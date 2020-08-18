@@ -1,6 +1,7 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -36,6 +37,7 @@ import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createChannelsChangeHandler,
   createProductTypeSelectHandler
 } from "../../utils/handlers";
 import ProductAttributes, {
@@ -54,12 +56,10 @@ interface FormData extends MetadataFormData {
   basePrice: number;
   category: string;
   changeTaxCode: boolean;
+  channelListing: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   description: RawDraftContentState;
-  isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   slug: string;
   productType: string;
@@ -94,6 +94,7 @@ interface ProductCreatePageProps {
     hasVariants: boolean;
     productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
+  hasChannelChanged: boolean;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -103,12 +104,15 @@ interface ProductCreatePageProps {
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
+  openChannelsModal: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
+  allChannelsCount,
   currency,
+  currentChannels = [],
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -118,6 +122,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
+  hasChannelChanged,
   header,
   initial,
   productTypes: productTypeChoiceList,
@@ -128,6 +133,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchProductTypes,
   weightUnit,
   onSubmit,
+  openChannelsModal,
   onWarehouseConfigure
 }: ProductCreatePageProps) => {
   const intl = useIntl();
@@ -170,17 +176,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     basePrice: 0,
     category: "",
     changeTaxCode: false,
+    channelListing: currentChannels,
     chargeTaxes: false,
     collections: [],
     description: {} as any,
-    isAvailable: false,
-    isAvailableForPurchase: false,
-    isPublished: false,
     metadata: [],
     name: "",
     privateMetadata: [],
     productType: "",
-    publicationDate: "",
     seoDescription: "",
     seoTitle: "",
     sku: null,
@@ -226,7 +229,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({
+        change,
+        data,
+        hasChanged,
+        set,
+        submit,
+        triggerChange,
+        toggleValue
+      }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -261,6 +272,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
+
+        const handleChannelsChange = createChannelsChangeHandler(
+          data,
+          set,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -379,30 +396,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
-                <AvailabilityCard
-                  data={data}
-                  errors={errors}
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListing}
                   disabled={disabled}
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Not published",
-                      description: "product label"
-                    }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will become published on {date}",
-                        description: "product publication date label"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Published",
-                      description: "product label"
-                    })
-                  }}
-                  onChange={change}
+                  onChange={handleChannelsChange}
+                  openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
@@ -419,7 +419,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={
+                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+              }
             />
           </Container>
         );

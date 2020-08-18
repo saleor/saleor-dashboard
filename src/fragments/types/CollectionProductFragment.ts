@@ -20,7 +20,6 @@ export interface CollectionProductFragment_thumbnail {
 export interface CollectionProductFragment {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionProductFragment_productType;
   thumbnail: CollectionProductFragment_thumbnail | null;

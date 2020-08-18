@@ -1,13 +1,19 @@
+import { useChannelsList } from "@saleor/channels/queries";
+import { ChannelData, createChannelsData } from "@saleor/channels/utils";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import useListActions from "@saleor/hooks/useListActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { useProductChannelListingUpdate } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
+import getProductErrorMessage from "@saleor/utils/errors/product";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -22,10 +28,8 @@ import { decimal, weight } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
-import {
-  useProductCreateMutation,
-  useProductSetAvailabilityForPurchase
-} from "../mutations";
+import { useProductCreateMutation } from "../mutations";
+import { ProductCreate } from "../types/ProductCreate";
 import { productListUrl, productUrl } from "../urls";
 
 export const ProductCreateView: React.FC = () => {
@@ -64,32 +68,76 @@ export const ProductCreateView: React.FC = () => {
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const taxTypes = useTaxTypeList({});
 
-  const handleBack = () => navigate(productListUrl());
+  const { data: channelsData } = useChannelsList({});
+  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
+  const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
 
-  const [
-    setProductAvailability,
-    productAvailabilityOpts
-  ] = useProductSetAvailabilityForPurchase({
+  const [updateChannels] = useProductChannelListingUpdate({
     onCompleted: data => {
-      const errors = data?.productSetAvailabilityForPurchase?.errors;
-      if (errors?.length === 0) {
-        navigate(productUrl(data.productSetAvailabilityForPurchase.product.id));
-      }
-    }
-  });
-
-  const [productCreate, productCreateOpts] = useProductCreateMutation({
-    onCompleted: data => {
-      if (data.productCreate.errors.length === 0) {
+      if (data.productChannelListingUpdate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Product created"
+            defaultMessage: "Channels updated"
           })
         });
+        navigate(productUrl(data.productChannelListingUpdate.product.id));
+      } else {
+        data.productChannelListingUpdate.errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
+
+  const {
+    isSelected: isChannelSelected,
+    listElements: channelListElements,
+    set: setChannels,
+    toggle: channelsToggle
+  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+
+  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
+
+  const handleChannelsModalClose = () => {
+    setChannelsModalOpen(false);
+    setChannels(currentChannels);
+  };
+
+  const handleChannelsConfirm = () => {
+    setCurrentChannels(channelListElements);
+    setChannelsModalOpen(false);
+  };
+
+  const handleBack = () => navigate(productListUrl());
+
+  const handleSuccess = (data: ProductCreate, channelsData: ChannelData[]) => {
+    if (data.productCreate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Product created"
+        })
+      });
+      updateChannels({
+        variables: {
+          id: data.productCreate.product.id,
+          input: {
+            addChannels: channelsData.map(channel => ({
+              channelId: channel.id,
+              isPublished: channel.isPublished,
+              publicationDate: channel.publicationDate
+            }))
+          }
+        }
+      });
+    }
+  };
+
+  const [productCreate, productCreateOpts] = useProductCreateMutation({});
 
   const handleCreate = async (formData: ProductCreatePageSubmitData) => {
     const result = await productCreate({
@@ -104,11 +152,8 @@ export const ProductCreateView: React.FC = () => {
           chargeTaxes: formData.chargeTaxes,
           collections: formData.collections,
           descriptionJson: JSON.stringify(formData.description),
-          isPublished: formData.isPublished,
           name: formData.name,
           productType: formData.productType,
-          publicationDate:
-            formData.publicationDate !== "" ? formData.publicationDate : null,
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
@@ -121,7 +166,6 @@ export const ProductCreateView: React.FC = () => {
           })),
           taxCode: formData.changeTaxCode ? formData.taxCode : undefined,
           trackInventory: formData.trackInventory,
-          visibleInListings: formData.visibleInListings,
           weight: weight(formData.weight)
         }
       }
@@ -130,21 +174,12 @@ export const ProductCreateView: React.FC = () => {
     const productId = result.data.productCreate?.product?.id;
 
     if (productId) {
-      const { isAvailableForPurchase, availableForPurchase } = formData;
-
-      const variables = getProductAvailabilityVariables({
-        availableForPurchase,
-        isAvailableForPurchase,
-        productId
-      });
-
-      setProductAvailability({
-        variables
-      });
+      handleSuccess(result.data, formData.channelListing);
     }
 
     return productId || null;
   };
+
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
@@ -159,15 +194,33 @@ export const ProductCreateView: React.FC = () => {
           description: "window title"
         })}
       />
+      {!!allChannels?.length && (
+        <ChannelsAvailabilityDialog
+          isSelected={isChannelSelected}
+          disabled={!channelListElements.length}
+          channels={allChannels}
+          onChange={channelsToggle}
+          onClose={handleChannelsModalClose}
+          open={isChannelsModalOpen}
+          title={intl.formatMessage({
+            defaultMessage: "Manage Products Channel Availability"
+          })}
+          confirmButtonState="default"
+          onConfirm={handleChannelsConfirm}
+        />
+      )}
       <ProductCreatePage
+        allChannelsCount={allChannels?.length}
+        currentChannels={currentChannels}
+        hasChannelChanged={allChannels?.length !== currentChannels?.length}
         currency={shop?.defaultCurrency}
-        categories={(searchCategoryOpts.data?.search.edges || []).map(
-          edge => edge.node
-        )}
-        collections={(searchCollectionOpts.data?.search.edges || []).map(
-          edge => edge.node
-        )}
-        disabled={productCreateOpts.loading || productAvailabilityOpts.loading}
+        categories={
+          searchCategoryOpts?.data?.search?.edges || [].map(edge => edge.node)
+        }
+        collections={
+          searchCollectionOpts?.data?.search?.edges || [].map(edge => edge.node)
+        }
+        disabled={productCreateOpts.loading}
         errors={productCreateOpts.data?.productCreate.errors || []}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
@@ -203,6 +256,7 @@ export const ProductCreateView: React.FC = () => {
         }
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
+        openChannelsModal={() => setChannelsModalOpen(true)}
       />
     </>
   );

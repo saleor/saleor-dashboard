@@ -22,7 +22,6 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_productType;
   thumbnail: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_thumbnail | null;
@@ -54,7 +53,7 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_errors {
-  __typename: "ProductError";
+  __typename: "CollectionProductError";
   code: ProductErrorCode;
   field: string | null;
 }

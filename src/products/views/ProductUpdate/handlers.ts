@@ -1,15 +1,16 @@
+import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
-import { decimal, weight } from "@saleor/misc";
+import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
+import {
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdateVariables
+} from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
-import {
-  ProductSetAvailabilityForPurchase,
-  ProductSetAvailabilityForPurchaseVariables
-} from "@saleor/products/types/ProductSetAvailabilityForPurchase";
 import {
   ProductUpdate,
   ProductUpdateVariables
@@ -22,8 +23,8 @@ import {
   SimpleProductUpdateVariables
 } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
-import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
+import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 
@@ -35,9 +36,9 @@ export function createUpdateHandler(
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
   ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
-  setProductAvailability: (
-    variables: ProductSetAvailabilityForPurchaseVariables
-  ) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
+  updateChannels: (options: {
+    variables: ProductChannelListingUpdateVariables;
+  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -47,12 +48,10 @@ export function createUpdateHandler(
           id: attribute.id,
           values: attribute.value[0] === "" ? [] : attribute.value
         })),
-        basePrice: decimal(data.basePrice),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
         descriptionJson: JSON.stringify(data.description),
-        isPublished: data.isPublished,
         name: data.name,
         publicationDate:
           data.publicationDate !== "" ? data.publicationDate : null,
@@ -61,8 +60,7 @@ export function createUpdateHandler(
           title: data.seoTitle
         },
         slug: data.slug,
-        taxCode: data.changeTaxCode ? data.taxCode : null,
-        visibleInListings: data.visibleInListings
+        taxCode: data.changeTaxCode ? data.taxCode : null
       }
     };
 
@@ -97,25 +95,29 @@ export function createUpdateHandler(
         ...result.data.productVariantUpdate.errors
       ];
     }
-    const { isAvailableForPurchase, availableForPurchase } = data;
-    if (
-      isAvailableForPurchase !== product.isAvailableForPurchase ||
-      availableForPurchase !== product.availableForPurchase
-    ) {
-      const variables = getProductAvailabilityVariables({
-        availableForPurchase,
-        isAvailableForPurchase,
-        productId: product.id
-      });
-
-      const availabilityResult = await setProductAvailability(variables);
-      errors = [
-        ...errors,
-        ...availabilityResult.data.productSetAvailabilityForPurchase.errors
-      ];
-    }
-
-    return errors;
+    const productChannels = createChannelsDataFromProduct(
+      product.channelListing
+    );
+    const diffChannels = diff(
+      productChannels,
+      data.channelListing,
+      (a, b) => a.id === b.id
+    );
+    updateChannels({
+      variables: {
+        id: product.id,
+        input: {
+          addChannels: data.channelListing.map(channel => ({
+            channelId: channel.id,
+            isPublished: channel.isPublished,
+            publicationDate: channel.publicationDate
+          })),
+          removeChannels: diffChannels.removed?.map(
+            removedChannel => removedChannel.id
+          )
+        }
+      }
+    });
   };
 }
 
