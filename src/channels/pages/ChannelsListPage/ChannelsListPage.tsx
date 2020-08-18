@@ -23,7 +23,6 @@ import { useStyles } from "./styles";
 export interface ChannelsListPageProps {
   channelsList: Channels_channels[] | undefined;
   navigateToChannelCreate: () => void;
-  disabled: boolean;
   onBack: () => void;
   onRowClick: (id: string) => () => void;
   onRemove: (id: string) => void;
@@ -92,8 +91,8 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       {channel?.name || <Skeleton />}
                     </span>
                   </TableCell>
-                  {channelsList?.length > 1 && (
-                    <TableCell className={classes.colAction}>
+                  <TableCell className={classes.colAction}>
+                    {channelsList?.length > 1 && (
                       <IconButton
                         color="primary"
                         onClick={
@@ -104,8 +103,8 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       >
                         <DeleteIcon />
                       </IconButton>
-                    </TableCell>
-                  )}
+                    )}
+                  </TableCell>
                 </TableRow>
               ),
               () => (

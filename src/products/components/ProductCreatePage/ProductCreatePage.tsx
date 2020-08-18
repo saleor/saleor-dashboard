@@ -1,5 +1,7 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -8,9 +10,7 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -33,6 +33,7 @@ import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createChannelsChangeHandler,
   createProductTypeSelectHandler
 } from "../../utils/handlers";
 import ProductAttributes, {
@@ -46,12 +47,11 @@ import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
   basePrice: number;
-  publicationDate: string;
   category: string;
+  channelListing: ChannelData[];
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
-  isPublished: boolean;
   name: string;
   productType: string;
   seoDescription: string;
@@ -67,6 +67,8 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: ProductErrorFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -80,18 +82,22 @@ interface ProductCreatePageProps {
     hasVariants: boolean;
     productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
+  hasChannelChanged: boolean;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  openChannelsModal: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
+  allChannelsCount,
   currency,
+  currentChannels = [],
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -101,16 +107,17 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
+  hasChannelChanged,
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
   warehouses,
   onBack,
   fetchProductTypes,
-  onSubmit
+  onSubmit,
+  openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
   // Form values
   const {
     change: changeAttributeData,
@@ -132,13 +139,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const initialData: FormData = {
     basePrice: 0,
     category: "",
+    channelListing: currentChannels,
     chargeTaxes: false,
     collections: [],
     description: {} as any,
-    isPublished: false,
     name: "",
     productType: "",
-    publicationDate: "",
     seoDescription: "",
     seoTitle: "",
     sku: null,
@@ -172,7 +178,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({
+        change,
+        data,
+        hasChanged,
+        set,
+        submit,
+        triggerChange,
+        toggleValue
+      }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -205,6 +219,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           setSelectedAttributes,
           setProductType,
           productTypeChoiceList
+        );
+
+        const handleChannelsChange = createChannelsChangeHandler(
+          data,
+          set,
+          triggerChange
         );
 
         return (
@@ -309,29 +329,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListing}
                   disabled={disabled}
-                  hiddenMessage={intl.formatMessage(
-                    {
-                      defaultMessage: "will be visible from {date}",
-                      description: "product"
-                    },
-                    {
-                      date: localizeDate(data.publicationDate)
-                    }
-                  )}
-                  onChange={change}
-                  visibleMessage={intl.formatMessage(
-                    {
-                      defaultMessage: "since {date}",
-                      description: "product"
-                    },
-                    {
-                      date: localizeDate(data.publicationDate)
-                    }
-                  )}
+                  onChange={handleChannelsChange}
+                  openModal={openChannelsModal}
                 />
               </div>
             </Grid>
@@ -339,7 +343,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={
+                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+              }
             />
           </Container>
         );

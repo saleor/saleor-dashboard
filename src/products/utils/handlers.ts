@@ -1,6 +1,7 @@
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
+import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
@@ -43,6 +44,27 @@ export function createAttributeChangeHandler(
 
     triggerChange();
     changeAttributeData(attributeId, [value]);
+  };
+}
+
+export function createChannelsChangeHandler(
+  data: ProductUpdatePageFormData,
+  updateChannels: (data: ProductUpdatePageFormData) => void,
+  triggerChange: () => void
+) {
+  return (index: number) => (channelData: {
+    isPublished: boolean;
+    publicationDate: string | null;
+  }) => {
+    const channels = data.channelListing;
+    const newChannels = [...channels];
+    newChannels[index] = {
+      ...channels[index],
+      isPublished: channelData.isPublished,
+      publicationDate: channelData.publicationDate
+    };
+    updateChannels({ ...data, channelListing: newChannels });
+    triggerChange();
   };
 }
 

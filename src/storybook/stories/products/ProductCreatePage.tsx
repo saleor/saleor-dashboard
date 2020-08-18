@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -12,11 +14,15 @@ import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
 
 const product = productFixture("");
+const channels = createChannelsData(channelsList);
 
 storiesOf("Views / Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={[]}
@@ -32,12 +38,16 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
   ))
   .add("When loading", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={true}
       errors={[]}
@@ -53,12 +63,16 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={undefined}
     />
   ))
   .add("form errors", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={(["name", "productType", "category", "sku"] as Array<
@@ -80,6 +94,7 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />

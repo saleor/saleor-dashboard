@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeValueInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductCreate
@@ -135,6 +135,19 @@ export interface ProductCreate_productCreate_product_purchaseCost {
   stop: ProductCreate_productCreate_product_purchaseCost_stop | null;
 }
 
+export interface ProductCreate_productCreate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface ProductCreate_productCreate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductCreate_productCreate_product_channelListing_channel;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductCreate_productCreate_product_images {
   __typename: "ProductImage";
   id: string;
@@ -189,9 +202,8 @@ export interface ProductCreate_productCreate_product {
   margin: ProductCreate_productCreate_product_margin | null;
   purchaseCost: ProductCreate_productCreate_product_purchaseCost | null;
   isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
+  channelListing: ProductCreate_productCreate_product_channelListing[] | null;
   images: (ProductCreate_productCreate_product_images | null)[] | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
 }
@@ -208,17 +220,11 @@ export interface ProductCreate {
 
 export interface ProductCreateVariables {
   attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
   category: string;
   chargeTaxes: boolean;
   collections?: (string | null)[] | null;
   descriptionJson?: any | null;
-  isPublished: boolean;
   name: string;
-  basePrice?: any | null;
   productType: string;
-  sku?: string | null;
   seo?: SeoInput | null;
-  stocks: StockInput[];
-  trackInventory: boolean;
 }

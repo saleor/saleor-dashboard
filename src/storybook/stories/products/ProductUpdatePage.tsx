@@ -1,4 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
+import { channelsList } from "@saleor/channels/fixtures";
+import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
 import ProductUpdatePage, {
@@ -14,17 +16,21 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
+const channels = createChannelsData(channelsList);
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
+  allChannelsCount: 5,
   categories: [product.category],
   collections,
+  currentChannels: [],
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,
   fetchCollections: () => undefined,
   fetchMoreCategories: fetchMoreProps,
   fetchMoreCollections: fetchMoreProps,
+  hasChannelChanged: false,
   header: product.name,
   images: product.images,
   onBack: () => undefined,
@@ -35,6 +41,7 @@ const props: ProductUpdatePageProps = {
   onVariantAdd: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  openChannelsModal: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",
@@ -116,7 +123,6 @@ storiesOf("Views / Products / Product edit", module)
         "category",
         "chargeTaxes",
         "collections",
-        "isPublished",
         "name",
         "publicationDate",
         "seoDescription",
@@ -129,4 +135,7 @@ storiesOf("Views / Products / Product edit", module)
         field
       }))}
     />
+  ))
+  .add("with channels", () => (
+    <ProductUpdatePage {...props} currentChannels={channels} />
   ));

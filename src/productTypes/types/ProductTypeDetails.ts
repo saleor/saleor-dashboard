@@ -36,7 +36,7 @@ export interface ProductTypeDetails_productType_variantAttributes {
 
 export interface ProductTypeDetails_productType_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

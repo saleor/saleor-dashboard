@@ -1,5 +1,6 @@
-import { decimal } from "@saleor/misc";
+import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
+import { ProductChannelListingUpdateVariables } from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
@@ -7,12 +8,16 @@ import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
+import { diff } from "fast-array-diff";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createUpdateHandler(
   product: ProductDetails_product,
   updateProduct: (variables: ProductUpdateVariables) => void,
-  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
+  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void,
+  updateChannels: (options: {
+    variables: ProductChannelListingUpdateVariables;
+  }) => void
 ) {
   return (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -20,16 +25,12 @@ export function createUpdateHandler(
         id: attribute.id,
         values: attribute.value[0] === "" ? [] : attribute.value
       })),
-      basePrice: decimal(data.basePrice),
       category: data.category,
       chargeTaxes: data.chargeTaxes,
       collections: data.collections,
       descriptionJson: JSON.stringify(data.description),
       id: product.id,
-      isPublished: data.isPublished,
       name: data.name,
-      publicationDate:
-        data.publicationDate !== "" ? data.publicationDate : null,
       seo: {
         description: data.seoDescription,
         title: data.seoTitle
@@ -51,6 +52,29 @@ export function createUpdateHandler(
         updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
     }
+    const productChannels = createChannelsDataFromProduct(
+      product.channelListing
+    );
+    const diffChannels = diff(
+      productChannels,
+      data.channelListing,
+      (a, b) => a.id === b.id
+    );
+    updateChannels({
+      variables: {
+        id: product.id,
+        input: {
+          addChannels: data.channelListing.map(channel => ({
+            channelId: channel.id,
+            isPublished: channel.isPublished,
+            publicationDate: channel.publicationDate
+          })),
+          removeChannels: diffChannels.removed?.map(
+            removedChannel => removedChannel.id
+          )
+        }
+      }
+    });
   };
 }
 

@@ -1,3 +1,4 @@
+import { ChannelData } from "@saleor/channels/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -171,12 +172,11 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 export interface ProductUpdatePageFormData {
   basePrice: number;
   category: string | null;
+  channelListing: ChannelData[];
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
-  isPublished: boolean;
   name: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
@@ -185,20 +185,20 @@ export interface ProductUpdatePageFormData {
 
 export function getProductUpdatePageFormData(
   product: ProductDetails_product,
-  variants: ProductDetails_product_variants[]
+  variants: ProductDetails_product_variants[],
+  currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
+    channelListing: currentChannels,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
-    isPublished: maybe(() => product.isPublished, false),
     name: maybe(() => product.name, ""),
-    publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
     sku: maybe(

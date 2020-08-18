@@ -102,6 +102,7 @@ const productListQuery = gql`
     $before: String
     $filter: ProductFilterInput
     $sort: ProductOrder
+    $channel: String
   ) {
     products(
       before: $before
@@ -110,6 +111,7 @@ const productListQuery = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {
@@ -155,13 +157,18 @@ export const TypedProductListQuery = TypedQuery<
 
 const productDetailsQuery = gql`
   ${productFragmentDetails}
-  query ProductDetails($id: ID!) {
-    product(id: $id) {
+  query ProductDetails($id: ID!, $channel: String) {
+    product(id: $id, channel: $channel) {
       ...Product
     }
   }
 `;
 export const TypedProductDetailsQuery = TypedQuery<
+  ProductDetails,
+  ProductDetailsVariables
+>(productDetailsQuery);
+
+export const useProductDetailsQuery = makeQuery<
   ProductDetails,
   ProductDetailsVariables
 >(productDetailsQuery);

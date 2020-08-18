@@ -17,6 +17,9 @@ const messages = defineMessages({
   attributeVariantsDisabled: {
     defaultMessage: "Variants are disabled in this product type"
   },
+  duplicated: {
+    defaultMessage: "The same object cannot be in both lists"
+  },
   skuUnique: {
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
@@ -46,6 +49,8 @@ function getProductErrorMessage(
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.INVALID:
         return intl.formatMessage(commonErrorMessages.invalid);
+      case ProductErrorCode.DUPLICATED_INPUT_ITEM:
+        return intl.formatMessage(messages.duplicated);
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }

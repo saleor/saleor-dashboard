@@ -3,7 +3,7 @@ import {
   collectionProductFragment
 } from "@saleor/fragments/collections";
 import {
-  productErrorFragment,
+  collectionsErrorFragment,
   shopErrorFragment
 } from "@saleor/fragments/errors";
 import gql from "graphql-tag";
@@ -44,7 +44,7 @@ import {
 
 const collectionUpdate = gql`
   ${collectionDetailsFragment}
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
     collectionUpdate(id: $id, input: $input) {
       collection {
@@ -63,7 +63,7 @@ export const TypedCollectionUpdateMutation = TypedMutation<
 
 const collectionUpdateWithHomepage = gql`
   ${collectionDetailsFragment}
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   ${shopErrorFragment}
   mutation CollectionUpdateWithHomepage(
     $id: ID!
@@ -97,7 +97,7 @@ export const TypedCollectionUpdateWithHomepageMutation = TypedMutation<
 
 const assignCollectionProduct = gql`
   ${collectionProductFragment}
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CollectionAssignProduct(
     $collectionId: ID!
     $productIds: [ID!]!
@@ -124,7 +124,7 @@ const assignCollectionProduct = gql`
         }
       }
       errors: productErrors {
-        ...ProductErrorFragment
+        ...CollectionErrorFragment
       }
     }
   }
@@ -136,7 +136,7 @@ export const TypedCollectionAssignProductMutation = TypedMutation<
 
 const createCollection = gql`
   ${collectionDetailsFragment}
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CreateCollection($input: CollectionCreateInput!) {
     collectionCreate(input: $input) {
       collection {
@@ -154,7 +154,7 @@ export const TypedCollectionCreateMutation = TypedMutation<
 >(createCollection);
 
 const removeCollection = gql`
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation RemoveCollection($id: ID!) {
     collectionDelete(id: $id) {
       errors: productErrors {
@@ -169,7 +169,7 @@ export const TypedCollectionRemoveMutation = TypedMutation<
 >(removeCollection);
 
 const unassignCollectionProduct = gql`
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation UnassignCollectionProduct(
     $collectionId: ID!
     $productIds: [ID]!
@@ -188,7 +188,6 @@ const unassignCollectionProduct = gql`
           edges {
             node {
               id
-              isPublished
               name
               productType {
                 id
@@ -219,7 +218,7 @@ export const TypedUnassignCollectionProductMutation = TypedMutation<
 >(unassignCollectionProduct);
 
 const collectionBulkDelete = gql`
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CollectionBulkDelete($ids: [ID]!) {
     collectionBulkDelete(ids: $ids) {
       errors: productErrors {
@@ -234,7 +233,7 @@ export const TypedCollectionBulkDelete = TypedMutation<
 >(collectionBulkDelete);
 
 const collectionBulkPublish = gql`
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CollectionBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     collectionBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors: productErrors {

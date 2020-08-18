@@ -4,11 +4,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -34,7 +34,7 @@ import TDisplayColumn, {
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -106,11 +106,13 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  channelsCount: number;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
   const {
     activeAttributeSortId,
+    channelsCount,
     settings,
     disabled,
     isChecked,
@@ -130,7 +132,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
-  const intl = useIntl();
 
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
@@ -191,7 +192,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <col className={classes.colType} />
           </DisplayColumn>
-          <DisplayColumn column="isPublished" displayColumns={settings.columns}>
+          <DisplayColumn
+            column="availability"
+            displayColumns={settings.columns}
+          >
             <col className={classes.colPublished} />
           </DisplayColumn>
           {gridAttributesFromSettings.map(gridAttribute => (
@@ -241,7 +245,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
               />
             </TableCellHeader>
           </DisplayColumn>
-          <DisplayColumn column="isPublished" displayColumns={settings.columns}>
+          <DisplayColumn
+            column="availability"
+            displayColumns={settings.columns}
+          >
             <TableCellHeader
               className={classes.colPublished}
               direction={
@@ -252,8 +259,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
               onClick={() => onSort(ProductListUrlSortField.status)}
             >
               <FormattedMessage
-                defaultMessage="Published"
-                description="product status"
+                defaultMessage="Availability"
+                description="product channels"
               />
             </TableCellHeader>
           </DisplayColumn>
@@ -333,7 +340,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
                   data-test="id"
-                  data-test-id={maybe(() => product.id)}
+                  data-test-id={product?.id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -379,37 +386,23 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       className={classes.colType}
                       data-test="product-type"
                     >
-                      {product && product.productType ? (
-                        product.productType.name
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {product?.productType?.name || <Skeleton />}
                     </TableCell>
                   </DisplayColumn>
                   <DisplayColumn
-                    column="isPublished"
+                    column="availability"
                     displayColumns={settings.columns}
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-test="isPublished"
-                      data-test-is-published={maybe(() => product.isPublished)}
+                      data-test="availability"
+                      data-test-availability={!!product?.channelListing?.length}
                     >
-                      {product &&
-                      maybe(() => product.isPublished !== undefined) ? (
-                        <StatusLabel
-                          label={
-                            product.isPublished
-                              ? intl.formatMessage({
-                                  defaultMessage: "Published",
-                                  description: "product status"
-                                })
-                              : intl.formatMessage({
-                                  defaultMessage: "Not published",
-                                  description: "product status"
-                                })
-                          }
-                          status={product.isPublished ? "success" : "error"}
+                      {product?.channelListing !== undefined ? (
+                        <ChannelsAvailabilityDropdown
+                          allChannelsCount={channelsCount}
+                          currentChannel={product?.channelListing[0]}
+                          channels={product?.channelListing}
                         />
                       ) : (
                         <Skeleton />
