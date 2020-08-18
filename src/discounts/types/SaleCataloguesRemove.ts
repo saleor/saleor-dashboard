@@ -29,7 +29,6 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_n
   __typename: "Product";
   id: string;
   name: string;
-  isPublished: boolean;
   productType: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_productType;
   thumbnail: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_thumbnail | null;
 }

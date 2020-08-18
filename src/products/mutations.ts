@@ -19,9 +19,9 @@ import {
   productBulkDeleteVariables
 } from "./types/productBulkDelete";
 import {
-  productBulkPublish,
-  productBulkPublishVariables
-} from "./types/productBulkPublish";
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdateVariables
+} from "./types/ProductChannelListingUpdate";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
 import { ProductExport, ProductExportVariables } from "./types/ProductExport";
@@ -41,10 +41,6 @@ import {
   ProductImageUpdate,
   ProductImageUpdateVariables
 } from "./types/ProductImageUpdate";
-import {
-  ProductSetAvailabilityForPurchase,
-  ProductSetAvailabilityForPurchaseVariables
-} from "./types/ProductSetAvailabilityForPurchase";
 import { ProductUpdate, ProductUpdateVariables } from "./types/ProductUpdate";
 import {
   ProductVariantBulkCreate,
@@ -470,21 +466,6 @@ export const useProductBulkDeleteMutation = makeMutation<
   productBulkDeleteVariables
 >(productBulkDeleteMutation);
 
-export const productBulkPublishMutation = gql`
-  ${productErrorFragment}
-  mutation productBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
-    productBulkPublish(ids: $ids, isPublished: $isPublished) {
-      errors: productErrors {
-        ...ProductErrorFragment
-      }
-    }
-  }
-`;
-export const useProductBulkPublishMutation = makeMutation<
-  productBulkPublish,
-  productBulkPublishVariables
->(productBulkPublishMutation);
-
 export const ProductVariantBulkCreateMutation = gql`
   ${bulkProductErrorFragment}
   mutation ProductVariantBulkCreate(
@@ -537,35 +518,25 @@ export const useProductExport = makeMutation<
   ProductExportVariables
 >(productExportMutation);
 
-const productSetAvailabilityForPurchase = gql`
-  ${productErrorFragment}
-  mutation ProductSetAvailabilityForPurchase(
-    $isAvailable: Boolean!
-    $productId: ID!
-    $startDate: Date
+export const ProductChannelListingUpdateMutation = gql`
+  ${productFragmentDetails}
+  mutation ProductChannelListingUpdate(
+    $id: ID!
+    $input: ProductChannelListingUpdateInput!
   ) {
-    productSetAvailabilityForPurchase(
-      isAvailable: $isAvailable
-      productId: $productId
-      startDate: $startDate
-    ) {
+    productChannelListingUpdate(id: $id, input: $input) {
       product {
-        id
-        availableForPurchase
-        isAvailableForPurchase
+        ...Product
       }
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors: productsErrors {
+        field
         message
+        code
+        channels
       }
     }
   }
 `;
-
-export const useProductSetAvailabilityForPurchase = makeMutation<
-  ProductSetAvailabilityForPurchase,
-  ProductSetAvailabilityForPurchaseVariables
->(productSetAvailabilityForPurchase);
 
 const productVariantReorder = gql`
   ${productErrorFragment}
@@ -585,3 +556,7 @@ export const useProductVariantReorderMutation = makeMutation<
   ProductVariantReorder,
   ProductVariantReorderVariables
 >(productVariantReorder);
+export const useProductChannelListingUpdate = makeMutation<
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdateVariables
+>(ProductChannelListingUpdateMutation);

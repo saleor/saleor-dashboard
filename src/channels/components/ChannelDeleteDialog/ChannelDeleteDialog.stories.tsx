@@ -13,6 +13,7 @@ const props: ChannelDeleteDialogProps = {
     value: channel.id
   })),
   confirmButtonState: "default",
+  hasChannelOrders: false,
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true
@@ -20,4 +21,7 @@ const props: ChannelDeleteDialogProps = {
 
 storiesOf("Views / Channels / Delete channel", module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelDeleteDialog {...props} />);
+  .add("default", () => <ChannelDeleteDialog {...props} />)
+  .add("with channel orders", () => (
+    <ChannelDeleteDialog {...props} hasChannelOrders={true} />
+  ));

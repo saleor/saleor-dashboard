@@ -18,12 +18,25 @@ export interface ProductFragment_productType {
   hasVariants: boolean;
 }
 
+export interface ProductFragment_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface ProductFragment_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductFragment_channelListing_channel;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductFragment {
   __typename: "Product";
   id: string;
   name: string;
   thumbnail: ProductFragment_thumbnail | null;
   isAvailable: boolean | null;
-  isPublished: boolean;
   productType: ProductFragment_productType;
+  channelListing: ProductFragment_channelListing[] | null;
 }

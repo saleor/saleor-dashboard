@@ -160,7 +160,6 @@ export const sale: SaleDetails_sale = {
         node: {
           __typename: "Product",
           id: "UHJvZHVjdDo3MQ==",
-          isPublished: true,
           name: "Orange Juice",
           productType: {
             __typename: "ProductType",
@@ -178,7 +177,6 @@ export const sale: SaleDetails_sale = {
         node: {
           __typename: "Product",
           id: "UHJvZHVjdDo3Mw==",
-          isPublished: true,
           name: "Carrot Juice",
           productType: {
             __typename: "ProductType",
@@ -196,7 +194,6 @@ export const sale: SaleDetails_sale = {
         node: {
           __typename: "Product",
           id: "UHJvZHVjdDo3OQ==",
-          isPublished: true,
           name: "Bean Juice",
           productType: {
             __typename: "ProductType",
@@ -214,7 +211,6 @@ export const sale: SaleDetails_sale = {
         node: {
           __typename: "Product",
           id: "UHJvZHVjdDoxMTU=",
-          isPublished: true,
           name: "Black Hoodie",
           productType: {
             __typename: "ProductType",

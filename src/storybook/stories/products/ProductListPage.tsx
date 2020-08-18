@@ -36,6 +36,7 @@ const props: ProductListPageProps = {
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
+  channelsCount: 6,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
@@ -43,7 +44,7 @@ const props: ProductListPageProps = {
   products,
   settings: {
     ...pageListProps.default.settings,
-    columns: ["isPublished", "productType", "price"]
+    columns: ["availability", "productType", "price"]
   },
   totalGridAttributes: attributes.length
 };
@@ -59,16 +60,5 @@ storiesOf("Views / Products / Product list", module)
       disabled={true}
     />
   ))
-  .add("published", () => (
-    <ProductListPage
-      {...props}
-      products={products.filter(product => product.isPublished)}
-    />
-  ))
-  .add("not published", () => (
-    <ProductListPage
-      {...props}
-      products={products.filter(product => !product.isPublished)}
-    />
-  ))
+  .add("with data", () => <ProductListPage {...props} products={products} />)
   .add("no data", () => <ProductListPage {...props} products={[]} />);
