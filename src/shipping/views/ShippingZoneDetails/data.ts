@@ -38,7 +38,6 @@ export function getCreateShippingRateVariables(
             : parseFloat(data.minValue)
           : null,
       name: data.name,
-      price: data.isFree ? 0 : parseFloat(data.price),
       shippingZone: id,
       type: params.type
     }
@@ -63,7 +62,6 @@ export function getUpdateShippingRateVariables(
       minimumOrderPrice: isPriceSet ? parsedMinValue : null,
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
-      price: data.isFree ? 0 : parseFloat(data.price),
       shippingZone: id,
       type: data.type
     }

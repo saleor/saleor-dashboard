@@ -7,6 +7,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
 import ShippingZoneCountriesAssignDialog from "@saleor/shipping/components/ShippingZoneCountriesAssignDialog";
 import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
@@ -24,15 +25,16 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { findValueInEnum, getStringOrPlaceholder } from "../../../misc";
-import {
-  CountryCode,
-  ShippingMethodTypeEnum
-} from "../../../types/globalTypes";
+import { CountryCode } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage, {
   FormData
 } from "../../components/ShippingZoneDetailsPage";
 import { useShippingZone } from "../../queries";
 import {
+  shippingPriceRatesEditUrl,
+  shippingPriceRatesUrl,
+  shippingWeightRatesEditUrl,
+  shippingWeightRatesUrl,
   shippingZonesListUrl,
   shippingZoneUrl,
   ShippingZoneUrlDialog,
@@ -72,7 +74,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     ShippingZoneUrlDialog,
     ShippingZoneUrlQueryParams
   >(navigate, params => shippingZoneUrl(id, params), params);
-  const rate = data?.shippingZone?.shippingMethods.find(
+  const rate = data?.shippingZone?.shippingMethods?.find(
     rate => rate.id === params.id
   );
 
@@ -183,15 +185,9 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onDelete={() => openModal("remove")}
-        onPriceRateAdd={() =>
-          openModal("add-rate", {
-            type: ShippingMethodTypeEnum.PRICE
-          })
-        }
+        onPriceRateAdd={() => navigate(shippingPriceRatesUrl(id))}
         onPriceRateEdit={rateId =>
-          openModal("edit-rate", {
-            id: rateId
-          })
+          navigate(shippingPriceRatesEditUrl(id, rateId))
         }
         onRateRemove={rateId =>
           openModal("remove-rate", {
@@ -200,15 +196,9 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         onSubmit={handleSubmit}
         onWarehouseAdd={() => openModal("add-warehouse")}
-        onWeightRateAdd={() =>
-          openModal("add-rate", {
-            type: ShippingMethodTypeEnum.WEIGHT
-          })
-        }
+        onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
         onWeightRateEdit={rateId =>
-          openModal("edit-rate", {
-            id: rateId
-          })
+          navigate(shippingWeightRatesEditUrl(id, rateId))
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
@@ -236,34 +226,19 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         rate={rate}
         variant={rate?.type}
       />
-      <ActionDialog
+      <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
         onClose={closeModal}
-        onConfirm={() =>
+        handleConfirm={() =>
           deleteShippingRate({
             variables: {
               id: params.id
             }
           })
         }
+        name={rate?.name}
         open={params.action === "remove-rate"}
-        title={intl.formatMessage({
-          defaultMessage: "Delete Shipping Method",
-          description: "dialog header"
-        })}
-        variant="delete"
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="Are you sure you want to delete {name}?"
-            description="delete shipping method"
-            id="shippingZoneDetailsDialogsDeleteShippingMethod"
-            values={{
-              name: getStringOrPlaceholder(rate?.name)
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
+      />
       <ShippingZoneRateDialog
         action="create"
         confirmButtonState={createShippingRateOpts.status}

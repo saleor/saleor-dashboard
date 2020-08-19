@@ -13,13 +13,13 @@ import { sectionNames } from "@saleor/intl";
 import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import {
-  getCreateShippingPriceRateVariables,
+  getCreateShippingWeightRateVariables,
   getShippingMethodChannelVariables
 } from "@saleor/shipping/handlers";
 import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutations";
 import { useShippingRateCreate } from "@saleor/shipping/mutations";
 import {
-  shippingPriceRatesEditUrl,
+  shippingWeightRatesEditUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
@@ -27,11 +27,11 @@ import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface PriceRatesCreateProps {
+export interface WeightRatesCreateProps {
   id: string;
 }
 
-export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
+export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -47,18 +47,22 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
       const errors = data.shippingMethodChannelListingUpdate.errors;
       if (errors.length === 0) {
         navigate(
-          shippingPriceRatesEditUrl(
+          shippingWeightRatesEditUrl(
             id,
             data.shippingMethodChannelListingUpdate.shippingMethod.id
           )
         );
       } else {
         errors.map(err =>
-          notify({ status: "error", text: getShippingErrorMessage(err, intl) })
+          notify({
+            status: "error",
+            text: getShippingErrorMessage(err, intl)
+          })
         );
       }
     }
   });
+
   const shippingChannels = createShippingChannels(channelsData?.channels);
   const allChannels = createShippingChannels(channelsData?.channels);
 
@@ -95,7 +99,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
 
   const handleSubmit = (data: FormData) =>
     createShippingRate({
-      variables: getCreateShippingPriceRateVariables(data, id)
+      variables: getCreateShippingWeightRateVariables(data, id)
     });
 
   const handleBack = () => navigate(shippingZoneUrl(id));
@@ -112,20 +116,19 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            defaultMessage: "Manage Channel Availability"
+            defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"
           onConfirm={handleChannelsConfirm}
         />
       )}
-
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         onChannelsChange={(data: ChannelShippingData[]) =>
           setCurrentChannels(data)
         }
-        defaultCurrency={shop?.defaultCurrency}
         shippingChannels={currentChannels}
+        defaultCurrency={shop?.defaultCurrency}
         disabled={
           channelsLoading ||
           createShippingRateOpts?.status === "loading" ||
@@ -136,10 +139,10 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
         onBack={handleBack}
         errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
         openChannelsModal={handleChannelsModalOpen}
-        variant={ShippingMethodTypeEnum.PRICE}
+        variant={ShippingMethodTypeEnum.WEIGHT}
       />
     </>
   );
 };
 
-export default PriceRatesCreate;
+export default WeightRatesCreate;

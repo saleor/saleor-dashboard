@@ -1550,6 +1550,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
   shippingMethods: [
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumOrderPrice: null,
       maximumOrderWeight: {
@@ -1578,6 +1579,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
+      channels: [],
       maximumOrderPrice: null,
       maximumOrderWeight: null,
       minimumOrderPrice: {
@@ -1600,6 +1602,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderPrice: null,
       maximumOrderWeight: null,
@@ -1624,6 +1627,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderPrice: null,
       maximumOrderWeight: null,

@@ -17,13 +17,13 @@ import ShippingZoneRatesPage, {
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import {
   getShippingMethodChannelVariables,
-  getUpdateShippingPriceRateVariables
+  getUpdateShippingWeightRateVariables
 } from "@saleor/shipping/handlers";
-import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutations";
 import {
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
+import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutations";
 import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
@@ -32,12 +32,12 @@ import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface PriceRatesUpdateProps {
+export interface WeightRatesUpdateProps {
   id: string;
   rateId: string;
 }
 
-export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
+export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   id,
   rateId
 }) => {
@@ -54,8 +54,8 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const rate = data?.shippingZone?.shippingMethods.find(
     rate => rate.id === rateId
   );
-  const { data: channelsData } = useChannelsList({});
 
+  const { data: channelsData } = useChannelsList({});
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
@@ -80,7 +80,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       }
     }
   });
-
   const shippingChannels = createShippingChannelsFromRate(rate?.channels);
   const allChannels = createShippingChannels(channelsData?.channels);
 
@@ -132,6 +131,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       }
     }
   });
+
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
@@ -145,9 +145,9 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   });
 
   const handleDelete = () => setOpenModal(true);
-  const handleSubmit = (formData: FormData) =>
+  const handleSubmit = (data: FormData) =>
     updateShippingRate({
-      variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
+      variables: getUpdateShippingWeightRateVariables(data, id, rateId)
     });
 
   const handleBack = () => navigate(shippingZoneUrl(id));
@@ -164,7 +164,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            defaultMessage: "Manage Channel Availability"
+            defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"
           onConfirm={handleChannelsConfirm}
@@ -200,10 +200,10 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         openChannelsModal={handleChannelsModalOpen}
-        variant={ShippingMethodTypeEnum.PRICE}
+        variant={ShippingMethodTypeEnum.WEIGHT}
       />
     </>
   );
 };
 
-export default PriceRatesUpdate;
+export default WeightRatesUpdate;
