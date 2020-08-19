@@ -3736,9 +3736,6 @@
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_4241018152": {
-    "string": "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
-  },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
     "string": "Search Plugins..."
   },
@@ -5577,6 +5574,9 @@
   },
   "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
     "string": "Url has invalid format"
+  },
+  "src_dot_utils_dot_errors_dot_misconfigured": {
+    "string": "Plugin is misconfigured and cannot be activated"
   },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
