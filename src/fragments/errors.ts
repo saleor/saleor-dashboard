@@ -127,3 +127,10 @@ export const exportErrorFragment = gql`
     field
   }
 `;
+
+export const pluginErrorFragment = gql`
+  fragment PluginErrorFragment on PluginError {
+    code
+    field
+  }
+`;
