@@ -50,6 +50,22 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   currency: string;
 }
 
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channels_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channels {
+  __typename: "ShippingMethodChannelListing";
+  id: string;
+  channel: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channels_channel;
+  price: number | null;
+  minValue: number | null;
+  maxValue: number | null;
+}
+
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
@@ -60,6 +76,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   name: string;
   price: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
+  channels: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channels | null)[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses {
