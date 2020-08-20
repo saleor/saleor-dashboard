@@ -8,7 +8,14 @@ export enum JWTError {
 }
 
 export function isJwtError(error: GraphQLError): boolean {
-  return !!findValueInEnum(error.extensions.exception.code, JWTError);
+  let jwtError: boolean;
+  try {
+    jwtError = !!findValueInEnum(error.extensions.exception.code, JWTError);
+  } catch (e) {
+    jwtError = false;
+  }
+
+  return jwtError;
 }
 
 export function isTokenExpired(error: GraphQLError): boolean {
