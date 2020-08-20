@@ -73,7 +73,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               <div className={classes.togglable}>
                 <Typography color="textSecondary" variant="body2">
                   <FormattedMessage
-                    defaultMessage="{number} Fields"
+                    defaultMessage="{number,plural,one{{number} Field} other{{number} Fields}}"
                     description="number of metadata fields in model"
                     values={{
                       number: data.length
