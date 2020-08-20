@@ -11,13 +11,11 @@ import ChannelsAvailability, {
 const props: ChannelsAvailabilityProps = {
   allChannelsCount: 4,
   channels: createChannelsDataFromProduct(productChannels),
+  onChange: () => undefined,
   openModal: () => undefined,
   selectedChannelsCount: 3
 };
 
 storiesOf("Generics / ChannelsAvailability", module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelsAvailability {...props} />)
-  .add("with onChange prop", () => (
-    <ChannelsAvailability {...props} onChange={() => undefined} />
-  ));
+  .add("default", () => <ChannelsAvailability {...props} />);

@@ -14,14 +14,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
+interface Value {
+  maxValue: string;
+  minValue: string;
+  price: string;
+}
+
 export interface PricingCardProps {
   channels: ChannelShippingData[];
   defaultCurrency: string;
   disabled: boolean;
-  onChange: (
-    channelId: string,
-    value: { maxValue: string; minValue: string; price: string }
-  ) => void;
+  onChange: (channelId: string, value: Value) => void;
 }
 
 const numberOfColumns = 2;

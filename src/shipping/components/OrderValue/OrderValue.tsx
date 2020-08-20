@@ -16,16 +16,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
+interface Value {
+  maxValue: string;
+  minValue: string;
+}
 export interface OrderValueProps {
   channels: ChannelShippingData[];
   defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;
   onChange: (event: ChangeEvent) => void;
-  onChannelsChange: (
-    channelId: string,
-    value: { maxValue: string; minValue: string }
-  ) => void;
+  onChannelsChange: (channelId: string, value: Value) => void;
 }
 
 const numberOfColumns = 3;

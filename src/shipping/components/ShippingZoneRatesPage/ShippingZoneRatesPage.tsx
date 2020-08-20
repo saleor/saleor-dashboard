@@ -139,7 +139,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <ChannelsAvailability
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
-                  channels={shippingChannels}
+                  shippingChannels={shippingChannels}
                   openModal={openChannelsModal}
                 />
               </div>

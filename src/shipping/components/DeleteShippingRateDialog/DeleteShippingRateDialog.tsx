@@ -8,7 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface DeleteShippingRateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name?: string;
+  name: string;
   onClose: () => void;
   handleConfirm: () => void;
 }

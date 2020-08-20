@@ -9,6 +9,7 @@ import DeleteShippingRateDialog, {
 const props: DeleteShippingRateDialogProps = {
   confirmButtonState: "default",
   handleConfirm: () => undefined,
+  name: "Shipping",
   onClose: () => undefined,
   open: true
 };
@@ -18,7 +19,4 @@ storiesOf("Shipping / DeleteShippingRateDialog", module)
   .add("default", () => <DeleteShippingRateDialog {...props} />)
   .add("loading", () => (
     <DeleteShippingRateDialog {...props} confirmButtonState="loading" />
-  ))
-  .add("with name", () => (
-    <DeleteShippingRateDialog {...props} name="Shipping" />
   ));
