@@ -78,8 +78,6 @@ jobs:
         uses: actions/checkout@v1
       - name: Cypress run
         uses: cypress-io/github-action@v2
-        env:
-          DEBUG: cypress:*
         with:
           build: npm run build
           start: npx http-server -a localhost -p 9000 build/dashboard
