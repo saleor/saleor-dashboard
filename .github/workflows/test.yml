@@ -79,7 +79,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          API_URI: https://pwa.demo.saleor.rocks/graphql/
+          API_URI: ${{ secrets.API_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
         with:
           build: npm run build
           start: npx http-server -a localhost -p 9000 build/dashboard
