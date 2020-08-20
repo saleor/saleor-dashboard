@@ -6,6 +6,9 @@ const useStyles = makeStyles(
       textAlign: "right",
       width: 130
     };
+    const colName: React.CSSProperties = {
+      width: 220
+    };
 
     return {
       colAction: {
@@ -18,7 +21,11 @@ const useStyles = makeStyles(
         ...colAction
       },
       colName: {
-        width: 220
+        ...colName,
+        verticalAlign: "top"
+      },
+      colNameHeader: {
+        ...colName
       },
       colValue: {},
       content: {
@@ -37,6 +44,9 @@ const useStyles = makeStyles(
       },
       input: {
         padding: theme.spacing(0.5, 2)
+      },
+      nameInput: {
+        padding: `13px 16px`
       },
       table: {
         tableLayout: "fixed"
