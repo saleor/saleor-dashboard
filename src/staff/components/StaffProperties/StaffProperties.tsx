@@ -35,7 +35,7 @@ const useStyles = makeStyles(
       width: 120
     },
     avatarDefault: {
-      "& p": {
+      "& div": {
         color: "#fff",
         fontSize: 35,
         fontWeight: "bold",

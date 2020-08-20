@@ -39,6 +39,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { getSortUrlVariables } from "@saleor/utils/sort";
+import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -122,6 +123,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10
+    }
+  });
+  const warehouses = useWarehouseList({
+    variables: {
+      first: 100
     }
   });
 
@@ -551,6 +557,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             filter: data?.products.totalCount
                           }}
                           selectedProducts={listElements.length}
+                          warehouses={
+                            warehouses.data?.warehouses.edges.map(
+                              edge => edge.node
+                            ) || []
+                          }
                           onClose={closeModal}
                           onSubmit={data =>
                             exportProducts({

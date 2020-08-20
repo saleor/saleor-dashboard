@@ -1,12 +1,4 @@
-Cypress.Commands.add("loginUser", (email, password) =>
-  cy
-    .get("input[name='email']")
-    .type(email)
-    .get("input[name='password']")
-    .type(password)
-    .get("[data-test=submit]")
-    .click()
-);
+import "./user";
 
 Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.

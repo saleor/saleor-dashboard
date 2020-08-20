@@ -1,15 +1,15 @@
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
+import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
 import { FetchMoreProps } from "@saleor/types";
@@ -22,8 +22,17 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
+import useProductExportFieldMessages from "./messages";
+
 export const attributeNamePrefix = "attribute-";
+export const warehouseNamePrefix = "warehouse-";
 const maxChips = 4;
+
+const inventoryFields = [
+  ProductFieldEnum.PRODUCT_WEIGHT,
+  ProductFieldEnum.VARIANT_SKU,
+  ProductFieldEnum.VARIANT_WEIGHT
+];
 
 const useStyles = makeStyles(
   theme => ({
@@ -45,12 +54,23 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
       marginTop: theme.spacing(3)
     },
+    hrWarehouses: {
+      marginBottom: theme.spacing(3),
+      marginTop: theme.spacing(1)
+    },
     label: {
       "&&": {
         overflow: "visible"
       },
+      "&:first-of-type": {
+        paddingTop: 0
+      },
+      "&:not(:last-of-type)": {
+        borderBottom: `1px solid ${theme.palette.divider}`
+      },
       justifyContent: "space-between",
       margin: theme.spacing(0),
+      padding: theme.spacing(1, 0),
       width: "100%"
     },
     loadMoreContainer: {
@@ -62,8 +82,14 @@ const useStyles = makeStyles(
       display: "inline-block",
       marginBottom: theme.spacing()
     },
+    optionLabel: {
+      marginLeft: 0
+    },
     quickPeekContainer: {
       marginBottom: theme.spacing(-1)
+    },
+    warehousesLabel: {
+      marginBottom: theme.spacing(2)
     }
   }),
   {
@@ -80,12 +106,14 @@ const Option: React.FC<{
 
   return (
     <FormControlLabel
+      classes={{
+        label: classes.optionLabel
+      }}
       color="primary"
       control={
         <Checkbox
           className={classes.checkbox}
           checked={checked}
-          color="primary"
           name={name}
           onChange={onChange}
         />
@@ -104,66 +132,7 @@ const FieldAccordion: React.FC<AccordionProps & {
   onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
 }> = ({ data, fields, onChange, onToggleAll, ...props }) => {
   const classes = useStyles({});
-  const intl = useIntl();
-
-  const fieldNames: Record<ProductFieldEnum, string> = {
-    [ProductFieldEnum.CATEGORY]: intl.formatMessage({
-      defaultMessage: "Category",
-      description: "product field"
-    }),
-    [ProductFieldEnum.CHARGE_TAXES]: intl.formatMessage({
-      defaultMessage: "Charge Taxes",
-      description: "product field"
-    }),
-    [ProductFieldEnum.COLLECTIONS]: intl.formatMessage({
-      defaultMessage: "Collections",
-      description: "product field"
-    }),
-    [ProductFieldEnum.COST_PRICE]: intl.formatMessage({
-      defaultMessage: "Cost Price",
-      description: "product field"
-    }),
-    [ProductFieldEnum.DESCRIPTION]: intl.formatMessage({
-      defaultMessage: "Description",
-      description: "product field"
-    }),
-    [ProductFieldEnum.NAME]: intl.formatMessage({
-      defaultMessage: "Name",
-      description: "product field"
-    }),
-    [ProductFieldEnum.PRODUCT_IMAGES]: intl.formatMessage({
-      defaultMessage: "Product Images",
-      description: "product field"
-    }),
-    [ProductFieldEnum.PRODUCT_TYPE]: intl.formatMessage({
-      defaultMessage: "Type",
-      description: "product field"
-    }),
-    [ProductFieldEnum.PRODUCT_WEIGHT]: intl.formatMessage({
-      defaultMessage: "Weight",
-      description: "product field"
-    }),
-    [ProductFieldEnum.VARIANT_IMAGES]: intl.formatMessage({
-      defaultMessage: "Variant Images",
-      description: "product field"
-    }),
-    [ProductFieldEnum.VARIANT_PRICE]: intl.formatMessage({
-      defaultMessage: "Variant Price",
-      description: "product field"
-    }),
-    [ProductFieldEnum.VARIANT_SKU]: intl.formatMessage({
-      defaultMessage: "SKU",
-      description: "product field"
-    }),
-    [ProductFieldEnum.VARIANT_WEIGHT]: intl.formatMessage({
-      defaultMessage: "Variant Weight",
-      description: "product field"
-    }),
-    [ProductFieldEnum.VISIBLE]: intl.formatMessage({
-      defaultMessage: "Visibility",
-      description: "product field"
-    })
-  };
+  const getFieldLabel = useProductExportFieldMessages();
 
   const selectedAll = fields.every(field =>
     data.exportInfo.fields.includes(field)
@@ -181,7 +150,7 @@ const FieldAccordion: React.FC<AccordionProps & {
             {selectedFields.slice(0, maxChips).map(field => (
               <Chip
                 className={classes.chip}
-                label={fieldNames[field]}
+                label={getFieldLabel(field)}
                 onClose={() =>
                   onChange({
                     target: {
@@ -226,7 +195,7 @@ const FieldAccordion: React.FC<AccordionProps & {
           onChange={onChange}
           key={field}
         >
-          {fieldNames[field]}
+          {getFieldLabel(field)}
         </Option>
       ))}
     </Accordion>
@@ -235,11 +204,14 @@ const FieldAccordion: React.FC<AccordionProps & {
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
   attributes: MultiAutocompleteChoiceType[];
+  warehouses: MultiAutocompleteChoiceType[];
   data: ExportProductsInput;
   selectedAttributes: MultiAutocompleteChoiceType[];
-  onAttrtibuteSelect: (event: ChangeEvent) => void;
-  onChange: (event: ChangeEvent) => void;
+  onAttrtibuteSelect: FormChange;
+  onWarehouseSelect: FormChange;
+  onChange: FormChange;
   onFetch: (query: string) => void;
+  onSelectAllWarehouses: FormChange;
 }
 
 const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
@@ -248,14 +220,18 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   hasMore,
   selectedAttributes,
   loading,
+  warehouses,
   onAttrtibuteSelect,
+  onWarehouseSelect,
   onChange,
   onFetch,
-  onFetchMore
+  onFetchMore,
+  onSelectAllWarehouses
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
+  const getFieldLabel = useProductExportFieldMessages();
 
   const handleFieldChange = (event: ChangeEvent) =>
     onChange({
@@ -289,6 +265,12 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         }
       }
     });
+
+  const selectedInventoryFields = data.exportInfo.fields.filter(field =>
+    inventoryFields.includes(field)
+  );
+  const selectedAllInventoryFields =
+    selectedInventoryFields.length === inventoryFields.length;
 
   return (
     <>
@@ -410,22 +392,134 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         onToggleAll={handleToggleAllFields}
         data-test="financial"
       />
-      <FieldAccordion
+      <Accordion
         className={classes.accordion}
         title={intl.formatMessage({
           defaultMessage: "Inventory Information",
           description: "informations about product stock, header"
         })}
-        data={data}
-        fields={[
-          ProductFieldEnum.PRODUCT_WEIGHT,
-          ProductFieldEnum.VARIANT_SKU,
-          ProductFieldEnum.VARIANT_WEIGHT
-        ]}
-        onChange={handleFieldChange}
-        onToggleAll={handleToggleAllFields}
+        quickPeek={
+          (data.exportInfo.warehouses.length > 0 ||
+            selectedInventoryFields.length > 0) && (
+            <div className={classes.quickPeekContainer}>
+              {selectedInventoryFields.slice(0, maxChips).map(field => (
+                <Chip
+                  className={classes.chip}
+                  label={getFieldLabel(field)}
+                  onClose={() =>
+                    onChange({
+                      target: {
+                        name: field,
+                        value: false
+                      }
+                    })
+                  }
+                />
+              ))}
+              {data.exportInfo.warehouses
+                .slice(0, maxChips - selectedInventoryFields.length)
+                .map(warehouseId => (
+                  <Chip
+                    className={classes.chip}
+                    label={
+                      warehouses.find(
+                        warehouse => warehouse.value === warehouseId
+                      ).label
+                    }
+                    onClose={() =>
+                      onWarehouseSelect({
+                        target: {
+                          name: warehouseNamePrefix + warehouseId,
+                          value: undefined
+                        }
+                      })
+                    }
+                  />
+                ))}
+              {data.exportInfo.warehouses.length +
+                selectedInventoryFields.length >
+                maxChips && (
+                <Typography className={classes.moreLabel} variant="caption">
+                  <FormattedMessage
+                    defaultMessage="and {number} more"
+                    description="there are more elements of list that are hidden"
+                    values={{
+                      number:
+                        data.exportInfo.warehouses.length +
+                        selectedInventoryFields.length -
+                        maxChips
+                    }}
+                  />
+                </Typography>
+              )}
+            </div>
+          )
+        }
         data-test="inventory"
-      />
+      >
+        <div>
+          <Option
+            checked={selectedAllInventoryFields}
+            name="all"
+            onChange={() =>
+              handleToggleAllFields(
+                inventoryFields,
+                !selectedAllInventoryFields
+              )
+            }
+          >
+            <FormattedMessage
+              defaultMessage="Select All"
+              description="selectt all options"
+            />
+          </Option>
+          {inventoryFields.map(field => (
+            <Option
+              checked={data.exportInfo.fields.includes(field)}
+              name={field}
+              onChange={handleFieldChange}
+              key={field}
+            >
+              {getFieldLabel(field)}
+            </Option>
+          ))}
+        </div>
+        <Hr className={classes.hrWarehouses} />
+        <Typography>
+          <FormattedMessage defaultMessage="Export Product Stock Quantity to CSV" />
+        </Typography>
+        <div>
+          <Option
+            checked={warehouses.every(warehouse =>
+              data.exportInfo.warehouses.includes(warehouse.value)
+            )}
+            name="all-warehouses"
+            onChange={onSelectAllWarehouses}
+          >
+            <FormattedMessage
+              defaultMessage="Export stock for all warehouses"
+              description="option"
+            />
+          </Option>
+        </div>
+        <Hr className={classes.hrWarehouses} />
+        <Typography className={classes.warehousesLabel} variant="subtitle1">
+          <FormattedMessage
+            defaultMessage="Warehouses A to Z"
+            description="list of warehouses"
+          />
+        </Typography>
+        {warehouses.map(warehouse => (
+          <Option
+            checked={data.exportInfo.warehouses.includes(warehouse.value)}
+            name={warehouseNamePrefix + warehouse.value}
+            onChange={onWarehouseSelect}
+            key={warehouse.value}
+          >
+            {warehouse.label}
+          </Option>
+        ))}
+      </Accordion>
       <FieldAccordion
         title={intl.formatMessage({
           defaultMessage: "SEO Information",
