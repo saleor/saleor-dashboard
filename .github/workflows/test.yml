@@ -77,6 +77,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Sanity check
+        env:
+          API_URI: ${{ secrets.API_URI }}
         run: |
           echo $API_URI
       - name: Cypress run
