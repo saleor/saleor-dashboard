@@ -76,6 +76,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Sanity check
+        run: |
+          echo $API_URI
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
