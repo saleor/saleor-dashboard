@@ -10,11 +10,8 @@ import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
 import ShippingZoneCountriesAssignDialog from "@saleor/shipping/components/ShippingZoneCountriesAssignDialog";
-import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
 import {
-  useShippingRateCreate,
   useShippingRateDelete,
-  useShippingRateUpdate,
   useShippingZoneDelete,
   useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
@@ -40,10 +37,6 @@ import {
   ShippingZoneUrlDialog,
   ShippingZoneUrlQueryParams
 } from "../../urls";
-import {
-  getCreateShippingRateVariables,
-  getUpdateShippingRateVariables
-} from "./data";
 
 export interface ShippingZoneDetailsProps {
   id: string;
@@ -77,30 +70,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const rate = data?.shippingZone?.shippingMethods?.find(
     rate => rate.id === params.id
   );
-
-  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
-    onCompleted: data => {
-      if (data.shippingPriceCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      }
-    }
-  });
-
-  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate({
-    onCompleted: data => {
-      if (data.shippingPriceUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      }
-    }
-  });
 
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {
@@ -210,22 +179,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         onFetchMore={loadMore}
         onSearchChange={search}
       />
-      <ShippingZoneRateDialog
-        action="edit"
-        confirmButtonState={updateShippingRateOpts.status}
-        defaultCurrency={shop?.defaultCurrency}
-        disabled={updateShippingRateOpts.loading}
-        errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
-        onClose={closeModal}
-        onSubmit={data =>
-          updateShippingRate({
-            variables: getUpdateShippingRateVariables(data, params, id)
-          })
-        }
-        open={params.action === "edit-rate"}
-        rate={rate}
-        variant={rate?.type}
-      />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
         onClose={closeModal}
@@ -238,22 +191,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         name={rate?.name}
         open={params.action === "remove-rate"}
-      />
-      <ShippingZoneRateDialog
-        action="create"
-        confirmButtonState={createShippingRateOpts.status}
-        defaultCurrency={shop?.defaultCurrency}
-        disabled={createShippingRateOpts.loading}
-        errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
-        onClose={closeModal}
-        onSubmit={data =>
-          createShippingRate({
-            variables: getCreateShippingRateVariables(data, params, id)
-          })
-        }
-        open={params.action === "add-rate"}
-        rate={undefined}
-        variant={params.type}
       />
       <ActionDialog
         confirmButtonState={deleteShippingZoneOpts.status}

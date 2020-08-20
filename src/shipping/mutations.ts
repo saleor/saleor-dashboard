@@ -165,6 +165,7 @@ export const useShippingRateUpdate = makeMutation<
 
 const createShippingRate = gql`
   ${shippingErrorFragment}
+  ${shippingMethodFragment}
   ${shippingZoneDetailsFragment}
   mutation CreateShippingRate($input: ShippingPriceInput!) {
     shippingPriceCreate(input: $input) {
@@ -173,6 +174,9 @@ const createShippingRate = gql`
       }
       shippingZone {
         ...ShippingZoneDetailsFragment
+      }
+      shippingMethod {
+        ...ShippingMethodFragment
       }
     }
   }

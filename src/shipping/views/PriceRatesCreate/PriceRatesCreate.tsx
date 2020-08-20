@@ -78,10 +78,9 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
     onCompleted: data => {
       const errors = data.shippingPriceCreate.errors;
       if (errors.length === 0) {
-        const methods = data.shippingPriceCreate.shippingZone.shippingMethods;
         updateShippingMethodChannelListing({
           variables: getShippingMethodChannelVariables(
-            methods[methods.length - 1].id,
+            data.shippingPriceCreate.shippingMethod.id,
             currentChannels
           )
         });
