@@ -2,7 +2,6 @@
 describe("Warehouse settings", () => {
   beforeEach(() => {
     cy.clearSessionData();
-    // cy.loginUser();
   });
 
   xit("Warehouse section visible in the configuration", () => {
@@ -16,7 +15,6 @@ describe("Warehouse settings", () => {
   xit("Editing warehouse is available", () => {
     cy.visit(`/warehouses`)
       .loginUser()
-      // .get("[data-testid=defaultwarehouse]")
       .get("[data-test=editButton]")
       .first()
       .click()
