@@ -79,7 +79,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          API_URI: https://pwa.demo.saleor.rocks/graphql/
           DEBUG: cypress:*
         with:
           build: npm run build
