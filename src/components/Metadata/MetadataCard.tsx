@@ -44,7 +44,11 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
   const classes = useStyles({});
 
   return (
-    <Card data-test="metadata-editor" data-test-is-private={isPrivate}>
+    <Card
+      data-test="metadata-editor"
+      data-test-is-private={isPrivate}
+      data-test-expanded={expanded}
+    >
       <CardTitle
         title={
           isPrivate
@@ -113,36 +117,37 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               ) : (
                 <Table className={classes.table}>
                   <TableHead>
-                    <TableCell className={classes.colName}>
-                      <FormattedMessage
-                        defaultMessage="Field"
-                        description="metadata field name, header"
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colValue}>
-                      <FormattedMessage
-                        defaultMessage="Value"
-                        description="metadata field value, header"
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colActionHeader}>
-                      <FormattedMessage
-                        defaultMessage="Actions"
-                        description="table action"
-                      />
-                    </TableCell>
+                    <TableRow>
+                      <TableCell className={classes.colNameHeader}>
+                        <FormattedMessage
+                          defaultMessage="Field"
+                          description="metadata field name, header"
+                        />
+                      </TableCell>
+                      <TableCell className={classes.colValue}>
+                        <FormattedMessage
+                          defaultMessage="Value"
+                          description="metadata field value, header"
+                        />
+                      </TableCell>
+                      <TableCell className={classes.colActionHeader}>
+                        <FormattedMessage
+                          defaultMessage="Actions"
+                          description="table action"
+                        />
+                      </TableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
                     {data.map((field, fieldIndex) => (
-                      <TableRow key={fieldIndex}>
+                      <TableRow data-test="field" key={fieldIndex}>
                         <TableCell className={classes.colName}>
                           <TextField
                             InputProps={{
                               classes: {
-                                root: classes.input
+                                input: classes.nameInput
                               }
                             }}
-                            multiline
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             fullWidth
                             onChange={onChange}
