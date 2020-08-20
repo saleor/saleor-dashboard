@@ -81,8 +81,8 @@ jobs:
         env:
           API_URI: https://pwa.demo.saleor.rocks/graphql/
         with:
-          start: |
-            npm start
+          build: npm run build
+          start: npx http-server -a localhost -p 9000 build/dashboard
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
       - uses: actions/upload-artifact@v1

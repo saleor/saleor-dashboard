@@ -306,10 +306,10 @@ export function createHref(url: string) {
 interface AnyEvent {
   stopPropagation: () => void;
 }
-export function stopPropagation(cb: () => void) {
+export function stopPropagation(cb: (event?: AnyEvent) => void) {
   return (event: AnyEvent) => {
     event.stopPropagation();
-    cb();
+    cb(event);
   };
 }
 

@@ -14,11 +14,6 @@ export interface StaffMemberAdd_staffCreate_errors {
   field: string | null;
 }
 
-export interface StaffMemberAdd_staffCreate_user_avatar {
-  __typename: "Image";
-  url: string;
-}
-
 export interface StaffMemberAdd_staffCreate_user_permissionGroups {
   __typename: "Group";
   id: string;
@@ -32,6 +27,11 @@ export interface StaffMemberAdd_staffCreate_user_userPermissions {
   name: string;
 }
 
+export interface StaffMemberAdd_staffCreate_user_avatar {
+  __typename: "Image";
+  url: string;
+}
+
 export interface StaffMemberAdd_staffCreate_user {
   __typename: "User";
   id: string;
@@ -39,9 +39,9 @@ export interface StaffMemberAdd_staffCreate_user {
   firstName: string;
   isActive: boolean;
   lastName: string;
-  avatar: StaffMemberAdd_staffCreate_user_avatar | null;
   permissionGroups: (StaffMemberAdd_staffCreate_user_permissionGroups | null)[] | null;
   userPermissions: (StaffMemberAdd_staffCreate_user_userPermissions | null)[] | null;
+  avatar: StaffMemberAdd_staffCreate_user_avatar | null;
 }
 
 export interface StaffMemberAdd_staffCreate {

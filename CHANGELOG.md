@@ -16,6 +16,16 @@ All notable, unreleased changes to this project will be documented in this file.
 - Refactor authorization - #624 by @dominik-zeglen
 - Fix minor bugs - #628 by @dominik-zeglen
 - Add navigator button - #635 by @dominik-zeglen
+- Update to newest schema - #638 by @dominik-zeglen
+- Fix missing save button - #636 by @dominik-zeglen
+- Fix user avatars - #639 by @dominik-zeglen
+- Reset modal state after closing - #644 by @dominik-zeglen
+- Fix incorrect messages - #643 by @dominik-zeglen
+- Do not use devserver to run cypress tests - #650 by @dominik-zeglen
+- Fix updating product that has no variants - #649 by @dominik-zeglen
+- Update checkbox design - #651 by @dominik-zeglen
+- Add warehouse choice - #646 by @dominik-zeglen
+- Fix user management modal actions - #637 by @eaglesemanation
 
 ## 2.10.1
 

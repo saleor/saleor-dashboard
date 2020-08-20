@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -113,7 +113,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_stocks {
 
 export interface VariantUpdate_productVariantUpdate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -244,7 +244,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks 
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

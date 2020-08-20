@@ -285,7 +285,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                 />
               </DialogContentText>
               <DialogContentText>
-                <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+                <FormattedMessage defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront." />
               </DialogContentText>
             </ActionDialog>
             <ActionDialog

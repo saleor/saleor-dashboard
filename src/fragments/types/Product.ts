@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: Product
@@ -170,7 +170,7 @@ export interface Product_variants {
 
 export interface Product_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

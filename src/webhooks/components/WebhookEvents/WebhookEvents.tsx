@@ -32,6 +32,14 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "All events",
       description: "event"
     }),
+    [WebhookEventTypeEnum.CHECKOUT_CREATED]: intl.formatMessage({
+      defaultMessage: "Checkout created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.CHECKOUT_UPDATED]: intl.formatMessage({
+      defaultMessage: "Checkout updated",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.CUSTOMER_CREATED]: intl.formatMessage({
       defaultMessage: "Customer created",
       description: "event"

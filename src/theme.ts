@@ -1,10 +1,15 @@
 import Card from "@material-ui/core/Card";
+import Checkbox from "@material-ui/core/Checkbox";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { createElement } from "react";
 
 import { IThemeColors } from "./components/Theme/themes";
+import CheckboxIcon from "./icons/Checkbox";
+import CheckboxCheckedIcon from "./icons/CheckboxChecked";
+import CheckboxIndeterminateIcon from "./icons/CheckboxIndeterminate";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
   [
@@ -561,4 +566,11 @@ Card.defaultProps = {
 
 Typography.defaultProps = {
   component: "div"
+};
+
+Checkbox.defaultProps = {
+  checkedIcon: createElement(CheckboxCheckedIcon),
+  color: "primary",
+  icon: createElement(CheckboxIcon),
+  indeterminateIcon: createElement(CheckboxIndeterminateIcon)
 };

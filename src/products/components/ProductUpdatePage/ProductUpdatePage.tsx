@@ -167,23 +167,33 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
-    const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0].stocks.map(
-      stock => stock.warehouse.id
-    );
-    const stockDiff = diff(variantStocks, dataStocks);
+    if (product.productType.hasVariants) {
+      onSubmit({
+        ...data,
+        addStocks: [],
+        attributes,
+        removeStocks: [],
+        updateStocks: []
+      });
+    } else {
+      const dataStocks = stocks.map(stock => stock.id);
+      const variantStocks = product.variants[0]?.stocks.map(
+        stock => stock.warehouse.id
+      );
+      const stockDiff = diff(variantStocks, dataStocks);
 
-    onSubmit({
-      ...data,
-      addStocks: stocks.filter(stock =>
-        stockDiff.added.some(addedStock => addedStock === stock.id)
-      ),
-      attributes,
-      removeStocks: stockDiff.removed,
-      updateStocks: stocks.filter(
-        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-      )
-    });
+      onSubmit({
+        ...data,
+        addStocks: stocks.filter(stock =>
+          stockDiff.added.some(addedStock => addedStock === stock.id)
+        ),
+        attributes,
+        removeStocks: stockDiff.removed,
+        updateStocks: stocks.filter(
+          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+        )
+      });
+    }
   };
 
   return (
