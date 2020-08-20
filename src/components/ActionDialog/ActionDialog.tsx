@@ -33,7 +33,7 @@ interface ActionDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   title: string;
-  variant?: "default" | "delete";
+  variant?: "default" | "delete" | "info";
   onConfirm();
 }
 
@@ -61,20 +61,22 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
         <Button onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
-          onClick={onConfirm}
-          className={classNames({
-            [classes.deleteButton]: variant === "delete"
-          })}
-        >
-          {confirmButtonLabel ||
-            (variant === "delete"
-              ? intl.formatMessage(buttonMessages.delete)
-              : intl.formatMessage(buttonMessages.confirm))}
-        </ConfirmButton>
+        {variant !== "info" && (
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            color="primary"
+            variant="contained"
+            onClick={onConfirm}
+            className={classNames({
+              [classes.deleteButton]: variant === "delete"
+            })}
+          >
+            {confirmButtonLabel ||
+              (variant === "delete"
+                ? intl.formatMessage(buttonMessages.delete)
+                : intl.formatMessage(buttonMessages.confirm))}
+          </ConfirmButton>
+        )}
       </DialogActions>
     </Dialog>
   );

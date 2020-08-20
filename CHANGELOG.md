@@ -25,6 +25,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix updating product that has no variants - #649 by @dominik-zeglen
 - Update checkbox design - #651 by @dominik-zeglen
 - Add warehouse choice - #646 by @dominik-zeglen
+- Fix user management modal actions - #637 by @eaglesemanation
 
 ## 2.10.1
 
