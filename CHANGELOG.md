@@ -26,6 +26,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update checkbox design - #651 by @dominik-zeglen
 - Add warehouse choice - #646 by @dominik-zeglen
 - Fix user management modal actions - #637 by @eaglesemanation
+- Fix navigator button rendering on safari browser - #656 by @dominik-zeglen
 
 ## 2.10.1
 

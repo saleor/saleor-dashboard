@@ -69,6 +69,7 @@ const useStyles = makeStyles(
         border: `1px solid ${theme.palette.divider}`,
         height: 40,
         marginRight: theme.spacing(2),
+        padding: 6,
         width: 40
       }
     };
