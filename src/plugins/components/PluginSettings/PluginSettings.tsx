@@ -2,8 +2,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import InfoIcon from "@material-ui/icons/Info";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { UserError } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
@@ -32,7 +35,9 @@ const useStyles = makeStyles(
     item: {
       "&:not(:last-child)": {
         marginBottom: theme.spacing(3)
-      }
+      },
+      alignItems: "center",
+      display: "flex"
     },
     itemLabel: {
       fontWeight: 500
@@ -71,17 +76,30 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
           return (
             <div className={classes.item} key={field.name}>
               {fieldData.type === ConfigurationTypeFieldEnum.BOOLEAN ? (
-                <ControlledCheckbox
-                  name={field.name}
-                  label={fieldData.label}
-                  checked={
-                    typeof field.value !== "boolean"
-                      ? field.value === "true"
-                      : field.value
-                  }
-                  onChange={onChange}
-                  disabled={disabled}
-                />
+                <>
+                  <ControlledSwitch
+                    name={field.name}
+                    label={fieldData.label}
+                    checked={
+                      typeof field.value !== "boolean"
+                        ? field.value === "true"
+                        : field.value
+                    }
+                    onChange={onChange}
+                    disabled={disabled}
+                  />
+                  {fieldData.helpText && (
+                    <Tooltip
+                      title={
+                        <Typography variant="body2">
+                          {fieldData.helpText}
+                        </Typography>
+                      }
+                    >
+                      <InfoIcon />
+                    </Tooltip>
+                  )}
+                </>
               ) : (
                 <TextField
                   disabled={disabled}

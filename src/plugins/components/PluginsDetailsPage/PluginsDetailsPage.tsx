@@ -9,11 +9,11 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
-import { UserError } from "@saleor/types";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -30,7 +30,7 @@ export interface FormData {
 
 export interface PluginsDetailsPageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: PluginErrorFragment[];
   plugin: Plugin_plugin;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -65,15 +65,13 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const initialForm: FormData = {
-    active: maybe(() => plugin.active, false),
-    configuration: maybe(() =>
-      plugin.configuration
-        .filter(field => !isSecretField(plugin.configuration, field.name))
-        .map(field => ({
-          ...field,
-          value: field.value || ""
-        }))
-    )
+    active: plugin?.active || false,
+    configuration: plugin?.configuration
+      ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))
+      .map(field => ({
+        ...field,
+        value: field.value || ""
+      }))
   };
 
   return (
@@ -108,7 +106,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                   description: "header"
                 },
                 {
-                  pluginName: maybe(() => plugin.name, "...")
+                  pluginName: getStringOrPlaceholder(plugin?.name)
                 }
               )}
             />
@@ -129,8 +127,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
               </div>
               <PluginInfo
                 data={data}
-                description={maybe(() => plugin.description, "")}
-                name={maybe(() => plugin.name, "")}
+                description={plugin?.description || ""}
+                errors={errors}
+                name={plugin?.name || ""}
                 onChange={onChange}
               />
               {data.configuration && (
@@ -143,25 +142,17 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                         description: "section header"
                       })}
                     </Typography>
-                    <Typography>
-                      {intl.formatMessage({
-                        defaultMessage:
-                          "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
-                      })}
-                    </Typography>
                   </div>
                   <div>
                     <PluginSettings
                       data={data}
-                      fields={maybe(() => plugin.configuration, [])}
+                      fields={plugin?.configuration || []}
                       errors={errors}
                       disabled={disabled}
                       onChange={onChange}
                     />
-                    {maybe(() =>
-                      plugin.configuration.some(field =>
-                        isSecretField(plugin.configuration, field.name)
-                      )
+                    {plugin?.configuration.some(field =>
+                      isSecretField(plugin.configuration, field.name)
                     ) && (
                       <>
                         <CardSpacer />
