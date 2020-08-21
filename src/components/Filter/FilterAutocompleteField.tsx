@@ -50,7 +50,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   displayValues,
   filterField,
   setDisplayValues,
-  onFilterPropertyChange
+  onFilterPropertyChange,
+  ...rest
 }) => {
   const classes = useStyles({});
 
@@ -90,8 +91,9 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   };
 
   return (
-    <div>
+    <div {...rest}>
       <TextField
+        data-test="filter-field-autocomplete-input"
         className={classes.inputContainer}
         fullWidth
         name={filterField.name + "_autocomplete"}
@@ -107,6 +109,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormControlLabel
             control={
               <Checkbox
+                data-test="filter-field-autocomplete-selected"
+                data-test-id={filterField.value}
                 checked={filterField.value.includes(displayValue.value)}
               />
             }
@@ -118,7 +122,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {displayHr && <Hr className={classes.hr} />}
       {displayNoResults && (
-        <Typography className={classes.noResults} color="textSecondary">
+        <Typography
+          data-test="filter-field-autocomplete-no-results"
+          className={classes.noResults}
+          color="textSecondary"
+        >
           <FormattedMessage defaultMessage="No results" description="search" />
         </Typography>
       )}
@@ -126,7 +134,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         <div className={classes.option} key={option.value}>
           <FormControlLabel
             control={
-              <Checkbox checked={filterField.value.includes(option.value)} />
+              <Checkbox
+                data-test="filter-field-autocomplete-option"
+                data-test-id={filterField.value}
+                checked={filterField.value.includes(option.value)}
+              />
             }
             label={option.label}
             name={filterField.name}
@@ -136,6 +148,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {filterField.hasMore && (
         <Link
+          data-test="filter-field-autocomplete-has-more"
           className={classes.showMore}
           underline
           onClick={filterField.onFetchMore}
