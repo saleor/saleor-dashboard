@@ -1,3 +1,6 @@
+import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { decimal, weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
@@ -13,9 +16,6 @@ import {
 } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
-import { UpdateMetadataVariables } from "@saleor/utils/metadata/types/UpdateMetadata";
-import { UpdatePrivateMetadataVariables } from "@saleor/utils/metadata/types/UpdatePrivateMetadata";
-import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 
@@ -26,11 +26,7 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<ProductUpdate>>,
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
-  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
-  updateMetadata: (variables: UpdateMetadataVariables) => Promise<any>,
-  updatePrivateMetadata: (
-    variables: UpdatePrivateMetadataVariables
-  ) => Promise<any>
+  ) => Promise<MutationFetchResult<SimpleProductUpdate>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -54,7 +50,9 @@ export function createUpdateHandler(
       }
     };
 
-    let errors: any[];
+    let errors: Array<
+      ProductErrorFragment | StockErrorFragment | BulkStockErrorFragment
+    >;
 
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
@@ -81,34 +79,7 @@ export function createUpdateHandler(
       ];
     }
 
-    if (errors.length === 0) {
-      if (data.metadata) {
-        const metaDiff = diff(
-          product.metadata,
-          data.metadata,
-          (a, b) => a.key === b.key
-        );
-
-        updateMetadata({
-          id: product.id,
-          input: data.metadata,
-          keysToDelete: metaDiff.removed.map(meta => meta.key)
-        });
-      }
-      if (data.privateMetadata) {
-        const privateMetaDiff = diff(
-          product.privateMetadata,
-          data.privateMetadata,
-          (a, b) => a.key === b.key
-        );
-
-        updatePrivateMetadata({
-          id: product.id,
-          input: data.privateMetadata,
-          keysToDelete: privateMetaDiff.removed.map(meta => meta.key)
-        });
-      }
-    }
+    return errors;
   };
 }
 
