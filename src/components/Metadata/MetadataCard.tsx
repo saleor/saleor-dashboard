@@ -45,7 +45,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
 
   return (
     <Card
-      data-test="metadata-editor"
+      data-test="metadataEditor"
       data-test-is-private={isPrivate}
       data-test-expanded={expanded}
     >
@@ -171,7 +171,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                         <TableCell className={classes.colAction}>
                           <IconButton
                             color="primary"
-                            data-test="delete-field"
+                            data-test="deleteField"
                             data-test-id={fieldIndex}
                             onClick={() =>
                               onChange({
@@ -193,7 +193,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               <CardActions>
                 <Button
                   color="primary"
-                  data-test="add-field"
+                  data-test="addField"
                   onClick={() =>
                     onChange({
                       target: {

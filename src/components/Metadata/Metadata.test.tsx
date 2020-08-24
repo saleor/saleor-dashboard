@@ -112,7 +112,7 @@ describe("Metadata editor", () => {
     const wrapper = mount(<Component />);
 
     const fieldSelector = 'tr[data-test="field"]';
-    const deleteButtonSelector = '[data-test="delete-field"]';
+    const deleteButtonSelector = '[data-test="deleteField"]';
 
     // Expand to reveal fields
     wrapper
@@ -138,7 +138,7 @@ describe("Metadata editor", () => {
     const wrapper = mount(<Component />);
 
     const fieldSelector = 'tr[data-test="field"]';
-    const addButtonSelector = '[data-test="add-field"]';
+    const addButtonSelector = '[data-test="addField"]';
 
     // Expand to reveal fields
     wrapper

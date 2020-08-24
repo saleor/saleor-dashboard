@@ -1549,6 +1549,46 @@
     "context": "button",
     "string": "Add"
   },
+  "src_dot_components_dot_Metadata_dot_1148029984": {
+    "context": "metadata field value, header",
+    "string": "Value"
+  },
+  "src_dot_components_dot_Metadata_dot_1509432322": {
+    "context": "header",
+    "string": "Metadata"
+  },
+  "src_dot_components_dot_Metadata_dot_1535223586": {
+    "context": "header",
+    "string": "Private Metadata"
+  },
+  "src_dot_components_dot_Metadata_dot_2024779015": {
+    "context": "empty metadata text",
+    "string": "There is no private metadata created for this element."
+  },
+  "src_dot_components_dot_Metadata_dot_2087058956": {
+    "context": "empty metadata text",
+    "string": "There is no metadata created for this element."
+  },
+  "src_dot_components_dot_Metadata_dot_2537046678": {
+    "context": "metadata field name, header",
+    "string": "Field"
+  },
+  "src_dot_components_dot_Metadata_dot_3181473584": {
+    "context": "add metadata field,button",
+    "string": "Add Field"
+  },
+  "src_dot_components_dot_Metadata_dot_4190792473": {
+    "context": "table action",
+    "string": "Actions"
+  },
+  "src_dot_components_dot_Metadata_dot_549104951": {
+    "context": "number of metadata fields in model",
+    "string": "{number,plural,one{{number} Field} other{{number} Fields}}"
+  },
+  "src_dot_components_dot_Metadata_dot_553451245": {
+    "context": "empty metadata text",
+    "string": "Use the button below to add new metadata field"
+  },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
     "string": "to {money}"
