@@ -100,7 +100,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         {choices.length > 0 ? (
           choices.map(choice => (
             <MenuItem
-              data-test="select-field-option"
+              data-test="selectFieldOption"
               data-test-id={choice.value}
               value={choice.value}
               key={choice.value}
@@ -110,7 +110,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
           ))
         ) : (
           <MenuItem
-            data-test="select-field-option"
+            data-test="selectFieldOption"
             data-test-disabled
             disabled={true}
           >

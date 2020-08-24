@@ -164,7 +164,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      data-test="filter-group-active"
+                      data-test="filterGroupActive"
                       data-test-id={filterField.name}
                       checked={filterField.active}
                     />
@@ -215,7 +215,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   ) && (
                     <>
                       <SingleSelectField
-                        data-test="filter-field-range-type-choice"
+                        data-test="filterFieldRangeTypeChoice"
                         choices={getIsFilterMultipleChoices(intl)}
                         value={
                           filterField.multiple
@@ -385,7 +385,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         <FormControlLabel
                           control={
                             <Radio
-                              data-test="filter-field-boolean"
+                              data-test="filterFieldBoolean"
                               data-test-is-checked={
                                 filterField.value[0] === option.value
                               }
