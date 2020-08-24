@@ -3,18 +3,36 @@ import { ProductUpdatePageSubmitData } from "@saleor/products/components/Product
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
-import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
-import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
+import {
+  ProductUpdate,
+  ProductUpdateVariables
+} from "@saleor/products/types/ProductUpdate";
+import {
+  SimpleProductUpdate,
+  SimpleProductUpdateVariables
+} from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
+import { UpdateMetadataVariables } from "@saleor/utils/metadata/types/UpdateMetadata";
+import { UpdatePrivateMetadataVariables } from "@saleor/utils/metadata/types/UpdatePrivateMetadata";
+import { diff } from "fast-array-diff";
+import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createUpdateHandler(
   product: ProductDetails_product,
-  updateProduct: (variables: ProductUpdateVariables) => void,
-  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
+  updateProduct: (
+    variables: ProductUpdateVariables
+  ) => Promise<MutationFetchResult<ProductUpdate>>,
+  updateSimpleProduct: (
+    variables: SimpleProductUpdateVariables
+  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
+  updateMetadata: (variables: UpdateMetadataVariables) => Promise<any>,
+  updatePrivateMetadata: (
+    variables: UpdatePrivateMetadataVariables
+  ) => Promise<any>
 ) {
-  return (data: ProductUpdatePageSubmitData) => {
+  return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
       attributes: data.attributes.map(attribute => ({
         id: attribute.id,
@@ -36,10 +54,13 @@ export function createUpdateHandler(
       }
     };
 
+    let errors: any[];
+
     if (product.productType.hasVariants) {
-      updateProduct(productVariables);
+      const result = await updateProduct(productVariables);
+      errors = result.data.productUpdate.errors;
     } else {
-      updateSimpleProduct({
+      const result = await updateSimpleProduct({
         ...productVariables,
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         deleteStocks: data.removeStocks,
@@ -51,6 +72,42 @@ export function createUpdateHandler(
         updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
         weight: weight(data.weight)
       });
+      errors = [
+        ...result.data.productUpdate.errors,
+        ...result.data.productVariantStocksCreate.errors,
+        ...result.data.productVariantStocksDelete.errors,
+        ...result.data.productVariantStocksUpdate.errors,
+        ...result.data.productVariantUpdate.errors
+      ];
+    }
+
+    if (errors.length === 0) {
+      if (data.metadata) {
+        const metaDiff = diff(
+          product.metadata,
+          data.metadata,
+          (a, b) => a.key === b.key
+        );
+
+        updateMetadata({
+          id: product.id,
+          input: data.metadata,
+          keysToDelete: metaDiff.removed.map(meta => meta.key)
+        });
+      }
+      if (data.privateMetadata) {
+        const privateMetaDiff = diff(
+          product.privateMetadata,
+          data.privateMetadata,
+          (a, b) => a.key === b.key
+        );
+
+        updatePrivateMetadata({
+          id: product.id,
+          input: data.privateMetadata,
+          keysToDelete: privateMetaDiff.removed.map(meta => meta.key)
+        });
+      }
     }
   };
 }

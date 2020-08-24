@@ -1,7 +1,9 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
 import { Node } from "@saleor/types";
+import { MetadataInput } from "@saleor/types/globalTypes";
 
 export function mapCountriesToChoices(
   countries: ShopInfo_shop_countries[]
@@ -19,4 +21,11 @@ export function mapNodeToChoice(
     label: node.name,
     value: node.id
   }));
+}
+
+export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
+  return {
+    key: item.key,
+    value: item.value
+  };
 }

@@ -14,7 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import ToggleIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { FormChange } from "@saleor/hooks/useForm";
-import React from "react";
+import { MetadataInput } from "@saleor/types/globalTypes";
+import React, { useEffect } from "react";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
@@ -22,10 +23,10 @@ import { FormattedMessage } from "react-intl";
 import CardTitle from "../CardTitle";
 import Skeleton from "../Skeleton";
 import useStyles from "./styles";
-import { EventDataAction, EventDataField, MetadataItem } from "./types";
+import { EventDataAction, EventDataField } from "./types";
 
 export interface MetadataCardProps {
-  data: MetadataItem[];
+  data: MetadataInput[];
   isPrivate: boolean;
   onChange: FormChange;
 }
@@ -40,8 +41,18 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
   onChange
 }) => {
   const intl = useIntl();
-  const [expanded, setExpanded] = React.useState(data?.length === 0);
+  const loaded = React.useRef(false);
+  const [expanded, setExpanded] = React.useState(true);
   const classes = useStyles({});
+
+  useEffect(() => {
+    if (data !== undefined) {
+      loaded.current = true;
+      if (data.length > 0) {
+        setExpanded(false);
+      }
+    }
+  }, [data === undefined]);
 
   return (
     <Card

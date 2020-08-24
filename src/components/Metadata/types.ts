@@ -1,4 +1,4 @@
-export type MetadataItem = Record<"key" | "value", string>;
+import { MetadataInput } from "@saleor/types/globalTypes";
 
 export enum EventDataAction {
   add = "add",
@@ -14,4 +14,8 @@ export interface EventData {
   field: EventDataField | null;
   fieldIndex: number | null;
   value: string;
+}
+export interface MetadataFormData {
+  metadata: MetadataInput[];
+  privateMetadata: MetadataInput[];
 }
