@@ -252,7 +252,7 @@ const productImageQuery = gql`
     }
   }
 `;
-export const TypedProductImageQuery = TypedQuery<
+export const useProductImageQuery = makeQuery<
   ProductImageById,
   ProductImageByIdVariables
 >(productImageQuery);
