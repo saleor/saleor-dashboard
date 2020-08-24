@@ -174,7 +174,7 @@ const productDetailsQuery = gql`
     }
   }
 `;
-export const TypedProductDetailsQuery = TypedQuery<
+export const useProductDetails = makeQuery<
   ProductDetails,
   ProductDetailsVariables
 >(productDetailsQuery);
