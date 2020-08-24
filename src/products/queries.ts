@@ -150,10 +150,9 @@ const productListQuery = gql`
     }
   }
 `;
-export const TypedProductListQuery = TypedQuery<
-  ProductList,
-  ProductListVariables
->(productListQuery);
+export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
+  productListQuery
+);
 
 const countAllProductsQuery = gql`
   query CountAllProducts {
@@ -288,7 +287,7 @@ const availableInGridAttributes = gql`
     }
   }
 `;
-export const AvailableInGridAttributesQuery = TypedQuery<
+export const useAvailableInGridAttributesQuery = makeQuery<
   GridAttributes,
   GridAttributesVariables
 >(availableInGridAttributes);
