@@ -4,6 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
@@ -20,6 +21,7 @@ import { SearchCollections_search_edges_node } from "@saleor/searches/types/Sear
 import { FetchMoreProps, ListActions } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { convertFromRaw, RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
 import React from "react";
@@ -155,6 +157,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, []))
   );
 
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const initialData = getProductUpdatePageFormData(product, variants);
   const initialDescription = maybe<RawDraftContentState>(() =>
     JSON.parse(product.descriptionJson)
@@ -167,11 +175,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
+    const metadata = isMetadataModified ? data.metadata : undefined;
+    const privateMetadata = isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined;
+
     if (product.productType.hasVariants) {
       onSubmit({
         ...data,
         addStocks: [],
         attributes,
+        metadata,
+        privateMetadata,
         removeStocks: [],
         updateStocks: []
       });
@@ -188,6 +203,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           stockDiff.added.some(addedStock => addedStock === stock.id)
         ),
         attributes,
+        metadata,
+        privateMetadata,
         removeStocks: stockDiff.removed,
         updateStocks: stocks.filter(
           stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
@@ -224,6 +241,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           attributes,
           triggerChange
         );
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <>
@@ -347,6 +365,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         "Add search engine title and description to make this product easier to find"
                     })}
                   />
+                  <CardSpacer />
+                  <Metadata data={data} onChange={changeMetadata} />
                 </div>
                 <div>
                   <ProductOrganization
