@@ -230,7 +230,7 @@ const productVariantCreateQuery = gql`
     }
   }
 `;
-export const TypedProductVariantCreateQuery = TypedQuery<
+export const useProductVariantCreateQuery = makeQuery<
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
 >(productVariantCreateQuery);
