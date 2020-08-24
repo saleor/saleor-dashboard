@@ -14,20 +14,21 @@ import {
 
 const updateMetadata = gql`
   ${metadataFragment}
+  ${metadataErrorFragment}
   mutation UpdateMetadata(
     $id: ID!
     $input: [MetadataInput!]!
     $keysToDelete: [String!]!
   ) {
     updateMetadata(id: $id, input: $input) {
-      item {
-        ...Metadata
-        ... on Node {
-          id
-        }
+      errors: metadataErrors {
+        ...MetadataErrorFragment
       }
     }
     deleteMetadata(id: $id, keys: $keysToDelete) {
+      errors: metadataErrors {
+        ...MetadataErrorFragment
+      }
       item {
         ...Metadata
         ... on Node {

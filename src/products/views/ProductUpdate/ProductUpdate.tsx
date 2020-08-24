@@ -23,6 +23,7 @@ import {
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -187,10 +188,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductImage({ variables: { id } });
   const handleImageEdit = (imageId: string) => () =>
     navigate(productImageUrl(id, imageId));
-  const handleSubmit = createUpdateHandler(
+  const handleSubmit = createMetadataUpdateHandler(
     product,
-    variables => updateProduct({ variables }),
-    variables => updateSimpleProduct({ variables }),
+    createUpdateHandler(
+      product,
+      variables => updateProduct({ variables }),
+      variables => updateSimpleProduct({ variables })
+    ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
   );
