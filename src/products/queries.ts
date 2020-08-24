@@ -10,7 +10,6 @@ import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { CountAllProducts } from "./types/CountAllProducts";
 import {
   CreateMultipleVariantsData,
@@ -186,7 +185,7 @@ const productVariantQuery = gql`
     }
   }
 `;
-export const TypedProductVariantQuery = TypedQuery<
+export const useProductVariantQuery = makeQuery<
   ProductVariantDetails,
   ProductVariantDetailsVariables
 >(productVariantQuery);
