@@ -10,7 +10,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, maybe, weight } from "../../misc";
+import { decimal, weight } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -107,14 +107,13 @@ export const ProductCreateView: React.FC = () => {
         })}
       />
       <ProductCreatePage
-        currency={maybe(() => shop.defaultCurrency)}
-        categories={maybe(() => searchCategoryOpts.data.search.edges, []).map(
+        currency={shop?.defaultCurrency}
+        categories={(searchCategoryOpts.data?.search.edges || []).map(
           edge => edge.node
         )}
-        collections={maybe(
-          () => searchCollectionOpts.data.search.edges,
-          []
-        ).map(edge => edge.node)}
+        collections={(searchCollectionOpts.data?.search.edges || []).map(
+          edge => edge.node
+        )}
         disabled={productCreateOpts.loading}
         errors={productCreateOpts.data?.productCreate.errors || []}
         fetchCategories={searchCategory}
@@ -124,30 +123,24 @@ export const ProductCreateView: React.FC = () => {
           defaultMessage: "New Product",
           description: "page header"
         })}
-        productTypes={maybe(() =>
-          searchProductTypesOpts.data.search.edges.map(edge => edge.node)
+        productTypes={searchProductTypesOpts.data?.search.edges.map(
+          edge => edge.node
         )}
         onBack={handleBack}
         onSubmit={handleSubmit}
         saveButtonBarState={productCreateOpts.status}
         fetchMoreCategories={{
-          hasMore: maybe(
-            () => searchCategoryOpts.data.search.pageInfo.hasNextPage
-          ),
+          hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
           loading: searchCategoryOpts.loading,
           onFetchMore: loadMoreCategories
         }}
         fetchMoreCollections={{
-          hasMore: maybe(
-            () => searchCollectionOpts.data.search.pageInfo.hasNextPage
-          ),
+          hasMore: searchCollectionOpts.data?.search.pageInfo.hasNextPage,
           loading: searchCollectionOpts.loading,
           onFetchMore: loadMoreCollections
         }}
         fetchMoreProductTypes={{
-          hasMore: maybe(
-            () => searchProductTypesOpts.data.search.pageInfo.hasNextPage
-          ),
+          hasMore: searchProductTypesOpts.data?.search.pageInfo.hasNextPage,
           loading: searchProductTypesOpts.loading,
           onFetchMore: loadMoreProductTypes
         }}

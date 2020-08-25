@@ -122,10 +122,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleImageSelect = (id: string) => () => {
     if (variant) {
-      if (
-        variant.images &&
-        variant.images.map(image => image.id).indexOf(id) !== -1
-      ) {
+      if (variant?.images?.map(image => image.id).indexOf(id) !== -1) {
         unassignImage({
           variables: {
             imageId: id,
