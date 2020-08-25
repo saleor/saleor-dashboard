@@ -6,7 +6,6 @@ import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import {
   AttributeDetails,
   AttributeDetailsVariables
@@ -21,7 +20,7 @@ const attributeDetails = gql`
     }
   }
 `;
-export const AttributeDetailsQuery = TypedQuery<
+export const useAttributeDetailsQuery = makeQuery<
   AttributeDetails,
   AttributeDetailsVariables
 >(attributeDetails);
