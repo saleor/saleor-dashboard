@@ -215,6 +215,7 @@ export interface ProductImageCreate_productImageCreate_product {
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
   weight: ProductImageCreate_productImageCreate_product_weight | null;
+  availableForPurchase: any | null;
 }
 
 export interface ProductImageCreate_productImageCreate {

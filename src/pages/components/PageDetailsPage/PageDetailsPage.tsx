@@ -137,15 +137,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   }
                 )}
                 onChange={change}
-                visibleMessage={intl.formatMessage(
-                  {
-                    defaultMessage: "since {date}",
-                    description: "page"
-                  },
-                  {
-                    date: localizeDate(data.publicationDate)
-                  }
-                )}
               />
             </div>
           </Grid>

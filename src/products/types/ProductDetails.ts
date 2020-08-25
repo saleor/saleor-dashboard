@@ -209,6 +209,7 @@ export interface ProductDetails_product {
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
   weight: ProductDetails_product_weight | null;
+  availableForPurchase: any | null;
 }
 
 export interface ProductDetails {

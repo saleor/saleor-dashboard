@@ -7,6 +7,10 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
 import {
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+} from "@saleor/products/types/ProductSetAvailabilityForPurchase";
+import {
   ProductUpdate,
   ProductUpdateVariables
 } from "@saleor/products/types/ProductUpdate";
@@ -26,7 +30,10 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<ProductUpdate>>,
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
-  ) => Promise<MutationFetchResult<SimpleProductUpdate>>
+  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
+  setProductAvailability: (options: {
+    variables: ProductSetAvailabilityForPurchaseVariables;
+  }) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -40,7 +47,7 @@ export function createUpdateHandler(
       collections: data.collections,
       descriptionJson: JSON.stringify(data.description),
       id: product.id,
-      isPublished: data.isPublished,
+      isPublished: data.publicationDate ? true : data.isPublished,
       name: data.name,
       publicationDate:
         data.publicationDate !== "" ? data.publicationDate : null,
@@ -76,6 +83,25 @@ export function createUpdateHandler(
         ...result.data.productVariantStocksDelete.errors,
         ...result.data.productVariantStocksUpdate.errors,
         ...result.data.productVariantUpdate.errors
+      ];
+    }
+
+    const { isAvailable, availableForPurchase } = data;
+    if (
+      isAvailable !== product.isAvailable ||
+      availableForPurchase !== product.availableForPurchase
+    ) {
+      const availabilityResult = await setProductAvailability({
+        variables: {
+          isAvailable: data.availableForPurchase ? true : data.isAvailable,
+          productId: product.id,
+          startDate:
+            data.availableForPurchase !== "" ? data.availableForPurchase : null
+        }
+      });
+      errors = [
+        ...errors,
+        ...availabilityResult.data.productSetAvailabilityForPurchase.errors
       ];
     }
 

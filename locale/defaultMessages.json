@@ -1142,10 +1142,6 @@
     "context": "collections section name",
     "string": "Collections"
   },
-  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_1815688500": {
-    "context": "collection",
-    "string": "since {date}"
-  },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
     "context": "collection",
     "string": "will be visible from {date}"
@@ -1156,10 +1152,6 @@
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_951411809": {
     "context": "page header",
     "string": "Add Collection"
-  },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
-    "context": "collection",
-    "string": "since {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
     "context": "collection",
@@ -1836,22 +1828,47 @@
   "src_dot_components_dot_Timeline_dot_3028189627": {
     "string": "Leave your note here..."
   },
+  "src_dot_components_dot_VisibilityCard_dot_1306298759": {
+    "string": "Available for purchase"
+  },
   "src_dot_components_dot_VisibilityCard_dot_1459686496": {
     "context": "section header",
     "string": "Visibility"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_1815688500": {
+    "context": "date",
+    "string": "since {date}"
   },
   "src_dot_components_dot_VisibilityCard_dot_2060790769": {
     "context": "publish on date",
     "string": "Publish on"
   },
+  "src_dot_components_dot_VisibilityCard_dot_2232321263": {
+    "context": "publication date",
+    "string": "will become published on {date}"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_2341910657": {
+    "string": "Not published"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_2699516026": {
+    "context": "available on date",
+    "string": "Set available on"
+  },
   "src_dot_components_dot_VisibilityCard_dot_292404896": {
     "string": "Set publication date"
   },
-  "src_dot_components_dot_VisibilityCard_dot_643174786": {
-    "string": "Visible"
+  "src_dot_components_dot_VisibilityCard_dot_2938074852": {
+    "context": "product",
+    "string": "will become available on {date}"
   },
-  "src_dot_components_dot_VisibilityCard_dot_77815154": {
-    "string": "Hidden"
+  "src_dot_components_dot_VisibilityCard_dot_3640454975": {
+    "string": "Published"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_570524410": {
+    "string": "Set availability date"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_825317195": {
+    "string": "Unavailable for purchase"
   },
   "src_dot_components_dot_WeightRange_dot_264731940": {
     "context": "weight",
@@ -3465,10 +3482,6 @@
     "context": "page header",
     "string": "Create Page"
   },
-  "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1815688500": {
-    "context": "page",
-    "string": "since {date}"
-  },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1996767833": {
     "string": "Add search engine title and description to make this page easier to find"
   },
@@ -4014,14 +4027,6 @@
     "context": "product organization, header",
     "string": "Organization"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
-  },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -4301,14 +4306,6 @@
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
-  },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
@@ -4593,6 +4590,10 @@
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
     "string": "Delete Product Variants"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_1964228100": {
+    "context": "snackbar text",
+    "string": "Availability updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",

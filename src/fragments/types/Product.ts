@@ -209,4 +209,5 @@ export interface Product {
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
+  availableForPurchase: any | null;
 }

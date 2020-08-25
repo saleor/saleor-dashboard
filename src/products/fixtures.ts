@@ -95,6 +95,7 @@ export const product: (
       ]
     }
   ],
+  availableForPurchase: null,
   basePrice: {
     __typename: "Money" as "Money",
     amount: 339.39,

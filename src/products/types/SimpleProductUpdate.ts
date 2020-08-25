@@ -215,6 +215,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: SimpleProductUpdate_productUpdate_product_weight | null;
+  availableForPurchase: any | null;
 }
 
 export interface SimpleProductUpdate_productUpdate {
