@@ -8,6 +8,18 @@ import { WeightUnitsEnum } from "./../../types/globalTypes";
 // GraphQL fragment: ProductVariant
 // ====================================================
 
+export interface ProductVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ProductVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -114,6 +126,8 @@ export interface ProductVariant_weight {
 export interface ProductVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (ProductVariant_metadata | null)[];
+  privateMetadata: (ProductVariant_privateMetadata | null)[];
   attributes: ProductVariant_attributes[];
   costPrice: ProductVariant_costPrice | null;
   images: (ProductVariant_images | null)[] | null;

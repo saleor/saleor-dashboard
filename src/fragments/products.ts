@@ -184,8 +184,10 @@ export const fragmentVariant = gql`
   ${fragmentProductImage}
   ${stockFragment}
   ${weightFragment}
+  ${metadataFragment}
   fragment ProductVariant on ProductVariant {
     id
+    ...Metadata
     attributes {
       attribute {
         id

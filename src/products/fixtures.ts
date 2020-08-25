@@ -1524,6 +1524,13 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       url: placeholderImage
     }
   ],
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Extended Hard",
   price: {
     __typename: "Money",
@@ -1655,6 +1662,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     ]
   },
+  privateMetadata: [],
   sku: "1230959124123",
   stocks: [
     {

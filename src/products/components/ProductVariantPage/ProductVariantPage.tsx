@@ -4,6 +4,8 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import { MetadataFormData } from "@saleor/components/Metadata";
+import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -17,6 +19,8 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -31,7 +35,7 @@ import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog"
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 
-export interface ProductVariantPageFormData {
+export interface ProductVariantPageFormData extends MetadataFormData {
   costPrice: string;
   price: string;
   sku: string;
@@ -100,6 +104,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const variantImages = maybe(() => variant.images.map(image => image.id), []);
   const productImages = maybe(() =>
     variant.product.images.sort((prev, next) =>
@@ -114,7 +124,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   const initialForm: ProductVariantPageFormData = {
     costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
+    metadata: variant?.metadata?.map(mapMetadataItemToInput),
     price: maybe(() => variant.price.amount.toString(), ""),
+    privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: maybe(() => variant.sku, ""),
     trackInventory: variant?.trackInventory,
     weight: variant?.weight?.value.toString() || ""
@@ -124,6 +136,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     const dataStocks = stocks.map(stock => stock.id);
     const variantStocks = variant.stocks.map(stock => stock.warehouse.id);
     const stockDiff = diff(variantStocks, dataStocks);
+    const metadata = isMetadataModified ? data.metadata : undefined;
+    const privateMetadata = isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined;
 
     onSubmit({
       ...data,
@@ -131,6 +147,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         stockDiff.added.some(addedStock => addedStock === stock.id)
       ),
       attributes,
+      metadata,
+      privateMetadata,
       removeStocks: stockDiff.removed,
       updateStocks: stocks.filter(
         stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
@@ -151,6 +169,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               changeAttributeData(id, value);
               triggerChange();
             };
+
+            const changeMetadata = makeMetadataChangeHandler(change);
 
             return (
               <>
@@ -235,6 +255,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         removeStock(id);
                       }}
                     />
+                    <CardSpacer />
+                    <Metadata data={data} onChange={changeMetadata} />
                   </div>
                 </Grid>
                 <SaveButtonBar
