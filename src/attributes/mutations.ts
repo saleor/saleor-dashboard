@@ -1,6 +1,6 @@
 import { attributeDetailsFragment } from "@saleor/fragments/attributes";
 import { productErrorFragment } from "@saleor/fragments/errors";
-import { TypedMutation } from "@saleor/mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import {
@@ -46,7 +46,7 @@ const attributeBulkDelete = gql`
     }
   }
 `;
-export const AttributeBulkDeleteMutation = TypedMutation<
+export const useAttributeBulkDeleteMutation = makeMutation<
   AttributeBulkDelete,
   AttributeBulkDeleteVariables
 >(attributeBulkDelete);
@@ -61,7 +61,7 @@ const attributeDelete = gql`
     }
   }
 `;
-export const AttributeDeleteMutation = TypedMutation<
+export const useAttributeDeleteMutation = makeMutation<
   AttributeDelete,
   AttributeDeleteVariables
 >(attributeDelete);
@@ -80,7 +80,7 @@ export const attributeUpdateMutation = gql`
     }
   }
 `;
-export const AttributeUpdateMutation = TypedMutation<
+export const useAttributeUpdateMutation = makeMutation<
   AttributeUpdate,
   AttributeUpdateVariables
 >(attributeUpdateMutation);
@@ -99,7 +99,7 @@ const attributeValueDelete = gql`
     }
   }
 `;
-export const AttributeValueDeleteMutation = TypedMutation<
+export const useAttributeValueDeleteMutation = makeMutation<
   AttributeValueDelete,
   AttributeValueDeleteVariables
 >(attributeValueDelete);
@@ -118,7 +118,7 @@ export const attributeValueUpdateMutation = gql`
     }
   }
 `;
-export const AttributeValueUpdateMutation = TypedMutation<
+export const useAttributeValueUpdateMutation = makeMutation<
   AttributeValueUpdate,
   AttributeValueUpdateVariables
 >(attributeValueUpdateMutation);
@@ -137,7 +137,7 @@ export const attributeValueCreateMutation = gql`
     }
   }
 `;
-export const AttributeValueCreateMutation = TypedMutation<
+export const useAttributeValueCreateMutation = makeMutation<
   AttributeValueCreate,
   AttributeValueCreateVariables
 >(attributeValueCreateMutation);
@@ -156,7 +156,7 @@ export const attributeCreateMutation = gql`
     }
   }
 `;
-export const AttributeCreateMutation = TypedMutation<
+export const useAttributeCreateMutation = makeMutation<
   AttributeCreate,
   AttributeCreateVariables
 >(attributeCreateMutation);
@@ -177,7 +177,7 @@ const attributeValueReorderMutation = gql`
     }
   }
 `;
-export const AttributeValueReorderMutation = TypedMutation<
+export const useAttributeValueReorderMutation = makeMutation<
   AttributeValueReorder,
   AttributeValueReorderVariables
 >(attributeValueReorderMutation);
