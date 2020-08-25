@@ -10,7 +10,6 @@ import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { CountAllProducts } from "./types/CountAllProducts";
 import {
   CreateMultipleVariantsData,
@@ -150,10 +149,9 @@ const productListQuery = gql`
     }
   }
 `;
-export const TypedProductListQuery = TypedQuery<
-  ProductList,
-  ProductListVariables
->(productListQuery);
+export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
+  productListQuery
+);
 
 const countAllProductsQuery = gql`
   query CountAllProducts {
@@ -174,7 +172,7 @@ const productDetailsQuery = gql`
     }
   }
 `;
-export const TypedProductDetailsQuery = TypedQuery<
+export const useProductDetails = makeQuery<
   ProductDetails,
   ProductDetailsVariables
 >(productDetailsQuery);
@@ -187,7 +185,7 @@ const productVariantQuery = gql`
     }
   }
 `;
-export const TypedProductVariantQuery = TypedQuery<
+export const useProductVariantQuery = makeQuery<
   ProductVariantDetails,
   ProductVariantDetailsVariables
 >(productVariantQuery);
@@ -231,7 +229,7 @@ const productVariantCreateQuery = gql`
     }
   }
 `;
-export const TypedProductVariantCreateQuery = TypedQuery<
+export const useProductVariantCreateQuery = makeQuery<
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
 >(productVariantCreateQuery);
@@ -253,7 +251,7 @@ const productImageQuery = gql`
     }
   }
 `;
-export const TypedProductImageQuery = TypedQuery<
+export const useProductImageQuery = makeQuery<
   ProductImageById,
   ProductImageByIdVariables
 >(productImageQuery);
@@ -288,7 +286,7 @@ const availableInGridAttributes = gql`
     }
   }
 `;
-export const AvailableInGridAttributesQuery = TypedQuery<
+export const useAvailableInGridAttributesQuery = makeQuery<
   GridAttributes,
   GridAttributesVariables
 >(availableInGridAttributes);

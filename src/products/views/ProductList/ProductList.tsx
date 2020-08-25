@@ -45,18 +45,16 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
 import {
-  TypedProductBulkDeleteMutation,
-  TypedProductBulkPublishMutation,
+  useProductBulkDeleteMutation,
+  useProductBulkPublishMutation,
   useProductExport
 } from "../../mutations";
 import {
-  AvailableInGridAttributesQuery,
-  TypedProductListQuery,
+  useAvailableInGridAttributesQuery,
   useCountAllProducts,
-  useInitialProductFilterDataQuery
+  useInitialProductFilterDataQuery,
+  useProductListQuery
 } from "../../queries";
-import { productBulkDelete } from "../../types/productBulkDelete";
-import { productBulkPublish } from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
@@ -235,6 +233,53 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
+  const { data, loading, refetch } = useProductListQuery({
+    displayLoader: true,
+    variables: queryVariables
+  });
+
+  function filterColumnIds(columns: ProductListColumns[]) {
+    return columns
+      .filter(isAttributeColumnValue)
+      .map(getAttributeIdFromColumnValue);
+  }
+  const attributes = useAvailableInGridAttributesQuery({
+    variables: { first: 6, ids: filterColumnIds(settings.columns) }
+  });
+
+  const [
+    productBulkDelete,
+    productBulkDeleteOpts
+  ] = useProductBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.productBulkDelete.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        reset();
+        refetch();
+      }
+    }
+  });
+
+  const [
+    productBulkPublish,
+    productBulkPublishOpts
+  ] = useProductBulkPublishMutation({
+    onCompleted: data => {
+      if (data.productBulkPublish.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        reset();
+        refetch();
+      }
+    }
+  });
 
   const filterOpts = getFilterOpts(
     params,
@@ -262,345 +307,259 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   );
 
-  function filterColumnIds(columns: ProductListColumns[]) {
-    return columns
-      .filter(isAttributeColumnValue)
-      .map(getAttributeIdFromColumnValue);
-  }
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+    maybe(() => data.products.pageInfo),
+    paginationState,
+    params
+  );
 
   return (
-    <AvailableInGridAttributesQuery
-      variables={{ first: 6, ids: filterColumnIds(settings.columns) }}
-    >
-      {attributes => (
-        <TypedProductListQuery displayLoader variables={queryVariables}>
-          {({ data, loading, refetch }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.products.pageInfo),
-              paginationState,
-              params
-            );
-
-            const handleBulkDelete = (data: productBulkDelete) => {
-              if (data.productBulkDelete.errors.length === 0) {
-                closeModal();
-                notify({
-                  status: "success",
-                  text: intl.formatMessage(commonMessages.savedChanges)
-                });
-                reset();
-                refetch();
+    <>
+      <ProductListPage
+        activeAttributeSortId={params.attributeId}
+        sort={{
+          asc: params.asc,
+          sort: params.sort
+        }}
+        onSort={handleSort}
+        availableInGridAttributes={maybe(
+          () => attributes.data.availableInGrid.edges.map(edge => edge.node),
+          []
+        )}
+        currencySymbol={currencySymbol}
+        currentTab={currentTab}
+        defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
+        filterOpts={filterOpts}
+        gridAttributes={maybe(
+          () => attributes.data.grid.edges.map(edge => edge.node),
+          []
+        )}
+        totalGridAttributes={maybe(
+          () => attributes.data.availableInGrid.totalCount,
+          0
+        )}
+        settings={settings}
+        loading={attributes.loading}
+        hasMore={maybe(
+          () => attributes.data.availableInGrid.pageInfo.hasNextPage,
+          false
+        )}
+        onAdd={() => navigate(productAddUrl)}
+        disabled={loading}
+        products={maybe(() => data.products.edges.map(edge => edge.node))}
+        onFetchMore={() =>
+          attributes.loadMore(
+            (prev, next) => {
+              if (
+                prev.availableInGrid.pageInfo.endCursor ===
+                next.availableInGrid.pageInfo.endCursor
+              ) {
+                return prev;
               }
-            };
-
-            const handleBulkPublish = (data: productBulkPublish) => {
-              if (data.productBulkPublish.errors.length === 0) {
-                closeModal();
-                notify({
-                  status: "success",
-                  text: intl.formatMessage(commonMessages.savedChanges)
-                });
-                reset();
-                refetch();
+              return {
+                ...prev,
+                availableInGrid: {
+                  ...prev.availableInGrid,
+                  edges: [
+                    ...prev.availableInGrid.edges,
+                    ...next.availableInGrid.edges
+                  ],
+                  pageInfo: next.availableInGrid.pageInfo
+                }
+              };
+            },
+            {
+              after: attributes.data.availableInGrid.pageInfo.endCursor
+            }
+          )
+        }
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
+        onUpdateListSettings={updateListSettings}
+        pageInfo={pageInfo}
+        onRowClick={id => () => navigate(productUrl(id))}
+        onAll={resetFilters}
+        toolbar={
+          <>
+            <Button
+              color="primary"
+              onClick={() =>
+                openModal("unpublish", {
+                  ids: listElements
+                })
               }
-            };
-
-            return (
-              <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
-                {(productBulkDelete, productBulkDeleteOpts) => (
-                  <TypedProductBulkPublishMutation
-                    onCompleted={handleBulkPublish}
-                  >
-                    {(productBulkPublish, productBulkPublishOpts) => (
-                      <>
-                        <ProductListPage
-                          activeAttributeSortId={params.attributeId}
-                          sort={{
-                            asc: params.asc,
-                            sort: params.sort
-                          }}
-                          onSort={handleSort}
-                          availableInGridAttributes={maybe(
-                            () =>
-                              attributes.data.availableInGrid.edges.map(
-                                edge => edge.node
-                              ),
-                            []
-                          )}
-                          currencySymbol={currencySymbol}
-                          currentTab={currentTab}
-                          defaultSettings={
-                            defaultListSettings[ListViews.PRODUCT_LIST]
-                          }
-                          filterOpts={filterOpts}
-                          gridAttributes={maybe(
-                            () =>
-                              attributes.data.grid.edges.map(edge => edge.node),
-                            []
-                          )}
-                          totalGridAttributes={maybe(
-                            () => attributes.data.availableInGrid.totalCount,
-                            0
-                          )}
-                          settings={settings}
-                          loading={attributes.loading}
-                          hasMore={maybe(
-                            () =>
-                              attributes.data.availableInGrid.pageInfo
-                                .hasNextPage,
-                            false
-                          )}
-                          onAdd={() => navigate(productAddUrl)}
-                          disabled={loading}
-                          products={maybe(() =>
-                            data.products.edges.map(edge => edge.node)
-                          )}
-                          onFetchMore={() =>
-                            attributes.loadMore(
-                              (prev, next) => {
-                                if (
-                                  prev.availableInGrid.pageInfo.endCursor ===
-                                  next.availableInGrid.pageInfo.endCursor
-                                ) {
-                                  return prev;
-                                }
-                                return {
-                                  ...prev,
-                                  availableInGrid: {
-                                    ...prev.availableInGrid,
-                                    edges: [
-                                      ...prev.availableInGrid.edges,
-                                      ...next.availableInGrid.edges
-                                    ],
-                                    pageInfo: next.availableInGrid.pageInfo
-                                  }
-                                };
-                              },
-                              {
-                                after:
-                                  attributes.data.availableInGrid.pageInfo
-                                    .endCursor
-                              }
-                            )
-                          }
-                          onNextPage={loadNextPage}
-                          onPreviousPage={loadPreviousPage}
-                          onUpdateListSettings={updateListSettings}
-                          pageInfo={pageInfo}
-                          onRowClick={id => () => navigate(productUrl(id))}
-                          onAll={resetFilters}
-                          toolbar={
-                            <>
-                              <Button
-                                color="primary"
-                                onClick={() =>
-                                  openModal("unpublish", {
-                                    ids: listElements
-                                  })
-                                }
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Unpublish"
-                                  description="unpublish product, button"
-                                />
-                              </Button>
-                              <Button
-                                color="primary"
-                                onClick={() =>
-                                  openModal("publish", {
-                                    ids: listElements
-                                  })
-                                }
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Publish"
-                                  description="publish product, button"
-                                />
-                              </Button>
-                              <IconButton
-                                color="primary"
-                                onClick={() =>
-                                  openModal("delete", {
-                                    ids: listElements
-                                  })
-                                }
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </>
-                          }
-                          isChecked={isSelected}
-                          selected={listElements.length}
-                          toggle={toggle}
-                          toggleAll={toggleAll}
-                          onSearchChange={handleSearchChange}
-                          onFilterChange={changeFilters}
-                          onTabSave={() => openModal("save-search")}
-                          onTabDelete={() => openModal("delete-search")}
-                          onTabChange={handleTabChange}
-                          initialSearch={params.query || ""}
-                          tabs={getFilterTabs().map(tab => tab.name)}
-                          onExport={() => openModal("export")}
-                        />
-                        <ActionDialog
-                          open={params.action === "delete"}
-                          confirmButtonState={productBulkDeleteOpts.status}
-                          onClose={closeModal}
-                          onConfirm={() =>
-                            productBulkDelete({
-                              variables: { ids: params.ids }
-                            })
-                          }
-                          title={intl.formatMessage({
-                            defaultMessage: "Delete Products",
-                            description: "dialog header"
-                          })}
-                          variant="delete"
-                        >
-                          <DialogContentText>
-                            <FormattedMessage
-                              defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-                              description="dialog content"
-                              values={{
-                                counter: maybe(() => params.ids.length),
-                                displayQuantity: (
-                                  <strong>
-                                    {maybe(() => params.ids.length)}
-                                  </strong>
-                                )
-                              }}
-                            />
-                          </DialogContentText>
-                        </ActionDialog>
-                        <ActionDialog
-                          open={params.action === "publish"}
-                          confirmButtonState={productBulkPublishOpts.status}
-                          onClose={closeModal}
-                          onConfirm={() =>
-                            productBulkPublish({
-                              variables: {
-                                ids: params.ids,
-                                isPublished: true
-                              }
-                            })
-                          }
-                          title={intl.formatMessage({
-                            defaultMessage: "Publish Products",
-                            description: "dialog header"
-                          })}
-                        >
-                          <DialogContentText>
-                            <FormattedMessage
-                              defaultMessage="{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
-                              description="dialog content"
-                              values={{
-                                counter: maybe(() => params.ids.length),
-                                displayQuantity: (
-                                  <strong>
-                                    {maybe(() => params.ids.length)}
-                                  </strong>
-                                )
-                              }}
-                            />
-                          </DialogContentText>
-                        </ActionDialog>
-                        <ActionDialog
-                          open={params.action === "unpublish"}
-                          confirmButtonState={productBulkPublishOpts.status}
-                          onClose={closeModal}
-                          onConfirm={() =>
-                            productBulkPublish({
-                              variables: {
-                                ids: params.ids,
-                                isPublished: false
-                              }
-                            })
-                          }
-                          title={intl.formatMessage({
-                            defaultMessage: "Unpublish Products",
-                            description: "dialog header"
-                          })}
-                        >
-                          <DialogContentText>
-                            <FormattedMessage
-                              defaultMessage="{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
-                              description="dialog content"
-                              values={{
-                                counter: maybe(() => params.ids.length),
-                                displayQuantity: (
-                                  <strong>
-                                    {maybe(() => params.ids.length)}
-                                  </strong>
-                                )
-                              }}
-                            />
-                          </DialogContentText>
-                        </ActionDialog>
-                        <ProductExportDialog
-                          attributes={(
-                            searchAttributes.result.data?.search.edges || []
-                          ).map(edge => edge.node)}
-                          hasMore={
-                            searchAttributes.result.data?.search.pageInfo
-                              .hasNextPage
-                          }
-                          loading={searchAttributes.result.loading}
-                          onFetch={searchAttributes.search}
-                          onFetchMore={searchAttributes.loadMore}
-                          open={params.action === "export"}
-                          confirmButtonState={exportProductsOpts.status}
-                          errors={
-                            exportProductsOpts.data?.exportProducts.errors || []
-                          }
-                          productQuantity={{
-                            all: countAllProducts.data?.products.totalCount,
-                            filter: data?.products.totalCount
-                          }}
-                          selectedProducts={listElements.length}
-                          warehouses={
-                            warehouses.data?.warehouses.edges.map(
-                              edge => edge.node
-                            ) || []
-                          }
-                          onClose={closeModal}
-                          onSubmit={data =>
-                            exportProducts({
-                              variables: {
-                                input: {
-                                  ...data,
-                                  filter,
-                                  ids: listElements
-                                }
-                              }
-                            })
-                          }
-                        />
-                        <SaveFilterTabDialog
-                          open={params.action === "save-search"}
-                          confirmButtonState="default"
-                          onClose={closeModal}
-                          onSubmit={handleFilterTabSave}
-                        />
-                        <DeleteFilterTabDialog
-                          open={params.action === "delete-search"}
-                          confirmButtonState="default"
-                          onClose={closeModal}
-                          onSubmit={handleFilterTabDelete}
-                          tabName={maybe(
-                            () => tabs[currentTab - 1].name,
-                            "..."
-                          )}
-                        />
-                      </>
-                    )}
-                  </TypedProductBulkPublishMutation>
-                )}
-              </TypedProductBulkDeleteMutation>
-            );
-          }}
-        </TypedProductListQuery>
-      )}
-    </AvailableInGridAttributesQuery>
+            >
+              <FormattedMessage
+                defaultMessage="Unpublish"
+                description="unpublish product, button"
+              />
+            </Button>
+            <Button
+              color="primary"
+              onClick={() =>
+                openModal("publish", {
+                  ids: listElements
+                })
+              }
+            >
+              <FormattedMessage
+                defaultMessage="Publish"
+                description="publish product, button"
+              />
+            </Button>
+            <IconButton
+              color="primary"
+              onClick={() =>
+                openModal("delete", {
+                  ids: listElements
+                })
+              }
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        }
+        isChecked={isSelected}
+        selected={listElements.length}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        onSearchChange={handleSearchChange}
+        onFilterChange={changeFilters}
+        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal("delete-search")}
+        onTabChange={handleTabChange}
+        initialSearch={params.query || ""}
+        tabs={getFilterTabs().map(tab => tab.name)}
+        onExport={() => openModal("export")}
+      />
+      <ActionDialog
+        open={params.action === "delete"}
+        confirmButtonState={productBulkDeleteOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          productBulkDelete({
+            variables: { ids: params.ids }
+          })
+        }
+        title={intl.formatMessage({
+          defaultMessage: "Delete Products",
+          description: "dialog header"
+        })}
+        variant="delete"
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+            description="dialog content"
+            values={{
+              counter: maybe(() => params.ids.length),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            }}
+          />
+        </DialogContentText>
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "publish"}
+        confirmButtonState={productBulkPublishOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          productBulkPublish({
+            variables: {
+              ids: params.ids,
+              isPublished: true
+            }
+          })
+        }
+        title={intl.formatMessage({
+          defaultMessage: "Publish Products",
+          description: "dialog header"
+        })}
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
+            description="dialog content"
+            values={{
+              counter: maybe(() => params.ids.length),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            }}
+          />
+        </DialogContentText>
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "unpublish"}
+        confirmButtonState={productBulkPublishOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          productBulkPublish({
+            variables: {
+              ids: params.ids,
+              isPublished: false
+            }
+          })
+        }
+        title={intl.formatMessage({
+          defaultMessage: "Unpublish Products",
+          description: "dialog header"
+        })}
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
+            description="dialog content"
+            values={{
+              counter: maybe(() => params.ids.length),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            }}
+          />
+        </DialogContentText>
+      </ActionDialog>
+      <ProductExportDialog
+        attributes={(searchAttributes.result.data?.search.edges || []).map(
+          edge => edge.node
+        )}
+        hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
+        loading={searchAttributes.result.loading}
+        onFetch={searchAttributes.search}
+        onFetchMore={searchAttributes.loadMore}
+        open={params.action === "export"}
+        confirmButtonState={exportProductsOpts.status}
+        errors={exportProductsOpts.data?.exportProducts.errors || []}
+        productQuantity={{
+          all: countAllProducts.data?.products.totalCount,
+          filter: data?.products.totalCount
+        }}
+        selectedProducts={listElements.length}
+        warehouses={
+          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
+        }
+        onClose={closeModal}
+        onSubmit={data =>
+          exportProducts({
+            variables: {
+              input: {
+                ...data,
+                filter,
+                ids: listElements
+              }
+            }
+          })
+        }
+      />
+      <SaveFilterTabDialog
+        open={params.action === "save-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={handleFilterTabSave}
+      />
+      <DeleteFilterTabDialog
+        open={params.action === "delete-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={handleFilterTabDelete}
+        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+      />
+    </>
   );
 };
 export default ProductList;

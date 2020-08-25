@@ -15,12 +15,14 @@ import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog
 import ProductVariantPage, {
   ProductVariantPageSubmitData
 } from "../components/ProductVariantPage";
-import ProductVariantOperations from "../containers/ProductVariantOperations";
-import { TypedProductVariantQuery } from "../queries";
 import {
-  VariantUpdate,
-  VariantUpdate_productVariantUpdate_errors
-} from "../types/VariantUpdate";
+  useVariantDeleteMutation,
+  useVariantImageAssignMutation,
+  useVariantImageUnassignMutation,
+  useVariantUpdateMutation
+} from "../mutations";
+import { useProductVariantQuery } from "../queries";
+import { VariantUpdate_productVariantUpdate_errors } from "../types/VariantUpdate";
 import {
   productUrl,
   productVariantAddUrl,
@@ -59,6 +61,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
+  const { data, loading } = useProductVariantQuery({
+    displayLoader: true,
+    variables: {
+      id: variantId
+    }
+  });
+
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
@@ -70,132 +79,122 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
 
-  return (
-    <TypedProductVariantQuery displayLoader variables={{ id: variantId }}>
-      {({ data, loading }) => {
-        const variant = data?.productVariant;
+  const [assignImage, assignImageOpts] = useVariantImageAssignMutation({});
+  const [unassignImage, unassignImageOpts] = useVariantImageUnassignMutation(
+    {}
+  );
+  const [deleteVariant, deleteVariantOpts] = useVariantDeleteMutation({
+    onCompleted: () => {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Variant removed"
+        })
+      });
+      navigate(productUrl(productId));
+    }
+  });
+  const [updateVariant, updateVariantOpts] = useVariantUpdateMutation({
+    onCompleted: data => {
+      if (data.productVariantUpdate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+      } else {
+        setErrors(data.productVariantUpdate.errors);
+      }
+    }
+  });
 
-        if (variant === null) {
-          return <NotFoundPage onBack={handleBack} />;
-        }
+  const variant = data?.productVariant;
 
-        const handleDelete = () => {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              defaultMessage: "Variant removed"
-            })
-          });
-          navigate(productUrl(productId));
-        };
-        const handleUpdate = (data: VariantUpdate) => {
-          if (data.productVariantUpdate.errors.length === 0) {
-            notify({
-              status: "success",
-              text: intl.formatMessage(commonMessages.savedChanges)
-            });
-          } else {
-            setErrors(data.productVariantUpdate.errors);
+  if (variant === null) {
+    return <NotFoundPage onBack={handleBack} />;
+  }
+
+  const disableFormSave =
+    loading ||
+    deleteVariantOpts.loading ||
+    updateVariantOpts.loading ||
+    assignImageOpts.loading ||
+    unassignImageOpts.loading;
+
+  const handleImageSelect = (id: string) => () => {
+    if (variant) {
+      if (variant?.images?.map(image => image.id).indexOf(id) !== -1) {
+        unassignImage({
+          variables: {
+            imageId: id,
+            variantId: variant.id
           }
-        };
+        });
+      } else {
+        assignImage({
+          variables: {
+            imageId: id,
+            variantId: variant.id
+          }
+        });
+      }
+    }
+  };
 
-        return (
-          <ProductVariantOperations
-            onDelete={handleDelete}
-            onUpdate={handleUpdate}
-          >
-            {({ assignImage, deleteVariant, updateVariant, unassignImage }) => {
-              const disableFormSave =
-                loading ||
-                deleteVariant.opts.loading ||
-                updateVariant.opts.loading ||
-                assignImage.opts.loading ||
-                unassignImage.opts.loading;
-
-              const handleImageSelect = (id: string) => () => {
-                if (variant) {
-                  if (
-                    variant.images &&
-                    variant.images.map(image => image.id).indexOf(id) !== -1
-                  ) {
-                    unassignImage.mutate({
-                      imageId: id,
-                      variantId: variant.id
-                    });
-                  } else {
-                    assignImage.mutate({
-                      imageId: id,
-                      variantId: variant.id
-                    });
-                  }
-                }
-              };
-
-              return (
-                <>
-                  <WindowTitle title={data?.productVariant?.name} />
-                  <ProductVariantPage
-                    defaultWeightUnit={shop?.defaultWeightUnit}
-                    errors={errors}
-                    saveButtonBarState={updateVariant.opts.status}
-                    loading={disableFormSave}
-                    placeholderImage={placeholderImg}
-                    variant={variant}
-                    header={variant?.name || variant?.sku}
-                    warehouses={
-                      warehouses.data?.warehouses.edges.map(
-                        edge => edge.node
-                      ) || []
-                    }
-                    onAdd={() => navigate(productVariantAddUrl(productId))}
-                    onBack={handleBack}
-                    onDelete={() => openModal("remove")}
-                    onImageSelect={handleImageSelect}
-                    onSubmit={(data: ProductVariantPageSubmitData) =>
-                      updateVariant.mutate({
-                        addStocks: data.addStocks.map(
-                          mapFormsetStockToStockInput
-                        ),
-                        attributes: data.attributes.map(attribute => ({
-                          id: attribute.id,
-                          values: [attribute.value]
-                        })),
-                        costPrice: decimal(data.costPrice),
-                        id: variantId,
-                        price: decimal(data.price),
-                        removeStocks: data.removeStocks,
-                        sku: data.sku,
-                        stocks: data.updateStocks.map(
-                          mapFormsetStockToStockInput
-                        ),
-                        trackInventory: data.trackInventory,
-                        weight: weight(data.weight)
-                      })
-                    }
-                    onVariantClick={variantId => {
-                      navigate(productVariantEditUrl(productId, variantId));
-                    }}
-                  />
-                  <ProductVariantDeleteDialog
-                    confirmButtonState={deleteVariant.opts.status}
-                    onClose={() =>
-                      navigate(productVariantEditUrl(productId, variantId))
-                    }
-                    onConfirm={() =>
-                      deleteVariant.mutate({
-                        id: variantId
-                      })
-                    }
-                    open={params.action === "remove"}
-                    name={data?.productVariant?.name}
-                  />
-                </>
-              );
-            }}
-          </ProductVariantOperations>
-        );
-      }}
-    </TypedProductVariantQuery>
+  return (
+    <>
+      <WindowTitle title={data?.productVariant?.name} />
+      <ProductVariantPage
+        defaultWeightUnit={shop?.defaultWeightUnit}
+        errors={errors}
+        saveButtonBarState={updateVariantOpts.status}
+        loading={disableFormSave}
+        placeholderImage={placeholderImg}
+        variant={variant}
+        header={variant?.name || variant?.sku}
+        warehouses={
+          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
+        }
+        onAdd={() => navigate(productVariantAddUrl(productId))}
+        onBack={handleBack}
+        onDelete={() => openModal("remove")}
+        onImageSelect={handleImageSelect}
+        onSubmit={(data: ProductVariantPageSubmitData) =>
+          updateVariant({
+            variables: {
+              addStocks: data.addStocks.map(mapFormsetStockToStockInput),
+              attributes: data.attributes.map(attribute => ({
+                id: attribute.id,
+                values: [attribute.value]
+              })),
+              costPrice: decimal(data.costPrice),
+              id: variantId,
+              price: decimal(data.price),
+              removeStocks: data.removeStocks,
+              sku: data.sku,
+              stocks: data.updateStocks.map(mapFormsetStockToStockInput),
+              trackInventory: data.trackInventory,
+              weight: weight(data.weight)
+            }
+          })
+        }
+        onVariantClick={variantId => {
+          navigate(productVariantEditUrl(productId, variantId));
+        }}
+      />
+      <ProductVariantDeleteDialog
+        confirmButtonState={deleteVariantOpts.status}
+        onClose={() => navigate(productVariantEditUrl(productId, variantId))}
+        onConfirm={() =>
+          deleteVariant({
+            variables: {
+              id: variantId
+            }
+          })
+        }
+        open={params.action === "remove"}
+        name={data?.productVariant?.name}
+      />
+    </>
   );
 };
 export default ProductVariant;
