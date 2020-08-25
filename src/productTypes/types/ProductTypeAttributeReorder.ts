@@ -20,6 +20,18 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   taxCode: string | null;
 }
 
+export interface ProductTypeAttributeReorder_productTypeReorderAttributes_productType_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductTypeAttributeReorder_productTypeReorderAttributes_productType_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes_productType_productAttributes {
   __typename: "Attribute";
   id: string;
@@ -53,6 +65,8 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeAttributeReorder_productTypeReorderAttributes_productType_taxType | null;
+  metadata: (ProductTypeAttributeReorder_productTypeReorderAttributes_productType_metadata | null)[];
+  privateMetadata: (ProductTypeAttributeReorder_productTypeReorderAttributes_productType_privateMetadata | null)[];
   productAttributes: (ProductTypeAttributeReorder_productTypeReorderAttributes_productType_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeAttributeReorder_productTypeReorderAttributes_productType_variantAttributes | null)[] | null;
   weight: ProductTypeAttributeReorder_productTypeReorderAttributes_productType_weight | null;

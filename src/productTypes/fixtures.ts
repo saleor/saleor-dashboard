@@ -550,7 +550,15 @@ export const productType: ProductTypeDetails_productType = {
   hasVariants: false,
   id: "UHJvZHVjdFR5cGU6NQ==",
   isShippingRequired: false,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "E-books",
+  privateMetadata: [],
   productAttributes: [
     {
       __typename: "Attribute" as "Attribute",

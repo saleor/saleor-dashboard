@@ -1,4 +1,5 @@
 import { productTypeDetailsFragment } from "@saleor/fragments/productTypes";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -78,7 +79,7 @@ export const productTypeUpdateMutation = gql`
     }
   }
 `;
-export const TypedProductTypeUpdateMutation = TypedMutation<
+export const useProductTypeUpdateMutation = makeMutation<
   ProductTypeUpdate,
   ProductTypeUpdateVariables
 >(productTypeUpdateMutation);

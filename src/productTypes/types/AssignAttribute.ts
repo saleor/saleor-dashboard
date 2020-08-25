@@ -20,6 +20,18 @@ export interface AssignAttribute_attributeAssign_productType_taxType {
   taxCode: string | null;
 }
 
+export interface AssignAttribute_attributeAssign_productType_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AssignAttribute_attributeAssign_productType_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface AssignAttribute_attributeAssign_productType_productAttributes {
   __typename: "Attribute";
   id: string;
@@ -53,6 +65,8 @@ export interface AssignAttribute_attributeAssign_productType {
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: AssignAttribute_attributeAssign_productType_taxType | null;
+  metadata: (AssignAttribute_attributeAssign_productType_metadata | null)[];
+  privateMetadata: (AssignAttribute_attributeAssign_productType_privateMetadata | null)[];
   productAttributes: (AssignAttribute_attributeAssign_productType_productAttributes | null)[] | null;
   variantAttributes: (AssignAttribute_attributeAssign_productType_variantAttributes | null)[] | null;
   weight: AssignAttribute_attributeAssign_productType_weight | null;
