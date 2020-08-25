@@ -313,6 +313,8 @@ const MenuList: React.FC<MenuListProps> = props => {
             href={createHref(menuItem.url)}
             onClick={event => closeSubMenu(menuItem.url, event)}
             key={menuItem.label}
+            data-testid={menuItem.testingContextId}
+            data-test="menuItemEntry"
           >
             <div className={classes.menuItemHover}>
               <SVG
