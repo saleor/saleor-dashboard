@@ -14,6 +14,11 @@ import usePaginator, {
 import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,6 +63,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const { search, result } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const handleCollectionUpdate = (data: CollectionUpdate) => {
     if (data.collectionUpdate.errors.length === 0) {
@@ -161,7 +168,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           return <NotFoundPage onBack={handleBack} />;
         }
 
-        const handleSubmit = (formData: CollectionDetailsPageFormData) => {
+        const handleUpdate = async (
+          formData: CollectionDetailsPageFormData
+        ) => {
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
             descriptionJson: JSON.stringify(formData.description),
@@ -178,22 +187,34 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             : false;
 
           if (formData.isFeatured !== isFeatured) {
-            updateCollectionWithHomepage({
+            const result = await updateCollectionWithHomepage({
               variables: {
                 homepageId: formData.isFeatured ? id : null,
                 id,
                 input
               }
             });
+            return [
+              ...result.data.collectionUpdate.errors,
+              ...result.data.homepageCollectionUpdate.errors
+            ];
           } else {
-            updateCollection({
+            const result = await updateCollection({
               variables: {
                 id,
                 input
               }
             });
+
+            return result.data.collectionUpdate.errors;
           }
         };
+        const handleSubmit = createMetadataUpdateHandler(
+          data?.collection,
+          handleUpdate,
+          variables => updateMetadata({ variables }),
+          variables => updatePrivateMetadata({ variables })
+        );
 
         const formTransitionState = getMutationState(
           updateCollectionOpts.called ||

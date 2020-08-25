@@ -80,7 +80,15 @@ export const collection: (
   descriptionJson: JSON.stringify(content),
   id: "Q29sbGVjdGlvbjox",
   isPublished: true,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Summer collection",
+  privateMetadata: [],
   products: {
     __typename: "ProductCountableConnection",
     edges: [

@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { metadataFragment } from "./metadata";
+
 export const collectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
@@ -10,8 +12,10 @@ export const collectionFragment = gql`
 
 export const collectionDetailsFragment = gql`
   ${collectionFragment}
+  ${metadataFragment}
   fragment CollectionDetailsFragment on Collection {
     ...CollectionFragment
+    ...Metadata
     backgroundImage {
       alt
       url
