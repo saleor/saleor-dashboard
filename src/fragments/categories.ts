@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { metadataFragment } from "./metadata";
+
 export const categoryFragment = gql`
   fragment CategoryFragment on Category {
     id
@@ -13,8 +15,10 @@ export const categoryFragment = gql`
   }
 `;
 export const categoryDetailsFragment = gql`
+  ${metadataFragment}
   fragment CategoryDetailsFragment on Category {
     id
+    ...Metadata
     backgroundImage {
       alt
       url

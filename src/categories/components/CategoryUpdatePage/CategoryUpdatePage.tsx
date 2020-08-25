@@ -6,12 +6,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
+import Metadata from "@saleor/components/Metadata/Metadata";
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,7 +32,7 @@ import {
 import CategoryBackground from "../CategoryBackground";
 import CategoryProducts from "../CategoryProducts";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   backgroundImageAlt: string;
   description: RawDraftContentState;
   name: string;
@@ -100,144 +104,174 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const initialData: FormData = category
     ? {
         backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
         description: maybe(() => JSON.parse(category.descriptionJson)),
+        metadata: category?.metadata?.map(mapMetadataItemToInput),
         name: category.name || "",
+        privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
         seoDescription: category.seoDescription || "",
         seoTitle: category.seoTitle || ""
       }
     : {
         backgroundImageAlt: "",
         description: "",
+        metadata: undefined,
         name: "",
+        privateMetadata: undefined,
         seoDescription: "",
         seoTitle: ""
       };
+
+  const handleSubmit = (data: FormData) => {
+    const metadata = isMetadataModified ? data.metadata : undefined;
+    const privateMetadata = isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined;
+
+    onSubmit({
+      ...data,
+      metadata,
+      privateMetadata
+    });
+  };
+
   return (
-    <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
-      {({ data, change, submit, hasChanged }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.categories)}
-          </AppHeader>
-          <PageHeader title={category ? category.name : undefined} />
-          <CategoryDetailsForm
-            category={category}
-            data={data}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-          />
-          <CardSpacer />
-          <CategoryBackground
-            data={data}
-            onImageUpload={onImageUpload}
-            onImageDelete={onImageDelete}
-            image={maybe(() => category.backgroundImage)}
-            onChange={change}
-          />
-          <CardSpacer />
-          <SeoForm
-            helperText={intl.formatMessage({
-              defaultMessage:
-                "Add search engine title and description to make this category easier to find"
-            })}
-            title={data.seoTitle}
-            titlePlaceholder={data.name}
-            description={data.seoDescription}
-            descriptionPlaceholder={data.name}
-            loading={!category}
-            onChange={change}
-            disabled={disabled}
-          />
-          <CardSpacer />
-          <TabContainer>
-            <CategoriesTab
-              isActive={currentTab === CategoryPageTab.categories}
-              changeTab={changeTab}
-            >
-              <FormattedMessage
-                defaultMessage="Subcategories"
-                description="number of subcategories in category"
-              />
-            </CategoriesTab>
-            <ProductsTab
-              isActive={currentTab === CategoryPageTab.products}
-              changeTab={changeTab}
-            >
-              <FormattedMessage
-                defaultMessage="Products"
-                description="number of products in category"
-              />
-            </ProductsTab>
-          </TabContainer>
-          <CardSpacer />
-          {currentTab === CategoryPageTab.categories && (
-            <Card>
-              <CardTitle
-                title={intl.formatMessage({
-                  defaultMessage: "All Subcategories",
-                  description: "section header"
-                })}
-                toolbar={
-                  <Button
-                    color="primary"
-                    variant="text"
-                    onClick={onAddCategory}
-                  >
-                    <FormattedMessage
-                      defaultMessage="Create subcategory"
-                      description="button"
-                    />
-                  </Button>
-                }
-              />
-              <CategoryList
-                categories={subcategories}
+    <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
+      {({ data, change, submit, hasChanged }) => {
+        const changeMetadata = makeMetadataChangeHandler(change);
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.categories)}
+            </AppHeader>
+            <PageHeader title={category ? category.name : undefined} />
+            <CategoryDetailsForm
+              category={category}
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+            <CardSpacer />
+            <CategoryBackground
+              data={data}
+              onImageUpload={onImageUpload}
+              onImageDelete={onImageDelete}
+              image={maybe(() => category.backgroundImage)}
+              onChange={change}
+            />
+            <CardSpacer />
+            <SeoForm
+              helperText={intl.formatMessage({
+                defaultMessage:
+                  "Add search engine title and description to make this category easier to find"
+              })}
+              title={data.seoTitle}
+              titlePlaceholder={data.name}
+              description={data.seoDescription}
+              descriptionPlaceholder={data.name}
+              loading={!category}
+              onChange={change}
+              disabled={disabled}
+            />
+            <CardSpacer />
+            <Metadata data={data} onChange={changeMetadata} />
+            <CardSpacer />
+            <TabContainer>
+              <CategoriesTab
+                isActive={currentTab === CategoryPageTab.categories}
+                changeTab={changeTab}
+              >
+                <FormattedMessage
+                  defaultMessage="Subcategories"
+                  description="number of subcategories in category"
+                />
+              </CategoriesTab>
+              <ProductsTab
+                isActive={currentTab === CategoryPageTab.products}
+                changeTab={changeTab}
+              >
+                <FormattedMessage
+                  defaultMessage="Products"
+                  description="number of products in category"
+                />
+              </ProductsTab>
+            </TabContainer>
+            <CardSpacer />
+            {currentTab === CategoryPageTab.categories && (
+              <Card>
+                <CardTitle
+                  title={intl.formatMessage({
+                    defaultMessage: "All Subcategories",
+                    description: "section header"
+                  })}
+                  toolbar={
+                    <Button
+                      color="primary"
+                      variant="text"
+                      onClick={onAddCategory}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Create subcategory"
+                        description="button"
+                      />
+                    </Button>
+                  }
+                />
+                <CategoryList
+                  categories={subcategories}
+                  disabled={disabled}
+                  isChecked={isChecked}
+                  isRoot={false}
+                  pageInfo={pageInfo}
+                  selected={selected}
+                  sort={undefined}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  toolbar={subcategoryListToolbar}
+                  onNextPage={onNextPage}
+                  onPreviousPage={onPreviousPage}
+                  onRowClick={onCategoryClick}
+                  onSort={() => undefined}
+                />
+              </Card>
+            )}
+            {currentTab === CategoryPageTab.products && (
+              <CategoryProducts
+                categoryName={maybe(() => category.name)}
+                products={products}
                 disabled={disabled}
-                isChecked={isChecked}
-                isRoot={false}
                 pageInfo={pageInfo}
-                selected={selected}
-                sort={undefined}
-                toggle={toggle}
-                toggleAll={toggleAll}
-                toolbar={subcategoryListToolbar}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
-                onRowClick={onCategoryClick}
-                onSort={() => undefined}
+                onRowClick={onProductClick}
+                onAdd={onAddProduct}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                selected={selected}
+                isChecked={isChecked}
+                toolbar={productListToolbar}
               />
-            </Card>
-          )}
-          {currentTab === CategoryPageTab.products && (
-            <CategoryProducts
-              categoryName={maybe(() => category.name)}
-              products={products}
-              disabled={disabled}
-              pageInfo={pageInfo}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
-              onRowClick={onProductClick}
-              onAdd={onAddProduct}
-              toggle={toggle}
-              toggleAll={toggleAll}
-              selected={selected}
-              isChecked={isChecked}
-              toolbar={productListToolbar}
+            )}
+            <SaveButtonBar
+              onCancel={onBack}
+              onDelete={onDelete}
+              onSave={submit}
+              state={saveButtonBarState}
+              disabled={disabled || !hasChanged}
             />
-          )}
-          <SaveButtonBar
-            onCancel={onBack}
-            onDelete={onDelete}
-            onSave={submit}
-            state={saveButtonBarState}
-            disabled={disabled || !hasChanged}
-          />
-        </Container>
-      )}
+          </Container>
+        );
+      }}
     </Form>
   );
 };
