@@ -18,6 +18,24 @@ export const createChannelsData = (
     publicationDate: null
   })) || [];
 
+export const createShippingChannels = (
+  data?: Channels_channels[]
+): ChannelShippingData[] | [] =>
+  data?.map(channel => ({
+    id: channel.id,
+    maxValue: "",
+    minValue: "",
+    name: channel.name,
+    price: ""
+  })) || [];
+export interface ChannelShippingData {
+  id: string;
+  minValue: string;
+  name: string;
+  maxValue: string;
+  price: string;
+}
+
 export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product_channelListing[]
 ) =>

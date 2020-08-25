@@ -3,12 +3,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { RequireOnlyOne } from "@saleor/misc";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -16,27 +17,28 @@ import { useIntl } from "react-intl";
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
 
-export interface ChannelsAvailabilityProps {
+interface Value {
+  isPublished: boolean;
+  publicationDate: string | null;
+}
+interface ChannelsAvailability {
   channels: ChannelData[];
+  shippingChannels: ChannelShippingData[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
-  onChange: (
-    index: number
-  ) => (channelData: {
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => void;
+  onChange?: (index: number) => (data: Value) => void;
   openModal: () => void;
 }
+export type ChannelsAvailabilityProps = RequireOnlyOne<
+  ChannelsAvailability,
+  "channels" | "shippingChannels"
+>;
 
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  onChange: (data: {
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => void;
+  onChange: (data: Value) => void;
 }
 
 const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
@@ -162,7 +164,8 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
     allChannelsCount,
     channels,
     openModal,
-    onChange
+    onChange,
+    shippingChannels
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
@@ -204,9 +207,20 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
               <Hr className={classes.hr} />
             </>
           )}
-          {channels?.map((data, index) => (
-            <Channel key={data.id} data={data} onChange={onChange(index)} />
-          ))}
+          {channels
+            ? channels.map((data, index) => (
+                <Channel key={data.id} data={data} onChange={onChange(index)} />
+              ))
+            : shippingChannels.map(data => (
+                <>
+                  <div key={data.id} className={classes.channelItem}>
+                    <div className={classes.channelName}>
+                      <Typography>{data.name}</Typography>
+                    </div>
+                  </div>
+                  <Hr className={classes.hr} />
+                </>
+              ))}
         </CardContent>
       </Card>
     </>
