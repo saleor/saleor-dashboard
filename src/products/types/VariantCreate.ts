@@ -14,6 +14,18 @@ export interface VariantCreate_productVariantCreate_errors {
   field: string | null;
 }
 
+export interface VariantCreate_productVariantCreate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -120,6 +132,8 @@ export interface VariantCreate_productVariantCreate_productVariant_weight {
 export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantCreate_productVariantCreate_productVariant_metadata | null)[];
+  privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
   attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
   costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;

@@ -14,6 +14,18 @@ export interface VariantImageUnassign_variantImageUnassign_errors {
   field: string | null;
 }
 
+export interface VariantImageUnassign_variantImageUnassign_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VariantImageUnassign_variantImageUnassign_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -120,6 +132,8 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_weight
 export interface VariantImageUnassign_variantImageUnassign_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantImageUnassign_variantImageUnassign_productVariant_metadata | null)[];
+  privateMetadata: (VariantImageUnassign_variantImageUnassign_productVariant_privateMetadata | null)[];
   attributes: VariantImageUnassign_variantImageUnassign_productVariant_attributes[];
   costPrice: VariantImageUnassign_variantImageUnassign_productVariant_costPrice | null;
   images: (VariantImageUnassign_variantImageUnassign_productVariant_images | null)[] | null;

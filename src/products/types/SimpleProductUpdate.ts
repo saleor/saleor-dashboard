@@ -229,6 +229,18 @@ export interface SimpleProductUpdate_productVariantUpdate_errors {
   field: string | null;
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -335,6 +347,8 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_weight 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (SimpleProductUpdate_productVariantUpdate_productVariant_metadata | null)[];
+  privateMetadata: (SimpleProductUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   attributes: SimpleProductUpdate_productVariantUpdate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantUpdate_productVariant_images | null)[] | null;
@@ -358,6 +372,18 @@ export interface SimpleProductUpdate_productVariantStocksCreate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes_attribute_values {
@@ -466,6 +492,8 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_w
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (SimpleProductUpdate_productVariantStocksCreate_productVariant_metadata | null)[];
+  privateMetadata: (SimpleProductUpdate_productVariantStocksCreate_productVariant_privateMetadata | null)[];
   attributes: SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksCreate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksCreate_productVariant_images | null)[] | null;
@@ -488,6 +516,18 @@ export interface SimpleProductUpdate_productVariantStocksDelete_errors {
   __typename: "StockError";
   code: StockErrorCode;
   field: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes_attribute_values {
@@ -596,6 +636,8 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_w
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (SimpleProductUpdate_productVariantStocksDelete_productVariant_metadata | null)[];
+  privateMetadata: (SimpleProductUpdate_productVariantStocksDelete_productVariant_privateMetadata | null)[];
   attributes: SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksDelete_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksDelete_productVariant_images | null)[] | null;
@@ -619,6 +661,18 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values {
@@ -727,6 +781,8 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_w
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_metadata | null)[];
+  privateMetadata: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   attributes: SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;

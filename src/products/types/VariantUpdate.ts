@@ -14,6 +14,18 @@ export interface VariantUpdate_productVariantUpdate_errors {
   field: string | null;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -120,6 +132,8 @@ export interface VariantUpdate_productVariantUpdate_productVariant_weight {
 export interface VariantUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantUpdate_productVariantUpdate_productVariant_metadata | null)[];
+  privateMetadata: (VariantUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   attributes: VariantUpdate_productVariantUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
@@ -143,6 +157,18 @@ export interface VariantUpdate_productVariantStocksUpdate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values {
@@ -251,6 +277,8 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_weight 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantUpdate_productVariantStocksUpdate_productVariant_metadata | null)[];
+  privateMetadata: (VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   attributes: VariantUpdate_productVariantStocksUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
