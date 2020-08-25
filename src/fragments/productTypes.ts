@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import { attributeFragment } from "./attributes";
+import { metadataFragment } from "./metadata";
 
 export const productTypeFragment = gql`
   fragment ProductTypeFragment on ProductType {
@@ -18,8 +19,10 @@ export const productTypeFragment = gql`
 export const productTypeDetailsFragment = gql`
   ${attributeFragment}
   ${productTypeFragment}
+  ${metadataFragment}
   fragment ProductTypeDetailsFragment on ProductType {
     ...ProductTypeFragment
+    ...Metadata
     productAttributes {
       ...AttributeFragment
     }

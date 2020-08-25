@@ -14,6 +14,18 @@ export interface ProductTypeDetailsFragment_taxType {
   taxCode: string | null;
 }
 
+export interface ProductTypeDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductTypeDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ProductTypeDetailsFragment_productAttributes {
   __typename: "Attribute";
   id: string;
@@ -47,6 +59,8 @@ export interface ProductTypeDetailsFragment {
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeDetailsFragment_taxType | null;
+  metadata: (ProductTypeDetailsFragment_metadata | null)[];
+  privateMetadata: (ProductTypeDetailsFragment_privateMetadata | null)[];
   productAttributes: (ProductTypeDetailsFragment_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeDetailsFragment_variantAttributes | null)[] | null;
   weight: ProductTypeDetailsFragment_weight | null;
