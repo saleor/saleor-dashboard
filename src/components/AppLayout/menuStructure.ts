@@ -24,6 +24,7 @@ export interface IMenuItem {
   icon?: any;
   label: string;
   permission?: PermissionEnum;
+  testingContextId: string;
   url?: string;
 }
 
@@ -33,6 +34,7 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       ariaLabel: "home",
       icon: homeIcon,
       label: intl.formatMessage(sectionNames.home),
+      testingContextId: "home",
       url: "/"
     },
     {
@@ -41,22 +43,26 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
         {
           ariaLabel: "products",
           label: intl.formatMessage(sectionNames.products),
+          testingContextId: "products",
           url: productListUrl()
         },
         {
           ariaLabel: "categories",
           label: intl.formatMessage(sectionNames.categories),
+          testingContextId: "categories",
           url: categoryListUrl()
         },
         {
           ariaLabel: "collections",
           label: intl.formatMessage(sectionNames.collections),
+          testingContextId: "collections",
           url: collectionListUrl()
         }
       ],
       icon: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
-      permission: PermissionEnum.MANAGE_PRODUCTS
+      permission: PermissionEnum.MANAGE_PRODUCTS,
+      testingContextId: "catalogue"
     },
     {
       ariaLabel: "orders",
@@ -65,24 +71,28 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
           ariaLabel: "orders",
           label: intl.formatMessage(sectionNames.orders),
           permission: PermissionEnum.MANAGE_ORDERS,
+          testingContextId: "orders",
           url: orderListUrl()
         },
         {
           ariaLabel: "order drafts",
           label: intl.formatMessage(commonMessages.drafts),
           permission: PermissionEnum.MANAGE_ORDERS,
+          testingContextId: "order drafts",
           url: orderDraftListUrl()
         }
       ],
       icon: ordersIcon,
       label: intl.formatMessage(sectionNames.orders),
-      permission: PermissionEnum.MANAGE_ORDERS
+      permission: PermissionEnum.MANAGE_ORDERS,
+      testingContextId: "orders"
     },
     {
       ariaLabel: "customers",
       icon: customerIcon,
       label: intl.formatMessage(sectionNames.customers),
       permission: PermissionEnum.MANAGE_USERS,
+      testingContextId: "customers",
       url: customerListUrl()
     },
 
@@ -92,23 +102,27 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
         {
           ariaLabel: "sales",
           label: intl.formatMessage(sectionNames.sales),
+          testingContextId: "sales",
           url: saleListUrl()
         },
         {
           ariaLabel: "vouchers",
           label: intl.formatMessage(sectionNames.vouchers),
+          testingContextId: "vouchers",
           url: voucherListUrl()
         }
       ],
       icon: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
-      permission: PermissionEnum.MANAGE_DISCOUNTS
+      permission: PermissionEnum.MANAGE_DISCOUNTS,
+      testingContextId: "discounts"
     },
     {
       ariaLabel: "apps",
       icon: appsIcon,
       label: intl.formatMessage(sectionNames.apps),
       permission: PermissionEnum.MANAGE_APPS,
+      testingContextId: "apps",
       url: appsListPath
     },
     {
@@ -116,6 +130,7 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       icon: translationIcon,
       label: intl.formatMessage(sectionNames.translations),
       permission: PermissionEnum.MANAGE_TRANSLATIONS,
+      testingContextId: "translations",
       url: languageListUrl
     }
   ];
