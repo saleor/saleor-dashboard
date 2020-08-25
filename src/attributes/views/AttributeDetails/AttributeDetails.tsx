@@ -5,12 +5,19 @@ import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { move } from "@saleor/utils/lists";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
-import AttributePage from "../../components/AttributePage";
+import AttributePage, {
+  AttributePageFormData
+} from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import {
@@ -38,6 +45,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
@@ -166,6 +175,32 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       }
     });
 
+  const handleUpdate = async (data: AttributePageFormData) => {
+    const input = {
+      ...data,
+      inputType: undefined,
+      metadata: undefined,
+      privateMetadata: undefined,
+      storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0)
+    };
+
+    const result = await attributeUpdate({
+      variables: {
+        id,
+        input
+      }
+    });
+
+    return result.data.attributeUpdate.errors;
+  };
+
+  const handleSubmit = createMetadataUpdateHandler(
+    data?.attribute,
+    handleUpdate,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
+
   return (
     <>
       <AttributePage
@@ -174,25 +209,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         errors={attributeUpdateOpts.data?.attributeUpdate.errors || []}
         onBack={() => navigate(attributeListUrl())}
         onDelete={() => openModal("remove")}
-        onSubmit={data => {
-          const input = {
-            ...data,
-            inputType: undefined
-          };
-
-          attributeUpdate({
-            variables: {
-              id,
-              input: {
-                ...input,
-                storefrontSearchPosition: parseInt(
-                  input.storefrontSearchPosition,
-                  0
-                )
-              }
-            }
-          });
-        }}
+        onSubmit={handleSubmit}
         onValueAdd={() => openModal("add-value")}
         onValueDelete={id =>
           openModal("remove-value", {

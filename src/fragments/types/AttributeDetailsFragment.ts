@@ -8,6 +8,18 @@ import { AttributeInputTypeEnum, AttributeValueType } from "./../../types/global
 // GraphQL fragment: AttributeDetailsFragment
 // ====================================================
 
+export interface AttributeDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AttributeDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface AttributeDetailsFragment_values {
   __typename: "AttributeValue";
   id: string;
@@ -24,6 +36,8 @@ export interface AttributeDetailsFragment {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  metadata: (AttributeDetailsFragment_metadata | null)[];
+  privateMetadata: (AttributeDetailsFragment_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;

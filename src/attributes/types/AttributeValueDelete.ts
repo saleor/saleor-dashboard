@@ -8,6 +8,18 @@ import { AttributeInputTypeEnum, AttributeValueType, ProductErrorCode } from "./
 // GraphQL mutation operation: AttributeValueDelete
 // ====================================================
 
+export interface AttributeValueDelete_attributeValueDelete_attribute_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface AttributeValueDelete_attributeValueDelete_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -24,6 +36,8 @@ export interface AttributeValueDelete_attributeValueDelete_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  metadata: (AttributeValueDelete_attributeValueDelete_attribute_metadata | null)[];
+  privateMetadata: (AttributeValueDelete_attributeValueDelete_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;
