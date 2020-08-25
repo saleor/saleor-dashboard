@@ -1,9 +1,7 @@
-import { ChannelShippingData } from "@saleor/channels/utils";
+import { ChannelShippingData as Channel } from "@saleor/channels/utils";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { useState } from "react";
-
-type Channel = ChannelShippingData;
 
 function useChannels(channels: Channel[]) {
   const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);

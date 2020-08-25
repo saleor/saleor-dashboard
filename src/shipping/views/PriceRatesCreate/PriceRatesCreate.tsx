@@ -59,7 +59,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
       }
     }
   });
-  const shippingChannels = createShippingChannels(channelsData?.channels);
+
   const allChannels = createShippingChannels(channelsData?.channels);
 
   const {
@@ -72,7 +72,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels
-  } = useChannels(shippingChannels);
+  } = useChannels(allChannels);
 
   const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
     onCompleted: data => {
