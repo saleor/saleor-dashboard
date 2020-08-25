@@ -9,3 +9,23 @@ Cypress.Commands.add("loginUser", () =>
     .get(LOGIN_SELECTORS.signInButton)
     .click()
 );
+
+Cypress.Commands.add("loginUserViaRequest", () =>
+  cy
+    .request({
+      method: "POST",
+      url: Cypress.env("API_URI"),
+      body: {
+        operationName: "TokenAuth",
+        variables: {
+          email: Cypress.env("USER_NAME"),
+          password: Cypress.env("USER_PASSWORD")
+        },
+        query:
+          "mutation TokenAuth($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    errors: accountErrors {\n      code\n      field\n      message\n      __typename\n    }\n    user {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"
+      }
+    })
+    .then(resp => {
+      window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
+    })
+);

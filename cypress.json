@@ -1,8 +1,5 @@
 {
   "baseUrl": "http://localhost:9000",
-  "env": {
-    "API_URI": "https://pwa.demo.saleor.rocks/graphql/"
-  },
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,

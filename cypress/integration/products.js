@@ -1,37 +1,43 @@
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
 
 // <reference types="cypress" />
 describe("Products", () => {
   beforeEach(() => {
-    cy.clearSessionData();
-    cy.visit("/");
-    cy.loginUser();
+    cy.clearSessionData().loginUserViaRequest();
   });
 
   it("should add new visible product", () => {
-    cy.get(LEFT_MENU_SELECTORS.catalog)
+    cy.visit("/")
+      .get(LEFT_MENU_SELECTORS.catalog)
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.products)
+      .get(PRODUCTS_SELECTORS.products)
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.createProductBtn)
+      .get(PRODUCTS_SELECTORS.createProductBtn)
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.productNameInput)
+      .get(PRODUCTS_SELECTORS.productNameInput)
       .click()
       .type("Visible test product")
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.productTypeInput)
+      .get(PRODUCTS_SELECTORS.productTypeInput)
       .click()
-      .type("Cushion{'enter'}")
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.categoryInput)
+      .type("Cushion")
+      .get(PRODUCTS_SELECTORS.categoryItem)
+      .should("have.length", 1)
+      .get(PRODUCTS_SELECTORS.firstCategoryItem)
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.categoryDropdown)
+      .get(PRODUCTS_SELECTORS.categoryInput)
+      .click()
+      .get(PRODUCTS_SELECTORS.categoryItem)
       .first()
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.visibleRadioBtn)
+      .get(PRODUCTS_SELECTORS.visibleRadioBtn)
+      .first()
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.saveBtn)
+      .get(PRODUCTS_SELECTORS.saveBtn)
       .click()
-      .get(LEFT_MENU_SELECTORS.PRODUCTS_SELECTORS.confirmationMsg)
-      .contains("Product save");
+      .get(PRODUCTS_SELECTORS.confirmationMsg, {
+        timeout: 1000
+      })
+      .contains("Product created");
   });
 });
