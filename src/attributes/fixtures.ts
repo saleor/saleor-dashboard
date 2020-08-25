@@ -14,7 +14,15 @@ export const attribute: AttributeDetailsFragment = {
   filterableInStorefront: true,
   id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
   inputType: AttributeInputTypeEnum.DROPDOWN,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Author",
+  privateMetadata: [],
   slug: "author",
   storefrontSearchPosition: 2,
   valueRequired: true,
