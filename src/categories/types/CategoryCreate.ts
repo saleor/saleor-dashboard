@@ -8,6 +8,18 @@ import { CategoryInput, ProductErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: CategoryCreate
 // ====================================================
 
+export interface CategoryCreate_categoryCreate_category_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CategoryCreate_categoryCreate_category_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CategoryCreate_categoryCreate_category_backgroundImage {
   __typename: "Image";
   alt: string | null;
@@ -22,6 +34,8 @@ export interface CategoryCreate_categoryCreate_category_parent {
 export interface CategoryCreate_categoryCreate_category {
   __typename: "Category";
   id: string;
+  metadata: (CategoryCreate_categoryCreate_category_metadata | null)[];
+  privateMetadata: (CategoryCreate_categoryCreate_category_privateMetadata | null)[];
   backgroundImage: CategoryCreate_categoryCreate_category_backgroundImage | null;
   name: string;
   descriptionJson: any;

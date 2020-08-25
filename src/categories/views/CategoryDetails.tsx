@@ -12,6 +12,11 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +27,8 @@ import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
 import {
   CategoryPageTab,
-  CategoryUpdatePage
+  CategoryUpdatePage,
+  FormData
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import {
   useCategoryBulkDeleteMutation,
@@ -63,6 +69,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
@@ -167,6 +175,31 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params
   );
 
+  const handleUpdate = async (formData: FormData) => {
+    const result = await updateCategory({
+      variables: {
+        id,
+        input: {
+          backgroundImageAlt: formData.backgroundImageAlt,
+          descriptionJson: JSON.stringify(formData.description),
+          name: formData.name,
+          seo: {
+            description: formData.seoDescription,
+            title: formData.seoTitle
+          }
+        }
+      }
+    });
+
+    return result.data.categoryUpdate.errors;
+  };
+  const handleSubmit = createMetadataUpdateHandler(
+    data?.category,
+    handleUpdate,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
+
   return (
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
@@ -209,22 +242,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
         onProductClick={id => () => navigate(productUrl(id))}
-        onSubmit={formData =>
-          updateCategory({
-            variables: {
-              id,
-              input: {
-                backgroundImageAlt: formData.backgroundImageAlt,
-                descriptionJson: JSON.stringify(formData.description),
-                name: formData.name,
-                seo: {
-                  description: formData.seoDescription,
-                  title: formData.seoTitle
-                }
-              }
-            }
-          })
-        }
+        onSubmit={handleSubmit}
         products={maybe(() =>
           data.category.products.edges.map(edge => edge.node)
         )}
