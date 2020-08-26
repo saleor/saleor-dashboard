@@ -245,4 +245,5 @@ export interface ProductCreateVariables {
   stocks: StockInput[];
   trackInventory: boolean;
   weight?: any | null;
+  visibleInListings?: boolean | null;
 }

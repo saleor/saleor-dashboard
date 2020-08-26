@@ -18,6 +18,9 @@ import FormSpacer from "../FormSpacer";
 
 const useStyles = makeStyles(
   theme => ({
+    checkbox: {
+      marginTop: 10
+    },
     children: {
       "& button": {
         margin: "0 9px"
@@ -125,11 +128,13 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   defaultMessage: "Published"
                 })}
               </p>
-              {isPublished && publicationDate && (
-                <span className={classes.secondLabel}>
-                  {visibleMessage(publicationDate)}
-                </span>
-              )}
+              {isPublished &&
+                publicationDate &&
+                Date.parse(publicationDate) < dateNow && (
+                  <span className={classes.secondLabel}>
+                    {visibleMessage(publicationDate)}
+                  </span>
+                )}
             </>
           }
           name={"isPublished" as keyof FormData}
@@ -142,7 +147,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               </p>
               {publicationDate &&
                 !isPublished &&
-                Date.parse(publicationDate) > dateNow &&
+                Date.parse(publicationDate) >= dateNow &&
                 (hiddenMessage || (
                   <span className={classes.secondLabel}>
                     {intl.formatMessage(
@@ -163,16 +168,14 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         />
         {!isPublished && (
           <>
-            {!isPublished && (
-              <Typography
-                className={classes.setPublicationDate}
-                onClick={() => setPublicationDate(!isPublicationDate)}
-              >
-                {intl.formatMessage({
-                  defaultMessage: "Set publication date"
-                })}
-              </Typography>
-            )}
+            <Typography
+              className={classes.setPublicationDate}
+              onClick={() => setPublicationDate(!isPublicationDate)}
+            >
+              {intl.formatMessage({
+                defaultMessage: "Set publication date"
+              })}
+            </Typography>
             {isPublicationDate && (
               <TextField
                 error={!!getFieldError(errors, "publicationDate")}
@@ -203,7 +206,6 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             </Typography>
           </>
         )}
-
         {hasAvailableProps && (
           <>
             <Hr />
@@ -232,21 +234,19 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                       defaultMessage: "Unavailable for purchase"
                     })}
                   </p>
-                  {availableForPurchase &&
-                    !isAvailable &&
-                    Date.parse(availableForPurchase) > dateNow && (
-                      <span className={classes.secondLabel}>
-                        {intl.formatMessage(
-                          {
-                            defaultMessage: "will become available on {date}",
-                            description: "product"
-                          },
-                          {
-                            date: localizeDate(availableForPurchase)
-                          }
-                        )}
-                      </span>
-                    )}
+                  {availableForPurchase && !isAvailable && (
+                    <span className={classes.secondLabel}>
+                      {intl.formatMessage(
+                        {
+                          defaultMessage: "will become available on {date}",
+                          description: "product"
+                        },
+                        {
+                          date: localizeDate(availableForPurchase)
+                        }
+                      )}
+                    </span>
+                  )}
                 </>
               }
               value={isAvailable}
@@ -294,16 +294,34 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             )}
           </>
         )}
-        <Hr />
-        <ControlledCheckbox
-          name="visibleInListings"
-          checked={visibleInListings}
-          disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "Show in product listings"
-          })}
-          onChange={onChange}
-        />
+        {visibleInListings !== undefined && (
+          <>
+            <Hr />
+            <ControlledCheckbox
+              className={classes.checkbox}
+              name="visibleInListings"
+              checked={visibleInListings}
+              disabled={disabled}
+              label={
+                <>
+                  <p className={classes.label}>
+                    {intl.formatMessage({
+                      defaultMessage: "Show in product listings"
+                    })}
+                  </p>
+
+                  <span className={classes.secondLabel}>
+                    {intl.formatMessage({
+                      defaultMessage:
+                        "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+                    })}
+                  </span>
+                </>
+              }
+              onChange={onChange}
+            />
+          </>
+        )}
         <div className={classes.children}>{children}</div>
       </CardContent>
     </Card>

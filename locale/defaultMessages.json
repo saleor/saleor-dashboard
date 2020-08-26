@@ -1831,6 +1831,9 @@
   "src_dot_components_dot_VisibilityCard_dot_1306298759": {
     "string": "Available for purchase"
   },
+  "src_dot_components_dot_VisibilityCard_dot_1311467573": {
+    "string": "Show in product listings"
+  },
   "src_dot_components_dot_VisibilityCard_dot_1459686496": {
     "context": "section header",
     "string": "Visibility"
@@ -1846,6 +1849,9 @@
   "src_dot_components_dot_VisibilityCard_dot_2232321263": {
     "context": "publication date",
     "string": "will become published on {date}"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_2264302389": {
+    "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
   "src_dot_components_dot_VisibilityCard_dot_2341910657": {
     "string": "Not published"

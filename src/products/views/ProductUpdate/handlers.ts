@@ -47,14 +47,15 @@ export function createUpdateHandler(
       collections: data.collections,
       descriptionJson: JSON.stringify(data.description),
       id: product.id,
-      isPublished: data.publicationDate ? true : data.isPublished,
+      isPublished: data.isPublished,
       name: data.name,
       publicationDate:
         data.publicationDate !== "" ? data.publicationDate : null,
       seo: {
         description: data.seoDescription,
         title: data.seoTitle
-      }
+      },
+      visibleInListings: data.visibleInListings
     };
 
     let errors: Array<
@@ -93,10 +94,14 @@ export function createUpdateHandler(
     ) {
       const availabilityResult = await setProductAvailability({
         variables: {
-          isAvailable: data.availableForPurchase ? true : data.isAvailable,
+          isAvailable:
+            availableForPurchase && !isAvailable ? true : isAvailable,
           productId: product.id,
-          startDate:
-            data.availableForPurchase !== "" ? data.availableForPurchase : null
+          startDate: isAvailable
+            ? null
+            : availableForPurchase !== ""
+            ? availableForPurchase
+            : null
         }
       });
       errors = [

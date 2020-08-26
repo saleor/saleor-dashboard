@@ -145,6 +145,7 @@ export const productUpdateMutation = gql`
     $name: String
     $basePrice: Decimal
     $seo: SeoInput
+    $visibleInListings: Boolean
   ) {
     productUpdate(
       id: $id
@@ -159,6 +160,7 @@ export const productUpdateMutation = gql`
         name: $name
         basePrice: $basePrice
         seo: $seo
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -290,6 +292,7 @@ export const productCreateMutation = gql`
     $stocks: [StockInput!]!
     $trackInventory: Boolean!
     $weight: WeightScalar
+    $visibleInListings: Boolean
   ) {
     productCreate(
       input: {
@@ -308,6 +311,7 @@ export const productCreateMutation = gql`
         stocks: $stocks
         trackInventory: $trackInventory
         weight: $weight
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
