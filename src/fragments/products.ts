@@ -177,6 +177,7 @@ export const productFragmentDetails = gql`
       ...WeightFragment
     }
     availableForPurchase
+    visibleInListings
   }
 `;
 

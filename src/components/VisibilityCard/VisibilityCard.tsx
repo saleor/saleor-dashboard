@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
@@ -57,6 +58,7 @@ interface VisibilityCardProps {
     isAvailable?: boolean;
     isPublished: boolean;
     publicationDate: string;
+    visibleInListings?: boolean;
   };
   errors: UserError[];
   disabled?: boolean;
@@ -67,14 +69,19 @@ interface VisibilityCardProps {
 export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
-    data: { availableForPurchase, isAvailable, isPublished, publicationDate },
+    data: {
+      availableForPurchase,
+      isAvailable,
+      isPublished,
+      publicationDate,
+      visibleInListings
+    },
     errors,
     disabled,
     hiddenMessage,
     onChange
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const dateNow = React.useContext(DateContext);
@@ -287,6 +294,16 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             )}
           </>
         )}
+        <Hr />
+        <ControlledCheckbox
+          name="visibleInListings"
+          checked={visibleInListings}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Show in product listings"
+          })}
+          onChange={onChange}
+        />
         <div className={classes.children}>{children}</div>
       </CardContent>
     </Card>

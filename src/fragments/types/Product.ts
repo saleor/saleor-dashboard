@@ -210,4 +210,5 @@ export interface Product {
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
   availableForPurchase: any | null;
+  visibleInListings: boolean;
 }

@@ -216,6 +216,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
   weight: ProductImageUpdate_productImageUpdate_product_weight | null;
   availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductImageUpdate_productImageUpdate {

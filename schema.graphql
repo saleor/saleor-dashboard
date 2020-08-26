@@ -1072,7 +1072,7 @@ type Collection implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
-  products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
+  products(filter: ProductFilterInput, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
 }
@@ -3635,6 +3635,7 @@ type Product implements Node & ObjectWithMetadata {
   chargeTaxes: Boolean!
   weight: Weight
   availableForPurchase: Date
+  visibleInListings: Boolean!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
@@ -3721,6 +3722,7 @@ input ProductCreateInput {
   sku: String
   trackInventory: Boolean
   basePrice: Decimal
+  visibleInListings: Boolean
   productType: ID!
   stocks: [StockInput!]
 }
@@ -3759,6 +3761,7 @@ enum ProductFieldEnum {
   CATEGORY
   VISIBLE
   AVAILABLE_FOR_PURCHASE
+  SEARCHABLE
   PRODUCT_WEIGHT
   COLLECTIONS
   CHARGE_TAXES
@@ -3853,6 +3856,7 @@ input ProductInput {
   sku: String
   trackInventory: Boolean
   basePrice: Decimal
+  visibleInListings: Boolean
 }
 
 input ProductOrder {
