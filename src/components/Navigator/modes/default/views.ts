@@ -1,3 +1,4 @@
+import { appsListUrl } from "@saleor/apps/urls";
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { categoryListUrl } from "@saleor/categories/urls";
 import { collectionListUrl } from "@saleor/collections/urls";
@@ -8,6 +9,7 @@ import { sectionNames } from "@saleor/intl";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { pageListUrl } from "@saleor/pages/urls";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
 import { productListUrl } from "@saleor/products/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
@@ -32,6 +34,10 @@ function searchInViews(
   navigate: UseNavigatorResult
 ): QuickSearchActionInput[] {
   const views: View[] = [
+    {
+      label: intl.formatMessage(sectionNames.apps),
+      url: appsListUrl()
+    },
     {
       label: intl.formatMessage(sectionNames.attributes),
       url: attributeListUrl()
@@ -67,6 +73,10 @@ function searchInViews(
     {
       label: intl.formatMessage(sectionNames.pages),
       url: pageListUrl()
+    },
+    {
+      label: intl.formatMessage(sectionNames.permissionGroups),
+      url: permissionGroupListUrl()
     },
     {
       label: intl.formatMessage(sectionNames.plugins),
