@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
 
 Cypress.Commands.add("loginUser", () =>
@@ -10,8 +11,25 @@ Cypress.Commands.add("loginUser", () =>
     .click()
 );
 
-Cypress.Commands.add("loginUserViaRequest", () =>
-  cy
+Cypress.Commands.add("loginUserViaRequest", () => {
+  const logInMutationQuery = `mutation TokenAuth($email: String!, $password: String!) {
+    tokenCreate(email: $email, password: $password) {
+      token
+      errors: accountErrors {
+        code
+        field
+        message
+        __typename
+      }
+      user {
+        id
+        __typename
+      }
+      __typename
+    }
+  }`;
+
+  return cy
     .request({
       method: "POST",
       url: Cypress.env("API_URI"),
@@ -21,11 +39,10 @@ Cypress.Commands.add("loginUserViaRequest", () =>
           email: Cypress.env("USER_NAME"),
           password: Cypress.env("USER_PASSWORD")
         },
-        query:
-          "mutation TokenAuth($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    errors: accountErrors {\n      code\n      field\n      message\n      __typename\n    }\n    user {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"
+        query: logInMutationQuery
       }
     })
     .then(resp => {
       window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
-    })
-);
+    });
+});
