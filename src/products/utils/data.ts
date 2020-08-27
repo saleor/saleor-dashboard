@@ -202,7 +202,7 @@ export function getProductUpdatePageFormData(
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
-    isAvailable: product?.isAvailable,
+    isAvailable: !!product?.isAvailable,
     isPublished: maybe(() => product.isPublished, false),
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
@@ -220,7 +220,7 @@ export function getProductUpdatePageFormData(
       ""
     ),
     trackInventory: !!product?.variants[0]?.trackInventory,
-    visibleInListings: product?.visibleInListings || false,
+    visibleInListings: !!product?.visibleInListings,
     weight: product?.weight?.value.toString() || ""
   };
 }

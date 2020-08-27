@@ -47,7 +47,7 @@ const useStyles = makeStyles(
       cursor: "pointer",
       fontSize: 14,
       paddingBottom: 10,
-      paddingTop: 5,
+      paddingTop: 0,
       textDecoration: "underline"
     }
   }),
@@ -105,7 +105,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         description: "date"
       },
       {
-        date: localizeDate(date)
+        date: localizeDate(date, "L")
       }
     );
 
@@ -156,7 +156,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                         description: "publication date"
                       },
                       {
-                        date: localizeDate(publicationDate)
+                        date: localizeDate(publicationDate, "L")
                       }
                     )}
                   </span>
@@ -219,11 +219,13 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                       defaultMessage: "Available for purchase"
                     })}
                   </p>
-                  {isAvailable && availableForPurchase && (
-                    <span className={classes.secondLabel}>
-                      {visibleMessage(availableForPurchase)}
-                    </span>
-                  )}
+                  {isAvailable &&
+                    availableForPurchase &&
+                    Date.parse(availableForPurchase) < dateNow && (
+                      <span className={classes.secondLabel}>
+                        {visibleMessage(availableForPurchase)}
+                      </span>
+                    )}
                 </>
               }
               name={"isAvailable" as keyof FormData}
@@ -234,19 +236,21 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                       defaultMessage: "Unavailable for purchase"
                     })}
                   </p>
-                  {availableForPurchase && !isAvailable && (
-                    <span className={classes.secondLabel}>
-                      {intl.formatMessage(
-                        {
-                          defaultMessage: "will become available on {date}",
-                          description: "product"
-                        },
-                        {
-                          date: localizeDate(availableForPurchase)
-                        }
-                      )}
-                    </span>
-                  )}
+                  {availableForPurchase &&
+                    !isAvailable &&
+                    Date.parse(availableForPurchase) >= dateNow && (
+                      <span className={classes.secondLabel}>
+                        {intl.formatMessage(
+                          {
+                            defaultMessage: "will become available on {date}",
+                            description: "product available for purchase date"
+                          },
+                          {
+                            date: localizeDate(availableForPurchase, "L")
+                          }
+                        )}
+                      </span>
+                    )}
                 </>
               }
               value={isAvailable}
