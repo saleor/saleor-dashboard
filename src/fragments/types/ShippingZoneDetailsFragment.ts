@@ -44,6 +44,22 @@ export interface ShippingZoneDetailsFragment_shippingMethods_price {
   currency: string;
 }
 
+export interface ShippingZoneDetailsFragment_shippingMethods_channels_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ShippingZoneDetailsFragment_shippingMethods_channels {
+  __typename: "ShippingMethodChannelListing";
+  id: string;
+  channel: ShippingZoneDetailsFragment_shippingMethods_channels_channel;
+  price: number | null;
+  minValue: number | null;
+  maxValue: number | null;
+}
+
 export interface ShippingZoneDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
@@ -54,6 +70,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   name: string;
   price: ShippingZoneDetailsFragment_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
+  channels: (ShippingZoneDetailsFragment_shippingMethods_channels | null)[] | null;
 }
 
 export interface ShippingZoneDetailsFragment_warehouses {

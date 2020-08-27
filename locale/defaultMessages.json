@@ -4517,87 +4517,6 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1109610983": {
     "string": "Shipping Zone Name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1337705349": {
-    "string": "Minimal Order Value"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1388947267": {
-    "string": "This rate will apply to all orders of all weights"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1397795758": {
-    "context": "add weight based shipping method, dialog header",
-    "string": "Add Weight Rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1403365734": {
-    "context": "shipping method price",
-    "string": "Rate Price"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1486599614": {
-    "string": "This will be shown to customers at checkout"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1542600502": {
-    "context": "button",
-    "string": "Update rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_16061680": {
-    "context": "button",
-    "string": "Create rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1878009504": {
-    "string": "Minimal Order Weight"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2215090771": {
-    "context": "shipping method, switch button",
-    "string": "This is free shipping"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2324036635": {
-    "context": "order weight range",
-    "string": "Weight range"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2533614652": {
-    "context": "order price range",
-    "string": "Value range"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2892088870": {
-    "context": "dialog header",
-    "string": "Add Price Rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3213611593": {
-    "context": "shipping method",
-    "string": "Rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3463567334": {
-    "string": "Maximal Order Value"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3659741519": {
-    "string": "Maximal Order Weight"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_382595300": {
-    "context": "shipping method name",
-    "string": "Rate Name"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3934114933": {
-    "context": "dialog header",
-    "string": "Edit Price Rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_4152709923": {
-    "context": "edit weight based shipping method, dialog header",
-    "string": "Edit Weight Rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_4226393146": {
-    "string": "This rate will apply to all orders of all prices"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_882649212": {
-    "context": "shipping method has no value limits",
-    "string": "There are no value limits"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_price": {
-    "context": "error message",
-    "string": "Maximum price cannot be lower than minimum"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_weight": {
-    "context": "error message",
-    "string": "Maximum weight cannot be lower than minimum"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1161979494": {
     "context": "page title",
     "string": "Price Rate Create"
@@ -4696,6 +4615,16 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
+  "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_4092948954": {
+    "context": "notification text",
+    "string": "Channels saved"
+  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
     "string": "Delete Shipping Zone"
@@ -4704,13 +4633,19 @@
     "context": "unassign country",
     "string": "Are you sure you want to delete {countryName} from this shipping zone?"
   },
-  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1502359905": {
-    "context": "dialog header",
-    "string": "Delete Shipping Method"
-  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
     "context": "unassign country, dialog header",
     "string": "Delete from Shipping Zone"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
+    "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
+    "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_4092948954": {
+    "context": "notification text",
+    "string": "Channels saved"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",

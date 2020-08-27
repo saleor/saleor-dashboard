@@ -44,6 +44,22 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_price {
   currency: string;
 }
 
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels {
+  __typename: "ShippingMethodChannelListing";
+  id: string;
+  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels_channel;
+  price: number | null;
+  minValue: number | null;
+  maxValue: number | null;
+}
+
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -54,6 +70,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   name: string;
   price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
+  channels: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels | null)[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {

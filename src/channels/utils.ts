@@ -1,5 +1,6 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
+import { ShippingZone_shippingZone_shippingMethods_channels } from "@saleor/shipping/types/ShippingZone";
 
 export interface ChannelData {
   id: string;
@@ -27,6 +28,17 @@ export const createShippingChannels = (
     minValue: "",
     name: channel.name,
     price: ""
+  })) || [];
+
+export const createShippingChannelsFromRate = (
+  data?: ShippingZone_shippingZone_shippingMethods_channels[]
+): ChannelShippingData[] | [] =>
+  data?.map(channelData => ({
+    id: channelData.channel.id,
+    maxValue: channelData.maxValue ? channelData.maxValue.toString() : "",
+    minValue: channelData.minValue ? channelData.minValue.toString() : "",
+    name: channelData.channel.name,
+    price: channelData.price ? channelData.price.toString() : ""
   })) || [];
 export interface ChannelShippingData {
   id: string;
