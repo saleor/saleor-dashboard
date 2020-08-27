@@ -6,15 +6,23 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  shippingPriceRatesEditUrl,
+  shippingPriceRatesUrl,
+  shippingWeightRatesEditUrl,
+  shippingWeightRatesUrl,
   shippingZoneAddPath,
   shippingZonePath,
   shippingZonesListPath,
   ShippingZonesListUrlQueryParams,
   ShippingZoneUrlQueryParams
 } from "./urls";
+import PriceRatesCreateComponent from "./views/PriceRatesCreate";
+import PriceRatesUpdateComponent from "./views/PriceRatesUpdate";
 import ShippingZoneCreate from "./views/ShippingZoneCreate";
 import ShippingZoneDetailsComponent from "./views/ShippingZoneDetails";
 import ShippingZonesListComponent from "./views/ShippingZonesList";
+import WeightRatesCreateComponent from "./views/WeightRatesCreate";
+import WeightRatesUpdateComponent from "./views/WeightRatesUpdate";
 
 const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -38,6 +46,34 @@ const ShippingZoneDetails: React.FC<RouteComponentProps<
   );
 };
 
+const PriceRatesCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => <PriceRatesCreateComponent id={decodeURIComponent(match.params.id)} />;
+
+const WeightRatesCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => <WeightRatesCreateComponent id={decodeURIComponent(match.params.id)} />;
+
+const WeightRatesUpdate: React.FC<RouteComponentProps<{
+  id: string;
+  rateId: string;
+}>> = ({ match }) => (
+  <WeightRatesUpdateComponent
+    id={decodeURIComponent(match.params.id)}
+    rateId={decodeURIComponent(match.params.rateId)}
+  />
+);
+
+const PriceRatesUpdate: React.FC<RouteComponentProps<{
+  id: string;
+  rateId: string;
+}>> = ({ match }) => (
+  <PriceRatesUpdateComponent
+    id={decodeURIComponent(match.params.id)}
+    rateId={decodeURIComponent(match.params.rateId)}
+  />
+);
+
 export const ShippingRouter: React.FC = () => {
   const intl = useIntl();
 
@@ -55,7 +91,27 @@ export const ShippingRouter: React.FC = () => {
           path={shippingZoneAddPath}
           component={ShippingZoneCreate}
         />
-        <Route path={shippingZonePath(":id")} component={ShippingZoneDetails} />
+        <Route
+          exact
+          path={shippingZonePath(":id")}
+          component={ShippingZoneDetails}
+        />
+        <Route
+          path={shippingPriceRatesUrl(":id")}
+          component={PriceRatesCreate}
+        />
+        <Route
+          path={shippingWeightRatesUrl(":id")}
+          component={WeightRatesCreate}
+        />
+        <Route
+          path={shippingWeightRatesEditUrl(":id", ":rateId")}
+          component={WeightRatesUpdate}
+        />
+        <Route
+          path={shippingPriceRatesEditUrl(":id", ":rateId")}
+          component={PriceRatesUpdate}
+        />
       </Switch>
     </>
   );

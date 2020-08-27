@@ -1536,9 +1536,25 @@ export interface SeoInput {
   description?: string | null;
 }
 
+export interface ServiceAccountTokenInput {
+  name?: string | null;
+  serviceAccount: string;
+}
+
+export interface ShippingMethodChannelListingAddInput {
+  channelId: string;
+  price?: any | null;
+  minValue?: any | null;
+  maxValue?: any | null;
+}
+
+export interface ShippingMethodChannelListingInput {
+  addChannels?: ShippingMethodChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface ShippingPriceInput {
   name?: string | null;
-  price?: any | null;
   minimumOrderPrice?: any | null;
   maximumOrderPrice?: any | null;
   minimumOrderWeight?: any | null;

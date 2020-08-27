@@ -824,7 +824,6 @@ type Category implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   ancestors(
-    channel: String
     before: String
     after: String
     first: Int
@@ -840,7 +839,6 @@ type Category implements Node & ObjectWithMetadata {
   url: String
     @deprecated(reason: "This field will be removed after 2020-07-31.")
   children(
-    channel: String
     before: String
     after: String
     first: Int
@@ -958,7 +956,7 @@ type Checkout implements Node & ObjectWithMetadata {
   lastChange: DateTime!
   user: User
   quantity: Int!
-  channel: Channel
+  channel: Channel!
   billingAddress: Address
   shippingAddress: Address
   shippingMethod: ShippingMethod
@@ -2846,6 +2844,10 @@ type Mutation {
     languageCode: LanguageCodeEnum!
   ): ShopSettingsTranslate
   shopAddressUpdate(input: AddressInput): ShopAddressUpdate
+  shippingMethodChannelListingUpdate(
+    id: ID!
+    input: ShippingMethodChannelListingInput!
+  ): ShippingMethodChannelListingUpdate
   shippingPriceCreate(input: ShippingPriceInput!): ShippingPriceCreate
   shippingPriceDelete(id: ID!): ShippingPriceDelete
   shippingPriceBulkDelete(ids: [ID]!): ShippingPriceBulkDelete
@@ -4424,13 +4426,15 @@ type ProductType implements Node & ObjectWithMetadata {
     first: Int
     last: Int
   ): ProductCountableConnection
+    @deprecated(
+      reason: "Use the top-level `products` query with the `productTypes` filter."
+    )
   taxRate: TaxRateType
   taxType: TaxType
   variantAttributes: [Attribute]
   productAttributes: [Attribute]
   availableAttributes(
     filter: AttributeFilterInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4749,7 +4753,6 @@ type Query {
   warehouses(
     filter: WarehouseFilterInput
     sortBy: WarehouseSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4762,15 +4765,10 @@ type Query {
     first: Int
     last: Int
   ): TranslatableItemConnection
-  translation(
-    id: ID!
-    kind: TranslatableKinds!
-    channel: String
-  ): TranslatableItem
+  translation(id: ID!, kind: TranslatableKinds!): TranslatableItem
   stock(id: ID!): Stock
   stocks(
     filter: StockFilterInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4779,7 +4777,6 @@ type Query {
   shop: Shop!
   shippingZone(id: ID!): ShippingZone
   shippingZones(
-    channel: String
     before: String
     after: String
     first: Int
@@ -4787,7 +4784,6 @@ type Query {
   ): ShippingZoneCountableConnection
   digitalContent(id: ID!): DigitalContent
   digitalContents(
-    channel: String
     before: String
     after: String
     first: Int
@@ -4796,7 +4792,6 @@ type Query {
   attributes(
     filter: AttributeFilterInput
     sortBy: AttributeSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4807,18 +4802,16 @@ type Query {
     filter: CategoryFilterInput
     sortBy: CategorySortingInput
     level: Int
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): CategoryCountableConnection
-  category(id: ID, slug: String, channel: String): Category
+  category(id: ID, slug: String): Category
   collection(id: ID, slug: String): Collection
   collections(
     filter: CollectionFilterInput
     sortBy: CollectionSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4835,11 +4828,10 @@ type Query {
     first: Int
     last: Int
   ): ProductCountableConnection
-  productType(id: ID!, channel: String): ProductType
+  productType(id: ID!): ProductType
   productTypes(
     filter: ProductTypeFilterInput
     sortBy: ProductTypeSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4864,7 +4856,6 @@ type Query {
   ): ProductVariantCountableConnection
   payment(id: ID!): Payment
   payments(
-    channel: String
     before: String
     after: String
     first: Int
@@ -4874,14 +4865,12 @@ type Query {
   pages(
     sortBy: PageSortingInput
     filter: PageFilterInput
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): PageCountableConnection
   homepageEvents(
-    channel: String
     before: String
     after: String
     first: Int
@@ -4893,7 +4882,6 @@ type Query {
     filter: OrderFilterInput
     created: ReportingPeriod
     status: OrderStatusFilter
-    channel: String
     before: String
     after: String
     first: Int
@@ -4903,7 +4891,6 @@ type Query {
     sortBy: OrderSortingInput
     filter: OrderDraftFilterInput
     created: ReportingPeriod
-    channel: String
     before: String
     after: String
     first: Int
@@ -4924,7 +4911,6 @@ type Query {
   menuItems(
     sortBy: MenuItemSortingInput
     filter: MenuItemFilterInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4932,7 +4918,6 @@ type Query {
   ): MenuItemCountableConnection
   giftCard(id: ID!): GiftCard
   giftCards(
-    channel: String
     before: String
     after: String
     first: Int
@@ -4952,7 +4937,6 @@ type Query {
     filter: SaleFilterInput
     sortBy: SaleSortingInput
     query: String
-    channel: String
     before: String
     after: String
     first: Int
@@ -4963,7 +4947,6 @@ type Query {
     filter: VoucherFilterInput
     sortBy: VoucherSortingInput
     query: String
-    channel: String
     before: String
     after: String
     first: Int
@@ -4973,7 +4956,6 @@ type Query {
   exportFiles(
     filter: ExportFileFilterInput
     sortBy: ExportFileSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -4989,7 +4971,6 @@ type Query {
   ): CheckoutCountableConnection
   checkoutLine(id: ID): CheckoutLine
   checkoutLines(
-    channel: String
     before: String
     after: String
     first: Int
@@ -5001,7 +4982,6 @@ type Query {
   apps(
     filter: AppFilterInput
     sortBy: AppSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -5018,7 +4998,6 @@ type Query {
   customers(
     filter: CustomerFilterInput
     sortBy: UserSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -5027,7 +5006,6 @@ type Query {
   permissionGroups(
     filter: PermissionGroupFilterInput
     sortBy: PermissionGroupSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -5038,7 +5016,6 @@ type Query {
   staffUsers(
     filter: StaffUserInput
     sortBy: UserSortingInput
-    channel: String
     before: String
     after: String
     first: Int
@@ -5099,21 +5076,18 @@ type Sale implements Node {
   startDate: DateTime!
   endDate: DateTime
   categories(
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): CategoryCountableConnection
   collections(
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): CollectionCountableConnection
   products(
-    channel: String
     before: String
     after: String
     first: Int
@@ -5297,6 +5271,36 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   type: ShippingMethodTypeEnum
   translation(languageCode: LanguageCodeEnum!): ShippingMethodTranslation
+  channels: [ShippingMethodChannelListing]
+}
+
+type ShippingMethodChannelListing implements Node {
+  id: ID!
+  channel: Channel!
+  price: Float
+  minValue: Float
+  maxValue: Float
+}
+
+input ShippingMethodChannelListingAddInput {
+  channelId: ID!
+  price: Decimal
+  minValue: Decimal
+  maxValue: Decimal
+}
+
+input ShippingMethodChannelListingInput {
+  addChannels: [ShippingMethodChannelListingAddInput!]
+  removeChannels: [ID!]
+}
+
+type ShippingMethodChannelListingUpdate {
+  errors: [Error!]!
+    @deprecated(
+      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
+    )
+  shippingMethod: ShippingMethod
+  shippingErrors: [ShippingError!]!
 }
 
 type ShippingMethodTranslatableContent implements Node {
@@ -5332,8 +5336,8 @@ type ShippingPriceCreate {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   shippingZone: ShippingZone
-  shippingErrors: [ShippingError!]!
   shippingMethod: ShippingMethod
+  shippingErrors: [ShippingError!]!
 }
 
 type ShippingPriceDelete {
@@ -5348,9 +5352,8 @@ type ShippingPriceDelete {
 
 input ShippingPriceInput {
   name: String
-  price: PositiveDecimal
-  minimumOrderPrice: PositiveDecimal
-  maximumOrderPrice: PositiveDecimal
+  minimumOrderPrice: Decimal
+  maximumOrderPrice: Decimal
   minimumOrderWeight: WeightScalar
   maximumOrderWeight: WeightScalar
   type: ShippingMethodTypeEnum
@@ -5372,8 +5375,8 @@ type ShippingPriceUpdate {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   shippingZone: ShippingZone
-  shippingErrors: [ShippingError!]!
   shippingMethod: ShippingMethod
+  shippingErrors: [ShippingError!]!
 }
 
 type ShippingZone implements Node & ObjectWithMetadata {
@@ -5932,14 +5935,12 @@ type User implements Node & ObjectWithMetadata {
   addresses: [Address]
   checkout: Checkout
   giftCards(
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): GiftCardCountableConnection
   orders(
-    channel: String
     before: String
     after: String
     first: Int
@@ -6086,21 +6087,18 @@ type Voucher implements Node {
   minSpent: Money
   minCheckoutItemsQuantity: Int
   categories(
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): CategoryCountableConnection
   collections(
-    channel: String
     before: String
     after: String
     first: Int
     last: Int
   ): CollectionCountableConnection
   products(
-    channel: String
     before: String
     after: String
     first: Int

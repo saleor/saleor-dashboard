@@ -35,6 +35,17 @@ export const shippingMethodFragment = gql`
       currency
     }
     type
+    channels {
+      id
+      channel {
+        id
+        name
+        currencyCode
+      }
+      price
+      minValue
+      maxValue
+    }
   }
 `;
 export const shippingZoneDetailsFragment = gql`
