@@ -99,12 +99,21 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
       >
         {choices.length > 0 ? (
           choices.map(choice => (
-            <MenuItem value={choice.value} key={choice.value}>
+            <MenuItem
+              data-test="selectFieldOption"
+              data-test-id={choice.value}
+              value={choice.value}
+              key={choice.value}
+            >
               {choice.label}
             </MenuItem>
           ))
         ) : (
-          <MenuItem disabled={true}>
+          <MenuItem
+            data-test="selectFieldOption"
+            data-test-disabled
+            disabled={true}
+          >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>
         )}
