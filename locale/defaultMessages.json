@@ -205,6 +205,10 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
+  "productExportFieldAvailability": {
+    "context": "product field",
+    "string": "Available for purchase"
+  },
   "productExportFieldCategory": {
     "context": "product field",
     "string": "Category"
@@ -4597,16 +4601,16 @@
     "context": "dialog header",
     "string": "Delete Product Variants"
   },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_1964228100": {
-    "context": "snackbar text",
-    "string": "Availability updated"
-  },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_671489548": {
+    "context": "snackbar text",
+    "string": "Product availability updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_879305849": {
     "context": "dialog header",
