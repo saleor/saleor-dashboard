@@ -1537,6 +1537,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     amount: 100,
     currency: "USD"
   },
+  privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
     id: "prod1",
@@ -1662,7 +1663,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     ]
   },
-  privateMetadata: [],
   sku: "1230959124123",
   stocks: [
     {

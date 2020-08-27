@@ -15,7 +15,7 @@ export const collectionDetailsFragment = gql`
   ${metadataFragment}
   fragment CollectionDetailsFragment on Collection {
     ...CollectionFragment
-    ...Metadata
+    ...MetadataFragment
     backgroundImage {
       alt
       url

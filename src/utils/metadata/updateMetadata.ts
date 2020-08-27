@@ -30,7 +30,7 @@ const updateMetadata = gql`
         ...MetadataErrorFragment
       }
       item {
-        ...Metadata
+        ...MetadataFragment
         ... on Node {
           id
         }
@@ -61,7 +61,7 @@ const updatePrivateMetadata = gql`
         ...MetadataErrorFragment
       }
       item {
-        ...Metadata
+        ...MetadataFragment
         ... on Node {
           id
         }

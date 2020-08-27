@@ -18,7 +18,7 @@ export const attributeDetailsFragment = gql`
   ${metadataFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
-    ...Metadata
+    ...MetadataFragment
     availableInGrid
     inputType
     storefrontSearchPosition

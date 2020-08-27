@@ -18,7 +18,7 @@ export const categoryDetailsFragment = gql`
   ${metadataFragment}
   fragment CategoryDetailsFragment on Category {
     id
-    ...Metadata
+    ...MetadataFragment
     backgroundImage {
       alt
       url

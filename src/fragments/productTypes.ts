@@ -22,7 +22,7 @@ export const productTypeDetailsFragment = gql`
   ${metadataFragment}
   fragment ProductTypeDetailsFragment on ProductType {
     ...ProductTypeFragment
-    ...Metadata
+    ...MetadataFragment
     productAttributes {
       ...AttributeFragment
     }

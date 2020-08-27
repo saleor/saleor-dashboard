@@ -109,7 +109,7 @@ export const productFragmentDetails = gql`
   ${metadataFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
-    ...Metadata
+    ...MetadataFragment
     name
     descriptionJson
     seoTitle
@@ -187,7 +187,7 @@ export const fragmentVariant = gql`
   ${metadataFragment}
   fragment ProductVariant on ProductVariant {
     id
-    ...Metadata
+    ...MetadataFragment
     attributes {
       attribute {
         id
