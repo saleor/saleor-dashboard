@@ -1,7 +1,7 @@
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -109,7 +109,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     <>
       <AttributePage
         attribute={null}
-        disabled={false}
+        disabled={attributeCreateOpts.loading}
         errors={attributeCreateOpts.data?.attributeCreate.errors || []}
         onBack={() => navigate(attributeListUrl())}
         onDelete={undefined}
@@ -166,13 +166,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           <AttributeValueDeleteDialog
             attributeName={undefined}
             open={params.action === "remove-value"}
-            name={maybe(() => values[id].name, "...")}
+            name={getStringOrPlaceholder(values[id].name)}
             confirmButtonState="default"
             onClose={closeModal}
             onConfirm={handleValueDelete}
           />
           <AttributeValueEditDialog
-            attributeValue={maybe(() => values[params.id])}
+            attributeValue={values[params.id]}
             confirmButtonState="default"
             disabled={false}
             errors={valueErrors}
