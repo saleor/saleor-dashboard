@@ -99,6 +99,18 @@ export interface SimpleProductUpdate_productUpdate_product_pricing {
   priceRangeUndiscounted: SimpleProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -186,6 +198,8 @@ export interface SimpleProductUpdate_productUpdate_product {
   attributes: SimpleProductUpdate_productUpdate_product_attributes[];
   productType: SimpleProductUpdate_productUpdate_product_productType;
   pricing: SimpleProductUpdate_productUpdate_product_pricing | null;
+  metadata: (SimpleProductUpdate_productUpdate_product_metadata | null)[];
+  privateMetadata: (SimpleProductUpdate_productUpdate_product_privateMetadata | null)[];
   name: string;
   descriptionJson: any;
   seoTitle: string | null;

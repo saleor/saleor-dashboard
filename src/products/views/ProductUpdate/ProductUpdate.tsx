@@ -23,6 +23,11 @@ import {
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -81,6 +86,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
   const shop = useShop();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
@@ -181,10 +188,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductImage({ variables: { id } });
   const handleImageEdit = (imageId: string) => () =>
     navigate(productImageUrl(id, imageId));
-  const handleSubmit = createUpdateHandler(
+  const handleSubmit = createMetadataUpdateHandler(
     product,
-    variables => updateProduct({ variables }),
-    variables => updateSimpleProduct({ variables })
+    createUpdateHandler(
+      product,
+      variables => updateProduct({ variables }),
+      variables => updateSimpleProduct({ variables })
+    ),
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
   );
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables })

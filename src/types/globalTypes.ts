@@ -506,6 +506,12 @@ export enum MenuSortField {
   NAME = "NAME",
 }
 
+export enum MetadataErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+}
+
 export enum OrderAction {
   CAPTURE = "CAPTURE",
   MARK_AS_PAID = "MARK_AS_PAID",
@@ -1184,6 +1190,11 @@ export interface MenuItemMoveInput {
 export interface MenuSortingInput {
   direction: OrderDirection;
   field: MenuSortField;
+}
+
+export interface MetadataInput {
+  key: string;
+  value: string;
 }
 
 export interface NameTranslationInput {

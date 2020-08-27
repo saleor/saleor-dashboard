@@ -93,6 +93,18 @@ export interface Product_pricing {
   priceRangeUndiscounted: Product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface Product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface Product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface Product_category {
   __typename: "Category";
   id: string;
@@ -180,6 +192,8 @@ export interface Product {
   attributes: Product_attributes[];
   productType: Product_productType;
   pricing: Product_pricing | null;
+  metadata: (Product_metadata | null)[];
+  privateMetadata: (Product_privateMetadata | null)[];
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
