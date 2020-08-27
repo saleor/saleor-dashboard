@@ -1550,6 +1550,21 @@ export const shippingZone: ShippingZoneDetailsFragment = {
   shippingMethods: [
     {
       __typename: "ShippingMethod",
+      channels: [
+        {
+          __typename: "ShippingMethodChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "Q2hhbm5lbDo5",
+            name: "Channel USD"
+          },
+          id: "U2hpcHBpbmdNZXRob2RDaGFubmVsTGlzdGluZzo0",
+          maxValue: 2,
+          minValue: 1,
+          price: 86.21
+        }
+      ],
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumOrderPrice: null,
       maximumOrderWeight: {
@@ -1577,6 +1592,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumOrderPrice: null,
       maximumOrderWeight: null,
@@ -1600,6 +1616,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderPrice: null,
       maximumOrderWeight: null,
@@ -1624,6 +1641,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
+      channels: [],
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderPrice: null,
       maximumOrderWeight: null,
