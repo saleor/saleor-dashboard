@@ -147,7 +147,6 @@ function loadStories() {
   require("./stories/shipping/ShippingZoneCountriesAssignDialog");
   require("./stories/shipping/ShippingZoneCreatePage");
   require("./stories/shipping/ShippingZoneDetailsPage");
-  require("./stories/shipping/ShippingZoneRateDialog");
   require("./stories/shipping/ShippingZonesListPage");
 
   // Site settings

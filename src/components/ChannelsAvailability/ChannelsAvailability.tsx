@@ -204,9 +204,20 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
               <Hr className={classes.hr} />
             </>
           )}
-          {channels?.map((data, index) => (
-            <Channel key={data.id} data={data} onChange={onChange(index)} />
-          ))}
+          {channels
+            ? channels.map((data, index) => (
+                <Channel key={data.id} data={data} onChange={onChange(index)} />
+              ))
+            : shippingChannels.map(data => (
+                <React.Fragment key={data.id}>
+                  <div className={classes.channelItem}>
+                    <div className={classes.channelName}>
+                      <Typography>{data.name}</Typography>
+                    </div>
+                  </div>
+                  <Hr className={classes.hr} />
+                </React.Fragment>
+              ))}
         </CardContent>
       </Card>
     </>

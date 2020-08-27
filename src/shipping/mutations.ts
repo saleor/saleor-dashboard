@@ -32,6 +32,10 @@ import {
   DeleteShippingZoneVariables
 } from "./types/DeleteShippingZone";
 import {
+  ShippingMethodChannelListingUpdate,
+  ShippingMethodChannelListingUpdateVariables
+} from "./types/ShippingMethodChannelListingUpdate";
+import {
   UpdateDefaultWeightUnit,
   UpdateDefaultWeightUnitVariables
 } from "./types/UpdateDefaultWeightUnit";
@@ -161,6 +165,7 @@ export const useShippingRateUpdate = makeMutation<
 
 const createShippingRate = gql`
   ${shippingErrorFragment}
+  ${shippingMethodFragment}
   ${shippingZoneDetailsFragment}
   mutation CreateShippingRate($input: ShippingPriceInput!) {
     shippingPriceCreate(input: $input) {
@@ -169,6 +174,9 @@ const createShippingRate = gql`
       }
       shippingZone {
         ...ShippingZoneDetailsFragment
+      }
+      shippingMethod {
+        ...ShippingMethodFragment
       }
     }
   }
@@ -211,3 +219,26 @@ export const useShippingRateBulkDelete = makeMutation<
   BulkDeleteShippingRate,
   BulkDeleteShippingRateVariables
 >(bulkDeleteShippingRate);
+
+export const shippingMethodChannelListingUpdate = gql`
+  ${shippingErrorFragment}
+  ${shippingMethodFragment}
+  mutation ShippingMethodChannelListingUpdate(
+    $id: ID!
+    $input: ShippingMethodChannelListingInput!
+  ) {
+    shippingMethodChannelListingUpdate(id: $id, input: $input) {
+      shippingMethod {
+        ...ShippingMethodFragment
+      }
+      errors: shippingErrors {
+        ...ShippingErrorFragment
+      }
+    }
+  }
+`;
+
+export const useShippingMethodChannelListingUpdate = makeMutation<
+  ShippingMethodChannelListingUpdate,
+  ShippingMethodChannelListingUpdateVariables
+>(shippingMethodChannelListingUpdate);
