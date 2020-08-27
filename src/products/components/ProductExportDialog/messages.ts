@@ -74,6 +74,11 @@ function useProductExportFieldMessages() {
       defaultMessage: "Visibility",
       description: "product field",
       id: "productExportFieldVisibility"
+    }),
+    [ProductFieldEnum.AVAILABLE_FOR_PURCHASE]: intl.formatMessage({
+      defaultMessage: "Available for purchase",
+      description: "product field",
+      id: "productExportFieldAvailability"
     })
   };
 

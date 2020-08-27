@@ -386,7 +386,8 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.CHARGE_TAXES,
           ProductFieldEnum.COST_PRICE,
           ProductFieldEnum.VARIANT_PRICE,
-          ProductFieldEnum.VISIBLE
+          ProductFieldEnum.VISIBLE,
+          ProductFieldEnum.AVAILABLE_FOR_PURCHASE
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
