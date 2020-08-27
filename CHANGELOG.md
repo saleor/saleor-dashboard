@@ -29,6 +29,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix navigator button rendering on safari browser - #656 by @dominik-zeglen
 - Use hooks instead of containers with render props in product mutations - #667 by @dominik-zeglen
 - Add apps and permission groups to navigator - #678 by @dominik-zeglen
+- Add metadata - #670 by @dominik-zeglen
 
 ## 2.10.1
 
