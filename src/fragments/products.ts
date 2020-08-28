@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { metadataFragment } from "./metadata";
 import { weightFragment } from "./weight";
 
 export const stockFragment = gql`
@@ -105,8 +106,10 @@ export const productFragmentDetails = gql`
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${weightFragment}
+  ${metadataFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
+    ...MetadataFragment
     name
     descriptionJson
     seoTitle
@@ -181,8 +184,10 @@ export const fragmentVariant = gql`
   ${fragmentProductImage}
   ${stockFragment}
   ${weightFragment}
+  ${metadataFragment}
   fragment ProductVariant on ProductVariant {
     id
+    ...MetadataFragment
     attributes {
       attribute {
         id

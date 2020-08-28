@@ -12,7 +12,6 @@ import {
   ProductTypeAttributeReorderMutation,
   TypedAssignAttributeMutation,
   TypedProductTypeDeleteMutation,
-  TypedProductTypeUpdateMutation,
   TypedUnassignAttributeMutation
 } from "../mutations";
 import {
@@ -27,10 +26,6 @@ import {
   ProductTypeDelete,
   ProductTypeDeleteVariables
 } from "../types/ProductTypeDelete";
-import {
-  ProductTypeUpdate,
-  ProductTypeUpdateVariables
-} from "../types/ProductTypeUpdate";
 import {
   UnassignAttribute,
   UnassignAttributeVariables
@@ -75,17 +70,12 @@ interface ProductTypeOperationsProps {
       ProductTypeAttributeReorder,
       ProductTypeAttributeReorderVariables
     >;
-    updateProductType: PartialMutationProviderOutput<
-      ProductTypeUpdate,
-      ProductTypeUpdateVariables
-    >;
   }) => React.ReactNode;
   productType: ProductTypeDetailsFragment;
   onAssignAttribute: (data: AssignAttribute) => void;
   onUnassignAttribute: (data: UnassignAttribute) => void;
   onProductTypeAttributeReorder: (data: ProductTypeAttributeReorder) => void;
   onProductTypeDelete: (data: ProductTypeDelete) => void;
-  onProductTypeUpdate: (data: ProductTypeUpdate) => void;
 }
 
 const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
@@ -94,85 +84,72 @@ const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
   onAssignAttribute,
   onUnassignAttribute,
   onProductTypeAttributeReorder,
-  onProductTypeDelete,
-  onProductTypeUpdate
+  onProductTypeDelete
 }) => (
   <TypedProductTypeDeleteMutation onCompleted={onProductTypeDelete}>
     {(...deleteProductType) => (
-      <TypedProductTypeUpdateMutation onCompleted={onProductTypeUpdate}>
-        {(...updateProductType) => (
-          <TypedAssignAttributeMutation onCompleted={onAssignAttribute}>
-            {(...assignAttribute) => (
-              <TypedUnassignAttributeMutation onCompleted={onUnassignAttribute}>
-                {(...unassignAttribute) => (
-                  <ProductTypeAttributeReorderMutation
-                    onCompleted={onProductTypeAttributeReorder}
-                  >
-                    {(
-                      reorderAttributeMutation,
-                      reorderAttributeMutationResult
-                    ) => {
-                      const reorderAttributeMutationFn: MutationFunction<
-                        ProductTypeAttributeReorder,
-                        ProductTypeAttributeReorderVariables
-                      > = opts => {
-                        const optimisticResponse: ProductTypeAttributeReorder = {
-                          productTypeReorderAttributes: {
-                            __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
-                            errors: [],
-                            productType: {
-                              ...productType,
-                              productAttributes:
-                                opts.variables.type ===
-                                AttributeTypeEnum.PRODUCT
-                                  ? moveAttribute(
-                                      productType.productAttributes,
-                                      opts.variables.move
-                                    )
-                                  : productType.productAttributes,
-                              variantAttributes:
-                                opts.variables.type ===
-                                AttributeTypeEnum.VARIANT
-                                  ? moveAttribute(
-                                      productType.variantAttributes,
-                                      opts.variables.move
-                                    )
-                                  : productType.variantAttributes
-                            }
-                          }
-                        };
-                        return reorderAttributeMutation({
-                          ...opts,
-                          optimisticResponse
-                        });
-                      };
+      <TypedAssignAttributeMutation onCompleted={onAssignAttribute}>
+        {(...assignAttribute) => (
+          <TypedUnassignAttributeMutation onCompleted={onUnassignAttribute}>
+            {(...unassignAttribute) => (
+              <ProductTypeAttributeReorderMutation
+                onCompleted={onProductTypeAttributeReorder}
+              >
+                {(reorderAttributeMutation, reorderAttributeMutationResult) => {
+                  const reorderAttributeMutationFn: MutationFunction<
+                    ProductTypeAttributeReorder,
+                    ProductTypeAttributeReorderVariables
+                  > = opts => {
+                    const optimisticResponse: ProductTypeAttributeReorder = {
+                      productTypeReorderAttributes: {
+                        __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
+                        errors: [],
+                        productType: {
+                          ...productType,
+                          productAttributes:
+                            opts.variables.type === AttributeTypeEnum.PRODUCT
+                              ? moveAttribute(
+                                  productType.productAttributes,
+                                  opts.variables.move
+                                )
+                              : productType.productAttributes,
+                          variantAttributes:
+                            opts.variables.type === AttributeTypeEnum.VARIANT
+                              ? moveAttribute(
+                                  productType.variantAttributes,
+                                  opts.variables.move
+                                )
+                              : productType.variantAttributes
+                        }
+                      }
+                    };
+                    return reorderAttributeMutation({
+                      ...opts,
+                      optimisticResponse
+                    });
+                  };
 
-                      return children({
-                        assignAttribute: getMutationProviderData(
-                          ...assignAttribute
-                        ),
-                        deleteProductType: getMutationProviderData(
-                          ...deleteProductType
-                        ),
-                        reorderAttribute: getMutationProviderData(
-                          reorderAttributeMutationFn,
-                          reorderAttributeMutationResult
-                        ),
-                        unassignAttribute: getMutationProviderData(
-                          ...unassignAttribute
-                        ),
-                        updateProductType: getMutationProviderData(
-                          ...updateProductType
-                        )
-                      });
-                    }}
-                  </ProductTypeAttributeReorderMutation>
-                )}
-              </TypedUnassignAttributeMutation>
+                  return children({
+                    assignAttribute: getMutationProviderData(
+                      ...assignAttribute
+                    ),
+                    deleteProductType: getMutationProviderData(
+                      ...deleteProductType
+                    ),
+                    reorderAttribute: getMutationProviderData(
+                      reorderAttributeMutationFn,
+                      reorderAttributeMutationResult
+                    ),
+                    unassignAttribute: getMutationProviderData(
+                      ...unassignAttribute
+                    )
+                  });
+                }}
+              </ProductTypeAttributeReorderMutation>
             )}
-          </TypedAssignAttributeMutation>
+          </TypedUnassignAttributeMutation>
         )}
-      </TypedProductTypeUpdateMutation>
+      </TypedAssignAttributeMutation>
     )}
   </TypedProductTypeDeleteMutation>
 );

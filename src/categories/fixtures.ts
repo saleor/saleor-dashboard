@@ -105,11 +105,19 @@ export const category: (
   },
   descriptionJson: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Coffees",
   parent: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6Mw=="
   },
+  privateMetadata: [],
   products: {
     __typename: "ProductCountableConnection",
     edges: [

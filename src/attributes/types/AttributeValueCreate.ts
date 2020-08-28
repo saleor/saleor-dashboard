@@ -8,6 +8,18 @@ import { AttributeValueCreateInput, AttributeInputTypeEnum, AttributeValueType, 
 // GraphQL mutation operation: AttributeValueCreate
 // ====================================================
 
+export interface AttributeValueCreate_attributeValueCreate_attribute_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AttributeValueCreate_attributeValueCreate_attribute_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -24,6 +36,8 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  metadata: (AttributeValueCreate_attributeValueCreate_attribute_metadata | null)[];
+  privateMetadata: (AttributeValueCreate_attributeValueCreate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;

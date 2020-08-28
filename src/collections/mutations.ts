@@ -6,9 +6,9 @@ import {
   productErrorFragment,
   shopErrorFragment
 } from "@saleor/fragments/errors";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
 import {
   CollectionAssignProduct,
   CollectionAssignProductVariables
@@ -56,7 +56,7 @@ const collectionUpdate = gql`
     }
   }
 `;
-export const TypedCollectionUpdateMutation = TypedMutation<
+export const useCollectionUpdateMutation = makeMutation<
   CollectionUpdate,
   CollectionUpdateVariables
 >(collectionUpdate);
@@ -90,7 +90,7 @@ const collectionUpdateWithHomepage = gql`
     }
   }
 `;
-export const TypedCollectionUpdateWithHomepageMutation = TypedMutation<
+export const useCollectionUpdateWithHomepageMutation = makeMutation<
   CollectionUpdateWithHomepage,
   CollectionUpdateWithHomepageVariables
 >(collectionUpdateWithHomepage);
@@ -129,7 +129,7 @@ const assignCollectionProduct = gql`
     }
   }
 `;
-export const TypedCollectionAssignProductMutation = TypedMutation<
+export const useCollectionAssignProductMutation = makeMutation<
   CollectionAssignProduct,
   CollectionAssignProductVariables
 >(assignCollectionProduct);
@@ -148,7 +148,7 @@ const createCollection = gql`
     }
   }
 `;
-export const TypedCollectionCreateMutation = TypedMutation<
+export const useCollectionCreateMutation = makeMutation<
   CreateCollection,
   CreateCollectionVariables
 >(createCollection);
@@ -163,7 +163,7 @@ const removeCollection = gql`
     }
   }
 `;
-export const TypedCollectionRemoveMutation = TypedMutation<
+export const useCollectionRemoveMutation = makeMutation<
   RemoveCollection,
   RemoveCollectionVariables
 >(removeCollection);
@@ -213,7 +213,7 @@ const unassignCollectionProduct = gql`
     }
   }
 `;
-export const TypedUnassignCollectionProductMutation = TypedMutation<
+export const useUnassignCollectionProductMutation = makeMutation<
   UnassignCollectionProduct,
   UnassignCollectionProductVariables
 >(unassignCollectionProduct);
@@ -228,7 +228,7 @@ const collectionBulkDelete = gql`
     }
   }
 `;
-export const TypedCollectionBulkDelete = TypedMutation<
+export const useCollectionBulkDelete = makeMutation<
   CollectionBulkDelete,
   CollectionBulkDeleteVariables
 >(collectionBulkDelete);
@@ -243,7 +243,7 @@ const collectionBulkPublish = gql`
     }
   }
 `;
-export const TypedCollectionBulkPublish = TypedMutation<
+export const useCollectionBulkPublish = makeMutation<
   CollectionBulkPublish,
   CollectionBulkPublishVariables
 >(collectionBulkPublish);

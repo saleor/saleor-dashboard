@@ -1,3 +1,4 @@
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -10,6 +11,7 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import { RawDraftContentState } from "draft-js";
 
 import { ProductAttributeInput } from "../components/ProductAttributes";
@@ -168,7 +170,7 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
   );
 }
 
-export interface ProductUpdatePageFormData {
+export interface ProductUpdatePageFormData extends MetadataFormData {
   basePrice: number;
   category: string | null;
   collections: string[];
@@ -198,7 +200,9 @@ export function getProductUpdatePageFormData(
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
     isPublished: maybe(() => product.isPublished, false),
+    metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
+    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),

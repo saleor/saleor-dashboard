@@ -6,6 +6,11 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -67,6 +72,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       id: variantId
     }
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
@@ -140,6 +147,39 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   };
 
+  const handleUpdate = async (data: ProductVariantPageSubmitData) => {
+    const result = await updateVariant({
+      variables: {
+        addStocks: data.addStocks.map(mapFormsetStockToStockInput),
+        attributes: data.attributes.map(attribute => ({
+          id: attribute.id,
+          values: [attribute.value]
+        })),
+        costPrice: decimal(data.costPrice),
+        id: variantId,
+        price: decimal(data.price),
+        removeStocks: data.removeStocks,
+        sku: data.sku,
+        stocks: data.updateStocks.map(mapFormsetStockToStockInput),
+        trackInventory: data.trackInventory,
+        weight: weight(data.weight)
+      }
+    });
+
+    return [
+      ...result.data?.productVariantStocksCreate.errors,
+      ...result.data?.productVariantStocksDelete.errors,
+      ...result.data?.productVariantStocksUpdate.errors,
+      ...result.data?.productVariantUpdate.errors
+    ];
+  };
+  const handleSubmit = createMetadataUpdateHandler(
+    data?.productVariant,
+    handleUpdate,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
+
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
@@ -158,25 +198,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={(data: ProductVariantPageSubmitData) =>
-          updateVariant({
-            variables: {
-              addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-              attributes: data.attributes.map(attribute => ({
-                id: attribute.id,
-                values: [attribute.value]
-              })),
-              costPrice: decimal(data.costPrice),
-              id: variantId,
-              price: decimal(data.price),
-              removeStocks: data.removeStocks,
-              sku: data.sku,
-              stocks: data.updateStocks.map(mapFormsetStockToStockInput),
-              trackInventory: data.trackInventory,
-              weight: weight(data.weight)
-            }
-          })
-        }
+        onSubmit={handleSubmit}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}

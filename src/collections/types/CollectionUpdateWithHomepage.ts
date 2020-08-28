@@ -30,6 +30,18 @@ export interface CollectionUpdateWithHomepage_homepageCollectionUpdate {
   shop: CollectionUpdateWithHomepage_homepageCollectionUpdate_shop | null;
 }
 
+export interface CollectionUpdateWithHomepage_collectionUpdate_collection_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CollectionUpdateWithHomepage_collectionUpdate_collection_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage {
   __typename: "Image";
   alt: string | null;
@@ -41,6 +53,8 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
   id: string;
   isPublished: boolean;
   name: string;
+  metadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_metadata | null)[];
+  privateMetadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage | null;
   descriptionJson: any;
   publicationDate: any | null;

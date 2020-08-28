@@ -6,6 +6,18 @@
 // GraphQL query operation: CollectionDetails
 // ====================================================
 
+export interface CollectionDetails_collection_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CollectionDetails_collection_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CollectionDetails_collection_backgroundImage {
   __typename: "Image";
   alt: string | null;
@@ -56,6 +68,8 @@ export interface CollectionDetails_collection {
   id: string;
   isPublished: boolean;
   name: string;
+  metadata: (CollectionDetails_collection_metadata | null)[];
+  privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;
   descriptionJson: any;
   publicationDate: any | null;

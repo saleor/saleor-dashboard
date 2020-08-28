@@ -153,6 +153,13 @@ export const product: (
   isFeatured: false,
   isPublished: true,
   margin: { __typename: "Margin", start: 2, stop: 7 },
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Ergonomic Plastic Bacon",
   pricing: {
     __typename: "ProductPricingInfo",
@@ -186,6 +193,7 @@ export const product: (
       }
     }
   },
+  privateMetadata: [],
   productType: {
     __typename: "ProductType",
     hasVariants: true,
@@ -1516,12 +1524,20 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       url: placeholderImage
     }
   ],
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Extended Hard",
   price: {
     __typename: "Money",
     amount: 100,
     currency: "USD"
   },
+  privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
     id: "prod1",

@@ -134,3 +134,10 @@ export const pluginErrorFragment = gql`
     field
   }
 `;
+
+export const metadataErrorFragment = gql`
+  fragment MetadataErrorFragment on MetadataError {
+    code
+    field
+  }
+`;
