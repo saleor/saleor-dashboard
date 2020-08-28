@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## 2.11.0-rc.3
+
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
 - Migrate product base price to variant prices - #555 by @orzechdev
 - Migrate old notifications to the new ones - #587 by @AlicjaSzu
@@ -21,6 +23,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix user avatars - #639 by @dominik-zeglen
 - Reset modal state after closing - #644 by @dominik-zeglen
 - Fix incorrect messages - #643 by @dominik-zeglen
+
+## 2.11.0-rc.2
+
 - Do not use devserver to run cypress tests - #650 by @dominik-zeglen
 - Fix updating product that has no variants - #649 by @dominik-zeglen
 - Update checkbox design - #651 by @dominik-zeglen
