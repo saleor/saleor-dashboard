@@ -8,7 +8,6 @@ export const PRODUCTS_SELECTORS = {
   categoryItem: "[data-test='singleautocomplete-select-option']",
   firstCategoryItem: "#downshift-0-item-0",
   visibleRadioBtn: "[name='isPublished']",
-  availableRadioBtn: "[name='isAvailable']",
   saveBtn: "[data-test='button-bar-confirm']",
   confirmationMsg: "[data-test='notification']"
 };

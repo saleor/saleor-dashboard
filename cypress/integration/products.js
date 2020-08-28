@@ -33,9 +33,6 @@ describe("Products", () => {
       .get(PRODUCTS_SELECTORS.visibleRadioBtn)
       .first()
       .click()
-      .get(PRODUCTS_SELECTORS.availableRadioBtn)
-      .first()
-      .click()
       .get(PRODUCTS_SELECTORS.saveBtn)
       .click()
       .get(PRODUCTS_SELECTORS.confirmationMsg, {
