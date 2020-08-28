@@ -16,6 +16,7 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+  config.env.API_URI = process.env.API_URI;
+
+  return config;
 };

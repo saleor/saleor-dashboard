@@ -24,7 +24,8 @@ const useStyles = makeStyles(
 
 const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
   filterField,
-  onFilterPropertyChange
+  onFilterPropertyChange,
+  ...rest
 }) => {
   const classes = useStyles({});
   const handleSelect = (value: string) =>
@@ -41,7 +42,7 @@ const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
     });
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} {...rest}>
       {filterField.options.map(option => (
         <div
           className={classNames(classes.option, {
@@ -52,9 +53,15 @@ const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
           <FormControlLabel
             control={
               filterField.multiple ? (
-                <Checkbox checked={filterField.value.includes(option.value)} />
+                <Checkbox
+                  data-test="filterOption"
+                  data-test-id={option.value}
+                  checked={filterField.value.includes(option.value)}
+                />
               ) : (
                 <Radio
+                  data-test="filterOption"
+                  data-test-id={option.value}
                   checked={filterField.value[0] === option.value}
                   color="primary"
                 />
