@@ -2832,12 +2832,21 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1895667608": {
     "string": "Product"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_270371448": {
+    "string": "Product is out of stock"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2796503714": {
     "context": "quantity of ordered products",
     "string": "Quantity"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2963336581": {
+    "string": "Product is unavailable to purchase"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_546865199": {
     "string": "No Products added to Order"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_59548500": {
+    "string": "Product is hidden"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_878013594": {
     "context": "total price of ordered products",

@@ -51,6 +51,9 @@ const useStyles = makeStyles(
       textAlign: "right",
       width: 150
     },
+    errorInfo: {
+      color: theme.palette.error.main
+    },
     quantityField: {
       "& input": {
         padding: "12px 12px 10px",
@@ -126,6 +129,30 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                   <>
                     <Typography variant="body2">{line.productName}</Typography>
                     <Typography variant="caption">{line.productSku}</Typography>
+                    {!line.variant.quantityAvailable ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.errorInfo}
+                      >
+                        <FormattedMessage defaultMessage="Product is out of stock" />
+                      </Typography>
+                    ) : !line.variant.product.isAvailableForPurchase ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.errorInfo}
+                      >
+                        <FormattedMessage defaultMessage="Product is unavailable to purchase" />
+                      </Typography>
+                    ) : (
+                      !line.variant.product.isPublished && (
+                        <Typography
+                          variant="caption"
+                          className={classes.errorInfo}
+                        >
+                          <FormattedMessage defaultMessage="Product is hidden" />
+                        </Typography>
+                      )
+                    )}
                   </>
                 ) : (
                   <Skeleton />

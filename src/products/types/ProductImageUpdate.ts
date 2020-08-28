@@ -208,6 +208,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   collections: (ProductImageUpdate_productImageUpdate_product_collections | null)[] | null;
   margin: ProductImageUpdate_productImageUpdate_product_margin | null;
   purchaseCost: ProductImageUpdate_productImageUpdate_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;

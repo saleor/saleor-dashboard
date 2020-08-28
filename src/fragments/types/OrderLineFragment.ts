@@ -6,6 +6,18 @@
 // GraphQL fragment: OrderLineFragment
 // ====================================================
 
+export interface OrderLineFragment_variant_product {
+  __typename: "Product";
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderLineFragment_variant {
+  __typename: "ProductVariant";
+  product: OrderLineFragment_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderLineFragment_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -33,6 +45,7 @@ export interface OrderLineFragment {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderLineFragment_variant | null;
   productName: string;
   productSku: string;
   quantity: number;

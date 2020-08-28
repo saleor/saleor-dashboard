@@ -944,6 +944,15 @@ export const order = (placeholder: string): OrderDetails_order => ({
                 amount: 79.71,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                isAvailableForPurchase: true,
+                isPublished: true
+              },
+              quantityAvailable: 10
             }
           },
           quantity: 1
@@ -985,6 +994,15 @@ export const order = (placeholder: string): OrderDetails_order => ({
                 amount: 79.71,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                isAvailableForPurchase: true,
+                isPublished: true
+              },
+              quantityAvailable: 10
             }
           },
           quantity: 1
@@ -1031,6 +1049,15 @@ export const order = (placeholder: string): OrderDetails_order => ({
           amount: 18.51,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        product: {
+          __typename: "Product",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     },
     {
@@ -1057,6 +1084,15 @@ export const order = (placeholder: string): OrderDetails_order => ({
           amount: 79.71,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        product: {
+          __typename: "Product",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     }
   ],
@@ -1173,6 +1209,15 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
           amount: 65.95,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        product: {
+          __typename: "Product",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     },
     {
@@ -1199,6 +1244,15 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
           amount: 68.2,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        product: {
+          __typename: "Product",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     }
   ],

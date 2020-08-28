@@ -202,6 +202,7 @@ export interface ProductDetails_product {
   collections: (ProductDetails_product_collections | null)[] | null;
   margin: ProductDetails_product_margin | null;
   purchaseCost: ProductDetails_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;

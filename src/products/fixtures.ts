@@ -102,7 +102,11 @@ export const product: (
     currency: "NZD",
     localized: "339.39 NZD"
   },
-  category: { __typename: "Category", id: "Q2F0ZWdvcnk6MQ==", name: "Apparel" },
+  category: {
+    __typename: "Category",
+    id: "Q2F0ZWdvcnk6MQ==",
+    name: "Apparel"
+  },
   chargeTaxes: true,
   collections: [
     {
@@ -151,6 +155,7 @@ export const product: (
     }
   ],
   isAvailable: false,
+  isAvailableForPurchase: false,
   isFeatured: false,
   isPublished: true,
   margin: { __typename: "Margin", start: 2, stop: 7 },

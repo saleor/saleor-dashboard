@@ -134,6 +134,7 @@ export const productFragmentDetails = gql`
         ...Money
       }
     }
+    isAvailableForPurchase
     isAvailable
     isPublished
     chargeTaxes

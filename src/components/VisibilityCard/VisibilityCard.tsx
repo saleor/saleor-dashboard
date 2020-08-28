@@ -58,7 +58,7 @@ interface VisibilityCardProps {
   children?: React.ReactNode | React.ReactNodeArray;
   data: {
     availableForPurchase?: string;
-    isAvailable?: boolean;
+    isAvailableForPurchase?: boolean;
     isPublished: boolean;
     publicationDate: string;
     visibleInListings?: boolean;
@@ -74,7 +74,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
     children,
     data: {
       availableForPurchase,
-      isAvailable,
+      isAvailableForPurchase: isAvailable,
       isPublished,
       publicationDate,
       visibleInListings
@@ -211,7 +211,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             <Hr />
             <RadioSwitchField
               disabled={disabled}
-              error={!!getFieldError(errors, "isAvailable")}
+              error={!!getFieldError(errors, "isAvailableForPurchase")}
               firstOptionLabel={
                 <>
                   <p className={classes.label}>
@@ -228,7 +228,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                     )}
                 </>
               }
-              name={"isAvailable" as keyof FormData}
+              name={"isAvailableForPurchase" as keyof FormData}
               secondOptionLabel={
                 <>
                   <p className={classes.label}>
@@ -236,21 +236,19 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                       defaultMessage: "Unavailable for purchase"
                     })}
                   </p>
-                  {availableForPurchase &&
-                    !isAvailable &&
-                    Date.parse(availableForPurchase) >= dateNow && (
-                      <span className={classes.secondLabel}>
-                        {intl.formatMessage(
-                          {
-                            defaultMessage: "will become available on {date}",
-                            description: "product available for purchase date"
-                          },
-                          {
-                            date: localizeDate(availableForPurchase, "L")
-                          }
-                        )}
-                      </span>
-                    )}
+                  {availableForPurchase && !isAvailable && (
+                    <span className={classes.secondLabel}>
+                      {intl.formatMessage(
+                        {
+                          defaultMessage: "will become available on {date}",
+                          description: "product available for purchase date"
+                        },
+                        {
+                          date: localizeDate(availableForPurchase, "L")
+                        }
+                      )}
+                    </span>
+                  )}
                 </>
               }
               value={isAvailable}
@@ -288,11 +286,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                 )}
               </>
             )}
-            {getFieldError(errors, "isAvailable") && (
+            {getFieldError(errors, "isAvailableForPurchase") && (
               <>
                 <FormSpacer />
                 <Typography color="error">
-                  {getFieldError(errors, "isAvailable")?.message}
+                  {getFieldError(errors, "isAvailableForPurchase")?.message}
                 </Typography>
               </>
             )}
