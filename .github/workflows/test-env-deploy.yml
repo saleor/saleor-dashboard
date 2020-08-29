@@ -47,7 +47,7 @@ jobs:
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.]+/graphql/?
+          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
 
