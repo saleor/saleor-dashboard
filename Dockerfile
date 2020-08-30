@@ -1,17 +1,29 @@
-FROM node:10 as builder
+FROM node:10-slim as base
+RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
+USER node
 ARG APP_MOUNT_URI
 ARG API_URI
 ARG STATIC_URL
 ENV API_URI ${API_URI:-http://localhost:8000/graphql/}
 ENV APP_MOUNT_URI ${APP_MOUNT_URI:-/dashboard/}
 ENV STATIC_URL ${STATIC_URL:-/dashboard/}
-RUN STATIC_URL=${STATIC_URL} API_URI=${API_URI} APP_MOUNT_URI=${APP_MOUNT_URI} npm run build
+ENV NODE_ENV production
+COPY --chown=node:node package*.json ./
+RUN npm install --only=prod
 
-FROM nginx:stable
+FROM base as dev
+ENV NODE_ENV development
+RUN npm install --only=dev
+CMD ["npm", "start"]
+
+FROM dev as build
+ENV NODE_ENV production
+COPY --chown=node:node . .
+RUN npm run build
+
+FROM nginx:stable-alpine as prod
 WORKDIR /app
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build/ /app/
+COPY --from=build /app/build /app
+CMD ["nginx", "-g", "daemon off;"]

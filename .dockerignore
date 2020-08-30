@@ -1,2 +1,7 @@
-node_modules
+.circleci
+.git
+.github
+Dockerfile
 build
+node_modules
+recordings
