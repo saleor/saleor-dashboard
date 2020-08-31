@@ -213,7 +213,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       product,
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
-      setProductAvailability
+      variables => setProductAvailability({ variables })
     ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })

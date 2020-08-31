@@ -31,9 +31,9 @@ export function createUpdateHandler(
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
   ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
-  setProductAvailability: (options: {
-    variables: ProductSetAvailabilityForPurchaseVariables;
-  }) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
+  setProductAvailability: (
+    variables: ProductSetAvailabilityForPurchaseVariables
+  ) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -97,15 +97,13 @@ export function createUpdateHandler(
           : isAvailableForPurchase;
 
       const availabilityResult = await setProductAvailability({
-        variables: {
-          isAvailable,
-          productId: product.id,
-          startDate: isAvailableForPurchase
-            ? null
-            : availableForPurchase !== ""
-            ? availableForPurchase
-            : null
-        }
+        isAvailable,
+        productId: product.id,
+        startDate: isAvailableForPurchase
+          ? null
+          : availableForPurchase !== ""
+          ? availableForPurchase
+          : null
       });
       errors = [
         ...errors,

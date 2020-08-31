@@ -171,6 +171,7 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 }
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
+  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   collections: string[];
