@@ -103,6 +103,11 @@ export const TypedAssignAttributeMutation = TypedMutation<
   AssignAttributeVariables
 >(assignAttributeMutation);
 
+export const useAssignAttributeMutation = makeMutation<
+  AssignAttribute,
+  AssignAttributeVariables
+>(assignAttributeMutation);
+
 export const unassignAttributeMutation = gql`
   ${productTypeDetailsFragment}
   mutation UnassignAttribute($id: ID!, $ids: [ID]!) {
@@ -118,6 +123,11 @@ export const unassignAttributeMutation = gql`
   }
 `;
 export const TypedUnassignAttributeMutation = TypedMutation<
+  UnassignAttribute,
+  UnassignAttributeVariables
+>(unassignAttributeMutation);
+
+export const useUnassignAttributeMutation = makeMutation<
   UnassignAttribute,
   UnassignAttributeVariables
 >(unassignAttributeMutation);

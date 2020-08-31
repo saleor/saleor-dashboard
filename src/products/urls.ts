@@ -8,6 +8,7 @@ import {
   FiltersAsDictWithMultipleValues,
   FiltersWithMultipleValues,
   Pagination,
+  SingleAction,
   Sort,
   TabActionDialog
 } from "../types";
@@ -73,10 +74,18 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
-export type ProductVariantEditUrlDialog = "remove";
+export type ProductVariantEditUrlDialog =
+  | "remove"
+  | "assign-attribute"
+  | "unassign-attribute"
+  | "unassign-attributes";
 export type ProductVariantEditUrlQueryParams = Dialog<
   ProductVariantEditUrlDialog
->;
+> &
+  BulkAction &
+  SingleAction & {
+    type?: string;
+  };
 export const productVariantEditUrl = (
   productId: string,
   variantId: string,

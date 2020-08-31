@@ -97,6 +97,7 @@ export function getAttributeInputFromVariant(
     (): VariantAttributeInput[] =>
       variant.attributes.map(attribute => ({
         data: {
+          isRequired: attribute.attribute.valueRequired,
           values: attribute.attribute.values
         },
         id: attribute.attribute.id,
@@ -126,6 +127,7 @@ export function getVariantAttributeInputFromProduct(
   return maybe(() =>
     product.productType.variantAttributes.map(attribute => ({
       data: {
+        isRequired: attribute.valueRequired,
         values: attribute.values
       },
       id: attribute.id,

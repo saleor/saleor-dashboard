@@ -80,6 +80,11 @@ export interface ProductVariant_product_thumbnail {
   url: string;
 }
 
+export interface ProductVariant_product_productType {
+  __typename: "ProductType";
+  id: string;
+}
+
 export interface ProductVariant_product_variants_images {
   __typename: "ProductImage";
   id: string;
@@ -100,6 +105,7 @@ export interface ProductVariant_product {
   images: (ProductVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
+  productType: ProductVariant_product_productType;
   variants: (ProductVariant_product_variants | null)[] | null;
 }
 

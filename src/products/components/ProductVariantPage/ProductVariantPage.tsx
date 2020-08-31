@@ -62,6 +62,8 @@ interface ProductVariantPageProps {
   header: string;
   warehouses: WarehouseFragment[];
   onVariantReorder: ReorderAction;
+  onAttributeRemove: any;
+  onAttributeAdd: () => void;
   onAdd();
   onBack();
   onDelete();
@@ -85,7 +87,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onImageSelect,
   onSubmit,
   onVariantClick,
-  onVariantReorder
+  onVariantReorder,
+  onAttributeAdd,
+  onAttributeRemove
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -200,6 +204,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       disabled={loading}
                       errors={errors}
                       onChange={handleAttributeChange}
+                      onRemove={onAttributeRemove}
+                      onEdit={onAttributeAdd}
                     />
                     <CardSpacer />
                     <ProductVariantImages

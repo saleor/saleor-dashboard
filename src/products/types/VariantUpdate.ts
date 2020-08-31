@@ -86,6 +86,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_thumb
   url: string;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_product_productType {
+  __typename: "ProductType";
+  id: string;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_product_variants_images {
   __typename: "ProductImage";
   id: string;
@@ -106,6 +111,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product {
   images: (VariantUpdate_productVariantUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
+  productType: VariantUpdate_productVariantUpdate_productVariant_product_productType;
   variants: (VariantUpdate_productVariantUpdate_productVariant_product_variants | null)[] | null;
 }
 
@@ -231,6 +237,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   url: string;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_productType {
+  __typename: "ProductType";
+  id: string;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_images {
   __typename: "ProductImage";
   id: string;
@@ -251,6 +262,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
+  productType: VariantUpdate_productVariantStocksUpdate_productVariant_product_productType;
   variants: (VariantUpdate_productVariantStocksUpdate_productVariant_product_variants | null)[] | null;
 }
 

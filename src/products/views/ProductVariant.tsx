@@ -1,10 +1,18 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
+import useAvailableAttributeSearch from "@saleor/productTypes/hooks/useAvailableAttributeSearch";
+import {
+  useAssignAttributeMutation,
+  useUnassignAttributeMutation
+} from "@saleor/productTypes/mutations";
+import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -68,7 +76,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
-  const { data, loading } = useProductVariantQuery({
+  const { data, loading, refetch } = useProductVariantQuery({
     displayLoader: true,
     variables: {
       id: variantId
@@ -92,6 +100,30 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [unassignImage, unassignImageOpts] = useVariantImageUnassignMutation(
     {}
   );
+  const [
+    unassignAttribute,
+    unassignAttributeOpts
+  ] = useUnassignAttributeMutation({
+    onCompleted: data => {
+      if (data.attributeUnassign.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Attribute removed"
+          })
+        });
+        refetch();
+      }
+    }
+  });
+  const [assignAttribute, assignAttributeOpts] = useAssignAttributeMutation({});
+
+  const { loadMore, search, result } = useAvailableAttributeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      id: data?.productVariant?.product.productType.id || ""
+    }
+  });
   const [deleteVariant, deleteVariantOpts] = useVariantDeleteMutation({
     onCompleted: () => {
       notify({
@@ -138,7 +170,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     updateVariantOpts.loading ||
     assignImageOpts.loading ||
     unassignImageOpts.loading ||
-    reorderProductVariantsOpts.loading;
+    reorderProductVariantsOpts.loading ||
+    unassignAttributeOpts?.loading;
 
   const handleImageSelect = (id: string) => () => {
     if (variant) {
@@ -193,9 +226,64 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  const handleAttributeRemove = (attrId: string) =>
+    unassignAttribute({
+      variables: {
+        id: data?.productVariant.product.productType.id,
+        ids: [attrId]
+      }
+    });
+
+  const handleAssignAttribute = () =>
+    assignAttribute({
+      variables: {
+        id: data?.productVariant.product.productType.id,
+        operations: params.ids.map(id => ({
+          id,
+          type: AttributeTypeEnum[params.type]
+        }))
+      }
+    });
+
+  const closeModal = () =>
+    navigate(productVariantEditUrl(productId, variantId, params), true);
+
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
+      <AssignAttributeDialog
+        attributes={result?.data?.productType?.availableAttributes.edges.map(
+          edge => edge.node
+        )}
+        confirmButtonState={assignAttributeOpts.status}
+        errors={
+          assignAttributeOpts?.data?.attributeAssign?.errors.map(
+            err => err.message
+          ) || []
+        }
+        loading={assignAttributeOpts.loading}
+        onClose={closeModal}
+        onSubmit={handleAssignAttribute}
+        onFetch={search}
+        onFetchMore={loadMore}
+        onOpen={result.refetch}
+        hasMore={
+          !!result?.data?.productType?.availableAttributes.pageInfo.hasNextPage
+        }
+        open={params.action === "assign-attribute"}
+        selected={params?.ids || []}
+        onToggle={attributeId => {
+          const ids = params?.ids || [];
+          navigate(
+            productVariantEditUrl(productId, variantId, {
+              ...params,
+              ids: ids.includes(attributeId)
+                ? params.ids.filter(selectedId => selectedId !== attributeId)
+                : [...ids, attributeId]
+            })
+          );
+        }}
+      />
       <ProductVariantPage
         defaultWeightUnit={shop?.defaultWeightUnit}
         errors={errors}
@@ -216,6 +304,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
+        onAttributeAdd={() =>
+          navigate(
+            productVariantEditUrl(productId, variantId, {
+              ...params,
+              action: "assign-attribute"
+            })
+          )
+        }
+        onAttributeRemove={handleAttributeRemove}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

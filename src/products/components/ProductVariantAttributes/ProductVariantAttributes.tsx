@@ -1,6 +1,9 @@
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
@@ -10,13 +13,15 @@ import SingleAutocompleteSelectField, {
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { commonMessages } from "@saleor/intl";
+import { buttonMessages } from "@saleor/intl";
+// import { commonMessages } from "@saleor/intl";
 import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
+  isRequired: boolean;
   values: ProductVariant_attributes_attribute_values[];
 }
 export type VariantAttributeInput = FormsetAtomicData<
@@ -29,6 +34,8 @@ interface ProductVariantAttributesProps {
   disabled: boolean;
   errors: VariantCreate_productVariantCreate_errors[];
   onChange: FormsetChange<VariantAttributeInputData>;
+  onRemove: (id: string) => void;
+  onEdit: () => void;
 }
 
 function getAttributeDisplayValue(
@@ -65,45 +72,78 @@ function getAttributeValueChoices(
     value: attributeValue.slug
   }));
 }
-
+// commonMessages.generalInformations
 const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   attributes,
   disabled,
   errors,
-  onChange
+  onChange,
+  onEdit,
+  onRemove
 }) => {
   const intl = useIntl();
-
+  // console.log("attributes wtf", attributes);
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
+        title={intl.formatMessage({
+          defaultMessage: "Configurable attributes"
+        })}
+        toolbar={
+          <Button color="primary" onClick={onEdit}>
+            {intl.formatMessage(buttonMessages.edit)}
+          </Button>
+        }
       />
       <CardContent>
-        <Grid variant="uniform">
+        <div>
           {attributes === undefined ? (
             <Skeleton />
           ) : (
             attributes.map(attribute => (
-              <SingleAutocompleteSelectField
-                key={attribute.id}
-                disabled={disabled}
-                displayValue={getAttributeDisplayValue(
-                  attribute.id,
-                  attribute.value,
-                  attributes
-                )}
-                label={attribute.label}
-                name={`attribute:${attribute.id}`}
-                onChange={event => onChange(attribute.id, event.target.value)}
-                value={getAttributeValue(attribute.id, attributes)}
-                choices={getAttributeValueChoices(attribute.id, attributes)}
-                allowCustomValues
-                data-test="variant-attribute-input"
-              />
+              <div key={attribute.id}>
+                <Grid>
+                  <div>
+                    <SingleAutocompleteSelectField
+                      disabled={disabled}
+                      displayValue={getAttributeDisplayValue(
+                        attribute.id,
+                        attribute.value,
+                        attributes
+                      )}
+                      label={attribute.label}
+                      name={`attribute:${attribute.id}`}
+                      onChange={event =>
+                        onChange(attribute.id, event.target.value)
+                      }
+                      value={getAttributeValue(attribute.id, attributes)}
+                      choices={getAttributeValueChoices(
+                        attribute.id,
+                        attributes
+                      )}
+                      allowCustomValues
+                      data-test="variant-attribute-input"
+                    />
+                    {attribute.data.isRequired && (
+                      <Typography variant="caption">
+                        {intl.formatMessage({ defaultMessage: "Required" })}
+                      </Typography>
+                    )}
+                  </div>
+                  {!attribute.data.isRequired && (
+                    <IconButton
+                      color="primary"
+                      onClick={() => onRemove(attribute.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                </Grid>
+                <FormSpacer />
+              </div>
             ))
           )}
-        </Grid>
+        </div>
         {errors.length > 0 && (
           <>
             <FormSpacer />
