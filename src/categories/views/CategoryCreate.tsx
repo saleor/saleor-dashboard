@@ -1,11 +1,15 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
-import CategoryCreatePage from "../components/CategoryCreatePage";
+import CategoryCreatePage, { FormData } from "../components/CategoryCreatePage";
 import { useCategoryCreateMutation } from "../mutations";
 import { CategoryCreate } from "../types/CategoryCreate";
 import { categoryListUrl, categoryUrl } from "../urls";
@@ -20,6 +24,8 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const handleSuccess = (data: CategoryCreate) => {
     if (data.categoryCreate.errors.length === 0) {
@@ -37,9 +43,27 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     onCompleted: handleSuccess
   });
 
-  const errors = maybe(
-    () => createCategoryResult.data.categoryCreate.errors,
-    []
+  const handleCreate = async (formData: FormData) => {
+    const result = await createCategory({
+      variables: {
+        input: {
+          descriptionJson: JSON.stringify(formData.description),
+          name: formData.name,
+          seo: {
+            description: formData.seoDescription,
+            title: formData.seoTitle
+          }
+        },
+        parent: parentId || null
+      }
+    });
+
+    return result.data?.categoryCreate.category?.id || null;
+  };
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata
   );
 
   return (
@@ -52,26 +76,12 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       />
       <CategoryCreatePage
         saveButtonBarState={createCategoryResult.status}
-        errors={errors}
+        errors={createCategoryResult.data?.categoryCreate.errors || []}
         disabled={createCategoryResult.loading}
         onBack={() =>
           navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
         }
-        onSubmit={formData =>
-          createCategory({
-            variables: {
-              input: {
-                descriptionJson: JSON.stringify(formData.description),
-                name: formData.name,
-                seo: {
-                  description: formData.seoDescription,
-                  title: formData.seoTitle
-                }
-              },
-              parent: parentId || null
-            }
-          })
-        }
+        onSubmit={handleSubmit}
       />
     </>
   );
