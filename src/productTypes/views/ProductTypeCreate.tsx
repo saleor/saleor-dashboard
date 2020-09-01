@@ -1,6 +1,11 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,6 +22,8 @@ export const ProductTypeCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const handleCreateSuccess = (updateData: ProductTypeCreateMutation) => {
     if (updateData.productTypeCreate.errors.length === 0) {
@@ -32,8 +39,8 @@ export const ProductTypeCreate: React.FC = () => {
   return (
     <TypedProductTypeCreateMutation onCompleted={handleCreateSuccess}>
       {(createProductType, createProductTypeOpts) => {
-        const handleCreate = (formData: ProductTypeForm) =>
-          createProductType({
+        const handleCreate = async (formData: ProductTypeForm) => {
+          const result = await createProductType({
             variables: {
               input: {
                 hasVariants: false,
@@ -44,6 +51,15 @@ export const ProductTypeCreate: React.FC = () => {
               }
             }
           });
+
+          return result.data?.productTypeCreate.productType?.id || null;
+        };
+        const handleSubmit = createMetadataCreateHandler(
+          handleCreate,
+          updateMetadata,
+          updatePrivateMetadata
+        );
+
         return (
           <TypedProductTypeCreateDataQuery displayLoader>
             {({ data, loading }) => (
@@ -58,19 +74,18 @@ export const ProductTypeCreate: React.FC = () => {
                 <ProductTypeCreatePage
                   defaultWeightUnit={maybe(() => data.shop.defaultWeightUnit)}
                   disabled={loading}
-                  errors={maybe(
-                    () => createProductTypeOpts.data.productTypeCreate.errors,
-                    []
-                  )}
+                  errors={
+                    createProductTypeOpts.data?.productTypeCreate.errors || []
+                  }
                   pageTitle={intl.formatMessage({
                     defaultMessage: "Create Product Type",
                     description: "header",
                     id: "productTypeCreatePageHeader"
                   })}
                   saveButtonBarState={createProductTypeOpts.status}
-                  taxTypes={maybe(() => data.taxTypes, [])}
+                  taxTypes={data?.taxTypes || []}
                   onBack={() => navigate(productTypeListUrl())}
-                  onSubmit={handleCreate}
+                  onSubmit={handleSubmit}
                 />
               </>
             )}
