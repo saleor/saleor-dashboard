@@ -137,8 +137,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   );
 
   const {
-    isMetadataModified,
-    isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
@@ -179,20 +177,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const collections = getChoices(collectionChoiceList);
   const productTypes = getChoices(productTypeChoiceList);
 
-  const handleSubmit = (data: FormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
-
+  const handleSubmit = (data: FormData) =>
     onSubmit({
       ...data,
       attributes,
-      metadata,
-      privateMetadata,
       stocks
     });
-  };
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>

@@ -49,26 +49,11 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const {
-    isMetadataModified,
-    isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleSubmit = (data: FormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
-
-    onSubmit({
-      ...data,
-      metadata,
-      privateMetadata
-    });
-  };
-
   return (
-    <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
+    <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
       {({ data, change, submit, hasChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
