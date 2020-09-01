@@ -14,6 +14,18 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_errors {
   field: string | null;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -291,6 +303,8 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata | null)[];
+  privateMetadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress | null;
   canFinalize: boolean;
   created: any;

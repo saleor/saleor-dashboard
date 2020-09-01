@@ -14,6 +14,18 @@ export interface OrderDraftFinalize_draftOrderComplete_errors {
   field: string | null;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface OrderDraftFinalize_draftOrderComplete_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -291,6 +303,8 @@ export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
 export interface OrderDraftFinalize_draftOrderComplete_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderDraftFinalize_draftOrderComplete_order_metadata | null)[];
+  privateMetadata: (OrderDraftFinalize_draftOrderComplete_order_privateMetadata | null)[];
   billingAddress: OrderDraftFinalize_draftOrderComplete_order_billingAddress | null;
   canFinalize: boolean;
   created: any;

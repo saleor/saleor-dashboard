@@ -235,7 +235,7 @@ export function hasErrors(errorList: UserError[] | null): boolean {
 export function getMutationState(
   called: boolean,
   loading: boolean,
-  ...errorList: UserError[][]
+  ...errorList: any[][]
 ): ConfirmButtonTransitionState {
   if (loading) {
     return "loading";

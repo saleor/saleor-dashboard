@@ -14,6 +14,18 @@ export interface OrderVoid_orderVoid_errors {
   field: string | null;
 }
 
+export interface OrderVoid_orderVoid_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderVoid_orderVoid_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface OrderVoid_orderVoid_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -291,6 +303,8 @@ export interface OrderVoid_orderVoid_order_invoices {
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderVoid_orderVoid_order_metadata | null)[];
+  privateMetadata: (OrderVoid_orderVoid_order_privateMetadata | null)[];
   billingAddress: OrderVoid_orderVoid_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
