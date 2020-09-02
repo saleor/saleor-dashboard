@@ -896,6 +896,19 @@ export const order = (placeholder: string): OrderDetails_order => ({
       quantity: null,
       type: OrderEventsEnum.EMAIL_SENT,
       user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo5",
+      invoiceNumber: null,
+      message: null,
+      quantity: null,
+      type: OrderEventsEnum.PAYMENT_AUTHORIZED,
+      user: null
     }
   ],
   fulfillments: [
