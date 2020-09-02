@@ -1,5 +1,8 @@
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
+import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -11,7 +14,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import React from "react";
@@ -148,21 +151,38 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
-                  hiddenMessage={intl.formatMessage(
-                    {
-                      defaultMessage: "will be visible from {date}",
-                      description: "collection"
-                    },
-                    {
-                      date: localizeDate(data.publicationDate)
-                    }
-                  )}
-                  onChange={change}
-                />
+                <Card>
+                  <CardTitle
+                    title={intl.formatMessage(commonMessages.availability)}
+                  />
+                  <CardContent>
+                    <VisibilityCard
+                      data={data}
+                      errors={errors}
+                      disabled={disabled}
+                      messages={{
+                        hiddenLabel: intl.formatMessage({
+                          defaultMessage: "Visible",
+                          description: "collection label"
+                        }),
+                        hiddenSecondLabel: intl.formatMessage(
+                          {
+                            defaultMessage: "will be visible from {date}",
+                            description: "collection"
+                          },
+                          {
+                            date: localizeDate(data.publicationDate, "L")
+                          }
+                        ),
+                        visibleLabel: intl.formatMessage({
+                          defaultMessage: "Hidden",
+                          description: "collection label"
+                        })
+                      }}
+                      onChange={change}
+                    />
+                  </CardContent>
+                </Card>
               </div>
             </Grid>
             <SaveButtonBar

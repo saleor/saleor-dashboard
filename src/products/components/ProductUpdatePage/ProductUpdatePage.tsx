@@ -1,4 +1,5 @@
 import AppHeader from "@saleor/components/AppHeader";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -8,9 +9,9 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -126,6 +127,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toolbar
 }) => {
   const intl = useIntl();
+  const localizeDate = useDateLocalize();
   const attributeInput = React.useMemo(
     () => getAttributeInputFromProduct(product),
     [product]
@@ -385,10 +387,29 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handleCollectionSelect}
                   />
                   <CardSpacer />
-                  <VisibilityCard
+                  <AvailabilityCard
                     data={data}
                     errors={errors}
                     disabled={disabled}
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label"
+                      }),
+                      hiddenSecondLabel: intl.formatMessage(
+                        {
+                          defaultMessage: "will become published on {date}",
+                          description: "product publication date label"
+                        },
+                        {
+                          date: localizeDate(data.publicationDate, "L")
+                        }
+                      ),
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label"
+                      })
+                    }}
                     onChange={change}
                   />
                 </div>

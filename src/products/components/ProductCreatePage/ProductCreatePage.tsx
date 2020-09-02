@@ -1,4 +1,5 @@
 import AppHeader from "@saleor/components/AppHeader";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,8 +10,8 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -54,6 +55,7 @@ interface FormData extends MetadataFormData {
   chargeTaxes: boolean;
   description: RawDraftContentState;
   isAvailable: boolean;
+  isAvailableForPurchase: boolean;
   isPublished: boolean;
   name: string;
   productType: string;
@@ -62,6 +64,7 @@ interface FormData extends MetadataFormData {
   sku: string;
   stockQuantity: number;
   trackInventory: boolean;
+  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductCreatePageSubmitData extends FormData {
@@ -116,6 +119,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onSubmit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
+  const localizeDate = useDateLocalize();
   // Form values
   const {
     change: changeAttributeData,
@@ -147,6 +151,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     collections: [],
     description: {} as any,
     isAvailable: false,
+    isAvailableForPurchase: false,
     isPublished: false,
     metadata: [],
     name: "",
@@ -158,6 +163,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     sku: null,
     stockQuantity: null,
     trackInventory: false,
+    visibleInListings: false,
     weight: ""
   };
 
@@ -335,10 +341,29 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
-                <VisibilityCard
+                <AvailabilityCard
                   data={data}
                   errors={errors}
                   disabled={disabled}
+                  messages={{
+                    hiddenLabel: intl.formatMessage({
+                      defaultMessage: "Not published",
+                      description: "product label"
+                    }),
+                    hiddenSecondLabel: intl.formatMessage(
+                      {
+                        defaultMessage: "will become published on {date}",
+                        description: "product publication date label"
+                      },
+                      {
+                        date: localizeDate(data.publicationDate, "L")
+                      }
+                    ),
+                    visibleLabel: intl.formatMessage({
+                      defaultMessage: "Published",
+                      description: "product label"
+                    })
+                  }}
                   onChange={change}
                 />
               </div>

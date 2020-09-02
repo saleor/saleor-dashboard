@@ -159,15 +159,25 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                   <VisibilityCard
                     data={data}
                     errors={errors}
-                    hiddenMessage={intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "collection"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate)
-                      }
-                    )}
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Visible",
+                        description: "collection label"
+                      }),
+                      hiddenSecondLabel: intl.formatMessage(
+                        {
+                          defaultMessage: "will be visible from {date}",
+                          description: "collection"
+                        },
+                        {
+                          date: localizeDate(data.publicationDate, "L")
+                        }
+                      ),
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Hidden",
+                        description: "collection label"
+                      })
+                    }}
                     onChange={change}
                   >
                     <FormSpacer />
