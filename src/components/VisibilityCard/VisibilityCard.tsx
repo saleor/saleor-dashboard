@@ -10,6 +10,7 @@ import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
+import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -19,6 +20,7 @@ import FormSpacer from "../FormSpacer";
 const useStyles = makeStyles(
   theme => ({
     checkbox: {
+      alignItems: "flex-start",
       marginTop: 10
     },
     children: {
@@ -36,10 +38,15 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(3)
     },
     label: {
-      lineHeight: 1,
-      margin: 0
+      lineHeight: 1.2,
+      marginBottom: 5,
+      marginTop: 0
+    },
+    listingLabel: {
+      marginTop: 9
     },
     secondLabel: {
+      color: theme.palette.text.hint,
       fontSize: 12
     },
     setPublicationDate: {
@@ -47,8 +54,7 @@ const useStyles = makeStyles(
       cursor: "pointer",
       fontSize: 14,
       paddingBottom: 10,
-      paddingTop: 0,
-      textDecoration: "underline"
+      paddingTop: 0
     }
   }),
   { name: "VisibilityCard" }
@@ -306,7 +312,9 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               disabled={disabled}
               label={
                 <>
-                  <p className={classes.label}>
+                  <p
+                    className={classNames(classes.label, classes.listingLabel)}
+                  >
                     {intl.formatMessage({
                       defaultMessage: "Show in product listings"
                     })}
