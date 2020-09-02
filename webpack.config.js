@@ -4,6 +4,7 @@ const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 require("dotenv").config();
 
@@ -28,8 +29,9 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
   DEMO_MODE: false,
   GTM_ID: ""
 });
+const compressionPlugin = new CompressionPlugin({});
 
-const dashboardBuildPath = "build/dashboard/";
+const dashboardBuildPath = "build/";
 
 module.exports = (env, argv) => {
   const devMode = argv.mode !== "production";
@@ -100,7 +102,12 @@ module.exports = (env, argv) => {
       splitChunks: false
     },
     output,
-    plugins: [checkerPlugin, environmentPlugin, htmlWebpackPlugin],
+    plugins: [
+      checkerPlugin,
+      environmentPlugin,
+      htmlWebpackPlugin,
+      compressionPlugin
+    ],
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin]

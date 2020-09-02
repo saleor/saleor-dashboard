@@ -1,7 +1,10 @@
+.cache
 .circleci
 .git
 .github
 Dockerfile
 build
+cypress/screenshots
+cypress/videos
 node_modules
 recordings
