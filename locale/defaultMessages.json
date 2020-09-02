@@ -3137,6 +3137,10 @@
     "context": "order history message",
     "string": "Products were deleted from draft order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_4121987561": {
+    "context": "order history message",
+    "string": "Order refund information was sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4265697648": {
     "context": "order history message",
     "string": "Updated fulfillment group's tracking number"
@@ -3144,6 +3148,10 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4266665081": {
     "context": "order history message",
     "string": "Payment failed"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_493321552": {
+    "context": "order history message",
+    "string": "Order cancel information was sent to customer"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_651019008": {
     "context": "order history message",

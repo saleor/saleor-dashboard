@@ -30,6 +30,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Use hooks instead of containers with render props in product mutations - #667 by @dominik-zeglen
 - Add apps and permission groups to navigator - #678 by @dominik-zeglen
 - Add metadata - #670 by @dominik-zeglen
+- Update order history information - #680 by @dominik-zeglen
 - Add metadata editor to creator views - #684 by @dominik-zeglen
 
 ## 2.10.1
