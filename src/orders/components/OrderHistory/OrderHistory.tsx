@@ -76,6 +76,16 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
             defaultMessage: "Shipping tracking number was sent to customer",
             description: "order history message"
           });
+        case OrderEventsEmailsEnum.ORDER_CANCEL:
+          return intl.formatMessage({
+            defaultMessage: "Order cancel information was sent to customer",
+            description: "order history message"
+          });
+        case OrderEventsEmailsEnum.ORDER_REFUND:
+          return intl.formatMessage({
+            defaultMessage: "Order refund information was sent to customer",
+            description: "order history message"
+          });
       }
     case OrderEventsEnum.FULFILLMENT_CANCELED:
       return intl.formatMessage({
@@ -211,6 +221,13 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
         defaultMessage: "Order address was updated",
         description: "order history message"
       });
+    case OrderEventsEnum.PAYMENT_AUTHORIZED:
+      return intl.formatMessage({
+        defaultMessage: "Payment was authorized",
+        description: "order history message"
+      });
+    case OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION:
+      return event.message;
   }
 };
 
