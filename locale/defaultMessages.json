@@ -3151,6 +3151,10 @@
     "context": "order history message",
     "string": "Draft order was created"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3237374063": {
+    "context": "order history message",
+    "string": "Payment was authorized"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
     "context": "order history message",
     "string": "Marked order as paid"
