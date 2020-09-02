@@ -4,6 +4,11 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -55,6 +60,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       }
     }
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const product = data?.product;
 
@@ -63,8 +70,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   }
 
   const handleBack = () => navigate(productUrl(productId));
-  const handleSubmit = (formData: ProductVariantCreatePageSubmitData) =>
-    variantCreate({
+  const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
+    const result = await variantCreate({
       variables: {
         input: {
           attributes: formData.attributes
@@ -86,6 +93,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         }
       }
     });
+
+    return result.data.productVariantCreate?.productVariant?.id || null;
+  };
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata
+  );
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 

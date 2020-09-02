@@ -4,6 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -25,6 +26,7 @@ import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -45,7 +47,7 @@ import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
-interface FormData {
+interface FormData extends MetadataFormData {
   basePrice: number;
   publicationDate: string;
   category: string;
@@ -133,6 +135,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const initialDescription = React.useRef(
     convertToRaw(ContentState.createFromText(""))
   );
+
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const initialData: FormData = {
     basePrice: 0,
     category: "",
@@ -140,7 +147,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     collections: [],
     description: {} as any,
     isPublished: false,
+    metadata: [],
     name: "",
+    privateMetadata: [],
     productType: "",
     publicationDate: "",
     seoDescription: "",
@@ -170,9 +179,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
   const handleSubmit = (data: FormData) =>
     onSubmit({
+      ...data,
       attributes,
-      stocks,
-      ...data
+      stocks
     });
 
   return (
@@ -211,6 +220,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           setProductType,
           productTypeChoiceList
         );
+
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -296,6 +307,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   loading={disabled}
                   onChange={change}
                 />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
                 <ProductOrganization

@@ -82,9 +82,9 @@ const AttributePage: React.FC<AttributePageProps> = ({
           filterableInDashboard: true,
           filterableInStorefront: true,
           inputType: AttributeInputTypeEnum.DROPDOWN,
-          metadata: undefined,
+          metadata: [],
           name: "",
-          privateMetadata: undefined,
+          privateMetadata: [],
           slug: "",
           storefrontSearchPosition: "",
           valueRequired: true,
@@ -119,10 +119,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
         };
 
   const handleSubmit = (data: AttributePageFormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
+    const metadata =
+      !attribute || isMetadataModified ? data.metadata : undefined;
+    const privateMetadata =
+      !attribute || isPrivateMetadataModified
+        ? data.privateMetadata
+        : undefined;
 
     onSubmit({
       ...data,
@@ -170,12 +172,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   onValueReorder={onValueReorder}
                   onValueUpdate={onValueUpdate}
                 />
-                {!!attribute && (
-                  <>
-                    <CardSpacer />
-                    <Metadata data={data} onChange={changeMetadata} />
-                  </>
-                )}
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
                 <AttributeProperties

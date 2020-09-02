@@ -6,6 +6,11 @@ import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -49,6 +54,8 @@ export const ProductCreateView: React.FC = () => {
       first: 50
     }
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const handleBack = () => navigate(productListUrl());
 
@@ -66,8 +73,8 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleSubmit = (formData: ProductCreatePageSubmitData) => {
-    productCreate({
+  const handleCreate = async (formData: ProductCreatePageSubmitData) => {
+    const result = await productCreate({
       variables: {
         attributes: formData.attributes.map(attribute => ({
           id: attribute.id,
@@ -96,7 +103,14 @@ export const ProductCreateView: React.FC = () => {
         weight: weight(formData.weight)
       }
     });
+
+    return result.data.productCreate?.product?.id || null;
   };
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata
+  );
 
   return (
     <>

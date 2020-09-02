@@ -5,6 +5,7 @@ import { getStringOrPlaceholder } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   add,
   isSelected,
@@ -12,11 +13,17 @@ import {
   remove,
   updateAtIndex
 } from "@saleor/utils/lists";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
-import AttributePage from "../../components/AttributePage";
+import AttributePage, {
+  AttributePageFormData
+} from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog, {
   AttributeValueEditDialogFormData
@@ -72,6 +79,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
     }
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const id = params.id ? parseInt(params.id, 0) : undefined;
 
@@ -105,6 +114,31 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(move(values[oldIndex], values, areValuesEqual, newIndex));
 
+  const handleCreate = async (data: AttributePageFormData) => {
+    const input = {
+      ...data,
+      metadata: undefined,
+      privateMetadata: undefined,
+      storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0),
+      values: values.map(value => ({
+        name: value.name
+      }))
+    };
+
+    const result = await attributeCreate({
+      variables: {
+        input
+      }
+    });
+
+    return result.data.attributeCreate?.attribute?.id || null;
+  };
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata
+  );
+
   return (
     <>
       <AttributePage
@@ -113,22 +147,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         errors={attributeCreateOpts.data?.attributeCreate.errors || []}
         onBack={() => navigate(attributeListUrl())}
         onDelete={undefined}
-        onSubmit={input =>
-          attributeCreate({
-            variables: {
-              input: {
-                ...input,
-                storefrontSearchPosition: parseInt(
-                  input.storefrontSearchPosition,
-                  0
-                ),
-                values: values.map(value => ({
-                  name: value.name
-                }))
-              }
-            }
-          })
-        }
+        onSubmit={handleSubmit}
         onValueAdd={() => openModal("add-value")}
         onValueDelete={id =>
           openModal("remove-value", {

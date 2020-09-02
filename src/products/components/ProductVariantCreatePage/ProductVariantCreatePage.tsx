@@ -4,6 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
@@ -13,6 +14,7 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,7 +28,7 @@ import ProductVariantAttributes, {
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 
-interface ProductVariantCreatePageFormData {
+interface ProductVariantCreatePageFormData extends MetadataFormData {
   costPrice: string;
   images: string[];
   price: string;
@@ -83,11 +85,16 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     data: stocks,
     remove: removeStock
   } = useFormset<null, string>([]);
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: ProductVariantCreatePageFormData = {
     costPrice: "",
     images: maybe(() => product.images.map(image => image.id)),
+    metadata: [],
     price: "",
+    privateMetadata: [],
     quantity: "0",
     sku: "",
     trackInventory: true,
@@ -108,6 +115,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           changeAttributeData(id, value);
           triggerChange();
         };
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -176,6 +184,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     removeStock(id);
                   }}
                 />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
             </Grid>
             <SaveButtonBar
