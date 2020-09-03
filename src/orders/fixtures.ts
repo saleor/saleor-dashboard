@@ -1264,8 +1264,10 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       }
     }
   ],
+  metadata: [],
   number: "24",
   paymentStatus: null,
+  privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
