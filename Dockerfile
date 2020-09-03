@@ -16,18 +16,15 @@ FROM base as dev
 CMD npm start
 
 FROM base as source
-COPY --chown=node:node assets ./assets/
-COPY --chown=node:node locale ./locale/
-COPY --chown=node:node testUtils ./testUtils/
-COPY --chown=node:node src ./src/
-COPY --chown=node:node *.js ./
-COPY --chown=node:node *.json ./
-COPY --chown=node:node *.ts ./
-
-FROM source as test
-# AuthProvider.test.ts breaks testing during build, 
-# because it's basically integration test and not unit test
-#RUN npm test -- --ci --no-cache
+COPY --chown=node:node \
+	assets \
+	locale \
+	testUtils \
+	src \
+	*.js \
+	*.json \
+	*.ts \
+	./
 
 FROM source as build
 RUN npm run build
