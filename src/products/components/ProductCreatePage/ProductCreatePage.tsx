@@ -48,6 +48,7 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData extends MetadataFormData {
+  availableForPurchase: string;
   basePrice: number;
   publicationDate: string;
   category: string;
