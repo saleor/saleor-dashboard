@@ -202,6 +202,7 @@ export interface ProductDetails_product {
   collections: (ProductDetails_product_collections | null)[] | null;
   margin: ProductDetails_product_margin | null;
   purchaseCost: ProductDetails_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
@@ -209,6 +210,8 @@ export interface ProductDetails_product {
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
   weight: ProductDetails_product_weight | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductDetails {

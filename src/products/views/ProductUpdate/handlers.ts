@@ -7,6 +7,10 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
 import {
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+} from "@saleor/products/types/ProductSetAvailabilityForPurchase";
+import {
   ProductUpdate,
   ProductUpdateVariables
 } from "@saleor/products/types/ProductUpdate";
@@ -26,7 +30,10 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<ProductUpdate>>,
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
-  ) => Promise<MutationFetchResult<SimpleProductUpdate>>
+  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
+  setProductAvailability: (
+    variables: ProductSetAvailabilityForPurchaseVariables
+  ) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -47,7 +54,8 @@ export function createUpdateHandler(
       seo: {
         description: data.seoDescription,
         title: data.seoTitle
-      }
+      },
+      visibleInListings: data.visibleInListings
     };
 
     let errors: Array<
@@ -76,6 +84,30 @@ export function createUpdateHandler(
         ...result.data.productVariantStocksDelete.errors,
         ...result.data.productVariantStocksUpdate.errors,
         ...result.data.productVariantUpdate.errors
+      ];
+    }
+    const { isAvailableForPurchase, availableForPurchase } = data;
+    if (
+      isAvailableForPurchase !== product.isAvailableForPurchase ||
+      availableForPurchase !== product.availableForPurchase
+    ) {
+      const isAvailable =
+        availableForPurchase && !isAvailableForPurchase
+          ? true
+          : isAvailableForPurchase;
+
+      const availabilityResult = await setProductAvailability({
+        isAvailable,
+        productId: product.id,
+        startDate: isAvailableForPurchase
+          ? null
+          : availableForPurchase !== ""
+          ? availableForPurchase
+          : null
+      });
+      errors = [
+        ...errors,
+        ...availabilityResult.data.productSetAvailabilityForPurchase.errors
       ];
     }
 

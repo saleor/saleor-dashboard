@@ -127,25 +127,26 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 data={data}
                 errors={errors}
                 disabled={disabled}
-                hiddenMessage={intl.formatMessage(
-                  {
-                    defaultMessage: "will be visible from {date}",
-                    description: "page"
-                  },
-                  {
-                    date: localizeDate(data.publicationDate)
-                  }
-                )}
+                messages={{
+                  hiddenLabel: intl.formatMessage({
+                    defaultMessage: "Hidden",
+                    description: "page label"
+                  }),
+                  hiddenSecondLabel: intl.formatMessage(
+                    {
+                      defaultMessage: "will be visible from {date}",
+                      description: "page"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate, "L")
+                    }
+                  ),
+                  visibleLabel: intl.formatMessage({
+                    defaultMessage: "Visible",
+                    description: "page label"
+                  })
+                }}
                 onChange={change}
-                visibleMessage={intl.formatMessage(
-                  {
-                    defaultMessage: "since {date}",
-                    description: "page"
-                  },
-                  {
-                    date: localizeDate(data.publicationDate)
-                  }
-                )}
               />
             </div>
           </Grid>

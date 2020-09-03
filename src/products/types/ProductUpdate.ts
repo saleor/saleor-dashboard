@@ -208,6 +208,7 @@ export interface ProductUpdate_productUpdate_product {
   collections: (ProductUpdate_productUpdate_product_collections | null)[] | null;
   margin: ProductUpdate_productUpdate_product_margin | null;
   purchaseCost: ProductUpdate_productUpdate_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
@@ -215,6 +216,8 @@ export interface ProductUpdate_productUpdate_product {
   images: (ProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: ProductUpdate_productUpdate_product_weight | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductUpdate_productUpdate {
@@ -239,4 +242,5 @@ export interface ProductUpdateVariables {
   name?: string | null;
   basePrice?: any | null;
   seo?: SeoInput | null;
+  visibleInListings?: boolean | null;
 }

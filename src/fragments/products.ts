@@ -134,6 +134,7 @@ export const productFragmentDetails = gql`
         ...Money
       }
     }
+    isAvailableForPurchase
     isAvailable
     isPublished
     chargeTaxes
@@ -176,6 +177,8 @@ export const productFragmentDetails = gql`
     weight {
       ...WeightFragment
     }
+    availableForPurchase
+    visibleInListings
   }
 `;
 

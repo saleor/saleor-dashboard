@@ -208,6 +208,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   collections: (SimpleProductUpdate_productUpdate_product_collections | null)[] | null;
   margin: SimpleProductUpdate_productUpdate_product_margin | null;
   purchaseCost: SimpleProductUpdate_productUpdate_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
@@ -215,6 +216,8 @@ export interface SimpleProductUpdate_productUpdate_product {
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: SimpleProductUpdate_productUpdate_product_weight | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface SimpleProductUpdate_productUpdate {

@@ -202,6 +202,7 @@ export interface Product {
   collections: (Product_collections | null)[] | null;
   margin: Product_margin | null;
   purchaseCost: Product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
@@ -209,4 +210,6 @@ export interface Product {
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }

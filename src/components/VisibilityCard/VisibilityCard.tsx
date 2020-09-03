@@ -4,10 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
-import React from "react";
+import classNames from "classnames";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DateContext } from "../Date/DateContext";
@@ -15,6 +19,10 @@ import FormSpacer from "../FormSpacer";
 
 const useStyles = makeStyles(
   theme => ({
+    checkbox: {
+      alignItems: "flex-start",
+      marginTop: 10
+    },
     children: {
       "& button": {
         margin: "0 9px"
@@ -30,65 +38,92 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(3)
     },
     label: {
-      lineHeight: 1,
-      margin: 0
+      lineHeight: 1.2,
+      marginBottom: 5,
+      marginTop: 0
+    },
+    listingLabel: {
+      marginTop: 9
     },
     secondLabel: {
+      color: theme.palette.text.hint,
       fontSize: 12
     },
     setPublicationDate: {
       color: theme.palette.primary.main,
       cursor: "pointer",
-      fontSize: "14px",
-      paddingTop: "15px",
-      textDecoration: "underline"
+      fontSize: 14,
+      paddingBottom: 10,
+      paddingTop: 0
     }
   }),
   { name: "VisibilityCard" }
 );
 
-interface VisibilityCardProps {
+interface Message {
+  visibleLabel: string;
+  hiddenLabel: string;
+  visibleSecondLabel?: string;
+  hiddenSecondLabel: string;
+  availableLabel?: string;
+  unavailableLabel?: string;
+  availableSecondLabel?: string;
+  setAvailabilityDateLabel?: string;
+}
+export interface VisibilityCardProps {
   children?: React.ReactNode | React.ReactNodeArray;
   data: {
+    availableForPurchase?: string;
+    isAvailableForPurchase?: boolean;
     isPublished: boolean;
     publicationDate: string;
+    visibleInListings?: boolean;
   };
   errors: UserError[];
   disabled?: boolean;
-  hiddenMessage: string;
+  messages: Message;
   onChange: (event: React.ChangeEvent<any>) => void;
-  visibleMessage: string;
 }
 
 export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
-    data: { isPublished, publicationDate },
+    data: {
+      availableForPurchase,
+      isAvailableForPurchase: isAvailable,
+      isPublished,
+      publicationDate,
+      visibleInListings
+    },
     errors,
     disabled,
-    hiddenMessage,
-    onChange,
-    visibleMessage
+    messages,
+    onChange
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-  const [isPublicationDate, setPublicationDate] = React.useState(
+  const localizeDate = useDateLocalize();
+  const dateNow = React.useContext(DateContext);
+  const hasAvailableProps =
+    isAvailable !== undefined && availableForPurchase !== undefined;
+
+  const [isPublicationDate, setPublicationDate] = useState(
     publicationDate === null ? true : false
   );
-  const dateNow = React.useContext(DateContext);
-  const visibleSecondLabel = publicationDate
-    ? isPublished
-      ? visibleMessage
-      : null
-    : null;
-  const hiddenSecondLabel = publicationDate
-    ? isPublished
-      ? null
-      : Date.parse(publicationDate) > dateNow
-      ? hiddenMessage
-      : null
-    : null;
+  const [isAvailableDate, setAvailableDate] = useState(
+    availableForPurchase === null ? true : false
+  );
+
+  const visibleMessage = (date: string) =>
+    intl.formatMessage(
+      {
+        defaultMessage: "since {date}",
+        description: "date"
+      },
+      {
+        date: localizeDate(date, "L")
+      }
+    );
 
   return (
     <Card>
@@ -104,23 +139,28 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           error={!!getFieldError(errors, "isPublished")}
           firstOptionLabel={
             <>
-              <p className={classes.label}>
-                {intl.formatMessage({
-                  defaultMessage: "Visible"
-                })}
-              </p>
-              <span className={classes.secondLabel}>{visibleSecondLabel}</span>
+              <p className={classes.label}>{messages.visibleLabel}</p>
+              {isPublished &&
+                publicationDate &&
+                Date.parse(publicationDate) < dateNow && (
+                  <span className={classes.secondLabel}>
+                    {messages.visibleSecondLabel ||
+                      visibleMessage(publicationDate)}
+                  </span>
+                )}
             </>
           }
           name={"isPublished" as keyof FormData}
           secondOptionLabel={
             <>
-              <p className={classes.label}>
-                {intl.formatMessage({
-                  defaultMessage: "Hidden"
-                })}
-              </p>
-              <span className={classes.secondLabel}>{hiddenSecondLabel}</span>
+              <p className={classes.label}>{messages.hiddenLabel}</p>
+              {publicationDate &&
+                !isPublished &&
+                Date.parse(publicationDate) >= dateNow && (
+                  <span className={classes.secondLabel}>
+                    {messages.hiddenSecondLabel}
+                  </span>
+                )}
             </>
           }
           value={isPublished}
@@ -128,16 +168,14 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         />
         {!isPublished && (
           <>
-            {!isPublished && (
-              <Typography
-                className={classes.setPublicationDate}
-                onClick={() => setPublicationDate(!isPublicationDate)}
-              >
-                {intl.formatMessage({
-                  defaultMessage: "Set publication date"
-                })}
-              </Typography>
-            )}
+            <Typography
+              className={classes.setPublicationDate}
+              onClick={() => setPublicationDate(!isPublicationDate)}
+            >
+              {intl.formatMessage({
+                defaultMessage: "Set publication date"
+              })}
+            </Typography>
             {isPublicationDate && (
               <TextField
                 error={!!getFieldError(errors, "publicationDate")}
@@ -166,6 +204,108 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             <Typography color="error">
               {getFieldError(errors, "isPublished")?.message}
             </Typography>
+          </>
+        )}
+        {hasAvailableProps && (
+          <>
+            <Hr />
+            <RadioSwitchField
+              disabled={disabled}
+              error={!!getFieldError(errors, "isAvailableForPurchase")}
+              firstOptionLabel={
+                <>
+                  <p className={classes.label}>{messages.availableLabel}</p>
+                  {isAvailable &&
+                    availableForPurchase &&
+                    Date.parse(availableForPurchase) < dateNow && (
+                      <span className={classes.secondLabel}>
+                        {visibleMessage(availableForPurchase)}
+                      </span>
+                    )}
+                </>
+              }
+              name={"isAvailableForPurchase" as keyof FormData}
+              secondOptionLabel={
+                <>
+                  <p className={classes.label}>{messages.unavailableLabel}</p>
+                  {availableForPurchase && !isAvailable && (
+                    <span className={classes.secondLabel}>
+                      {messages.availableSecondLabel}
+                    </span>
+                  )}
+                </>
+              }
+              value={isAvailable}
+              onChange={onChange}
+            />
+            {!isAvailable && (
+              <>
+                <Typography
+                  className={classes.setPublicationDate}
+                  onClick={() => setAvailableDate(!isAvailable)}
+                >
+                  {messages.setAvailabilityDateLabel}
+                </Typography>
+                {isAvailableDate && (
+                  <TextField
+                    error={!!getFieldError(errors, "startDate")}
+                    disabled={disabled}
+                    label={intl.formatMessage({
+                      defaultMessage: "Set available on",
+                      description: "available on date"
+                    })}
+                    name="availableForPurchase"
+                    type="date"
+                    fullWidth={true}
+                    helperText={getFieldError(errors, "startDate")?.message}
+                    value={availableForPurchase ? availableForPurchase : ""}
+                    onChange={onChange}
+                    className={classes.date}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                )}
+              </>
+            )}
+            {getFieldError(errors, "isAvailableForPurchase") && (
+              <>
+                <FormSpacer />
+                <Typography color="error">
+                  {getFieldError(errors, "isAvailableForPurchase")?.message}
+                </Typography>
+              </>
+            )}
+          </>
+        )}
+        {visibleInListings !== undefined && (
+          <>
+            <Hr />
+            <ControlledCheckbox
+              className={classes.checkbox}
+              name="visibleInListings"
+              checked={visibleInListings}
+              disabled={disabled}
+              label={
+                <>
+                  <p
+                    className={classNames(classes.label, classes.listingLabel)}
+                  >
+                    {intl.formatMessage({
+                      defaultMessage: "Show in product listings"
+                    })}
+                  </p>
+
+                  <span className={classes.secondLabel}>
+                    {intl.formatMessage({
+                      defaultMessage:
+                        "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+                    })}
+                  </span>
+                </>
+              }
+              onChange={onChange}
+            />
           </>
         )}
         <div className={classes.children}>{children}</div>

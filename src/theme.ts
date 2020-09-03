@@ -122,6 +122,7 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiFormControlLabel: {
         label: {
+          lineHeight: 1.2,
           marginLeft: 4
         }
       },

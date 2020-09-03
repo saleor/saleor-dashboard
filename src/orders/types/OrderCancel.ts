@@ -56,6 +56,18 @@ export interface OrderCancel_orderCancel_order_events {
   user: OrderCancel_orderCancel_order_events_user | null;
 }
 
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  product: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -83,6 +95,7 @@ export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -114,6 +127,18 @@ export interface OrderCancel_orderCancel_order_fulfillments {
   warehouse: OrderCancel_orderCancel_order_fulfillments_warehouse | null;
 }
 
+export interface OrderCancel_orderCancel_order_lines_variant_product {
+  __typename: "Product";
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderCancel_orderCancel_order_lines_variant {
+  __typename: "ProductVariant";
+  product: OrderCancel_orderCancel_order_lines_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderCancel_orderCancel_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -141,6 +166,7 @@ export interface OrderCancel_orderCancel_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderCancel_orderCancel_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;

@@ -208,6 +208,7 @@ export interface ProductCreate_productCreate_product {
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;
   margin: ProductCreate_productCreate_product_margin | null;
   purchaseCost: ProductCreate_productCreate_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
@@ -215,6 +216,8 @@ export interface ProductCreate_productCreate_product {
   images: (ProductCreate_productCreate_product_images | null)[] | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
   weight: ProductCreate_productCreate_product_weight | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductCreate_productCreate {
@@ -243,4 +246,5 @@ export interface ProductCreateVariables {
   stocks: StockInput[];
   trackInventory: boolean;
   weight?: any | null;
+  visibleInListings?: boolean | null;
 }

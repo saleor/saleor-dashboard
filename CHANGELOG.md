@@ -32,6 +32,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add metadata - #670 by @dominik-zeglen
 - Update order history information - #680 by @dominik-zeglen
 - Add metadata editor to creator views - #684 by @dominik-zeglen
+- Update product visibility card component - #679 by @AlicjaSzu
 
 ## 2.10.1
 

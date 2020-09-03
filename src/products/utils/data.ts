@@ -171,11 +171,14 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 }
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
+  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
+  isAvailableForPurchase: boolean;
+  isAvailable: boolean;
   isPublished: boolean;
   name: string;
   publicationDate: string;
@@ -184,6 +187,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
+  visibleInListings: boolean;
 }
 
 export function getProductUpdatePageFormData(
@@ -191,6 +195,7 @@ export function getProductUpdatePageFormData(
   variants: ProductDetails_product_variants[]
 ): ProductUpdatePageFormData {
   return {
+    availableForPurchase: product?.availableForPurchase,
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
     chargeTaxes: maybe(() => product.chargeTaxes, false),
@@ -199,6 +204,8 @@ export function getProductUpdatePageFormData(
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
+    isAvailable: !!product?.isAvailable,
+    isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
@@ -216,6 +223,7 @@ export function getProductUpdatePageFormData(
       ""
     ),
     trackInventory: !!product?.variants[0]?.trackInventory,
+    visibleInListings: !!product?.visibleInListings,
     weight: product?.weight?.value.toString() || ""
   };
 }

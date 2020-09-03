@@ -95,13 +95,18 @@ export const product: (
       ]
     }
   ],
+  availableForPurchase: null,
   basePrice: {
     __typename: "Money" as "Money",
     amount: 339.39,
     currency: "NZD",
     localized: "339.39 NZD"
   },
-  category: { __typename: "Category", id: "Q2F0ZWdvcnk6MQ==", name: "Apparel" },
+  category: {
+    __typename: "Category",
+    id: "Q2F0ZWdvcnk6MQ==",
+    name: "Apparel"
+  },
   chargeTaxes: true,
   collections: [
     {
@@ -150,6 +155,7 @@ export const product: (
     }
   ],
   isAvailable: false,
+  isAvailableForPurchase: false,
   isFeatured: false,
   isPublished: true,
   margin: { __typename: "Margin", start: 2, stop: 7 },
@@ -332,6 +338,7 @@ export const product: (
       }
     }
   ],
+  visibleInListings: true,
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,

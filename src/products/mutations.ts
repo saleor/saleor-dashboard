@@ -40,6 +40,10 @@ import {
   ProductImageUpdate,
   ProductImageUpdateVariables
 } from "./types/ProductImageUpdate";
+import {
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+} from "./types/ProductSetAvailabilityForPurchase";
 import { ProductUpdate, ProductUpdateVariables } from "./types/ProductUpdate";
 import {
   ProductVariantBulkCreate,
@@ -141,6 +145,7 @@ export const productUpdateMutation = gql`
     $name: String
     $basePrice: Decimal
     $seo: SeoInput
+    $visibleInListings: Boolean
   ) {
     productUpdate(
       id: $id
@@ -155,6 +160,7 @@ export const productUpdateMutation = gql`
         name: $name
         basePrice: $basePrice
         seo: $seo
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -286,6 +292,7 @@ export const productCreateMutation = gql`
     $stocks: [StockInput!]!
     $trackInventory: Boolean!
     $weight: WeightScalar
+    $visibleInListings: Boolean
   ) {
     productCreate(
       input: {
@@ -304,6 +311,7 @@ export const productCreateMutation = gql`
         stocks: $stocks
         trackInventory: $trackInventory
         weight: $weight
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -588,3 +596,28 @@ export const useProductExport = makeMutation<
   ProductExport,
   ProductExportVariables
 >(productExportMutation);
+
+const productSetAvailabilityForPurchase = gql`
+  ${productErrorFragment}
+  mutation ProductSetAvailabilityForPurchase(
+    $isAvailable: Boolean!
+    $productId: ID!
+    $startDate: Date
+  ) {
+    productSetAvailabilityForPurchase(
+      isAvailable: $isAvailable
+      productId: $productId
+      startDate: $startDate
+    ) {
+      errors: productErrors {
+        ...ProductErrorFragment
+        message
+      }
+    }
+  }
+`;
+
+export const useProductSetAvailabilityForPurchase = makeMutation<
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+>(productSetAvailabilityForPurchase);
