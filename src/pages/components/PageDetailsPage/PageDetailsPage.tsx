@@ -129,7 +129,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={disabled}
                 messages={{
                   hiddenLabel: intl.formatMessage({
-                    defaultMessage: "Visible",
+                    defaultMessage: "Hidden",
                     description: "page label"
                   }),
                   hiddenSecondLabel: intl.formatMessage(
@@ -142,7 +142,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     }
                   ),
                   visibleLabel: intl.formatMessage({
-                    defaultMessage: "Hidden",
+                    defaultMessage: "Visible",
                     description: "page label"
                   })
                 }}

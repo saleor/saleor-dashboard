@@ -4382,9 +4382,15 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1050795709": {
+    "string": "Attribute code"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
     "context": "variant price",
     "string": "Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1192828581": {
+    "string": "No attributes found"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1346828628": {
     "string": "Selected values will be used to create variants for the configurable product."
@@ -4397,6 +4403,10 @@
     "context": "variant attribute",
     "string": "Select Attribute"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1935535842": {
+    "context": "table actions",
+    "string": "Required"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2002684673": {
     "context": "page title",
     "string": "Price and SKUs"
@@ -4408,6 +4418,14 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2158649399": {
     "context": "product attribute values, page title",
     "string": "Choose Values"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2186555805": {
+    "context": "table actions",
+    "string": "Use in faceted search"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2235596452": {
+    "context": "table actions",
+    "string": "Searchable"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2478977538": {
     "context": "attribute values, variant creation step",
@@ -4447,12 +4465,20 @@
     "context": "create multiple variants, button",
     "string": "Create"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_4190792473": {
+    "context": "table actions",
+    "string": "Actions"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_520980261": {
     "context": "variant creator summary card header",
     "string": "Created Variants"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_551319747": {
     "string": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_643174786": {
+    "context": "table actions",
+    "string": "Visible"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_693960049": {
     "string": "SKU"
@@ -4467,6 +4493,10 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_904693740": {
     "context": "previous step, button",
     "string": "Previous"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_909072922": {
+    "context": "table header label",
+    "string": "Default label"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_998917294": {
     "context": "variant name",

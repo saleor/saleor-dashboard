@@ -161,7 +161,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     errors={errors}
                     messages={{
                       hiddenLabel: intl.formatMessage({
-                        defaultMessage: "Visible",
+                        defaultMessage: "Hidden",
                         description: "collection label"
                       }),
                       hiddenSecondLabel: intl.formatMessage(
@@ -174,7 +174,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                         }
                       ),
                       visibleLabel: intl.formatMessage({
-                        defaultMessage: "Hidden",
+                        defaultMessage: "Visible",
                         description: "collection label"
                       })
                     }}
