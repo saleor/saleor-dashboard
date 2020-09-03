@@ -1437,10 +1437,6 @@
     "context": "product availability",
     "string": "Available for purchase"
   },
-  "src_dot_components_dot_AvailabilityCard_dot_2936097346": {
-    "context": "product unavailability",
-    "string": "Unvailable for purchase"
-  },
   "src_dot_components_dot_AvailabilityCard_dot_2938074852": {
     "context": "product available for purchase date",
     "string": "will become available on {date}"
@@ -1448,6 +1444,10 @@
   "src_dot_components_dot_AvailabilityCard_dot_570524410": {
     "context": "product availability date label",
     "string": "Set availability date"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_825317195": {
+    "context": "product unavailability",
+    "string": "Unavailable for purchase"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",

@@ -8,6 +8,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
 import classNames from "classnames";
@@ -82,7 +83,7 @@ export interface VisibilityCardProps {
   errors: UserError[];
   disabled?: boolean;
   messages: Message;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
 }
 
 export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
@@ -236,7 +237,15 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                 </>
               }
               value={isAvailable}
-              onChange={onChange}
+              onChange={e => {
+                const { value } = e.target;
+                if (!value) {
+                  onChange({
+                    target: { name: "availableForPurchase", value: null }
+                  });
+                }
+                return onChange(e);
+              }}
             />
             {!isAvailable && (
               <>
