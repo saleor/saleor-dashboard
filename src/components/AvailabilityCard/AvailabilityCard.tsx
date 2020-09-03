@@ -42,7 +42,7 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = props => {
           description: "product availability date label"
         }),
         unavailableLabel: intl.formatMessage({
-          defaultMessage: "Unvailable for purchase",
+          defaultMessage: "Unavailable for purchase",
           description: "product unavailability"
         })
       }}
