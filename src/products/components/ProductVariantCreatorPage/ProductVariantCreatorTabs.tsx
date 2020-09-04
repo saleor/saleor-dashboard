@@ -10,6 +10,13 @@ function useSteps(): Array<Step<ProductVariantCreatorStep>> {
   return [
     {
       label: intl.formatMessage({
+        defaultMessage: "Choose attributes",
+        description: "attributes list, variant creation step"
+      }),
+      value: ProductVariantCreatorStep.attributes
+    },
+    {
+      label: intl.formatMessage({
         defaultMessage: "Select Values",
         description: "attribute values, variant creation step"
       }),

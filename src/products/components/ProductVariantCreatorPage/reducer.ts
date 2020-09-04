@@ -1,3 +1,4 @@
+import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
@@ -28,6 +29,7 @@ export enum ProductVariantCreateReducerActionType {
   changeVariantData,
   changeVariantStockData,
   changeWarehouses,
+  chooseAttributes,
   deleteVariant,
   reload,
   selectValue
@@ -61,6 +63,10 @@ export interface ProductVariantCreateReducerAction {
   };
   changeWarehouses?: {
     warehouseId: string;
+  };
+  chooseAttributes?: {
+    list: ProductDetails_product_productType_variantAttributes[];
+    selected: string[];
   };
   deleteVariant?: {
     variantIndex: number;
@@ -124,6 +130,17 @@ function selectValue(
       ...prevState.stock,
       values: stockValues
     }
+  };
+}
+
+function chooseAttributes(
+  prevState: ProductVariantCreateFormData,
+  list: any[],
+  selected: string[]
+) {
+  return {
+    ...prevState,
+    attributes: list.filter(item => selected.find(id => id === item.id))
   };
 }
 
@@ -394,6 +411,12 @@ function reduceProductVariantCreateFormData(
   action: ProductVariantCreateReducerAction
 ) {
   switch (action.type) {
+    case ProductVariantCreateReducerActionType.chooseAttributes:
+      return chooseAttributes(
+        prevState,
+        action.chooseAttributes.list,
+        action.chooseAttributes.selected
+      );
     case ProductVariantCreateReducerActionType.selectValue:
       return selectValue(
         prevState,

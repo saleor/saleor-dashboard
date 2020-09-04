@@ -5,6 +5,8 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
+import { ListActions } from "@saleor/types";
+import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -44,6 +46,8 @@ function canHitNext(
   data: ProductVariantCreateFormData
 ): boolean {
   switch (step) {
+    case ProductVariantCreatorStep.attributes:
+      return !!data.attributes.length;
     case ProductVariantCreatorStep.values:
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
@@ -81,12 +85,19 @@ export interface ProductVariantCreatePageProps
   defaultPrice: string;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
+type ProductVariantCreatePageWithListProps = ProductVariantCreatePageProps &
+  ListActions;
 
 function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
   switch (step) {
+    case ProductVariantCreatorStep.attributes:
+      return intl.formatMessage({
+        defaultMessage: "Choose Attributes",
+        description: "product attributes list, page title"
+      });
     case ProductVariantCreatorStep.values:
       return intl.formatMessage({
-        defaultMessage: "Choose Values",
+        defaultMessage: "Select Values",
         description: "product attribute values, page title"
       });
     case ProductVariantCreatorStep.prices:
@@ -107,6 +118,11 @@ function getDescription(
   intl: IntlShape
 ): string {
   switch (step) {
+    case ProductVariantCreatorStep.attributes:
+      return intl.formatMessage({
+        defaultMessage:
+          "Attributes that you will choose here will be taken into account in variant creation."
+      });
     case ProductVariantCreatorStep.values:
       return intl.formatMessage({
         defaultMessage:
@@ -125,32 +141,56 @@ function getDescription(
   }
 }
 
-const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
+const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> = props => {
   const {
+    availableAttributes,
+    attributesListElements,
     attributes,
     defaultPrice,
     errors,
     onSubmit,
     warehouses,
+    isChecked,
+    selected,
+    toggle,
+    toggleAll,
+    toolbar,
     ...contentProps
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const selectedAttributes = availableAttributes.filter(attribute =>
+    isSelected(
+      attribute.id,
+      attributesListElements.map(listAttribute => listAttribute),
+      (a, b) => a === b
+    )
+  );
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, defaultPrice, warehouses)
+    createInitialForm(selectedAttributes, defaultPrice, warehouses)
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
   >(
-    ProductVariantCreatorStep.values,
+    ProductVariantCreatorStep.attributes,
     [
+      ProductVariantCreatorStep.attributes,
       ProductVariantCreatorStep.values,
       ProductVariantCreatorStep.prices,
       ProductVariantCreatorStep.summary
     ],
     {
       onTransition: (_, nextStep) => {
+        if (nextStep === ProductVariantCreatorStep.values) {
+          dispatchFormDataAction({
+            chooseAttributes: {
+              list: availableAttributes,
+              selected: attributesListElements
+            },
+            type: ProductVariantCreateReducerActionType.chooseAttributes
+          });
+        }
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
             type: ProductVariantCreateReducerActionType.reload
@@ -182,7 +222,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
           </>
         }
       >
-        {step !== ProductVariantCreatorStep.values && (
+        {step !== ProductVariantCreatorStep.attributes && (
           <Button className={classes.button} color="primary" onClick={prevStep}>
             <FormattedMessage
               defaultMessage="Previous"
@@ -219,11 +259,18 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
+        attributesListElements={attributesListElements}
+        availableAttributes={availableAttributes}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
         step={step}
         warehouses={warehouses}
+        isChecked={isChecked}
+        selected={selected}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        toolbar={toolbar}
       />
     </Container>
   );

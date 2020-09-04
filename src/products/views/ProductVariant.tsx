@@ -116,7 +116,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       }
     }
   });
-  const [assignAttribute, assignAttributeOpts] = useAssignAttributeMutation({});
+  const [assignAttribute, assignAttributeOpts] = useAssignAttributeMutation({
+    onCompleted: data => {
+      if (data.attributeAssign.errors.length === 0) {
+        refetch();
+        closeModal();
+      }
+    }
+  });
 
   const { loadMore, search, result } = useAvailableAttributeSearch({
     variables: {
@@ -240,13 +247,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         id: data?.productVariant.product.productType.id,
         operations: params.ids.map(id => ({
           id,
-          type: AttributeTypeEnum[params.type]
+          type: AttributeTypeEnum.VARIANT
         }))
       }
     });
 
   const closeModal = () =>
-    navigate(productVariantEditUrl(productId, variantId, params), true);
+    navigate(productVariantEditUrl(productId, variantId), true);
 
   return (
     <>

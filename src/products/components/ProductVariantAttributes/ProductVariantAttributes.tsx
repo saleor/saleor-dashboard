@@ -72,7 +72,7 @@ function getAttributeValueChoices(
     value: attributeValue.slug
   }));
 }
-// commonMessages.generalInformations
+
 const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   attributes,
   disabled,
@@ -82,7 +82,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   onRemove
 }) => {
   const intl = useIntl();
-  // console.log("attributes wtf", attributes);
+
   return (
     <Card>
       <CardTitle
@@ -131,12 +131,14 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                     )}
                   </div>
                   {!attribute.data.isRequired && (
-                    <IconButton
-                      color="primary"
-                      onClick={() => onRemove(attribute.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <div>
+                      <IconButton
+                        color="primary"
+                        onClick={() => onRemove(attribute.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </div>
                   )}
                 </Grid>
                 <FormSpacer />

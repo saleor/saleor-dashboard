@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -41,6 +42,11 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
       }
     }
   });
+  const { isSelected, listElements, toggle, toggleAll } = useBulkActions(
+    data?.product?.productType?.variantAttributes?.map(
+      attribute => attribute.id
+    ) || []
+  );
   const shop = useShop();
 
   return (
@@ -57,6 +63,12 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []
         }
+        availableAttributes={[
+          ...(data?.product?.productType?.availableAttributes?.edges.map(
+            edge => edge.node
+          ) || []),
+          ...(data?.product?.productType?.variantAttributes || [])
+        ]}
         attributes={data?.product?.productType?.variantAttributes || []}
         currencySymbol={shop?.defaultCurrency}
         onSubmit={inputs =>
@@ -65,6 +77,12 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           })
         }
         warehouses={data?.warehouses.edges.map(edge => edge.node) || []}
+        isChecked={isSelected}
+        attributesListElements={listElements}
+        selected={listElements.length}
+        toolbar={null}
+        toggle={toggle}
+        toggleAll={toggleAll}
       />
     </>
   );

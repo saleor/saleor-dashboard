@@ -1,3 +1,4 @@
+import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
 import {
@@ -12,7 +13,6 @@ import {
   Sort,
   TabActionDialog
 } from "../types";
-import { stringifyQs } from "../utils/urls";
 
 const productSection = "/products/";
 

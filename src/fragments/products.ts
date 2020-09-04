@@ -73,14 +73,35 @@ export const productVariantAttributesFragment = gql`
     }
     productType {
       id
+      availableAttributes(first: 20) {
+        edges {
+          node {
+            id
+            name
+            slug
+            valueRequired
+            values {
+              id
+              name
+              slug
+            }
+            filterableInDashboard
+            visibleInStorefront
+          }
+        }
+      }
       variantAttributes {
         id
         name
+        slug
+        valueRequired
         values {
           id
           name
           slug
         }
+        filterableInDashboard
+        visibleInStorefront
       }
     }
     pricing {
@@ -228,6 +249,9 @@ export const fragmentVariant = gql`
       name
       thumbnail {
         url
+      }
+      productType {
+        id
       }
       variants {
         id

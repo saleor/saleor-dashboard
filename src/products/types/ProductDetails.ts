@@ -38,6 +38,34 @@ export interface ProductDetails_product_attributes {
   values: (ProductDetails_product_attributes_values | null)[];
 }
 
+export interface ProductDetails_product_productType_availableAttributes_edges_node_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface ProductDetails_product_productType_availableAttributes_edges_node {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  valueRequired: boolean;
+  values: (ProductDetails_product_productType_availableAttributes_edges_node_values | null)[] | null;
+  filterableInDashboard: boolean;
+  visibleInStorefront: boolean;
+}
+
+export interface ProductDetails_product_productType_availableAttributes_edges {
+  __typename: "AttributeCountableEdge";
+  node: ProductDetails_product_productType_availableAttributes_edges_node;
+}
+
+export interface ProductDetails_product_productType_availableAttributes {
+  __typename: "AttributeCountableConnection";
+  edges: ProductDetails_product_productType_availableAttributes_edges[];
+}
+
 export interface ProductDetails_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -49,12 +77,17 @@ export interface ProductDetails_product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
+  slug: string | null;
+  valueRequired: boolean;
   values: (ProductDetails_product_productType_variantAttributes_values | null)[] | null;
+  filterableInDashboard: boolean;
+  visibleInStorefront: boolean;
 }
 
 export interface ProductDetails_product_productType {
   __typename: "ProductType";
   id: string;
+  availableAttributes: ProductDetails_product_productType_availableAttributes | null;
   variantAttributes: (ProductDetails_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;

@@ -1,10 +1,15 @@
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
+import {
+  ProductDetails_product_productType_availableAttributes_edges_node,
+  ProductDetails_product_productType_variantAttributes
+} from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ListActions } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
 import { ProductVariantCreateFormData } from "./form";
+import ProductVariantChooseAttributes from "./ProductVariantChooseAttributes";
 import ProductVariantCreatePriceAndSku from "./ProductVariantCreatorPriceAndSku";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
 import ProductVariantCreateValues from "./ProductVariantCreatorValues";
@@ -14,7 +19,9 @@ import {
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
 
-export interface ProductVariantCreatorContentProps {
+export interface ProductVariantCreatorContentProps extends ListActions {
+  availableAttributes: ProductDetails_product_productType_availableAttributes_edges_node[];
+  attributesListElements: string[];
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
@@ -26,23 +33,31 @@ export interface ProductVariantCreatorContentProps {
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
   attributes,
+  attributesListElements,
+  availableAttributes,
   currencySymbol,
   data,
   dispatchFormDataAction,
   errors,
   step,
-  warehouses
+  warehouses,
+  ...listProps
 }) => {
-  const selectedAttributes = attributes.filter(attribute =>
+  const selectedAttributes = availableAttributes.filter(attribute =>
     isSelected(
       attribute.id,
-      data.attributes.map(dataAttribute => dataAttribute.id),
+      attributesListElements.map(dataAttribute => dataAttribute),
       (a, b) => a === b
     )
   );
-
   return (
     <>
+      {step === ProductVariantCreatorStep.attributes && (
+        <ProductVariantChooseAttributes
+          availableAttributes={availableAttributes}
+          {...listProps}
+        />
+      )}
       {step === ProductVariantCreatorStep.values && (
         <ProductVariantCreateValues
           attributes={selectedAttributes}
