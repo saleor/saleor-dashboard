@@ -73,23 +73,6 @@ export const productVariantAttributesFragment = gql`
     }
     productType {
       id
-      availableAttributes(first: 20) {
-        edges {
-          node {
-            id
-            name
-            slug
-            valueRequired
-            values {
-              id
-              name
-              slug
-            }
-            filterableInDashboard
-            visibleInStorefront
-          }
-        }
-      }
       variantAttributes {
         id
         name
@@ -100,7 +83,7 @@ export const productVariantAttributesFragment = gql`
           name
           slug
         }
-        filterableInDashboard
+        filterableInStorefront
         visibleInStorefront
       }
     }

@@ -1,10 +1,7 @@
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import {
-  ProductDetails_product_productType_availableAttributes_edges_node,
-  ProductDetails_product_productType_variantAttributes
-} from "@saleor/products/types/ProductDetails";
+import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { ListActions } from "@saleor/types";
+import { ListActionsWithoutToolbar } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
@@ -19,8 +16,8 @@ import {
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
 
-export interface ProductVariantCreatorContentProps extends ListActions {
-  availableAttributes: ProductDetails_product_productType_availableAttributes_edges_node[];
+export interface ProductVariantCreatorContentProps
+  extends ListActionsWithoutToolbar {
   attributesListElements: string[];
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
@@ -34,7 +31,6 @@ export interface ProductVariantCreatorContentProps extends ListActions {
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
   attributes,
   attributesListElements,
-  availableAttributes,
   currencySymbol,
   data,
   dispatchFormDataAction,
@@ -43,7 +39,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
   warehouses,
   ...listProps
 }) => {
-  const selectedAttributes = availableAttributes.filter(attribute =>
+  const selectedAttributes = attributes.filter(attribute =>
     isSelected(
       attribute.id,
       attributesListElements.map(dataAttribute => dataAttribute),
@@ -54,7 +50,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
     <>
       {step === ProductVariantCreatorStep.attributes && (
         <ProductVariantChooseAttributes
-          availableAttributes={availableAttributes}
+          attributes={attributes}
           {...listProps}
         />
       )}

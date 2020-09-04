@@ -5,8 +5,7 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
-import { ListActions } from "@saleor/types";
-import { isSelected } from "@saleor/utils/lists";
+import { ListActionsWithoutToolbar } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -86,7 +85,7 @@ export interface ProductVariantCreatePageProps
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 type ProductVariantCreatePageWithListProps = ProductVariantCreatePageProps &
-  ListActions;
+  ListActionsWithoutToolbar;
 
 function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
   switch (step) {
@@ -143,7 +142,6 @@ function getDescription(
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> = props => {
   const {
-    availableAttributes,
     attributesListElements,
     attributes,
     defaultPrice,
@@ -154,21 +152,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
     selected,
     toggle,
     toggleAll,
-    toolbar,
     ...contentProps
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const selectedAttributes = availableAttributes.filter(attribute =>
-    isSelected(
-      attribute.id,
-      attributesListElements.map(listAttribute => listAttribute),
-      (a, b) => a === b
-    )
-  );
+
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(selectedAttributes, defaultPrice, warehouses)
+    createInitialForm(attributes, defaultPrice, warehouses)
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
@@ -185,7 +176,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
         if (nextStep === ProductVariantCreatorStep.values) {
           dispatchFormDataAction({
             chooseAttributes: {
-              list: availableAttributes,
               selected: attributesListElements
             },
             type: ProductVariantCreateReducerActionType.chooseAttributes
@@ -260,7 +250,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
         {...contentProps}
         attributes={attributes}
         attributesListElements={attributesListElements}
-        availableAttributes={availableAttributes}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
@@ -270,7 +259,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
         selected={selected}
         toggle={toggle}
         toggleAll={toggleAll}
-        toolbar={toolbar}
       />
     </Container>
   );

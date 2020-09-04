@@ -44,34 +44,6 @@ export interface ProductImageUpdate_productImageUpdate_product_attributes {
   values: (ProductImageUpdate_productImageUpdate_product_attributes_values | null)[];
 }
 
-export interface ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges_node_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges_node {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  valueRequired: boolean;
-  values: (ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges_node_values | null)[] | null;
-  filterableInDashboard: boolean;
-  visibleInStorefront: boolean;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges {
-  __typename: "AttributeCountableEdge";
-  node: ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges_node;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_productType_availableAttributes {
-  __typename: "AttributeCountableConnection";
-  edges: ProductImageUpdate_productImageUpdate_product_productType_availableAttributes_edges[];
-}
-
 export interface ProductImageUpdate_productImageUpdate_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -86,14 +58,13 @@ export interface ProductImageUpdate_productImageUpdate_product_productType_varia
   slug: string | null;
   valueRequired: boolean;
   values: (ProductImageUpdate_productImageUpdate_product_productType_variantAttributes_values | null)[] | null;
-  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
   visibleInStorefront: boolean;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_productType {
   __typename: "ProductType";
   id: string;
-  availableAttributes: ProductImageUpdate_productImageUpdate_product_productType_availableAttributes | null;
   variantAttributes: (ProductImageUpdate_productImageUpdate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;

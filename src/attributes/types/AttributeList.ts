@@ -20,6 +20,7 @@ export interface AttributeList_attributes_edges_node {
   id: string;
   name: string | null;
   slug: string | null;
+  valueRequired: boolean;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

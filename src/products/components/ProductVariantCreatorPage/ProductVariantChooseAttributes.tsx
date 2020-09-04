@@ -2,99 +2,91 @@ import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
+import MuiTableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { commonMessages } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
-import { ProductDetails_product_productType_availableAttributes_edges_node } from "@saleor/products/types/ProductDetails";
-import { ListActions } from "@saleor/types";
+import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
+import { ListActionsWithoutToolbar } from "@saleor/types";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ProductVariantChooseAttributesProps extends ListActions {
-  availableAttributes: ProductDetails_product_productType_availableAttributes_edges_node[];
+export interface ProductVariantChooseAttributesProps
+  extends ListActionsWithoutToolbar {
+  attributes: ProductDetails_product_productType_variantAttributes[];
 }
 
-const numberOfColumns = 7;
+const numberOfColumns = 6;
 
 const useStyles = makeStyles(
-  theme => ({
-    colNote: {
-      width: 200
+  () => ({
+    colAttribute: {
+      width: 150
     }
   }),
   { name: "ProductVariantChooseAttributes" }
 );
 
 const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesProps> = props => {
-  const {
-    availableAttributes,
-    isChecked,
-    selected,
-    toggle,
-    toggleAll,
-    toolbar
-  } = props;
+  const { attributes, isChecked, selected, toggle, toggleAll } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
+
+  const positive = intl.formatMessage(commonMessages.yes);
+  const negative = intl.formatMessage(commonMessages.no);
 
   return (
     <Card>
       <ResponsiveTable>
-        <TableHead
-          // colSpan={numberOfColumns}
-          // selected={selected}
-          // disabled={disabled}
-          items={availableAttributes}
-          // toggleAll={toggleAll}
-          // toolbar={toolbar}
-        >
+        <MuiTableHead>
           <TableRow>
-            <TableCell className={classes.colNote}>
+            {(attributes === undefined || attributes.length > 0) && (
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={
+                    attributes && attributes.length > selected && selected > 0
+                  }
+                  checked={selected === 0 ? false : true}
+                  disabled={false}
+                  onChange={() => toggleAll(attributes, selected)}
+                />
+              </TableCell>
+            )}
+            <TableCell>
               <FormattedMessage defaultMessage="Attribute code" />
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.colAttribute}>
               <FormattedMessage
                 defaultMessage="Default label"
-                description="table header label"
+                description="table column title"
               />
             </TableCell>
-            <TableCell>
-              <FormattedMessage
-                defaultMessage="Actions"
-                description="table actions"
-              />
-            </TableCell>
-            <TableCell>
+            <TableCell className={classes.colAttribute}>
               <FormattedMessage
                 defaultMessage="Required"
-                description="table actions"
+                description="table column title"
               />
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.colAttribute}>
               <FormattedMessage
                 defaultMessage="Visible"
-                description="table actions"
+                description="table column title"
               />
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.colAttribute}>
               <FormattedMessage
-                defaultMessage="Searchable"
-                description="table actions"
-              />
-            </TableCell>
-            <TableCell>
-              <FormattedMessage
-                defaultMessage="Use in faceted search"
-                description="table actions"
+                defaultMessage="Use as filter in storefront"
+                description="table column title"
               />
             </TableCell>
           </TableRow>
-        </TableHead>
+        </MuiTableHead>
         <TableBody>
           {renderCollection(
-            availableAttributes,
+            attributes,
             attribute => {
               const isSelected = attribute ? isChecked(attribute.id) : false;
               return (
@@ -102,30 +94,23 @@ const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesPro
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={isSelected}
-                      disabled={!!attribute.valueRequired && isSelected}
+                      disabled={!!attribute.valueRequired}
                       disableClickPropagation
-                      onChange={() => {
-                        toggle(attribute.id);
-                      }}
+                      onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colNote}>
-                    {attribute?.slug || <Skeleton />}
+                  <TableCell>{attribute?.slug || <Skeleton />}</TableCell>
+                  <TableCell className={classes.colAttribute}>
+                    {attribute?.name || <Skeleton />}
                   </TableCell>
-                  <TableCell>{attribute?.name || <Skeleton />}</TableCell>
-                  <TableCell>
-                    {attribute?.valueRequired ? "Yes" : "No"}
+                  <TableCell className={classes.colAttribute}>
+                    {attribute?.valueRequired ? positive : negative}
                   </TableCell>
-                  <TableCell>
-                    <TableCell>
-                      {attribute?.valueRequired ? "Yes" : "No"}
-                    </TableCell>
+                  <TableCell className={classes.colAttribute}>
+                    {attribute?.visibleInStorefront ? positive : negative}
                   </TableCell>
-                  <TableCell>
-                    {attribute?.filterableInDashboard ? "Yes" : "No"}
-                  </TableCell>
-                  <TableCell>
-                    {attribute?.valueRequired ? "Yes" : "No"}
+                  <TableCell className={classes.colAttribute}>
+                    {attribute?.filterableInStorefront ? positive : negative}
                   </TableCell>
                 </TableRow>
               );

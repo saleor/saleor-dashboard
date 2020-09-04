@@ -210,11 +210,12 @@ export const product: (
     variantAttributes: [
       {
         __typename: "Attribute",
+        filterableInStorefront: true,
         id: "pta18161",
         name: "Color",
         slug: "color",
-        sortOrder: 0,
         valueRequired: true,
+        visibleInStorefront: true,
         values: [
           {
             __typename: "AttributeValue",
@@ -1614,6 +1615,10 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     ],
     name: "Our Awesome Book",
+    productType: {
+      __typename: "ProductType",
+      id: "1"
+    },
     thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
     variants: [
       {

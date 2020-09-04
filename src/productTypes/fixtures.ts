@@ -567,6 +567,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
+      valueRequired: false,
       visibleInStorefront: true
     },
     {
@@ -576,6 +577,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
+      valueRequired: false,
       visibleInStorefront: true
     },
     {
@@ -585,6 +587,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
+      valueRequired: false,
       visibleInStorefront: true
     }
   ],

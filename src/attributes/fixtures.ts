@@ -55,6 +55,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -86,6 +87,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
       name: "Box Size",
       slug: "box-size",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -135,6 +137,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToz",
       name: "Brand",
       slug: "brand",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -157,6 +160,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
       name: "Candy Box Size",
       slug: "candy-box-size",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -197,6 +201,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
       name: "Coffee Genre",
       slug: "coffee-genre",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -228,6 +233,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToy",
       name: "Collar",
       slug: "collar",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -268,6 +274,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       name: "Color",
       slug: "color",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -299,6 +306,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       name: "Cover",
       slug: "cover",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -366,6 +374,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       name: "Flavor",
       slug: "flavor",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -397,6 +406,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -428,6 +438,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -459,6 +470,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       name: "Size",
       slug: "size",
+      valueRequired: false,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",

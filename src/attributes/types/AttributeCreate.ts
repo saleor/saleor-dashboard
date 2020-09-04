@@ -33,6 +33,7 @@ export interface AttributeCreate_attributeCreate_attribute {
   id: string;
   name: string | null;
   slug: string | null;
+  valueRequired: boolean;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -41,7 +42,6 @@ export interface AttributeCreate_attributeCreate_attribute {
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;
-  valueRequired: boolean;
   values: (AttributeCreate_attributeCreate_attribute_values | null)[] | null;
 }
 

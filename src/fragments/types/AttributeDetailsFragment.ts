@@ -33,6 +33,7 @@ export interface AttributeDetailsFragment {
   id: string;
   name: string | null;
   slug: string | null;
+  valueRequired: boolean;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -41,6 +42,5 @@ export interface AttributeDetailsFragment {
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;
-  valueRequired: boolean;
   values: (AttributeDetailsFragment_values | null)[] | null;
 }

@@ -38,34 +38,6 @@ export interface CreateMultipleVariantsData_product_attributes {
   values: (CreateMultipleVariantsData_product_attributes_values | null)[];
 }
 
-export interface CreateMultipleVariantsData_product_productType_availableAttributes_edges_node_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface CreateMultipleVariantsData_product_productType_availableAttributes_edges_node {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  valueRequired: boolean;
-  values: (CreateMultipleVariantsData_product_productType_availableAttributes_edges_node_values | null)[] | null;
-  filterableInDashboard: boolean;
-  visibleInStorefront: boolean;
-}
-
-export interface CreateMultipleVariantsData_product_productType_availableAttributes_edges {
-  __typename: "AttributeCountableEdge";
-  node: CreateMultipleVariantsData_product_productType_availableAttributes_edges_node;
-}
-
-export interface CreateMultipleVariantsData_product_productType_availableAttributes {
-  __typename: "AttributeCountableConnection";
-  edges: CreateMultipleVariantsData_product_productType_availableAttributes_edges[];
-}
-
 export interface CreateMultipleVariantsData_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -80,14 +52,13 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   slug: string | null;
   valueRequired: boolean;
   values: (CreateMultipleVariantsData_product_productType_variantAttributes_values | null)[] | null;
-  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
   visibleInStorefront: boolean;
 }
 
 export interface CreateMultipleVariantsData_product_productType {
   __typename: "ProductType";
   id: string;
-  availableAttributes: CreateMultipleVariantsData_product_productType_availableAttributes | null;
   variantAttributes: (CreateMultipleVariantsData_product_productType_variantAttributes | null)[] | null;
 }
 

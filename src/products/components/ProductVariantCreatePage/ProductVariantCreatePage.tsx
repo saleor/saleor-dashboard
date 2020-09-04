@@ -143,6 +143,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   disabled={disabled}
                   errors={errors}
                   onChange={handleAttributeChange}
+                  onRemove={() => null}
+                  onEdit={() => null}
                 />
                 <CardSpacer />
                 <ProductVariantPrice

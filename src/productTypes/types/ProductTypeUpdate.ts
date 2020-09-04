@@ -37,6 +37,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_productAttribut
   id: string;
   name: string | null;
   slug: string | null;
+  valueRequired: boolean;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -47,6 +48,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttribut
   id: string;
   name: string | null;
   slug: string | null;
+  valueRequired: boolean;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

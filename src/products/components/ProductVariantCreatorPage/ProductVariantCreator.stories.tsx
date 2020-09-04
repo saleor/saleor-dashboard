@@ -74,6 +74,7 @@ const data: ProductVariantCreateFormData = {
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
+  attributesListElements: [],
   currencySymbol: "USD",
   data: {
     ...data,
@@ -81,7 +82,11 @@ const props: ProductVariantCreatorContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
+  isChecked: () => undefined,
+  selected: 0,
   step: ProductVariantCreatorStep.values,
+  toggle: () => undefined,
+  toggleAll: () => undefined,
   warehouses: warehouseList
 };
 
