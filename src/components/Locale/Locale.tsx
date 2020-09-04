@@ -1,6 +1,5 @@
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import React from "react";
-import { useEffect } from "react";
 import { IntlProvider } from "react-intl";
 
 export enum Locale {
@@ -15,7 +14,7 @@ export enum Locale {
   EL = "el",
   EN = "en",
   ES = "es",
-  ES_CO = "es-co",
+  ES_CO = "es-CO",
   ET = "et",
   FA = "fa",
   FR = "fr",
@@ -32,7 +31,7 @@ export enum Locale {
   NL = "nl",
   PL = "pl",
   PT = "pt",
-  PT_BR = "pt-br",
+  PT_BR = "pt-BR",
   RO = "ro",
   RU = "ru",
   SK = "sk",
@@ -44,8 +43,8 @@ export enum Locale {
   TR = "tr",
   UK = "uk",
   VI = "vi",
-  ZH_HANS = "zh-hans",
-  ZH_HANT = "zh-hant"
+  ZH_HANS = "zh-Hans",
+  ZH_HANT = "zh-Hant"
 }
 
 interface StructuredMessage {
@@ -144,16 +143,21 @@ const LocaleProvider: React.FC = ({ children }) => {
     "locale",
     getMatchingLocale(navigator.languages) || defaultLocale
   );
-  const [messages, setMessages] = useLocalStorage("messages", {});
+  const [messages, setMessages] = React.useState(undefined);
 
-  useEffect(() => {
-    if (locale !== defaultLocale) {
-      // It seems like Webpack is unable to use aliases for lazy imports
-      import(`../../../locale/${locale}.json`).then(({ default: res }) =>
-        setMessages(res)
-      );
+  React.useEffect(() => {
+    async function changeLocale() {
+      if (locale !== defaultLocale) {
+        // It seems like Webpack is unable to use aliases for lazy imports
+        const mod = await import(`../../../locale/${locale}.json`);
+        setMessages(mod.default);
+      } else {
+        setMessages(undefined);
+      }
     }
-  });
+
+    changeLocale();
+  }, [locale]);
 
   return (
     <IntlProvider
