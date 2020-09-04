@@ -16,6 +16,18 @@ export interface FulfillOrder_orderFulfill_errors {
   orderLine: string | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -293,6 +305,8 @@ export interface FulfillOrder_orderFulfill_order_invoices {
 export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
+  metadata: (FulfillOrder_orderFulfill_order_metadata | null)[];
+  privateMetadata: (FulfillOrder_orderFulfill_order_privateMetadata | null)[];
   billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;
   canFinalize: boolean;
   created: any;

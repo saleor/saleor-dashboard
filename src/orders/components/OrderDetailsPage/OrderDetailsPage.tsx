@@ -3,13 +3,19 @@ import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
+import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { UserPermissionProps } from "@saleor/types";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -49,6 +55,8 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
     code: string;
     label: string;
   }>;
+  disabled: boolean;
+  saveButtonBarState: ConfirmButtonTransitionState;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -66,11 +74,14 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onSubmit(data: MetadataFormData);
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
+    disabled,
     order,
+    saveButtonBarState,
     userPermissions,
     onBack,
     onBillingAddressEdit,
@@ -87,11 +98,17 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onProfileView,
     onInvoiceClick,
     onInvoiceGenerate,
-    onInvoiceSend
+    onInvoiceSend,
+    onSubmit
   } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const canCancel = maybe(() => order.status) !== OrderStatus.CANCELED;
   const canEditAddresses = maybe(() => order.status) !== OrderStatus.CANCELED;
@@ -100,103 +117,138 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     line => line.quantityFulfilled < line.quantity
   );
 
+  const handleSubmit = (data: MetadataFormData) => {
+    const metadata = isMetadataModified ? data.metadata : undefined;
+    const privateMetadata = isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined;
+
+    onSubmit({
+      metadata,
+      privateMetadata
+    });
+  };
+
+  const initial: MetadataFormData = {
+    metadata: order?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
+  };
+
   return (
-    <Container>
-      <AppHeader onBack={onBack}>
-        {intl.formatMessage(sectionNames.orders)}
-      </AppHeader>
-      <PageHeader
-        className={classes.header}
-        inline
-        title={maybe(() => order.number) ? "#" + order.number : undefined}
-      >
-        {canCancel && (
-          <CardMenu
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Cancel order",
-                  description: "button"
-                }),
-                onSelect: onOrderCancel
-              }
-            ]}
-          />
-        )}
-      </PageHeader>
-      <div className={classes.date}>
-        {order && order.created ? (
-          <Typography variant="caption">
-            <DateTime date={order.created} />
-          </Typography>
-        ) : (
-          <Skeleton style={{ width: "10em" }} />
-        )}
-      </div>
-      <Grid>
-        <div>
-          {unfulfilled.length > 0 && (
-            <OrderUnfulfilledItems
-              canFulfill={canFulfill}
-              lines={unfulfilled}
-              onFulfill={onOrderFulfill}
-            />
-          )}
-          {renderCollection(
-            maybe(() => order.fulfillments),
-            (fulfillment, fulfillmentIndex) => (
-              <React.Fragment key={maybe(() => fulfillment.id, "loading")}>
-                {!(unfulfilled.length === 0 && fulfillmentIndex === 0) && (
-                  <CardSpacer />
-                )}
-                <OrderFulfillment
-                  fulfillment={fulfillment}
-                  orderNumber={maybe(() => order.number)}
-                  onOrderFulfillmentCancel={() =>
-                    onFulfillmentCancel(fulfillment.id)
-                  }
-                  onTrackingCodeAdd={() =>
-                    onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                  }
+    <Form initial={initial} onSubmit={handleSubmit}>
+      {({ change, data, hasChanged, submit }) => {
+        const changeMetadata = makeMetadataChangeHandler(change);
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.orders)}
+            </AppHeader>
+            <PageHeader
+              className={classes.header}
+              inline
+              title={maybe(() => order.number) ? "#" + order.number : undefined}
+            >
+              {canCancel && (
+                <CardMenu
+                  menuItems={[
+                    {
+                      label: intl.formatMessage({
+                        defaultMessage: "Cancel order",
+                        description: "button"
+                      }),
+                      onSelect: onOrderCancel
+                    }
+                  ]}
                 />
-              </React.Fragment>
-            )
-          )}
-          <CardSpacer />
-          <OrderPayment
-            order={order}
-            onCapture={onPaymentCapture}
-            onMarkAsPaid={onPaymentPaid}
-            onRefund={onPaymentRefund}
-            onVoid={onPaymentVoid}
-          />
-          <OrderHistory
-            history={maybe(() => order.events)}
-            onNoteAdd={onNoteAdd}
-          />
-        </div>
-        <div>
-          <OrderCustomer
-            canEditAddresses={canEditAddresses}
-            canEditCustomer={false}
-            order={order}
-            userPermissions={userPermissions}
-            onBillingAddressEdit={onBillingAddressEdit}
-            onShippingAddressEdit={onShippingAddressEdit}
-            onProfileView={onProfileView}
-          />
-          <CardSpacer />
-          <OrderInvoiceList
-            invoices={order?.invoices}
-            onInvoiceClick={onInvoiceClick}
-            onInvoiceGenerate={onInvoiceGenerate}
-            onInvoiceSend={onInvoiceSend}
-          />
-          <CardSpacer />
-          <OrderCustomerNote note={maybe(() => order.customerNote)} />
-        </div>
-      </Grid>
-    </Container>
+              )}
+            </PageHeader>
+            <div className={classes.date}>
+              {order && order.created ? (
+                <Typography variant="caption">
+                  <DateTime date={order.created} />
+                </Typography>
+              ) : (
+                <Skeleton style={{ width: "10em" }} />
+              )}
+            </div>
+            <Grid>
+              <div>
+                {unfulfilled.length > 0 && (
+                  <OrderUnfulfilledItems
+                    canFulfill={canFulfill}
+                    lines={unfulfilled}
+                    onFulfill={onOrderFulfill}
+                  />
+                )}
+                {renderCollection(
+                  maybe(() => order.fulfillments),
+                  (fulfillment, fulfillmentIndex) => (
+                    <React.Fragment
+                      key={maybe(() => fulfillment.id, "loading")}
+                    >
+                      {!(
+                        unfulfilled.length === 0 && fulfillmentIndex === 0
+                      ) && <CardSpacer />}
+                      <OrderFulfillment
+                        fulfillment={fulfillment}
+                        orderNumber={maybe(() => order.number)}
+                        onOrderFulfillmentCancel={() =>
+                          onFulfillmentCancel(fulfillment.id)
+                        }
+                        onTrackingCodeAdd={() =>
+                          onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                        }
+                      />
+                    </React.Fragment>
+                  )
+                )}
+                <CardSpacer />
+                <OrderPayment
+                  order={order}
+                  onCapture={onPaymentCapture}
+                  onMarkAsPaid={onPaymentPaid}
+                  onRefund={onPaymentRefund}
+                  onVoid={onPaymentVoid}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
+                <OrderHistory
+                  history={maybe(() => order.events)}
+                  onNoteAdd={onNoteAdd}
+                />
+              </div>
+              <div>
+                <OrderCustomer
+                  canEditAddresses={canEditAddresses}
+                  canEditCustomer={false}
+                  order={order}
+                  userPermissions={userPermissions}
+                  onBillingAddressEdit={onBillingAddressEdit}
+                  onShippingAddressEdit={onShippingAddressEdit}
+                  onProfileView={onProfileView}
+                />
+                <CardSpacer />
+                <OrderInvoiceList
+                  invoices={order?.invoices}
+                  onInvoiceClick={onInvoiceClick}
+                  onInvoiceGenerate={onInvoiceGenerate}
+                  onInvoiceSend={onInvoiceSend}
+                />
+                <CardSpacer />
+                <OrderCustomerNote note={maybe(() => order.customerNote)} />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              onCancel={onBack}
+              onSave={submit}
+              state={saveButtonBarState}
+              disabled={disabled || !hasChanged}
+            />
+          </Container>
+        );
+      }}
+    </Form>
   );
 };
 OrderDetailsPage.displayName = "OrderDetailsPage";

@@ -1,21 +1,30 @@
+import { MetadataFormData } from "@saleor/components/Metadata";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
+import { commonMessages } from "@saleor/intl";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
 import {
+  getMutationState,
   getStringOrPlaceholder,
   maybe,
   transformAddressToForm
@@ -113,6 +122,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   });
   const { queue } = useBackgroundTask();
   const intl = useIntl();
+  const [updateMetadata, updateMetadataOpts] = useMetadataUpdate({});
+  const [
+    updatePrivateMetadata,
+    updatePrivateMetadataOpts
+  ] = usePrivateMetadataUpdate({});
+  const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
@@ -129,6 +144,23 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         if (order === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
+
+        const handleSubmit = async (data: MetadataFormData) => {
+          const update = createMetadataUpdateHandler(
+            order,
+            () => Promise.resolve([]),
+            variables => updateMetadata({ variables }),
+            variables => updatePrivateMetadata({ variables })
+          );
+          const result = await update(data);
+
+          if (result.length === 0) {
+            notify({
+              status: "success",
+              text: intl.formatMessage(commonMessages.savedChanges)
+            });
+          }
+        };
 
         return (
           <OrderDetailsMessages id={id} params={params}>
@@ -211,6 +243,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           )}
                         />
                         <OrderDetailsPage
+                          disabled={
+                            updateMetadataOpts.loading ||
+                            updatePrivateMetadataOpts.loading
+                          }
                           onNoteAdd={variables =>
                             orderAddNote.mutate({
                               input: variables,
@@ -219,6 +255,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           onBack={handleBack}
                           order={order}
+                          saveButtonBarState={getMutationState(
+                            updateMetadataOpts.called ||
+                              updatePrivateMetadataOpts.called,
+                            updateMetadataOpts.loading ||
+                              updatePrivateMetadataOpts.loading,
+                            [
+                              ...(updateMetadataOpts.data?.deleteMetadata
+                                .errors || []),
+                              ...(updateMetadataOpts.data?.updateMetadata
+                                .errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.deletePrivateMetadata.errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.updatePrivateMetadata.errors || [])
+                            ]
+                          )}
                           shippingMethods={maybe(
                             () => data.order.availableShippingMethods,
                             []
@@ -271,6 +323,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onInvoiceSend={id =>
                             openModal("invoice-send", { id })
                           }
+                          onSubmit={handleSubmit}
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}

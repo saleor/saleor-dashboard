@@ -8,6 +8,18 @@ import { OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentCharg
 // GraphQL fragment: OrderDetailsFragment
 // ====================================================
 
+export interface OrderDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface OrderDetailsFragment_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -285,6 +297,8 @@ export interface OrderDetailsFragment_invoices {
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
+  metadata: (OrderDetailsFragment_metadata | null)[];
+  privateMetadata: (OrderDetailsFragment_privateMetadata | null)[];
   billingAddress: OrderDetailsFragment_billingAddress | null;
   canFinalize: boolean;
   created: any;

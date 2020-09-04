@@ -14,6 +14,18 @@ export interface OrderLineDelete_draftOrderLineDelete_errors {
   field: string | null;
 }
 
+export interface OrderLineDelete_draftOrderLineDelete_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderLineDelete_draftOrderLineDelete_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface OrderLineDelete_draftOrderLineDelete_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -291,6 +303,8 @@ export interface OrderLineDelete_draftOrderLineDelete_order_invoices {
 export interface OrderLineDelete_draftOrderLineDelete_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderLineDelete_draftOrderLineDelete_order_metadata | null)[];
+  privateMetadata: (OrderLineDelete_draftOrderLineDelete_order_privateMetadata | null)[];
   billingAddress: OrderLineDelete_draftOrderLineDelete_order_billingAddress | null;
   canFinalize: boolean;
   created: any;

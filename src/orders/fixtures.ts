@@ -1096,8 +1096,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       }
     }
   ],
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.key",
+      value: "some-value"
+    }
+  ],
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+  privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
     city: "West Patriciastad",
@@ -1256,8 +1264,10 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       }
     }
   ],
+  metadata: [],
   number: "24",
   paymentStatus: null,
+  privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
