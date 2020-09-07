@@ -79,7 +79,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const intl = useIntl();
   const scrollPosition = useWindowScroll();
   const scrolledToBottom =
-    scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
+    scrollPosition.y + window.innerHeight - document.body.scrollHeight >= -5;
 
   return (
     <AppActionContext.Consumer>

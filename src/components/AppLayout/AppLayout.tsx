@@ -30,6 +30,7 @@ import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
+import SideBar from "../SideBar";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
@@ -52,12 +53,12 @@ const useStyles = makeStyles(
     },
     appLoader: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(4),
       zIndex: 1201
     },
     appLoaderPlaceholder: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(4)
     },
     arrow: {
       marginLeft: theme.spacing(2),
@@ -70,18 +71,7 @@ const useStyles = makeStyles(
       }
     },
     content: {
-      [theme.breakpoints.down("sm")]: {
-        paddingLeft: 0
-      },
-      paddingLeft: drawerWidthExpanded,
-      transition: "padding-left 0.5s ease",
-      width: "100%"
-    },
-    contentToggle: {
-      [theme.breakpoints.down("sm")]: {
-        paddingLeft: 0
-      },
-      paddingLeft: drawerWidth
+      flex: 1
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
@@ -97,70 +87,6 @@ const useStyles = makeStyles(
       display: "flex",
       height: 40,
       marginBottom: theme.spacing(3)
-    },
-    isMenuSmall: {
-      "& path": {
-        fill: theme.palette.primary.main
-      },
-      "& span": {
-        margin: "0 8px"
-      },
-      "& svg": {
-        marginTop: 8,
-        transform: "rotate(180deg)"
-      },
-      "&:hover": {
-        background: "#E6F3F3"
-      },
-      background: theme.palette.background.paper,
-      border: `solid 1px #EAEAEA`,
-      borderRadius: "50%",
-      cursor: "pointer",
-      height: 32,
-      position: "absolute",
-      right: -16,
-      top: 65,
-      transition: `background ${theme.transitions.duration.shorter}ms`,
-      width: 32,
-      zIndex: 99
-    },
-    isMenuSmallDark: {
-      "&:hover": {
-        background: `linear-gradient(0deg, rgba(25, 195, 190, 0.1), rgba(25, 195, 190, 0.1)), ${theme.palette.background.paper}`
-      },
-      border: `solid 1px #252728`,
-      transition: `background  ${theme.transitions.duration.shorter}ms`
-    },
-    isMenuSmallHide: {
-      "& svg": {
-        marginLeft: "3px",
-        transform: "rotate(0deg)"
-      }
-    },
-    logo: {
-      "& svg": {
-        left: "50%",
-        position: "absolute",
-        top: "50%",
-        transform: "translate(-50%,-50%)"
-      },
-      background: theme.palette.secondary.main,
-      display: "block",
-      height: 80,
-      position: "relative"
-    },
-    logoDark: {
-      "& path": {
-        fill: theme.palette.common.white
-      },
-      background: theme.palette.primary.main
-    },
-    logoSmall: {
-      "& svg": {
-        margin: 0,
-        padding: 0,
-        width: "80px"
-      }
     },
     menu: {
       background: theme.palette.background.paper,
@@ -238,6 +164,7 @@ const useStyles = makeStyles(
       zIndex: 1
     },
     root: {
+      display: "flex",
       width: `100%`
     },
     rotate: {
@@ -286,7 +213,7 @@ const useStyles = makeStyles(
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${theme.spacing(2) + appLoaderHeight + 70}px)`
+      minHeight: `calc(100vh - ${theme.spacing(4) + appLoaderHeight + 120}px)`
     }
   }),
   {
@@ -301,7 +228,6 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { isDark, toggleTheme } = useTheme();
-  const [isMenuSmall, setMenuSmall] = useLocalStorage("isMenuSmall", false);
   const [isDrawerOpened, setDrawerState] = React.useState(false);
   const [isMenuOpened, setMenuState] = React.useState(false);
   const appActionAnchor = React.useRef<HTMLDivElement>();
@@ -344,10 +270,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     navigate(url);
   };
 
-  const handleIsMenuSmall = () => {
-    setMenuSmall(!isMenuSmall);
-  };
-
   const handleErrorBack = () => {
     navigate("/");
     dispatchAppState({
@@ -367,7 +289,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <AppHeaderContext.Provider value={appHeaderAnchor}>
         <AppActionContext.Provider value={appActionAnchor}>
           <div className={classes.root}>
-            <div className={classes.sideBar}>
+            {/* <div className={classes.sideBar}>
               <ResponsiveDrawer
                 onClose={() => setDrawerState(false)}
                 open={isDrawerOpened}
@@ -404,12 +326,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   onMenuItemClick={handleMenuItemClick}
                 />
               </ResponsiveDrawer>
-            </div>
-            <div
-              className={classNames(classes.content, {
-                [classes.contentToggle]: isMenuSmall
-              })}
-            >
+            </div> */}
+            <SideBar
+              menuItems={menuStructure}
+              location={location.pathname}
+              user={user}
+              renderConfigure={renderConfigure}
+              onMenuItemClick={handleMenuItemClick}
+            />
+            <div className={classes.content}>
               {appState.loading ? (
                 <LinearProgress className={classes.appLoader} color="primary" />
               ) : (
