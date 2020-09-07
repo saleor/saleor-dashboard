@@ -145,7 +145,7 @@ export const TypedOrderDraftFinalizeMutation = TypedMutation<
 const orderRefundMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderRefund($id: ID!, $amount: Decimal!) {
+  mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
     orderRefund(id: $id, amount: $amount) {
       errors: orderErrors {
         ...OrderErrorFragment
@@ -202,7 +202,7 @@ export const TypedOrderMarkAsPaidMutation = TypedMutation<
 const orderCaptureMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderCapture($id: ID!, $amount: Decimal!) {
+  mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
     orderCapture(id: $id, amount: $amount) {
       errors: orderErrors {
         ...OrderErrorFragment
