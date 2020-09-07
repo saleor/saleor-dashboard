@@ -1,26 +1,87 @@
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
+import classNames from "classnames";
 import React from "react";
+import SVG from "react-inlinesvg";
 
 import { IMenuItem } from "../AppLayout/menuStructure";
 
 export interface MenuItemProps {
+  active: boolean;
+  isMenuShrunk: boolean;
   menuItem: IMenuItem;
   onClick: (url: string, event: React.MouseEvent) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
+    hideLabel: {
+      "&$label": {
+        opacity: 0
+      }
+    },
+    icon: {
+      "& svg": {
+        height: 24,
+        width: 24
+      },
+      marginRight: theme.spacing(1.5),
+      transition: theme.transitions.duration.shortest + "ms"
+    },
+    label: {
+      cursor: "pointer",
+      fontSize: 16,
+      fontWeight: "bold",
+      opacity: 1,
+      transition: theme.transitions.duration.shortest + "ms"
+    },
     paper: {
       borderRadius: 16,
+      cursor: "default",
       padding: theme.spacing(3)
     },
     popper: {
       marginLeft: theme.spacing(3),
       zIndex: 2
+    },
+    root: {
+      "&:hover": {
+        color: theme.palette.primary.main
+      },
+      borderBottomRightRadius: 100,
+      borderTopRightRadius: 100,
+      color: theme.palette.text.disabled,
+      cursor: "pointer",
+      display: "flex",
+      height: 56,
+      marginBottom: theme.spacing(),
+      overflow: "hidden",
+      padding: theme.spacing(2, 3),
+      transition: theme.transitions.duration.shortest + "ms",
+      width: 72
+    },
+    rootActive: {
+      "&$root": {
+        background: theme.palette.background.paper,
+        boxShadow: `9px 9px 20px 0 ${theme.palette.grey[300]}`,
+        color: theme.palette.primary.main
+      }
+    },
+    rootExpanded: {
+      width: 210
+    },
+    subMenuLabel: {
+      "&$label": {
+        "&:not(:last-child)": {
+          marginBottom: theme.spacing(2)
+        }
+      },
+      "&:hover": {
+        color: theme.palette.primary.main
+      }
     }
   }),
   {
@@ -28,7 +89,12 @@ const useStyles = makeStyles(
   }
 );
 
-const MenuItem: React.FC<MenuItemProps> = ({ menuItem, onClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  active,
+  menuItem,
+  isMenuShrunk,
+  onClick
+}) => {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);
@@ -43,8 +109,25 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, onClick }) => {
   };
 
   return (
-    <div ref={anchor} onClick={event => handleClick(event, menuItem)}>
-      {menuItem.label}
+    <div
+      className={classNames(classes.root, {
+        [classes.rootActive]: active,
+        [classes.rootExpanded]: !isMenuShrunk
+      })}
+      ref={anchor}
+      onClick={event => handleClick(event, menuItem)}
+    >
+      {menuItem.icon && <SVG className={classes.icon} src={menuItem.icon} />}
+      <Typography
+        className={classNames(classes.label, {
+          [classes.hideLabel]: isMenuShrunk
+        })}
+        variant="body2"
+        data-test="menu-item-label"
+        data-test-id={menuItem.testingContextId}
+      >
+        {menuItem.label}
+      </Typography>
       {menuItem.children && (
         <Popper
           className={classes.popper}
@@ -60,13 +143,16 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, onClick }) => {
           >
             <Paper elevation={6} className={classes.paper}>
               {menuItem.children.map(subMenuItem => (
-                <div
+                <Typography
+                  className={classNames(classes.label, classes.subMenuLabel)}
                   key={subMenuItem.url}
                   onClick={event => handleClick(event, subMenuItem)}
-                  data-test="select-option"
+                  data-test="submenu-item-label"
+                  data-test-id={subMenuItem.testingContextId}
+                  variant="body2"
                 >
                   {subMenuItem.label}
-                </div>
+                </Typography>
               ))}
             </Paper>
           </ClickAwayListener>

@@ -203,7 +203,6 @@ const useStyles = makeStyles(
       textAlign: "right"
     },
     view: {
-      backgroundColor: theme.palette.background.default,
       flex: 1,
       flexGrow: 1,
       marginLeft: 0,

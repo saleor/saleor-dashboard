@@ -4,6 +4,13 @@ import { matchPath } from "react-router";
 import { IMenuItem } from "../AppLayout/menuStructure";
 
 export function isMenuActive(location: string, menuItem: IMenuItem) {
+  if (menuItem.children) {
+    return menuItem.children.reduce(
+      (acc, subMenuItem) => acc || isMenuActive(location, subMenuItem),
+      false
+    );
+  }
+
   return location.split("?")[0] === orderDraftListUrl().split("?")[0] &&
     menuItem.url.split("?")[0] === orderListUrl().split("?")[0]
     ? false
