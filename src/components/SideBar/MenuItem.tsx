@@ -88,7 +88,8 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main
       },
       background: "none",
-      border: "none"
+      border: "none",
+      color: theme.palette.text.disabled
     }
   }),
   {
