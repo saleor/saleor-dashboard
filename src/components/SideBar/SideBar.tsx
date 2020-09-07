@@ -10,13 +10,17 @@ import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
 import { IMenuItem } from "../AppLayout/menuStructure";
+import ExpandButton from "./ExpandButton";
 import MenuItem from "./MenuItem";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
+    expandButton: {
+      marginLeft: theme.spacing(2)
+    },
     logo: {
-      margin: `36px 0 ${theme.spacing(3)}px 19px`
+      margin: `36px 0 ${theme.spacing(3)}px ${theme.spacing(3)}px`
     },
     root: {
       transition: "width 0.5s ease"
@@ -97,7 +101,11 @@ const SideBar: React.FC<SideBarProps> = ({
           onClick={onMenuItemClick}
         />
       )}
-      <button onClick={() => setShrink(!isShrunk)}>toggl</button>
+      <ExpandButton
+        className={classes.expandButton}
+        isShrunk={isShrunk}
+        onClick={() => setShrink(!isShrunk)}
+      />
     </div>
   );
 };

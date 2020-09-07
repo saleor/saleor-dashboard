@@ -59,7 +59,7 @@ const useStyles = makeStyles(
       height: 56,
       marginBottom: theme.spacing(),
       overflow: "hidden",
-      padding: theme.spacing(2, 3),
+      padding: theme.spacing(2, 3, 2, 3.5),
       transition: theme.transitions.duration.shortest + "ms",
       width: 72
     },
