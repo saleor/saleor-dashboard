@@ -49,8 +49,8 @@ const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesPro
                   indeterminate={
                     attributes && attributes.length > selected && selected > 0
                   }
-                  checked={selected === 0 ? false : true}
-                  disabled={false}
+                  checked={selected !== 0}
+                  disabled={!attributes?.length}
                   onChange={() => toggleAll(attributes, selected)}
                 />
               </TableCell>
