@@ -215,7 +215,6 @@ export const product: (
         name: "Color",
         slug: "color",
         valueRequired: true,
-        visibleInStorefront: true,
         values: [
           {
             __typename: "AttributeValue",
@@ -231,7 +230,8 @@ export const product: (
             slug: "white",
             sortOrder: 1
           }
-        ]
+        ],
+        visibleInStorefront: true
       }
     ]
   },

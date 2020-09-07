@@ -1,3 +1,4 @@
+import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
@@ -64,6 +65,7 @@ export interface ProductVariantCreateReducerAction {
     warehouseId: string;
   };
   chooseAttributes?: {
+    list: ProductDetails_product_productType_variantAttributes[];
     selected: string[];
   };
   deleteVariant?: {
@@ -133,11 +135,12 @@ function selectValue(
 
 function chooseAttributes(
   prevState: ProductVariantCreateFormData,
+  list: ProductDetails_product_productType_variantAttributes[],
   selected: string[]
 ) {
   return {
     ...prevState,
-    attributes: prevState.attributes
+    attributes: list
       .filter(item => selected.find(id => id === item.id))
       .map(attribute => ({
         id: attribute.id,
@@ -414,7 +417,11 @@ function reduceProductVariantCreateFormData(
 ) {
   switch (action.type) {
     case ProductVariantCreateReducerActionType.chooseAttributes:
-      return chooseAttributes(prevState, action.chooseAttributes.selected);
+      return chooseAttributes(
+        prevState,
+        action.chooseAttributes.list,
+        action.chooseAttributes.selected
+      );
     case ProductVariantCreateReducerActionType.selectValue:
       return selectValue(
         prevState,

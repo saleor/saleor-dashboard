@@ -54,6 +54,8 @@ interface ProductVariantCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;
+  onAttributeRemove: (id: string) => void;
+  onAttributeAdd: () => void;
   onBack: () => void;
   onSubmit: (data: ProductVariantCreatePageSubmitData) => void;
   onVariantClick: (variantId: string) => void;
@@ -72,7 +74,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onBack,
   onSubmit,
   onVariantClick,
-  onVariantReorder
+  onVariantReorder,
+  onAttributeAdd,
+  onAttributeRemove
 }) => {
   const intl = useIntl();
   const attributeInput = React.useMemo(
@@ -138,15 +142,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 />
               </div>
               <div>
-                <ProductVariantAttributes
-                  attributes={attributes}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={handleAttributeChange}
-                  onRemove={() => null}
-                  onEdit={() => null}
-                />
-                <CardSpacer />
                 <ProductVariantPrice
                   errors={errors}
                   price={data.price}
@@ -154,6 +149,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   costPrice={data.costPrice}
                   loading={disabled}
                   onChange={change}
+                />
+                <CardSpacer />
+                <ProductVariantAttributes
+                  attributes={attributes}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={handleAttributeChange}
+                  onRemove={onAttributeRemove}
+                  onEdit={onAttributeAdd}
                 />
                 <CardSpacer />
                 <ProductShipping

@@ -70,6 +70,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
   onOpen: () => void;
   onSubmit: () => void;
   onToggle: (id: string) => void;
+  type?: "add" | "edit";
 }
 
 const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
@@ -85,7 +86,8 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   onFetchMore,
   onOpen,
   onSubmit,
-  onToggle
+  onToggle,
+  type = "add"
 }: AssignAttributeDialogProps) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -102,10 +104,17 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Assign Attribute"
-          description="dialog header"
-        />
+        {type === "add" ? (
+          <FormattedMessage
+            defaultMessage="Assign Attribute"
+            description="dialog header"
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage="Edit Attributes"
+            description="dialog header"
+          />
+        )}
       </DialogTitle>
       <DialogContent>
         <TextField
@@ -208,10 +217,14 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           type="submit"
           onClick={onSubmit}
         >
-          <FormattedMessage
-            defaultMessage="Assign attributes"
-            description="button"
-          />
+          {type === "add" ? (
+            <FormattedMessage
+              defaultMessage="Assign attributes"
+              description="button"
+            />
+          ) : (
+            <FormattedMessage defaultMessage="Done" description="button" />
+          )}
         </ConfirmButton>
       </DialogActions>
     </Dialog>

@@ -176,6 +176,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
         if (nextStep === ProductVariantCreatorStep.values) {
           dispatchFormDataAction({
             chooseAttributes: {
+              list: attributes,
               selected: attributesListElements
             },
             type: ProductVariantCreateReducerActionType.chooseAttributes

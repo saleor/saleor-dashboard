@@ -105,8 +105,13 @@ export const productVariantCreatorUrl = (productId: string) =>
 
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
-export const productVariantAddUrl = (productId: string): string =>
-  productVariantAddPath(encodeURIComponent(productId));
+export const productVariantAddUrl = (
+  productId: string,
+  params?: ProductVariantEditUrlQueryParams
+): string =>
+  productVariantAddPath(encodeURIComponent(productId)) +
+  "?" +
+  stringifyQs(params);
 
 export const productImagePath = (productId: string, imageId: string) =>
   urlJoin(productSection, productId, "image", imageId);

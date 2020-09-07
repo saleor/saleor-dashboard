@@ -3882,6 +3882,14 @@
     "context": "button",
     "string": "Assign attributes"
   },
+  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_2578844291": {
+    "context": "button",
+    "string": "Done"
+  },
+  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3228191859": {
+    "context": "dialog header",
+    "string": "Edit Attributes"
+  },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
     "context": "dialog header",
     "string": "Assign Attribute"
@@ -4374,6 +4382,12 @@
     "context": "product label",
     "string": "Published"
   },
+  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1935535842": {
+    "string": "Required"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_301135124": {
+    "string": "Configurable attributes"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",
     "string": "Save variant"
@@ -4382,9 +4396,15 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1050795709": {
+    "string": "Attribute code"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
     "context": "variant price",
     "string": "Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1192828581": {
+    "string": "No attributes found"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1346828628": {
     "string": "Selected values will be used to create variants for the configurable product."
@@ -4397,6 +4417,10 @@
     "context": "variant attribute",
     "string": "Select Attribute"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1935535842": {
+    "context": "table column title",
+    "string": "Required"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2002684673": {
     "context": "page title",
     "string": "Price and SKUs"
@@ -4405,13 +4429,16 @@
     "context": "variant stock, header",
     "string": "Stock and Warehousing"
   },
-  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2158649399": {
-    "context": "product attribute values, page title",
-    "string": "Choose Values"
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2172212658": {
+    "string": "Attributes that you will choose here will be taken into account in variant creation."
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2478977538": {
     "context": "attribute values, variant creation step",
     "string": "Select Values"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2554776649": {
+    "context": "table column title",
+    "string": "Use as filter in storefront"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2670525734": {
     "context": "variant attribute",
@@ -4426,6 +4453,10 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3387090508": {
     "string": "Apply unique stock by attribute to each SKU"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_345321728": {
+    "context": "attributes list, variant creation step",
+    "string": "Choose attributes"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3570949907": {
     "string": "Apply unique prices by attribute to each SKU"
@@ -4451,8 +4482,16 @@
     "context": "variant creator summary card header",
     "string": "Created Variants"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_536315940": {
+    "context": "product attributes list, page title",
+    "string": "Choose Attributes"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_551319747": {
     "string": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_643174786": {
+    "context": "table column title",
+    "string": "Visible"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_693960049": {
     "string": "SKU"
@@ -4467,6 +4506,10 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_904693740": {
     "context": "previous step, button",
     "string": "Previous"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_909072922": {
+    "context": "table column title",
+    "string": "Default label"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_998917294": {
     "context": "variant name",
@@ -4597,6 +4640,9 @@
   "src_dot_products_dot_views_dot_2362587265": {
     "context": "header",
     "string": "Create Variant"
+  },
+  "src_dot_products_dot_views_dot_2576665185": {
+    "string": "Attribute removed"
   },
   "src_dot_products_dot_views_dot_2880386427": {
     "string": "Are you sure you want to delete this image?"

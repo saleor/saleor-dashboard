@@ -206,7 +206,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         attributes: data.attributes.map(attribute => ({
           id: attribute.id,
-          values: [attribute.value]
+          values: [attribute.value || ""]
         })),
         costPrice: decimal(data.costPrice),
         id: variantId,
@@ -226,6 +226,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       ...result.data?.productVariantUpdate.errors
     ];
   };
+
   const handleSubmit = createMetadataUpdateHandler(
     data?.productVariant,
     handleUpdate,
@@ -290,6 +291,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
             })
           );
         }}
+        type="edit"
       />
       <ProductVariantPage
         defaultWeightUnit={shop?.defaultWeightUnit}
