@@ -1,11 +1,7 @@
-import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
-import Hidden from "@material-ui/core/Hidden";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
@@ -14,7 +10,6 @@ import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
@@ -22,7 +17,6 @@ import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import classNames from "classnames";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
@@ -33,10 +27,8 @@ import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import SideBar from "../SideBar";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
-import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
-import MenuList from "./MenuList";
+import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
-import ResponsiveDrawer from "./ResponsiveDrawer";
 import ThemeSwitch from "./ThemeSwitch";
 
 const useStyles = makeStyles(
@@ -170,13 +162,6 @@ const useStyles = makeStyles(
     rotate: {
       transform: "rotate(180deg)"
     },
-    sideBar: {
-      [theme.breakpoints.down("sm")]: {
-        padding: 0
-      },
-      background: theme.palette.background.paper,
-      padding: `0 ${theme.spacing(4)}px`
-    },
     spacer: {
       flex: 1
     },
@@ -288,44 +273,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <AppHeaderContext.Provider value={appHeaderAnchor}>
         <AppActionContext.Provider value={appActionAnchor}>
           <div className={classes.root}>
-            {/* <div className={classes.sideBar}>
-              <ResponsiveDrawer
-                onClose={() => setDrawerState(false)}
-                open={isDrawerOpened}
-                small={!isMenuSmall}
-              >
-                <div
-                  className={classNames(classes.logo, {
-                    [classes.logoSmall]: isMenuSmall,
-                    [classes.logoDark]: isDark
-                  })}
-                >
-                  <SVG
-                    src={isMenuSmall ? saleorDarkLogoSmall : saleorDarkLogo}
-                  />
-                </div>
-                <Hidden smDown>
-                  <div
-                    className={classNames(classes.isMenuSmall, {
-                      [classes.isMenuSmallHide]: isMenuSmall,
-                      [classes.isMenuSmallDark]: isDark
-                    })}
-                    onClick={handleIsMenuSmall}
-                  >
-                    <SVG src={menuArrowIcon} />
-                  </div>
-                </Hidden>
-                <MenuList
-                  className={isMenuSmall ? classes.menuSmall : classes.menu}
-                  menuItems={menuStructure}
-                  isMenuSmall={!isMenuSmall}
-                  location={location.pathname}
-                  user={user}
-                  renderConfigure={renderConfigure}
-                  onMenuItemClick={handleMenuItemClick}
-                />
-              </ResponsiveDrawer>
-            </div> */}
             <SideBar
               menuItems={menuStructure}
               location={location.pathname}
