@@ -33,6 +33,7 @@ const useStyles = makeStyles(
     },
     label: {
       cursor: "pointer",
+      display: "block",
       fontSize: 16,
       fontWeight: "bold",
       opacity: 1,
@@ -41,16 +42,20 @@ const useStyles = makeStyles(
     paper: {
       borderRadius: 16,
       cursor: "default",
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
+      textAlign: "left"
     },
     popper: {
       marginLeft: theme.spacing(3),
       zIndex: 2
     },
     root: {
-      "&:hover": {
-        color: theme.palette.primary.main
+      "&:hover, &:focus": {
+        color: theme.palette.primary.main,
+        outline: 0
       },
+      background: "none",
+      border: "none",
       borderBottomRightRadius: 100,
       borderTopRightRadius: 100,
       color: theme.palette.text.disabled,
@@ -79,9 +84,11 @@ const useStyles = makeStyles(
           marginBottom: theme.spacing(2)
         }
       },
-      "&:hover": {
+      "&:hover, &:focus": {
         color: theme.palette.primary.main
-      }
+      },
+      background: "none",
+      border: "none"
     }
   }),
   {
@@ -97,7 +104,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
+  const anchor = React.useRef<HTMLButtonElement>(null);
 
   const handleClick = (event: React.MouseEvent, menuItem: IMenuItem) => {
     if (menuItem.children) {
@@ -109,7 +116,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   };
 
   return (
-    <div
+    <button
       className={classNames(classes.root, {
         [classes.rootActive]: active,
         [classes.rootExpanded]: !isMenuShrunk
@@ -119,6 +126,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
     >
       {menuItem.icon && <SVG className={classes.icon} src={menuItem.icon} />}
       <Typography
+        aria-label={menuItem.ariaLabel}
         className={classNames(classes.label, {
           [classes.hideLabel]: isMenuShrunk
         })}
@@ -144,9 +152,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
             <Paper elevation={6} className={classes.paper}>
               {menuItem.children.map(subMenuItem => (
                 <Typography
+                  aria-label={subMenuItem.ariaLabel}
+                  component="button"
                   className={classNames(classes.label, classes.subMenuLabel)}
                   key={subMenuItem.url}
-                  onClick={event => handleClick(event, subMenuItem)}
+                  onClick={event => {
+                    event.preventDefault();
+                    handleClick(event, subMenuItem);
+                  }}
                   data-test="submenu-item-label"
                   data-test-id={subMenuItem.testingContextId}
                   variant="body2"
@@ -158,7 +171,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           </ClickAwayListener>
         </Popper>
       )}
-    </div>
+    </button>
   );
 };
 
