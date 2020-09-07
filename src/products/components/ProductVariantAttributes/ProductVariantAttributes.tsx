@@ -14,7 +14,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { buttonMessages } from "@saleor/intl";
-// import { commonMessages } from "@saleor/intl";
 import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
 import React from "react";
