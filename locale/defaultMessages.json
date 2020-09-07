@@ -2719,7 +2719,7 @@
   },
   "src_dot_home": {
     "context": "home section name",
-    "string": "Home"
+    "string": "Dashboard"
   },
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_draft": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
