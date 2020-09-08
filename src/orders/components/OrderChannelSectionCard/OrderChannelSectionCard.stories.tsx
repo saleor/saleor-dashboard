@@ -6,22 +6,13 @@ import React from "react";
 import OrderChannelSectionCard, { OrderChannelSectionCardProps } from ".";
 
 const props: OrderChannelSectionCardProps = {
-  disabled: false,
-  onSelectClick: () => undefined,
   selectedChannelName: "International store"
 };
 
-storiesOf("Orders / Draft order channel section", module)
+storiesOf("Orders / Order details channel section", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <OrderChannelSectionCard {...props} />)
   .add("loading", () => (
-    <OrderChannelSectionCard
-      {...props}
-      selectedChannelName={undefined}
-      disabled={true}
-    />
-  ))
-  .add("no channel selected", () => (
-    <OrderChannelSectionCard {...props} selectedChannelName={null} />
+    <OrderChannelSectionCard {...props} selectedChannelName={undefined} />
   ));

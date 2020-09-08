@@ -271,6 +271,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onInvoiceSend={id =>
                             openModal("invoice-send", { id })
                           }
+                          selectedChannelName="Channel"
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
