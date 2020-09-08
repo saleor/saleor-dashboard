@@ -62,71 +62,7 @@ export const channelsList: Channels_channels[] = [
     currencyCode: "euro",
     id: "Q2hhbm5lbDo5w0z",
     name: "Channel USD",
-    slug: "channel-usd50"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm5lbDo585",
-    name: "Channel USD",
-    slug: "channel-usd8"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm7lbDoyr7",
-    name: "Channel",
-    slug: "channel27"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbn5lbDoyy2",
-    name: "Channel test2",
-    slug: "channeltest45"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm5lbDo5w3",
-    name: "Channel USD",
-    slug: "channel-usd53"
-  },
-  // /
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm5lbDo5w099",
-    name: "Channel USD",
-    slug: "channel-usd50"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm5lbDo58456",
-    name: "Channel USD",
-    slug: "channel-usd8"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm7lbDoyr756",
-    name: "Channel",
-    slug: "channel27"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbn5lbDoyy232",
-    name: "Channel test2",
-    slug: "channeltest45"
-  },
-  {
-    __typename: "Channel",
-    currencyCode: "euro",
-    id: "Q2hhbm5lbDo5w399",
-    name: "Channel USD",
-    slug: "channel-usd53"
+    slug: "channel-usd1"
   }
 ];
 
