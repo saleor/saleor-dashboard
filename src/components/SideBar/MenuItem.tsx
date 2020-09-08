@@ -1,6 +1,7 @@
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
@@ -15,6 +16,9 @@ export interface MenuItemProps {
   menuItem: IMenuItem;
   onClick: (url: string, event: React.MouseEvent) => void;
 }
+
+export const menuWidth = 210;
+export const shrunkMenuWidth = 72;
 
 const useStyles = makeStyles(
   theme => ({
@@ -58,7 +62,7 @@ const useStyles = makeStyles(
       border: "none",
       borderBottomRightRadius: 100,
       borderTopRightRadius: 100,
-      color: theme.palette.text.disabled,
+      color: fade(theme.palette.text.primary, 0.6),
       cursor: "pointer",
       display: "flex",
       height: 56,
@@ -66,7 +70,7 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(2, 3, 2, 3.5),
       transition: theme.transitions.duration.shortest + "ms",
-      width: 72
+      width: shrunkMenuWidth
     },
     rootActive: {
       "&$root": {
@@ -76,7 +80,7 @@ const useStyles = makeStyles(
       }
     },
     rootExpanded: {
-      width: 210
+      width: menuWidth
     },
     subMenuLabel: {
       "&$label": {
@@ -89,7 +93,7 @@ const useStyles = makeStyles(
       },
       background: "none",
       border: "none",
-      color: theme.palette.text.disabled
+      color: fade(theme.palette.text.primary, 0.6)
     }
   }),
   {

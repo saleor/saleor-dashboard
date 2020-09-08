@@ -5,13 +5,14 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { User } from "@saleor/fragments/types/User";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { sectionNames } from "@saleor/intl";
+import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
 import { IMenuItem } from "../AppLayout/menuStructure";
 import ExpandButton from "./ExpandButton";
-import MenuItem from "./MenuItem";
+import MenuItem, { menuWidth, shrunkMenuWidth } from "./MenuItem";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
@@ -19,11 +20,18 @@ const useStyles = makeStyles(
     expandButton: {
       marginLeft: theme.spacing(2)
     },
+    float: {
+      position: "fixed"
+    },
     logo: {
       margin: `36px 0 ${theme.spacing(3)}px ${theme.spacing(3)}px`
     },
     root: {
-      transition: "width 0.5s ease"
+      transition: "width 0.5s ease",
+      width: menuWidth
+    },
+    rootShrink: {
+      width: shrunkMenuWidth
     }
   }),
   {
@@ -57,55 +65,61 @@ const SideBar: React.FC<SideBarProps> = ({
   const intl = useIntl();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.logo}>
-        <SVG src={logoLight} />
-      </div>
-      {menuItems.map(menuItem => {
-        const isActive = isMenuActive(location, menuItem);
+    <div
+      className={classNames(classes.root, {
+        [classes.rootShrink]: isShrunk
+      })}
+    >
+      <div className={classes.float}>
+        <div className={classes.logo}>
+          <SVG src={logoLight} />
+        </div>
+        {menuItems.map(menuItem => {
+          const isActive = isMenuActive(location, menuItem);
 
-        if (
-          menuItem.permission &&
-          !user.userPermissions
-            .map(perm => perm.code)
-            .includes(menuItem.permission)
-        ) {
-          return null;
-        }
+          if (
+            menuItem.permission &&
+            !user.userPermissions
+              .map(perm => perm.code)
+              .includes(menuItem.permission)
+          ) {
+            return null;
+          }
 
-        return (
+          return (
+            <MenuItem
+              active={isActive}
+              isMenuShrunk={isShrunk}
+              menuItem={menuItem}
+              onClick={onMenuItemClick}
+            />
+          );
+        })}
+        {renderConfigure && (
           <MenuItem
-            active={isActive}
+            active={
+              !menuItems.reduce(
+                (acc, menuItem) => acc || isMenuActive(location, menuItem),
+                false
+              )
+            }
             isMenuShrunk={isShrunk}
-            menuItem={menuItem}
+            menuItem={{
+              ariaLabel: "configure",
+              icon: configurationIcon,
+              label: intl.formatMessage(sectionNames.configuration),
+              testingContextId: "configure",
+              url: configurationMenuUrl
+            }}
             onClick={onMenuItemClick}
           />
-        );
-      })}
-      {renderConfigure && (
-        <MenuItem
-          active={
-            !menuItems.reduce(
-              (acc, menuItem) => acc || isMenuActive(location, menuItem),
-              false
-            )
-          }
-          isMenuShrunk={isShrunk}
-          menuItem={{
-            ariaLabel: "configure",
-            icon: configurationIcon,
-            label: intl.formatMessage(sectionNames.configuration),
-            testingContextId: "configure",
-            url: configurationMenuUrl
-          }}
-          onClick={onMenuItemClick}
+        )}
+        <ExpandButton
+          className={classes.expandButton}
+          isShrunk={isShrunk}
+          onClick={() => setShrink(!isShrunk)}
         />
-      )}
-      <ExpandButton
-        className={classes.expandButton}
-        isShrunk={isShrunk}
-        onClick={() => setShrink(!isShrunk)}
-      />
+      </div>
     </div>
   );
 };
