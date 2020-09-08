@@ -9,9 +9,10 @@ import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { Choice, Choices } from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
+import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
@@ -40,6 +41,9 @@ const useStyles = makeStyles(
 export interface OrderDraftPageProps
   extends FetchMoreProps,
     UserPermissionProps {
+  channelsChoices: Choices;
+  selectedChannel: Choice;
+  onChannelChange: (channel: Choice) => void;
   disabled: boolean;
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
@@ -89,10 +93,12 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onShippingMethodEdit,
     onProfileView,
     order,
-    selectedChannelName = "",
     users,
     usersLoading,
-    userPermissions
+    userPermissions,
+    channelsChoices,
+    selectedChannel,
+    onChannelChange
   } = props;
   const classes = useStyles(props);
 
@@ -157,10 +163,11 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onShippingAddressEdit={onShippingAddressEdit}
           />
           <CardSpacer />
-          <OrderChannelSectionCard
-            selectedChannelName={selectedChannelName}
-            onSelectClick={() => undefined}
+          <DraftOrderChannelSectionCard
+            channelsChoices={channelsChoices}
+            selectedChoice={selectedChannel}
             disabled={disabled}
+            onChange={onChannelChange}
           />
         </div>
       </Grid>

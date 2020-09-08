@@ -1,20 +1,26 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import {
+  Choice,
+  Choices,
+  SingleSelectField
+} from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
-import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface DraftOrderChannelSectionCardProps {
-  selectedChannelName: string;
-  onSelectClick: () => void;
+  channelsChoices: Choices;
   disabled: boolean;
+  selectedChoice: Choice;
+  onChange: (option: any) => void;
 }
 
 export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCardProps> = ({
+  channelsChoices,
+  selectedChoice,
   disabled,
-  onSelectClick,
-  selectedChannelName
+  onChange
 }) => {
   const intl = useIntl();
 
@@ -25,21 +31,11 @@ export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCard
           defaultMessage: "Sales channel",
           description: "section header"
         })}
-        toolbar={
-          <Button
-            color="primary"
-            variant="text"
-            disabled={disabled}
-            onClick={onSelectClick}
-          >
-            {intl.formatMessage(buttonMessages.edit)}
-          </Button>
-        }
       />
       <CardContent>
-        {selectedChannelName === undefined ? (
+        {selectedChoice === undefined ? (
           <Skeleton />
-        ) : selectedChannelName === null ? (
+        ) : selectedChoice === null ? (
           <Typography>
             <FormattedMessage
               defaultMessage="Channel not set"
@@ -48,7 +44,17 @@ export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCard
             />
           </Typography>
         ) : (
-          <Typography>{selectedChannelName}</Typography>
+          <SingleSelectField
+            choices={channelsChoices}
+            name="channels"
+            label={intl.formatMessage({
+              defaultMessage: "Select Channel",
+              description: "input label"
+            })}
+            disabled={disabled}
+            value={selectedChoice.value}
+            onChange={e => onChange(e.target.value)}
+          />
         )}
       </CardContent>
     </Card>

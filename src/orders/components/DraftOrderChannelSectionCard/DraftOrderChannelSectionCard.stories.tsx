@@ -1,3 +1,4 @@
+import { channelsList } from "@saleor/channels/fixtures";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -7,10 +8,16 @@ import DraftOrderChannelSectionCard, {
   DraftOrderChannelSectionCardProps
 } from ".";
 
+const channelsChoices = channelsList.map(channel => ({
+  label: channel.name,
+  value: channel.id
+}));
+
 const props: DraftOrderChannelSectionCardProps = {
+  channelsChoices,
   disabled: false,
-  onSelectClick: () => undefined,
-  selectedChannelName: "International store"
+  onChange: () => undefined,
+  selectedChoice: channelsChoices[0]
 };
 
 storiesOf("Orders / Draft order channel section", module)
@@ -20,10 +27,10 @@ storiesOf("Orders / Draft order channel section", module)
   .add("loading", () => (
     <DraftOrderChannelSectionCard
       {...props}
-      selectedChannelName={undefined}
+      selectedChoice={undefined}
       disabled={true}
     />
   ))
   .add("no channel selected", () => (
-    <DraftOrderChannelSectionCard {...props} selectedChannelName={null} />
+    <DraftOrderChannelSectionCard {...props} selectedChoice={null} />
   ));
