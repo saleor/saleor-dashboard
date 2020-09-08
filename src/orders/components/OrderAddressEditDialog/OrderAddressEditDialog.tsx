@@ -80,7 +80,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }}>
       <Form initial={address} onSubmit={handleSubmit}>
-        {({ change, data, submit }) => {
+        {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
@@ -118,7 +118,6 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
                   transitionState={confirmButtonState}
                   color="primary"
                   variant="contained"
-                  onClick={submit}
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.confirm} />

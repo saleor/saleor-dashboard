@@ -160,6 +160,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
           defaultMessage: "Order successfully updated"
         })
       });
+      closeModal();
     }
   };
   const handleDraftUpdate = (data: OrderDraftUpdate) => {
