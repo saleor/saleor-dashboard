@@ -138,6 +138,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <Grid>
         <div>
           <OrderDraftDetails
+            disabled={!selectedChannel}
             order={order}
             onOrderLineAdd={onOrderLineAdd}
             onOrderLineChange={onOrderLineChange}

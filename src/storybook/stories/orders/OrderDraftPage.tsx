@@ -55,6 +55,9 @@ storiesOf("Views / Orders / Order draft", module)
   .add("without lines", () => (
     <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
   ))
+  .add("without selected channel", () => (
+    <OrderDraftPage {...props} selectedChannel={undefined} />
+  ))
   .add("no user permissions", () => (
     <OrderDraftPage {...props} userPermissions={[]} />
   ));

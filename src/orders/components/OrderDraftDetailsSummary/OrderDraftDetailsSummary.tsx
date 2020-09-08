@@ -23,12 +23,13 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftDetailsSummaryProps {
+  disabled?: boolean;
   order: OrderDetails_order;
   onShippingMethodEdit: () => void;
 }
 
 const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
-  const { order, onShippingMethodEdit } = props;
+  const { disabled, order, onShippingMethodEdit } = props;
 
   const classes = useStyles(props);
 
@@ -60,7 +61,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           order.shippingMethodName !== undefined ? (
             order.shippingMethod === null ? (
               order.availableShippingMethods &&
-              order.availableShippingMethods.length > 0 ? (
+              order.availableShippingMethods.length > 0 &&
+              !disabled ? (
                 <td>
                   <Link onClick={onShippingMethodEdit}>
                     <FormattedMessage

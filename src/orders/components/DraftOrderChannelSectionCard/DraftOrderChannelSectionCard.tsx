@@ -13,7 +13,7 @@ export interface DraftOrderChannelSectionCardProps {
   channelsChoices: Choices;
   disabled: boolean;
   selectedChoice: Choice;
-  onChange: (option: any) => void;
+  onChange: (option: Choice) => void;
 }
 
 export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCardProps> = ({
