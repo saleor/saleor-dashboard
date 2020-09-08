@@ -93,6 +93,7 @@ const SideBar: React.FC<SideBarProps> = ({
               isMenuShrunk={isShrunk}
               menuItem={menuItem}
               onClick={onMenuItemClick}
+              key={menuItem.ariaLabel}
             />
           );
         })}

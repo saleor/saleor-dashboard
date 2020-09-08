@@ -11,11 +11,14 @@ export function isMenuActive(location: string, menuItem: IMenuItem) {
     );
   }
 
-  return location.split("?")[0] === orderDraftListUrl().split("?")[0] &&
-    menuItem.url.split("?")[0] === orderListUrl().split("?")[0]
+  const activeUrl = location.split("?")[0];
+  const menuItemUrl = menuItem.url.split("?")[0];
+
+  return activeUrl === orderDraftListUrl().split("?")[0] &&
+    menuItemUrl === orderListUrl().split("?")[0]
     ? false
-    : !!matchPath(location.split("?")[0], {
-        exact: menuItem.url.split("?")[0] === "/",
-        path: menuItem.url.split("?")[0]
+    : !!matchPath(activeUrl, {
+        exact: menuItemUrl === "/",
+        path: menuItemUrl
       });
 }

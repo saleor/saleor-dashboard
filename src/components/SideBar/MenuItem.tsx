@@ -43,6 +43,18 @@ const useStyles = makeStyles(
       opacity: 1,
       transition: theme.transitions.duration.shortest + "ms"
     },
+    menuItemBtn: {
+      "&:focus": {
+        color: theme.palette.primary.main,
+        outline: 0
+      },
+      background: "none",
+      border: "none",
+      color: "inherit",
+      display: "inline-flex",
+      margin: 0,
+      padding: 0
+    },
     paper: {
       borderRadius: 16,
       cursor: "default",
@@ -58,8 +70,6 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main,
         outline: 0
       },
-      background: "none",
-      border: "none",
       borderBottomRightRadius: 100,
       borderTopRightRadius: 100,
       color: fade(theme.palette.text.primary, 0.6),
@@ -89,7 +99,8 @@ const useStyles = makeStyles(
         }
       },
       "&:hover, &:focus": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
+        outline: 0
       },
       background: "none",
       border: "none",
@@ -109,7 +120,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLButtonElement>(null);
+  const anchor = React.useRef<HTMLDivElement>(null);
 
   const handleClick = (event: React.MouseEvent, menuItem: IMenuItem) => {
     if (menuItem.children) {
@@ -121,7 +132,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   };
 
   return (
-    <button
+    <div
       className={classNames(classes.root, {
         [classes.rootActive]: active,
         [classes.rootExpanded]: !isMenuShrunk
@@ -129,18 +140,20 @@ const MenuItem: React.FC<MenuItemProps> = ({
       ref={anchor}
       onClick={event => handleClick(event, menuItem)}
     >
-      {menuItem.icon && <SVG className={classes.icon} src={menuItem.icon} />}
-      <Typography
-        aria-label={menuItem.ariaLabel}
-        className={classNames(classes.label, {
-          [classes.hideLabel]: isMenuShrunk
-        })}
-        variant="body2"
-        data-test="menu-item-label"
-        data-test-id={menuItem.testingContextId}
-      >
-        {menuItem.label}
-      </Typography>
+      <button className={classes.menuItemBtn}>
+        {menuItem.icon && <SVG className={classes.icon} src={menuItem.icon} />}
+        <Typography
+          aria-label={menuItem.ariaLabel}
+          className={classNames(classes.label, {
+            [classes.hideLabel]: isMenuShrunk
+          })}
+          variant="body2"
+          data-test="menu-item-label"
+          data-test-id={menuItem.testingContextId}
+        >
+          {menuItem.label}
+        </Typography>
+      </button>
       {menuItem.children && (
         <Popper
           className={classes.popper}
@@ -176,7 +189,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           </ClickAwayListener>
         </Popper>
       )}
-    </button>
+    </div>
   );
 };
 
