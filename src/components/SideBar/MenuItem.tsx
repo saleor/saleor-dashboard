@@ -75,7 +75,7 @@ const useStyles = makeStyles(
     rootActive: {
       "&$root": {
         background: theme.palette.background.paper,
-        boxShadow: `9px 9px 20px 0 ${theme.palette.grey[300]}`,
+        boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.16)",
         color: theme.palette.primary.main
       }
     },

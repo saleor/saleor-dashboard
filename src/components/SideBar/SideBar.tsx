@@ -28,7 +28,8 @@ const useStyles = makeStyles(
     },
     root: {
       transition: "width 0.5s ease",
-      width: menuWidth
+      width: menuWidth,
+      zIndex: 100
     },
     rootShrink: {
       width: shrunkMenuWidth
