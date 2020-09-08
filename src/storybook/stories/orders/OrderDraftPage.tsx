@@ -32,6 +32,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onShippingMethodEdit: undefined,
   order,
   saveButtonBarState: "default",
+  selectedChannelName: "Channel",
   userPermissions: adminUserPermissions,
   users: clients,
   usersLoading: false
