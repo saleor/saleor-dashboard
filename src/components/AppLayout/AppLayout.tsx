@@ -85,67 +85,6 @@ const useStyles = makeStyles(
       height: "100vh",
       padding: "25px 20px"
     },
-    menuIcon: {
-      "& span": {
-        "&:nth-child(1)": {
-          top: 15
-        },
-        "&:nth-child(2), &:nth-child(3)": {
-          top: 20
-        },
-        "&:nth-child(4)": {
-          top: 25
-        },
-        background: theme.palette.secondary.light,
-        display: "block",
-        height: 1,
-        left: "20%",
-        opacity: 1,
-        position: "absolute",
-        transform: "rotate(0deg)",
-        transition: ".25s ease-in-out",
-        width: "60%"
-      },
-      [theme.breakpoints.up("md")]: {
-        display: "none"
-      },
-      [theme.breakpoints.down("sm")]: {
-        left: 0
-      },
-      background: theme.palette.background.paper,
-      borderRadius: "50%",
-      cursor: "pointer",
-      height: 42,
-      left: theme.spacing(),
-      marginRight: theme.spacing(2),
-      position: "relative",
-      transform: "rotate(0deg)",
-      transition: `${theme.transitions.duration.shorter}ms ease-in-out`,
-      width: 42
-    },
-    menuIconDark: {
-      "& span": {
-        background: theme.palette.common.white
-      }
-    },
-    menuIconOpen: {
-      "& span": {
-        "&:nth-child(1), &:nth-child(4)": {
-          left: "50%",
-          top: 20,
-          width: 0
-        },
-        "&:nth-child(2)": {
-          transform: "rotate(45deg)"
-        },
-        "&:nth-child(3)": {
-          transform: "rotate(-45deg)"
-        }
-      },
-      left: 280,
-      position: "absolute",
-      zIndex: 1999
-    },
     menuSmall: {
       background: theme.palette.background.paper,
       height: "100vh",
@@ -212,7 +151,6 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { isDark, toggleTheme } = useTheme();
-  const [isDrawerOpened, setDrawerState] = React.useState(false);
   const [isMenuOpened, setMenuState] = React.useState(false);
   const appActionAnchor = React.useRef<HTMLDivElement>();
   const appHeaderAnchor = React.useRef<HTMLDivElement>();
@@ -247,13 +185,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     navigate(staffMemberDetailsUrl(user.id));
   };
 
-  const handleMenuItemClick = (url: string, event: React.MouseEvent<any>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setDrawerState(false);
-    navigate(url);
-  };
-
   const handleErrorBack = () => {
     navigate("/");
     dispatchAppState({
@@ -278,7 +209,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               location={location.pathname}
               user={user}
               renderConfigure={renderConfigure}
-              onMenuItemClick={handleMenuItemClick}
+              onMenuItemClick={navigate}
             />
             <div className={classes.content}>
               {appState.loading ? (
@@ -290,18 +221,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 <div>
                   <Container>
                     <div className={classes.header}>
-                      <div
-                        className={classNames(classes.menuIcon, {
-                          [classes.menuIconOpen]: isDrawerOpened,
-                          [classes.menuIconDark]: isDark
-                        })}
-                        onClick={() => setDrawerState(!isDrawerOpened)}
-                      >
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
                       <div ref={appHeaderAnchor} />
                       <div className={classes.spacer} />
                       <div className={classes.userBar}>

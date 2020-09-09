@@ -4,6 +4,7 @@ import Popper from "@material-ui/core/Popper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -14,7 +15,7 @@ export interface MenuItemProps {
   active: boolean;
   isMenuShrunk: boolean;
   menuItem: IMenuItem;
-  onClick: (url: string, event: React.MouseEvent) => void;
+  onClick: UseNavigatorResult;
 }
 
 export const menuWidth = 210;
@@ -51,6 +52,7 @@ const useStyles = makeStyles(
       background: "none",
       border: "none",
       color: "inherit",
+      cursor: "pointer",
       display: "inline-flex",
       margin: 0,
       padding: 0
@@ -126,10 +128,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
   const anchor = React.useRef<HTMLDivElement>(null);
 
   const handleClick = (event: React.MouseEvent, menuItem: IMenuItem) => {
+    event.stopPropagation();
     if (menuItem.children) {
       setOpen(true);
     } else {
-      onClick(menuItem.url, event);
+      onClick(menuItem.url);
       setOpen(false);
     }
   };
@@ -174,10 +177,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                   component="button"
                   className={classNames(classes.label, classes.subMenuLabel)}
                   key={subMenuItem.url}
-                  onClick={event => {
-                    event.preventDefault();
-                    handleClick(event, subMenuItem);
-                  }}
+                  onClick={event => handleClick(event, subMenuItem)}
                   data-test="submenu-item-label"
                   data-test-id={subMenuItem.testingContextId}
                   variant="body2"

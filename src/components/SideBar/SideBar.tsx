@@ -4,6 +4,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { User } from "@saleor/fragments/types/User";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
@@ -46,7 +47,7 @@ export interface SideBarProps {
   location: string;
   user: User;
   renderConfigure: boolean;
-  onMenuItemClick: (url: string, event: React.MouseEvent) => void;
+  onMenuItemClick: UseNavigatorResult;
 }
 
 export interface IActiveSubMenu {
