@@ -25,10 +25,12 @@ const useStyles = makeStyles(
   { name: "SingleSelectField" }
 );
 
-export type Choices = Array<{
+export interface Choice {
   value: string;
   label: string | React.ReactNode;
-}>;
+}
+
+export type Choices = Choice[];
 interface SingleSelectFieldProps {
   choices: Choices;
   className?: string;

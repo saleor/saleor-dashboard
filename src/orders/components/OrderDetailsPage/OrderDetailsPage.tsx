@@ -9,6 +9,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -49,6 +50,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
     code: string;
     label: string;
   }>;
+  selectedChannelName: string;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -87,7 +89,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onProfileView,
     onInvoiceClick,
     onInvoiceGenerate,
-    onInvoiceSend
+    onInvoiceSend,
+    selectedChannelName
   } = props;
   const classes = useStyles(props);
 
@@ -185,6 +188,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             onShippingAddressEdit={onShippingAddressEdit}
             onProfileView={onProfileView}
           />
+          <CardSpacer />
+          <OrderChannelSectionCard selectedChannelName={selectedChannelName} />
           <CardSpacer />
           <OrderInvoiceList
             invoices={order?.invoices}

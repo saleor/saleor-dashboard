@@ -1,9 +1,12 @@
+import { useChannelsList } from "@saleor/channels/queries";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { Choice, Choices } from "@saleor/components/SingleSelectField";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
@@ -91,6 +94,8 @@ interface OrderDetailsProps {
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { user } = useUser();
+
+  const { data: channelsData } = useChannelsList({});
   const {
     loadMore: loadMoreCustomers,
     search: searchUsers,
@@ -120,6 +125,15 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   >(navigate, params => orderUrl(id, params), params);
 
   const handleBack = () => navigate(orderListUrl());
+
+  const channelChoices: Choices =
+    channelsData?.channels?.map(channel => ({
+      label: channel.name,
+      value: channel.id
+    })) || [];
+  const [selectedChannel, onChannelChange] = useStateFromProps<Choice>(
+    channelChoices.length ? channelChoices[0] : undefined
+  );
 
   return (
     <TypedOrderDetailsQuery displayLoader variables={{ id }}>
@@ -271,6 +285,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onInvoiceSend={id =>
                             openModal("invoice-send", { id })
                           }
+                          selectedChannelName="Channel"
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
@@ -495,6 +510,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             navigate(customerUrl(order.user.id))
                           }
                           userPermissions={user?.userPermissions || []}
+                          selectedChannel={selectedChannel}
+                          onChannelChange={onChannelChange}
+                          channelsChoices={channelChoices}
                         />
                         <OrderDraftCancelDialog
                           confirmButtonState={orderDraftCancel.opts.status}

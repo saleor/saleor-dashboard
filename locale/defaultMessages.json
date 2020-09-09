@@ -188,6 +188,10 @@
   "menuPropertiesMenuTitle": {
     "string": "Menu Title"
   },
+  "orderChannelNotSet": {
+    "context": "customer is not set in draft order",
+    "string": "Channel not set"
+  },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
     "string": "Not set"
@@ -2420,6 +2424,14 @@
     "context": "orders section name",
     "string": "Orders"
   },
+  "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_1243773440": {
+    "context": "section header",
+    "string": "Sales channel"
+  },
+  "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_2342703674": {
+    "context": "input label",
+    "string": "Select Channel"
+  },
   "src_dot_orders_dot_components_dot_OrderAddressEditDialog_dot_3278396777": {
     "context": "dialog header",
     "string": "Edit Shipping Address"
@@ -2444,6 +2456,10 @@
   },
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+  },
+  "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
+    "context": "section header",
+    "string": "Sales channel"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerNote_dot_1505053535": {
     "string": "No notes from customer"
