@@ -2,20 +2,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
+import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { Choice, Choices } from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
@@ -39,6 +41,9 @@ const useStyles = makeStyles(
 export interface OrderDraftPageProps
   extends FetchMoreProps,
     UserPermissionProps {
+  channelsChoices: Choices;
+  selectedChannel: Choice;
+  onChannelChange: (channel: Choice) => void;
   disabled: boolean;
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
@@ -48,6 +53,7 @@ export interface OrderDraftPageProps
     label: string;
   }>;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedChannelName?: string;
   fetchUsers: (query: string) => void;
   onBack: () => void;
   onBillingAddressEdit: () => void;
@@ -89,7 +95,10 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     order,
     users,
     usersLoading,
-    userPermissions
+    userPermissions,
+    channelsChoices,
+    selectedChannel,
+    onChannelChange
   } = props;
   const classes = useStyles(props);
 
@@ -103,7 +112,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <PageHeader
         className={classes.header}
         inline
-        title={maybe(() => order.number) ? "#" + order.number : undefined}
+        title={order?.number ? "#" + order?.number : undefined}
       >
         <CardMenu
           menuItems={[
@@ -129,16 +138,14 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <Grid>
         <div>
           <OrderDraftDetails
+            disabled={!selectedChannel}
             order={order}
             onOrderLineAdd={onOrderLineAdd}
             onOrderLineChange={onOrderLineChange}
             onOrderLineRemove={onOrderLineRemove}
             onShippingMethodEdit={onShippingMethodEdit}
           />
-          <OrderHistory
-            history={maybe(() => order.events)}
-            onNoteAdd={onNoteAdd}
-          />
+          <OrderHistory history={order?.events} onNoteAdd={onNoteAdd} />
         </div>
         <div>
           <OrderCustomer
@@ -156,11 +163,18 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onProfileView={onProfileView}
             onShippingAddressEdit={onShippingAddressEdit}
           />
+          <CardSpacer />
+          <DraftOrderChannelSectionCard
+            channelsChoices={channelsChoices}
+            selectedChoice={selectedChannel}
+            disabled={disabled}
+            onChange={onChannelChange}
+          />
         </div>
       </Grid>
       <SaveButtonBar
         state={saveButtonBarState}
-        disabled={disabled || !maybe(() => order.canFinalize)}
+        disabled={disabled || !order?.canFinalize}
         onCancel={onBack}
         onSave={onDraftFinalize}
         labels={{
