@@ -105,7 +105,8 @@ const useStyles = makeStyles(
       background: "none",
       border: "none",
       color: fade(theme.palette.text.primary, 0.6),
-      textAlign: "left"
+      textAlign: "left",
+      whiteSpace: "nowrap"
     }
   }),
   {
