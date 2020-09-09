@@ -511,7 +511,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           userPermissions={user?.userPermissions || []}
                           selectedChannel={selectedChannel}
-                          onChannelChange={option => onChannelChange(option)}
+                          onChannelChange={onChannelChange}
                           channelsChoices={channelChoices}
                         />
                         <OrderDraftCancelDialog
