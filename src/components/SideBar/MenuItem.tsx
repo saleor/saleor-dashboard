@@ -57,6 +57,7 @@ const useStyles = makeStyles(
     },
     paper: {
       borderRadius: 16,
+      boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.16)",
       cursor: "default",
       padding: theme.spacing(3),
       textAlign: "left"
@@ -169,7 +170,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
             onClickAway={() => setOpen(false)}
             mouseEvent="onClick"
           >
-            <Paper elevation={6} className={classes.paper}>
+            <Paper className={classes.paper}>
               {menuItem.children.map(subMenuItem => (
                 <Typography
                   aria-label={subMenuItem.ariaLabel}
