@@ -166,10 +166,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           disablePortal
           placement="right-start"
         >
-          <ClickAwayListener
-            onClickAway={() => setOpen(false)}
-            mouseEvent="onClick"
-          >
+          <ClickAwayListener onClickAway={() => setOpen(false)}>
             <Paper className={classes.paper}>
               {menuItem.children.map(subMenuItem => (
                 <Typography
