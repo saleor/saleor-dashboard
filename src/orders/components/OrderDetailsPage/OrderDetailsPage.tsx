@@ -14,6 +14,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -58,6 +59,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedChannelName: string;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -100,7 +102,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onInvoiceClick,
     onInvoiceGenerate,
     onInvoiceSend,
-    onSubmit
+    onSubmit,
+    selectedChannelName
   } = props;
   const classes = useStyles(props);
 
@@ -212,7 +215,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onRefund={onPaymentRefund}
                   onVoid={onPaymentVoid}
                 />
-                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={maybe(() => order.events)}
@@ -228,6 +230,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}
                   onProfileView={onProfileView}
+                />
+                <CardSpacer />
+                <OrderChannelSectionCard
+                  selectedChannelName={selectedChannelName}
                 />
                 <CardSpacer />
                 <OrderInvoiceList
