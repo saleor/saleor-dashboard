@@ -184,6 +184,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             description: "snackbar text"
           })
         });
+        refetch();
       }
     }
   });

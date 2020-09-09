@@ -239,12 +239,14 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               value={isAvailable}
               onChange={e => {
                 const { value } = e.target;
-                onChange({
-                  target: {
-                    name: "availableForPurchase",
-                    value: value ? localizeDate(new Date().toString()) : null
-                  }
-                });
+                if (!value) {
+                  onChange({
+                    target: {
+                      name: "availableForPurchase",
+                      value: null
+                    }
+                  });
+                }
                 return onChange(e);
               }}
             />
