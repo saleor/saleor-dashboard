@@ -146,7 +146,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
       ref={anchor}
       onClick={event => handleClick(event, menuItem)}
     >
-      <button className={classes.menuItemBtn}>
+      <button
+        className={classes.menuItemBtn}
+        data-test="menu-item-label"
+        data-test-id={menuItem.testingContextId}
+      >
         {menuItem.icon && <SVG className={classes.icon} src={menuItem.icon} />}
         <Typography
           aria-label={menuItem.ariaLabel}
@@ -154,8 +158,6 @@ const MenuItem: React.FC<MenuItemProps> = ({
             [classes.hideLabel]: isMenuShrunk
           })}
           variant="body2"
-          data-test="menu-item-label"
-          data-test-id={menuItem.testingContextId}
         >
           {menuItem.label}
         </Typography>
