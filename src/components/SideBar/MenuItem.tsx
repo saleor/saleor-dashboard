@@ -104,7 +104,8 @@ const useStyles = makeStyles(
       },
       background: "none",
       border: "none",
-      color: fade(theme.palette.text.primary, 0.6)
+      color: fade(theme.palette.text.primary, 0.6),
+      textAlign: "left"
     }
   }),
   {
