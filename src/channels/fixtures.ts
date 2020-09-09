@@ -25,30 +25,51 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    id: "Q2hhbm7lbDoy",
+    id: "Q2hhbm7lbDoy213",
     name: "Channel",
     slug: "channel"
   },
   {
     __typename: "Channel",
     currencyCode: "euro",
-    id: "Q2hhbn5lbDoy",
+    id: "Q2hhbn5lbDoytr",
     name: "Channel test",
     slug: "channeltest"
   },
   {
     __typename: "Channel",
     currencyCode: "euro",
-    id: "Q2hhbm5lbDo5",
+    id: "Q2hhbm5lbDo5bot",
     name: "Channel USD",
     slug: "channel-usd"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbm7lbDoyr0tr",
+    name: "Channel",
+    slug: "channel2"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbn5lbDoyya",
+    name: "Channel test",
+    slug: "channeltest4"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbm5lbDo5w0z",
+    name: "Channel USD",
+    slug: "channel-usd1"
   }
 ];
 
 export const channel: Channel_channel = {
   __typename: "Channel",
   currencyCode: "zl",
-  id: "Q2hhbm5lbDov",
+  id: "Q2hhbm5lbDov78",
   name: "Test",
   slug: "test"
 };
