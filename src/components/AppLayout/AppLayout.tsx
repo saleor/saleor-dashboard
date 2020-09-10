@@ -1,6 +1,6 @@
-import Hidden from "@material-ui/core/Hidden";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -108,6 +108,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [appState, dispatchAppState] = useAppState();
   const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
+  const isMdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -141,7 +142,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <AppHeaderContext.Provider value={appHeaderAnchor}>
         <AppActionContext.Provider value={appActionAnchor}>
           <div className={classes.root}>
-            <Hidden smDown>
+            {isMdUp && (
               <SideBar
                 menuItems={menuStructure}
                 location={location.pathname}
@@ -149,7 +150,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 renderConfigure={renderConfigure}
                 onMenuItemClick={navigate}
               />
-            </Hidden>
+            )}
             <div className={classes.content}>
               {appState.loading ? (
                 <LinearProgress className={classes.appLoader} color="primary" />
@@ -160,10 +161,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 <div>
                   <Container>
                     <div className={classes.header}>
-                      <Hidden smDown>
-                        <div ref={appHeaderAnchor} />
-                      </Hidden>
-                      <Hidden mdUp>=</Hidden>
+                      {isMdUp && <div ref={appHeaderAnchor} />}
+                      {!isMdUp && <>=</>}
                       <div className={classes.spacer} />
                       <div className={classes.userBar}>
                         <ThemeSwitch
@@ -186,9 +185,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         />
                       </div>
                     </div>
-                    <Hidden mdUp>
-                      <div ref={appHeaderAnchor} />
-                    </Hidden>
+                    {!isMdUp && <div ref={appHeaderAnchor} />}
                   </Container>
                 </div>
                 <main className={classes.view}>
