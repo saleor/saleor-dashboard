@@ -19,7 +19,10 @@ import { decimal, weight } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
-import { useProductCreateMutation } from "../mutations";
+import {
+  useProductCreateMutation,
+  useProductSetAvailabilityForPurchase
+} from "../mutations";
 import { productListUrl, productUrl } from "../urls";
 
 export const ProductCreateView: React.FC = () => {
@@ -59,6 +62,18 @@ export const ProductCreateView: React.FC = () => {
 
   const handleBack = () => navigate(productListUrl());
 
+  const [
+    setProductAvailability,
+    productAvailabilityOpts
+  ] = useProductSetAvailabilityForPurchase({
+    onCompleted: data => {
+      const errors = data?.productSetAvailabilityForPurchase?.errors;
+      if (errors?.length === 0) {
+        navigate(productUrl(data.productSetAvailabilityForPurchase.product.id));
+      }
+    }
+  });
+
   const [productCreate, productCreateOpts] = useProductCreateMutation({
     onCompleted: data => {
       if (data.productCreate.errors.length === 0) {
@@ -68,7 +83,6 @@ export const ProductCreateView: React.FC = () => {
             defaultMessage: "Product created"
           })
         });
-        navigate(productUrl(data.productCreate.product.id));
       }
     }
   });
@@ -100,11 +114,33 @@ export const ProductCreateView: React.FC = () => {
           warehouse: stock.id
         })),
         trackInventory: formData.trackInventory,
+        visibleInListings: formData.visibleInListings,
         weight: weight(formData.weight)
       }
     });
 
-    return result.data.productCreate?.product?.id || null;
+    const productId = result.data.productCreate?.product?.id;
+
+    const { isAvailableForPurchase, availableForPurchase } = formData;
+
+    const isAvailable =
+      availableForPurchase && !isAvailableForPurchase
+        ? true
+        : isAvailableForPurchase;
+
+    setProductAvailability({
+      variables: {
+        isAvailable,
+        productId,
+        startDate: isAvailableForPurchase
+          ? null
+          : availableForPurchase !== ""
+          ? availableForPurchase
+          : null
+      }
+    });
+
+    return productId || null;
   };
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
@@ -128,7 +164,7 @@ export const ProductCreateView: React.FC = () => {
         collections={(searchCollectionOpts.data?.search.edges || []).map(
           edge => edge.node
         )}
-        disabled={productCreateOpts.loading}
+        disabled={productCreateOpts.loading || productAvailabilityOpts.loading}
         errors={productCreateOpts.data?.productCreate.errors || []}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}

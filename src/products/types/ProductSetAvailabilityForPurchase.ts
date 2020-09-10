@@ -8,6 +8,12 @@ import { ProductErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: ProductSetAvailabilityForPurchase
 // ====================================================
 
+export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase_product {
+  __typename: "Product";
+  id: string;
+  availableForPurchase: any | null;
+}
+
 export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
@@ -17,6 +23,7 @@ export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurc
 
 export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase {
   __typename: "ProductSetAvailabilityForPurchase";
+  product: ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase_product | null;
   errors: ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase_errors[];
 }
 
