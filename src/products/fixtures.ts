@@ -1978,6 +1978,17 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
+  pricing: {
+    __typename: "VariantPricingInfo",
+    priceUndiscounted: {
+      __typename: "TaxedMoney",
+      gross: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
+      }
+    }
+  },
   product: {
     __typename: "Product" as "Product",
     id: "prod1",

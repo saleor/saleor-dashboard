@@ -49,6 +49,22 @@ export interface VariantImageAssign_variantImageAssign_productVariant_costPrice 
   currency: string;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: VariantImageAssign_variantImageAssign_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: VariantImageAssign_variantImageAssign_productVariant_pricing_priceUndiscounted | null;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -129,6 +145,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   id: string;
   attributes: VariantImageAssign_variantImageAssign_productVariant_attributes[];
   costPrice: VariantImageAssign_variantImageAssign_productVariant_costPrice | null;
+  pricing: VariantImageAssign_variantImageAssign_productVariant_pricing | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
   product: VariantImageAssign_variantImageAssign_productVariant_product;
