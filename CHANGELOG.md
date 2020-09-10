@@ -4,22 +4,6 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## 2.11.0-rc.5
-
-- Update savebar design - #690 by @dominik-zeglen
-- Add metadata to orders - #688 by @dominik-zeglen
-- Add lazyload to locales - #692 by @eaglesemanation
-- Fix not closed address update modal with two confirmations - #699 by @orzechdev
-- Update schema with PositiveDecimal type - #695 by @AlicjaSzu
-
-## 2.11.0-rc.4
-
-- Update order history information - #680 by @dominik-zeglen
-- Add metadata editor to creator views - #684 by @dominik-zeglen
-- Update product visibility card component - #679 by @AlicjaSzu
-
-## 2.11.0-rc.3
-
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
 - Migrate product base price to variant prices - #555 by @orzechdev
 - Migrate old notifications to the new ones - #587 by @AlicjaSzu
@@ -37,9 +21,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix user avatars - #639 by @dominik-zeglen
 - Reset modal state after closing - #644 by @dominik-zeglen
 - Fix incorrect messages - #643 by @dominik-zeglen
-
-## 2.11.0-rc.2
-
 - Do not use devserver to run cypress tests - #650 by @dominik-zeglen
 - Fix updating product that has no variants - #649 by @dominik-zeglen
 - Update checkbox design - #651 by @dominik-zeglen
@@ -49,6 +30,14 @@ All notable, unreleased changes to this project will be documented in this file.
 - Use hooks instead of containers with render props in product mutations - #667 by @dominik-zeglen
 - Add apps and permission groups to navigator - #678 by @dominik-zeglen
 - Add metadata - #670 by @dominik-zeglen
+- Update order history information - #680 by @dominik-zeglen
+- Add metadata editor to creator views - #684 by @dominik-zeglen
+- Update product visibility card component - #679 by @AlicjaSzu
+- Update savebar design - #690 by @dominik-zeglen
+- Add metadata to orders - #688 by @dominik-zeglen
+- Add lazyload to locales - #692 by @eaglesemanation
+- Fix not closed address update modal with two confirmations - #699 by @orzechdev
+- Update schema with PositiveDecimal type - #695 by @AlicjaSzu
 
 ## 2.10.1
 
