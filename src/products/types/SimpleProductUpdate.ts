@@ -123,6 +123,27 @@ export interface SimpleProductUpdate_productUpdate_product_purchaseCost {
   stop: SimpleProductUpdate_productUpdate_product_purchaseCost_stop | null;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: SimpleProductUpdate_productUpdate_product_channelListing_channel;
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: SimpleProductUpdate_productUpdate_product_channelListing_discountedPrice | null;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_images {
   __typename: "ProductImage";
   id: string;
@@ -242,6 +263,22 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_costPri
   currency: string;
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: SimpleProductUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: SimpleProductUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted | null;
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -322,6 +359,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   id: string;
   attributes: SimpleProductUpdate_productVariantUpdate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantUpdate_productVariant_costPrice | null;
+  pricing: SimpleProductUpdate_productVariantUpdate_productVariant_pricing | null;
   images: (SimpleProductUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
@@ -377,6 +415,22 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_c
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing_priceUndiscounted | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_images {
@@ -459,6 +513,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksCreate_productVariant_costPrice | null;
+  pricing: SimpleProductUpdate_productVariantStocksCreate_productVariant_pricing | null;
   images: (SimpleProductUpdate_productVariantStocksCreate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksCreate_productVariant_product;
@@ -513,6 +568,22 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_c
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing_priceUndiscounted | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_images {
@@ -595,6 +666,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksDelete_productVariant_costPrice | null;
+  pricing: SimpleProductUpdate_productVariantStocksDelete_productVariant_pricing | null;
   images: (SimpleProductUpdate_productVariantStocksDelete_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksDelete_productVariant_product;
@@ -650,6 +722,22 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_c
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_images {
@@ -732,6 +820,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes[];
   costPrice: SimpleProductUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
+  pricing: SimpleProductUpdate_productVariantStocksUpdate_productVariant_pricing | null;
   images: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product;
