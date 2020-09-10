@@ -139,6 +139,13 @@ export interface ProductImageCreate_productImageCreate_product_channelListing_ch
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
 export interface ProductImageCreate_productImageCreate_product_channelListing {
@@ -146,6 +153,7 @@ export interface ProductImageCreate_productImageCreate_product_channelListing {
   channel: ProductImageCreate_productImageCreate_product_channelListing_channel;
   isPublished: boolean;
   publicationDate: any | null;
+  discountedPrice: ProductImageCreate_productImageCreate_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_images {
@@ -154,12 +162,6 @@ export interface ProductImageCreate_productImageCreate_product_images {
   alt: string;
   sortOrder: number | null;
   url: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductImageCreate_productImageCreate_product_variants_stocks_warehouse {
@@ -176,15 +178,31 @@ export interface ProductImageCreate_productImageCreate_product_variants_stocks {
   warehouse: ProductImageCreate_productImageCreate_product_variants_stocks_warehouse;
 }
 
+export interface ProductImageCreate_productImageCreate_product_variants_pricing_price_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_variants_pricing_price {
+  __typename: "TaxedMoney";
+  gross: ProductImageCreate_productImageCreate_product_variants_pricing_price_gross;
+}
+
+export interface ProductImageCreate_productImageCreate_product_variants_pricing {
+  __typename: "VariantPricingInfo";
+  price: ProductImageCreate_productImageCreate_product_variants_pricing_price | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product_variants {
   __typename: "ProductVariant";
   id: string;
   sku: string;
   name: string;
-  price: ProductImageCreate_productImageCreate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductImageCreate_productImageCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  pricing: ProductImageCreate_productImageCreate_product_variants_pricing | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product {

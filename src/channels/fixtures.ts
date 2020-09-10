@@ -79,6 +79,7 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "123",
       name: "Channel1"
     },
@@ -89,6 +90,7 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "124",
       name: "Channel2"
     },
@@ -99,10 +101,32 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "125",
       name: "Channel3"
     },
     isPublished: false,
     publicationDate: null
+  }
+];
+
+export const productPriceChannels = [
+  {
+    costPrice: "5",
+    id: "123",
+    name: "Channel1",
+    sellingPrice: "10"
+  },
+  {
+    costPrice: "15",
+    id: "124",
+    name: "Channel2",
+    sellingPrice: "20"
+  },
+  {
+    costPrice: "15",
+    id: "125",
+    name: "Channel3",
+    sellingPrice: "100"
   }
 ];

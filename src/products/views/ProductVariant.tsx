@@ -4,6 +4,8 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
@@ -57,6 +59,24 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductVariantChannelListingUpdate({
+    onCompleted: data => {
+      if (
+        data.productVariantChannelListingUpdate.productChannelListingErrors
+          .length === 0
+      ) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Channels updated"
+          })
+        });
+      }
+    }
+  });
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
@@ -67,6 +87,28 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   );
 
   const handleBack = () => navigate(productUrl(productId));
+
+  const handleSubmitChannels = (
+    data: ProductVariantPageSubmitData,
+    variant: ProductVariantDetails_productVariant
+  ) => {
+    if (
+      data.channelListing.some(
+        (channel, index) =>
+          channel.price !== variant.channelListing[index].price.amount
+      )
+    ) {
+      updateChannels({
+        variables: {
+          id: variant.id,
+          input: data.channelListing.map(listing => ({
+            channelId: listing.id,
+            price: listing.price
+          }))
+        }
+      });
+    }
+  };
 
   return (
     <TypedProductVariantQuery displayLoader variables={{ id: variantId }}>
@@ -108,7 +150,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                 deleteVariant.opts.loading ||
                 updateVariant.opts.loading ||
                 assignImage.opts.loading ||
-                unassignImage.opts.loading;
+                unassignImage.opts.loading ||
+                updateChannelsOpts.loading;
 
               const handleImageSelect = (id: string) => () => {
                 if (variant) {
@@ -134,6 +177,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                   <WindowTitle title={data?.productVariant?.name} />
                   <ProductVariantPage
                     errors={errors}
+                    channelErrors={
+                      updateChannelsOpts?.data
+                        ?.productVariantChannelListingUpdate
+                        ?.productChannelListingErrors || []
+                    }
                     saveButtonBarState={updateVariant.opts.status}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
@@ -148,7 +196,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                     onBack={handleBack}
                     onDelete={() => openModal("remove")}
                     onImageSelect={handleImageSelect}
-                    onSubmit={(data: ProductVariantPageSubmitData) =>
+                    onSubmit={(data: ProductVariantPageSubmitData) => {
                       updateVariant.mutate({
                         addStocks: data.addStocks.map(
                           mapFormsetStockToStockInput
@@ -159,15 +207,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                         })),
                         costPrice: decimal(data.costPrice),
                         id: variantId,
-                        price: decimal(data.price),
                         removeStocks: data.removeStocks,
                         sku: data.sku,
                         stocks: data.updateStocks.map(
                           mapFormsetStockToStockInput
                         ),
                         trackInventory: data.trackInventory
-                      })
-                    }
+                      });
+                      handleSubmitChannels(data, variant);
+                    }}
                     onVariantClick={variantId => {
                       navigate(productVariantEditUrl(productId, variantId));
                     }}

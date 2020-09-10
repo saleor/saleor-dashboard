@@ -8,7 +8,7 @@ import OrderValue, { OrderValueProps } from "./OrderValue";
 
 const props: OrderValueProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channels
+    shippingZone.shippingMethods[0].channelListing
   ),
   defaultCurrency: "USD",
   disabled: false,

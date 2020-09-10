@@ -1,40 +1,75 @@
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import { renderCollection } from "@saleor/misc";
+import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    grid: {
-      display: "grid",
-      gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "1fr 1fr"
+    caption: {
+      fontSize: 14,
+      padding: theme.spacing(0, 3, 2, 3)
+    },
+    colName: {
+      fontSize: 14,
+      paddingLeft: 0,
+      width: "auto"
+    },
+    colPrice: {
+      textAlign: "right",
+      width: 200
+    },
+    colType: {
+      fontSize: 14,
+      textAlign: "right",
+      width: 200
+    },
+    input: {
+      "& input": {
+        padding: "16px 12px 17px"
+      }
+    },
+    pricingContent: {
+      "&:last-child": {
+        paddingBottom: 0
+      },
+      paddingLeft: 0,
+      paddingRight: 0
+    },
+    table: {
+      tableLayout: "fixed"
     }
   }),
   { name: "ProductVariantPrice" }
 );
 
 interface ProductVariantPriceProps {
-  currencySymbol?: string;
-  price?: string;
-  costPrice?: string;
-  errors: ProductErrorFragment[];
+  ProductVariantChannelListings: ProductVariantChannelData[];
+  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   loading?: boolean;
-  onChange(event: any);
+  onChange: (id: string, price: number) => void;
 }
 
-const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const { currencySymbol, costPrice, errors, price, loading, onChange } = props;
+const numberOfColumns = 2;
 
+const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
+  const { errors, ProductVariantChannelListings, loading, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const formErrors = getFormErrors(["price", "cost_price"], errors);
 
   return (
     <Card>
@@ -44,51 +79,94 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           description: "product pricing, section header"
         })}
       />
-      <CardContent>
-        <div className={classes.grid}>
-          <div>
-            <PriceField
-              error={!!formErrors.price}
-              name="price"
-              label={intl.formatMessage({
-                defaultMessage: "Selling price override"
-              })}
-              hint={
-                getProductErrorMessage(formErrors.price, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalPriceField"
-                })
-              }
-              value={price}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
-          </div>
-          <div>
-            <PriceField
-              error={!!formErrors.cost_price}
-              name="costPrice"
-              label={intl.formatMessage({
-                defaultMessage: "Cost price override"
-              })}
-              hint={
-                getProductErrorMessage(formErrors.cost_price, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalCostPriceField"
-                })
-              }
-              value={costPrice}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
-          </div>
-        </div>
+      <CardContent className={classes.pricingContent}>
+        <Typography variant="caption" className={classes.caption}>
+          {intl.formatMessage({
+            defaultMessage:
+              "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
+            description: "info text"
+          })}
+        </Typography>
+        <ResponsiveTable className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <FormattedMessage
+                  defaultMessage="Channel Name"
+                  description="tabel column header"
+                />
+              </TableCell>
+              <TableCell className={classes.colType}>
+                <FormattedMessage
+                  defaultMessage="Selling Price"
+                  description="tabel column header"
+                />
+              </TableCell>
+              {/* <TableCell className={classes.colType}>
+                <FormattedMessage
+                  defaultMessage="Cost Price"
+                  description="tabel column header"
+                />
+              </TableCell> */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              ProductVariantChannelListings,
+              listing => {
+                const error = errors?.filter(
+                  error => error.channels[0] === listing.id
+                );
+                return (
+                  <TableRow key={listing?.id || "skeleton"}>
+                    <TableCell>{listing?.name || <Skeleton />}</TableCell>
+                    <TableCell className={classes.colPrice}>
+                      {listing ? (
+                        <PriceField
+                          className={classes.input}
+                          error={!!error?.length}
+                          name={`${listing.id}-channel-price`}
+                          value={listing.price}
+                          currencySymbol={listing.currency}
+                          onChange={e => onChange(listing.id, e.target.value)}
+                          disabled={loading}
+                          hint={error?.length ? error[0].message : ""}
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    {/* FIXME: Waiting for costPrice */}
+                    {/* <TableCell className={classes.colPrice}>
+                    {listing?.channel ? (
+                      <PriceField
+                        className={classes.input}
+                        error={false}
+                        name={`${listing.id}-channel-price`}
+                        value={listing.price}
+                        currencySymbol={listing.currency}
+                        onChange={e =>
+                          onChange(listing.id, e.target.value)
+                        }
+                        disabled={loading}
+                      />
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell> */}
+                  </TableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="No channels found" />
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        </ResponsiveTable>
       </CardContent>
     </Card>
   );

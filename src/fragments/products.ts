@@ -141,9 +141,14 @@ export const productFragmentDetails = gql`
       channel {
         id
         name
+        currencyCode
       }
       isPublished
       publicationDate
+      discountedPrice {
+        amount
+        currency
+      }
     }
     pricing {
       priceRangeUndiscounted {
@@ -166,14 +171,18 @@ export const productFragmentDetails = gql`
       id
       sku
       name
-      price {
-        ...Money
-      }
       margin
       stocks {
         ...StockFragment
       }
       trackInventory
+      pricing {
+        price {
+          gross {
+            ...Money
+          }
+        }
+      }
     }
     productType {
       id
@@ -215,9 +224,6 @@ export const fragmentVariant = gql`
       url
     }
     name
-    price {
-      ...Money
-    }
     product {
       id
       images {
@@ -235,6 +241,16 @@ export const fragmentVariant = gql`
           id
           url
         }
+      }
+    }
+    channelListing {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      price {
+        ...Money
       }
     }
     sku

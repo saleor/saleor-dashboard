@@ -16,6 +16,7 @@ storiesOf("Views / Products / Product variant details", module)
     <ProductVariantPage
       header={variant.name || variant.sku}
       errors={[]}
+      channelErrors={[]}
       variant={variant}
       onAdd={() => undefined}
       onBack={() => undefined}
@@ -31,6 +32,7 @@ storiesOf("Views / Products / Product variant details", module)
     <ProductVariantPage
       header={undefined}
       errors={[]}
+      channelErrors={[]}
       loading={true}
       onBack={() => undefined}
       placeholderImage={placeholderImage}
@@ -72,6 +74,15 @@ storiesOf("Views / Products / Product variant details", module)
         message: "Generic form error",
         ...error
       }))}
+      channelErrors={[
+        {
+          __typename: "ProductChannelListingError",
+          channels: ["Q2hhbm5lbDox"],
+          code: ProductErrorCode.INVALID,
+          field: "price",
+          message: "Product price cannot be lower than 0."
+        }
+      ]}
       warehouses={warehouseList}
     />
   ));

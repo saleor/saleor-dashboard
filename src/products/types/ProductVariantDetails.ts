@@ -41,16 +41,26 @@ export interface ProductVariantDetails_productVariant_costPrice {
   currency: string;
 }
 
+export interface ProductVariantDetails_productVariant_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantDetails_productVariant_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: ProductVariantDetails_productVariant_pricing_priceUndiscounted_gross;
+}
+
+export interface ProductVariantDetails_productVariant_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: ProductVariantDetails_productVariant_pricing_priceUndiscounted | null;
+}
+
 export interface ProductVariantDetails_productVariant_images {
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface ProductVariantDetails_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductVariantDetails_productVariant_product_images {
@@ -89,6 +99,25 @@ export interface ProductVariantDetails_productVariant_product {
   variants: (ProductVariantDetails_productVariant_product_variants | null)[] | null;
 }
 
+export interface ProductVariantDetails_productVariant_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantDetails_productVariant_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantDetails_productVariant_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductVariantDetails_productVariant_channelListing_channel;
+  price: ProductVariantDetails_productVariant_channelListing_price | null;
+}
+
 export interface ProductVariantDetails_productVariant_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -108,10 +137,11 @@ export interface ProductVariantDetails_productVariant {
   id: string;
   attributes: ProductVariantDetails_productVariant_attributes[];
   costPrice: ProductVariantDetails_productVariant_costPrice | null;
+  pricing: ProductVariantDetails_productVariant_pricing | null;
   images: (ProductVariantDetails_productVariant_images | null)[] | null;
   name: string;
-  price: ProductVariantDetails_productVariant_price | null;
   product: ProductVariantDetails_productVariant_product;
+  channelListing: ProductVariantDetails_productVariant_channelListing[] | null;
   sku: string;
   stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;
   trackInventory: boolean;

@@ -86,6 +86,7 @@ export enum CategorySortField {
 
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -432,9 +433,11 @@ export enum LanguageCodeEnum {
   IS = "IS",
   IT = "IT",
   JA = "JA",
+  KM = "KM",
   KO = "KO",
   LT = "LT",
   MN = "MN",
+  MY = "MY",
   NB = "NB",
   NL = "NL",
   PL = "PL",
@@ -498,12 +501,14 @@ export enum OrderErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
+  MISSING_CHANNEL = "MISSING_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
   PAYMENT_ERROR = "PAYMENT_ERROR",
   PAYMENT_MISSING = "PAYMENT_MISSING",
   PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE = "PRODUCT_UNAVAILABLE_FOR_PURCHASE",
   REQUIRED = "REQUIRED",
   SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
   SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
@@ -515,7 +520,9 @@ export enum OrderErrorCode {
 export enum OrderEventsEmailsEnum {
   DIGITAL_LINKS = "DIGITAL_LINKS",
   FULFILLMENT_CONFIRMATION = "FULFILLMENT_CONFIRMATION",
+  ORDER_CANCEL = "ORDER_CANCEL",
   ORDER_CONFIRMATION = "ORDER_CONFIRMATION",
+  ORDER_REFUND = "ORDER_REFUND",
   PAYMENT_CONFIRMATION = "PAYMENT_CONFIRMATION",
   SHIPPING_CONFIRMATION = "SHIPPING_CONFIRMATION",
   TRACKING_UPDATED = "TRACKING_UPDATED",
@@ -527,6 +534,7 @@ export enum OrderEventsEnum {
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
   EMAIL_SENT = "EMAIL_SENT",
+  EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
   FULFILLMENT_RESTOCKED_ITEMS = "FULFILLMENT_RESTOCKED_ITEMS",
@@ -593,11 +601,14 @@ export enum PageSortField {
 }
 
 export enum PaymentChargeStatusEnum {
+  CANCELLED = "CANCELLED",
   FULLY_CHARGED = "FULLY_CHARGED",
   FULLY_REFUNDED = "FULLY_REFUNDED",
   NOT_CHARGED = "NOT_CHARGED",
   PARTIALLY_CHARGED = "PARTIALLY_CHARGED",
   PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED",
+  PENDING = "PENDING",
+  REFUSED = "REFUSED",
 }
 
 export enum PermissionEnum {
@@ -650,6 +661,7 @@ export enum ProductErrorCode {
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL = "PRODUCT_NOT_ASSIGNED_TO_CHANNEL",
   PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
@@ -1304,17 +1316,21 @@ export interface ProductTypeSortingInput {
 export interface ProductVariantBulkCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  price?: any | null;
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;
+  channelListings?: ProductVariantChannelListingAddInput[] | null;
+}
+
+export interface ProductVariantChannelListingAddInput {
+  channelId: string;
+  price: any;
 }
 
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1325,7 +1341,6 @@ export interface ProductVariantCreateInput {
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
   costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1388,8 +1403,8 @@ export interface ServiceAccountTokenInput {
 export interface ShippingMethodChannelListingAddInput {
   channelId: string;
   price?: any | null;
-  minValue?: any | null;
-  maxValue?: any | null;
+  minimumOrderPrice?: any | null;
+  maximumOrderPrice?: any | null;
 }
 
 export interface ShippingMethodChannelListingInput {
@@ -1399,8 +1414,6 @@ export interface ShippingMethodChannelListingInput {
 
 export interface ShippingPriceInput {
   name?: string | null;
-  minimumOrderPrice?: any | null;
-  maximumOrderPrice?: any | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
   type?: ShippingMethodTypeEnum | null;

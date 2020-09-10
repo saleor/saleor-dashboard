@@ -48,6 +48,10 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 import {
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+} from "./types/ProductVariantChannelListingUpdate";
+import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "./types/SimpleProductUpdate";
@@ -318,7 +322,6 @@ export const variantUpdateMutation = gql`
     $id: ID!
     $attributes: [AttributeValueInput]
     $costPrice: Decimal
-    $price: Decimal
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
@@ -328,7 +331,6 @@ export const variantUpdateMutation = gql`
       input: {
         attributes: $attributes
         costPrice: $costPrice
-        price: $price
         sku: $sku
         trackInventory: $trackInventory
       }
@@ -533,7 +535,7 @@ export const ProductChannelListingUpdateMutation = gql`
       product {
         ...Product
       }
-      errors: productsErrors {
+      productChannelListingErrors {
         field
         message
         code
@@ -547,3 +549,28 @@ export const useProductChannelListingUpdate = makeMutation<
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
 >(ProductChannelListingUpdateMutation);
+
+export const ProductVariantChannelListingUpdateMutation = gql`
+  ${fragmentVariant}
+  mutation ProductVariantChannelListingUpdate(
+    $id: ID!
+    $input: [ProductVariantChannelListingAddInput!]!
+  ) {
+    productVariantChannelListingUpdate(id: $id, input: $input) {
+      variant {
+        ...ProductVariant
+      }
+      productChannelListingErrors {
+        field
+        message
+        code
+        channels
+      }
+    }
+  }
+`;
+
+export const useProductVariantChannelListingUpdate = makeMutation<
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+>(ProductVariantChannelListingUpdateMutation);

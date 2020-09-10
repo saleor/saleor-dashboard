@@ -1,6 +1,7 @@
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
+import { ProductVariantPageFormData } from "@saleor/products/components/ProductVariantPage";
 import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { toggle } from "@saleor/utils/lists";
 
@@ -53,6 +54,7 @@ export function createChannelsChangeHandler(
   triggerChange: () => void
 ) {
   return (index: number) => (channelData: {
+    discountedPrice: { amount: number; currency: string };
     isPublished: boolean;
     publicationDate: string | null;
   }) => {
@@ -64,6 +66,29 @@ export function createChannelsChangeHandler(
       publicationDate: channelData.publicationDate
     };
     updateChannels({ ...data, channelListing: newChannels });
+    triggerChange();
+  };
+}
+
+export function createVariantChannelsChangeHandler(
+  data: ProductVariantPageFormData,
+  setData: (data: ProductVariantPageFormData) => void,
+  triggerChange: () => void
+) {
+  return (id: string, price: number) => {
+    const { channelListing } = data;
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        price
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    setData({ ...data, channelListing: updatedChannels });
     triggerChange();
   };
 }

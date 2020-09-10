@@ -63,7 +63,10 @@ export const ProductCreateView: React.FC = () => {
 
   const [updateChannels] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length === 0) {
+      if (
+        data.productChannelListingUpdate.productChannelListingErrors.length ===
+        0
+      ) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -72,11 +75,12 @@ export const ProductCreateView: React.FC = () => {
         });
         navigate(productUrl(data.productChannelListingUpdate.product.id));
       } else {
-        data.productChannelListingUpdate.errors.map(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl)
-          })
+        data.productChannelListingUpdate.productChannelListingErrors.map(
+          error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl)
+            })
         );
       }
     }

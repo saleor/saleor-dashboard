@@ -15,9 +15,9 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListActions from "@saleor/hooks/useListActions";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -86,20 +86,19 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       first: 50
     }
   });
+
   const { data: channelsData } = useChannelsList({});
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { channel: "default-channel", id }
   });
   const product = data?.product;
 
   const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
-
   const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
     product?.channelListing
   );
-  const [currentChannels, setCurrentChannels] = useLocalStorage<ChannelData[]>(
-    `productChannels-${id}`,
+  const [currentChannels, setCurrentChannels] = useStateFromProps(
     productChannelsChoices
   );
 
@@ -117,7 +116,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [updateChannels] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length === 0) {
+      if (
+        data.productChannelListingUpdate.productChannelListingErrors.length ===
+        0
+      ) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -129,11 +131,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         );
         setCurrentChannels(updatedProductChannelsChoices);
       } else {
-        data.productChannelListingUpdate.errors.map(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl)
-          })
+        data.productChannelListingUpdate.productChannelListingErrors.map(
+          error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl)
+            })
         );
       }
     }
