@@ -2,6 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
+import Hidden from "@material-ui/core/Hidden";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
@@ -67,29 +68,17 @@ const useStyles = makeStyles(
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
-        marginRight: -theme.spacing(1.5)
+        marginRight: theme.spacing(1)
       },
       marginRight: theme.spacing(2)
     },
     header: {
       [theme.breakpoints.down("sm")]: {
-        height: 88,
-        marginBottom: 0
+        height: "auto"
       },
       display: "flex",
       height: 40,
       marginBottom: theme.spacing(3)
-    },
-    menu: {
-      background: theme.palette.background.paper,
-      height: "100vh",
-      padding: "25px 20px"
-    },
-    menuSmall: {
-      background: theme.palette.background.paper,
-      height: "100vh",
-      overflow: "hidden",
-      padding: 25
     },
     popover: {
       zIndex: 1
@@ -105,11 +94,6 @@ const useStyles = makeStyles(
       flex: 1
     },
     userBar: {
-      [theme.breakpoints.down("sm")]: {
-        alignItems: "flex-end",
-        flexDirection: "column-reverse",
-        overflow: "hidden"
-      },
       alignItems: "center",
       display: "flex"
     },
@@ -204,13 +188,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <AppHeaderContext.Provider value={appHeaderAnchor}>
         <AppActionContext.Provider value={appActionAnchor}>
           <div className={classes.root}>
-            <SideBar
-              menuItems={menuStructure}
-              location={location.pathname}
-              user={user}
-              renderConfigure={renderConfigure}
-              onMenuItemClick={navigate}
-            />
+            <Hidden smDown>
+              <SideBar
+                menuItems={menuStructure}
+                location={location.pathname}
+                user={user}
+                renderConfigure={renderConfigure}
+                onMenuItemClick={navigate}
+              />
+            </Hidden>
             <div className={classes.content}>
               {appState.loading ? (
                 <LinearProgress className={classes.appLoader} color="primary" />
@@ -221,7 +207,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 <div>
                   <Container>
                     <div className={classes.header}>
-                      <div ref={appHeaderAnchor} />
+                      <Hidden smDown>
+                        <div ref={appHeaderAnchor} />
+                      </Hidden>
+                      <Hidden mdUp>=</Hidden>
                       <div className={classes.spacer} />
                       <div className={classes.userBar}>
                         <ThemeSwitch
@@ -311,6 +300,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         </div>
                       </div>
                     </div>
+                    <Hidden mdUp>
+                      <div ref={appHeaderAnchor} />
+                    </Hidden>
                   </Container>
                 </div>
                 <main className={classes.view}>
