@@ -35,6 +35,11 @@ export const CountryList: React.FC = () => {
           defaultMessage: "Successfully fetched tax rates"
         })
       });
+    } else {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
     }
   };
 
