@@ -4,9 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
-} from "@saleor/components/SaveFilterTabDialog";
+import SaveFilterTabDialog, {SaveFilterTabDialogFormData} from "@saleor/components/SaveFilterTabDialog";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
@@ -17,39 +15,27 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
+import usePaginator, {createPaginationState} from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
-import {
-  getAttributeIdFromColumnValue,
-  isAttributeColumnValue
-} from "@saleor/products/components/ProductListPage/utils";
-import { ProductListVariables } from "@saleor/products/types/ProductList";
+import {buttonMessages, commonMessages} from "@saleor/intl";
+import {maybe} from "@saleor/misc";
+import {getAttributeIdFromColumnValue, isAttributeColumnValue} from "@saleor/products/components/ProductListPage/utils";
+import {ProductListVariables} from "@saleor/products/types/ProductList";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { ListViews } from "@saleor/types";
+import {ListViews} from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { getSortUrlVariables } from "@saleor/utils/sort";
+import {getSortUrlVariables} from "@saleor/utils/sort";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
-import {
-  TypedProductBulkDeleteMutation,
-  TypedProductBulkPublishMutation
-} from "../../mutations";
-import {
-  AvailableInGridAttributesQuery,
-  TypedProductListQuery,
-  useInitialProductFilterDataQuery
-} from "../../queries";
-import { productBulkDelete } from "../../types/productBulkDelete";
-import { productBulkPublish } from "../../types/productBulkPublish";
+import {TypedProductBulkDeleteMutation, TypedProductBulkPublishMutation} from "../../mutations";
+import {AvailableInGridAttributesQuery, TypedProductListQuery, useInitialProductFilterDataQuery} from "../../queries";
+import {productBulkDelete} from "../../types/productBulkDelete";
+import {productBulkPublish} from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
@@ -68,7 +54,17 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import {getSortQueryVariables} from "./sort";
+import {Dialog, DialogContent, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
+import ConfirmButton from "@saleor/components/ConfirmButton";
+import DialogActions from "@material-ui/core/DialogActions";
+import {ProductPublishType} from "@saleor/types/globalTypes";
+import {DateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import plLocale from "date-fns/locale/pl";
+import FormSpacer from "@saleor/components/FormSpacer";
+import moment from "moment-timezone";
+
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -261,6 +257,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               }
             };
 
+            const [auctionTypeVal, auctionTypeSetValue] = React.useState(ProductPublishType.AUCTION);
+            const auctionTypeHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+              auctionTypeSetValue(ProductPublishType[(event.target as HTMLInputElement).value]);
+            };
+
+            const [auctionDate, auctionHandleDateChange] = React.useState(new Date());
+
             return (
               <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
                 {(productBulkDelete, productBulkDeleteOpts) => (
@@ -427,38 +430,67 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             />
                           </DialogContentText>
                         </ActionDialog>
-                        <ActionDialog
+                        <Dialog
                           open={params.action === "publish"}
-                          confirmButtonState={productBulkPublishOpts.status}
                           onClose={closeModal}
-                          onConfirm={() =>
-                            productBulkPublish({
-                              variables: {
-                                ids: params.ids,
-                                isPublished: true
-                              }
-                            })
-                          }
                           title={intl.formatMessage({
                             defaultMessage: "Publish Products",
                             description: "dialog header"
                           })}
                         >
-                          <DialogContentText>
-                            <FormattedMessage
-                              defaultMessage="{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
-                              description="dialog content"
-                              values={{
-                                counter: maybe(() => params.ids.length),
-                                displayQuantity: (
-                                  <strong>
-                                    {maybe(() => params.ids.length)}
-                                  </strong>
-                                )
-                              }}
-                            />
-                          </DialogContentText>
-                        </ActionDialog>
+                          <DialogContent>
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="{counter,plural,one{Parametry publikacji produktu} other{Parametry publikacji {displayQuantity} produktów}}"
+                                description="dialog content"
+                                values={{
+                                  counter: maybe(() => params.ids.length),
+                                  displayQuantity: (
+                                    <strong>
+                                      {maybe(() => params.ids.length)}
+                                    </strong>
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
+                            <FormSpacer />
+                            <RadioGroup row aria-label="Typ aukcji" name="auction_type" value={auctionTypeVal} onChange={auctionTypeHandleChange}>
+                              <FormControlLabel value={ProductPublishType.AUCTION} control={<Radio />} label="Aukcja" />
+                              <FormControlLabel value={ProductPublishType.BUY_NOW} control={<Radio />} label="Kup teraz" />
+                            </RadioGroup>
+                            <FormSpacer />
+                            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
+                              <DateTimePicker label="Data i godzina publikacji"
+                                              format="yyyy-MM-dd HH:mm"
+                                              ampm={false}
+                                              disabled={auctionTypeVal !== ProductPublishType.AUCTION}
+                                              value={auctionDate}
+                                              onChange={auctionHandleDateChange} />
+                            </MuiPickersUtilsProvider>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={closeModal}>
+                              <FormattedMessage {...buttonMessages.back} />
+                            </Button>
+                            <ConfirmButton
+                                transitionState={productBulkPublishOpts.status}
+                                color="primary"
+                                variant="contained"
+                                onClick={() =>
+                                    productBulkPublish({
+                                      variables: {
+                                        ids: params.ids,
+                                        isPublished: true,
+                                        offerType: auctionTypeVal,
+                                        startingAt: moment(auctionDate).format("YYYY-MM-DD HH:mm")
+                                      }
+                                    })
+                                }
+                            >
+                              {intl.formatMessage(buttonMessages.confirm)}
+                            </ConfirmButton>
+                          </DialogActions>
+                        </Dialog>
                         <ActionDialog
                           open={params.action === "unpublish"}
                           confirmButtonState={productBulkPublishOpts.status}
@@ -467,7 +499,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             productBulkPublish({
                               variables: {
                                 ids: params.ids,
-                                isPublished: false
+                                isPublished: false,
+                                offerType: null,
+                                startingAt: null
                               }
                             })
                           }

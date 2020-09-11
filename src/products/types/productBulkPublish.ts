@@ -26,4 +26,6 @@ export interface productBulkPublish {
 export interface productBulkPublishVariables {
   ids: string[];
   isPublished: boolean;
+  offerType: string;
+  startingAt: string;
 }

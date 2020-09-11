@@ -362,6 +362,7 @@ const productListQuery = gql`
               }
             }
           }
+          jsonPrivateMetadata
         }
       }
       pageInfo {

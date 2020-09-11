@@ -70,6 +70,12 @@ export interface ProductList_products_edges_node_pricing {
   priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted | null;
 }
 
+export interface ProductList_products_edges_node_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ProductList_products_edges_node {
   __typename: "Product";
   id: string;
@@ -81,6 +87,7 @@ export interface ProductList_products_edges_node {
   updatedAt: any | null;
   attributes: ProductList_products_edges_node_attributes[];
   pricing: ProductList_products_edges_node_pricing | null;
+  jsonPrivateMetadata: string | null;
 }
 
 export interface ProductList_products_edges {

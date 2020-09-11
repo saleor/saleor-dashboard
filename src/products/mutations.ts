@@ -529,8 +529,8 @@ export const TypedProductBulkDeleteMutation = TypedMutation<
 
 export const productBulkPublishMutation = gql`
   ${productErrorFragment}
-  mutation productBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
-    productBulkPublish(ids: $ids, isPublished: $isPublished) {
+  mutation productBulkPublish($ids: [ID!]!, $isPublished: Boolean!, $offerType: String!, $startingAt: String!) {
+    productBulkPublish(ids: $ids, isPublished: $isPublished, offerType: $offerType, startingAt: $startingAt) {
       errors: productErrors {
         ...ProductErrorFragment
       }
