@@ -2,6 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
+import Hidden from "@material-ui/core/Hidden";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
@@ -9,6 +10,7 @@ import Popper from "@material-ui/core/Popper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { User } from "@saleor/fragments/types/User";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { getUserInitials, getUserName } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -16,22 +18,43 @@ import { FormattedMessage } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     arrow: {
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: 0
+      },
       marginLeft: theme.spacing(2),
       transition: theme.transitions.duration.standard + "ms"
     },
     avatar: {
       "&&": {
+        [theme.breakpoints.down("sm")]: {
+          height: 40,
+          width: 40
+        },
         height: 32,
         width: 32
       }
     },
+    avatarInitials: {
+      color: theme.palette.primary.contrastText
+    },
+    avatarPlaceholder: {
+      alignItems: "center",
+      background: theme.palette.primary.main,
+      borderRadius: "100%",
+      display: "flex",
+      justifyContent: "center"
+    },
     popover: {
+      marginTop: theme.spacing(2),
       zIndex: 1
     },
     rotate: {
       transform: "rotate(180deg)"
     },
     userChip: {
+      [theme.breakpoints.down("sm")]: {
+        height: 48
+      },
       backgroundColor: theme.palette.background.paper,
       borderRadius: 24,
       color: theme.palette.text.primary,
@@ -78,14 +101,24 @@ const UserChip: React.FC<UserChipProps> = ({
   return (
     <div className={classes.userMenuContainer} ref={anchor}>
       <Chip
-        avatar={user.avatar && <Avatar alt="user" src={user.avatar.url} />}
+        avatar={
+          user.avatar ? (
+            <Avatar alt="user" src={user.avatar.url} />
+          ) : (
+            <div className={classes.avatarPlaceholder}>
+              <div className={classes.avatarInitials}>
+                {getUserInitials(user)}
+              </div>
+            </div>
+          )
+        }
         classes={{
           avatar: classes.avatar
         }}
         className={classes.userChip}
         label={
           <>
-            {user.email}
+            <Hidden smDown>{getUserName(user, true)}</Hidden>
             <ArrowDropdown
               className={classNames(classes.arrow, {
                 [classes.rotate]: isMenuOpened
