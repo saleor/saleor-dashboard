@@ -16,6 +16,7 @@ import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import SideBar from "../SideBar";
+import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
@@ -162,7 +163,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   <Container>
                     <div className={classes.header}>
                       {isMdUp && <div ref={appHeaderAnchor} />}
-                      {!isMdUp && <>=</>}
+                      {!isMdUp && (
+                        <SideBarDrawer
+                          menuItems={menuStructure}
+                          location={location.pathname}
+                          user={user}
+                          renderConfigure={renderConfigure}
+                          onMenuItemClick={navigate}
+                        />
+                      )}
                       <div className={classes.spacer} />
                       <div className={classes.userBar}>
                         <ThemeSwitch
