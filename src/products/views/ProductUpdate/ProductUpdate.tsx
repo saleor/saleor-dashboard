@@ -181,7 +181,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         const updatedProduct = data?.productSetAvailabilityForPurchase?.product;
         setProduct(product => ({
           ...product,
-          availableForPurchase: updatedProduct.availableForPurchase
+          availableForPurchase: updatedProduct.availableForPurchase,
+          isAvailableForPurchase: updatedProduct.isAvailableForPurchase
         }));
         notify({
           status: "success",
@@ -190,7 +191,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             description: "snackbar text"
           })
         });
-        refetch();
       }
     }
   });

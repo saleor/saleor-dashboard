@@ -12,6 +12,7 @@ export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurc
   __typename: "Product";
   id: string;
   availableForPurchase: any | null;
+  isAvailableForPurchase: boolean | null;
 }
 
 export interface ProductSetAvailabilityForPurchase_productSetAvailabilityForPurchase_errors {

@@ -121,24 +121,26 @@ export const ProductCreateView: React.FC = () => {
 
     const productId = result.data.productCreate?.product?.id;
 
-    const { isAvailableForPurchase, availableForPurchase } = formData;
+    if (productId) {
+      const { isAvailableForPurchase, availableForPurchase } = formData;
 
-    const isAvailable =
-      availableForPurchase && !isAvailableForPurchase
-        ? true
-        : isAvailableForPurchase;
+      const isAvailable =
+        availableForPurchase && !isAvailableForPurchase
+          ? true
+          : isAvailableForPurchase;
 
-    setProductAvailability({
-      variables: {
-        isAvailable,
-        productId,
-        startDate: isAvailableForPurchase
-          ? null
-          : availableForPurchase !== ""
-          ? availableForPurchase
-          : null
-      }
-    });
+      setProductAvailability({
+        variables: {
+          isAvailable,
+          productId,
+          startDate: isAvailableForPurchase
+            ? null
+            : availableForPurchase !== ""
+            ? availableForPurchase
+            : null
+        }
+      });
+    }
 
     return productId || null;
   };
