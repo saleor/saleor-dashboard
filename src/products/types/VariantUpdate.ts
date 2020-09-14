@@ -49,22 +49,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant_costPrice {
   currency: string;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted {
-  __typename: "TaxedMoney";
-  gross: VariantUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted_gross;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_pricing {
-  __typename: "VariantPricingInfo";
-  priceUndiscounted: VariantUpdate_productVariantUpdate_productVariant_pricing_priceUndiscounted | null;
-}
-
 export interface VariantUpdate_productVariantUpdate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -145,7 +129,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   id: string;
   attributes: VariantUpdate_productVariantUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantUpdate_productVariant_costPrice | null;
-  pricing: VariantUpdate_productVariantUpdate_productVariant_pricing | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
@@ -201,22 +184,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_costPri
   __typename: "Money";
   amount: number;
   currency: string;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted {
-  __typename: "TaxedMoney";
-  gross: VariantUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted_gross;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_pricing {
-  __typename: "VariantPricingInfo";
-  priceUndiscounted: VariantUpdate_productVariantStocksUpdate_productVariant_pricing_priceUndiscounted | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_images {
@@ -299,7 +266,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   id: string;
   attributes: VariantUpdate_productVariantStocksUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
-  pricing: VariantUpdate_productVariantStocksUpdate_productVariant_pricing | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;

@@ -123,27 +123,6 @@ export interface ProductImageCreate_productImageCreate_product_purchaseCost {
   stop: ProductImageCreate_productImageCreate_product_purchaseCost_stop | null;
 }
 
-export interface ProductImageCreate_productImageCreate_product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: ProductImageCreate_productImageCreate_product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-  discountedPrice: ProductImageCreate_productImageCreate_product_channelListing_discountedPrice | null;
-}
-
 export interface ProductImageCreate_productImageCreate_product_images {
   __typename: "ProductImage";
   id: string;
