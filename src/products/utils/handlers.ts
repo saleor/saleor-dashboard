@@ -116,3 +116,30 @@ export function createProductTypeSelectHandler(
     );
   };
 }
+
+interface ProductAvailabilityArgs {
+  availableForPurchase: string | null;
+  isAvailableForPurchase: boolean;
+  productId: string;
+}
+
+export function getProductAvailabilityVariables({
+  isAvailableForPurchase,
+  availableForPurchase,
+  productId
+}: ProductAvailabilityArgs) {
+  const isAvailable =
+    availableForPurchase && !isAvailableForPurchase
+      ? true
+      : isAvailableForPurchase;
+
+  return {
+    isAvailable,
+    productId,
+    startDate: isAvailableForPurchase
+      ? null
+      : availableForPurchase !== ""
+      ? availableForPurchase
+      : null
+  };
+}

@@ -3,6 +3,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -124,21 +125,14 @@ export const ProductCreateView: React.FC = () => {
     if (productId) {
       const { isAvailableForPurchase, availableForPurchase } = formData;
 
-      const isAvailable =
-        availableForPurchase && !isAvailableForPurchase
-          ? true
-          : isAvailableForPurchase;
+      const variables = getProductAvailabilityVariables({
+        availableForPurchase,
+        isAvailableForPurchase,
+        productId
+      });
 
       setProductAvailability({
-        variables: {
-          isAvailable,
-          productId,
-          startDate: isAvailableForPurchase
-            ? null
-            : availableForPurchase !== ""
-            ? availableForPurchase
-            : null
-        }
+        variables
       });
     }
 

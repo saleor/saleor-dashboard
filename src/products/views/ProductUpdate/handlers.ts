@@ -19,6 +19,7 @@ import {
   SimpleProductUpdateVariables
 } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
@@ -91,20 +92,13 @@ export function createUpdateHandler(
       isAvailableForPurchase !== product.isAvailableForPurchase ||
       availableForPurchase !== product.availableForPurchase
     ) {
-      const isAvailable =
-        availableForPurchase && !isAvailableForPurchase
-          ? true
-          : isAvailableForPurchase;
-
-      const availabilityResult = await setProductAvailability({
-        isAvailable,
-        productId: product.id,
-        startDate: isAvailableForPurchase
-          ? null
-          : availableForPurchase !== ""
-          ? availableForPurchase
-          : null
+      const variables = getProductAvailabilityVariables({
+        availableForPurchase,
+        isAvailableForPurchase,
+        productId: product.id
       });
+
+      const availabilityResult = await setProductAvailability(variables);
       errors = [
         ...errors,
         ...availabilityResult.data.productSetAvailabilityForPurchase.errors
