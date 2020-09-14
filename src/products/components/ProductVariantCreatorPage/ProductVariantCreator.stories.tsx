@@ -61,10 +61,12 @@ const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
 
 const data: ProductVariantCreateFormData = {
   attributes: dataAttributes,
+  channelListings: [],
   price,
   stock,
   variants: createVariants({
     attributes: dataAttributes,
+    channelListings: [],
     price,
     stock,
     variants: [],
@@ -74,6 +76,7 @@ const data: ProductVariantCreateFormData = {
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
+  channels: [],
   currencySymbol: "USD",
   data: {
     ...data,

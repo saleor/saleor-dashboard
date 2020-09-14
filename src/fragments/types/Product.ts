@@ -93,6 +93,27 @@ export interface Product_pricing {
   priceRangeUndiscounted: Product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface Product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface Product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface Product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: Product_channelListing_channel;
+  discountedPrice: Product_channelListing_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface Product_category {
   __typename: "Category";
   id: string;
@@ -127,27 +148,6 @@ export interface Product_purchaseCost {
   __typename: "MoneyRange";
   start: Product_purchaseCost_start | null;
   stop: Product_purchaseCost_stop | null;
-}
-
-export interface Product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface Product_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: Product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-  discountedPrice: Product_channelListing_discountedPrice | null;
 }
 
 export interface Product_images {
@@ -205,6 +205,7 @@ export interface Product {
   attributes: Product_attributes[];
   productType: Product_productType;
   pricing: Product_pricing | null;
+  channelListing: Product_channelListing[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -215,7 +216,6 @@ export interface Product {
   purchaseCost: Product_purchaseCost | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
-  channelListing: Product_channelListing[] | null;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
 }

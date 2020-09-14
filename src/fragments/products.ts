@@ -101,6 +101,17 @@ export const productVariantAttributesFragment = gql`
         }
       }
     }
+    channelListing {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      discountedPrice {
+        amount
+        currency
+      }
+    }
   }
 `;
 

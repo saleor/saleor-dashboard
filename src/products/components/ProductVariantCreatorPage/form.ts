@@ -20,6 +20,7 @@ export interface Attribute {
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
+  channelListings: any[];
   price: AllOrAttribute<string>;
   stock: AllOrAttribute<number[]>;
   variants: ProductVariantBulkCreateInput[];
@@ -28,17 +29,18 @@ export interface ProductVariantCreateFormData {
 
 export const createInitialForm = (
   attributes: ProductDetails_product_productType_variantAttributes[],
-  price: string,
+  channels: any[],
   warehouses: WarehouseFragment[]
 ): ProductVariantCreateFormData => ({
   attributes: attributes.map(attribute => ({
     id: attribute.id,
     values: []
   })),
+  channelListings: channels,
   price: {
     attribute: undefined,
     mode: "all",
-    value: price || "",
+    value: channels[0].price || "",
     values: []
   },
   stock: {

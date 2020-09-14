@@ -48,24 +48,57 @@ export function createAttributeChangeHandler(
   };
 }
 
+export function createChannelsPriceChangeHandler(
+  data: ProductUpdatePageFormData,
+  updateChannels: (data: ProductUpdatePageFormData) => void,
+  triggerChange: () => void
+) {
+  return (id: string, price: number) => {
+    const { channelListing } = data;
+
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        price
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    updateChannels({ ...data, channelListing: updatedChannels });
+    triggerChange();
+  };
+}
+
 export function createChannelsChangeHandler(
   data: ProductUpdatePageFormData,
   updateChannels: (data: ProductUpdatePageFormData) => void,
   triggerChange: () => void
 ) {
-  return (index: number) => (channelData: {
-    discountedPrice: { amount: number; currency: string };
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => {
-    const channels = data.channelListing;
-    const newChannels = [...channels];
-    newChannels[index] = {
-      ...channels[index],
-      isPublished: channelData.isPublished,
-      publicationDate: channelData.publicationDate
-    };
-    updateChannels({ ...data, channelListing: newChannels });
+  return (
+    id: string,
+    {
+      isPublished,
+      publicationDate
+    }: { isPublished: boolean; publicationDate: string | null }
+  ) => {
+    const { channelListing } = data;
+
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        isPublished: isPublished || channel.isPublished,
+        publicationDate: publicationDate || channel.publicationDate
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    updateChannels({ ...data, channelListing: updatedChannels });
     triggerChange();
   };
 }

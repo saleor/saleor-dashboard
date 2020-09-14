@@ -113,12 +113,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           <TableBody>
             {renderCollection(
               ProductVariantChannelListings,
-              listing => {
+              (listing, index) => {
                 const error = errors?.filter(
                   error => error.channels[0] === listing.id
                 );
                 return (
-                  <TableRow key={listing?.id || "skeleton"}>
+                  <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
                     <TableCell className={classes.colPrice}>
                       {listing ? (

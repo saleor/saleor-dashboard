@@ -91,12 +91,32 @@ export interface CreateMultipleVariantsData_product_pricing {
   priceRangeUndiscounted: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface CreateMultipleVariantsData_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CreateMultipleVariantsData_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CreateMultipleVariantsData_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: CreateMultipleVariantsData_product_channelListing_channel;
+  discountedPrice: CreateMultipleVariantsData_product_channelListing_discountedPrice | null;
+}
+
 export interface CreateMultipleVariantsData_product {
   __typename: "Product";
   id: string;
   attributes: CreateMultipleVariantsData_product_attributes[];
   productType: CreateMultipleVariantsData_product_productType;
   pricing: CreateMultipleVariantsData_product_pricing | null;
+  channelListing: CreateMultipleVariantsData_product_channelListing[] | null;
 }
 
 export interface CreateMultipleVariantsData_warehouses_edges_node {
@@ -122,4 +142,5 @@ export interface CreateMultipleVariantsData {
 
 export interface CreateMultipleVariantsDataVariables {
   id: string;
+  channel?: string | null;
 }

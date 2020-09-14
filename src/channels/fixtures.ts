@@ -83,6 +83,11 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       id: "123",
       name: "Channel1"
     },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 5,
+      currency: "USD"
+    },
     isPublished: true,
     publicationDate: "2020-07-14"
   },
@@ -94,6 +99,11 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       id: "124",
       name: "Channel2"
     },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD"
+    },
     isPublished: false,
     publicationDate: "2020-07-30"
   },
@@ -104,6 +114,11 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       currencyCode: "USD",
       id: "125",
       name: "Channel3"
+    },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 8,
+      currency: "USD"
     },
     isPublished: false,
     publicationDate: null

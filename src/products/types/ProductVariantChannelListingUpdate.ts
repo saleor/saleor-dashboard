@@ -43,22 +43,6 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing_priceUndiscounted_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing_priceUndiscounted {
-  __typename: "TaxedMoney";
-  gross: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing_priceUndiscounted_gross;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing {
-  __typename: "VariantPricingInfo";
-  priceUndiscounted: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing_priceUndiscounted | null;
-}
-
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images {
   __typename: "ProductImage";
   id: string;
@@ -139,7 +123,6 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   id: string;
   attributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes[];
   costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_costPrice | null;
-  pricing: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_pricing | null;
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images | null)[] | null;
   name: string;
   product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;

@@ -5,8 +5,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
-  createChannelsData,
-  createChannelsDataFromProduct
+  createChannelsDataFromProduct,
+  createChannelsDataWithPrice
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -94,7 +94,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   });
   const product = data?.product;
 
-  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
+  const allChannels: ChannelData[] = createChannelsDataWithPrice(
+    product?.channelListing,
+    channelsData?.channels
+  );
   const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
     product?.channelListing
   );

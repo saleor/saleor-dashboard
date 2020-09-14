@@ -1,23 +1,60 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
 import { ShippingZone_shippingZone_shippingMethods_channels } from "@saleor/shipping/types/ShippingZone";
-
+import { uniqBy } from "lodash";
 export interface ChannelData {
   id: string;
   isPublished: boolean;
   name: string;
   publicationDate: string | null;
+  currency: string;
+  price: number;
+}
+
+export interface ChannelPriceData {
+  id: string;
+  name: string;
+  currency: string;
+  price: number;
 }
 
 export const createChannelsData = (
   data?: Channels_channels[]
 ): ChannelData[] | [] =>
   data?.map(channel => ({
+    currency: "",
     id: channel.id,
     isPublished: false,
     name: channel.name,
+    price: null,
     publicationDate: null
   })) || [];
+
+export const createChannelsDataWithPrice = (
+  productData?: ProductDetails_product_channelListing[],
+  data?: Channels_channels[]
+): ChannelData[] | [] => {
+  if (data && productData) {
+    const dataArr = data.map(channel => ({
+      currency: "",
+      id: channel.id,
+      isPublished: false,
+      name: channel.name,
+      price: null,
+      publicationDate: null
+    }));
+    const productDataArr = productData.map(listing => ({
+      currency: listing.discountedPrice.currency,
+      id: listing.channel.id,
+      isPublished: listing.isPublished,
+      name: listing.channel.name,
+      price: listing.discountedPrice.amount,
+      publicationDate: listing.publicationDate
+    }));
+    return uniqBy([...productDataArr, ...dataArr], obj => obj.id);
+  }
+  return [];
+};
 
 export const createShippingChannels = (
   data?: Channels_channels[]
@@ -52,8 +89,10 @@ export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product_channelListing[]
 ) =>
   productData?.map(option => ({
+    currency: option.discountedPrice.currency,
     id: option.channel.id,
     isPublished: option.isPublished,
     name: option.channel.name,
+    price: option.discountedPrice.amount,
     publicationDate: option.publicationDate
   })) || [];

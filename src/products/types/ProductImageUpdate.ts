@@ -99,6 +99,27 @@ export interface ProductImageUpdate_productImageUpdate_product_pricing {
   priceRangeUndiscounted: ProductImageUpdate_productImageUpdate_product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductImageUpdate_productImageUpdate_product_channelListing_channel;
+  discountedPrice: ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -133,27 +154,6 @@ export interface ProductImageUpdate_productImageUpdate_product_purchaseCost {
   __typename: "MoneyRange";
   start: ProductImageUpdate_productImageUpdate_product_purchaseCost_start | null;
   stop: ProductImageUpdate_productImageUpdate_product_purchaseCost_stop | null;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: ProductImageUpdate_productImageUpdate_product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-  discountedPrice: ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_images {
@@ -211,6 +211,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   attributes: ProductImageUpdate_productImageUpdate_product_attributes[];
   productType: ProductImageUpdate_productImageUpdate_product_productType;
   pricing: ProductImageUpdate_productImageUpdate_product_pricing | null;
+  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -221,7 +222,6 @@ export interface ProductImageUpdate_productImageUpdate_product {
   purchaseCost: ProductImageUpdate_productImageUpdate_product_purchaseCost | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
-  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   images: (ProductImageUpdate_productImageUpdate_product_images | null)[] | null;
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
 }

@@ -99,6 +99,27 @@ export interface ProductCreate_productCreate_product_pricing {
   priceRangeUndiscounted: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface ProductCreate_productCreate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductCreate_productCreate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductCreate_productCreate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductCreate_productCreate_product_channelListing_channel;
+  discountedPrice: ProductCreate_productCreate_product_channelListing_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductCreate_productCreate_product_category {
   __typename: "Category";
   id: string;
@@ -133,27 +154,6 @@ export interface ProductCreate_productCreate_product_purchaseCost {
   __typename: "MoneyRange";
   start: ProductCreate_productCreate_product_purchaseCost_start | null;
   stop: ProductCreate_productCreate_product_purchaseCost_stop | null;
-}
-
-export interface ProductCreate_productCreate_product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface ProductCreate_productCreate_product_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductCreate_productCreate_product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: ProductCreate_productCreate_product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-  discountedPrice: ProductCreate_productCreate_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductCreate_productCreate_product_images {
@@ -211,6 +211,7 @@ export interface ProductCreate_productCreate_product {
   attributes: ProductCreate_productCreate_product_attributes[];
   productType: ProductCreate_productCreate_product_productType;
   pricing: ProductCreate_productCreate_product_pricing | null;
+  channelListing: ProductCreate_productCreate_product_channelListing[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -221,7 +222,6 @@ export interface ProductCreate_productCreate_product {
   purchaseCost: ProductCreate_productCreate_product_purchaseCost | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
-  channelListing: ProductCreate_productCreate_product_channelListing[] | null;
   images: (ProductCreate_productCreate_product_images | null)[] | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
 }

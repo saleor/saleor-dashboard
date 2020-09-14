@@ -99,6 +99,27 @@ export interface ProductUpdate_productUpdate_product_pricing {
   priceRangeUndiscounted: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted | null;
 }
 
+export interface ProductUpdate_productUpdate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductUpdate_productUpdate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductUpdate_productUpdate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductUpdate_productUpdate_product_channelListing_channel;
+  discountedPrice: ProductUpdate_productUpdate_product_channelListing_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductUpdate_productUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -133,27 +154,6 @@ export interface ProductUpdate_productUpdate_product_purchaseCost {
   __typename: "MoneyRange";
   start: ProductUpdate_productUpdate_product_purchaseCost_start | null;
   stop: ProductUpdate_productUpdate_product_purchaseCost_stop | null;
-}
-
-export interface ProductUpdate_productUpdate_product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface ProductUpdate_productUpdate_product_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductUpdate_productUpdate_product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: ProductUpdate_productUpdate_product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-  discountedPrice: ProductUpdate_productUpdate_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductUpdate_productUpdate_product_images {
@@ -211,6 +211,7 @@ export interface ProductUpdate_productUpdate_product {
   attributes: ProductUpdate_productUpdate_product_attributes[];
   productType: ProductUpdate_productUpdate_product_productType;
   pricing: ProductUpdate_productUpdate_product_pricing | null;
+  channelListing: ProductUpdate_productUpdate_product_channelListing[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -221,7 +222,6 @@ export interface ProductUpdate_productUpdate_product {
   purchaseCost: ProductUpdate_productUpdate_product_purchaseCost | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
-  channelListing: ProductUpdate_productUpdate_product_channelListing[] | null;
   images: (ProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;
 }
