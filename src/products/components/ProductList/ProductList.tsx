@@ -1,9 +1,11 @@
+import {Button} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import WarningIcon from "@material-ui/icons/Warning";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -21,6 +23,7 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
+import ProductPublishReportDialog from "@saleor/products/components/ProductPublishReportDialog";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
 import {
   ProductList_products_edges_node,
@@ -190,9 +193,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
 
   const [reportOpen, setReportOpen] = React.useState(false);
   const [privateMetadataMap, setPrivateMetadataMap] = React.useState(null);
-  const handleReportOpen = (privateMetadataMapVal: string) => {
+  const [isPublished, setIsPublished] = React.useState(false);
+  const handleReportOpen = (privateMetadataMapVal: string, isPublishedVal: boolean) => {
     setPrivateMetadataMap(privateMetadataMapVal)
     setReportOpen(true);
+    setIsPublished(isPublishedVal);
   };
   const handleReportClose = () => {
     setReportOpen(false);
@@ -439,10 +444,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       maybe(() => product.isPublished !== undefined) ? (
                         <Button onClick={event => {
                           event.stopPropagation();
-                          handleReportOpen(rowPrivateMetadataMap);
+                          handleReportOpen(rowPrivateMetadataMap, product.isPublished);
                         }}>
                           {rowPrivateMetadataMap['publish.allegro.errors'] !== undefined && rowPrivateMetadataMap['publish.allegro.errors'].length > 0 &&
-                            <WarningIcon />
+                            <WarningIcon color="error" />
                           }
                           <StatusLabel
                             label={
@@ -456,7 +461,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                                   description: "product status"
                                 })
                             }
-                            status={product.isPublished ? "success" : "error"}
+                            status={product.isPublished ? "success" : ""}
                           />
                         </Button>
                       ) : (
@@ -532,6 +537,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
         </TableBody>
       </ResponsiveTable>
       <ProductPublishReportDialog privateMetadataMap={privateMetadataMap}
+                                  isPublished={isPublished}
                                   open={reportOpen}
                                   onClose={handleReportClose} />
     </div>

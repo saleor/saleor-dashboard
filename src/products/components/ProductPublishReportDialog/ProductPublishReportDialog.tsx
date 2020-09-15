@@ -1,6 +1,7 @@
-import React from "react";
-import {Link, Dialog, DialogTitle, Grid, Paper, makeStyles, createStyles, Theme, Typography} from "@material-ui/core";
+import {createStyles, Dialog, DialogTitle, Grid, Link, makeStyles, Paper, Theme} from "@material-ui/core";
 import {renderCollection} from "@saleor/misc";
+import React from "react";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,11 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface ProductPublishReportDialogProps {
   open: boolean;
   privateMetadataMap: any;
+  isPublished: boolean;
   onClose?();
 }
 
 const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = props => {
-  const { open, onClose, privateMetadataMap } = props;
+  const { open, onClose, privateMetadataMap, isPublished } = props;
   const classes = useStyles(props);
 
   return (
@@ -40,7 +42,8 @@ const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = pr
           </Grid>
           <Grid item xs={4}>
             {privateMetadataMap && privateMetadataMap['publish.allegro.id'] !== undefined ?
-              <Link href={"https://allegro.pl/oferta/aukcja-" + privateMetadataMap['publish.allegro.id']} target="_blank">
+              <Link href={"https://allegro.pl/oferta/aukcja-" + privateMetadataMap['publish.allegro.id'] +
+              ((!isPublished && privateMetadataMap['publish.allegro.status'] === 'moderated') ? '/restore' : '')} target="_blank">
                 Przejdź do aukcji
               </Link>
               : undefined}
@@ -51,11 +54,9 @@ const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = pr
           <br />
           {privateMetadataMap && renderCollection(
             privateMetadataMap['publish.allegro.errors'],
-            err => {
-              return (
+            err => (
                 <p>{err}</p>
-              );
-            },
+              ),
             () => (
               <p>-</p>
             )

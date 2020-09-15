@@ -1,9 +1,15 @@
+import DateFnsUtils from "@date-io/date-fns";
+import {Dialog, DialogContent, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {DateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import ActionDialog from "@saleor/components/ActionDialog";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import FormSpacer from "@saleor/components/FormSpacer";
 import SaveFilterTabDialog, {SaveFilterTabDialogFormData} from "@saleor/components/SaveFilterTabDialog";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
@@ -28,6 +34,8 @@ import {ListViews} from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import {getSortUrlVariables} from "@saleor/utils/sort";
+import plLocale from "date-fns/locale/pl";
+import moment from "moment-timezone";
 import React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 
@@ -55,19 +63,15 @@ import {
   saveFilterTab
 } from "./filters";
 import {getSortQueryVariables} from "./sort";
-import {Dialog, DialogContent, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import DialogActions from "@material-ui/core/DialogActions";
-import {ProductPublishType} from "@saleor/types/globalTypes";
-import {DateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import plLocale from "date-fns/locale/pl";
-import FormSpacer from "@saleor/components/FormSpacer";
-import moment from "moment-timezone";
 
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
+}
+
+enum ProductPublishType {
+  AUCTION = "AUCTION",
+  BUY_NOW = "BUY_NOW",
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {

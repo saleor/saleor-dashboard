@@ -321,6 +321,7 @@ export const products = (
     id: "UHJvZHVjdDo2MQ==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Nebula Night Sky Paint",
     pricing: {
       __typename: "ProductPricingInfo",
@@ -362,6 +363,7 @@ export const products = (
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
     isPublished: false,
+    jsonPrivateMetadata: "{}",
     name: "Light Speed Yellow Paint",
     pricing: {
       __typename: "ProductPricingInfo",
@@ -403,6 +405,7 @@ export const products = (
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
     isPublished: false,
+    jsonPrivateMetadata: "{}",
     name: "Hyperspace Turquoise Paint",
 
     pricing: {
@@ -460,6 +463,7 @@ export const products = (
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Pineapple Juice",
 
     pricing: {
@@ -517,6 +521,7 @@ export const products = (
     id: "UHJvZHVjdDo3Ng==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Coconut Juice",
 
     pricing: {
@@ -574,6 +579,7 @@ export const products = (
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Apple Juice",
 
     pricing: {
@@ -631,6 +637,7 @@ export const products = (
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Orange Juice",
 
     pricing: {
@@ -688,6 +695,7 @@ export const products = (
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Banana Juice",
 
     pricing: {
@@ -745,6 +753,7 @@ export const products = (
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
     isPublished: false,
+    jsonPrivateMetadata: "{}",
     name: "Bean Juice",
 
     pricing: {
@@ -802,6 +811,7 @@ export const products = (
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Carrot Juice",
 
     pricing: {
@@ -859,6 +869,7 @@ export const products = (
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Green Juice",
 
     pricing: {
@@ -916,6 +927,7 @@ export const products = (
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Code Division T-shirt",
 
     pricing: {
@@ -973,6 +985,7 @@ export const products = (
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Polo Shirt",
 
     pricing: {
@@ -1030,6 +1043,7 @@ export const products = (
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Polo Shirt",
 
     pricing: {
@@ -1087,6 +1101,7 @@ export const products = (
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Polo Shirt",
 
     pricing: {
@@ -1144,6 +1159,7 @@ export const products = (
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Polo Shirt",
 
     pricing: {
@@ -1201,6 +1217,7 @@ export const products = (
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
     isPublished: false,
+    jsonPrivateMetadata: "{}",
     name: "Black Hoodie",
 
     pricing: {
@@ -1258,6 +1275,7 @@ export const products = (
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Blue Hoodie",
 
     pricing: {
@@ -1315,6 +1333,7 @@ export const products = (
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
     isPublished: true,
+    jsonPrivateMetadata: "{}",
     name: "Mustard Hoodie",
 
     pricing: {
@@ -1372,6 +1391,7 @@ export const products = (
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
     isPublished: false,
+    jsonPrivateMetadata: "{}",
     name: "Colored Parrot Cushion",
 
     pricing: {
