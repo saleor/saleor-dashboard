@@ -39,6 +39,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix not closed address update modal with two confirmations - #699 by @orzechdev
 - Update schema with PositiveDecimal type - #695 by @AlicjaSzu
 - Restyle side menu - #697 by @dominik-zeglen
+- Add error info when fetching taxes - #701 by @dominik-zeglen
 
 ## 2.10.1
 
