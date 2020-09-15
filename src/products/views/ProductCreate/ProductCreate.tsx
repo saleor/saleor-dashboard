@@ -8,21 +8,22 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { useProductChannelListingUpdate } from "@saleor/products/mutations";
+import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
+import {
+  useProductChannelListingUpdate,
+  useProductVariantChannelListingUpdate,
+  useVariantCreateMutation
+} from "@saleor/products/mutations";
+import { useProductCreateMutation } from "@saleor/products/mutations";
+import { productListUrl, productUrl } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import getProductErrorMessage from "@saleor/utils/errors/product";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductCreatePage, {
-  ProductCreatePageSubmitData
-} from "../components/ProductCreatePage";
-import { useProductCreateMutation } from "../mutations";
-import { ProductCreate } from "../types/ProductCreate";
-import { productListUrl, productUrl } from "../urls";
+import { createHandler } from "./handlers";
 
 export const ProductCreateView: React.FC = () => {
   const navigate = useNavigator();
@@ -57,34 +58,21 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
+  const productTypes = searchProductTypesOpts?.data?.search?.edges?.map(
+    edge => edge.node
+  );
+
   const { data: channelsData } = useChannelsList({});
   const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
   const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
 
-  const [updateChannels] = useProductChannelListingUpdate({
-    onCompleted: data => {
-      if (
-        data.productChannelListingUpdate.productChannelListingErrors.length ===
-        0
-      ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Channels updated"
-          })
-        });
-        navigate(productUrl(data.productChannelListingUpdate.product.id));
-      } else {
-        data.productChannelListingUpdate.productChannelListingErrors.map(
-          error =>
-            notify({
-              status: "error",
-              text: getProductErrorMessage(error, intl)
-            })
-        );
-      }
-    }
-  });
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
+    {}
+  );
+  const [
+    updateVariantChannels,
+    updateVariantChannelsOpts
+  ] = useProductVariantChannelListingUpdate({});
 
   const {
     isSelected: isChannelSelected,
@@ -105,53 +93,38 @@ export const ProductCreateView: React.FC = () => {
     setChannelsModalOpen(false);
   };
 
+  const handleSuccess = (productId: string) => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        defaultMessage: "Product created"
+      })
+    });
+    navigate(productUrl(productId));
+  };
+
   const handleBack = () => navigate(productListUrl());
 
-  const handleSuccess = (data: ProductCreate, channelsData: ChannelData[]) => {
-    if (data.productCreate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          defaultMessage: "Product created"
-        })
-      });
-      updateChannels({
-        variables: {
-          id: data.productCreate.product.id,
-          input: {
-            addChannels: channelsData.map(channel => ({
-              channelId: channel.id,
-              isPublished: channel.isPublished,
-              publicationDate: channel.publicationDate
-            }))
-          }
-        }
-      });
-    }
-  };
-
-  const [productCreate, productCreateOpts] = useProductCreateMutation({});
-
-  const handleSubmit = (formData: ProductCreatePageSubmitData) => {
-    productCreate({
-      variables: {
-        attributes: formData.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value
-        })),
-        category: formData.category,
-        chargeTaxes: formData.chargeTaxes,
-        collections: formData.collections,
-        descriptionJson: JSON.stringify(formData.description),
-        name: formData.name,
-        productType: formData.productType,
-        seo: {
-          description: formData.seoDescription,
-          title: formData.seoTitle
-        }
+  const [productCreate, productCreateOpts] = useProductCreateMutation({
+    onCompleted: data => {
+      const productId = data.productCreate.product.id;
+      if (productId) {
+        handleSuccess(productId);
       }
-    }).then(response => handleSuccess(response.data, formData.channelListing));
-  };
+    }
+  });
+  const [
+    productVariantCreate,
+    productVariantCreateOpts
+  ] = useVariantCreateMutation({});
+
+  const handleSubmit = createHandler(
+    productTypes,
+    variables => productCreate({ variables }),
+    variables => productVariantCreate({ variables }),
+    updateChannels,
+    updateVariantChannels
+  );
 
   return (
     <>
@@ -187,7 +160,16 @@ export const ProductCreateView: React.FC = () => {
         collections={
           searchCollectionOpts?.data?.search?.edges || [].map(edge => edge.node)
         }
-        disabled={productCreateOpts.loading}
+        disabled={
+          productCreateOpts.loading ||
+          productVariantCreateOpts.loading ||
+          updateChannelsOpts.loading ||
+          updateVariantChannelsOpts.loading
+        }
+        channelsErrors={
+          updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
+            ?.productChannelListingErrors
+        }
         errors={productCreateOpts.data?.productCreate.errors || []}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
@@ -196,9 +178,7 @@ export const ProductCreateView: React.FC = () => {
           defaultMessage: "New Product",
           description: "page header"
         })}
-        productTypes={searchProductTypesOpts?.data?.search?.edges?.map(
-          edge => edge.node
-        )}
+        productTypes={productTypes}
         onBack={handleBack}
         onSubmit={handleSubmit}
         saveButtonBarState={productCreateOpts.status}

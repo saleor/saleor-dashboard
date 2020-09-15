@@ -43,12 +43,13 @@ export const createChannelsDataWithPrice = (
       price: null,
       publicationDate: null
     }));
+
     const productDataArr = productData.map(listing => ({
-      currency: listing.discountedPrice.currency,
+      currency: listing.discountedPrice ? listing.discountedPrice.currency : "",
       id: listing.channel.id,
       isPublished: listing.isPublished,
       name: listing.channel.name,
-      price: listing.discountedPrice.amount,
+      price: listing.discountedPrice ? listing.discountedPrice.amount : null,
       publicationDate: listing.publicationDate
     }));
     return uniqBy([...productDataArr, ...dataArr], obj => obj.id);
@@ -89,10 +90,10 @@ export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product_channelListing[]
 ) =>
   productData?.map(option => ({
-    currency: option.discountedPrice.currency,
+    currency: option.discountedPrice ? option.discountedPrice.currency : "",
     id: option.channel.id,
     isPublished: option.isPublished,
     name: option.channel.name,
-    price: option.discountedPrice.amount,
+    price: option.discountedPrice ? option.discountedPrice.amount : null,
     publicationDate: option.publicationDate
   })) || [];

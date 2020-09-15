@@ -16,6 +16,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions } from "@saleor/types";
@@ -54,6 +55,7 @@ import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
+  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   errors: ProductErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
@@ -97,6 +99,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
+  channelsErrors,
   allChannelsCount,
   currentChannels = [],
   collections: collectionChoiceList,
@@ -279,7 +282,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <>
                       <ProductVariantPrice
                         ProductVariantChannelListings={data.channelListing}
-                        errors={[]}
+                        errors={channelsErrors}
                         loading={disabled}
                         onChange={handleChannelPriceChange}
                       />

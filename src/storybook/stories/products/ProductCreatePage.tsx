@@ -20,6 +20,7 @@ storiesOf("Views / Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage
+      channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
       hasChannelChanged={false}
@@ -45,6 +46,7 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("When loading", () => (
     <ProductCreatePage
+      channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
       hasChannelChanged={false}
@@ -70,6 +72,7 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("form errors", () => (
     <ProductCreatePage
+      channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
       hasChannelChanged={false}

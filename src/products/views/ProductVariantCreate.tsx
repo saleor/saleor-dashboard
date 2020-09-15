@@ -12,8 +12,8 @@ import { decimal } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";
-import { TypedVariantCreateMutation } from "../mutations";
-import { TypedProductVariantCreateQuery } from "../queries";
+import { useVariantCreateMutation } from "../mutations";
+import { useProductVariantCreateQuery } from "../queries";
 import { VariantCreate } from "../types/VariantCreate";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 
@@ -34,100 +34,86 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
+  const { data, loading: productLoading } = useProductVariantCreateQuery({
+    displayLoader: true,
+    variables: { id: productId }
+  });
+  const product = data?.product;
 
-  return (
-    <TypedProductVariantCreateQuery displayLoader variables={{ id: productId }}>
-      {({ data, loading: productLoading }) => {
-        const product = data?.product;
+  const handleCreateSuccess = (data: VariantCreate) => {
+    if (data.productVariantCreate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(
+        productVariantEditUrl(
+          productId,
+          data.productVariantCreate.productVariant.id
+        )
+      );
+    }
+  };
 
-        if (product === null) {
-          return <NotFoundPage onBack={() => navigate(productListUrl())} />;
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
+    onCompleted: handleCreateSuccess
+  });
+
+  const handleBack = () => navigate(productUrl(productId));
+  const handleSubmit = (formData: ProductVariantCreatePageSubmitData) =>
+    variantCreate({
+      variables: {
+        input: {
+          attributes: formData.attributes
+            .filter(attribute => attribute.value !== "")
+            .map(attribute => ({
+              id: attribute.id,
+              values: [attribute.value]
+            })),
+          costPrice: decimal(formData.costPrice),
+          product: productId,
+          sku: formData.sku,
+          stocks: formData.stocks.map(stock => ({
+            quantity: parseInt(stock.value, 0),
+            warehouse: stock.id
+          })),
+          trackInventory: true
         }
+      }
+    });
+  const handleVariantClick = (id: string) =>
+    navigate(productVariantEditUrl(productId, id));
 
-        const handleCreateSuccess = (data: VariantCreate) => {
-          if (data.productVariantCreate.errors.length === 0) {
-            notify({
-              status: "success",
-              text: intl.formatMessage(commonMessages.savedChanges)
-            });
-            navigate(
-              productVariantEditUrl(
-                productId,
-                data.productVariantCreate.productVariant.id
-              )
-            );
-          }
-        };
+  const disableForm = productLoading || variantCreateResult.loading;
 
-        return (
-          <TypedVariantCreateMutation onCompleted={handleCreateSuccess}>
-            {(variantCreate, variantCreateResult) => {
-              const handleBack = () => navigate(productUrl(productId));
-              const handleSubmit = (
-                formData: ProductVariantCreatePageSubmitData
-              ) =>
-                variantCreate({
-                  variables: {
-                    input: {
-                      attributes: formData.attributes
-                        .filter(attribute => attribute.value !== "")
-                        .map(attribute => ({
-                          id: attribute.id,
-                          values: [attribute.value]
-                        })),
-                      costPrice: decimal(formData.costPrice),
-                      product: productId,
-                      sku: formData.sku,
-                      stocks: formData.stocks.map(stock => ({
-                        quantity: parseInt(stock.value, 0),
-                        warehouse: stock.id
-                      })),
-                      trackInventory: true
-                    }
-                  }
-                });
-              const handleVariantClick = (id: string) =>
-                navigate(productVariantEditUrl(productId, id));
-
-              const disableForm = productLoading || variantCreateResult.loading;
-
-              return (
-                <>
-                  <WindowTitle
-                    title={intl.formatMessage({
-                      defaultMessage: "Create variant",
-                      description: "window title"
-                    })}
-                  />
-                  <ProductVariantCreatePage
-                    currencySymbol={shop?.defaultCurrency}
-                    disabled={disableForm}
-                    errors={
-                      variantCreateResult.data?.productVariantCreate.errors ||
-                      []
-                    }
-                    header={intl.formatMessage({
-                      defaultMessage: "Create Variant",
-                      description: "header"
-                    })}
-                    product={data?.product}
-                    onBack={handleBack}
-                    onSubmit={handleSubmit}
-                    onVariantClick={handleVariantClick}
-                    saveButtonBarState={variantCreateResult.status}
-                    warehouses={
-                      warehouses.data?.warehouses.edges.map(
-                        edge => edge.node
-                      ) || []
-                    }
-                  />
-                </>
-              );
-            }}
-          </TypedVariantCreateMutation>
-        );
-      }}
-    </TypedProductVariantCreateQuery>
+  return product === null ? (
+    <NotFoundPage onBack={() => navigate(productListUrl())} />
+  ) : (
+    <>
+      <WindowTitle
+        title={intl.formatMessage({
+          defaultMessage: "Create variant",
+          description: "window title"
+        })}
+      />
+      <ProductVariantCreatePage
+        currencySymbol={shop?.defaultCurrency}
+        disabled={disableForm}
+        errors={variantCreateResult.data?.productVariantCreate.errors || []}
+        header={intl.formatMessage({
+          defaultMessage: "Create Variant",
+          description: "header"
+        })}
+        product={data?.product}
+        onBack={handleBack}
+        onSubmit={handleSubmit}
+        onVariantClick={handleVariantClick}
+        saveButtonBarState={variantCreateResult.status}
+        warehouses={
+          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
+        }
+      />
+    </>
   );
 };
 export default ProductVariant;

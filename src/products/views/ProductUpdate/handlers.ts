@@ -1,25 +1,51 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
+import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
-import { ProductChannelListingUpdateVariables } from "@saleor/products/types/ProductChannelListingUpdate";
+import {
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors,
+  ProductChannelListingUpdateVariables
+} from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
-import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
-import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
+import {
+  ProductUpdate,
+  ProductUpdateVariables
+} from "@saleor/products/types/ProductUpdate";
+import {
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors,
+  ProductVariantChannelListingUpdateVariables
+} from "@saleor/products/types/ProductVariantChannelListingUpdate";
+import {
+  SimpleProductUpdate,
+  SimpleProductUpdateVariables
+} from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { diff } from "fast-array-diff";
+import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createUpdateHandler(
   product: ProductDetails_product,
-  updateProduct: (variables: ProductUpdateVariables) => void,
-  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void,
+  updateProduct: (
+    variables: ProductUpdateVariables
+  ) => Promise<MutationFetchResult<ProductUpdate>>,
+  updateSimpleProduct: (
+    variables: SimpleProductUpdateVariables
+  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateVariables;
-  }) => void
+  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
+  updateVariantChannels: (options: {
+    variables: ProductVariantChannelListingUpdateVariables;
+  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>
 ) {
-  return (data: ProductUpdatePageSubmitData) => {
+  return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
       attributes: data.attributes.map(attribute => ({
         id: attribute.id,
@@ -37,20 +63,50 @@ export function createUpdateHandler(
       }
     };
 
+    let errors: Array<
+      | ProductErrorFragment
+      | StockErrorFragment
+      | BulkStockErrorFragment
+      | ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors
+      | ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors
+    >;
+
     if (product.productType.hasVariants) {
-      updateProduct(productVariables);
+      const result = await updateProduct(productVariables);
+      errors = result.data.productUpdate.errors;
     } else {
-      updateSimpleProduct({
+      const result = await updateSimpleProduct({
         ...productVariables,
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         deleteStocks: data.removeStocks,
         productVariantId: product.variants[0].id,
         productVariantInput: {
+          costPrice: data.basePrice,
           sku: data.sku,
           trackInventory: data.trackInventory
         },
         updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
+
+      const variantResult = await updateVariantChannels({
+        variables: {
+          id: product.variants[0].id,
+          input: data.channelListing.map(listing => ({
+            channelId: listing.id,
+            price: listing.price
+          }))
+        }
+      });
+
+      errors = [
+        ...result.data.productUpdate.errors,
+        ...result.data.productVariantStocksCreate.errors,
+        ...result.data.productVariantStocksDelete.errors,
+        ...result.data.productVariantStocksUpdate.errors,
+        ...result.data.productVariantUpdate.errors,
+        ...variantResult.data.productVariantChannelListingUpdate
+          .productChannelListingErrors
+      ];
     }
     const productChannels = createChannelsDataFromProduct(
       product.channelListing
@@ -60,7 +116,7 @@ export function createUpdateHandler(
       data.channelListing,
       (a, b) => a.id === b.id
     );
-    updateChannels({
+    const result = await updateChannels({
       variables: {
         id: product.id,
         input: {
@@ -75,6 +131,10 @@ export function createUpdateHandler(
         }
       }
     });
+    return [
+      ...errors,
+      ...result.data.productChannelListingUpdate.productChannelListingErrors
+    ];
   };
 }
 
