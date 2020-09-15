@@ -6,8 +6,8 @@ import {
   warehouses
 } from "./fixtures";
 import reducer, {
-  ProductVariantCreateReducerActionType,
-  VariantField
+  ProductVariantCreateReducerActionType
+  // VariantField
 } from "./reducer";
 
 function execActions<TState, TAction>(
@@ -72,30 +72,30 @@ describe("Reducer is able to", () => {
     expect(state).toMatchSnapshot();
   });
 
-  it("select price for all variants", () => {
-    const price = "45.99";
-    const state = execActions(thirdStep, reducer, [
-      {
-        applyPriceOrStockToAll: {
-          mode: "all"
-        },
-        type: ProductVariantCreateReducerActionType.applyPriceToAll
-      },
-      {
-        changeApplyPriceToAllValue: {
-          price
-        },
-        type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
-      },
-      {
-        type: ProductVariantCreateReducerActionType.reload
-      }
-    ]);
+  // it("select price for all variants", () => {
+  //   const price = "45.99";
+  //   const state = execActions(thirdStep, reducer, [
+  //     {
+  //       applyPriceOrStockToAll: {
+  //         mode: "all"
+  //       },
+  //       type: ProductVariantCreateReducerActionType.applyPriceToAll
+  //     },
+  //     {
+  //       changeApplyPriceToAllValue: {
+  //         price
+  //       },
+  //       type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
+  //     },
+  //     {
+  //       type: ProductVariantCreateReducerActionType.reload
+  //     }
+  //   ]);
 
-    expect(state.price.mode).toBe("all");
-    expect(state.price.value).toBe(price);
-    expect(state).toMatchSnapshot();
-  });
+  //   expect(state.price.mode).toBe("all");
+  //   expect(state.price.value).toBe(price);
+  //   expect(state).toMatchSnapshot();
+  // });
 
   it("select warehouses in which stock will be created", () => {
     const state = execActions(thirdStep, reducer, [
@@ -144,49 +144,49 @@ describe("Reducer is able to", () => {
     expect(state).toMatchSnapshot();
   });
 
-  it("select price to each attribute value", () => {
-    const attribute = thirdStep.attributes[0];
-    const value = 45.99;
-    const state = execActions(thirdStep, reducer, [
-      {
-        applyPriceOrStockToAll: {
-          mode: "attribute"
-        },
-        type: ProductVariantCreateReducerActionType.applyPriceToAll
-      },
-      {
-        changeApplyPriceOrStockToAttributeId: {
-          attributeId: attribute.id
-        },
-        type:
-          ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId
-      },
-      {
-        changeAttributeValuePrice: {
-          price: value.toString(),
-          valueId: attribute.values[0]
-        },
-        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
-      },
-      {
-        changeAttributeValuePrice: {
-          price: (value + 6).toString(),
-          valueId: attribute.values[1]
-        },
-        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
-      },
-      {
-        type: ProductVariantCreateReducerActionType.reload
-      }
-    ]);
+  // it("select price to each attribute value", () => {
+  //   const attribute = thirdStep.attributes[0];
+  //   const value = 45.99;
+  //   const state = execActions(thirdStep, reducer, [
+  //     {
+  //       applyPriceOrStockToAll: {
+  //         mode: "attribute"
+  //       },
+  //       type: ProductVariantCreateReducerActionType.applyPriceToAll
+  //     },
+  //     {
+  //       changeApplyPriceOrStockToAttributeId: {
+  //         attributeId: attribute.id
+  //       },
+  //       type:
+  //         ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId
+  //     },
+  //     {
+  //       changeAttributeValuePrice: {
+  //         price: value.toString(),
+  //         valueId: attribute.values[0]
+  //       },
+  //       type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
+  //     },
+  //     {
+  //       changeAttributeValuePrice: {
+  //         price: (value + 6).toString(),
+  //         valueId: attribute.values[1]
+  //       },
+  //       type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
+  //     },
+  //     {
+  //       type: ProductVariantCreateReducerActionType.reload
+  //     }
+  //   ]);
 
-    expect(state.price.mode).toBe("attribute");
-    expect(state.price.values).toHaveLength(
-      state.attributes.find(attribute => state.price.attribute === attribute.id)
-        .values.length
-    );
-    expect(state).toMatchSnapshot();
-  });
+  //   expect(state.price.mode).toBe("attribute");
+  //   expect(state.price.values).toHaveLength(
+  //     state.attributes.find(attribute => state.price.attribute === attribute.id)
+  //       .values.length
+  //   );
+  //   expect(state).toMatchSnapshot();
+  // });
 
   it("select stock to each attribute value", () => {
     const attribute = thirdStep.attributes[0];
@@ -234,28 +234,28 @@ describe("Reducer is able to", () => {
     expect(state).toMatchSnapshot();
   });
 
-  it("modify individual variant price", () => {
-    const field: VariantField = "price";
-    const value = "49.99";
-    const variantIndex = 3;
+  // it("modify individual variant price", () => {
+  //   const field: VariantField = "price";
+  //   const value = "49.99";
+  //   const variantIndex = 3;
 
-    const state = execActions(fourthStep, reducer, [
-      {
-        changeVariantData: {
-          field,
-          value,
-          variantIndex
-        },
-        type: ProductVariantCreateReducerActionType.changeVariantData
-      }
-    ]);
+  //   const state = execActions(fourthStep, reducer, [
+  //     {
+  //       changeVariantData: {
+  //         field,
+  //         value,
+  //         variantIndex
+  //       },
+  //       type: ProductVariantCreateReducerActionType.changeVariantData
+  //     }
+  //   ]);
 
-    // expect(state.variants[variantIndex].price).toBe(value);
-    // expect(state.variants[variantIndex - 1].price).toBe(
-    //   fourthStep.variants[variantIndex - 1].price
-    // );
-    expect(state).toMatchSnapshot();
-  });
+  //   // expect(state.variants[variantIndex].price).toBe(value);
+  //   // expect(state.variants[variantIndex - 1].price).toBe(
+  //   //   fourthStep.variants[variantIndex - 1].price
+  //   // );
+  //   expect(state).toMatchSnapshot();
+  // });
 
   it("modify individual variant stock", () => {
     const quantity = 5;

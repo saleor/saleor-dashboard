@@ -39,9 +39,7 @@ const useStyles = makeStyles(
       width: 200
     },
     input: {
-      "& input": {
-        padding: "16px 12px 17px"
-      }
+      textAlign: "left"
     },
     pricingContent: {
       "&:last-child": {
@@ -125,8 +123,11 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                         <PriceField
                           className={classes.input}
                           error={!!error?.length}
+                          label={intl.formatMessage({
+                            defaultMessage: "Price"
+                          })}
                           name={`${listing.id}-channel-price`}
-                          value={listing.price}
+                          value={listing.price || ""}
                           currencySymbol={listing.currency}
                           onChange={e => onChange(listing.id, e.target.value)}
                           disabled={loading}

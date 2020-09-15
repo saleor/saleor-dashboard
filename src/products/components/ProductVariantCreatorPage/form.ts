@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 
@@ -20,7 +21,7 @@ export interface Attribute {
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
-  channelListings: any[];
+  channelListings: ChannelPriceData[];
   price: AllOrAttribute<string>;
   stock: AllOrAttribute<number[]>;
   variants: ProductVariantBulkCreateInput[];
@@ -29,7 +30,7 @@ export interface ProductVariantCreateFormData {
 
 export const createInitialForm = (
   attributes: ProductDetails_product_productType_variantAttributes[],
-  channels: any[],
+  channels: ChannelPriceData[],
   warehouses: WarehouseFragment[]
 ): ProductVariantCreateFormData => ({
   attributes: attributes.map(attribute => ({
@@ -40,7 +41,7 @@ export const createInitialForm = (
   price: {
     attribute: undefined,
     mode: "all",
-    value: channels[0].price || "",
+    value: "",
     values: []
   },
   stock: {

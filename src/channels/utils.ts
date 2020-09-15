@@ -1,6 +1,6 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
-import { ShippingZone_shippingZone_shippingMethods_channels } from "@saleor/shipping/types/ShippingZone";
+import { ShippingZone_shippingZone_shippingMethods_channelListing } from "@saleor/shipping/types/ShippingZone";
 import { uniqBy } from "lodash";
 export interface ChannelData {
   id: string;
@@ -36,7 +36,7 @@ export const createChannelsDataWithPrice = (
 ): ChannelData[] | [] => {
   if (data && productData) {
     const dataArr = data.map(channel => ({
-      currency: "",
+      currency: channel.currencyCode,
       id: channel.id,
       isPublished: false,
       name: channel.name,
@@ -45,7 +45,9 @@ export const createChannelsDataWithPrice = (
     }));
 
     const productDataArr = productData.map(listing => ({
-      currency: listing.discountedPrice ? listing.discountedPrice.currency : "",
+      currency: listing.discountedPrice
+        ? listing.discountedPrice.currency
+        : data.find(channel => channel.id === listing.channel.id).currencyCode,
       id: listing.channel.id,
       isPublished: listing.isPublished,
       name: listing.channel.name,
@@ -69,12 +71,16 @@ export const createShippingChannels = (
   })) || [];
 
 export const createShippingChannelsFromRate = (
-  data?: ShippingZone_shippingZone_shippingMethods_channels[]
+  data?: ShippingZone_shippingZone_shippingMethods_channelListing[]
 ): ChannelShippingData[] | [] =>
   data?.map(channelData => ({
     id: channelData.channel.id,
-    maxValue: channelData.maxValue ? channelData.maxValue.toString() : "",
-    minValue: channelData.minValue ? channelData.minValue.toString() : "",
+    maxValue: channelData.maximumOrderPrice
+      ? channelData.maximumOrderPrice.toString()
+      : "",
+    minValue: channelData.minimumOrderPrice
+      ? channelData.minimumOrderPrice.toString()
+      : "",
     name: channelData.channel.name,
     price: channelData.price ? channelData.price.toString() : ""
   })) || [];

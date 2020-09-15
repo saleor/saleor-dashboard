@@ -235,9 +235,6 @@
   "productTypeTaxesInputLabel": {
     "string": "Taxes"
   },
-  "productVariantCreatePricesPriceInputLabel": {
-    "string": "Price"
-  },
   "productVariantCreatePricesSetPricePlaceholder": {
     "context": "variant price",
     "string": "Price"
@@ -252,14 +249,6 @@
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
     "string": "Warehouses"
-  },
-  "productVariantPriceOptionalCostPriceField": {
-    "context": "optional field",
-    "string": "Optional"
-  },
-  "productVariantPriceOptionalPriceField": {
-    "context": "optional field",
-    "string": "Optional"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -1124,13 +1113,13 @@
     "context": "product channel publication status",
     "string": "hidden"
   },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1484966255": {
+    "context": "product status title",
+    "string": "Available in {count}/{allCount}"
+  },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
     "context": "product channel  publication date",
     "string": "published since {date}"
-  },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3257060829": {
-    "context": "product status title",
-    "string": "Available in {count}"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
     "context": "product channel publication date",
@@ -4038,11 +4027,23 @@
     "context": "product pricing, section header",
     "string": "Pricing"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1416480328": {
-    "string": "Cost price override"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
+    "string": "Price"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2238565650": {
-    "string": "Selling price override"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
+    "context": "tabel column header",
+    "string": "Selling Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
+    "context": "info text",
+    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3511613983": {
+    "context": "tabel column header",
+    "string": "Channel Name"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_4097816011": {
+    "string": "No channels found"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1001303107": {
     "context": "product variant inventory",
@@ -4102,14 +4103,6 @@
     "context": "product variant name",
     "string": "Variant"
   },
-  "src_dot_products_dot_views_dot_1542417144": {
-    "context": "window title",
-    "string": "Create Product"
-  },
-  "src_dot_products_dot_views_dot_1591632382": {
-    "context": "page header",
-    "string": "New Product"
-  },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -4124,18 +4117,26 @@
   "src_dot_products_dot_views_dot_2880386427": {
     "string": "Are you sure you want to delete this image?"
   },
-  "src_dot_products_dot_views_dot_2899821092": {
-    "string": "Product created"
-  },
-  "src_dot_products_dot_views_dot_3423943948": {
-    "string": "Manage Products Channel Availability"
-  },
   "src_dot_products_dot_views_dot_3576216025": {
     "string": "Channels updated"
   },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
     "string": "Create variant"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_1542417144": {
+    "context": "window title",
+    "string": "Create Product"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_1591632382": {
+    "context": "page header",
+    "string": "New Product"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_2899821092": {
+    "string": "Product created"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_1204353135": {
     "context": "dialog content",
@@ -4167,9 +4168,6 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
     "string": "Manage Products Channel Availability"
-  },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_3576216025": {
-    "string": "Channels updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
