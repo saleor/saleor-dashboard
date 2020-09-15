@@ -38,9 +38,6 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import ProductPublishReportDialog from "@saleor/products/components/ProductPublishReportDialog";
-import {Button} from "@material-ui/core";
-import WarningIcon from "@material-ui/icons/Warning";
 
 const useStyles = makeStyles(
   theme => ({
