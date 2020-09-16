@@ -115,7 +115,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 const error = errors?.filter(
                   error => error.channels[0] === listing.id
                 );
-                const hasWrongValue = listing.price < 0;
+                const hasWrongValue = listing?.price < 0;
                 return (
                   <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
