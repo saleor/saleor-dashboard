@@ -40,6 +40,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update schema with PositiveDecimal type - #695 by @AlicjaSzu
 - Add error info when fetching taxes - #701 by @dominik-zeglen
 - Fix return to previous page on screen size change - #710 by @orzechdev
+- Fix updating order details on address change #711 - by @orzechdev
+- Add no warehouses info in variant creator #713 - by @orzechdev
 - Add variants reordering possibility - #716 by @orzechdev
 - Fix avatar change button - #719 by @orzechdev
 - Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
@@ -104,7 +106,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
-- Fix updating order details on address change #711 - by @orzechdev
 
 ## 2.0.0
 
