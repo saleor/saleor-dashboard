@@ -302,6 +302,10 @@
     "context": "variant stock, header",
     "string": "Stock"
   },
+  "productVariantCreatorWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. You can configure your variants without providing stock quantites."
+  },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
     "string": "Warehouses"

@@ -123,192 +123,206 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
         })}
       />
       <CardContent>
-        {warehouses.length > 1 && (
+        {!warehouses.length ? (
+          <Typography color="textSecondary">
+            <FormattedMessage
+              defaultMessage="There are no warehouses set up for your store. You can configure your variants without providing stock quantites."
+              description="no warehouses info"
+              id="productVariantCreatorWarehouseSectionDescription"
+            />
+          </Typography>
+        ) : (
           <>
-            <Typography className={classes.warehouseHeader} variant="h5">
-              <FormattedMessage
-                defaultMessage="Warehouses"
-                description="header"
-                id="productVariantCreatorWarehouseSectionHeader"
-              />
-            </Typography>
-            <Typography className={classes.warehouseSubheader}>
-              <FormattedMessage
-                defaultMessage="Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
-                values={{
-                  numberOfProducts: data.attributes.reduce(
-                    (acc, attr) => acc + attr.values.length,
-                    0
-                  )
-                }}
-              />
-            </Typography>
-            <div className={classes.warehouseContainer}>
-              {warehouses.map(warehouse => (
-                <ControlledCheckbox
-                  checked={isSelected(
-                    warehouse.id,
-                    data.warehouses,
-                    (a, b) => a === b
-                  )}
-                  name={`warehouse:${warehouse.id}`}
-                  label={warehouse.name}
-                  onChange={() => onWarehouseToggle(warehouse.id)}
-                  key={warehouse.id}
-                />
-              ))}
-            </div>
-            <CardSpacer />
-            <Hr />
-            <CardSpacer />
-          </>
-        )}
-        <Typography className={classes.stockHeader} variant="h5">
-          <FormattedMessage
-            defaultMessage="Stock"
-            description="variant stock, header"
-            id="productVariantCreatorStockSectionHeader"
-          />
-        </Typography>
-        <RadioGroup value={data.stock.mode}>
-          <FormControlLabel
-            value="all"
-            control={<Radio color="primary" />}
-            label={intl.formatMessage({
-              defaultMessage: "Apply single stock to all SKUs"
-            })}
-            onChange={() => onApplyToAllChange("all")}
-          />
-          {data.stock.mode === "all" && (
-            <div className={classes.stockContainer}>
-              {data.warehouses.map((warehouseId, warehouseIndex) => (
-                <div key={warehouseId}>
-                  <Typography className={classes.warehouseName}>
-                    {
-                      warehouses.find(warehouse => warehouse.id === warehouseId)
-                        .name
-                    }
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    inputProps={{
-                      min: 0,
-                      type: "number"
-                    }}
-                    label={intl.formatMessage({
-                      defaultMessage: "Stock",
-                      id: "productVariantCreatePricesStockInputLabel"
-                    })}
-                    value={data.stock.value[warehouseIndex]}
-                    onChange={event =>
-                      onApplyToAllStockChange(
-                        parseInt(event.target.value, 10),
-                        warehouseIndex
-                      )
-                    }
+            {warehouses.length > 1 && (
+              <>
+                <Typography className={classes.warehouseHeader} variant="h5">
+                  <FormattedMessage
+                    defaultMessage="Warehouses"
+                    description="header"
+                    id="productVariantCreatorWarehouseSectionHeader"
                   />
+                </Typography>
+                <Typography className={classes.warehouseSubheader}>
+                  <FormattedMessage
+                    defaultMessage="Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
+                    values={{
+                      numberOfProducts: data.attributes.reduce(
+                        (acc, attr) => acc + attr.values.length,
+                        0
+                      )
+                    }}
+                  />
+                </Typography>
+                <div className={classes.warehouseContainer}>
+                  {warehouses.map(warehouse => (
+                    <ControlledCheckbox
+                      checked={isSelected(
+                        warehouse.id,
+                        data.warehouses,
+                        (a, b) => a === b
+                      )}
+                      name={`warehouse:${warehouse.id}`}
+                      label={warehouse.name}
+                      onChange={() => onWarehouseToggle(warehouse.id)}
+                      key={warehouse.id}
+                    />
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-          <FormSpacer />
-          <FormControlLabel
-            value="attribute"
-            control={<Radio color="primary" />}
-            label={intl.formatMessage({
-              defaultMessage: "Apply unique stock by attribute to each SKU"
-            })}
-            onChange={() => onApplyToAllChange("attribute")}
-          />
-          {data.stock.mode === "attribute" && (
-            <>
-              <FormSpacer />
-              <SingleSelectField
-                className={classes.shortInput}
-                choices={attributeChoices}
-                label={intl.formatMessage({
-                  defaultMessage: "Select Attribute",
-                  description: "variant attribute"
-                })}
-                value={data.stock.attribute}
-                onChange={event => onAttributeSelect(event.target.value)}
+                <CardSpacer />
+                <Hr />
+                <CardSpacer />
+              </>
+            )}
+            <Typography className={classes.stockHeader} variant="h5">
+              <FormattedMessage
+                defaultMessage="Stock"
+                description="variant stock, header"
+                id="productVariantCreatorStockSectionHeader"
               />
-              {stockAttributeValues && (
-                <>
-                  <Hr className={classes.hrAttribute} />
-                  <FormSpacer />
-                  <div className={classes.attributeStockScroll}>
-                    <div className={classes.attributeStockContainer}>
-                      <div />
-                      {data.stock.attribute &&
-                        data.warehouses.map(warehouseId => (
-                          <Typography
-                            className={classes.warehouseName}
-                            key={warehouseId}
-                          >
-                            {
-                              warehouses.find(
-                                warehouse => warehouse.id === warehouseId
-                              ).name
-                            }
-                          </Typography>
-                        ))}
-                      {stockAttributeValues.map(attributeValue => (
-                        <React.Fragment key={attributeValue.id}>
-                          <Typography>{attributeValue.name}</Typography>
-                          {data.warehouses.map(
-                            (warehouseId, warehouseIndex) => (
-                              <TextField
-                                fullWidth
-                                inputProps={{
-                                  min: 0,
-                                  type: "number"
-                                }}
-                                label={intl.formatMessage({
-                                  defaultMessage: "Stock",
-                                  id:
-                                    "productVariantCreatePricesStockInputLabel"
-                                })}
-                                value={
-                                  data.stock.values.find(
-                                    value => value.slug === attributeValue.slug
-                                  ).value[warehouseIndex]
-                                }
-                                onChange={event =>
-                                  onAttributeValueChange(
-                                    attributeValue.slug,
-                                    parseInt(event.target.value, 10),
-                                    warehouseIndex
-                                  )
-                                }
-                                key={warehouseId}
-                              />
-                            )
-                          )}
-                        </React.Fragment>
-                      ))}
+            </Typography>
+            <RadioGroup value={data.stock.mode}>
+              <FormControlLabel
+                value="all"
+                control={<Radio color="primary" />}
+                label={intl.formatMessage({
+                  defaultMessage: "Apply single stock to all SKUs"
+                })}
+                onChange={() => onApplyToAllChange("all")}
+              />
+              {data.stock.mode === "all" && (
+                <div className={classes.stockContainer}>
+                  {data.warehouses.map((warehouseId, warehouseIndex) => (
+                    <div key={warehouseId}>
+                      <Typography className={classes.warehouseName}>
+                        {
+                          warehouses.find(
+                            warehouse => warehouse.id === warehouseId
+                          ).name
+                        }
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        inputProps={{
+                          min: 0,
+                          type: "number"
+                        }}
+                        label={intl.formatMessage({
+                          defaultMessage: "Stock",
+                          id: "productVariantCreatePricesStockInputLabel"
+                        })}
+                        value={data.stock.value[warehouseIndex]}
+                        onChange={event =>
+                          onApplyToAllStockChange(
+                            parseInt(event.target.value, 10),
+                            warehouseIndex
+                          )
+                        }
+                      />
                     </div>
-                  </div>
+                  ))}
+                </div>
+              )}
+              <FormSpacer />
+              <FormControlLabel
+                value="attribute"
+                control={<Radio color="primary" />}
+                label={intl.formatMessage({
+                  defaultMessage: "Apply unique stock by attribute to each SKU"
+                })}
+                onChange={() => onApplyToAllChange("attribute")}
+              />
+              {data.stock.mode === "attribute" && (
+                <>
+                  <FormSpacer />
+                  <SingleSelectField
+                    className={classes.shortInput}
+                    choices={attributeChoices}
+                    label={intl.formatMessage({
+                      defaultMessage: "Select Attribute",
+                      description: "variant attribute"
+                    })}
+                    value={data.stock.attribute}
+                    onChange={event => onAttributeSelect(event.target.value)}
+                  />
+                  {stockAttributeValues && (
+                    <>
+                      <Hr className={classes.hrAttribute} />
+                      <FormSpacer />
+                      <div className={classes.attributeStockScroll}>
+                        <div className={classes.attributeStockContainer}>
+                          <div />
+                          {data.stock.attribute &&
+                            data.warehouses.map(warehouseId => (
+                              <Typography
+                                className={classes.warehouseName}
+                                key={warehouseId}
+                              >
+                                {
+                                  warehouses.find(
+                                    warehouse => warehouse.id === warehouseId
+                                  ).name
+                                }
+                              </Typography>
+                            ))}
+                          {stockAttributeValues.map(attributeValue => (
+                            <React.Fragment key={attributeValue.id}>
+                              <Typography>{attributeValue.name}</Typography>
+                              {data.warehouses.map(
+                                (warehouseId, warehouseIndex) => (
+                                  <TextField
+                                    fullWidth
+                                    inputProps={{
+                                      min: 0,
+                                      type: "number"
+                                    }}
+                                    label={intl.formatMessage({
+                                      defaultMessage: "Stock",
+                                      id:
+                                        "productVariantCreatePricesStockInputLabel"
+                                    })}
+                                    value={
+                                      data.stock.values.find(
+                                        value =>
+                                          value.slug === attributeValue.slug
+                                      ).value[warehouseIndex]
+                                    }
+                                    onChange={event =>
+                                      onAttributeValueChange(
+                                        attributeValue.slug,
+                                        parseInt(event.target.value, 10),
+                                        warehouseIndex
+                                      )
+                                    }
+                                    key={warehouseId}
+                                  />
+                                )
+                              )}
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
-            </>
-          )}
-          {data.stock.mode === "attribute" && !!data.stock.attribute && (
-            <>
+              {data.stock.mode === "attribute" && !!data.stock.attribute && (
+                <>
+                  <FormSpacer />
+                  <Hr />
+                </>
+              )}
               <FormSpacer />
-              <Hr />
-            </>
-          )}
-          <FormSpacer />
-          <FormControlLabel
-            value="skip"
-            control={<Radio color="primary" />}
-            label={intl.formatMessage({
-              defaultMessage: "Skip stock for now"
-            })}
-            onChange={() => onApplyToAllChange("skip")}
-          />
-        </RadioGroup>
+              <FormControlLabel
+                value="skip"
+                control={<Radio color="primary" />}
+                label={intl.formatMessage({
+                  defaultMessage: "Skip stock for now"
+                })}
+                onChange={() => onApplyToAllChange("skip")}
+              />
+            </RadioGroup>
+          </>
+        )}
       </CardContent>
     </Card>
   );
