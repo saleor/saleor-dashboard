@@ -201,6 +201,7 @@ export const simpleProductUpdateMutation = gql`
     $deleteStocks: [ID!]!
     $updateStocks: [StockInput!]!
     $weight: WeightScalar
+    $visibleInListings: Boolean
   ) {
     productUpdate(
       id: $id
@@ -216,6 +217,7 @@ export const simpleProductUpdateMutation = gql`
         basePrice: $basePrice
         seo: $seo
         weight: $weight
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
