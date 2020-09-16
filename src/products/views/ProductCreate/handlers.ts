@@ -17,6 +17,7 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
+import { compact } from "lodash";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
