@@ -28,7 +28,8 @@ import {
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
-  useSimpleProductUpdateMutation
+  useSimpleProductUpdateMutation,
+  useVariantCreateMutation
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -89,6 +90,22 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     displayLoader: true,
     variables: {
       first: 50
+    }
+  });
+  const [
+    productVariantCreate,
+    productVariantCreateOpts
+  ] = useVariantCreateMutation({
+    onCompleted: data => {
+      const errors = data.productVariantCreate.errors;
+      if (errors.length) {
+        errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
+      }
     }
   });
 
@@ -252,7 +269,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     variables => updateProduct({ variables }),
     variables => updateSimpleProduct({ variables }),
     updateChannels,
-    updateVariantChannels
+    updateVariantChannels,
+    productVariantCreate
   );
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables })
@@ -268,6 +286,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateProductOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
+    productVariantCreateOpts.loading ||
     loading;
   const formTransitionState = getMutationState(
     updateProductOpts.called || updateSimpleProductOpts.called,

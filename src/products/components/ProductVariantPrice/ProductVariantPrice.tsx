@@ -115,6 +115,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 const error = errors?.filter(
                   error => error.channels[0] === listing.id
                 );
+                const hasWrongValue = listing.price < 0;
                 return (
                   <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
@@ -122,7 +123,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!error?.length}
+                          error={!!error?.length || hasWrongValue}
                           label={intl.formatMessage({
                             defaultMessage: "Price"
                           })}
@@ -131,7 +132,17 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           currencySymbol={listing.currency}
                           onChange={e => onChange(listing.id, e.target.value)}
                           disabled={loading}
-                          hint={error?.length ? error[0].message : ""}
+                          hint={
+                            error?.length
+                              ? error[0].message
+                              : hasWrongValue
+                              ? intl.formatMessage({
+                                  defaultMessage:
+                                    "Product price cannot be lower than 0."
+                                })
+                              : ""
+                          }
+                          required
                         />
                       ) : (
                         <Skeleton />

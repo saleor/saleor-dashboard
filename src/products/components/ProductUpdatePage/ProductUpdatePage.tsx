@@ -178,11 +178,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
     const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0].stocks.map(
-      stock => stock.warehouse.id
-    );
+    const variantStocks =
+      product.variants[0]?.stocks.map(stock => stock.warehouse.id) || [];
     const stockDiff = diff(variantStocks, dataStocks);
-
     onSubmit({
       ...data,
       addStocks: stocks.filter(stock =>
@@ -242,6 +240,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           set,
           triggerChange
         );
+
+        const formDisabled =
+          !data.sku || data.channelListing?.some(channel => channel.price < 0);
 
         return (
           <>
@@ -389,7 +390,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
                 state={saveButtonBarState}
-                disabled={disabled || (!hasChanged && !hasChannelChanged)}
+                disabled={
+                  disabled ||
+                  formDisabled ||
+                  (!hasChanged && !hasChannelChanged)
+                }
               />
             </Container>
           </>

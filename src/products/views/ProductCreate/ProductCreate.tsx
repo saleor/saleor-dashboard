@@ -19,6 +19,7 @@ import { productListUrl, productUrl } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -116,7 +117,19 @@ export const ProductCreateView: React.FC = () => {
   const [
     productVariantCreate,
     productVariantCreateOpts
-  ] = useVariantCreateMutation({});
+  ] = useVariantCreateMutation({
+    onCompleted: data => {
+      const errors = data.productVariantCreate.errors;
+      if (errors.length) {
+        errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
+      }
+    }
+  });
 
   const handleSubmit = createHandler(
     productTypes,
@@ -170,7 +183,10 @@ export const ProductCreateView: React.FC = () => {
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
             ?.productChannelListingErrors
         }
-        errors={productCreateOpts.data?.productCreate.errors || []}
+        errors={[
+          ...(productCreateOpts.data?.productCreate.errors || []),
+          ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
+        ]}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
         fetchProductTypes={searchProductTypes}

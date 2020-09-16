@@ -161,20 +161,6 @@ export const productFragmentDetails = gql`
         currency
       }
     }
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
-      }
-    }
     images {
       ...ProductImageFragment
     }

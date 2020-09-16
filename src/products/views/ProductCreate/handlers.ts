@@ -22,6 +22,7 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
+import { compact } from "lodash";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
@@ -117,20 +118,28 @@ export function createHandler(
       errors = [...errors, ...channelErrors, ...variantErrors];
 
       if (channelErrors.length === 0 && variantErrors.length === 0) {
-        const variantResult = await updateVariantChannels({
-          variables: {
-            id: result[1].data.productVariantCreate.productVariant.id,
-            input: formData.channelListing.map(listing => ({
-              channelId: listing.id,
-              price: listing.price
-            }))
-          }
-        });
-        errors = [
-          ...errors,
-          ...variantResult.data.productVariantChannelListingUpdate
-            .productChannelListingErrors
-        ];
+        const variantPrices = compact(
+          formData.channelListing.map(
+            listing =>
+              listing.price !== null && {
+                channelId: listing.id,
+                price: listing.price
+              }
+          )
+        );
+        if (variantPrices.length) {
+          const variantResult = await updateVariantChannels({
+            variables: {
+              id: result[1].data.productVariantCreate.productVariant.id,
+              input: variantPrices
+            }
+          });
+          errors = [
+            ...errors,
+            ...variantResult.data.productVariantChannelListingUpdate
+              .productChannelListingErrors
+          ];
+        }
       }
     }
 

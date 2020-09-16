@@ -154,7 +154,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     stockQuantity: null,
     trackInventory: false
   };
-
   // Display values
   const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
     ProductAttributeValueChoices[]
@@ -234,6 +233,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
+
+        const formDisabled =
+          !data.sku || data.channelListing.some(channel => channel.price < 0);
 
         return (
           <Container>
@@ -351,7 +353,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onSave={submit}
               state={saveButtonBarState}
               disabled={
-                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+                disabled ||
+                !onSubmit ||
+                formDisabled ||
+                (!hasChanged && !hasChannelChanged)
               }
             />
           </Container>
