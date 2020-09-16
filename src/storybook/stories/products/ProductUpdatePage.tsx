@@ -39,6 +39,7 @@ const props: ProductUpdatePageProps = {
   onVariantReorder: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  onWarehouseConfigure: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",

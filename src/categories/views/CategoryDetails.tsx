@@ -211,7 +211,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         disabled={loading}
         errors={updateResult.data?.categoryUpdate.errors || []}
         onAddCategory={() => navigate(categoryAddUrl(id))}
-        onAddProduct={() => navigate(productAddUrl)}
+        onAddProduct={() => navigate(productAddUrl())}
         onBack={() =>
           navigate(
             maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())

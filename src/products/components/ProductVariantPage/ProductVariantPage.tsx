@@ -70,6 +70,7 @@ interface ProductVariantPageProps {
   onImageSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
+  onWarehouseConfigure();
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -88,7 +89,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onSubmit,
   onVariantClick,
   onVariantReorder,
-  onSetDefaultVariant
+  onSetDefaultVariant,
+  onWarehouseConfigure
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -240,6 +242,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <ProductStocks
                       data={data}
                       disabled={loading}
+                      hasVariants={true}
                       errors={errors}
                       stocks={stocks}
                       warehouses={warehouses}
@@ -263,6 +266,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         triggerChange();
                         removeStock(id);
                       }}
+                      onWarehouseConfigure={onWarehouseConfigure}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={changeMetadata} />

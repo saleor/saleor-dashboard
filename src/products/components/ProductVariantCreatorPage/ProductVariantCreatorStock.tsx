@@ -126,7 +126,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
         {!warehouses.length ? (
           <Typography color="textSecondary">
             <FormattedMessage
-              defaultMessage="There are no warehouses set up for your store. You can configure your variants without providing stock quantites."
+              defaultMessage="There are no warehouses set up for your store. You can configure variants without providing stock quantities."
               description="no warehouses info"
               id="productVariantCreatorWarehouseSectionDescription"
             />

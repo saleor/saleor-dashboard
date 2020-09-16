@@ -37,6 +37,7 @@ storiesOf("Views / Products / Create product", module)
       warehouses={warehouseList}
       taxTypes={taxTypes}
       weightUnit="kg"
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("When loading", () => (
@@ -60,6 +61,7 @@ storiesOf("Views / Products / Create product", module)
       warehouses={undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("form errors", () => (
@@ -89,5 +91,6 @@ storiesOf("Views / Products / Create product", module)
       warehouses={warehouseList}
       taxTypes={taxTypes}
       weightUnit="kg"
+      onWarehouseConfigure={() => undefined}
     />
   ));

@@ -3,6 +3,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
+import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -33,6 +34,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { warehouseListPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,6 +66,7 @@ interface ProductUpdateProps {
 }
 
 export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
+  const { action } = params;
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
@@ -312,6 +315,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
+        onWarehouseConfigure={() => openModal("leave-screen")}
         toolbar={
           <IconButton
             color="primary"
@@ -392,6 +396,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+      <LeaveScreenDialog
+        onSubmit={() => navigate(warehouseListPath)}
+        onClose={closeModal}
+        open={action === "leave-screen"}
+        confirmButtonState="default"
+      />
     </>
   );
 };

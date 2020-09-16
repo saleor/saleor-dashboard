@@ -1,4 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -13,6 +14,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { warehouseListPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -51,6 +53,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   productId,
   params
 }) => {
+  const { action } = params;
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -78,7 +81,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const [openModal] = createDialogActionHandlers<
+  const [openModal, closeModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
   >(
@@ -220,6 +223,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
+        onWarehouseConfigure={() => openModal("leave-screen")}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}
@@ -233,6 +237,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         }
         open={params.action === "remove"}
         name={data?.productVariant?.name}
+      />
+      <LeaveScreenDialog
+        onSubmit={() => navigate(warehouseListPath)}
+        onClose={closeModal}
+        open={action === "leave-screen"}
+        confirmButtonState="default"
       />
     </>
   );

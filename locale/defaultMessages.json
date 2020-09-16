@@ -304,7 +304,7 @@
   },
   "productVariantCreatorWarehouseSectionDescription": {
     "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. You can configure your variants without providing stock quantites."
+    "string": "There are no warehouses set up for your store. You can configure variants without providing stock quantities."
   },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
@@ -313,6 +313,22 @@
   "productVariantPriceOptionalCostPriceField": {
     "context": "optional field",
     "string": "Optional"
+  },
+  "productVariantWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please"
+  },
+  "productVariantWarehouseSectionDescriptionLink": {
+    "context": "no warehouses info",
+    "string": "configure a warehouse"
+  },
+  "productWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the product please"
+  },
+  "productWarehouseSectionDescriptionLink": {
+    "context": "no warehouses info",
+    "string": "configure a warehouse"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -1576,6 +1592,10 @@
   "src_dot_components_dot_LanguageSwitch_dot_4150219184": {
     "context": "button",
     "string": "{languageName} - {languageCode}"
+  },
+  "src_dot_components_dot_LeaveScreenDialog_dot_3281163715": {
+    "context": "leaving screen warning message",
+    "string": "You're leaving this screen. Do you want to save previously made changes?"
   },
   "src_dot_components_dot_ListField_dot_3099331554": {
     "context": "button",
