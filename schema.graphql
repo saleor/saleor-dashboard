@@ -851,6 +851,7 @@ type BulkProductError {
   attributes: [ID!]
   index: Int
   warehouses: [ID!]
+  channels: [ID!]
 }
 
 type BulkStockError {
@@ -1100,6 +1101,7 @@ enum ChannelErrorCode {
   REQUIRED
   UNIQUE
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT
+  CHANNELS_CURRENCY_MUST_BE_THE_SAME
 }
 
 type ChannelUpdate {
@@ -1124,7 +1126,6 @@ type Checkout implements Node & ObjectWithMetadata {
   channel: Channel!
   billingAddress: Address
   shippingAddress: Address
-  shippingMethod: ShippingMethod
   note: String!
   discount: Money
   discountName: String
@@ -1148,6 +1149,7 @@ type Checkout implements Node & ObjectWithMetadata {
   isShippingRequired: Boolean!
   lines: [CheckoutLine]
   shippingPrice: TaxedMoney
+  shippingMethod: ShippingMethod
   subtotalPrice: TaxedMoney
   token: UUID!
   totalPrice: TaxedMoney
@@ -1420,6 +1422,8 @@ type Collection implements Node & ObjectWithMetadata {
     )
   products(
     channel: String
+    filter: ProductFilterInput
+    sortBy: ProductOrder
     before: String
     after: String
     first: Int
@@ -2391,6 +2395,7 @@ input ExportFileSortingInput {
 input ExportInfoInput {
   attributes: [ID!]
   warehouses: [ID!]
+  channels: [ID!]
   fields: [ProductFieldEnum!]
 }
 
@@ -3363,6 +3368,11 @@ type Mutation {
     id: ID!
     input: ProductChannelListingUpdateInput!
   ): ProductChannelListingUpdate
+  productSetAvailabilityForPurchase(
+    isAvailable: Boolean!
+    productId: ID!
+    startDate: Date
+  ): ProductSetAvailabilityForPurchase
   productImageCreate(input: ProductImageCreateInput!): ProductImageCreate
   productVariantReorder(
     moves: [ReorderInput]!
@@ -3441,10 +3451,6 @@ type Mutation {
     id: ID!
     input: ProductVariantInput!
   ): ProductVariantUpdate
-  productVariantSetDefault(
-    productId: ID!
-    variantId: ID!
-  ): ProductVariantSetDefault
   productVariantTranslate(
     id: ID!
     input: NameTranslationInput!
@@ -3478,6 +3484,10 @@ type Mutation {
     @deprecated(
       reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31."
     )
+  productVariantChannelListingUpdate(
+    id: ID!
+    input: [ProductVariantChannelListingAddInput!]!
+  ): ProductVariantChannelListingUpdate
   variantImageAssign(imageId: ID!, variantId: ID!): VariantImageAssign
   variantImageUnassign(imageId: ID!, variantId: ID!): VariantImageUnassign
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
@@ -3633,6 +3643,7 @@ type Mutation {
   ): CheckoutBillingAddressUpdate
   checkoutComplete(
     checkoutId: ID!
+    paymentData: JSONString
     redirectUrl: String
     storeSource: Boolean = false
   ): CheckoutComplete
@@ -3869,7 +3880,7 @@ type Order implements Node & ObjectWithMetadata {
   shippingAddress: Address
   shippingMethod: ShippingMethod
   shippingMethodName: String
-  channel: Channel
+  channel: Channel!
   shippingPrice: TaxedMoney
   token: String!
   voucher: Voucher
@@ -4033,6 +4044,7 @@ enum OrderErrorCode {
   ZERO_QUANTITY
   INSUFFICIENT_STOCK
   DUPLICATED_INPUT_ITEM
+  MISSING_CHANNEL
 }
 
 type OrderEvent implements Node {
@@ -4523,7 +4535,7 @@ type PaymentGateway {
 input PaymentInput {
   gateway: String!
   token: String
-  amount: PositiveDecimal
+  amount: Decimal
   billingAddress: AddressInput
   returnUrl: String
 }
@@ -4734,7 +4746,6 @@ type Product implements Node & ObjectWithMetadata {
   weight: Weight
   availableForPurchase: Date
   visibleInListings: Boolean!
-  defaultVariant: ProductVariant
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]!
@@ -4750,7 +4761,6 @@ type Product implements Node & ObjectWithMetadata {
   thumbnail(size: Int): Image
   pricing: ProductPricingInfo
   isAvailable: Boolean
-  minimalVariantPrice: Money
   taxType: TaxType
   attributes: [SelectedAttribute!]!
   channelListing: [ProductChannelListing!]
@@ -4762,6 +4772,13 @@ type Product implements Node & ObjectWithMetadata {
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   isAvailableForPurchase: Boolean
+}
+
+type ProductAttributeError {
+  field: String
+  message: String
+  code: ProductErrorCode!
+  attributes: [ID!]
 }
 
 type ProductBulkDelete {
@@ -4787,6 +4804,7 @@ type ProductChannelListing implements Node {
   publicationDate: Date
   isPublished: Boolean!
   channel: Channel!
+  discountedPrice: Money
 }
 
 input ProductChannelListingAddInput {
@@ -4808,7 +4826,7 @@ type ProductChannelListingUpdate {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   product: Product
-  productsErrors: [ProductChannelListingError!]!
+  productChannelListingErrors: [ProductChannelListingError!]!
 }
 
 input ProductChannelListingUpdateInput {
@@ -4866,6 +4884,7 @@ input ProductCreateInput {
   taxCode: String
   seo: SeoInput
   weight: WeightScalar
+  visibleInListings: Boolean
   productType: ID!
 }
 
@@ -4901,6 +4920,7 @@ enum ProductErrorCode {
   UNIQUE
   VARIANT_NO_DIGITAL_CONTENT
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL
 }
 
 enum ProductFieldEnum {
@@ -4909,12 +4929,13 @@ enum ProductFieldEnum {
   PRODUCT_TYPE
   CATEGORY
   VISIBLE
+  AVAILABLE_FOR_PURCHASE
+  SEARCHABLE
   PRODUCT_WEIGHT
   COLLECTIONS
   CHARGE_TAXES
   PRODUCT_IMAGES
   VARIANT_SKU
-  VARIANT_PRICE
   COST_PRICE
   VARIANT_WEIGHT
   VARIANT_IMAGES
@@ -5032,6 +5053,7 @@ input ProductInput {
   taxCode: String
   seo: SeoInput
   weight: WeightScalar
+  visibleInListings: Boolean
 }
 
 input ProductOrder {
@@ -5331,7 +5353,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
     @deprecated(
       reason: "Use the quantityAvailable field instead. This field will be removed after 2020-07-31."
     )
-  price: Money
+  channelListing: [ProductVariantChannelListing!]
   pricing: VariantPricingInfo
   isAvailable: Boolean
     @deprecated(
@@ -5361,12 +5383,12 @@ type ProductVariantBulkCreate {
 
 input ProductVariantBulkCreateInput {
   attributes: [AttributeValueInput]!
-  costPrice: PositiveDecimal
-  price: PositiveDecimal
+  costPrice: Decimal
   sku: String!
   trackInventory: Boolean
   weight: WeightScalar
   stocks: [StockInput!]
+  channelListings: [ProductVariantChannelListingAddInput!]
 }
 
 type ProductVariantBulkDelete {
@@ -5376,6 +5398,26 @@ type ProductVariantBulkDelete {
     )
   count: Int!
   productErrors: [ProductError!]!
+}
+
+type ProductVariantChannelListing implements Node {
+  id: ID!
+  channel: Channel!
+  price: Money
+}
+
+input ProductVariantChannelListingAddInput {
+  channelId: ID!
+  price: Decimal!
+}
+
+type ProductVariantChannelListingUpdate {
+  errors: [Error!]!
+    @deprecated(
+      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
+    )
+  variant: ProductVariant
+  productChannelListingErrors: [ProductChannelListingError!]!
 }
 
 type ProductVariantClearMeta {
@@ -5418,8 +5460,7 @@ type ProductVariantCreate {
 
 input ProductVariantCreateInput {
   attributes: [AttributeValueInput]!
-  costPrice: PositiveDecimal
-  price: PositiveDecimal
+  costPrice: Decimal
   sku: String
   trackInventory: Boolean
   weight: WeightScalar
@@ -5443,8 +5484,7 @@ input ProductVariantFilterInput {
 
 input ProductVariantInput {
   attributes: [AttributeValueInput]
-  costPrice: PositiveDecimal
-  price: PositiveDecimal
+  costPrice: Decimal
   sku: String
   trackInventory: Boolean
   weight: WeightScalar
@@ -5585,8 +5625,9 @@ type Query {
     last: Int
   ): StockCountableConnection
   shop: Shop!
-  shippingZone(id: ID!): ShippingZone
+  shippingZone(id: ID!, channel: String): ShippingZone
   shippingZones(
+    channel: String
     before: String
     after: String
     first: Int
@@ -6214,29 +6255,29 @@ enum ShippingErrorCode {
 type ShippingMethod implements Node {
   id: ID!
   name: String!
-  price: Money
-  minimumOrderPrice: Money
-  maximumOrderPrice: Money
   minimumOrderWeight: Weight
   maximumOrderWeight: Weight
   type: ShippingMethodTypeEnum
   translation(languageCode: LanguageCodeEnum!): ShippingMethodTranslation
-  channels: [ShippingMethodChannelListing]
+  channelListing: [ShippingMethodChannelListing!]
+  price: Money
+  maximumOrderPrice: Money
+  minimumOrderPrice: Money
 }
 
 type ShippingMethodChannelListing implements Node {
   id: ID!
   channel: Channel!
-  price: Float
-  minValue: Float
-  maxValue: Float
+  minimumOrderPrice: Money
+  maximumOrderPrice: Money
+  price: Money
 }
 
 input ShippingMethodChannelListingAddInput {
   channelId: ID!
   price: Decimal
-  minValue: Decimal
-  maxValue: Decimal
+  minimumOrderPrice: Decimal
+  maximumOrderPrice: Decimal
 }
 
 input ShippingMethodChannelListingInput {
@@ -6302,8 +6343,6 @@ type ShippingPriceDelete {
 
 input ShippingPriceInput {
   name: String
-  minimumOrderPrice: Decimal
-  maximumOrderPrice: Decimal
   minimumOrderWeight: WeightScalar
   maximumOrderWeight: WeightScalar
   type: ShippingMethodTypeEnum

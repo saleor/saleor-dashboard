@@ -31,7 +31,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
 
   const { data, refetch } = useChannelsList({ displayLoader: true });
   const { data: ordersData } = useOrderListQuery({
-    variables: { channel: params.id, first: 1 }
+    variables: { first: 1 }
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<

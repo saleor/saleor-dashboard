@@ -17,6 +17,8 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
   getAttributeInputFromProductType,
   getChoices,
@@ -38,6 +40,7 @@ import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
+  createChannelsPriceChangeHandler,
   createProductTypeSelectHandler
 } from "../../utils/handlers";
 import ProductAttributes, {
@@ -46,13 +49,11 @@ import ProductAttributes, {
 } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 
 interface FormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string;
   changeTaxCode: boolean;
@@ -63,14 +64,12 @@ interface FormData extends MetadataFormData {
   name: string;
   slug: string;
   productType: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
   stockQuantity: number;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductCreatePageSubmitData extends FormData {
@@ -80,6 +79,9 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -111,7 +113,7 @@ interface ProductCreatePageProps {
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   allChannelsCount,
-  currency,
+  channelsErrors,
   currentChannels = [],
   disabled,
   categories: categoryChoiceList,
@@ -172,7 +174,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
   const initialData: FormData = {
     ...(initial || {}),
-    availableForPurchase: "",
     basePrice: 0,
     category: "",
     changeTaxCode: false,
@@ -191,7 +192,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     stockQuantity: null,
     taxCode: null,
     trackInventory: false,
-    visibleInListings: false,
     weight: ""
   };
 
@@ -278,6 +278,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
+        const handleChannelPriceChange = createChannelsPriceChangeHandler(
+          data,
+          set,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -314,12 +319,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       weightUnit={weightUnit}
                       onChange={change}
                     />
-                    <ProductPricing
-                      currency={currency}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handleChannelPriceChange}
                     />
                     <CardSpacer />
                     <ProductStocks

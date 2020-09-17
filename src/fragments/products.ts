@@ -105,6 +105,17 @@ export const productVariantAttributesFragment = gql`
         }
       }
     }
+    channelListing {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      discountedPrice {
+        amount
+        currency
+      }
+    }
   }
 `;
 
@@ -154,9 +165,14 @@ export const productFragmentDetails = gql`
       channel {
         id
         name
+        currencyCode
       }
       isPublished
       publicationDate
+      discountedPrice {
+        amount
+        currency
+      }
     }
     pricing {
       priceRangeUndiscounted {
@@ -179,14 +195,18 @@ export const productFragmentDetails = gql`
       id
       sku
       name
-      price {
-        ...Money
-      }
       margin
       stocks {
         ...StockFragment
       }
       trackInventory
+      pricing {
+        price {
+          gross {
+            ...Money
+          }
+        }
+      }
     }
     productType {
       id
@@ -242,9 +262,6 @@ export const fragmentVariant = gql`
       url
     }
     name
-    price {
-      ...Money
-    }
     product {
       id
       defaultVariant {
@@ -268,6 +285,16 @@ export const fragmentVariant = gql`
       }
       defaultVariant {
         id
+      }
+    }
+    channelListing {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      price {
+        ...Money
       }
     }
     sku
