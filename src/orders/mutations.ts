@@ -1,4 +1,3 @@
-import { fragmentAddress } from "@saleor/fragments/address";
 import {
   invoiceErrorFragment,
   orderErrorFragment
@@ -282,7 +281,7 @@ export const TypedOrderAddNoteMutation = TypedMutation<
 >(orderAddNoteMutation);
 
 const orderUpdateMutation = gql`
-  ${fragmentAddress}
+  ${fragmentOrderDetails}
   ${orderErrorFragment}
   mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
     orderUpdate(id: $id, input: $input) {
@@ -290,14 +289,7 @@ const orderUpdateMutation = gql`
         ...OrderErrorFragment
       }
       order {
-        id
-        userEmail
-        billingAddress {
-          ...AddressFragment
-        }
-        shippingAddress {
-          ...AddressFragment
-        }
+        ...OrderDetailsFragment
       }
     }
   }
