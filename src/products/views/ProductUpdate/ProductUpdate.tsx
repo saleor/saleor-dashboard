@@ -95,19 +95,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     productVariantCreate,
     productVariantCreateOpts
-  ] = useVariantCreateMutation({
-    onCompleted: data => {
-      const errors = data.productVariantCreate.errors;
-      if (errors.length) {
-        errors.map(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl)
-          })
-        );
-      }
-    }
-  });
+  ] = useVariantCreateMutation({});
 
   const { data: channelsData } = useChannelsList({});
   const { data, loading, refetch } = useProductDetailsQuery({
@@ -302,7 +290,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     searchCollectionsOpts?.data?.search?.edges || [].map(edge => edge.node);
   const errors = [
     ...(updateProductOpts?.data?.productUpdate?.errors || []),
-    ...(updateSimpleProductOpts?.data?.productUpdate?.errors || [])
+    ...(updateSimpleProductOpts?.data?.productUpdate?.errors || []),
+    ...(productVariantCreateOpts?.data?.productVariantCreate.errors || [])
   ];
   const channelsErrors = [
     ...(updateChannelsOpts?.data?.productChannelListingUpdate

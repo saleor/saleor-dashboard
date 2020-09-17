@@ -128,29 +128,18 @@ export function createHandler(
           )
         );
         if (variantPrices.length) {
-          const variantResult = await updateVariantChannels({
+          updateVariantChannels({
             variables: {
               id: result[1].data.productVariantCreate.productVariant.id,
               input: variantPrices
             }
           });
-          errors = [
-            ...errors,
-            ...variantResult.data.productVariantChannelListingUpdate
-              .productChannelListingErrors
-          ];
         }
       }
+    } else {
+      updateChannels(getChannelsVariables(productId, formData.channelListing));
     }
 
-    const channelResponse = await updateChannels(
-      getChannelsVariables(productId, formData.channelListing)
-    );
-
-    return [
-      ...errors,
-      ...channelResponse.data.productChannelListingUpdate
-        .productChannelListingErrors
-    ];
+    return errors;
   };
 }

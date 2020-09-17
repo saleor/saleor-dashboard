@@ -67,9 +67,24 @@ export const ProductCreateView: React.FC = () => {
   const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
   const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
-    {}
-  );
+  const handleSuccess = (productId: string) => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        defaultMessage: "Product created"
+      })
+    });
+    navigate(productUrl(productId));
+  };
+
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
+    onCompleted: data => {
+      const productId = data.productChannelListingUpdate.product.id;
+      if (productId) {
+        handleSuccess(productId);
+      }
+    }
+  });
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
@@ -94,26 +109,9 @@ export const ProductCreateView: React.FC = () => {
     setChannelsModalOpen(false);
   };
 
-  const handleSuccess = (productId: string) => {
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "Product created"
-      })
-    });
-    navigate(productUrl(productId));
-  };
-
   const handleBack = () => navigate(productListUrl());
 
-  const [productCreate, productCreateOpts] = useProductCreateMutation({
-    onCompleted: data => {
-      const productId = data.productCreate.product.id;
-      if (productId) {
-        handleSuccess(productId);
-      }
-    }
-  });
+  const [productCreate, productCreateOpts] = useProductCreateMutation({});
   const [
     productVariantCreate,
     productVariantCreateOpts

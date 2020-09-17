@@ -141,7 +141,7 @@ export function createUpdateHandler(
         );
         errors = getSimpleProductErrors(result.data);
 
-        const variantResult = await updateVariantChannels({
+        updateVariantChannels({
           variables: {
             id: product.variants[0].id,
             input: data.channelListing.map(listing => ({
@@ -150,11 +150,6 @@ export function createUpdateHandler(
             }))
           }
         });
-        errors = [
-          ...errors,
-          ...variantResult.data.productVariantChannelListingUpdate
-            .productChannelListingErrors
-        ];
       }
     }
     const productChannels = createChannelsDataFromProduct(
@@ -165,7 +160,7 @@ export function createUpdateHandler(
       data.channelListing,
       (a, b) => a.id === b.id
     );
-    const result = await updateChannels({
+    updateChannels({
       variables: {
         id: product.id,
         input: {
@@ -180,10 +175,7 @@ export function createUpdateHandler(
         }
       }
     });
-    return [
-      ...errors,
-      ...result.data.productChannelListingUpdate.productChannelListingErrors
-    ];
+    return errors;
   };
 }
 
