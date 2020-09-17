@@ -235,7 +235,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
 
         const formDisabled =
-          !data.sku || data.channelListing.some(channel => channel.price < 0);
+          !data.sku ||
+          data.channelListing.some(
+            channel => channel.price < 0 || !channel.price
+          );
 
         return (
           <Container>

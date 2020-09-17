@@ -242,7 +242,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         );
 
         const formDisabled =
-          !data.sku || data.channelListing?.some(channel => channel.price < 0);
+          !data.sku ||
+          data.channelListing?.some(
+            channel => channel.price < 0 || !channel.price
+          );
 
         return (
           <>
@@ -296,7 +299,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       variants={variants}
                       fallbackPrice={
                         product?.variants?.length
-                          ? product.variants[0].pricing.price.gross
+                          ? product.variants[0].channelListing[0]?.price
                           : undefined
                       }
                       onRowClick={onVariantShow}

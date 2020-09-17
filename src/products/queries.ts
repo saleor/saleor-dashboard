@@ -125,20 +125,6 @@ const productListQuery = gql`
               name
             }
           }
-          pricing {
-            priceRangeUndiscounted {
-              start {
-                gross {
-                  ...Money
-                }
-              }
-              stop {
-                gross {
-                  ...Money
-                }
-              }
-            }
-          }
         }
       }
       pageInfo {

@@ -124,8 +124,17 @@ export function createUpdateHandler(
         errors = productVariantResult.data.productVariantCreate.errors;
 
         const variantId =
-          productVariantResult.data.productVariantCreate.productVariant?.id;
+          productVariantResult.data.productVariantCreate?.productVariant?.id;
         if (variantId) {
+          updateVariantChannels({
+            variables: {
+              id: variantId,
+              input: data.channelListing.map(listing => ({
+                channelId: listing.id,
+                price: listing.price
+              }))
+            }
+          });
           const result = await updateSimpleProduct(
             getSimpleProductVariables(productVariables, data, variantId)
           );

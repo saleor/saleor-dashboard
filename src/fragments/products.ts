@@ -87,20 +87,6 @@ export const productVariantAttributesFragment = gql`
         }
       }
     }
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
-      }
-    }
     channelListing {
       channel {
         id
@@ -173,11 +159,15 @@ export const productFragmentDetails = gql`
         ...StockFragment
       }
       trackInventory
-      pricing {
+      channelListing {
+        channel {
+          id
+          name
+          currencyCode
+        }
         price {
-          gross {
-            ...Money
-          }
+          amount
+          currency
         }
       }
     }

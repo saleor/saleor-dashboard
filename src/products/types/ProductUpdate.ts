@@ -66,39 +66,6 @@ export interface ProductUpdate_productUpdate_product_productType {
   hasVariants: boolean;
 }
 
-export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_start_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductUpdate_productUpdate_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted | null;
-}
-
 export interface ProductUpdate_productUpdate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -178,20 +145,23 @@ export interface ProductUpdate_productUpdate_product_variants_stocks {
   warehouse: ProductUpdate_productUpdate_product_variants_stocks_warehouse;
 }
 
-export interface ProductUpdate_productUpdate_product_variants_pricing_price_gross {
+export interface ProductUpdate_productUpdate_product_variants_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductUpdate_productUpdate_product_variants_channelListing_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductUpdate_productUpdate_product_variants_pricing_price {
-  __typename: "TaxedMoney";
-  gross: ProductUpdate_productUpdate_product_variants_pricing_price_gross;
-}
-
-export interface ProductUpdate_productUpdate_product_variants_pricing {
-  __typename: "VariantPricingInfo";
-  price: ProductUpdate_productUpdate_product_variants_pricing_price | null;
+export interface ProductUpdate_productUpdate_product_variants_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductUpdate_productUpdate_product_variants_channelListing_channel;
+  price: ProductUpdate_productUpdate_product_variants_channelListing_price | null;
 }
 
 export interface ProductUpdate_productUpdate_product_variants {
@@ -202,7 +172,7 @@ export interface ProductUpdate_productUpdate_product_variants {
   margin: number | null;
   stocks: (ProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  pricing: ProductUpdate_productUpdate_product_variants_pricing | null;
+  channelListing: ProductUpdate_productUpdate_product_variants_channelListing[] | null;
 }
 
 export interface ProductUpdate_productUpdate_product {
@@ -210,7 +180,6 @@ export interface ProductUpdate_productUpdate_product {
   id: string;
   attributes: ProductUpdate_productUpdate_product_attributes[];
   productType: ProductUpdate_productUpdate_product_productType;
-  pricing: ProductUpdate_productUpdate_product_pricing | null;
   channelListing: ProductUpdate_productUpdate_product_channelListing[] | null;
   name: string;
   descriptionJson: any;

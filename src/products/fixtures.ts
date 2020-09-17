@@ -188,38 +188,6 @@ export const product: (
   isFeatured: false,
   margin: { __typename: "Margin", start: 2, stop: 7 },
   name: "Ergonomic Plastic Bacon",
-  pricing: {
-    __typename: "ProductPricingInfo",
-    priceRangeUndiscounted: {
-      __typename: "TaxedMoneyRange",
-      start: {
-        __typename: "TaxedMoney",
-        gross: {
-          __typename: "Money",
-          amount: 12.3,
-          currency: "USD"
-        },
-        net: {
-          __typename: "Money",
-          amount: 10,
-          currency: "USD"
-        }
-      },
-      stop: {
-        __typename: "TaxedMoney",
-        gross: {
-          __typename: "Money",
-          amount: 24.6,
-          currency: "USD"
-        },
-        net: {
-          __typename: "Money",
-          amount: 20,
-          currency: "USD"
-        }
-      }
-    }
-  },
   productType: {
     __typename: "ProductType",
     hasVariants: true,
@@ -278,6 +246,7 @@ export const product: (
   variants: [
     {
       __typename: "ProductVariant",
+      channelListing: [],
       id: "pv75934",
       images: [
         {
@@ -293,17 +262,6 @@ export const product: (
       ],
       margin: 2,
       name: "Cordoba Oro",
-      pricing: {
-        __typename: "VariantPricingInfo",
-        price: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 1,
-            currency: "USD"
-          }
-        }
-      },
       sku: "87192-94370",
       stocks: [
         {
@@ -325,6 +283,36 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
+      channelListing: [
+        {
+          __typename: "ProductVariantChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "123",
+            name: "Channel1"
+          },
+          price: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          }
+        },
+        {
+          __typename: "ProductVariantChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "124",
+            name: "Channel2"
+          },
+          price: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          }
+        }
+      ],
       id: "pv68615",
       images: [
         {
@@ -340,10 +328,6 @@ export const product: (
       ],
       margin: 7,
       name: "silver",
-      pricing: {
-        __typename: "VariantPricingInfo",
-        price: null
-      },
       sku: "69055-15190",
       stocks: [
         {
@@ -389,28 +373,6 @@ export const products = (
     id: "UHJvZHVjdDo2MQ==",
     isAvailable: true,
     name: "Nebula Night Sky Paint",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -450,28 +412,6 @@ export const products = (
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
     name: "Light Speed Yellow Paint",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -511,28 +451,6 @@ export const products = (
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
     name: "Hyperspace Turquoise Paint",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -587,28 +505,6 @@ export const products = (
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
     name: "Pineapple Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -663,29 +559,6 @@ export const products = (
     id: "UHJvZHVjdDo3Ng==",
     isAvailable: true,
     name: "Coconut Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -740,28 +613,6 @@ export const products = (
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
     name: "Apple Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -816,28 +667,6 @@ export const products = (
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
     name: "Orange Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -892,28 +721,6 @@ export const products = (
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
     name: "Banana Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -968,28 +775,6 @@ export const products = (
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
     name: "Bean Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1044,28 +829,6 @@ export const products = (
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
     name: "Carrot Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1120,28 +883,6 @@ export const products = (
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
     name: "Green Juice",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1196,28 +937,6 @@ export const products = (
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
     name: "Code Division T-shirt",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1272,28 +991,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
     name: "Polo Shirt",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1348,28 +1045,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
     name: "Polo Shirt",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1424,28 +1099,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
     name: "Polo Shirt",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1500,28 +1153,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
     name: "Polo Shirt",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1576,28 +1207,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
     name: "Black Hoodie",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1652,28 +1261,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
     name: "Blue Hoodie",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1728,28 +1315,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
     name: "Mustard Hoodie",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1804,28 +1369,6 @@ export const products = (
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
     name: "Colored Parrot Cushion",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,

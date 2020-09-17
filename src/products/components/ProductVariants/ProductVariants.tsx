@@ -15,7 +15,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
-import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
+import { ProductVariant_channelListing_price } from "@saleor/fragments/types/ProductVariant";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -170,7 +170,7 @@ function getAvailabilityLabel(
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
-  fallbackPrice?: ProductVariant_costPrice;
+  fallbackPrice?: ProductVariant_channelListing_price;
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
   onVariantsAdd?();
@@ -327,8 +327,8 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   <Hidden smDown>
                     <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
-                        variant.pricing?.price?.gross ? (
-                          <Money money={variant.pricing.price.gross} />
+                        variant.channelListing[0]?.price ? (
+                          <Money money={variant.channelListing[0]?.price} />
                         ) : fallbackPrice ? (
                           <Money money={fallbackPrice} />
                         ) : (

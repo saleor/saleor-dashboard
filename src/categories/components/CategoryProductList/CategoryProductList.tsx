@@ -4,7 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Checkbox from "@saleor/components/Checkbox";
-import Money from "@saleor/components/Money";
+// import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
@@ -19,8 +19,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  CategoryDetails_category_products_edges_node,
-  CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+  CategoryDetails_category_products_edges_node
+  // CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
 } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
@@ -97,50 +97,50 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
 
   const numberOfColumns = 5;
 
-  const getProductPrice = (
-    priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
-  ) => {
-    if (!priceRangeUndiscounted) {
-      return null;
-    }
+  // const getProductPrice = (
+  //   priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+  // ) => {
+  //   if (!priceRangeUndiscounted) {
+  //     return null;
+  //   }
 
-    const { start, stop } = priceRangeUndiscounted;
-    const {
-      gross: { amount: startAmount }
-    } = start;
-    const {
-      gross: { amount: stopAmount }
-    } = stop;
+  //   const { start, stop } = priceRangeUndiscounted;
+  //   const {
+  //     gross: { amount: startAmount }
+  //   } = start;
+  //   const {
+  //     gross: { amount: stopAmount }
+  //   } = stop;
 
-    if (startAmount === stopAmount) {
-      return (
-        <Money
-          money={{
-            amount: startAmount,
-            currency: start.gross.currency
-          }}
-        />
-      );
-    } else {
-      return (
-        <>
-          <Money
-            money={{
-              amount: startAmount,
-              currency: start.gross.currency
-            }}
-          />
-          {" - "}
-          <Money
-            money={{
-              amount: stopAmount,
-              currency: stop.gross.currency
-            }}
-          />
-        </>
-      );
-    }
-  };
+  //   if (startAmount === stopAmount) {
+  //     return (
+  //       <Money
+  //         money={{
+  //           amount: startAmount,
+  //           currency: start.gross.currency
+  //         }}
+  //       />
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <Money
+  //           money={{
+  //             amount: startAmount,
+  //             currency: start.gross.currency
+  //           }}
+  //         />
+  //         {" - "}
+  //         <Money
+  //           money={{
+  //             amount: stopAmount,
+  //             currency: stop.gross.currency
+  //           }}
+  //         />
+  //       </>
+  //     );
+  //   }
+  // };
 
   return (
     <div className={classes.tableContainer}>
@@ -255,11 +255,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {product?.pricing?.priceRangeUndiscounted ? (
+                    {/* {product?.pricing?.priceRangeUndiscounted ? (
                       getProductPrice(product?.pricing?.priceRangeUndiscounted)
                     ) : (
                       <Skeleton />
-                    )}
+                    )} */}
                   </TableCell>
                 </TableRow>
               );

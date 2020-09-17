@@ -132,6 +132,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           currencySymbol={listing.currency}
                           onChange={e => onChange(listing.id, e.target.value)}
                           disabled={loading}
+                          required
                           hint={
                             error?.length
                               ? error[0].message
@@ -142,7 +143,6 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                                 })
                               : ""
                           }
-                          required
                         />
                       ) : (
                         <Skeleton />

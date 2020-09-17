@@ -1,11 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
-import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { ProductCreatePageSubmitData } from "@saleor/products/components/ProductCreatePage";
 import {
   ProductChannelListingUpdate,
-  ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors,
   ProductChannelListingUpdateVariables
 } from "@saleor/products/types/ProductChannelListingUpdate";
 import {
@@ -14,7 +10,6 @@ import {
 } from "@saleor/products/types/ProductCreate";
 import {
   ProductVariantChannelListingUpdate,
-  ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors,
   ProductVariantChannelListingUpdateVariables
 } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
@@ -22,7 +17,6 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-import { compact } from "lodash";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
@@ -88,16 +82,8 @@ export function createHandler(
       }
     };
 
-    let errors: Array<
-      | ProductErrorFragment
-      | StockErrorFragment
-      | BulkStockErrorFragment
-      | ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors
-      | ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors
-    >;
-
     const result = await productCreate(productVariables);
-    errors = [...result.data.productCreate.errors];
+    const errors = result.data.productCreate.errors;
 
     const hasVariants = productTypes.find(
       product => product.id === formData.productType
@@ -111,26 +97,22 @@ export function createHandler(
         ),
         productVariantCreate(getSimpleProductVariables(formData, productId))
       ]);
-      const channelErrors =
-        result[0].data.productChannelListingUpdate.productChannelListingErrors;
       const variantErrors = result[1].data.productVariantCreate.errors;
-
-      errors = [...errors, ...channelErrors, ...variantErrors];
-
-      if (channelErrors.length === 0 && variantErrors.length === 0) {
-        const variantPrices = compact(
-          formData.channelListing.map(
+      const variantId = result[1].data.productVariantCreate.productVariant.id;
+      if (variantErrors.length === 0 && variantId) {
+        const variantPrices = formData.channelListing
+          .map(
             listing =>
               listing.price !== null && {
                 channelId: listing.id,
                 price: listing.price
               }
           )
-        );
+          .filter(Boolean);
         if (variantPrices.length) {
           updateVariantChannels({
             variables: {
-              id: result[1].data.productVariantCreate.productVariant.id,
+              id: variantId,
               input: variantPrices
             }
           });
