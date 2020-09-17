@@ -1,6 +1,7 @@
+import { ChannelData, ChannelPriceData } from "@saleor/channels/utils";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
@@ -16,23 +17,75 @@ export function createAttributeChangeHandler(
   };
 }
 
-export function createChannelsChangeHandler(
-  data: ProductUpdateFormData,
-  updateChannels: (data: ProductUpdateFormData) => void,
+export function createChannelsPriceChangeHandler(
+  channelListing: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
-  return (index: number) => (channelData: {
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => {
-    const channels = data.channelListing;
-    const newChannels = [...channels];
-    newChannels[index] = {
-      ...channels[index],
-      isPublished: channelData.isPublished,
-      publicationDate: channelData.publicationDate
-    };
-    updateChannels({ ...data, channelListing: newChannels });
+  return (id: string, price: number) => {
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        price
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    updateChannels(updatedChannels);
+    triggerChange();
+  };
+}
+
+export function createChannelsChangeHandler(
+  channelListing: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
+  triggerChange: () => void
+) {
+  return (
+    id: string,
+    {
+      isPublished,
+      publicationDate
+    }: { isPublished: boolean; publicationDate: string | null }
+  ) => {
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        isPublished: isPublished || channel.isPublished,
+        publicationDate: publicationDate || channel.publicationDate
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    updateChannels(updatedChannels);
+    triggerChange();
+  };
+}
+
+export function createVariantChannelsChangeHandler(
+  channelListing: ProductVariantChannelData[],
+  setData: (data: ProductVariantChannelData[]) => void,
+  triggerChange: () => void
+) {
+  return (id: string, price: number) => {
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        price
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    setData(updatedChannels);
     triggerChange();
   };
 }
@@ -74,6 +127,17 @@ export function createProductTypeSelectHandler(
     setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }
+
+export const getChannelsInput = (channels: ChannelPriceData[]) =>
+  channels?.map(channel => ({
+    data: channel,
+    id: channel.id,
+    label: channel.name,
+    value: {
+      costPrice: channel.costPrice,
+      price: channel.price
+    }
+  }));
 
 interface ProductAvailabilityArgs {
   availableForPurchase: string | null;

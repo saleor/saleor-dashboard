@@ -17,6 +17,8 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
@@ -33,7 +35,6 @@ import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -43,6 +44,7 @@ import ProductUpdateForm from "./form";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   placeholderImage: string;
@@ -91,6 +93,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
+  channelsErrors,
   allChannelsCount,
   currentChannels = [],
   collections: collectionChoiceList,
@@ -145,7 +148,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-  const currency = product?.variants[0]?.price.currency;
   const hasVariants = product?.productType?.hasVariants;
   const taxTypeChoices =
     taxTypes?.map(taxType => ({
@@ -205,12 +207,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 <CardSpacer />
                 {!!product?.productType && !hasVariants && (
                   <>
-                    <ProductPricing
-                      currency={currency}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handlers.changeChannelPrice}
                     />
                     <CardSpacer />
                   </>
@@ -220,11 +221,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     disabled={disabled}
                     variants={variants}
                     product={product}
-                    fallbackPrice={
-                      product?.variants?.length
-                        ? product.variants[0].price
-                        : undefined
-                    }
                     onRowClick={onVariantShow}
                     onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}

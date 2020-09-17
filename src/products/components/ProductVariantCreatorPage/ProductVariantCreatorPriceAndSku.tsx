@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
@@ -13,6 +14,7 @@ import ProductVariantCreatorStock from "./ProductVariantCreatorStock";
 export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatorPriceAndSkuProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  channelListings: ChannelPriceData[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];
@@ -34,6 +36,7 @@ export interface ProductVariantCreatorPriceAndSkuProps {
 
 const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSkuProps> = ({
   attributes,
+  channelListings,
   currencySymbol,
   data,
   warehouses,
@@ -48,6 +51,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
   <>
     <ProductVariantCreatorPrices
       attributes={attributes}
+      channelListings={channelListings}
       currencySymbol={currencySymbol}
       data={data}
       onApplyToAllChange={value => onApplyToAllChange(value, "price")}

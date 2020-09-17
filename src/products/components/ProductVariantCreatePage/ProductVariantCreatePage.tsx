@@ -17,7 +17,7 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductVariantAttributes from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-import ProductVariantPrice from "../ProductVariantPrice";
+// import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
 
 interface ProductVariantCreatePageProps {
@@ -37,7 +37,7 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
-  currencySymbol,
+  // currencySymbol,
   disabled,
   errors,
   header,
@@ -84,13 +84,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={handlers.selectAttribute}
               />
               <CardSpacer />
-              <ProductVariantPrice
-                data={data}
-                errors={errors}
-                currencySymbol={currencySymbol}
-                loading={disabled}
-                onChange={change}
-              />
+              {/* <ProductVariantPrice
+                  errors={errors}
+                  currencySymbol={currencySymbol}
+                  loading={disabled}
+                  onChange={change}
+                /> */}
               <CardSpacer />
               <ProductShipping
                 data={data}

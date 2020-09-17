@@ -29,7 +29,6 @@ export const orderListQuery = gql`
     $before: String
     $filter: OrderFilterInput
     $sort: OrderSortingInput
-    $channel: String
   ) {
     orders(
       before: $before
@@ -38,7 +37,6 @@ export const orderListQuery = gql`
       last: $last
       filter: $filter
       sortBy: $sort
-      channel: $channel
     ) {
       edges {
         node {

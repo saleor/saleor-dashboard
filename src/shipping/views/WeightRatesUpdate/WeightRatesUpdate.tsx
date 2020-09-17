@@ -80,7 +80,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       }
     }
   });
-  const shippingChannels = createShippingChannelsFromRate(rate?.channels);
+  const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
   const allChannels = createShippingChannels(channelsData?.channels);
 
   const {

@@ -58,7 +58,7 @@ export const warehouses: WarehouseFragment[] = [
 ];
 
 export const secondStep: ProductVariantCreateFormData = {
-  ...createInitialForm([], "10.99", warehouses),
+  ...createInitialForm([], [], warehouses),
   attributes: [
     {
       id: attributes[0].id,

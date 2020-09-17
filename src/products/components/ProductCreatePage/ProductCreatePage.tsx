@@ -10,10 +10,12 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
@@ -26,7 +28,6 @@ import { FetchMoreProps } from "../../../types";
 import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -37,6 +38,7 @@ import ProductCreateForm, {
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductChannelListingErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
@@ -65,6 +67,8 @@ interface ProductCreatePageProps {
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   allChannelsCount,
+  channelsErrors,
+  currentChannels = [],
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -125,6 +129,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       setSelectedTaxType={setSelectedTaxType}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
+      currentChannels={currentChannels}
     >
       {({ change, data, handlers, hasChanged, submit }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
@@ -166,11 +171,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       onChange={change}
                     />
                     <CardSpacer />
-                    <ProductPricing
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handlers.changeChannelPrice}
                     />
                     <CardSpacer />
                     <ProductStocks

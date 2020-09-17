@@ -23,6 +23,7 @@ const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
   categories: [product.category],
+  channelsErrors: [],
   collections,
   currentChannels: [],
   defaultWeightUnit: "kg",

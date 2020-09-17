@@ -50,20 +50,38 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   currency: string;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channels_channel {
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channels {
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channels_channel;
-  price: number | null;
-  minValue: number | null;
-  maxValue: number | null;
+  channel: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_channel;
+  price: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_price | null;
+  minimumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_minimumOrderPrice | null;
+  maximumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_maximumOrderPrice | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
@@ -76,7 +94,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   name: string;
   price: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
-  channels: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channels | null)[] | null;
+  channelListing: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing[] | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses {
