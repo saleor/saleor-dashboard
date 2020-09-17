@@ -6,17 +6,20 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+// import { ProductVariant_channelListing } from "@saleor/fragments/types/ProductVariant";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -30,9 +33,15 @@ import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog"
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 
+export interface ProductVariantChannelData {
+  id: string;
+  currency: string;
+  name: string;
+  price: number;
+}
 export interface ProductVariantPageFormData {
+  channelListing: ProductVariantChannelData[];
   costPrice: string;
-  price: string;
   sku: string;
   trackInventory: boolean;
 }
@@ -47,6 +56,7 @@ export interface ProductVariantPageSubmitData
 
 interface ProductVariantPageProps {
   variant?: ProductVariant;
+  channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   errors: VariantUpdate_productVariantUpdate_errors[];
   saveButtonBarState: ConfirmButtonTransitionState;
   loading?: boolean;
@@ -62,6 +72,7 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  channelErrors,
   errors,
   loading,
   header,
@@ -109,9 +120,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   );
 
   const initialForm: ProductVariantPageFormData = {
-    costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
-    price: maybe(() => variant.price.amount.toString(), ""),
-    sku: maybe(() => variant.sku, ""),
+    channelListing: variant?.channelListing?.map(listing => ({
+      currency: listing.price.currency,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: listing.price.amount
+    })),
+    costPrice: variant?.costPrice?.amount?.toString() || "",
+    sku: variant?.sku || "",
     trackInventory: variant?.trackInventory
   };
 
@@ -136,17 +152,19 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>
-          {maybe(() => variant.product.name)}
-        </AppHeader>
+        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
         <PageHeader title={header} />
         <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
-          {({ change, data, hasChanged, submit, triggerChange }) => {
+          {({ change, data, hasChanged, set, submit, triggerChange }) => {
             const handleAttributeChange: FormsetChange = (id, value) => {
               changeAttributeData(id, value);
               triggerChange();
             };
-
+            const handleChannelChange = createVariantChannelsChangeHandler(
+              data,
+              set,
+              triggerChange
+            );
             return (
               <>
                 <Grid variant="inverted">
@@ -181,18 +199,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <CardSpacer />
                     <ProductVariantPrice
-                      errors={errors}
-                      price={data.price}
-                      currencySymbol={
-                        variant && variant.price
-                          ? variant.price.currency
-                          : variant && variant.costPrice
-                          ? variant.costPrice.currency
-                          : ""
-                      }
-                      costPrice={data.costPrice}
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelErrors}
                       loading={loading}
-                      onChange={change}
+                      onChange={handleChannelChange}
                     />
                     <CardSpacer />
                     <ProductStocks

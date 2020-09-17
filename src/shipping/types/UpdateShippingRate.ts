@@ -44,20 +44,38 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_price {
   currency: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels_channel {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels_channel;
-  price: number | null;
-  minValue: number | null;
-  maxValue: number | null;
+  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_channel;
+  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_price | null;
+  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_minimumOrderPrice | null;
+  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_maximumOrderPrice | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
@@ -70,7 +88,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   name: string;
   price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
-  channels: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_channels | null)[] | null;
+  channelListing: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {

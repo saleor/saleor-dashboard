@@ -327,8 +327,8 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   <Hidden smDown>
                     <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
-                        variant.price ? (
-                          <Money money={variant.price} />
+                        variant.pricing?.price?.gross ? (
+                          <Money money={variant.pricing.price.gross} />
                         ) : fallbackPrice ? (
                           <Money money={fallbackPrice} />
                         ) : (

@@ -14,6 +14,8 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
   getChoices,
   ProductAttributeValueChoices,
@@ -34,6 +36,7 @@ import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
+  createChannelsPriceChangeHandler,
   createProductTypeSelectHandler
 } from "../../utils/handlers";
 import ProductAttributes, {
@@ -42,7 +45,6 @@ import ProductAttributes, {
 } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
@@ -66,6 +68,7 @@ export interface ProductCreatePageSubmitData extends FormData {
 }
 
 interface ProductCreatePageProps {
+  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   errors: ProductErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
@@ -96,7 +99,7 @@ interface ProductCreatePageProps {
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   allChannelsCount,
-  currency,
+  channelsErrors,
   currentChannels = [],
   disabled,
   categories: categoryChoiceList,
@@ -226,6 +229,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
+        const handleChannelPriceChange = createChannelsPriceChangeHandler(
+          data,
+          set,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -254,12 +262,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>
-                    <ProductPricing
-                      currency={currency}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handleChannelPriceChange}
                     />
                     <CardSpacer />
                     <ProductStocks

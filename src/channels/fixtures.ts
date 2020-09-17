@@ -79,8 +79,14 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "123",
       name: "Channel1"
+    },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 5,
+      currency: "USD"
     },
     isPublished: true,
     publicationDate: "2020-07-14"
@@ -89,8 +95,14 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "124",
       name: "Channel2"
+    },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD"
     },
     isPublished: false,
     publicationDate: "2020-07-30"
@@ -99,10 +111,37 @@ export const productChannels: ProductDetails_product_channelListing[] = [
     __typename: "ProductChannelListing",
     channel: {
       __typename: "Channel",
+      currencyCode: "USD",
       id: "125",
       name: "Channel3"
     },
+    discountedPrice: {
+      __typename: "Money",
+      amount: 8,
+      currency: "USD"
+    },
     isPublished: false,
     publicationDate: null
+  }
+];
+
+export const productPriceChannels = [
+  {
+    costPrice: "5",
+    id: "123",
+    name: "Channel1",
+    sellingPrice: "10"
+  },
+  {
+    costPrice: "15",
+    id: "124",
+    name: "Channel2",
+    sellingPrice: "20"
+  },
+  {
+    costPrice: "15",
+    id: "125",
+    name: "Channel3",
+    sellingPrice: "100"
   }
 ];

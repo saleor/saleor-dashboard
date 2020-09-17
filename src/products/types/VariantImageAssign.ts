@@ -55,12 +55,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant_images {
   url: string;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantImageAssign_variantImageAssign_productVariant_product_images {
   __typename: "ProductImage";
   id: string;
@@ -97,6 +91,25 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product {
   variants: (VariantImageAssign_variantImageAssign_productVariant_product_variants | null)[] | null;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: VariantImageAssign_variantImageAssign_productVariant_channelListing_channel;
+  price: VariantImageAssign_variantImageAssign_productVariant_channelListing_price | null;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -118,8 +131,8 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   costPrice: VariantImageAssign_variantImageAssign_productVariant_costPrice | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
-  price: VariantImageAssign_variantImageAssign_productVariant_price | null;
   product: VariantImageAssign_variantImageAssign_productVariant_product;
+  channelListing: VariantImageAssign_variantImageAssign_productVariant_channelListing[] | null;
   sku: string;
   stocks: (VariantImageAssign_variantImageAssign_productVariant_stocks | null)[] | null;
   trackInventory: boolean;

@@ -23,7 +23,7 @@ import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-import ProductVariantPrice from "../ProductVariantPrice";
+// import ProductVariantPrice from "../ProductVariantPrice";
 
 interface ProductVariantCreatePageFormData {
   costPrice: string;
@@ -54,7 +54,7 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
-  currencySymbol,
+  // currencySymbol,
   disabled,
   errors,
   header,
@@ -128,14 +128,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   onChange={handleAttributeChange}
                 />
                 <CardSpacer />
-                <ProductVariantPrice
+                {/* <ProductVariantPrice
                   errors={errors}
                   price={data.price}
                   currencySymbol={currencySymbol}
                   costPrice={data.costPrice}
                   loading={disabled}
                   onChange={change}
-                />
+                /> */}
                 <CardSpacer />
                 <ProductStocks
                   data={data}

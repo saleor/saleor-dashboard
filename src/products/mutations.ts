@@ -48,6 +48,10 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 import {
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+} from "./types/ProductVariantChannelListingUpdate";
+import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "./types/SimpleProductUpdate";
@@ -77,6 +81,11 @@ export const productImageCreateMutation = gql`
     }
   }
 `;
+export const useProductImageCreateMutation = makeMutation<
+  ProductImageCreate,
+  ProductImageCreateVariables
+>(productImageCreateMutation);
+
 export const TypedProductImageCreateMutation = TypedMutation<
   ProductImageCreate,
   ProductImageCreateVariables
@@ -95,6 +104,10 @@ export const productDeleteMutation = gql`
     }
   }
 `;
+export const useProductDeleteMutation = makeMutation<
+  ProductDelete,
+  ProductDeleteVariables
+>(productDeleteMutation);
 export const TypedProductDeleteMutation = TypedMutation<
   ProductDelete,
   ProductDeleteVariables
@@ -119,6 +132,10 @@ export const productImagesReorder = gql`
     }
   }
 `;
+export const useProductImagesReorder = makeMutation<
+  ProductImageReorder,
+  ProductImageReorderVariables
+>(productImagesReorder);
 export const TypedProductImagesReorder = TypedMutation<
   ProductImageReorder,
   ProductImageReorderVariables
@@ -158,6 +175,10 @@ export const productUpdateMutation = gql`
     }
   }
 `;
+export const useProductUpdateMutation = makeMutation<
+  ProductUpdate,
+  ProductUpdateVariables
+>(productUpdateMutation);
 export const TypedProductUpdateMutation = TypedMutation<
   ProductUpdate,
   ProductUpdateVariables
@@ -246,6 +267,10 @@ export const simpleProductUpdateMutation = gql`
     }
   }
 `;
+export const useSimpleProductUpdateMutation = makeMutation<
+  SimpleProductUpdate,
+  SimpleProductUpdateVariables
+>(simpleProductUpdateMutation);
 export const TypedSimpleProductUpdateMutation = TypedMutation<
   SimpleProductUpdate,
   SimpleProductUpdateVariables
@@ -303,6 +328,10 @@ export const variantDeleteMutation = gql`
     }
   }
 `;
+export const useVariantDeleteMutation = makeMutation<
+  VariantDelete,
+  VariantDeleteVariables
+>(variantDeleteMutation);
 export const TypedVariantDeleteMutation = TypedMutation<
   VariantDelete,
   VariantDeleteVariables
@@ -318,7 +347,6 @@ export const variantUpdateMutation = gql`
     $id: ID!
     $attributes: [AttributeValueInput]
     $costPrice: Decimal
-    $price: Decimal
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
@@ -328,7 +356,6 @@ export const variantUpdateMutation = gql`
       input: {
         attributes: $attributes
         costPrice: $costPrice
-        price: $price
         sku: $sku
         trackInventory: $trackInventory
       }
@@ -373,6 +400,10 @@ export const variantUpdateMutation = gql`
     }
   }
 `;
+export const useVariantUpdateMutation = makeMutation<
+  VariantUpdate,
+  VariantUpdateVariables
+>(variantUpdateMutation);
 export const TypedVariantUpdateMutation = TypedMutation<
   VariantUpdate,
   VariantUpdateVariables
@@ -392,7 +423,8 @@ export const variantCreateMutation = gql`
     }
   }
 `;
-export const TypedVariantCreateMutation = TypedMutation<
+
+export const useVariantCreateMutation = makeMutation<
   VariantCreate,
   VariantCreateVariables
 >(variantCreateMutation);
@@ -413,6 +445,10 @@ export const productImageDeleteMutation = gql`
     }
   }
 `;
+export const useProductImageDeleteMutation = makeMutation<
+  ProductImageDelete,
+  ProductImageDeleteVariables
+>(productImageDeleteMutation);
 export const TypedProductImageDeleteMutation = TypedMutation<
   ProductImageDelete,
   ProductImageDeleteVariables
@@ -432,6 +468,10 @@ export const productImageUpdateMutation = gql`
     }
   }
 `;
+export const useProductImageUpdateMutation = makeMutation<
+  ProductImageUpdate,
+  ProductImageUpdateVariables
+>(productImageUpdateMutation);
 export const TypedProductImageUpdateMutation = TypedMutation<
   ProductImageUpdate,
   ProductImageUpdateVariables
@@ -456,6 +496,11 @@ export const TypedVariantImageAssignMutation = TypedMutation<
   VariantImageAssignVariables
 >(variantImageAssignMutation);
 
+export const useVariantImageAssignMutation = makeMutation<
+  VariantImageAssign,
+  VariantImageAssignVariables
+>(variantImageAssignMutation);
+
 export const variantImageUnassignMutation = gql`
   ${fragmentVariant}
   ${productErrorFragment}
@@ -470,6 +515,10 @@ export const variantImageUnassignMutation = gql`
     }
   }
 `;
+export const useVariantImageUnassignMutation = makeMutation<
+  VariantImageUnassign,
+  VariantImageUnassignVariables
+>(variantImageUnassignMutation);
 export const TypedVariantImageUnassignMutation = TypedMutation<
   VariantImageUnassign,
   VariantImageUnassignVariables
@@ -486,6 +535,11 @@ export const productBulkDeleteMutation = gql`
   }
 `;
 export const TypedProductBulkDeleteMutation = TypedMutation<
+  productBulkDelete,
+  productBulkDeleteVariables
+>(productBulkDeleteMutation);
+
+export const useProductBulkDeleteMutation = makeMutation<
   productBulkDelete,
   productBulkDeleteVariables
 >(productBulkDeleteMutation);
@@ -522,6 +576,10 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);
+export const useProductVariantBulkDeleteMutation = makeMutation<
+  ProductVariantBulkDelete,
+  ProductVariantBulkDeleteVariables
+>(ProductVariantBulkDeleteMutation);
 
 export const ProductChannelListingUpdateMutation = gql`
   ${productFragmentDetails}
@@ -533,7 +591,7 @@ export const ProductChannelListingUpdateMutation = gql`
       product {
         ...Product
       }
-      errors: productsErrors {
+      productChannelListingErrors {
         field
         message
         code
@@ -547,3 +605,28 @@ export const useProductChannelListingUpdate = makeMutation<
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
 >(ProductChannelListingUpdateMutation);
+
+export const ProductVariantChannelListingUpdateMutation = gql`
+  ${fragmentVariant}
+  mutation ProductVariantChannelListingUpdate(
+    $id: ID!
+    $input: [ProductVariantChannelListingAddInput!]!
+  ) {
+    productVariantChannelListingUpdate(id: $id, input: $input) {
+      variant {
+        ...ProductVariant
+      }
+      productChannelListingErrors {
+        field
+        message
+        code
+        channels
+      }
+    }
+  }
+`;
+
+export const useProductVariantChannelListingUpdate = makeMutation<
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+>(ProductVariantChannelListingUpdateMutation);

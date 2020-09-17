@@ -38,20 +38,38 @@ export interface ShippingMethodFragment_price {
   currency: string;
 }
 
-export interface ShippingMethodFragment_channels_channel {
+export interface ShippingMethodFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingMethodFragment_channels {
+export interface ShippingMethodFragment_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingMethodFragment_channelListing_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingMethodFragment_channelListing_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingMethodFragment_channelListing {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingMethodFragment_channels_channel;
-  price: number | null;
-  minValue: number | null;
-  maxValue: number | null;
+  channel: ShippingMethodFragment_channelListing_channel;
+  price: ShippingMethodFragment_channelListing_price | null;
+  minimumOrderPrice: ShippingMethodFragment_channelListing_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingMethodFragment_channelListing_maximumOrderPrice | null;
 }
 
 export interface ShippingMethodFragment {
@@ -64,5 +82,5 @@ export interface ShippingMethodFragment {
   name: string;
   price: ShippingMethodFragment_price | null;
   type: ShippingMethodTypeEnum | null;
-  channels: (ShippingMethodFragment_channels | null)[] | null;
+  channelListing: ShippingMethodFragment_channelListing[] | null;
 }

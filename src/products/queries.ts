@@ -225,7 +225,7 @@ const productVariantCreateQuery = gql`
     }
   }
 `;
-export const TypedProductVariantCreateQuery = TypedQuery<
+export const useProductVariantCreateQuery = makeQuery<
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
 >(productVariantCreateQuery);
@@ -290,8 +290,8 @@ export const AvailableInGridAttributesQuery = TypedQuery<
 const createMultipleVariantsData = gql`
   ${productVariantAttributesFragment}
   ${warehouseFragment}
-  query CreateMultipleVariantsData($id: ID!) {
-    product(id: $id) {
+  query CreateMultipleVariantsData($id: ID!, $channel: String) {
+    product(id: $id, channel: $channel) {
       ...ProductVariantAttributesFragment
     }
     warehouses(first: 20) {

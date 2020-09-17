@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
@@ -16,6 +17,7 @@ import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  channels: ChannelPriceData[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
@@ -26,6 +28,7 @@ export interface ProductVariantCreatorContentProps {
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
   attributes,
+  channels,
   currencySymbol,
   data,
   dispatchFormDataAction,
@@ -62,6 +65,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
         <ProductVariantCreatePriceAndSku
           attributes={selectedAttributes}
           currencySymbol={currencySymbol}
+          channelListings={channels}
           data={data}
           warehouses={warehouses}
           onApplyToAllChange={(mode, type) =>
