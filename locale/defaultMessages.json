@@ -1109,6 +1109,15 @@
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
+  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_1528830621": {
+    "string": "Select channels you want for {contentType} to be available on"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_3630122739": {
+    "string": "Available at all channels"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_4243012684": {
+    "string": "Search through channels"
+  },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
     "context": "product channel publication status",
     "string": "hidden"

@@ -121,6 +121,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     set: setChannels,
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  const toggleAllChannels = (items: ChannelData[], selected: number) => {
+    setChannels([]);
+    if (selected !== items.length) {
+      setChannels(items);
+    }
+  };
   useEffect(() => {
     if (!currentChannels.length && productChannelsChoices.length) {
       setCurrentChannels(productChannelsChoices);
@@ -316,7 +322,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
       <ProductUpdatePage
