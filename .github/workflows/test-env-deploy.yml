@@ -25,6 +25,15 @@ jobs:
           env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
           ref: ${{ github.head_ref }}
 
+      - name: Start storybook deployment
+        uses: bobheadxi/deployments@v0.4.2
+        id: storybook-deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          ref: ${{ github.head_ref }}
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -60,6 +69,10 @@ jobs:
         run: |
           npm run build
 
+      - name: Run build storybook
+        run: |
+          npm run build-storybook
+
       - name: Set domain
         # Set test instance domain based on branch name slug
         run: |
@@ -73,7 +86,9 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
+        run: |
+          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
+          aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}/storybook
 
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
@@ -87,3 +102,13 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ env.domain }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update storybook deployment status
+        uses: bobheadxi/deployments@v0.4.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ env.domain }}/storybook/index.html
+          deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
