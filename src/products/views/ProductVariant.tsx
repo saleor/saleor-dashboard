@@ -202,6 +202,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
+        onVariantReorder={() => undefined} // TODO: ...
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

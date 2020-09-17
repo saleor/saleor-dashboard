@@ -126,6 +126,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
+        onVariantReorder={() => undefined} // TODO: ...
         saveButtonBarState={variantCreateResult.status}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []

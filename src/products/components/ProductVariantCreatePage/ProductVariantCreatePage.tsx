@@ -14,6 +14,7 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { ReorderAction } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -56,6 +57,7 @@ interface ProductVariantCreatePageProps {
   onBack: () => void;
   onSubmit: (data: ProductVariantCreatePageSubmitData) => void;
   onVariantClick: (variantId: string) => void;
+  onVariantReorder: ReorderAction;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -69,7 +71,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   weightUnit,
   onBack,
   onSubmit,
-  onVariantClick
+  onVariantClick,
+  onVariantReorder
 }) => {
   const intl = useIntl();
   const attributeInput = React.useMemo(
@@ -131,6 +134,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                       return onVariantClick(variantId);
                     }
                   }}
+                  onReorder={onVariantReorder}
                 />
               </div>
               <div>

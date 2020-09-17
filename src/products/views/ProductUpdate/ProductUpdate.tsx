@@ -289,6 +289,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
+        onVariantReorder={() => undefined} // TODO: ...
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}

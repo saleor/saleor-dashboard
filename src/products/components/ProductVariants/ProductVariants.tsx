@@ -3,9 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
-import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -14,13 +12,17 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import {
+  SortableTableBody,
+  SortableTableRow
+} from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions } from "../../../types";
+import { ListActions, ReorderAction } from "../../../types";
 import {
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
@@ -171,12 +173,13 @@ interface ProductVariantsProps extends ListActions {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
+  onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
   onVariantsAdd?();
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 6;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
@@ -186,6 +189,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
+    onVariantReorder,
     isChecked,
     selected,
     toggle,
@@ -266,6 +270,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             items={variants}
             toggleAll={toggleAll}
             toolbar={toolbar}
+            dragRows
           >
             <TableCell className={classes.colName}>
               <FormattedMessage
@@ -291,8 +296,8 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               />
             </TableCell>
           </TableHead>
-          <TableBody>
-            {renderCollection(variants, variant => {
+          <SortableTableBody onSortEnd={onVariantReorder}>
+            {renderCollection(variants, (variant, variantIndex) => {
               const isSelected = variant ? isChecked(variant.id) : false;
               const numAvailable =
                 variant && variant.stocks
@@ -303,11 +308,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   : null;
 
               return (
-                <TableRow
+                <SortableTableRow
                   selected={isSelected}
                   hover={!!variant}
                   onClick={onRowClick(variant.id)}
                   key={variant ? variant.id : "skeleton"}
+                  index={variantIndex || 0}
                   className={classes.link}
                 >
                   <TableCell padding="checkbox">
@@ -354,10 +360,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       )
                     )}
                   </TableCell>
-                </TableRow>
+                </SortableTableRow>
               );
             })}
-          </TableBody>
+          </SortableTableBody>
         </ResponsiveTable>
       )}
     </Card>

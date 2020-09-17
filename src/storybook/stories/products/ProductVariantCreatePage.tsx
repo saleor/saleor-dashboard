@@ -23,6 +23,7 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
@@ -54,6 +55,7 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
@@ -69,6 +71,7 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
@@ -87,6 +90,7 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
