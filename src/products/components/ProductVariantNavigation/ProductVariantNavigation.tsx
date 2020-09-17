@@ -116,7 +116,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
           ) : (
             <TableRow>
               <TableCellAvatar className={classes.tabActive} thumbnail={null} />
-              <TableCell className={classes.colName}>
+              <TableCell className={classes.colName} colSpan={2}>
                 <FormattedMessage
                   defaultMessage="New Variant"
                   description="variant name"
