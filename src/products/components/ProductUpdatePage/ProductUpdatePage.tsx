@@ -17,6 +17,8 @@ import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
@@ -43,13 +45,13 @@ import {
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
-  createChannelsChangeHandler
+  createChannelsChangeHandler,
+  createChannelsPriceChangeHandler
 } from "../../utils/handlers";
 import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -58,6 +60,7 @@ import ProductVariants from "../ProductVariants";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   placeholderImage: string;
@@ -105,6 +108,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
+  channelsErrors,
   allChannelsCount,
   currentChannels = [],
   collections: collectionChoiceList,
@@ -189,9 +193,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   );
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-
-  const currency =
-    product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
   const taxTypeChoices =
     taxTypes?.map(taxType => ({
@@ -275,7 +276,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           setSelectedTaxType,
           taxTypeChoices
         );
-        const handleChannelsChange = createChannelsChangeHandler(
+        const handleChannelChange = createChannelsChangeHandler(
+          data,
+          set,
+          triggerChange
+        );
+        const handleChannelPriceChange = createChannelsPriceChangeHandler(
           data,
           set,
           triggerChange
@@ -319,12 +325,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <CardSpacer />
                   {!!product?.productType && !hasVariants && (
                     <>
-                      <ProductPricing
-                        currency={currency}
-                        data={data}
-                        disabled={disabled}
-                        errors={errors}
-                        onChange={change}
+                      <ProductVariantPrice
+                        ProductVariantChannelListings={data.channelListing}
+                        errors={channelsErrors}
+                        loading={disabled}
+                        onChange={handleChannelPriceChange}
                       />
                       <CardSpacer />
                     </>
@@ -336,7 +341,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       product={product}
                       fallbackPrice={
                         product?.variants?.length
-                          ? product.variants[0].price
+                          ? product.variants[0].pricing.price.gross
                           : undefined
                       }
                       onRowClick={onVariantShow}
@@ -439,7 +444,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     allChannelsCount={allChannelsCount}
                     channels={data.channelListing}
                     disabled={disabled}
-                    onChange={handleChannelsChange}
+                    onChange={handleChannelChange}
                     openModal={openChannelsModal}
                   />
                   <CardSpacer />

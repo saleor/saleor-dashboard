@@ -41,10 +41,11 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         <StatusLabel
           label={intl.formatMessage(
             {
-              defaultMessage: "Available in {count}",
+              defaultMessage: "Available in {count}/{allCount}",
               description: "product status title"
             },
             {
+              allCount: allChannelsCount,
               count: channels.length
             }
           )}

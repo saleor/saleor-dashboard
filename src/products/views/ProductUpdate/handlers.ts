@@ -15,6 +15,10 @@ import {
   ProductUpdate,
   ProductUpdateVariables
 } from "@saleor/products/types/ProductUpdate";
+import {
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+} from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { ProductVariantDetails_productVariant_product } from "@saleor/products/types/ProductVariantDetails";
 import { ProductVariantReorderVariables } from "@saleor/products/types/ProductVariantReorder";
@@ -38,7 +42,10 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>
+  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
+  updateVariantChannels: (options: {
+    variables: ProductVariantChannelListingUpdateVariables;
+  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -53,8 +60,6 @@ export function createUpdateHandler(
         collections: data.collections,
         descriptionJson: JSON.stringify(data.description),
         name: data.name,
-        publicationDate:
-          data.publicationDate !== "" ? data.publicationDate : null,
         seo: {
           description: data.seoDescription,
           title: data.seoTitle
@@ -82,17 +87,31 @@ export function createUpdateHandler(
         },
         productVariantId: product.variants[0].id,
         productVariantInput: {
+          costPrice: data.basePrice,
           sku: data.sku,
           trackInventory: data.trackInventory
         },
         updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
+
+      const variantResult = await updateVariantChannels({
+        variables: {
+          id: product.variants[0].id,
+          input: data.channelListing.map(listing => ({
+            channelId: listing.id,
+            price: listing.price
+          }))
+        }
+      });
+
       errors = [
         ...result.data.productUpdate.errors,
         ...result.data.productVariantStocksCreate.errors,
         ...result.data.productVariantStocksDelete.errors,
         ...result.data.productVariantStocksUpdate.errors,
-        ...result.data.productVariantUpdate.errors
+        ...result.data.productVariantUpdate.errors,
+        ...variantResult.data.productVariantChannelListingUpdate
+          .productChannelListingErrors
       ];
     }
     const productChannels = createChannelsDataFromProduct(
@@ -103,7 +122,7 @@ export function createUpdateHandler(
       data.channelListing,
       (a, b) => a.id === b.id
     );
-    updateChannels({
+    const result = await updateChannels({
       variables: {
         id: product.id,
         input: {
@@ -118,6 +137,10 @@ export function createUpdateHandler(
         }
       }
     });
+    return [
+      ...errors,
+      ...result.data.productChannelListingUpdate.productChannelListingErrors
+    ];
   };
 }
 

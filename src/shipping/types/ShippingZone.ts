@@ -44,20 +44,38 @@ export interface ShippingZone_shippingZone_shippingMethods_price {
   currency: string;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_channels_channel {
+export interface ShippingZone_shippingZone_shippingMethods_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_channels {
+export interface ShippingZone_shippingZone_shippingMethods_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListing_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListing_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListing {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingZone_shippingZone_shippingMethods_channels_channel;
-  price: number | null;
-  minValue: number | null;
-  maxValue: number | null;
+  channel: ShippingZone_shippingZone_shippingMethods_channelListing_channel;
+  price: ShippingZone_shippingZone_shippingMethods_channelListing_price | null;
+  minimumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListing_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListing_maximumOrderPrice | null;
 }
 
 export interface ShippingZone_shippingZone_shippingMethods {
@@ -70,7 +88,7 @@ export interface ShippingZone_shippingZone_shippingMethods {
   name: string;
   price: ShippingZone_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
-  channels: (ShippingZone_shippingZone_shippingMethods_channels | null)[] | null;
+  channelListing: ShippingZone_shippingZone_shippingMethods_channelListing[] | null;
 }
 
 export interface ShippingZone_shippingZone_warehouses {

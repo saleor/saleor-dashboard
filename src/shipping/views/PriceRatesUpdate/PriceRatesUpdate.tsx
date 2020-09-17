@@ -81,7 +81,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
   });
 
-  const shippingChannels = createShippingChannelsFromRate(rate?.channels);
+  const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
   const allChannels = createShippingChannels(channelsData?.channels);
 
   const {
