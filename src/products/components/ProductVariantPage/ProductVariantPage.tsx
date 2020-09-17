@@ -11,6 +11,7 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
@@ -28,9 +29,15 @@ import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm from "./form";
 
+export interface ProductVariantChannelData {
+  id: string;
+  currency: string;
+  name: string;
+  price: number;
+}
 export interface ProductVariantPageFormData extends MetadataFormData {
+  channelListing: ProductVariantChannelData[];
   costPrice: string;
-  price: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -51,6 +58,7 @@ interface ProductVariantPageProps {
     | ProductErrorWithAttributesFragment[]
     | VariantUpdate_productVariantUpdate_errors[];
   header: string;
+  channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -70,6 +78,7 @@ interface ProductVariantPageProps {
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   defaultVariantId,
   defaultWeightUnit,
+  channelErrors,
   errors,
   header,
   loading,
@@ -101,9 +110,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>
-          {maybe(() => variant.product.name)}
-        </AppHeader>
+        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -115,6 +122,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variant={variant}
           onSubmit={onSubmit}
           warehouses={warehouses}
+          currentChannels={variant?.channelListing?.map(listing => ({
+            currency: listing.price.currency,
+            id: listing.channel.id,
+            name: listing.channel.name,
+            price: listing.price.amount
+          }))}
         >
           {({ change, data, handlers, hasChanged, submit }) => (
             <>
@@ -152,17 +165,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <ProductVariantPrice
-                    data={data}
-                    errors={errors}
-                    currencySymbol={
-                      variant && variant.price
-                        ? variant.price.currency
-                        : variant && variant.costPrice
-                        ? variant.costPrice.currency
-                        : ""
-                    }
+                    ProductVariantChannelListings={data.channelListing}
+                    errors={channelErrors}
                     loading={loading}
-                    onChange={change}
+                    onChange={handlers.changeChannels}
                   />
                   <CardSpacer />
                   <ProductShipping

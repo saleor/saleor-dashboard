@@ -14,6 +14,8 @@ import {
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createChannelsChangeHandler,
+  createChannelsPriceChangeHandler,
   createProductTypeSelectHandler
 } from "@saleor/products/utils/handlers";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
@@ -65,11 +67,16 @@ interface ProductCreateHandlers
       FormChange
     >,
     Record<
-      | "changeStock"
-      | "selectAttribute"
-      | "selectAttributeMultiple"
-      | "changeChannels",
+      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
+    >,
+    Record<"changeChannelPrice", (id: string, price: number) => void>,
+    Record<
+      "changeChannels",
+      (
+        id: string,
+        data: Omit<ChannelData, "name" | "price" | "currency" | "id">
+      ) => void
     >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
@@ -92,9 +99,11 @@ export interface UseProductCreateFormOpts
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   productTypes: SearchProductTypes_search_edges_node[];
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelData[];
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
@@ -215,7 +224,16 @@ function useProductCreateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleChannelsChange = (id: string) => (data: any) => null;
+  const handleChannelsChange = createChannelsChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
+  const handleChannelPriceChange = createChannelsPriceChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
 
   const getData = (): ProductCreateData => ({
     ...form.data,
@@ -231,6 +249,7 @@ function useProductCreateForm(
     data: getData(),
     handlers: {
       addStock: handleStockAdd,
+      changeChannelPrice: handleChannelPriceChange,
       changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,

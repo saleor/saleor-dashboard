@@ -128,6 +128,7 @@ function getDescription(
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
   const {
     attributes,
+    channels,
     defaultPrice,
     errors,
     onSubmit,
@@ -138,7 +139,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const intl = useIntl();
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, defaultPrice, warehouses)
+    createInitialForm(attributes, channels, warehouses)
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
@@ -162,7 +163,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const reloadForm = () =>
     dispatchFormDataAction({
       reload: {
-        data: createInitialForm(attributes, defaultPrice, warehouses)
+        data: createInitialForm(attributes, channels, warehouses)
       },
       type: ProductVariantCreateReducerActionType.reload
     });
@@ -219,6 +220,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
+        channels={channels}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}

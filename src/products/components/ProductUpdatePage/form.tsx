@@ -18,7 +18,8 @@ import {
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
-  createChannelsChangeHandler
+  createChannelsChangeHandler,
+  createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
@@ -73,11 +74,16 @@ interface ProductUpdateHandlers
       FormChange
     >,
     Record<
-      | "changeStock"
-      | "selectAttribute"
-      | "selectAttributeMultiple"
-      | "changeChannels",
+      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
+    >,
+    Record<"changeChannelPrice", (id: string, price: number) => void>,
+    Record<
+      "changeChannels",
+      (
+        id: string,
+        data: Omit<ChannelData, "name" | "price" | "currency" | "id">
+      ) => void
     >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
@@ -101,6 +107,7 @@ export interface UseProductUpdateFormOpts
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
@@ -211,7 +218,16 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleChannelsChange = (id: string) => (data: any) => null;
+  const handleChannelsChange = createChannelsChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
+  const handleChannelPriceChange = createChannelsPriceChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
 
   const data: ProductUpdateData = {
     ...form.data,
@@ -236,6 +252,7 @@ function useProductUpdateForm(
     data,
     handlers: {
       addStock: handleStockAdd,
+      changeChannelPrice: handleChannelPriceChange,
       changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,

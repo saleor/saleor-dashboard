@@ -244,7 +244,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     type: "number"
                   }}
                   fullWidth
-                  value={variant.price}
+                  value={""}
                   onChange={event =>
                     onVariantDataChange(
                       variantIndex,

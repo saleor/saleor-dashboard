@@ -22,6 +22,7 @@ import {
   useVariantCreateMutation
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
+import { VariantCreate } from "../types/VariantCreate";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
@@ -42,6 +43,20 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
+  const handleCreateSuccess = (data: VariantCreate) => {
+    if (data.productVariantCreate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(
+        productVariantEditUrl(
+          productId,
+          data.productVariantCreate.productVariant.id
+        )
+      );
+    }
+  };
 
   const { data, loading: productLoading } = useProductVariantCreateQuery({
     displayLoader: true,
@@ -49,21 +64,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   });
 
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
-    onCompleted: data => {
-      if (data.productVariantCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        navigate(
-          productVariantEditUrl(
-            productId,
-            data.productVariantCreate.productVariant.id
-          )
-        );
-      }
-    }
+    onCompleted: handleCreateSuccess
   });
+
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
@@ -94,7 +97,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
               values: [attribute.value]
             })),
           costPrice: decimal(formData.costPrice),
-          price: decimal(formData.price),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({

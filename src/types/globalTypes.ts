@@ -112,6 +112,7 @@ export enum CategorySortField {
 
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -551,6 +552,7 @@ export enum OrderErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
+  MISSING_CHANNEL = "MISSING_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
@@ -722,6 +724,7 @@ export enum ProductErrorCode {
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
   NOT_PRODUCTS_VARIANT = "NOT_PRODUCTS_VARIANT",
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL = "PRODUCT_NOT_ASSIGNED_TO_CHANNEL",
   PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
@@ -1483,17 +1486,21 @@ export interface ProductTypeSortingInput {
 export interface ProductVariantBulkCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  price?: any | null;
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;
+  channelListings?: ProductVariantChannelListingAddInput[] | null;
+}
+
+export interface ProductVariantChannelListingAddInput {
+  channelId: string;
+  price: any;
 }
 
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1504,7 +1511,6 @@ export interface ProductVariantCreateInput {
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
   costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1551,8 +1557,8 @@ export interface ServiceAccountTokenInput {
 export interface ShippingMethodChannelListingAddInput {
   channelId: string;
   price?: any | null;
-  minValue?: any | null;
-  maxValue?: any | null;
+  minimumOrderPrice?: any | null;
+  maximumOrderPrice?: any | null;
 }
 
 export interface ShippingMethodChannelListingInput {
@@ -1562,8 +1568,6 @@ export interface ShippingMethodChannelListingInput {
 
 export interface ShippingPriceInput {
   name?: string | null;
-  minimumOrderPrice?: any | null;
-  maximumOrderPrice?: any | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
   type?: ShippingMethodTypeEnum | null;
