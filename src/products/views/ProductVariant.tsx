@@ -21,6 +21,7 @@ import ProductVariantPage, {
   ProductVariantPageSubmitData
 } from "../components/ProductVariantPage";
 import {
+  useProductVariantReorderMutation,
   useVariantDeleteMutation,
   useVariantImageAssignMutation,
   useVariantImageUnassignMutation,
@@ -36,6 +37,7 @@ import {
   ProductVariantEditUrlQueryParams
 } from "../urls";
 import { mapFormsetStockToStockInput } from "../utils/data";
+import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
   variantId: string;
@@ -120,12 +122,23 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     return <NotFoundPage onBack={handleBack} />;
   }
 
+  const [
+    reorderProductVariants,
+    reorderProductVariantsOpts
+  ] = useProductVariantReorderMutation({});
+
+  const handleVariantReorder = createVariantReorderHandler(
+    variant?.product,
+    variables => reorderProductVariants({ variables })
+  );
+
   const disableFormSave =
     loading ||
     deleteVariantOpts.loading ||
     updateVariantOpts.loading ||
     assignImageOpts.loading ||
-    unassignImageOpts.loading;
+    unassignImageOpts.loading ||
+    reorderProductVariantsOpts.loading;
 
   const handleImageSelect = (id: string) => () => {
     if (variant) {
@@ -202,7 +215,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
-        onVariantReorder={() => undefined} // TODO: ...
+        onVariantReorder={handleVariantReorder}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}
