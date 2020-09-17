@@ -172,7 +172,6 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 }
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
@@ -197,8 +196,7 @@ export function getProductUpdatePageFormData(
   currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
-    availableForPurchase: product?.availableForPurchase,
-    basePrice: maybe(() => product.variants[0].price.amount, 0),
+    basePrice: maybe(() => product.variants[0].pricing.price.gross.amount, 0),
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
     channelListing: currentChannels,

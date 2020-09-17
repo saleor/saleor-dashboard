@@ -6,10 +6,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
+import PriceField from "@saleor/components/PriceField";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import React from "react";
@@ -23,6 +25,9 @@ import { getPriceAttributeValues } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
+    channelName: {
+      marginBottom: theme.spacing(1)
+    },
     hr: {
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(0.5)
@@ -42,6 +47,7 @@ const useStyles = makeStyles(
 
 export interface ProductVariantCreatorPricesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  channelListings: ChannelPriceData[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   onApplyToAllChange: (applyToAll: VariantCreatorPricesAndSkuMode) => void;
@@ -53,6 +59,7 @@ export interface ProductVariantCreatorPricesProps {
 const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = props => {
   const {
     attributes,
+    channelListings,
     currencySymbol,
     data,
     onApplyToAllChange,
@@ -88,22 +95,19 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             onChange={() => onApplyToAllChange("all")}
           />
           <FormSpacer />
-          <TextField
-            className={classes.shortInput}
-            inputProps={{
-              min: 0,
-              type: "number"
-            }}
-            InputProps={{
-              endAdornment: currencySymbol
-            }}
-            label={intl.formatMessage({
-              defaultMessage: "Price",
-              id: "productVariantCreatePricesPriceInputLabel"
-            })}
-            value={data.price.value}
-            onChange={event => onApplyToAllPriceChange(event.target.value)}
-          />
+          {channelListings.map(listing => (
+            <div key={listing.id} className={classes.shortInput}>
+              <Typography variant="caption" className={classes.channelName}>
+                {listing.name}
+              </Typography>
+              <PriceField
+                name={`${listing.id}-variant-channel-price`}
+                value={listing.price}
+                currencySymbol={listing.currency}
+                onChange={event => onApplyToAllPriceChange(event.target.value)}
+              />
+            </div>
+          ))}
           <FormSpacer />
           <FormControlLabel
             value="attribute"

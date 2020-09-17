@@ -6,6 +6,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -79,6 +81,24 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductVariantChannelListingUpdate({
+    onCompleted: data => {
+      if (
+        data.productVariantChannelListingUpdate.productChannelListingErrors
+          .length === 0
+      ) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Channels updated"
+          })
+        });
+      }
+    }
+  });
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
@@ -116,6 +136,28 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       setErrors(data.productVariantUpdate.errors);
     }
   });
+
+  const handleSubmitChannels = (
+    data: ProductVariantPageSubmitData,
+    variant: ProductVariantDetails_productVariant
+  ) => {
+    if (
+      data.channelListing.some(
+        (channel, index) =>
+          channel.price !== variant.channelListing[index].price.amount
+      )
+    ) {
+      updateChannels({
+        variables: {
+          id: variant.id,
+          input: data.channelListing.map(listing => ({
+            channelId: listing.id,
+            price: listing.price
+          }))
+        }
+      });
+    }
+  };
 
   const variant = data?.productVariant;
 
@@ -173,7 +215,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         })),
         costPrice: decimal(data.costPrice),
         id: variantId,
-        price: decimal(data.price),
         removeStocks: data.removeStocks,
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
@@ -203,6 +244,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
+        channelErrors={
+          updateChannelsOpts?.data?.productVariantChannelListingUpdate
+            ?.productChannelListingErrors || []
+        }
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}
         loading={disableFormSave}
@@ -216,7 +261,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={handleSubmit}
+        onSubmit={data => {
+          handleSubmit(data);
+          handleSubmitChannels(data, variant);
+        }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));

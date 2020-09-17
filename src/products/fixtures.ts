@@ -112,8 +112,14 @@ export const product: (
       __typename: "ProductChannelListing",
       channel: {
         __typename: "Channel",
+        currencyCode: "USD",
         id: "123",
         name: "Channel1"
+      },
+      discountedPrice: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
       },
       isPublished: true,
       publicationDate: "2020-07-14"
@@ -122,8 +128,14 @@ export const product: (
       __typename: "ProductChannelListing",
       channel: {
         __typename: "Channel",
+        currencyCode: "USD",
         id: "124",
         name: "Channel2"
+      },
+      discountedPrice: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
       },
       isPublished: false,
       publicationDate: "2020-07-30"
@@ -304,10 +316,16 @@ export const product: (
       ],
       margin: 2,
       name: "Cordoba Oro",
-      price: {
-        __typename: "Money",
-        amount: 678.78,
-        currency: "USD"
+      pricing: {
+        __typename: "VariantPricingInfo",
+        price: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          }
+        }
       },
       sku: "87192-94370",
       stocks: [
@@ -350,7 +368,10 @@ export const product: (
       ],
       margin: 7,
       name: "silver",
-      price: null,
+      pricing: {
+        __typename: "VariantPricingInfo",
+        price: null
+      },
       sku: "69055-15190",
       stocks: [
         {
@@ -529,7 +550,6 @@ export const products = (
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
     name: "Hyperspace Turquoise Paint",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -606,7 +626,6 @@ export const products = (
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
     name: "Pineapple Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -760,7 +779,6 @@ export const products = (
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
     name: "Apple Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -837,7 +855,6 @@ export const products = (
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
     name: "Orange Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -914,7 +931,6 @@ export const products = (
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
     name: "Banana Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -991,7 +1007,6 @@ export const products = (
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
     name: "Bean Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1068,7 +1083,6 @@ export const products = (
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
     name: "Carrot Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1145,7 +1159,6 @@ export const products = (
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
     name: "Green Juice",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1222,7 +1235,6 @@ export const products = (
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
     name: "Code Division T-shirt",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1299,7 +1311,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
     name: "Polo Shirt",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1376,7 +1387,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
     name: "Polo Shirt",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1453,7 +1463,6 @@ export const products = (
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
     name: "Polo Shirt",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1530,7 +1539,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
     name: "Polo Shirt",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1607,7 +1615,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
     name: "Black Hoodie",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1684,7 +1691,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
     name: "Blue Hoodie",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1761,7 +1767,6 @@ export const products = (
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
     name: "Mustard Hoodie",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1838,7 +1843,6 @@ export const products = (
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
     name: "Colored Parrot Cushion",
-
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -1954,6 +1958,36 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       ]
     }
   ],
+  channelListing: [
+    {
+      __typename: "ProductVariantChannelListing",
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "test1",
+        name: "Test channel"
+      },
+      price: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
+      }
+    },
+    {
+      __typename: "ProductVariantChannelListing",
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "test2",
+        name: "Test channel other"
+      },
+      price: {
+        __typename: "Money",
+        amount: 20,
+        currency: "USD"
+      }
+    }
+  ],
   costPrice: {
     __typename: "Money",
     amount: 12,
@@ -1990,12 +2024,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
-  price: {
-    __typename: "Money",
-    amount: 100,
-    currency: "USD"
-  },
-  privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
     defaultVariant: {
