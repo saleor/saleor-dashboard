@@ -31,6 +31,7 @@ export interface FormData {
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
+  seoSlug: string;
   slug: string;
   title: string;
 }
@@ -116,12 +117,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
             </div>
             <div>
-              <PageSlug
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
               <CardSpacer />
               <VisibilityCard
                 data={data}
