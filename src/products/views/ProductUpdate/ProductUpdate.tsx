@@ -5,8 +5,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
-  createChannelsData,
-  createChannelsDataFromProduct
+  createChannelsDataFromProduct,
+  createChannelsDataWithPrice
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -15,19 +15,21 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListActions from "@saleor/hooks/useListActions";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import {
+  useProductChannelListingUpdate,
   useProductDeleteMutation,
   useProductImageCreateMutation,
   useProductImageDeleteMutation,
   useProductImagesReorder,
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
+  useProductVariantChannelListingUpdate,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation
 } from "@saleor/products/mutations";
@@ -47,7 +49,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
-import { useProductChannelListingUpdate } from "../../mutations";
 import { useProductDetails } from "../../queries";
 import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -188,13 +189,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const product = data?.product;
 
-  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
-
+  const allChannels: ChannelData[] = createChannelsDataWithPrice(
+    product?.channelListing,
+    channelsData?.channels
+  );
   const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
     product?.channelListing
   );
-  const [currentChannels, setCurrentChannels] = useLocalStorage<ChannelData[]>(
-    `productChannels-${id}`,
+  const [currentChannels, setCurrentChannels] = useStateFromProps(
     productChannelsChoices
   );
 
@@ -210,29 +212,31 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   }, [productChannelsChoices]);
 
-  const [updateChannels] = useProductChannelListingUpdate({
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Channels updated"
-          })
-        });
+      if (
+        data.productChannelListingUpdate.productChannelListingErrors.length ===
+        0
+      ) {
         const updatedProductChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
           data.productChannelListingUpdate.product.channelListing
         );
         setCurrentChannels(updatedProductChannelsChoices);
       } else {
-        data.productChannelListingUpdate.errors.map(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl)
-          })
+        data.productChannelListingUpdate.productChannelListingErrors.map(
+          error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl)
+            })
         );
       }
     }
   });
+  const [
+    updateVariantChannels,
+    updateVariantChannelsOpts
+  ] = useProductVariantChannelListingUpdate({});
 
   const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -267,7 +271,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       product,
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
-      variables => updateChannels({ variables })
+      updateChannels,
+      updateVariantChannels
     ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
@@ -295,6 +300,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductImagesOpts.loading ||
     updateProductOpts.loading ||
     reorderProductVariantsOpts.loading ||
+    updateChannelsOpts.loading ||
+    updateVariantChannelsOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
@@ -317,6 +324,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product ? product.id : null,
     null
   );
+  const channelsErrors = [
+    ...(updateChannelsOpts?.data?.productChannelListingUpdate
+      ?.productChannelListingErrors || []),
+    ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
+      ?.productChannelListingErrors || [])
+  ];
 
   return (
     <>
@@ -348,6 +361,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
         errors={errors}
+        channelsErrors={channelsErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         saveButtonBarState={formTransitionState}
@@ -364,6 +378,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onSubmit={handleSubmit}
+        onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>

@@ -9,17 +9,20 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+// import { ProductVariant_channelListing } from "@saleor/fragments/types/ProductVariant";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
 import { ReorderAction } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -38,9 +41,15 @@ import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
+export interface ProductVariantChannelData {
+  id: string;
+  currency: string;
+  name: string;
+  price: number;
+}
 export interface ProductVariantPageFormData extends MetadataFormData {
+  channelListing: ProductVariantChannelData[];
   costPrice: string;
-  price: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -61,6 +70,7 @@ interface ProductVariantPageProps {
     | ProductErrorWithAttributesFragment[]
     | VariantUpdate_productVariantUpdate_errors[];
   header: string;
+  channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -80,6 +90,7 @@ interface ProductVariantPageProps {
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   defaultVariantId,
   defaultWeightUnit,
+  channelErrors,
   errors,
   header,
   loading,
@@ -136,9 +147,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   );
 
   const initialForm: ProductVariantPageFormData = {
+    channelListing: variant?.channelListing?.map(listing => ({
+      currency: listing.price.currency,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: listing.price.amount
+    })),
     costPrice: variant?.costPrice?.amount.toString() || "",
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
-    price: variant?.price?.amount.toString() || "",
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",
     trackInventory: !!variant?.trackInventory,
@@ -172,9 +188,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>
-          {maybe(() => variant.product.name)}
-        </AppHeader>
+        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -183,7 +197,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           )}
         </PageHeader>
         <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
-          {({ change, data, hasChanged, submit, triggerChange }) => {
+          {({ change, data, hasChanged, set, submit, triggerChange }) => {
             const handleAttributeChange: FormsetChange = (id, value) => {
               changeAttributeData(id, value);
               triggerChange();
@@ -191,6 +205,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
             const changeMetadata = makeMetadataChangeHandler(change);
 
+            const handleChannelChange = createVariantChannelsChangeHandler(
+              data,
+              set,
+              triggerChange
+            );
             return (
               <>
                 <Grid variant="inverted">
@@ -227,17 +246,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <CardSpacer />
                     <ProductVariantPrice
-                      errors={errors}
-                      data={data}
-                      currencySymbol={
-                        variant && variant.price
-                          ? variant.price.currency
-                          : variant && variant.costPrice
-                          ? variant.costPrice.currency
-                          : ""
-                      }
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelErrors}
                       loading={loading}
-                      onChange={change}
+                      onChange={handleChannelChange}
                     />
                     <CardSpacer />
                     <ProductShipping

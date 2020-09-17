@@ -91,10 +91,30 @@ export interface ProductVariantAttributesFragment_pricing {
   priceRangeUndiscounted: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted | null;
 }
 
+export interface ProductVariantAttributesFragment_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantAttributesFragment_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantAttributesFragment_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductVariantAttributesFragment_channelListing_channel;
+  discountedPrice: ProductVariantAttributesFragment_channelListing_discountedPrice | null;
+}
+
 export interface ProductVariantAttributesFragment {
   __typename: "Product";
   id: string;
   attributes: ProductVariantAttributesFragment_attributes[];
   productType: ProductVariantAttributesFragment_productType;
   pricing: ProductVariantAttributesFragment_pricing | null;
+  channelListing: ProductVariantAttributesFragment_channelListing[] | null;
 }

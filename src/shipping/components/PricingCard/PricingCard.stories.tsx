@@ -8,7 +8,7 @@ import PricingCard, { PricingCardProps } from "./PricingCard";
 
 const props: PricingCardProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channels
+    shippingZone.shippingMethods[0].channelListing
   ),
   defaultCurrency: "USD",
   disabled: false,

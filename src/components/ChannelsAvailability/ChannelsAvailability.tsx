@@ -21,22 +21,14 @@ export interface ChannelsAvailabilityProps {
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
-  onChange: (
-    index: number
-  ) => (channelData: {
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => void;
+  onChange?: (id: string, data: Value) => void;
   openModal: () => void;
 }
 
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  onChange: (data: {
-    isPublished: boolean;
-    publicationDate: string | null;
-  }) => void;
+  onChange: (id: string, data: Value) => void;
 }
 
 const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
@@ -118,7 +110,7 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
               }
               value={isPublished}
               onChange={() => {
-                onChange({
+                onChange(id, {
                   isPublished: !isPublished,
                   publicationDate:
                     !isPublished && !publicationDate
@@ -144,7 +136,10 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
                   shrink: true
                 }}
                 onChange={e =>
-                  onChange({ isPublished, publicationDate: e.target.value })
+                  onChange(id, {
+                    isPublished,
+                    publicationDate: e.target.value
+                  })
                 }
               />
             )}
@@ -205,10 +200,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             </>
           )}
           {channels
-            ? channels.map((data, index) => (
-                <Channel key={data.id} data={data} onChange={onChange(index)} />
+            ? channels.map(data => (
+                <Channel key={data.id} data={data} onChange={onChange} />
               ))
-            : shippingChannels.map(data => (
+            : shippingChannels
+            ? shippingChannels.map(data => (
                 <React.Fragment key={data.id}>
                   <div className={classes.channelItem}>
                     <div className={classes.channelName}>
@@ -217,7 +213,8 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
                   </div>
                   <Hr className={classes.hr} />
                 </React.Fragment>
-              ))}
+              ))
+            : null}
         </CardContent>
       </Card>
     </>

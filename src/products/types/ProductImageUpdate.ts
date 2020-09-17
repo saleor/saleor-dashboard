@@ -122,6 +122,26 @@ export interface ProductImageUpdate_productImageUpdate_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
 }
+export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductImageUpdate_productImageUpdate_product_channelListing_channel;
+  discountedPrice: ProductImageUpdate_productImageUpdate_product_channelListing_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
 
 export interface ProductImageUpdate_productImageUpdate_product_category {
   __typename: "Category";
@@ -159,31 +179,12 @@ export interface ProductImageUpdate_productImageUpdate_product_purchaseCost {
   stop: ProductImageUpdate_productImageUpdate_product_purchaseCost_stop | null;
 }
 
-export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_channelListing {
-  __typename: "ProductChannelListing";
-  channel: ProductImageUpdate_productImageUpdate_product_channelListing_channel;
-  isPublished: boolean;
-  publicationDate: any | null;
-}
-
 export interface ProductImageUpdate_productImageUpdate_product_images {
   __typename: "ProductImage";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_variants_stocks_warehouse {
@@ -200,15 +201,31 @@ export interface ProductImageUpdate_productImageUpdate_product_variants_stocks {
   warehouse: ProductImageUpdate_productImageUpdate_product_variants_stocks_warehouse;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_variants_pricing_price_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_variants_pricing_price {
+  __typename: "TaxedMoney";
+  gross: ProductImageUpdate_productImageUpdate_product_variants_pricing_price_gross;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_variants_pricing {
+  __typename: "VariantPricingInfo";
+  price: ProductImageUpdate_productImageUpdate_product_variants_pricing_price | null;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_variants {
   __typename: "ProductVariant";
   id: string;
   sku: string;
   name: string;
-  price: ProductImageUpdate_productImageUpdate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductImageUpdate_productImageUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  pricing: ProductImageUpdate_productImageUpdate_product_variants_pricing | null;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_weight {
@@ -231,6 +248,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   pricing: ProductImageUpdate_productImageUpdate_product_pricing | null;
   metadata: (ProductImageUpdate_productImageUpdate_product_metadata | null)[];
   privateMetadata: (ProductImageUpdate_productImageUpdate_product_privateMetadata | null)[];
+  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -244,7 +262,6 @@ export interface ProductImageUpdate_productImageUpdate_product {
   isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
-  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   images: (ProductImageUpdate_productImageUpdate_product_images | null)[] | null;
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
   weight: ProductImageUpdate_productImageUpdate_product_weight | null;
