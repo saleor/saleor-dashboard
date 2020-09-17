@@ -24,6 +24,7 @@ storiesOf("Views / Products / Product variant details", module)
       onImageSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
@@ -41,6 +42,7 @@ storiesOf("Views / Products / Product variant details", module)
       onImageSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
@@ -56,6 +58,7 @@ storiesOf("Views / Products / Product variant details", module)
       onImageSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       errors={[
         {
