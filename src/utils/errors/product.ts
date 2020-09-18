@@ -71,12 +71,13 @@ function getProductErrorMessage(
       case ProductErrorCode.INVALID:
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.UNIQUE:
-        return intl.formatMessage(messages.nameAlreadyTaken);
+        if (err.field === "sku") {
+          return intl.formatMessage(messages.skuUnique);
+        }
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
-
   return undefined;
 }
 

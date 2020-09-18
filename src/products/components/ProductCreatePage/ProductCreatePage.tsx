@@ -194,7 +194,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     trackInventory: false,
     weight: ""
   };
-
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || ""
@@ -283,6 +282,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
+
+        const formDisabled =
+          !data.sku ||
+          data.channelListing.some(
+            channel => channel.price < 0 || !channel.price
+          );
 
         return (
           <Container>
@@ -424,7 +429,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onSave={submit}
               state={saveButtonBarState}
               disabled={
-                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+                disabled ||
+                !onSubmit ||
+                formDisabled ||
+                (!hasChanged && !hasChannelChanged)
               }
             />
           </Container>

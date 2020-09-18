@@ -89,20 +89,6 @@ export const categoryDetails = gql`
               id
               name
             }
-            pricing {
-              priceRangeUndiscounted {
-                start {
-                  gross {
-                    ...Money
-                  }
-                }
-                stop {
-                  gross {
-                    ...Money
-                  }
-                }
-              }
-            }
           }
         }
       }

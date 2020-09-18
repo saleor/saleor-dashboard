@@ -26,11 +26,43 @@ import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "@saleor/products/types/SimpleProductUpdate";
+import {
+  VariantCreate,
+  VariantCreateVariables
+} from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
+
+const getSimpleProductVariables = (
+  productVariables: ProductUpdateVariables,
+  data: ProductUpdatePageSubmitData,
+  productId: string
+) => ({
+  ...productVariables,
+  addStocks: data.addStocks.map(mapFormsetStockToStockInput),
+  deleteStocks: data.removeStocks,
+  input: {
+    ...productVariables.input,
+    weight: weight(data.weight)
+  },
+  productVariantId: productId,
+  productVariantInput: {
+    costPrice: data.basePrice,
+    sku: data.sku,
+    trackInventory: data.trackInventory
+  },
+  updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
+});
+
+const getSimpleProductErrors = (data: SimpleProductUpdate) => [
+  ...data.productUpdate.errors,
+  ...data.productVariantStocksCreate.errors,
+  ...data.productVariantStocksDelete.errors,
+  ...data.productVariantStocksUpdate.errors
+];
 
 export function createUpdateHandler(
   product: ProductDetails_product,
@@ -45,7 +77,10 @@ export function createUpdateHandler(
   }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
   updateVariantChannels: (options: {
     variables: ProductVariantChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>
+  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
+  productVariantCreate: (options: {
+    variables: VariantCreateVariables;
+  }) => Promise<MutationFetchResult<VariantCreate>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -77,42 +112,60 @@ export function createUpdateHandler(
       const result = await updateProduct(productVariables);
       errors = result.data.productUpdate.errors;
     } else {
-      const result = await updateSimpleProduct({
-        ...productVariables,
-        addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        deleteStocks: data.removeStocks,
-        input: {
-          ...productVariables.input,
-          weight: weight(data.weight)
-        },
-        productVariantId: product.variants[0].id,
-        productVariantInput: {
-          costPrice: data.basePrice,
-          sku: data.sku,
-          trackInventory: data.trackInventory
-        },
-        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
-      });
+      if (!product.variants.length) {
+        const productVariantResult = await productVariantCreate({
+          variables: {
+            input: {
+              attributes:
+                product.productType.variantAttributes?.map(attribute => ({
+                  id: attribute.id,
+                  values: attribute.values.map(value => value.slug)
+                })) || [],
+              product: product.id,
+              sku: data.sku,
+              stocks: data.updateStocks.map(mapFormsetStockToStockInput)
+            }
+          }
+        });
+        errors = productVariantResult.data.productVariantCreate.errors;
 
-      const variantResult = await updateVariantChannels({
-        variables: {
-          id: product.variants[0].id,
-          input: data.channelListing.map(listing => ({
-            channelId: listing.id,
-            price: listing.price
-          }))
+        const variantId =
+          productVariantResult.data.productVariantCreate?.productVariant?.id;
+        if (variantId) {
+          updateVariantChannels({
+            variables: {
+              id: variantId,
+              input: data.channelListing.map(listing => ({
+                channelId: listing.id,
+                price: listing.price
+              }))
+            }
+          });
+          const result = await updateSimpleProduct(
+            getSimpleProductVariables(productVariables, data, variantId)
+          );
+          errors = [...errors, ...getSimpleProductErrors(result.data)];
         }
-      });
+      } else {
+        const result = await updateSimpleProduct(
+          getSimpleProductVariables(
+            productVariables,
+            data,
+            product.variants[0].id
+          )
+        );
+        errors = getSimpleProductErrors(result.data);
 
-      errors = [
-        ...result.data.productUpdate.errors,
-        ...result.data.productVariantStocksCreate.errors,
-        ...result.data.productVariantStocksDelete.errors,
-        ...result.data.productVariantStocksUpdate.errors,
-        ...result.data.productVariantUpdate.errors,
-        ...variantResult.data.productVariantChannelListingUpdate
-          .productChannelListingErrors
-      ];
+        updateVariantChannels({
+          variables: {
+            id: product.variants[0].id,
+            input: data.channelListing.map(listing => ({
+              channelId: listing.id,
+              price: listing.price
+            }))
+          }
+        });
+      }
     }
     const productChannels = createChannelsDataFromProduct(
       product.channelListing
@@ -122,7 +175,7 @@ export function createUpdateHandler(
       data.channelListing,
       (a, b) => a.id === b.id
     );
-    const result = await updateChannels({
+    updateChannels({
       variables: {
         id: product.id,
         input: {
@@ -137,10 +190,7 @@ export function createUpdateHandler(
         }
       }
     });
-    return [
-      ...errors,
-      ...result.data.productChannelListingUpdate.productChannelListingErrors
-    ];
+    return errors;
   };
 }
 

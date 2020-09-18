@@ -98,27 +98,30 @@ export function createHandler(
         ),
         productVariantCreate(getSimpleProductVariables(formData, productId))
       ]);
-      const channelErrors =
-        result[0].data.productChannelListingUpdate.productChannelListingErrors;
       const variantErrors = result[1].data.productVariantCreate.errors;
-
-      if (channelErrors.length === 0 && variantErrors.length === 0) {
-        await updateVariantChannels({
-          variables: {
-            id: result[1].data.productVariantCreate.productVariant.id,
-            input: formData.channelListing.map(listing => ({
-              channelId: listing.id,
-              price: listing.price
-            }))
-          }
-        });
+      const variantId = result[1].data.productVariantCreate.productVariant.id;
+      if (variantErrors.length === 0 && variantId) {
+        const variantPrices = formData.channelListing
+          .map(
+            listing =>
+              listing.price !== null && {
+                channelId: listing.id,
+                price: listing.price
+              }
+          )
+          .filter(Boolean);
+        if (variantPrices.length) {
+          updateVariantChannels({
+            variables: {
+              id: variantId,
+              input: variantPrices
+            }
+          });
+        }
       }
+    } else {
+      updateChannels(getChannelsVariables(productId, formData.channelListing));
     }
-
-    await updateChannels(
-      getChannelsVariables(productId, formData.channelListing)
-    );
-
     return productId || null;
   };
 }
