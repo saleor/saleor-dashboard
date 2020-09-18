@@ -25,6 +25,11 @@ const useStyles = makeStyles(
       marginBottom: -30,
       marginTop: theme.spacing(2)
     },
+    input: {
+      "& label": {
+        overflowX: "inherit"
+      }
+    },
     label: {
       fontSize: 14
     },
@@ -103,6 +108,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
         <TextField
           name="query"
           value={query}
+          className={classes.input}
           onChange={e => onQueryChange(e.target.value)}
           label={intl.formatMessage({
             defaultMessage: "Search through channels"
