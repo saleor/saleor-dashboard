@@ -6,9 +6,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -17,6 +14,9 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
@@ -38,6 +38,11 @@ const useStyles = makeStyles(
     },
     colQuantity: {
       textAlign: "center",
+      width: 120
+    },
+    colSku: {
+      textAlign: "right",
+      textOverflow: "ellipsis",
       width: 120
     },
     colTotal: {
@@ -97,6 +102,12 @@ const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
                 />
               </span>
             </TableCell>
+            <TableCell className={classes.colSku}>
+              <FormattedMessage
+                defaultMessage="SKU"
+                description="ordered product sku"
+              />
+            </TableCell>
             <TableCell className={classes.colQuantity}>
               <FormattedMessage
                 defaultMessage="Quantity"
@@ -130,6 +141,9 @@ const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
               >
                 {maybe(() => line.productName) || <Skeleton />}
               </TableCellAvatar>
+              <TableCell className={classes.colSku}>
+                {line?.productSku || <Skeleton />}
+              </TableCell>
               <TableCell className={classes.colQuantity}>
                 {maybe(() => line.quantity - line.quantityFulfilled) || (
                   <Skeleton />

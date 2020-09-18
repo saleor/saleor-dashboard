@@ -3,17 +3,17 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import CardTitle from "@saleor/components/CardTitle";
+import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
+import Skeleton from "@saleor/components/Skeleton";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { maybe } from "@saleor/misc";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CardTitle from "@saleor/components/CardTitle";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import Skeleton from "@saleor/components/Skeleton";
-import { maybe } from "@saleor/misc";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(

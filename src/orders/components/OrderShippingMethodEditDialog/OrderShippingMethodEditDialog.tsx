@@ -5,21 +5,21 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
 import Money from "@saleor/components/Money";
 import { SingleSelectField } from "@saleor/components/SingleSelectField";
-import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import { buttonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
-import FormSpacer from "@saleor/components/FormSpacer";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { OrderDetails_order_availableShippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
@@ -120,8 +120,8 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               {nonFieldErrors.length > 0 && (
                 <>
                   <FormSpacer />
-                  {nonFieldErrors.map(err => (
-                    <DialogContentText color="error">
+                  {nonFieldErrors.map((err, index) => (
+                    <DialogContentText color="error" key={index}>
                       {getOrderErrorMessage(err, intl)}
                     </DialogContentText>
                   ))}

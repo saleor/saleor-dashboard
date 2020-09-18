@@ -1,15 +1,15 @@
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
-
 import { categoryAddUrl } from "@saleor/categories/urls";
-import { permissionGroupAddUrl } from "@saleor/permissionGroups/urls";
 import { collectionAddUrl } from "@saleor/collections/urls";
 import { customerAddUrl } from "@saleor/customers/urls";
 import { voucherAddUrl } from "@saleor/discounts/urls";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
+import { permissionGroupAddUrl } from "@saleor/permissionGroups/urls";
 import { productAddUrl } from "@saleor/products/urls";
+import { score } from "fuzzaldrin";
 import { MutationFunction } from "react-apollo";
+import { IntlShape } from "react-intl";
+
 import { QuickSearchActionInput, QuickSearchMode } from "../../types";
 import messages from "../messages";
 import { sortScores } from "../utils";

@@ -1,6 +1,3 @@
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -13,13 +10,15 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { buttonMessages, commonMessages } from "@saleor/intl";
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { getFormErrors } from "@saleor/utils/errors";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AddMemberFormData {
   email: string;

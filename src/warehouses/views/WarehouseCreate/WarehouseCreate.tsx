@@ -1,16 +1,15 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
-import WarehouseCreatePage from "@saleor/warehouses/components/WarehouseCreatePage";
+import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { warehouseListUrl, warehouseUrl } from "@saleor/warehouses/urls";
-import { useWarehouseCreate } from "@saleor/warehouses/mutations";
-import { commonMessages } from "@saleor/intl";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
+import { commonMessages } from "@saleor/intl";
 import { findValueInEnum, getMutationStatus } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
-import useShop from "@saleor/hooks/useShop";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import WarehouseCreatePage from "@saleor/warehouses/components/WarehouseCreatePage";
+import { useWarehouseCreate } from "@saleor/warehouses/mutations";
+import { warehouseListUrl, warehouseUrl } from "@saleor/warehouses/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const WarehouseCreate: React.FC = () => {
   const intl = useIntl();
@@ -21,7 +20,10 @@ const WarehouseCreate: React.FC = () => {
     onCompleted: data => {
       if (data.createWarehouse.errors.length === 0) {
         navigate(warehouseUrl(data.createWarehouse.warehouse.id));
-        notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
       }
     }
   });

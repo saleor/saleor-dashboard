@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import ProductVariantCreatePage from "../../../products/components/ProductVariantCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";

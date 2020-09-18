@@ -3,31 +3,23 @@ import CardContent from "@material-ui/core/CardContent";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
-} from "@saleor/components/SingleAutocompleteSelectField";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
-import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookInfoProps {
   data: FormData;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  serviceDisplayValue: string;
-  services: SingleAutocompleteChoiceType[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  serviceOnChange: (event: ChangeEvent) => void;
-  fetchServiceAccounts: (data: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -47,17 +39,12 @@ const useStyles = makeStyles(
 const WebhookInfo: React.FC<WebhookInfoProps> = ({
   data,
   disabled,
-  services,
-  serviceDisplayValue,
-  fetchServiceAccounts,
   errors,
-  onChange,
-  serviceOnChange
+  onChange
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
-  const serviceAccountError = errors.find(error => error.field === null);
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
 
   return (
@@ -94,23 +81,6 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
             description: "webhook specific information"
           })}
         </Typography>
-        <SingleAutocompleteSelectField
-          disabled={disabled}
-          displayValue={serviceDisplayValue}
-          label={intl.formatMessage({
-            defaultMessage: "Assign to Service Account"
-          })}
-          error={!!serviceAccountError}
-          helperText={getWebhookErrorMessage(serviceAccountError, intl)}
-          name="serviceAccount"
-          onChange={serviceOnChange}
-          value={data.serviceAccount}
-          choices={services}
-          fetchChoices={fetchServiceAccounts}
-          InputProps={{
-            autoComplete: "off"
-          }}
-        />
         <FormSpacer />
         <TextField
           disabled={disabled}

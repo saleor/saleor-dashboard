@@ -1,10 +1,29 @@
+import {
+  bulkProductErrorFragment,
+  bulkStockErrorFragment,
+  exportErrorFragment,
+  productErrorFragment,
+  stockErrorFragment
+} from "@saleor/fragments/errors";
+import {
+  exportFileFragment,
+  fragmentVariant,
+  productFragmentDetails
+} from "@saleor/fragments/products";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { productErrorFragment } from "@saleor/attributes/mutations";
-import makeMutation from "@saleor/hooks/makeMutation";
-import { TypedMutation } from "../mutations";
+import {
+  productBulkDelete,
+  productBulkDeleteVariables
+} from "./types/productBulkDelete";
+import {
+  productBulkPublish,
+  productBulkPublishVariables
+} from "./types/productBulkPublish";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
+import { ProductExport, ProductExportVariables } from "./types/ProductExport";
 import {
   ProductImageCreate,
   ProductImageCreateVariables
@@ -21,7 +40,19 @@ import {
   ProductImageUpdate,
   ProductImageUpdateVariables
 } from "./types/ProductImageUpdate";
+import {
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+} from "./types/ProductSetAvailabilityForPurchase";
 import { ProductUpdate, ProductUpdateVariables } from "./types/ProductUpdate";
+import {
+  ProductVariantBulkCreate,
+  ProductVariantBulkCreateVariables
+} from "./types/ProductVariantBulkCreate";
+import {
+  ProductVariantBulkDelete,
+  ProductVariantBulkDeleteVariables
+} from "./types/ProductVariantBulkDelete";
 import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
@@ -38,45 +69,6 @@ import {
 } from "./types/VariantImageUnassign";
 import { VariantUpdate, VariantUpdateVariables } from "./types/VariantUpdate";
 
-import { fragmentVariant, productFragmentDetails } from "./queries";
-import {
-  productBulkDelete,
-  productBulkDeleteVariables
-} from "./types/productBulkDelete";
-import {
-  productBulkPublish,
-  productBulkPublishVariables
-} from "./types/productBulkPublish";
-import {
-  ProductVariantBulkCreate,
-  ProductVariantBulkCreateVariables
-} from "./types/ProductVariantBulkCreate";
-import {
-  ProductVariantBulkDelete,
-  ProductVariantBulkDeleteVariables
-} from "./types/ProductVariantBulkDelete";
-
-export const bulkProductErrorFragment = gql`
-  fragment BulkProductErrorFragment on BulkProductError {
-    field
-    code
-    index
-  }
-`;
-const bulkStockErrorFragment = gql`
-  fragment BulkStockErrorFragment on BulkStockError {
-    code
-    field
-    index
-  }
-`;
-const stockErrorFragment = gql`
-  fragment StockErrorFragment on StockError {
-    code
-    field
-  }
-`;
-
 export const productImageCreateMutation = gql`
   ${productErrorFragment}
   ${productFragmentDetails}
@@ -91,7 +83,7 @@ export const productImageCreateMutation = gql`
     }
   }
 `;
-export const TypedProductImageCreateMutation = TypedMutation<
+export const useProductImageCreateMutation = makeMutation<
   ProductImageCreate,
   ProductImageCreateVariables
 >(productImageCreateMutation);
@@ -109,7 +101,7 @@ export const productDeleteMutation = gql`
     }
   }
 `;
-export const TypedProductDeleteMutation = TypedMutation<
+export const useProductDeleteMutation = makeMutation<
   ProductDelete,
   ProductDeleteVariables
 >(productDeleteMutation);
@@ -133,7 +125,7 @@ export const productImagesReorder = gql`
     }
   }
 `;
-export const TypedProductImagesReorder = TypedMutation<
+export const useProductImagesReorder = makeMutation<
   ProductImageReorder,
   ProductImageReorderVariables
 >(productImagesReorder);
@@ -151,8 +143,9 @@ export const productUpdateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String
-    $basePrice: Decimal
+    $basePrice: PositiveDecimal
     $seo: SeoInput
+    $visibleInListings: Boolean
   ) {
     productUpdate(
       id: $id
@@ -167,6 +160,7 @@ export const productUpdateMutation = gql`
         name: $name
         basePrice: $basePrice
         seo: $seo
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -178,7 +172,7 @@ export const productUpdateMutation = gql`
     }
   }
 `;
-export const TypedProductUpdateMutation = TypedMutation<
+export const useProductUpdateMutation = makeMutation<
   ProductUpdate,
   ProductUpdateVariables
 >(productUpdateMutation);
@@ -199,7 +193,7 @@ export const simpleProductUpdateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String
-    $basePrice: Decimal
+    $basePrice: PositiveDecimal
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
     $seo: SeoInput
@@ -207,6 +201,7 @@ export const simpleProductUpdateMutation = gql`
     $deleteStocks: [ID!]!
     $updateStocks: [StockInput!]!
     $weight: WeightScalar
+    $visibleInListings: Boolean
   ) {
     productUpdate(
       id: $id
@@ -222,6 +217,7 @@ export const simpleProductUpdateMutation = gql`
         basePrice: $basePrice
         seo: $seo
         weight: $weight
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -274,7 +270,7 @@ export const simpleProductUpdateMutation = gql`
     }
   }
 `;
-export const TypedSimpleProductUpdateMutation = TypedMutation<
+export const useSimpleProductUpdateMutation = makeMutation<
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 >(simpleProductUpdateMutation);
@@ -291,13 +287,14 @@ export const productCreateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String!
-    $basePrice: Decimal
+    $basePrice: PositiveDecimal
     $productType: ID!
     $sku: String
     $seo: SeoInput
     $stocks: [StockInput!]!
     $trackInventory: Boolean!
     $weight: WeightScalar
+    $visibleInListings: Boolean
   ) {
     productCreate(
       input: {
@@ -316,6 +313,7 @@ export const productCreateMutation = gql`
         stocks: $stocks
         trackInventory: $trackInventory
         weight: $weight
+        visibleInListings: $visibleInListings
       }
     ) {
       errors: productErrors {
@@ -327,7 +325,7 @@ export const productCreateMutation = gql`
     }
   }
 `;
-export const TypedProductCreateMutation = TypedMutation<
+export const useProductCreateMutation = makeMutation<
   ProductCreate,
   ProductCreateVariables
 >(productCreateMutation);
@@ -345,7 +343,7 @@ export const variantDeleteMutation = gql`
     }
   }
 `;
-export const TypedVariantDeleteMutation = TypedMutation<
+export const useVariantDeleteMutation = makeMutation<
   VariantDelete,
   VariantDeleteVariables
 >(variantDeleteMutation);
@@ -359,8 +357,8 @@ export const variantUpdateMutation = gql`
     $removeStocks: [ID!]!
     $id: ID!
     $attributes: [AttributeValueInput]
-    $costPrice: Decimal
-    $priceOverride: Decimal
+    $costPrice: PositiveDecimal
+    $price: PositiveDecimal
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
@@ -371,7 +369,7 @@ export const variantUpdateMutation = gql`
       input: {
         attributes: $attributes
         costPrice: $costPrice
-        priceOverride: $priceOverride
+        price: $price
         sku: $sku
         trackInventory: $trackInventory
         weight: $weight
@@ -417,7 +415,7 @@ export const variantUpdateMutation = gql`
     }
   }
 `;
-export const TypedVariantUpdateMutation = TypedMutation<
+export const useVariantUpdateMutation = makeMutation<
   VariantUpdate,
   VariantUpdateVariables
 >(variantUpdateMutation);
@@ -436,7 +434,7 @@ export const variantCreateMutation = gql`
     }
   }
 `;
-export const TypedVariantCreateMutation = TypedMutation<
+export const useVariantCreateMutation = makeMutation<
   VariantCreate,
   VariantCreateVariables
 >(variantCreateMutation);
@@ -457,7 +455,7 @@ export const productImageDeleteMutation = gql`
     }
   }
 `;
-export const TypedProductImageDeleteMutation = TypedMutation<
+export const useProductImageDeleteMutation = makeMutation<
   ProductImageDelete,
   ProductImageDeleteVariables
 >(productImageDeleteMutation);
@@ -476,7 +474,7 @@ export const productImageUpdateMutation = gql`
     }
   }
 `;
-export const TypedProductImageUpdateMutation = TypedMutation<
+export const useProductImageUpdateMutation = makeMutation<
   ProductImageUpdate,
   ProductImageUpdateVariables
 >(productImageUpdateMutation);
@@ -495,7 +493,7 @@ export const variantImageAssignMutation = gql`
     }
   }
 `;
-export const TypedVariantImageAssignMutation = TypedMutation<
+export const useVariantImageAssignMutation = makeMutation<
   VariantImageAssign,
   VariantImageAssignVariables
 >(variantImageAssignMutation);
@@ -514,7 +512,7 @@ export const variantImageUnassignMutation = gql`
     }
   }
 `;
-export const TypedVariantImageUnassignMutation = TypedMutation<
+export const useVariantImageUnassignMutation = makeMutation<
   VariantImageUnassign,
   VariantImageUnassignVariables
 >(variantImageUnassignMutation);
@@ -529,7 +527,7 @@ export const productBulkDeleteMutation = gql`
     }
   }
 `;
-export const TypedProductBulkDeleteMutation = TypedMutation<
+export const useProductBulkDeleteMutation = makeMutation<
   productBulkDelete,
   productBulkDeleteVariables
 >(productBulkDeleteMutation);
@@ -544,7 +542,7 @@ export const productBulkPublishMutation = gql`
     }
   }
 `;
-export const TypedProductBulkPublishMutation = TypedMutation<
+export const useProductBulkPublishMutation = makeMutation<
   productBulkPublish,
   productBulkPublishVariables
 >(productBulkPublishMutation);
@@ -577,7 +575,51 @@ export const ProductVariantBulkDeleteMutation = gql`
     }
   }
 `;
-export const TypedProductVariantBulkDeleteMutation = TypedMutation<
+export const useProductVariantBulkDeleteMutation = makeMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);
+
+export const productExportMutation = gql`
+  ${exportFileFragment}
+  ${exportErrorFragment}
+  mutation ProductExport($input: ExportProductsInput!) {
+    exportProducts(input: $input) {
+      exportFile {
+        ...ExportFileFragment
+      }
+      errors: exportErrors {
+        ...ExportErrorFragment
+      }
+    }
+  }
+`;
+export const useProductExport = makeMutation<
+  ProductExport,
+  ProductExportVariables
+>(productExportMutation);
+
+const productSetAvailabilityForPurchase = gql`
+  ${productErrorFragment}
+  mutation ProductSetAvailabilityForPurchase(
+    $isAvailable: Boolean!
+    $productId: ID!
+    $startDate: Date
+  ) {
+    productSetAvailabilityForPurchase(
+      isAvailable: $isAvailable
+      productId: $productId
+      startDate: $startDate
+    ) {
+      errors: productErrors {
+        ...ProductErrorFragment
+        message
+      }
+    }
+  }
+`;
+
+export const useProductSetAvailabilityForPurchase = makeMutation<
+  ProductSetAvailabilityForPurchase,
+  ProductSetAvailabilityForPurchaseVariables
+>(productSetAvailabilityForPurchase);

@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PluginUpdateInput, ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
+import { PluginUpdateInput, PluginErrorCode, ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PluginUpdate
 // ====================================================
 
 export interface PluginUpdate_pluginUpdate_errors {
-  __typename: "Error";
+  __typename: "PluginError";
+  code: PluginErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface PluginUpdate_pluginUpdate_plugin_configuration {

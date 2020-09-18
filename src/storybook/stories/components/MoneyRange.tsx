@@ -1,7 +1,7 @@
+import MoneyRange, { MoneyRangeProps } from "@saleor/components/MoneyRange";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import MoneyRange, { MoneyRangeProps } from "@saleor/components/MoneyRange";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

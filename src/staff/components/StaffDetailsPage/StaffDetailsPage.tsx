@@ -1,10 +1,7 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
-import AccountStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
+import AccountStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -14,6 +11,7 @@ import Grid from "@saleor/components/Grid";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -21,7 +19,9 @@ import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";

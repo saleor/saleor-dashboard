@@ -1,4 +1,5 @@
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+
 import { createVariants } from "./createVariants";
 import {
   AllOrAttribute,

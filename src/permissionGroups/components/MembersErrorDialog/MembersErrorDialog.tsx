@@ -1,9 +1,8 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface MembersErrorDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -30,7 +29,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
         defaultMessage: "Unassign users",
         description: "dialog title"
       })}
-      variant="default"
+      variant="info"
     >
       <DialogContentText>
         <FormattedMessage

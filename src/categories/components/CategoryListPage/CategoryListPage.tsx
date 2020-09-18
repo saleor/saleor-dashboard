@@ -1,21 +1,21 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
-import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
+import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,
   PageListProps,
   SearchPageProps,
-  TabPageProps,
-  SortPage
+  SortPage,
+  TabPageProps
 } from "@saleor/types";
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import CategoryList from "../CategoryList";
 
 export interface CategoryTableProps

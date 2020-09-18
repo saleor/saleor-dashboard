@@ -7,8 +7,8 @@ import {
   Filters,
   Pagination,
   SingleAction,
-  TabActionDialog,
-  Sort
+  Sort,
+  TabActionDialog
 } from "../types";
 
 export const warehouseSection = "/warehouses/";

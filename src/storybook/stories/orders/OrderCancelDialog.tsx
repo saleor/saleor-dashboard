@@ -1,7 +1,7 @@
+import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { OrderErrorCode } from "@saleor/types/globalTypes";
 import OrderCancelDialog, {
   OrderCancelDialogProps
 } from "../../../orders/components/OrderCancelDialog";

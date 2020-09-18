@@ -1,9 +1,9 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../misc";
 import CustomerCreatePage from "../components/CustomerCreatePage";
 import { TypedCreateCustomerMutation } from "../mutations";
@@ -19,6 +19,7 @@ export const CustomerCreate: React.FC<{}> = () => {
   const handleCreateCustomerSuccess = (data: CreateCustomer) => {
     if (data.customerCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Customer created"
         })

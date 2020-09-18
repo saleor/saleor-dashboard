@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import SaveFilterTabDialog, {
   SaveFilterTabDialogProps
 } from "@saleor/components/SaveFilterTabDialog";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: SaveFilterTabDialogProps = {

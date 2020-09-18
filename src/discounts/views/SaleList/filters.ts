@@ -1,28 +1,29 @@
+import { IFilterElement } from "@saleor/components/Filter";
+import {
+  SaleFilterKeys,
+  SaleListFilterOpts
+} from "@saleor/discounts/components/SaleListPage";
+import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
 import {
   DiscountStatusEnum,
   DiscountValueTypeEnum,
   SaleFilterInput
 } from "@saleor/types/globalTypes";
-import { maybe, findValueInEnum, joinDateTime } from "@saleor/misc";
-import { IFilterElement } from "@saleor/components/Filter";
-import {
-  SaleListFilterOpts,
-  SaleFilterKeys
-} from "@saleor/discounts/components/SaleListPage";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
-  getSingleEnumValueQueryParam,
   getMinMaxQueryParam,
-  getMultipleEnumValueQueryParam
+  getMultipleEnumValueQueryParam,
+  getSingleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   SaleListUrlFilters,
   SaleListUrlFiltersEnum,
-  SaleListUrlQueryParams,
-  SaleListUrlFiltersWithMultipleValues
+  SaleListUrlFiltersWithMultipleValues,
+  SaleListUrlQueryParams
 } from "../../urls";
 
 export const SALE_FILTERS_KEY = "saleFilters";
@@ -116,4 +117,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   SaleListUrlQueryParams,
   SaleListUrlFilters
->(SaleListUrlFiltersEnum);
+>({
+  ...SaleListUrlFiltersEnum,
+  ...SaleListUrlFiltersWithMultipleValues
+});

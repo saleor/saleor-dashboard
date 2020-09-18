@@ -1,20 +1,19 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
 import {
-  AvailableInGridAttributes_availableInGrid_edges_node,
-  AvailableInGridAttributes_grid_edges_node
-} from "@saleor/products/types/AvailableInGridAttributes";
+  GridAttributes_availableInGrid_edges_node,
+  GridAttributes_grid_edges_node
+} from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
   FetchMoreProps,
@@ -23,7 +22,9 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import FilterBar from "@saleor/components/FilterBar";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import {
@@ -39,17 +40,18 @@ export interface ProductListPageProps
     FetchMoreProps,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
-  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
+  availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
-  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
+  gridAttributes: GridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
+  onExport: () => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
     columnPicker: {
-      marginRight: theme.spacing(3)
+      margin: theme.spacing(0, 3)
     }
   }),
   { name: "ProductListPage" }
@@ -71,6 +73,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     totalGridAttributes,
     onAdd,
     onAll,
+    onExport,
     onFetchMore,
     onFilterChange,
     onSearchChange,
@@ -119,6 +122,19 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.products)}>
+        <CardMenu
+          menuItems={[
+            {
+              label: intl.formatMessage({
+                defaultMessage: "Export Products",
+                description: "export products to csv file, button"
+              }),
+              onSelect: onExport,
+              testId: "export"
+            }
+          ]}
+          data-test="menu"
+        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
@@ -138,7 +154,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onClick={onAdd}
           color="primary"
           variant="contained"
-          data-tc="add-product"
+          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"

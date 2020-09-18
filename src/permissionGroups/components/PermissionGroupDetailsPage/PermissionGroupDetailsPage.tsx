@@ -1,32 +1,32 @@
+import AccountPermissions from "@saleor/components/AccountPermissions";
+import AppHeader from "@saleor/components/AppHeader";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
+import Grid from "@saleor/components/Grid";
+import PageHeader from "@saleor/components/PageHeader";
+import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { sectionNames } from "@saleor/intl";
+import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import {
+  extractPermissionCodes,
+  isGroupFullAccess
+} from "@saleor/permissionGroups/utils";
+import { ListActions, SortPage } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
+import { getFormErrors } from "@saleor/utils/errors";
+import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import FormSpacer from "@saleor/components/FormSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { PermissionEnum } from "@saleor/types/globalTypes";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { ListActions, SortPage } from "@saleor/types";
-import AccountPermissions from "@saleor/components/AccountPermissions";
-import AppHeader from "@saleor/components/AppHeader";
-import PageHeader from "@saleor/components/PageHeader";
-import { sectionNames } from "@saleor/intl";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import {
-  isGroupFullAccess,
-  extractPermissionCodes
-} from "@saleor/permissionGroups/utils";
-import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
-import { getFormErrors } from "@saleor/utils/errors";
-import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
-import PermissionGroupInfo from "../PermissionGroupInfo";
 import {
   PermissionGroupDetails_permissionGroup,
   PermissionGroupDetails_permissionGroup_users
 } from "../../types/PermissionGroupDetails";
+import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
 export interface PermissionGroupDetailsPageFormData {

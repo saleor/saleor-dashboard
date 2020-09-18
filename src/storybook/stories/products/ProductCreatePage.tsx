@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../../../products/components/ProductCreatePage";

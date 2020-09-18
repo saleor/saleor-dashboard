@@ -1,204 +1,227 @@
-import React from "react";
-
+import { IMessageContext } from "@saleor/components/messages";
+import { DEMO_MODE } from "@saleor/config";
+import { User } from "@saleor/fragments/types/User";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { getMutationStatus } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
-import { MutationFunction, MutationResult } from "react-apollo";
-import { maybe } from "@saleor/misc";
-import {
-  TypedTokenAuthMutation,
-  TypedVerifyTokenMutation,
-  TokenRefreshMutation
-} from "./mutations";
-import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
-import { User } from "./types/User";
-import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
-import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
-import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
+import ApolloClient from "apollo-client";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useApolloClient, useMutation } from "react-apollo";
+import { IntlShape, useIntl } from "react-intl";
+
 import { UserContext } from "./";
+import {
+  tokenAuthMutation,
+  tokenRefreshMutation,
+  tokenVerifyMutation
+} from "./mutations";
+import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
+import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
+import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
+import {
+  displayDemoMessage,
+  getTokens,
+  removeTokens,
+  setAuthToken,
+  setTokens
+} from "./utils";
 
-interface AuthProviderOperationsProps {
-  children: (props: {
-    hasToken: boolean;
-    isAuthenticated: boolean;
-    tokenAuthLoading: boolean;
-    tokenVerifyLoading: boolean;
-    user: User;
-  }) => React.ReactNode;
-}
-const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
-  children
-}) => (
-  <TypedTokenAuthMutation>
-    {(...tokenAuth) => (
-      <TypedVerifyTokenMutation>
-        {(...tokenVerify) => (
-          <TokenRefreshMutation>
-            {(...tokenRefresh) => (
-              <AuthProvider
-                tokenAuth={tokenAuth}
-                tokenVerify={tokenVerify}
-                tokenRefresh={tokenRefresh}
-              >
-                {children}
-              </AuthProvider>
-            )}
-          </TokenRefreshMutation>
-        )}
-      </TypedVerifyTokenMutation>
-    )}
-  </TypedTokenAuthMutation>
-);
+const persistToken = false;
 
-interface AuthProviderProps {
-  children: (props: {
-    hasToken: boolean;
-    isAuthenticated: boolean;
-    tokenAuthLoading: boolean;
-    tokenVerifyLoading: boolean;
-    user: User;
-  }) => React.ReactNode;
-  tokenAuth: [
-    MutationFunction<TokenAuth, TokenAuthVariables>,
-    MutationResult<TokenAuth>
-  ];
-  tokenVerify: [
-    MutationFunction<VerifyToken, VerifyTokenVariables>,
-    MutationResult<VerifyToken>
-  ];
-  tokenRefresh: [
-    MutationFunction<RefreshToken, RefreshTokenVariables>,
-    MutationResult<RefreshToken>
-  ];
-}
+export function useAuthProvider(
+  intl: IntlShape,
+  notify: IMessageContext,
+  apolloClient: ApolloClient<any>
+) {
+  const [userContext, setUserContext] = useState<undefined | User>(undefined);
+  const autologinPromise = useRef<Promise<any>>();
+  const refreshPromise = useRef<Promise<boolean>>();
 
-interface AuthProviderState {
-  user: User;
-  persistToken: boolean;
-}
-
-class AuthProvider extends React.Component<
-  AuthProviderProps,
-  AuthProviderState
-> {
-  constructor(props) {
-    super(props);
-    this.state = { persistToken: false, user: undefined };
-  }
-
-  componentWillReceiveProps(props: AuthProviderProps) {
-    const { tokenAuth, tokenVerify } = props;
-    const tokenAuthOpts = tokenAuth[1];
-    const tokenVerifyOpts = tokenVerify[1];
-
-    if (tokenAuthOpts.error || tokenVerifyOpts.error) {
-      this.logout();
-    }
-    if (tokenAuthOpts.data) {
-      const user = tokenAuthOpts.data.tokenCreate.user;
-      // FIXME: Now we set state also when auth fails and returned user is
-      // `null`, because the LoginView uses this `null` to display error.
-      this.setState({ user });
-      if (user) {
-        setAuthToken(
-          tokenAuthOpts.data.tokenCreate.token,
-          this.state.persistToken
-        );
-      }
-    } else {
-      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
-        this.logout();
-      } else {
-        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
-        if (!!user) {
-          this.setState({ user });
-        }
-      }
-    }
-  }
-
-  componentDidMount() {
-    const { user } = this.state;
-    const token = getAuthToken();
-    if (!!token && !user) {
-      this.verifyToken(token);
-    } else {
-      loginWithCredentialsManagementAPI(this.login);
-    }
-  }
-
-  login = async (email: string, password: string) => {
-    const { tokenAuth } = this.props;
-    const [tokenAuthFn] = tokenAuth;
-
-    tokenAuthFn({ variables: { email, password } }).then(result => {
-      if (result && !result.data.tokenCreate.errors.length) {
-        saveCredentials(result.data.tokenCreate.user, password);
-      }
-    });
-  };
-
-  loginByToken = (token: string, user: User) => {
-    this.setState({ user });
-    setAuthToken(token, this.state.persistToken);
-  };
-
-  logout = () => {
-    this.setState({ user: undefined });
+  const logout = () => {
+    setUserContext(undefined);
     if (isCredentialsManagementAPISupported) {
       navigator.credentials.preventSilentAccess();
     }
-    removeAuthToken();
+    removeTokens();
   };
 
-  verifyToken = (token: string) => {
-    const { tokenVerify } = this.props;
-    const [tokenVerifyFn] = tokenVerify;
+  const [tokenAuth, tokenAuthResult] = useMutation<
+    TokenAuth,
+    TokenAuthVariables
+  >(tokenAuthMutation, {
+    client: apolloClient,
+    onCompleted: result => {
+      if (result.tokenCreate.errors.length > 0) {
+        logout();
+      }
 
-    return tokenVerifyFn({ variables: { token } });
+      const user = result.tokenCreate.user;
+
+      // FIXME: Now we set state also when auth fails and returned user is
+      // `null`, because the LoginView uses this `null` to display error.
+      setUserContext(user);
+      if (user) {
+        setTokens(
+          result.tokenCreate.token,
+          result.tokenCreate.csrfToken,
+          persistToken
+        );
+      }
+    },
+    onError: logout
+  });
+  const [tokenRefresh] = useMutation<RefreshToken, RefreshTokenVariables>(
+    tokenRefreshMutation,
+    {
+      client: apolloClient,
+      onError: logout
+    }
+  );
+  const [tokenVerify, tokenVerifyResult] = useMutation<
+    VerifyToken,
+    VerifyTokenVariables
+  >(tokenVerifyMutation, {
+    client: apolloClient,
+    onCompleted: result => {
+      if (result.tokenVerify === null) {
+        logout();
+      } else {
+        const user = result.tokenVerify?.user;
+
+        if (!!user) {
+          setUserContext(user);
+        }
+      }
+    },
+    onError: logout
+  });
+
+  const tokenAuthOpts = {
+    ...tokenAuthResult,
+    status: getMutationStatus(tokenAuthResult)
+  };
+  const tokenVerifyOpts = {
+    ...tokenVerifyResult,
+    status: getMutationStatus(tokenVerifyResult)
   };
 
-  refreshToken = async () => {
-    const { tokenRefresh } = this.props;
-    const [tokenRefreshFn] = tokenRefresh;
-    const token = getAuthToken();
-
-    const refreshData = await tokenRefreshFn({ variables: { token } });
-
-    setAuthToken(refreshData.data.tokenRefresh.token, this.state.persistToken);
+  const onLogin = () => {
+    if (DEMO_MODE) {
+      displayDemoMessage(intl, notify);
+    }
   };
 
-  render() {
-    const { children, tokenAuth, tokenVerify } = this.props;
-    const tokenAuthOpts = tokenAuth[1];
-    const tokenVerifyOpts = tokenVerify[1];
-    const { user } = this.state;
-    const isAuthenticated = !!user;
+  useEffect(() => {
+    const token = getTokens().auth;
+    if (!!token && !userContext) {
+      autologinPromise.current = tokenVerify({ variables: { token } });
+    } else {
+      autologinPromise.current = loginWithCredentialsManagementAPI(login);
+    }
+  }, []);
 
-    return (
-      <UserContext.Provider
-        value={{
-          login: this.login,
-          loginByToken: this.loginByToken,
-          logout: this.logout,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenRefresh: this.refreshToken,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        }}
-      >
-        {children({
-          hasToken: !!getAuthToken(),
-          isAuthenticated,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        })}
-      </UserContext.Provider>
-    );
-  }
+  const login = async (email: string, password: string) => {
+    const result = await tokenAuth({ variables: { email, password } });
+
+    if (result && !result.data.tokenCreate.errors.length) {
+      if (!!onLogin) {
+        onLogin();
+      }
+      saveCredentials(result.data.tokenCreate.user, password);
+
+      return result.data.tokenCreate.user;
+    }
+
+    return null;
+  };
+
+  const loginByToken = (auth: string, refresh: string, user: User) => {
+    setUserContext(user);
+    setTokens(auth, refresh, persistToken);
+  };
+
+  const refreshToken = (): Promise<boolean> => {
+    if (!!refreshPromise.current) {
+      return refreshPromise.current;
+    }
+
+    return new Promise(resolve => {
+      const token = getTokens().refresh;
+
+      return tokenRefresh({ variables: { token } }).then(refreshData => {
+        if (!!refreshData.data.tokenRefresh?.token) {
+          setAuthToken(refreshData.data.tokenRefresh.token, persistToken);
+          return resolve(true);
+        }
+
+        return resolve(false);
+      });
+    });
+  };
+
+  return {
+    autologinPromise,
+    login,
+    loginByToken,
+    logout,
+    refreshToken,
+    tokenAuthOpts,
+    tokenVerifyOpts,
+    userContext
+  };
 }
 
-export default AuthProviderOperations;
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const apolloClient = useApolloClient();
+  const intl = useIntl();
+  const notify = useNotifier();
+
+  const {
+    login,
+    loginByToken,
+    logout,
+    tokenAuthOpts,
+    refreshToken,
+    tokenVerifyOpts,
+    userContext
+  } = useAuthProvider(intl, notify, apolloClient);
+
+  return (
+    <UserContext.Provider
+      value={{
+        login,
+        loginByToken,
+        logout,
+        tokenAuthLoading: tokenAuthOpts.loading,
+        tokenRefresh: refreshToken,
+        tokenVerifyLoading: tokenVerifyOpts.loading,
+        user: userContext
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const user = useContext(UserContext);
+  const isAuthenticated = !!user.user;
+
+  return {
+    hasToken: !!getTokens(),
+    isAuthenticated,
+    tokenAuthLoading: user.tokenAuthLoading,
+    tokenVerifyLoading: user.tokenVerifyLoading,
+    user: user.user
+  };
+};
+
+export default AuthProvider;

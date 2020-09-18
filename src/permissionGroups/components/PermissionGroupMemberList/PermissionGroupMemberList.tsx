@@ -1,32 +1,31 @@
+import { Button, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@saleor/components/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import classNames from "classnames";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import DeleteIcon from "@material-ui/icons/Delete";
+import CardTitle from "@saleor/components/CardTitle";
+import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import TableHead from "@saleor/components/TableHead";
 import {
   getUserInitials,
   getUserName,
-  stopPropagation,
-  renderCollection
+  renderCollection,
+  stopPropagation
 } from "@saleor/misc";
-import { ListActions, SortPage } from "@saleor/types";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import Checkbox from "@saleor/components/Checkbox";
-
-import { Button, IconButton } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
+import { sortMembers } from "@saleor/permissionGroups/sort";
 import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import { ListActions, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { sortMembers } from "@saleor/permissionGroups/sort";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -53,8 +52,8 @@ const useStyles = makeStyles(
       width: 47
     },
     avatarDefault: {
-      "& p": {
-        color: "#fff",
+      "& div": {
+        color: theme.palette.primary.contrastText,
         lineHeight: "47px"
       },
       background: theme.palette.primary.main,

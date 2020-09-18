@@ -1,15 +1,14 @@
-import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { useIntl, FormattedMessage } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-
+import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
-import { WarehouseDetails_warehouse_shippingZones_edges_node } from "@saleor/warehouses/types/WarehouseDetails";
-import { renderCollection, maybe } from "@saleor/misc";
 import Link from "@saleor/components/Link";
 import Skeleton from "@saleor/components/Skeleton";
+import { maybe, renderCollection } from "@saleor/misc";
+import { WarehouseDetails_warehouse_shippingZones_edges_node } from "@saleor/warehouses/types/WarehouseDetails";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface WarehouseInfoProps {
   zones: WarehouseDetails_warehouse_shippingZones_edges_node[];

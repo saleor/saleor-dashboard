@@ -8,8 +8,6 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -18,7 +16,12 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import {
+  CategoryDetails_category_products_edges_node,
+  CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+} from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -27,7 +30,7 @@ const useStyles = makeStyles(
         width: "auto"
       },
       colPrice: {
-        width: 200
+        width: 300
       },
       colPublished: {
         width: 200
@@ -74,9 +77,7 @@ interface CategoryProductListProps extends ListProps, ListActions {
   products: CategoryDetails_category_products_edges_node[];
 }
 
-export const CategoryProductList: React.FC<
-  CategoryProductListProps
-> = props => {
+export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
   const {
     disabled,
     isChecked,
@@ -95,6 +96,51 @@ export const CategoryProductList: React.FC<
   const intl = useIntl();
 
   const numberOfColumns = 5;
+
+  const getProductPrice = (
+    priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+  ) => {
+    if (!priceRangeUndiscounted) {
+      return null;
+    }
+
+    const { start, stop } = priceRangeUndiscounted;
+    const {
+      gross: { amount: startAmount }
+    } = start;
+    const {
+      gross: { amount: stopAmount }
+    } = stop;
+
+    if (startAmount === stopAmount) {
+      return (
+        <Money
+          money={{
+            amount: startAmount,
+            currency: start.gross.currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: startAmount,
+              currency: start.gross.currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: stopAmount,
+              currency: stop.gross.currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -209,10 +255,8 @@ export const CategoryProductList: React.FC<
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {maybe(() => product.basePrice) &&
-                    maybe(() => product.basePrice.amount) !== undefined &&
-                    maybe(() => product.basePrice.currency) !== undefined ? (
-                      <Money money={product.basePrice} />
+                    {product?.pricing?.priceRangeUndiscounted ? (
+                      getProductPrice(product?.pricing?.priceRangeUndiscounted)
                     ) : (
                       <Skeleton />
                     )}

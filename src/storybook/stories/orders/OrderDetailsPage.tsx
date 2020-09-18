@@ -1,9 +1,9 @@
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
+import { adminUserPermissions } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import placeholderImage from "@assets/images/placeholder60x60.png";
-import { adminUserPermissions } from "@saleor/fixtures";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
@@ -19,10 +19,14 @@ const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   countries,
+  disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,
+  onInvoiceClick: () => undefined,
+  onInvoiceGenerate: () => undefined,
+  onInvoiceSend: () => undefined,
   onNoteAdd: undefined,
   onOrderCancel: undefined,
   onOrderFulfill: undefined,
@@ -33,7 +37,9 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProductClick: undefined,
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
+  onSubmit: () => undefined,
   order,
+  saveButtonBarState: "default",
   userPermissions: adminUserPermissions
 };
 

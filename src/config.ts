@@ -2,7 +2,7 @@ import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
 
-export const APP_MOUNT_URI = process.env.APP_MOUNT_URI || "/";
+export const APP_MOUNT_URI = process.env.APP_MOUNT_URI;
 export const API_URI = process.env.API_URI;
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
@@ -20,6 +20,7 @@ export const PAGINATE_BY = 20;
 
 export type ProductListColumns = "productType" | "isPublished" | "price";
 export interface AppListViewSettings {
+  [ListViews.APPS_LIST]: ListSettings;
   [ListViews.CATEGORY_LIST]: ListSettings;
   [ListViews.COLLECTION_LIST]: ListSettings;
   [ListViews.CUSTOMER_LIST]: ListSettings;
@@ -38,6 +39,9 @@ export interface AppListViewSettings {
   [ListViews.WEBHOOK_LIST]: ListSettings;
 }
 export const defaultListSettings: AppListViewSettings = {
+  [ListViews.APPS_LIST]: {
+    rowNumber: 10
+  },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY
   },
@@ -90,3 +94,5 @@ export const defaultListSettings: AppListViewSettings = {
 };
 
 export const APP_VERSION = packageInfo.version;
+export const DEMO_MODE = process.env.DEMO_MODE === "true";
+export const GTM_ID = process.env.GTM_ID;

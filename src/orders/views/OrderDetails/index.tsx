@@ -1,23 +1,40 @@
-import { useIntl } from "react-intl";
-import React from "react";
-
+import { MetadataFormData } from "@saleor/components/Metadata";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
+import { commonMessages } from "@saleor/intl";
+import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { customerUrl } from "../../../customers/urls";
 import {
+  getMutationState,
+  getStringOrPlaceholder,
   maybe,
-  transformAddressToForm,
-  getStringOrPlaceholder
+  transformAddressToForm
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { OrderStatus, FulfillmentStatus } from "../../../types/globalTypes";
+import {
+  FulfillmentStatus,
+  JobStatusEnum,
+  OrderStatus
+} from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -37,11 +54,11 @@ import OrderOperations from "../../containers/OrderOperations";
 import { TypedOrderDetailsQuery, useOrderVariantSearch } from "../../queries";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import {
+  orderFulfillUrl,
   orderListUrl,
   orderUrl,
-  OrderUrlQueryParams,
   OrderUrlDialog,
-  orderFulfillUrl
+  OrderUrlQueryParams
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 
@@ -103,7 +120,14 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       first: 30
     }
   });
+  const { queue } = useBackgroundTask();
   const intl = useIntl();
+  const [updateMetadata, updateMetadataOpts] = useMetadataUpdate({});
+  const [
+    updatePrivateMetadata,
+    updatePrivateMetadataOpts
+  ] = usePrivateMetadataUpdate({});
+  const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
@@ -120,6 +144,23 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         if (order === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
+
+        const handleSubmit = async (data: MetadataFormData) => {
+          const update = createMetadataUpdateHandler(
+            order,
+            () => Promise.resolve([]),
+            variables => updateMetadata({ variables }),
+            variables => updatePrivateMetadata({ variables })
+          );
+          const result = await update(data);
+
+          if (result.length === 0) {
+            notify({
+              status: "success",
+              text: intl.formatMessage(commonMessages.savedChanges)
+            });
+          }
+        };
 
         return (
           <OrderDetailsMessages id={id} params={params}>
@@ -148,6 +189,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onDraftFinalize={orderMessages.handleDraftFinalize}
                 onDraftCancel={orderMessages.handleDraftCancel}
                 onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
+                onInvoiceRequest={(data: InvoiceRequest) => {
+                  if (
+                    data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS
+                  ) {
+                    orderMessages.handleInvoiceGenerateFinished(data);
+                  } else {
+                    orderMessages.handleInvoiceGeneratePending(data);
+                    queue(Task.INVOICE_GENERATE, {
+                      generateInvoice: {
+                        invoiceId: data.invoiceRequest.invoice.id,
+                        orderId: id
+                      }
+                    });
+                  }
+                }}
+                onInvoiceSend={orderMessages.handleInvoiceSend}
               >
                 {({
                   orderAddNote,
@@ -165,7 +222,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderFulfillmentUpdateTracking,
                   orderDraftCancel,
                   orderDraftFinalize,
-                  orderPaymentMarkAsPaid
+                  orderPaymentMarkAsPaid,
+                  orderInvoiceRequest,
+                  orderInvoiceSend
                 }) => (
                   <>
                     {order?.status !== OrderStatus.DRAFT ? (
@@ -184,6 +243,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           )}
                         />
                         <OrderDetailsPage
+                          disabled={
+                            updateMetadataOpts.loading ||
+                            updatePrivateMetadataOpts.loading
+                          }
                           onNoteAdd={variables =>
                             orderAddNote.mutate({
                               input: variables,
@@ -192,6 +255,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           onBack={handleBack}
                           order={order}
+                          saveButtonBarState={getMutationState(
+                            updateMetadataOpts.called ||
+                              updatePrivateMetadataOpts.called,
+                            updateMetadataOpts.loading ||
+                              updatePrivateMetadataOpts.loading,
+                            [
+                              ...(updateMetadataOpts.data?.deleteMetadata
+                                .errors || []),
+                              ...(updateMetadataOpts.data?.updateMetadata
+                                .errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.deletePrivateMetadata.errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.updatePrivateMetadata.errors || [])
+                            ]
+                          )}
                           shippingMethods={maybe(
                             () => data.order.availableShippingMethods,
                             []
@@ -229,6 +308,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
                           }
+                          onInvoiceClick={id =>
+                            window.open(
+                              order.invoices.find(invoice => invoice.id === id)
+                                ?.url,
+                              "_blank"
+                            )
+                          }
+                          onInvoiceGenerate={() =>
+                            orderInvoiceRequest.mutate({
+                              orderId: id
+                            })
+                          }
+                          onInvoiceSend={id =>
+                            openModal("invoice-send", { id })
+                          }
+                          onSubmit={handleSubmit}
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
@@ -358,6 +453,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             })
                           }
                           onClose={closeModal}
+                        />
+                        <OrderInvoiceEmailSendDialog
+                          confirmButtonState={orderInvoiceSend.opts.status}
+                          errors={
+                            orderInvoiceSend.opts.data?.invoiceSendEmail
+                              .errors || []
+                          }
+                          open={params.action === "invoice-send"}
+                          invoice={order?.invoices?.find(
+                            invoice => invoice.id === params.id
+                          )}
+                          onClose={closeModal}
+                          onSend={() =>
+                            orderInvoiceSend.mutate({ id: params.id })
+                          }
                         />
                       </>
                     ) : (

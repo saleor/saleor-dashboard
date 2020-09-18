@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "İsteğe bağlı"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "İsteğe bağlı"
   },
@@ -296,7 +296,7 @@
   },
   "src_dot_accept": {
     "context": "button",
-    "string": "Accept"
+    "string": "Kabul et"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
@@ -338,7 +338,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
     "context": "product attribute type",
-    "string": "Multiple Select"
+    "string": "Çoklu Seçim"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3605174225": {
     "context": "attribute's slug short code label",
@@ -568,10 +568,10 @@
   },
   "src_dot_cancelled": {
     "context": "order status",
-    "string": "Cancelled"
+    "string": "İptal Edildi"
   },
   "src_dot_catalog": {
-    "string": "Catalog"
+    "string": "Katalog"
   },
   "src_dot_categories": {
     "context": "categories section name",
@@ -587,7 +587,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_236319840": {
     "context": "page header",
-    "string": "Create New Category"
+    "string": "Yeni Kategori Oluştur"
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_2563994280": {
     "string": "Add search engine title and description to make this category easier to find"
@@ -608,7 +608,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_1140231710": {
     "context": "button",
-    "string": "Create category"
+    "string": "Kategori oluştur"
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_3841025483": {
     "string": "Search Category"
@@ -682,11 +682,11 @@
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_770296100": {
     "context": "button",
-    "string": "Create subcategory"
+    "string": "Alt kategori oluştur"
   },
   "src_dot_categories_dot_views_dot_1140231710": {
     "context": "window title",
-    "string": "Create category"
+    "string": "Kategori oluştur"
   },
   "src_dot_categories_dot_views_dot_1204353135": {
     "string": "{counter,plural,one {Are you sure you want to delete this product?} other {Are you sure you want to delete {displayQuantity} products?}}"
@@ -1187,7 +1187,7 @@
   },
   "src_dot_components_dot_Navigator_dot_2935523260": {
     "context": "navigator placeholder",
-    "string": "Search in Catalog"
+    "string": "Katalogta ara"
   },
   "src_dot_components_dot_Navigator_dot_3060198201": {
     "context": "navigator section header",
@@ -1256,7 +1256,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpCatalogMode": {
     "context": "navigator catalog mode description",
-    "string": "Search in Catalog"
+    "string": "Katalogta ara"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpCommandsMode": {
     "context": "navigator command mode description",
@@ -1674,6 +1674,10 @@
   "src_dot_delete": {
     "context": "button",
     "string": "Delete"
+  },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
   },
   "src_dot_description": {
     "string": "Açıklama"
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "Barkod"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Cancel Fulfillment"
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "İndirim"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Preauthorized amount"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Toplam"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Create Product"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Add Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
@@ -2808,6 +2820,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "Barkod"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -3157,7 +3173,7 @@
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_1140231710": {
     "context": "window title",
-    "string": "Create category"
+    "string": "Kategori oluştur"
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_3930588328": {
     "string": "Permission group created"
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "Adet"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Varyant"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Create Service Account"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",
@@ -4817,7 +4826,7 @@
   },
   "src_dot_translations": {
     "context": "translations section name",
-    "string": "Translations"
+    "string": "Çeviriler"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_1308081812": {
     "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
@@ -4883,7 +4892,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2460580333": {
     "context": "header",
-    "string": "Translations to {language}"
+    "string": "{language} Çeviriler"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2559018090": {
     "string": "Search Page"
@@ -4923,7 +4932,7 @@
     "string": "No translatable entities found"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_49462429": {
-    "string": "Completed Translations"
+    "string": "Tamamlanmış Çeviriler"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_636461959": {
     "context": "entity (product, collection, shipping method) name",

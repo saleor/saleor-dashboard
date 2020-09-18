@@ -4,134 +4,134 @@
     "string": "取消订单"
   },
   "configurationMenuAttributes": {
-    "string": "Determine attributes used to create product types"
+    "string": "确认创建产品类型的属性"
   },
   "configurationMenuNavigation": {
-    "string": "Define how users can navigate through your store"
+    "string": "定义用户如何浏览您的商店"
   },
   "configurationMenuPages": {
-    "string": "Manage and add additional pages"
+    "string": "管理和添加其它的页面"
   },
   "configurationMenuPermissionGroups": {
-    "string": "Manage your permission groups and their permissions"
+    "string": "管理您的权限及组权限"
   },
   "configurationMenuProductTypes": {
-    "string": "Define types of products you sell"
+    "string": "定义您销售的产品类型"
   },
   "configurationMenuShipping": {
-    "string": "Manage how you ship out orders"
+    "string": "管理您的发货方式"
   },
   "configurationMenuSiteSettings": {
-    "string": "View and update your site settings"
+    "string": "查看和更新您的网站设置"
   },
   "configurationMenuStaff": {
-    "string": "Manage your employees and their permissions"
+    "string": "管理您的员工及其权限"
   },
   "configurationMenuTaxes": {
-    "string": "Manage how your store charges tax"
+    "string": "管理店铺如何收税"
   },
   "configurationMenuWarehouses": {
-    "string": "Manage and update your warehouse information"
+    "string": "管理和更新您的仓库信息"
   },
   "configurationPluginsPages": {
-    "string": "View and update your plugins and their settings."
+    "string": "查看和更新您的插件及其设置"
   },
   "homeActivityCardHeader": {
     "context": "header",
-    "string": "Activity"
+    "string": " 活动"
   },
   "homeActivityCardNoActivities": {
-    "string": "No activities found"
+    "string": "没有促销活动"
   },
   "homeAnalyticsCardHeader": {
     "string": "今天"
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "您好， {userName}"
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
-    "string": "Here is some information we gathered about your store"
+    "string": "这是我们收集的有关您商店的一些信息"
   },
   "homeNotificationTableNoOrders": {
-    "string": "No orders ready to fulfill"
+    "string": "没有进行中的订单"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    "string": "{amount, plural,other {{amount}个订单进行中}}"
   },
   "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {One payment to capture} other {{amount} Payments to capture}}"
+    "string": "{amount, plural,other {需付款{amount} }}"
   },
   "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock} other {{amount} Products out of stock}}"
+    "string": "{amount, plural,other {{amount} 产品缺货}}"
   },
   "homeNotificationsNoPayments": {
-    "string": "No payments waiting for capture"
+    "string": "没有未付款的订单"
   },
   "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
+    "string": "没有产品缺货"
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
-    "string": "{amount, plural,one {One ordered} other {{amount} Ordered}}"
+    "string": "{amount, plural,other {{amount} 下订单}}"
   },
   "homeProductsListCardHeader": {
     "context": "header",
-    "string": "Top Products"
+    "string": "热销产品"
   },
   "homeProductsListCardNoProducts": {
-    "string": "No products found"
+    "string": "没有产品"
   },
   "homeScreenDisclaimer": {
     "context": "header",
-    "string": "Disclaimer"
+    "string": "声明"
   },
   "homeScreenDisclaimerText1": {
-    "string": "The new dashboard and the GraphQL API are preview-quality software."
+    "string": "新的仪表板和GraphQL API是预览版本的软件。"
   },
   "homeScreenDisclaimerText2": {
-    "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+    "string": "GraphQL API为beta质量。 尚未完全优化，可能会缺少某些突变或查询。"
   },
   "homeScreenHeader": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "您好， {userName}"
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
-    "string": "Create Menu"
+    "string": "新建菜单"
   },
   "menuCreateDialogMenuTitleLabel": {
-    "string": "Menu Title"
+    "string": "菜单标题"
   },
   "menuDetailsDeleteMenuContent": {
-    "string": "Are you sure you want to delete menu {menuName}?"
+    "string": "您确认要删除菜单 {menuName}？"
   },
   "menuDetailsDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "删除菜单"
   },
   "menuDetailsPageHelperText": {
-    "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+    "string": "通过拖放来创建导航结构。 只需创建一个新菜单项，然后将其拖动到其预定位置即可。 您可以相互移动项目以创建树结构，并上下拖动项目以创建层次结构"
   },
   "menuItemDialogAddItem": {
     "context": "create new menu item, header",
-    "string": "Add Item"
+    "string": "添加物品"
   },
   "menuItemDialogAddLink": {
     "context": "add link to navigation",
-    "string": "Link to: {url}"
+    "string": "链接：{url}"
   },
   "menuItemDialogEditItem": {
     "context": "edit menu item, header",
-    "string": "Edit Item"
+    "string": "编辑宝贝"
   },
   "menuItemDialogLinkLabel": {
     "context": "label",
     "string": "链接"
   },
   "menuItemDialogLinkPlaceholder": {
-    "string": "Start typing to begin search..."
+    "string": "输入内容搜索"
   },
   "menuItemDialogNameLabel": {
     "context": "menu item name",
@@ -139,71 +139,71 @@
   },
   "menuItemsAddItem": {
     "context": "add new menu item",
-    "string": "Create new item"
+    "string": "创建新的宝贝"
   },
   "menuItemsHeader": {
     "context": "header",
-    "string": "Menu Items"
+    "string": "菜单条目"
   },
   "menuItemsPlaceholder": {
-    "string": "Add new menu item to begin creating menu"
+    "string": "添加新的菜单至开始菜单"
   },
   "menuListCreatedMenu": {
-    "string": "Created menu"
+    "string": "已创建的菜单"
   },
   "menuListDeleteMenuContent": {
-    "string": "Are you sure you want to delete {menuName}?"
+    "string": "您确认要删除菜单 {menuName}？"
   },
   "menuListDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "删除菜单"
   },
   "menuListDeleteMenusContent": {
-    "string": "{counter,plural,one {Are you sure you want to delete this menu?} other {Are you sure you want to delete {displayQuantity} menus?}}"
+    "string": "{counter,plural,other {确认要删除{displayQuantity}菜单？}}"
   },
   "menuListDeleteMenusHeader": {
     "context": "dialog header",
-    "string": "Delete Menus"
+    "string": "删除菜单"
   },
   "menuListDeletedMenu": {
-    "string": "Deleted menu"
+    "string": "已删除菜单"
   },
   "menuListItems": {
     "context": "number of menu items",
-    "string": "Items"
+    "string": "宝贝"
   },
   "menuListMenutitle": {
-    "string": "Menu Title"
+    "string": "菜单标题"
   },
   "menuListNoMenus": {
-    "string": "No menus found"
+    "string": "没有菜单"
   },
   "menuListPageAddMenu": {
     "context": "button",
-    "string": "Create Menu"
+    "string": "新建菜单"
   },
   "menuPropertiesMenuTitle": {
-    "string": "Menu Title"
+    "string": "菜单标题"
   },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
-    "string": "Not set"
+    "string": "没有设置"
   },
   "orderCustomerCustomerNotSet": {
     "context": "customer is not set in draft order",
-    "string": "Not set"
+    "string": "没有设置"
   },
   "orderCustomerShippingAddressNotSet": {
     "context": "shipping address is not set in draft order",
-    "string": "Not set"
+    "string": "没有设置"
   },
   "orderPaymentShippingDoesNotApply": {
     "context": "order does not require shipping",
-    "string": "does not apply"
+    "string": "没有生效"
   },
   "orderPaymentVATDoesNotApply": {
     "context": "vat not included in order price",
-    "string": "does not apply"
+    "string": "没有生效"
   },
   "productStatusLabel": {
     "context": "product",
@@ -211,15 +211,15 @@
   },
   "productStockHeader": {
     "context": "product stock, section header",
-    "string": "Inventory"
+    "string": "库存"
   },
   "productTypeCreateHeader": {
     "context": "window title",
-    "string": "Create Product Type"
+    "string": "新建产品类型"
   },
   "productTypeCreatePageHeader": {
     "context": "header",
-    "string": "Create Product Type"
+    "string": "新建产品类型"
   },
   "productTypeTaxesHeader": {
     "context": "section header",
@@ -236,113 +236,113 @@
     "string": "价格"
   },
   "productVariantCreatePricesStockInputLabel": {
-    "string": "Stock"
+    "string": "库存"
   },
   "productVariantCreatorStockSectionHeader": {
     "context": "variant stock, header",
-    "string": "Stock"
+    "string": "存货"
   },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
-    "string": "Warehouses"
+    "string": "货仓"
   },
   "productVariantPriceOptionalCostPriceField": {
     "context": "optional field",
-    "string": "Optional"
+    "string": "可选"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
-    "string": "Optional"
+    "string": "可选"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
-    "string": "Categories ({quantity})"
+    "string": "分类（{quantity}）"
   },
   "saleDetailsPageCollectionsQuantity": {
     "context": "number of collections",
-    "string": "Collections ({quantity})"
+    "string": "系列 ({quantity})"
   },
   "saleDetailsPageProductsQuantity": {
     "context": "number of products",
-    "string": "Products ({quantity})"
+    "string": "产品 ({quantity})"
   },
   "saleDetailsUnassignCategory": {
     "context": "unassign category from sale, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "saleDetailsUnassignCollection": {
     "context": "unassign collection from sale, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "saleDetailsUnassignProduct": {
     "context": "unassign product from sale, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "shippingZoneDetailsDialogsDeleteShippingMethod": {
     "context": "delete shipping method",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "shippingZoneDetailsDialogsDeleteShippingZone": {
     "context": "delete shipping zone",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "shippingZoneWarehouses_dot_autocomplete_dot_label": {
     "context": "autocomplete select label",
-    "string": "Warehouse"
+    "string": "货仓"
   },
   "siteSettingsMailingHelperText": {
     "context": "helper text",
-    "string": "Mailing Configuration"
+    "string": "邮件配置"
   },
   "src_dot_accept": {
     "context": "button",
-    "string": "Accept"
+    "string": "接受"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
     "string": "属性"
   },
   "src_dot_attributes_dot_attributeSlugUnique": {
-    "string": "Attribute with this slug already exists"
+    "string": "此条属性已存在"
   },
   "src_dot_attributes_dot_attributeValueAlreadyExists": {
-    "string": "This value already exists within this attribute"
+    "string": "此值已存在于此属性中"
   },
   "src_dot_attributes_dot_components_dot_AttributeBulkDeleteDialog_dot_1184518529": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Are you sure you want to delete this attribute?} other {Are you sure you want to delete {displayQuantity} attributes?}}"
+    "string": "{counter,plural,other {确认要删除{displayQuantity}属性？}}"
   },
   "src_dot_attributes_dot_components_dot_AttributeBulkDeleteDialog_dot_1655187315": {
     "context": "dialog title",
-    "string": "Delete attributes"
+    "string": "删除属性"
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_1889602489": {
     "context": "dialog title",
-    "string": "Delete attribute"
+    "string": "删除属性"
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_3738429348": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {attributeName}?"
+    "string": "确认要删除{attributeName}属性？"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
     "context": "attribute's editor component",
-    "string": "Catalog Input type for Store Owner"
+    "string": "商店所有者的目录输入类型"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
     "context": "product attribute type",
-    "string": "Dropdown"
+    "string": "下拉"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
-    "string": "Value Required"
+    "string": "所需值"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
     "context": "product attribute type",
-    "string": "Multiple Select"
+    "string": "多选"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3605174225": {
     "context": "attribute's slug short code label",
-    "string": "Attribute Code"
+    "string": "属性码"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_4107478955": {
     "context": "attribute slug input field helper text",
@@ -354,7 +354,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
-    "string": "All Attributes"
+    "string": "所有属性"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3824684885": {
     "context": "button",
@@ -381,7 +381,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_valueRequired": {
     "context": "attribute value is required",
-    "string": "Value Required"
+    "string": "所需值"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_visibleInStorefront": {
     "context": "attribute",
@@ -399,7 +399,7 @@
     "string": "Searchable"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_3605174225": {
-    "string": "Attribute Code"
+    "string": "属性码"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_643174786": {
     "context": "attribute is visible",
@@ -411,7 +411,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
-    "string": "Create New Attribute"
+    "string": "新建新属性"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1318123158": {
     "context": "attribute is filterable in storefront",
@@ -438,7 +438,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_673770329": {
     "context": "add attribute as column in product list table",
-    "string": "Add to Column Options"
+    "string": "添加列选项"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_714335445": {
     "context": "use attribute in filtering",
@@ -464,7 +464,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1841790893": {
     "context": "add attribute value",
-    "string": "Add Value"
+    "string": "添加值"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_636461959": {
     "context": "attribute name",
@@ -502,7 +502,7 @@
   },
   "src_dot_attributes_dot_views_dot_AttributeDetails_dot_634268988": {
     "context": "added new attribute value",
-    "string": "Added new value"
+    "string": "添加新的值"
   },
   "src_dot_attributes_dot_views_dot_AttributeList_dot_3218248395": {
     "context": "deleted multiple attributes",
@@ -533,7 +533,7 @@
     "string": "Set new password"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2799926859": {
-    "string": "Confirm Password"
+    "string": "密码确认"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_4253911811": {
     "string": "Passwords do not match"
@@ -547,7 +547,7 @@
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2245157344": {
     "context": "button",
-    "string": "Back to login"
+    "string": "返回登录"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_4066297200": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -560,7 +560,7 @@
   },
   "src_dot_back": {
     "context": "button",
-    "string": "Back"
+    "string": "返回"
   },
   "src_dot_cancel": {
     "context": "button",
@@ -568,10 +568,10 @@
   },
   "src_dot_cancelled": {
     "context": "order status",
-    "string": "Cancelled"
+    "string": "取消"
   },
   "src_dot_catalog": {
-    "string": "Catalog"
+    "string": "分类"
   },
   "src_dot_categories": {
     "context": "categories section name",
@@ -579,18 +579,18 @@
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "北京台（可选）"
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_3289097895": {
     "context": "field is optional",
-    "string": "(Optional)"
+    "string": "（可选）"
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_236319840": {
     "context": "page header",
-    "string": "Create New Category"
+    "string": "新建新分类"
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_2563994280": {
-    "string": "Add search engine title and description to make this category easier to find"
+    "string": "添加关键字使得这个分类更容易被搜索引擎找到"
   },
   "src_dot_categories_dot_components_dot_CategoryDeleteDialog_dot_2004894945": {
     "context": "dialog title",
@@ -601,10 +601,10 @@
     "string": "Are you sure you want to delete {categoryName}?"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_1214235329": {
-    "string": "Category Name"
+    "string": "分类名"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_4037703468": {
-    "string": "Category Description"
+    "string": "分类描述"
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_1140231710": {
     "context": "button",
@@ -615,10 +615,10 @@
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_4294878092": {
     "context": "tab name",
-    "string": "All Categories"
+    "string": "所有分类"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_1214235329": {
-    "string": "Category Name"
+    "string": "分类名"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2054128296": {
     "string": "No categories found"
@@ -639,7 +639,7 @@
     "string": "价格"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "没有产品"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1952810469": {
     "context": "product type",
@@ -670,7 +670,7 @@
     "string": "Subcategories"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2563994280": {
-    "string": "Add search engine title and description to make this category easier to find"
+    "string": "添加关键字使得这个分类更容易被搜索引擎找到"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2968663655": {
     "context": "number of products in category",
@@ -678,7 +678,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_3229914152": {
     "context": "section header",
-    "string": "All Subcategories"
+    "string": "全部子类"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_770296100": {
     "context": "button",
@@ -692,7 +692,7 @@
     "string": "{counter,plural,one {Are you sure you want to delete this product?} other {Are you sure you want to delete {displayQuantity} products?}}"
   },
   "src_dot_categories_dot_views_dot_1754466114": {
-    "string": "Category created"
+    "string": "分类已新建"
   },
   "src_dot_categories_dot_views_dot_1823337870": {
     "string": "{counter,plural,one {Are you sure you want to delete this category?} other {Are you sure you want to delete {displayQuantity} categories?}}"
@@ -702,7 +702,7 @@
     "string": "Delete category"
   },
   "src_dot_categories_dot_views_dot_2189424032": {
-    "string": "Category deleted"
+    "string": "分类已删除"
   },
   "src_dot_categories_dot_views_dot_2507763081": {
     "context": "dialog title",
@@ -745,11 +745,11 @@
     "string": "will be visible from {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_946315389": {
-    "string": "Add search engine title and description to make this collection easier to find"
+    "string": "添加关键字使得这个系列更容易被搜索引擎找到"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_951411809": {
     "context": "page header",
-    "string": "Add Collection"
+    "string": "添加系列"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
     "context": "collection",
@@ -764,7 +764,7 @@
     "string": "Feature on Homepage"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_946315389": {
-    "string": "Add search engine title and description to make this collection easier to find"
+    "string": "添加关键字使得这个系列更容易被搜索引擎找到"
   },
   "src_dot_collections_dot_components_dot_CollectionDetails_dot_636461959": {
     "context": "collection name",
@@ -772,15 +772,15 @@
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "北京台（可选）"
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_3289097895": {
     "context": "field is optional",
-    "string": "(Optional)"
+    "string": "（可选）"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_1631917001": {
     "context": "tab name",
-    "string": "All Collections"
+    "string": "所有系列"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_4057224233": {
     "string": "Search Collection"
@@ -791,7 +791,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_hidden": {
     "context": "collection",
-    "string": "Hidden"
+    "string": "隐藏"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_published": {
     "context": "collection",
@@ -808,7 +808,7 @@
     "string": "No. of Products"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2759199473": {
-    "string": "Collection Name"
+    "string": "系列名"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_3326160357": {
     "context": "collection availability",
@@ -819,7 +819,7 @@
     "string": "已发布"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "没有产品"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1952810469": {
     "context": "product type",
@@ -849,7 +849,7 @@
     "string": "删除套餐"
   },
   "src_dot_collections_dot_views_dot_2001540731": {
-    "string": "Added product to collection"
+    "string": "将产品添加到系列"
   },
   "src_dot_collections_dot_views_dot_2402899582": {
     "string": "Are you sure you want to delete collection's image?"
@@ -877,7 +877,7 @@
   },
   "src_dot_collections_dot_views_dot_870815507": {
     "context": "unassign product from collection, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "src_dot_collections_dot_views_dot_942133001": {
     "context": "dialog title",
@@ -933,7 +933,7 @@
   },
   "src_dot_components_dot_AccountStatus_dot_2183517419": {
     "context": "section header",
-    "string": "Account Status"
+    "string": "账户状态"
   },
   "src_dot_components_dot_AccountStatus_dot_2683780981": {
     "string": "If you want to disable this account uncheck the box below"
@@ -945,7 +945,7 @@
     "string": "Phone"
   },
   "src_dot_components_dot_AddressEdit_dot_1363074570": {
-    "string": "Address line 1"
+    "string": "地址行1"
   },
   "src_dot_components_dot_AddressEdit_dot_253031977": {
     "string": "城市"
@@ -954,13 +954,13 @@
     "string": "ZIP / Postal code"
   },
   "src_dot_components_dot_AddressEdit_dot_3121963259": {
-    "string": "Address line 2"
+    "string": "地址行2"
   },
   "src_dot_components_dot_AddressEdit_dot_3570415321": {
-    "string": "Company"
+    "string": "公司"
   },
   "src_dot_components_dot_AddressEdit_dot_944851093": {
-    "string": "Country area"
+    "string": "国家地区"
   },
   "src_dot_components_dot_AppLayout_dot_21332146": {
     "context": "button",
@@ -968,7 +968,7 @@
   },
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
-    "string": "Account Settings"
+    "string": "账户设置"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Search Categories"
@@ -1034,7 +1034,7 @@
     "string": "Phone"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_1363074570": {
-    "string": "Address line 1"
+    "string": "地址行1"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_253031977": {
     "string": "城市"
@@ -1043,17 +1043,17 @@
     "string": "ZIP / Postal code"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3121963259": {
-    "string": "Address line 2"
+    "string": "地址行2"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3570415321": {
-    "string": "Company"
+    "string": "公司"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_944851093": {
-    "string": "Country area"
+    "string": "国家地区"
   },
   "src_dot_components_dot_ConfirmButton_dot_2845142593": {
     "context": "button",
-    "string": "Error"
+    "string": "错误"
   },
   "src_dot_components_dot_CountryList_dot_2460766407": {
     "context": "number of countries",
@@ -1072,17 +1072,17 @@
   },
   "src_dot_components_dot_ErrorMessageCard_dot_2845142593": {
     "context": "header",
-    "string": "Error"
+    "string": "错误"
   },
   "src_dot_components_dot_ErrorPage_dot_1723676032": {
     "context": "button",
-    "string": "Back to home"
+    "string": "返回首页"
   },
   "src_dot_components_dot_ErrorPage_dot_2736139139": {
-    "string": "Ooops!..."
+    "string": "噢！..."
   },
   "src_dot_components_dot_ErrorPage_dot_2845142593": {
-    "string": "Error"
+    "string": "错误"
   },
   "src_dot_components_dot_ErrorPage_dot_3090161573": {
     "string": "Don't worry, everything is gonna be fine"
@@ -1157,7 +1157,7 @@
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
-    "string": "Add new value: {value}"
+    "string": "添加新的值：{value}"
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_4205644805": {
     "string": "No results found"
@@ -1221,19 +1221,19 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCategory": {
     "context": "button",
-    "string": "Create Category"
+    "string": "新建分类"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCollection": {
     "context": "button",
-    "string": "Create Collection"
+    "string": "新建系列"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCustomer": {
     "context": "button",
-    "string": "Create Customer"
+    "string": "新建客户"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createOrder": {
     "context": "button",
-    "string": "Create Order"
+    "string": "新建订单"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createPermissionGroup": {
     "context": "button",
@@ -1241,7 +1241,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createProduct": {
     "context": "button",
-    "string": "Create Product"
+    "string": "新建产品"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createVoucher": {
     "context": "button",
@@ -1285,7 +1285,7 @@
     "string": "产品"
   },
   "src_dot_components_dot_NotFoundPage_dot_2736139139": {
-    "string": "Ooops!..."
+    "string": "噢！..."
   },
   "src_dot_components_dot_NotFoundPage_dot_4036415297": {
     "string": "Something's missing"
@@ -1302,7 +1302,7 @@
   },
   "src_dot_components_dot_RichTextEditor_dot_1603794322": {
     "context": "dialog header",
-    "string": "Add Image Link"
+    "string": "添加图片链接"
   },
   "src_dot_components_dot_RichTextEditor_dot_2049070632": {
     "context": "replace image, button",
@@ -1310,7 +1310,7 @@
   },
   "src_dot_components_dot_RichTextEditor_dot_2160163587": {
     "context": "button",
-    "string": "Add or Edit Link"
+    "string": "添加或编辑链接"
   },
   "src_dot_components_dot_RichTextEditor_dot_286109898": {
     "context": "rich text error",
@@ -1320,7 +1320,7 @@
     "string": "URL Linked"
   },
   "src_dot_components_dot_RichTextEditor_dot_4035057905": {
-    "string": "Image URL"
+    "string": "图片URL"
   },
   "src_dot_components_dot_RowNumberSelect_dot_1154361791": {
     "string": "No of Rows:"
@@ -1366,7 +1366,7 @@
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
-    "string": "Add new value: {value}"
+    "string": "添加新的值：{value}"
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_3069107721": {
     "string": "None"
@@ -1402,7 +1402,7 @@
     "string": "Visible"
   },
   "src_dot_components_dot_VisibilityCard_dot_77815154": {
-    "string": "Hidden"
+    "string": "隐藏"
   },
   "src_dot_components_dot_WeightRange_dot_264731940": {
     "context": "weight",
@@ -1447,7 +1447,7 @@
   },
   "src_dot_confirm": {
     "context": "button",
-    "string": "Confirm"
+    "string": "确认"
   },
   "src_dot_create": {
     "context": "button",
@@ -1459,11 +1459,11 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressDialog_dot_2364475135": {
     "context": "dialog title",
-    "string": "Edit Address"
+    "string": "编辑地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressDialog_dot_3769321414": {
     "context": "dialog title",
-    "string": "Add Address"
+    "string": "添加地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1090326769": {
     "context": "customer's address book, header",
@@ -1477,36 +1477,36 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_3623935073": {
     "context": "button",
-    "string": "Add address"
+    "string": "添加地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_489918044": {
     "context": "customer details, header",
     "string": "{fullName} Details"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_1224809208": {
-    "string": "Default Address"
+    "string": "默认地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_1578192486": {
-    "string": "Default Billing Address"
+    "string": "默认账单地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_2131178753": {
     "context": "button",
-    "string": "Set as default shipping address"
+    "string": "设为默认配送地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_3096438859": {
     "context": "button",
-    "string": "Set as default billing address"
+    "string": "设为默认账单地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_4109348993": {
-    "string": "Default Shipping Address"
+    "string": "默认配送地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_1967111456": {
     "context": "header",
-    "string": "Address Information"
+    "string": "地址信息"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_2758581442": {
     "context": "subsection header",
-    "string": "Shipping Address"
+    "string": "配送地址"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_359810770": {
     "context": "subsection header",
@@ -1517,14 +1517,14 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_4282475982": {
     "context": "subsection header",
-    "string": "Billing Address"
+    "string": "账单地址"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateAddress_dot_1751533141": {
     "context": "page header",
-    "string": "Primary Address"
+    "string": "首要地址"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateAddress_dot_401345057": {
-    "string": "The primary address of this customer."
+    "string": "这个客户的主要地址"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateDetails_dot_3063084773": {
     "context": "header",
@@ -1543,7 +1543,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerCreatePage_dot_4025686004": {
     "context": "page header",
-    "string": "Create Customer"
+    "string": "新建客户"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_2968565128": {
     "context": "check to mark this account as active",
@@ -1551,7 +1551,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_3298169382": {
     "context": "section subheader",
-    "string": "Active member since {date}"
+    "string": "从 {date} 起的活跃用户"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_577013340": {
     "context": "note about customer",
@@ -1563,7 +1563,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerInfo_dot_778526801": {
     "context": "customer contact section, header",
-    "string": "Contact Informations"
+    "string": "联系人信息"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_1643417013": {
     "string": "Search Customer"
@@ -1574,7 +1574,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_477293306": {
     "context": "tab name",
-    "string": "All Customers"
+    "string": "所有客户"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_joinDate": {
     "context": "customer",
@@ -1646,14 +1646,14 @@
   },
   "src_dot_customers_dot_views_dot_2657976015": {
     "context": "dialog header",
-    "string": "Delete Address"
+    "string": "删除地址"
   },
   "src_dot_customers_dot_views_dot_2859116187": {
     "context": "window title",
     "string": "Create customer"
   },
   "src_dot_customers_dot_views_dot_3689332763": {
-    "string": "Are you sure you want to delete this address from users address book?"
+    "string": "你确定要把这个地址从地址薄中删除吗？"
   },
   "src_dot_customers_dot_views_dot_3901579344": {
     "string": "Customer Removed"
@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Delete"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "描述"
   },
@@ -1682,7 +1686,7 @@
     "string": "折扣"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1567318211": {
-    "string": "Category name"
+    "string": "分类名"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1681512341": {
     "context": "section header",
@@ -1711,7 +1715,7 @@
     "string": "产品"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_3011396316": {
-    "string": "Collection name"
+    "string": "系列名"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_452750900": {
     "context": "section header",
@@ -1749,7 +1753,7 @@
     "string": "Active Dates"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "没有产品"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
     "context": "button",
@@ -1798,7 +1802,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_expired": {
     "context": "sale status",
-    "string": "Expired"
+    "string": "已过期"
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_fixed": {
     "context": "discount type",
@@ -1894,15 +1898,15 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_346170541": {
     "context": "number of categories",
-    "string": "Categories ({quantity})"
+    "string": "分类（{quantity}）"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_3673147015": {
     "context": "number of collections",
-    "string": "Collections ({quantity})"
+    "string": "系列 ({quantity})"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_846927739": {
     "context": "number of products",
-    "string": "Products ({quantity})"
+    "string": "产品 ({quantity})"
   },
   "src_dot_discounts_dot_components_dot_VoucherInfo_dot_1262795626": {
     "string": "Discount Code"
@@ -1928,7 +1932,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
-    "string": "All Vouchers"
+    "string": "所有代币券"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1930485532": {
     "string": "Search Voucher"
@@ -1943,7 +1947,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_expired": {
     "context": "voucher status",
-    "string": "Expired"
+    "string": "已过期"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_fixed": {
     "context": "discount type",
@@ -2025,7 +2029,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherSummary_dot_2735425668": {
     "context": "voucher",
-    "string": "Applies to"
+    "string": "应用到"
   },
   "src_dot_discounts_dot_components_dot_VoucherSummary_dot_3751756157": {
     "context": "voucher value requirement",
@@ -2180,7 +2184,7 @@
     "string": "编辑"
   },
   "src_dot_email": {
-    "string": "E-mail Address"
+    "string": "电子邮箱"
   },
   "src_dot_endDate": {
     "string": "End Date"
@@ -2231,7 +2235,7 @@
   },
   "src_dot_optionalField": {
     "context": "field is optional",
-    "string": "Optional"
+    "string": "可选"
   },
   "src_dot_orders": {
     "context": "orders section name",
@@ -2239,15 +2243,15 @@
   },
   "src_dot_orders_dot_components_dot_OrderAddressEditDialog_dot_3278396777": {
     "context": "dialog header",
-    "string": "Edit Shipping Address"
+    "string": "编辑配送地址"
   },
   "src_dot_orders_dot_components_dot_OrderAddressEditDialog_dot_3982060155": {
     "context": "dialog header",
-    "string": "Edit Billing Address"
+    "string": "编辑账单地址"
   },
   "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_1528036340": {
     "context": "dialog header",
-    "string": "Cancel Orders"
+    "string": "取消订单"
   },
   "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_4224885638": {
     "string": "{counter,plural,one {Are you sure you want to cancel this order?} other {Are you sure you want to cancel {displayQuantity} orders?}}"
@@ -2271,7 +2275,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2312694610": {
     "context": "subheader",
-    "string": "Contact Information"
+    "string": "联系人信息"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2433460203": {
     "string": "Search Customers"
@@ -2281,7 +2285,7 @@
     "string": "View Profile"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2758581442": {
-    "string": "Shipping Address"
+    "string": "配送地址"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_3426593715": {
     "context": "section header",
@@ -2289,13 +2293,13 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_3912924864": {
     "context": "billing address",
-    "string": "Same as shipping address"
+    "string": "和配送地址相同"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4172383244": {
-    "string": "Anonymous user"
+    "string": "不知名用户"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
-    "string": "Billing Address"
+    "string": "账单地址"
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_1854613983": {
     "context": "button",
@@ -2320,7 +2324,7 @@
     "string": "数量"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_546865199": {
-    "string": "No Products added to Order"
+    "string": "没有产品添加到订单"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_878013594": {
     "context": "total price of ordered products",
@@ -2328,7 +2332,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_2429341469": {
     "context": "button",
-    "string": "Add shipping carrier"
+    "string": "添加快递公司"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_3202709354": {
     "string": "Taxes (VAT included)"
@@ -2338,7 +2342,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_781550514": {
     "context": "subtotal price or an order",
-    "string": "Subtotal"
+    "string": "小计"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_878013594": {
     "context": "total price of an order",
@@ -2350,10 +2354,10 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
-    "string": "Add products"
+    "string": "添加多个产品"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
-    "string": "No billing address"
+    "string": "没有账单地址"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1161061962": {
     "context": "dialog header",
@@ -2366,7 +2370,7 @@
     "string": "There are missing or incorrect informations about this order:"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2430492151": {
-    "string": "No shipping address"
+    "string": "无配送地址"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2725265632": {
     "context": "button",
@@ -2391,7 +2395,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_551325728": {
     "context": "tab name",
-    "string": "All Drafts"
+    "string": "草稿箱"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_77765281": {
     "string": "Search Draft"
@@ -2405,7 +2409,7 @@
     "string": "客户"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_2177368638": {
-    "string": "No draft orders found"
+    "string": "未付款订单"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_2889196282": {
     "string": "No. of Order"
@@ -2507,7 +2511,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
     "context": "fulfillment group tracking number",
-    "string": "Add tracking"
+    "string": "添加追踪"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1134347598": {
     "context": "product price",
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "库存单位"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Cancel Fulfillment"
@@ -2546,7 +2554,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1230178536": {
     "context": "order history message",
-    "string": "Order address was updated"
+    "string": "订单地址已更新"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1521936480": {
     "context": "order history message",
@@ -2578,7 +2586,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2304318421": {
     "context": "order history message",
-    "string": "Note was added to the order"
+    "string": "备注被添加到订单"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2369495522": {
     "context": "order history message",
@@ -2656,7 +2664,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_875489544": {
     "context": "tab name",
-    "string": "All Orders"
+    "string": "全部订单"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "折扣"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "预授权金额"
@@ -2762,15 +2774,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_781550514": {
     "context": "order subtotal price",
-    "string": "Subtotal"
+    "string": "小计"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_878013594": {
     "context": "order total price",
     "string": "总数"
-  },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Create Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
@@ -2778,6 +2786,10 @@
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Add Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
@@ -2809,6 +2821,10 @@
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "库存单位"
+  },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
     "string": "总数"
@@ -2838,7 +2854,7 @@
     "string": "Order successfully cancelled"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3178394068": {
-    "string": "Note successfully added"
+    "string": "备注成功添加"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3280942553": {
     "string": "Order payment successfully voided"
@@ -2898,14 +2914,14 @@
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
-    "string": "Create Page"
+    "string": "新建页面"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1815688500": {
     "context": "page",
     "string": "since {date}"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1996767833": {
-    "string": "Add search engine title and description to make this page easier to find"
+    "string": "添加标题和描述使得这个页面更容易被搜索引擎找到"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_2001551496": {
     "context": "page",
@@ -2958,7 +2974,7 @@
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
-    "string": "Create Page"
+    "string": "新建页面"
   },
   "src_dot_pages_dot_views_dot_2680158037": {
     "string": "Successfully created new page"
@@ -3033,7 +3049,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
     "context": "button",
@@ -3071,7 +3087,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_2297471173": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_3528974446": {
     "context": "dialog title",
@@ -3105,14 +3121,14 @@
     "string": "Members"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_4190792473": {
-    "string": "Actions"
+    "string": "动作"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_425941108": {
     "string": "No permission groups found"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_136112637": {
     "context": "empty list message",
@@ -3122,7 +3138,7 @@
     "string": "No members found"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1789607185": {
-    "string": "Email Address"
+    "string": " 电子邮箱"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_2457011428": {
     "context": "button",
@@ -3141,7 +3157,7 @@
     "string": "Group members"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_4190792473": {
-    "string": "Actions"
+    "string": "动作"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_636461959": {
     "context": "staff member full name",
@@ -3164,7 +3180,7 @@
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_870815507": {
     "context": "button title",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupList_dot_92979760": {
     "string": "Permission Group Deleted"
@@ -3194,7 +3210,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
-    "string": "Add Value to Authorization Field"
+    "string": "添加值至授权区域"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_4269236107": {
     "context": "header",
@@ -3227,7 +3243,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "所有插件"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -3235,7 +3251,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_deactivated": {
     "context": "plugin",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_3247064221": {
     "context": "plugin status",
@@ -3243,7 +3259,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_4120604650": {
     "context": "user action bar",
-    "string": "Action"
+    "string": "动作"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_636461959": {
     "context": "plugin name",
@@ -3325,7 +3341,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
     "context": "delete product type",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_924066985": {
     "context": "dialog header",
@@ -3340,7 +3356,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_1776073799": {
     "context": "tab name",
-    "string": "All Product Types"
+    "string": "全部产品类型"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_3420445375": {
     "string": "Search Product Type"
@@ -3351,7 +3367,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_configurable": {
     "context": "product type",
-    "string": "Configurable"
+    "string": "可配置"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_digital": {
     "context": "product",
@@ -3386,7 +3402,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_2754779425": {
     "context": "product type",
-    "string": "Configurable"
+    "string": "可配置"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_881286562": {
     "context": "product type",
@@ -3426,7 +3442,7 @@
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "src_dot_products": {
     "context": "products section name",
@@ -3467,7 +3483,7 @@
     "string": "will be visible from {date}"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
-    "string": "Add search engine title and description to make this product easier to find"
+    "string": "添加标题和描述使得这个产品更容易被搜索引擎找到"
   },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
@@ -3475,11 +3491,11 @@
   },
   "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
     "context": "section header",
-    "string": "All Photos"
+    "string": "所有照片"
   },
   "src_dot_products_dot_components_dot_ProductImagePage_dot_1905082483": {
     "context": "field is optional",
-    "string": "Optional"
+    "string": "可选"
   },
   "src_dot_products_dot_components_dot_ProductImagePage_dot_2546267317": {
     "context": "header",
@@ -3503,7 +3519,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
-    "string": "Create Product"
+    "string": "新建产品"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
@@ -3518,15 +3534,15 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_821159718": {
     "context": "tab name",
-    "string": "All Products"
+    "string": "全部产品"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
-    "string": "Available"
+    "string": "可用"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
-    "string": "Hidden"
+    "string": "隐藏"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
@@ -3552,7 +3568,7 @@
     "string": "价格"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "没有产品"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
     "context": "product type",
@@ -3586,11 +3602,11 @@
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2754779425": {
     "context": "product is configurable",
-    "string": "Configurable"
+    "string": "可配置"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2805838453": {
     "context": "field is optional",
-    "string": "*Optional. Adding product to collection helps users find it."
+    "string": "*可选.添加产品至系列帮助用户找到它"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_4257289053": {
     "string": "Product Type"
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "数量"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -3644,11 +3657,11 @@
     "string": "will be visible from {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
-    "string": "Add search engine title and description to make this product easier to find"
+    "string": "添加标题和描述使得这个产品更容易被搜索引擎找到"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1536841622": {
     "context": "product attribute error",
-    "string": "All attributes should have value"
+    "string": "所有属性不能为空"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_258966189": {
     "context": "product attribute error",
@@ -3695,7 +3708,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2670525734": {
     "context": "variant attribute",
-    "string": "Choose attribute"
+    "string": "选择属性"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2745385064": {
     "context": "variant creation step",
@@ -3758,7 +3771,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_2297471173": {
     "context": "delete product variant",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_3726089650": {
     "context": "dialog header",
@@ -3777,7 +3790,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantImages_dot_989683980": {
     "context": "button",
-    "string": "Choose photos"
+    "string": "选择图片"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_2153006789": {
     "context": "section header",
@@ -3842,7 +3855,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3490038570": {
     "context": "product variant inventory status",
-    "string": "Inventory"
+    "string": "库存"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3989383405": {
     "context": "button",
@@ -3859,16 +3872,9 @@
     "context": "product variant name",
     "string": "变种"
   },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
-  },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
-    "string": "Create Product"
+    "string": "新建产品"
   },
   "src_dot_products_dot_views_dot_1591632382": {
     "context": "page header",
@@ -3937,7 +3943,7 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
@@ -4000,7 +4006,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
     "context": "header",
-    "string": "Create New Account"
+    "string": "新建用户"
   },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
     "context": "checkbox label",
@@ -4018,11 +4024,11 @@
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2864204643": {
     "context": "button",
-    "string": "Copied"
+    "string": "已复制"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_3406541221": {
     "context": "button",
-    "string": "Copy token"
+    "string": "复制"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_4189999598": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
@@ -4033,7 +4039,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_2297471173": {
     "context": "delete service account",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
     "context": "checkbox label",
@@ -4049,7 +4055,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
     "context": "service account",
-    "string": "Account Name"
+    "string": "用户名"
   },
   "src_dot_services_dot_components_dot_ServiceInfo_dot_426959482": {
     "context": "header",
@@ -4060,7 +4066,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_4040605455": {
     "context": "tab name",
-    "string": "All Service Accounts"
+    "string": "全部服务账号"
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_624280156": {
     "context": "button",
@@ -4072,7 +4078,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_deactivated": {
     "context": "service account",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_1342308051": {
     "string": "No service accounts found"
@@ -4100,7 +4106,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3406541221": {
     "context": "button",
-    "string": "Copy token"
+    "string": "复制"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3875340101": {
     "context": "header",
@@ -4137,7 +4143,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
     "context": "table actions",
-    "string": "Actions"
+    "string": "动作"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_426959482": {
     "context": "header",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Create Service Account"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",
@@ -4202,7 +4211,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_4049462680": {
     "context": "header",
-    "string": "Create New Shipping Zone"
+    "string": "新建新的配送区域"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_4270729636": {
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
@@ -4230,7 +4239,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1397795758": {
     "context": "add weight based shipping method, dialog header",
-    "string": "Add Weight Rate"
+    "string": "添加每公斤收费"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1403365734": {
     "context": "shipping method price",
@@ -4264,7 +4273,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2892088870": {
     "context": "dialog header",
-    "string": "Add Price Rate"
+    "string": "添加优惠利率"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3213611593": {
     "context": "shipping method",
@@ -4336,7 +4345,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_1221560277": {
     "context": "section header",
-    "string": "Warehouse"
+    "string": "货仓"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_2304484478": {
     "context": "button",
@@ -4427,7 +4436,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_1238948746": {
     "context": "dialog header",
-    "string": "Add New Authorization Key"
+    "string": "添加新的授权密钥"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2237029987": {
     "string": "密码"
@@ -4442,11 +4451,11 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_50561933": {
     "context": "button",
-    "string": "Add authentication"
+    "string": "添加认证"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1114030884": {
     "context": "button",
-    "string": "Add key"
+    "string": "添加键"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
     "context": "authentication provider name",
@@ -4473,7 +4482,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_280712237": {
     "context": "section header",
-    "string": "Mailing Configuration"
+    "string": "邮件配置"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_297689661": {
     "string": "Configurate your email address from which all automatic emails will be sent to your customers."
@@ -4502,11 +4511,11 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_2768400497": {
     "context": "section header",
-    "string": "Company Information"
+    "string": "公司信息"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_280712237": {
     "context": "section header",
-    "string": "Mailing Configuration"
+    "string": "邮件配置"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3657173399": {
     "string": "Email adress you provide here will be used as a contact adress for your customers."
@@ -4550,7 +4559,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_2852350932": {
     "context": "tab name",
-    "string": "All Staff Members"
+    "string": "全部员工"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_61043583": {
     "string": "Search Staff Member"
@@ -4573,10 +4582,10 @@
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_1789607185": {
-    "string": "Email Address"
+    "string": " 电子邮箱"
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_3247064221": {
     "context": "staff member status",
@@ -4609,7 +4618,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1434811103": {
     "context": "button",
-    "string": "Change your password"
+    "string": "修改密码"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_2237029987": {
     "context": "header",
@@ -4634,7 +4643,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_2771097267": {
     "context": "button",
-    "string": "Change photo"
+    "string": "更换图片"
   },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
     "context": "button",
@@ -4681,14 +4690,14 @@
     "string": "Reduced Tax Rates"
   },
   "src_dot_taxes_dot_components_dot_CountryList_dot_4039455144": {
-    "string": "Country Code"
+    "string": "国家代码"
   },
   "src_dot_taxes_dot_components_dot_CountryList_dot_577035076": {
-    "string": "Country Name"
+    "string": "国家名字"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1040021611": {
     "context": "tax rate",
-    "string": "Accommodation"
+    "string": "住处"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1260218997": {
     "context": "tax rate",
@@ -4696,7 +4705,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1323923780": {
     "context": "tax rate",
-    "string": "Bikes"
+    "string": "单车"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1451721797": {
     "context": "tax rate",
@@ -4714,7 +4723,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2201910191": {
     "context": "tax rate",
-    "string": "Baby foodstuffs"
+    "string": "婴儿食物"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_231341634": {
     "context": "tax rate",
@@ -4726,11 +4735,11 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2394675125": {
     "context": "tax rate",
-    "string": "Books"
+    "string": "书籍"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2465450918": {
     "context": "tax rate",
-    "string": "Agricultural supplies"
+    "string": "农业供给"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2482229874": {
     "context": "tax rate",
@@ -4746,7 +4755,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2584490289": {
     "context": "tax rate",
-    "string": "Children's clothing"
+    "string": "童衫"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2616794607": {
     "context": "tax rate",
@@ -4765,7 +4774,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_331632763": {
     "context": "tax rate",
-    "string": "Hotels"
+    "string": "酒店"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_331757068": {
     "context": "tax rate",
@@ -4781,7 +4790,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3911019760": {
     "context": "tax rate",
-    "string": "Advertising"
+    "string": "广告"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_4199760668": {
     "context": "tax rate",
@@ -4800,7 +4809,7 @@
     "string": "Pharmaceuticals"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_142803418": {
-    "string": "All products prices are entered with tax included"
+    "string": "所有商品的价格已包含税"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_2102582640": {
     "string": "Show gross prices to customers in the storefront"
@@ -4836,7 +4845,7 @@
     "string": "No translation yet"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1214235329": {
-    "string": "Category Name"
+    "string": "分类名"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -4857,7 +4866,7 @@
     "string": "Search Engine Title"
   },
   "src_dot_translations_dot_components_dot_TranslationsCollectionsPage_dot_2759199473": {
-    "string": "Collection Name"
+    "string": "系列名"
   },
   "src_dot_translations_dot_components_dot_TranslationsCollectionsPage_dot_3055443821": {
     "context": "header",
@@ -4867,7 +4876,7 @@
     "string": "Search Engine Preview"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1163855804": {
-    "string": "Languages"
+    "string": "语言"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1866913828": {
     "string": "Search Sale"
@@ -4923,20 +4932,20 @@
     "string": "No translatable entities found"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_49462429": {
-    "string": "Completed Translations"
+    "string": "完整翻译"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_636461959": {
     "context": "entity (product, collection, shipping method) name",
     "string": "名字"
   },
   "src_dot_translations_dot_components_dot_TranslationsLanguageListPage_dot_1163855804": {
-    "string": "Languages"
+    "string": "语言"
   },
   "src_dot_translations_dot_components_dot_TranslationsLanguageList_dot_2966651157": {
     "string": "No languages found"
   },
   "src_dot_translations_dot_components_dot_TranslationsLanguageList_dot_604081953": {
-    "string": "Language"
+    "string": "语言"
   },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_1116746286": {
     "context": "page content",
@@ -5149,11 +5158,11 @@
   },
   "src_dot_warehouses": {
     "context": "warehouses section name",
-    "string": "Warehouses"
+    "string": "货仓"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_1967111456": {
     "context": "warehouse",
-    "string": "Address Information"
+    "string": "地址信息"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_934572530": {
     "context": "header",
@@ -5169,7 +5178,7 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseDetailsPage_dot_1967111456": {
     "context": "warehouse",
-    "string": "Address Information"
+    "string": "地址信息"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseInfo_dot_2622674857": {
     "string": "Warehouse Name"
@@ -5192,7 +5201,7 @@
     "string": "No warehouses found"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_4190792473": {
-    "string": "Actions"
+    "string": "动作"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_636461959": {
     "context": "warehouse",
@@ -5223,7 +5232,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_2297471173": {
     "context": "delete webhook",
-    "string": "Are you sure you want to delete {name}?"
+    "string": "您确认想要删除 {name}?？"
   },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_3514087611": {
     "context": "dialog header",
@@ -5239,7 +5248,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
-    "string": "All events"
+    "string": "全部事件"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
     "context": "event",
@@ -5337,7 +5346,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_3300314452": {
     "context": "tab name",
-    "string": "All Webhooks"
+    "string": "所有Webhooks"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_active": {
     "context": "webhook",
@@ -5345,7 +5354,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_inactive": {
     "context": "webhook",
-    "string": "Inactive"
+    "string": "不活跃"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"
@@ -5356,7 +5365,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",
-    "string": "Action"
+    "string": "动作"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_618422799": {
     "string": "Unnamed webhook"
@@ -5374,14 +5383,14 @@
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "voucherDetailsUnassignCollection": {
     "context": "unassign collection from voucher, button",
-    "string": "Unassign"
+    "string": "取消分配"
   },
   "voucherDetailsUnassignProduct": {
     "context": "unassign product from voucher, button",
-    "string": "Unassign"
+    "string": "取消分配"
   }
 }

@@ -1,9 +1,8 @@
-import React from "react";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
@@ -39,6 +38,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const handleAddKeySuccess = (data: AuthorizationKeyAdd) => {
     if (data.authorizationKeyAdd.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(siteSettingsUrl());
@@ -47,10 +47,12 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const handleDeleteKeySuccess = (data: AuthorizationKeyDelete) => {
     if (data.authorizationKeyDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     } else {
       notify({
+        status: "error",
         text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
@@ -62,6 +64,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
       data.shopAddressUpdate.errors.length === 0
     ) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

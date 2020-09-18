@@ -7,9 +7,9 @@ import { ConfirmButtonTransitionState } from "./components/ConfirmButton/Confirm
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
+  MutationResultAdditionalProps,
   PartialMutationProviderOutput,
-  UserError,
-  MutationResultAdditionalProps
+  UserError
 } from "./types";
 import {
   AddressInput,
@@ -235,7 +235,7 @@ export function hasErrors(errorList: UserError[] | null): boolean {
 export function getMutationState(
   called: boolean,
   loading: boolean,
-  ...errorList: UserError[][]
+  ...errorList: any[][]
 ): ConfirmButtonTransitionState {
   if (loading) {
     return "loading";
@@ -306,10 +306,10 @@ export function createHref(url: string) {
 interface AnyEvent {
   stopPropagation: () => void;
 }
-export function stopPropagation(cb: () => void) {
+export function stopPropagation(cb: (event?: AnyEvent) => void) {
   return (event: AnyEvent) => {
     event.stopPropagation();
-    cb();
+    cb(event);
   };
 }
 

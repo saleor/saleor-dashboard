@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
 import UnassignMembersDialog, {
   UnassignMembersDialogProps
 } from "@saleor/permissionGroups/components/UnassignMembersDialog";
 import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
 const props: UnassignMembersDialogProps = {
   confirmButtonState: "default",

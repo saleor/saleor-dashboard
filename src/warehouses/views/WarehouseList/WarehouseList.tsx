@@ -1,45 +1,45 @@
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
+import { WindowTitle } from "@saleor/components/WindowTitle";
+import { configurationMenuUrl } from "@saleor/configuration";
+import useListSettings from "@saleor/hooks/useListSettings";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import usePaginator, {
+  createPaginationState
+} from "@saleor/hooks/usePaginator";
+import { commonMessages, sectionNames } from "@saleor/intl";
+import { getMutationStatus, maybe } from "@saleor/misc";
+import { ListViews } from "@saleor/types";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
+import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
+import { useWarehouseDelete } from "@saleor/warehouses/mutations";
+import { useWarehouseList } from "@saleor/warehouses/queries";
+import {
+  warehouseAddUrl,
+  warehouseListUrl,
+  WarehouseListUrlDialog,
+  WarehouseListUrlQueryParams,
+  warehouseUrl
+} from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  WarehouseListUrlQueryParams,
-  warehouseUrl,
-  WarehouseListUrlDialog,
-  warehouseListUrl,
-  warehouseAddUrl
-} from "@saleor/warehouses/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { useWarehouseList } from "@saleor/warehouses/queries";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useListSettings from "@saleor/hooks/useListSettings";
-import { ListViews } from "@saleor/types";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { sectionNames, commonMessages } from "@saleor/intl";
-import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
-} from "@saleor/components/SaveFilterTabDialog";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import { maybe, getMutationStatus } from "@saleor/misc";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { configurationMenuUrl } from "@saleor/configuration";
-import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
-import { useWarehouseDelete } from "@saleor/warehouses/mutations";
-import { getSortQueryVariables } from "./sort";
-import {
-  getFilterVariables,
-  getFilterTabs,
   areFiltersApplied,
   deleteFilterTab,
-  saveFilterTab,
-  getActiveFilters
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
 } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 export interface WarehouseListProps {
   params: WarehouseListUrlQueryParams;
@@ -71,6 +71,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         refetch();

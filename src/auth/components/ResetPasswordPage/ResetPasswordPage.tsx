@@ -2,12 +2,11 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -69,7 +68,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-tc": "email"
+              "data-test": "email"
             }}
           />
           <FormSpacer />

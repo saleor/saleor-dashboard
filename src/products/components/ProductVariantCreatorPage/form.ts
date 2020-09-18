@@ -1,5 +1,6 @@
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 
 export interface AttributeValue<T> {

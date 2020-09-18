@@ -1,15 +1,15 @@
-import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { toggle } from "@saleor/utils/lists";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { toggle } from "@saleor/utils/lists";
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import Link from "../Link";
 import Checkbox from "../Checkbox";
 import Hr from "../Hr";
+import Link from "../Link";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterBaseFieldProps } from "./types";
 
 interface FilterAutocompleteFieldProps extends FilterBaseFieldProps {
@@ -50,7 +50,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   displayValues,
   filterField,
   setDisplayValues,
-  onFilterPropertyChange
+  onFilterPropertyChange,
+  ...rest
 }) => {
   const classes = useStyles({});
 
@@ -90,8 +91,9 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   };
 
   return (
-    <div>
+    <div {...rest}>
       <TextField
+        data-test="filterFieldAutocompleteInput"
         className={classes.inputContainer}
         fullWidth
         name={filterField.name + "_autocomplete"}
@@ -107,6 +109,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormControlLabel
             control={
               <Checkbox
+                data-test="filterFieldAutocompleteSelected"
+                data-test-id={filterField.value}
                 checked={filterField.value.includes(displayValue.value)}
               />
             }
@@ -118,7 +122,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {displayHr && <Hr className={classes.hr} />}
       {displayNoResults && (
-        <Typography className={classes.noResults} color="textSecondary">
+        <Typography
+          data-test="filterFieldAutocompleteNoResults"
+          className={classes.noResults}
+          color="textSecondary"
+        >
           <FormattedMessage defaultMessage="No results" description="search" />
         </Typography>
       )}
@@ -126,7 +134,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         <div className={classes.option} key={option.value}>
           <FormControlLabel
             control={
-              <Checkbox checked={filterField.value.includes(option.value)} />
+              <Checkbox
+                data-test="filterFieldAutocompleteOption"
+                data-test-id={filterField.value}
+                checked={filterField.value.includes(option.value)}
+              />
             }
             label={option.label}
             name={filterField.name}
@@ -136,6 +148,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {filterField.hasMore && (
         <Link
+          data-test="filterFieldAutocompleteHasMore"
           className={classes.showMore}
           underline
           onClick={filterField.onFetchMore}

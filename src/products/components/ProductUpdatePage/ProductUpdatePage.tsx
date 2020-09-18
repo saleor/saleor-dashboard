@@ -1,18 +1,16 @@
-import { convertFromRaw, RawDraftContentState } from "draft-js";
-import { diff } from "fast-array-diff";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -23,8 +21,12 @@ import { SearchCollections_search_edges_node } from "@saleor/searches/types/Sear
 import { FetchMoreProps, ListActions } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { convertFromRaw, RawDraftContentState } from "draft-js";
+import { diff } from "fast-array-diff";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import {
   ProductDetails_product,
   ProductDetails_product_images,
@@ -35,9 +37,9 @@ import {
   getChoices,
   getProductUpdatePageFormData,
   getSelectedAttributesFromProduct,
+  getStockInputFromProduct,
   ProductAttributeValueChoices,
-  ProductUpdatePageFormData,
-  getStockInputFromProduct
+  ProductUpdatePageFormData
 } from "../../utils/data";
 import {
   createAttributeChangeHandler,
@@ -48,9 +50,9 @@ import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductVariants from "../ProductVariants";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductShipping from "../ProductShipping/ProductShipping";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
@@ -155,6 +157,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, []))
   );
 
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const initialData = getProductUpdatePageFormData(product, variants);
   const initialDescription = maybe<RawDraftContentState>(() =>
     JSON.parse(product.descriptionJson)
@@ -162,27 +170,47 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-  const currency = maybe(() => product.basePrice.currency);
+  const currency =
+    product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
-    const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0].stocks.map(
-      stock => stock.warehouse.id
-    );
-    const stockDiff = diff(variantStocks, dataStocks);
+    const metadata = isMetadataModified ? data.metadata : undefined;
+    const privateMetadata = isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined;
 
-    onSubmit({
-      ...data,
-      addStocks: stocks.filter(stock =>
-        stockDiff.added.some(addedStock => addedStock === stock.id)
-      ),
-      attributes,
-      removeStocks: stockDiff.removed,
-      updateStocks: stocks.filter(
-        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-      )
-    });
+    if (product.productType.hasVariants) {
+      onSubmit({
+        ...data,
+        addStocks: [],
+        attributes,
+        metadata,
+        privateMetadata,
+        removeStocks: [],
+        updateStocks: []
+      });
+    } else {
+      const dataStocks = stocks.map(stock => stock.id);
+      const variantStocks = product.variants[0]?.stocks.map(
+        stock => stock.warehouse.id
+      );
+      const stockDiff = diff(variantStocks, dataStocks);
+
+      onSubmit({
+        ...data,
+        addStocks: stocks.filter(stock =>
+          stockDiff.added.some(addedStock => addedStock === stock.id)
+        ),
+        attributes,
+        metadata,
+        privateMetadata,
+        removeStocks: stockDiff.removed,
+        updateStocks: stocks.filter(
+          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+        )
+      });
+    }
   };
 
   return (
@@ -213,6 +241,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           attributes,
           triggerChange
         );
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <>
@@ -249,19 +278,27 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     />
                   )}
                   <CardSpacer />
-                  <ProductPricing
-                    currency={currency}
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
+                  {!!product?.productType && !hasVariants && (
+                    <>
+                      <ProductPricing
+                        currency={currency}
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        onChange={change}
+                      />
+                      <CardSpacer />
+                    </>
+                  )}
                   {hasVariants ? (
                     <ProductVariants
                       disabled={disabled}
                       variants={variants}
-                      fallbackPrice={product ? product.basePrice : undefined}
+                      fallbackPrice={
+                        product?.variants?.length
+                          ? product.variants[0].price
+                          : undefined
+                      }
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
                       onVariantsAdd={onVariantsAdd}
@@ -328,6 +365,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         "Add search engine title and description to make this product easier to find"
                     })}
                   />
+                  <CardSpacer />
+                  <Metadata data={data} onChange={changeMetadata} />
                 </div>
                 <div>
                   <ProductOrganization
@@ -348,29 +387,30 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handleCollectionSelect}
                   />
                   <CardSpacer />
-                  <VisibilityCard
+                  <AvailabilityCard
                     data={data}
                     errors={errors}
                     disabled={disabled}
-                    hiddenMessage={intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "product"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate)
-                      }
-                    )}
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label"
+                      }),
+                      hiddenSecondLabel: intl.formatMessage(
+                        {
+                          defaultMessage: "will become published on {date}",
+                          description: "product publication date label"
+                        },
+                        {
+                          date: localizeDate(data.publicationDate, "L")
+                        }
+                      ),
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label"
+                      })
+                    }}
                     onChange={change}
-                    visibleMessage={intl.formatMessage(
-                      {
-                        defaultMessage: "since {date}",
-                        description: "product"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate)
-                      }
-                    )}
                   />
                 </div>
               </Grid>

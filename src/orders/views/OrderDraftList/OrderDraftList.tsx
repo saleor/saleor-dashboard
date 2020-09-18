@@ -1,9 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -16,13 +13,16 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import useShop from "@saleor/hooks/useShop";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import useShop from "@saleor/hooks/useShop";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   TypedOrderDraftBulkCancelMutation,
@@ -33,19 +33,19 @@ import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderDraftListUrl,
+  OrderDraftListUrlDialog,
   OrderDraftListUrlQueryParams,
-  orderUrl,
-  OrderDraftListUrlDialog
+  orderUrl
 } from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
+  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterQueryParam,
-  getFilterOpts
+  saveFilterTab
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -68,6 +68,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
+      status: "success",
       text: intl.formatMessage({
         defaultMessage: "Order draft successfully created"
       })
@@ -149,6 +150,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const handleOrderDraftBulkCancel = (data: OrderDraftBulkCancel) => {
     if (data.draftOrderBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Deleted draft orders"
         })

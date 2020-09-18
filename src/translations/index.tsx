@@ -1,9 +1,9 @@
+import { sectionNames } from "@saleor/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
 import { LanguageCodeEnum } from "../types/globalTypes";
 import {

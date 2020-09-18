@@ -1,22 +1,22 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { useIntl } from "react-intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  warehouseAddPath,
   warehouseListPath,
   WarehouseListUrlQueryParams,
-  warehousePath,
-  WarehouseUrlQueryParams,
   WarehouseListUrlSortField,
-  warehouseAddPath
+  warehousePath,
+  WarehouseUrlQueryParams
 } from "./urls";
+import WarehouseCreate from "./views/WarehouseCreate";
 import WarehouseDetailsComponent from "./views/WarehouseDetails";
 import WarehouseListComponent from "./views/WarehouseList";
-import WarehouseCreate from "./views/WarehouseCreate";
 
 const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));

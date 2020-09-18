@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
+import { ProductErrorCode, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantImageUnassign
@@ -12,6 +12,18 @@ export interface VariantImageUnassign_variantImageUnassign_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_attributes_attribute_values {
@@ -55,7 +67,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_images
   url: string;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_priceOverride {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -113,18 +125,20 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_stocks
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantImageUnassign_variantImageUnassign_productVariant_metadata | null)[];
+  privateMetadata: (VariantImageUnassign_variantImageUnassign_productVariant_privateMetadata | null)[];
   attributes: VariantImageUnassign_variantImageUnassign_productVariant_attributes[];
   costPrice: VariantImageUnassign_variantImageUnassign_productVariant_costPrice | null;
   images: (VariantImageUnassign_variantImageUnassign_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: VariantImageUnassign_variantImageUnassign_productVariant_priceOverride | null;
+  price: VariantImageUnassign_variantImageUnassign_productVariant_price | null;
   product: VariantImageUnassign_variantImageUnassign_productVariant_product;
   sku: string;
   stocks: (VariantImageUnassign_variantImageUnassign_productVariant_stocks | null)[] | null;

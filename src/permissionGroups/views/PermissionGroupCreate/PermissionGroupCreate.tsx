@@ -1,15 +1,16 @@
-import React from "react";
-import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
-import { PermissionGroupCreate } from "../../types/PermissionGroupCreate";
-import { permissionGroupListUrl, permissionGroupDetailsUrl } from "../../urls";
-import { usePermissionGroupCreate } from "../../mutations";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import PermissionGroupCreatePage from "../../components/PermissionGroupCreatePage";
+import { usePermissionGroupCreate } from "../../mutations";
+import { PermissionGroupCreate } from "../../types/PermissionGroupCreate";
+import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
@@ -21,6 +22,7 @@ const PermissionGroupCreateView: React.FC = () => {
   const handleSuccess = (data: PermissionGroupCreate) => {
     if (data?.permissionGroupCreate?.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Permission group created"
         })

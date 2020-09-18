@@ -87,7 +87,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -129,7 +129,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -171,7 +171,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -213,7 +213,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "49.99",
+      "price": "49.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -255,7 +255,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -297,7 +297,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -339,7 +339,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -381,7 +381,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -499,7 +499,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -541,7 +541,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -583,7 +583,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -625,7 +625,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -667,7 +667,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -709,7 +709,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "24.99",
+      "price": "24.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -751,7 +751,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -793,7 +793,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "26.99",
+      "price": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -930,7 +930,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -972,7 +972,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1014,7 +1014,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1056,7 +1056,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1098,7 +1098,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1140,7 +1140,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1182,7 +1182,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1224,7 +1224,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1328,7 +1328,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1370,7 +1370,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1412,7 +1412,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1454,7 +1454,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "45.99",
+      "price": "45.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1496,7 +1496,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "51.99",
+      "price": "51.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1538,7 +1538,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "51.99",
+      "price": "51.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1580,7 +1580,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "51.99",
+      "price": "51.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1622,7 +1622,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "51.99",
+      "price": "51.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1717,7 +1717,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1759,7 +1759,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1801,7 +1801,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1843,7 +1843,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1885,7 +1885,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1927,7 +1927,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1969,7 +1969,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2011,7 +2011,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2119,7 +2119,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2149,7 +2149,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2179,7 +2179,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2209,7 +2209,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2239,7 +2239,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2269,7 +2269,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2299,7 +2299,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -2329,7 +2329,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "10.99",
+      "price": "10.99",
       "sku": "",
       "stocks": Array [
         Object {

@@ -1,31 +1,30 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
+import { configurationMenuUrl } from "@saleor/configuration";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
-
+import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { configurationMenuUrl } from "@saleor/configuration";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import PermissionGroupDeleteDialog from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
 import { usePermissionGroupListQuery } from "@saleor/permissionGroups/queries";
 import { PermissionGroupDelete } from "@saleor/permissionGroups/types/PermissionGroupDelete";
-import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import { ListViews } from "@saleor/types";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
-  permissionGroupListUrl,
   permissionGroupAddUrl,
-  PermissionGroupListUrlQueryParams,
   permissionGroupDetailsUrl,
-  PermissionGroupListUrlDialog
+  permissionGroupListUrl,
+  PermissionGroupListUrlDialog,
+  PermissionGroupListUrlQueryParams
 } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
@@ -82,6 +81,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const handleDeleteSuccess = (data: PermissionGroupDelete) => {
     if (data.permissionGroupDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Permission Group Deleted"
         })

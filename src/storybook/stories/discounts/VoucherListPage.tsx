@@ -1,22 +1,22 @@
+import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import {
+  DiscountStatusEnum,
+  VoucherDiscountType
+} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
-import {
-  VoucherDiscountType,
-  DiscountStatusEnum
-} from "@saleor/types/globalTypes";
 import VoucherListPage, {
   VoucherListPageProps
 } from "../../../discounts/components/VoucherListPage";
 import { voucherList } from "../../../discounts/fixtures";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 

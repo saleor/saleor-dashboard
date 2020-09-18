@@ -2,9 +2,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
@@ -15,11 +12,13 @@ import MultiAutocompleteSelectField, {
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { maybe } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
   hasVariants: boolean;
@@ -125,7 +124,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             value={data.productType}
             onChange={onProductTypeChange}
             fetchChoices={fetchProductTypes}
-            data-tc="product-type"
+            data-test="product-type"
             {...fetchMoreProductTypes}
           />
         ) : (
@@ -171,7 +170,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           value={data.category}
           onChange={onCategoryChange}
           fetchChoices={fetchCategories}
-          data-tc="category"
+          data-test="category"
           {...fetchMoreCategories}
         />
         <FormSpacer />
@@ -196,7 +195,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           }
           onChange={onCollectionChange}
           fetchChoices={fetchCollections}
-          data-tc="collections"
+          data-test="collections"
           {...fetchMoreCollections}
         />
       </CardContent>

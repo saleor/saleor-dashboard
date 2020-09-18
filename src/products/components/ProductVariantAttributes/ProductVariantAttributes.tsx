@@ -1,9 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
@@ -11,11 +8,13 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
-import { ProductVariant_attributes_attribute_values } from "../../types/ProductVariant";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
   values: ProductVariant_attributes_attribute_values[];
@@ -100,7 +99,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                 value={getAttributeValue(attribute.id, attributes)}
                 choices={getAttributeValueChoices(attribute.id, attributes)}
                 allowCustomValues
-                data-tc="variant-attribute-input"
+                data-test="variant-attribute-input"
               />
             ))
           )}

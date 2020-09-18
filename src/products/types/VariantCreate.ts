@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantCreateInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantCreateInput, ProductErrorCode, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
@@ -12,6 +12,18 @@ export interface VariantCreate_productVariantCreate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute_values {
@@ -55,7 +67,7 @@ export interface VariantCreate_productVariantCreate_productVariant_images {
   url: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_priceOverride {
+export interface VariantCreate_productVariantCreate_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -113,18 +125,20 @@ export interface VariantCreate_productVariantCreate_productVariant_stocks {
 
 export interface VariantCreate_productVariantCreate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantCreate_productVariantCreate_productVariant_metadata | null)[];
+  privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
   attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
   costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: VariantCreate_productVariantCreate_productVariant_priceOverride | null;
+  price: VariantCreate_productVariantCreate_productVariant_price | null;
   product: VariantCreate_productVariantCreate_productVariant_product;
   sku: string;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;

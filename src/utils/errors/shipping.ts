@@ -1,8 +1,8 @@
-import { IntlShape, defineMessages } from "react-intl";
-
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
-import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { commonMessages } from "@saleor/intl";
+import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { defineMessages, IntlShape } from "react-intl";
+
 import commonErrorMessages from "./common";
 
 const messages = defineMessages({

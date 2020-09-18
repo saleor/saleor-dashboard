@@ -1,11 +1,11 @@
-import { stringify as stringifyQs } from "qs";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { stringify as stringifyQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { getMutationState, maybe } from "../../misc";
 import {
   LanguageCodeEnum,
@@ -57,6 +57,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
   const onAttributeUpdate = (data: UpdateAttributeTranslations) => {
     if (data.attributeTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);
@@ -65,6 +66,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
   const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
     if (data.attributeValueTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

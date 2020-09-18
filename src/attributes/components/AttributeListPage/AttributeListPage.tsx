@@ -1,27 +1,27 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import AppHeader from "@saleor/components/AppHeader";
 import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import Container from "../../../components/Container";
 import PageHeader from "../../../components/PageHeader";
 import {
+  FilterPageProps,
   ListActions,
   PageListProps,
-  FilterPageProps,
-  TabPageProps,
-  SortPage
+  SortPage,
+  TabPageProps
 } from "../../../types";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import AttributeList from "../AttributeList/AttributeList";
 import {
-  createFilterStructure,
+  AttributeFilterKeys,
   AttributeListFilterOpts,
-  AttributeFilterKeys
+  createFilterStructure
 } from "./filters";
 
 export interface AttributeListPageProps

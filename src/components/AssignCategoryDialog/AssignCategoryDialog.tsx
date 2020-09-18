@@ -9,9 +9,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -20,6 +17,9 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import Checkbox from "../Checkbox";
 
 export interface FormData {

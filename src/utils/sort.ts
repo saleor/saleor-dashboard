@@ -1,4 +1,5 @@
-import { parseBoolean, findValueInEnum } from "@saleor/misc";
+import { findValueInEnum, parseBoolean } from "@saleor/misc";
+
 import { TableCellHeaderArrowDirection } from "../components/TableCellHeader";
 import { Sort } from "../types";
 import { OrderDirection } from "../types/globalTypes";

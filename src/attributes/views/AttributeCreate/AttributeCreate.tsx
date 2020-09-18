@@ -1,11 +1,11 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import slugify from "slugify";
-
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   add,
   isSelected,
@@ -13,22 +13,28 @@ import {
   remove,
   updateAtIndex
 } from "@saleor/utils/lists";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
-import AttributePage from "../../components/AttributePage";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
+import React from "react";
+import { useIntl } from "react-intl";
+import slugify from "slugify";
+
+import AttributePage, {
+  AttributePageFormData
+} from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog, {
   AttributeValueEditDialogFormData
 } from "../../components/AttributeValueEditDialog";
-import { AttributeCreateMutation } from "../../mutations";
-import { AttributeCreate } from "../../types/AttributeCreate";
+import { useAttributeCreateMutation } from "../../mutations";
 import {
   attributeAddUrl,
+  AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
   attributeListUrl,
-  attributeUrl,
-  AttributeAddUrlDialog
+  attributeUrl
 } from "../../urls";
 
 interface AttributeDetailsProps {
@@ -60,6 +66,22 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     []
   );
 
+  const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
+    onCompleted: data => {
+      if (data.attributeCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Successfully created attribute"
+          })
+        });
+        navigate(attributeUrl(data.attributeCreate.attribute.id));
+      }
+    }
+  });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
   const id = params.id ? parseInt(params.id, 0) : undefined;
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -72,16 +94,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueDelete = () => {
     setValues(remove(values[params.id], values, areValuesEqual));
     closeModal();
-  };
-  const handleCreate = (data: AttributeCreate) => {
-    if (data.attributeCreate.errors.length === 0) {
-      notify({
-        text: intl.formatMessage({
-          defaultMessage: "Successfully created attribute"
-        })
-      });
-      navigate(attributeUrl(data.attributeCreate.attribute.id));
-    }
   };
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
@@ -102,88 +114,94 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(move(values[oldIndex], values, areValuesEqual, newIndex));
 
+  const handleCreate = async (data: AttributePageFormData) => {
+    const input = {
+      ...data,
+      metadata: undefined,
+      privateMetadata: undefined,
+      storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0),
+      values: values.map(value => ({
+        name: value.name
+      }))
+    };
+
+    const result = await attributeCreate({
+      variables: {
+        input
+      }
+    });
+
+    return result.data.attributeCreate?.attribute?.id || null;
+  };
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata
+  );
+
   return (
-    <AttributeCreateMutation onCompleted={handleCreate}>
-      {(attributeCreate, attributeCreateOpts) => (
+    <>
+      <AttributePage
+        attribute={null}
+        disabled={attributeCreateOpts.loading}
+        errors={attributeCreateOpts.data?.attributeCreate.errors || []}
+        onBack={() => navigate(attributeListUrl())}
+        onDelete={undefined}
+        onSubmit={handleSubmit}
+        onValueAdd={() => openModal("add-value")}
+        onValueDelete={id =>
+          openModal("remove-value", {
+            id
+          })
+        }
+        onValueReorder={handleValueReorder}
+        onValueUpdate={id =>
+          openModal("edit-value", {
+            id
+          })
+        }
+        saveButtonBarState={attributeCreateOpts.status}
+        values={values.map((value, valueIndex) => ({
+          __typename: "AttributeValue" as "AttributeValue",
+          id: valueIndex.toString(),
+          slug: slugify(value.name).toLowerCase(),
+          sortOrder: valueIndex,
+          type: null,
+          value: null,
+          ...value
+        }))}
+      />
+      <AttributeValueEditDialog
+        attributeValue={null}
+        confirmButtonState="default"
+        disabled={false}
+        errors={valueErrors}
+        open={params.action === "add-value"}
+        onClose={closeModal}
+        onSubmit={handleValueCreate}
+      />
+      {values.length > 0 && (
         <>
-          <AttributePage
-            attribute={null}
-            disabled={false}
-            errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-            onBack={() => navigate(attributeListUrl())}
-            onDelete={undefined}
-            onSubmit={input =>
-              attributeCreate({
-                variables: {
-                  input: {
-                    ...input,
-                    storefrontSearchPosition: parseInt(
-                      input.storefrontSearchPosition,
-                      0
-                    ),
-                    values: values.map(value => ({
-                      name: value.name
-                    }))
-                  }
-                }
-              })
-            }
-            onValueAdd={() => openModal("add-value")}
-            onValueDelete={id =>
-              openModal("remove-value", {
-                id
-              })
-            }
-            onValueReorder={handleValueReorder}
-            onValueUpdate={id =>
-              openModal("edit-value", {
-                id
-              })
-            }
-            saveButtonBarState={attributeCreateOpts.status}
-            values={values.map((value, valueIndex) => ({
-              __typename: "AttributeValue" as "AttributeValue",
-              id: valueIndex.toString(),
-              slug: slugify(value.name).toLowerCase(),
-              sortOrder: valueIndex,
-              type: null,
-              value: null,
-              ...value
-            }))}
+          <AttributeValueDeleteDialog
+            attributeName={undefined}
+            open={params.action === "remove-value"}
+            name={getStringOrPlaceholder(values[id]?.name)}
+            confirmButtonState="default"
+            onClose={closeModal}
+            onConfirm={handleValueDelete}
           />
           <AttributeValueEditDialog
-            attributeValue={null}
+            attributeValue={values[params.id]}
             confirmButtonState="default"
             disabled={false}
             errors={valueErrors}
-            open={params.action === "add-value"}
+            open={params.action === "edit-value"}
             onClose={closeModal}
-            onSubmit={handleValueCreate}
+            onSubmit={handleValueUpdate}
           />
-          {values.length > 0 && (
-            <>
-              <AttributeValueDeleteDialog
-                attributeName={undefined}
-                open={params.action === "remove-value"}
-                name={maybe(() => values[id].name, "...")}
-                confirmButtonState="default"
-                onClose={closeModal}
-                onConfirm={handleValueDelete}
-              />
-              <AttributeValueEditDialog
-                attributeValue={maybe(() => values[params.id])}
-                confirmButtonState="default"
-                disabled={false}
-                errors={valueErrors}
-                open={params.action === "edit-value"}
-                onClose={closeModal}
-                onSubmit={handleValueUpdate}
-              />
-            </>
-          )}
         </>
       )}
-    </AttributeCreateMutation>
+    </>
   );
 };
 AttributeDetails.displayName = "AttributeDetails";

@@ -1,18 +1,18 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum
 } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import ProductTypeListPage, {
   ProductTypeListPageProps

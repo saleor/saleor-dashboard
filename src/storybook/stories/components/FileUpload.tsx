@@ -1,7 +1,7 @@
+import FileUpload from "@saleor/components/FileUpload";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import FileUpload from "@saleor/components/FileUpload";
 import Decorator from "../../Decorator";
 
 storiesOf("Components / FileUpload", module)

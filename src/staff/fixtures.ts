@@ -1,5 +1,6 @@
 import avatarImage from "@assets/images/avatars/avatar1.png";
 import { permissions } from "@saleor/fixtures";
+
 import { StaffList_staffUsers_edges_node } from "./types/StaffList";
 import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
 

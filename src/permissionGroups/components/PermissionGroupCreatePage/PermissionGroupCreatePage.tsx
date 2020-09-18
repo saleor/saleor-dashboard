@@ -1,19 +1,20 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import AccountPermissions from "@saleor/components/AccountPermissions";
+import AppHeader from "@saleor/components/AppHeader";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import AppHeader from "@saleor/components/AppHeader";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { sectionNames } from "@saleor/intl";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
-import PermissionGroupInfo from "../PermissionGroupInfo";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { PermissionData } from "../PermissionGroupDetailsPage";
+import PermissionGroupInfo from "../PermissionGroupInfo";
 
 export interface PermissionGroupCreatePageFormData {
   name: string;

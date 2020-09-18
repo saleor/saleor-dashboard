@@ -1,11 +1,14 @@
-import gql from "graphql-tag";
-
-import { productErrorFragment } from "@saleor/attributes/mutations";
-import { TypedMutation } from "../mutations";
 import {
   collectionDetailsFragment,
   collectionProductFragment
-} from "./queries";
+} from "@saleor/fragments/collections";
+import {
+  productErrorFragment,
+  shopErrorFragment
+} from "@saleor/fragments/errors";
+import makeMutation from "@saleor/hooks/makeMutation";
+import gql from "graphql-tag";
+
 import {
   CollectionAssignProduct,
   CollectionAssignProductVariables
@@ -39,13 +42,6 @@ import {
   UnassignCollectionProductVariables
 } from "./types/UnassignCollectionProduct";
 
-export const ShopErrorFragment = gql`
-  fragment ShopErrorFragment on ShopError {
-    code
-    field
-  }
-`;
-
 const collectionUpdate = gql`
   ${collectionDetailsFragment}
   ${productErrorFragment}
@@ -60,7 +56,7 @@ const collectionUpdate = gql`
     }
   }
 `;
-export const TypedCollectionUpdateMutation = TypedMutation<
+export const useCollectionUpdateMutation = makeMutation<
   CollectionUpdate,
   CollectionUpdateVariables
 >(collectionUpdate);
@@ -68,7 +64,7 @@ export const TypedCollectionUpdateMutation = TypedMutation<
 const collectionUpdateWithHomepage = gql`
   ${collectionDetailsFragment}
   ${productErrorFragment}
-  ${ShopErrorFragment}
+  ${shopErrorFragment}
   mutation CollectionUpdateWithHomepage(
     $id: ID!
     $input: CollectionInput!
@@ -94,7 +90,7 @@ const collectionUpdateWithHomepage = gql`
     }
   }
 `;
-export const TypedCollectionUpdateWithHomepageMutation = TypedMutation<
+export const useCollectionUpdateWithHomepageMutation = makeMutation<
   CollectionUpdateWithHomepage,
   CollectionUpdateWithHomepageVariables
 >(collectionUpdateWithHomepage);
@@ -133,7 +129,7 @@ const assignCollectionProduct = gql`
     }
   }
 `;
-export const TypedCollectionAssignProductMutation = TypedMutation<
+export const useCollectionAssignProductMutation = makeMutation<
   CollectionAssignProduct,
   CollectionAssignProductVariables
 >(assignCollectionProduct);
@@ -152,7 +148,7 @@ const createCollection = gql`
     }
   }
 `;
-export const TypedCollectionCreateMutation = TypedMutation<
+export const useCollectionCreateMutation = makeMutation<
   CreateCollection,
   CreateCollectionVariables
 >(createCollection);
@@ -167,7 +163,7 @@ const removeCollection = gql`
     }
   }
 `;
-export const TypedCollectionRemoveMutation = TypedMutation<
+export const useCollectionRemoveMutation = makeMutation<
   RemoveCollection,
   RemoveCollectionVariables
 >(removeCollection);
@@ -217,7 +213,7 @@ const unassignCollectionProduct = gql`
     }
   }
 `;
-export const TypedUnassignCollectionProductMutation = TypedMutation<
+export const useUnassignCollectionProductMutation = makeMutation<
   UnassignCollectionProduct,
   UnassignCollectionProductVariables
 >(unassignCollectionProduct);
@@ -232,7 +228,7 @@ const collectionBulkDelete = gql`
     }
   }
 `;
-export const TypedCollectionBulkDelete = TypedMutation<
+export const useCollectionBulkDelete = makeMutation<
   CollectionBulkDelete,
   CollectionBulkDeleteVariables
 >(collectionBulkDelete);
@@ -247,7 +243,7 @@ const collectionBulkPublish = gql`
     }
   }
 `;
-export const TypedCollectionBulkPublish = TypedMutation<
+export const useCollectionBulkPublish = makeMutation<
   CollectionBulkPublish,
   CollectionBulkPublishVariables
 >(collectionBulkPublish);

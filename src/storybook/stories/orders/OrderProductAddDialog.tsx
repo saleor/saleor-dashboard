@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import OrderProductAddDialog, {
   OrderProductAddDialogProps
 } from "../../../orders/components/OrderProductAddDialog";

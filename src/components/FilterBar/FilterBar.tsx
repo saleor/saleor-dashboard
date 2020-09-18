@@ -1,14 +1,14 @@
+import Button from "@material-ui/core/Button";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Button from "@material-ui/core/Button";
 
 import { FilterProps } from "../../types";
+import Filter from "../Filter";
 import { IFilter } from "../Filter/types";
-import FilterTabs, { FilterTab } from "../TableFilter";
 import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
-import Filter from "../Filter";
+import FilterTabs, { FilterTab } from "../TableFilter";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,

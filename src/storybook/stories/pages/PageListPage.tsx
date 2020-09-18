@@ -1,7 +1,7 @@
+import { PageListUrlSortField } from "@saleor/pages/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { PageListUrlSortField } from "@saleor/pages/urls";
 import {
   listActionsProps,
   pageListProps,

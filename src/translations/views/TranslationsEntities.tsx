@@ -1,11 +1,12 @@
-import { stringify as stringifyQs } from "qs";
-import React from "react";
-
+import { AttributeTranslationFragment } from "@saleor/fragments/types/AttributeTranslationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import { stringify as stringifyQs } from "qs";
+import React from "react";
+
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
@@ -19,7 +20,6 @@ import {
   TypedSaleTranslations,
   TypedVoucherTranslations
 } from "../queries";
-import { AttributeTranslationFragment } from "../types/AttributeTranslationFragment";
 import {
   languageEntitiesUrl,
   LanguageEntitiesUrlQueryParams,

@@ -1,76 +1,14 @@
-import gql from "graphql-tag";
+import {
+  menuDetailsFragment,
+  menuFragment
+} from "@saleor/fragments/navigation";
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment, TypedQuery } from "../queries";
+import gql from "graphql-tag";
+
+import { TypedQuery } from "../queries";
 import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
 import { MenuList, MenuListVariables } from "./types/MenuList";
-
-export const menuFragment = gql`
-  fragment MenuFragment on Menu {
-    id
-    name
-    items {
-      id
-    }
-  }
-`;
-
-export const menuItemFragment = gql`
-  fragment MenuItemFragment on MenuItem {
-    category {
-      id
-      name
-    }
-    collection {
-      id
-      name
-    }
-    id
-    level
-    name
-    page {
-      id
-      title
-    }
-    url
-  }
-`;
-
-// GraphQL does not support recurive fragments
-export const menuItemNestedFragment = gql`
-  ${menuItemFragment}
-  fragment MenuItemNestedFragment on MenuItem {
-    ...MenuItemFragment
-    children {
-      ...MenuItemFragment
-      children {
-        ...MenuItemFragment
-        children {
-          ...MenuItemFragment
-          children {
-            ...MenuItemFragment
-            children {
-              ...MenuItemFragment
-              children {
-                ...MenuItemFragment
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const menuDetailsFragment = gql`
-  ${menuItemNestedFragment}
-  fragment MenuDetailsFragment on Menu {
-    id
-    items {
-      ...MenuItemNestedFragment
-    }
-    name
-  }
-`;
 
 const menuList = gql`
   ${menuFragment}

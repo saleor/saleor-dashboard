@@ -1,13 +1,13 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import Typography from "@material-ui/core/Typography";
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "../MultiAutocompleteSelectField";
@@ -59,7 +59,7 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
         value={formData?.permissionGroups}
         onChange={onChange}
         fetchChoices={onSearchChange}
-        data-tc="permissionGroups"
+        data-test="permissionGroups"
         onFetchMore={onFetchMore}
         hasMore={hasMore}
         loading={loading}

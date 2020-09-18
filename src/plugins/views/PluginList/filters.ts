@@ -1,20 +1,21 @@
-import { PluginFilterInput } from "@saleor/types/globalTypes";
-import {
-  PluginListFilterOpts,
-  PluginFilterKeys
-} from "@saleor/plugins/components/PluginsListPage";
-import { maybe, parseBoolean } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
+import { maybe, parseBoolean } from "@saleor/misc";
 import {
-  PluginListUrlFilters,
-  PluginListUrlFiltersEnum,
-  PluginListUrlQueryParams
-} from "../../urls";
+  PluginFilterKeys,
+  PluginListFilterOpts
+} from "@saleor/plugins/components/PluginsListPage";
+import { PluginFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
   getSingleValueQueryParam
 } from "../../../utils/filters";
+import {
+  PluginListUrlFilters,
+  PluginListUrlFiltersEnum,
+  PluginListUrlQueryParams
+} from "../../urls";
 
 export const PLUGIN_FILTERS_KEY = "pluginFilters";
 

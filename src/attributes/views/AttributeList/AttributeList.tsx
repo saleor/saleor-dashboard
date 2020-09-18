@@ -1,16 +1,13 @@
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterOpts
+  saveFilterTab
 } from "@saleor/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -22,28 +19,30 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import useShop from "@saleor/hooks/useShop";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import useShop from "@saleor/hooks/useShop";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { PAGINATE_BY } from "../../../config";
 import useBulkActions from "../../../hooks/useBulkActions";
 import { maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
-import { AttributeBulkDeleteMutation } from "../../mutations";
+import { useAttributeBulkDeleteMutation } from "../../mutations";
 import { useAttributeListQuery } from "../../queries";
-import { AttributeBulkDelete } from "../../types/AttributeBulkDelete";
 import {
   attributeAddUrl,
   attributeListUrl,
+  AttributeListUrlDialog,
   AttributeListUrlQueryParams,
-  attributeUrl,
-  AttributeListUrlDialog
+  attributeUrl
 } from "../../urls";
-import { getSortQueryVariables } from "./sort";
 import { getFilterQueryParam } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {
   params: AttributeListUrlQueryParams;
@@ -70,6 +69,26 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   );
   const { data, loading, refetch } = useAttributeListQuery({
     variables: queryVariables
+  });
+
+  const [
+    attributeBulkDelete,
+    attributeBulkDeleteOpts
+  ] = useAttributeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.attributeBulkDelete.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Attributes successfully delete",
+            description: "deleted multiple attributes"
+          })
+        });
+        reset();
+        refetch();
+      }
+    }
   });
 
   const tabs = getFilterTabs();
@@ -125,95 +144,73 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     params
   );
 
-  const handleBulkDelete = (data: AttributeBulkDelete) => {
-    if (data.attributeBulkDelete.errors.length === 0) {
-      closeModal();
-      notify({
-        text: intl.formatMessage({
-          defaultMessage: "Attributes successfully delete",
-          description: "deleted multiple attributes"
-        })
-      });
-      reset();
-      refetch();
-    }
-  };
-
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
-    <AttributeBulkDeleteMutation onCompleted={handleBulkDelete}>
-      {(attributeBulkDelete, attributeBulkDeleteOpts) => (
-        <>
-          <AttributeListPage
-            attributes={maybe(() =>
-              data.attributes.edges.map(edge => edge.node)
-            )}
-            currencySymbol={currencySymbol}
-            currentTab={currentTab}
-            disabled={loading || attributeBulkDeleteOpts.loading}
-            filterOpts={getFilterOpts(params)}
-            initialSearch={params.query || ""}
-            isChecked={isSelected}
-            onAdd={() => navigate(attributeAddUrl())}
-            onAll={resetFilters}
-            onBack={() => navigate(configurationMenuUrl)}
-            onFilterChange={changeFilters}
-            onNextPage={loadNextPage}
-            onPreviousPage={loadPreviousPage}
-            onRowClick={id => () => navigate(attributeUrl(id))}
-            onSearchChange={handleSearchChange}
-            onSort={handleSort}
-            onTabChange={handleTabChange}
-            onTabDelete={() => openModal("delete-search")}
-            onTabSave={() => openModal("save-search")}
-            pageInfo={pageInfo}
-            selected={listElements.length}
-            sort={getSortParams(params)}
-            tabs={tabs.map(tab => tab.name)}
-            toggle={toggle}
-            toggleAll={toggleAll}
-            toolbar={
-              <IconButton
-                color="primary"
-                onClick={() =>
-                  openModal("remove", {
-                    ids: listElements
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+    <>
+      <AttributeListPage
+        attributes={maybe(() => data.attributes.edges.map(edge => edge.node))}
+        currencySymbol={currencySymbol}
+        currentTab={currentTab}
+        disabled={loading || attributeBulkDeleteOpts.loading}
+        filterOpts={getFilterOpts(params)}
+        initialSearch={params.query || ""}
+        isChecked={isSelected}
+        onAdd={() => navigate(attributeAddUrl())}
+        onAll={resetFilters}
+        onBack={() => navigate(configurationMenuUrl)}
+        onFilterChange={changeFilters}
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
+        onRowClick={id => () => navigate(attributeUrl(id))}
+        onSearchChange={handleSearchChange}
+        onSort={handleSort}
+        onTabChange={handleTabChange}
+        onTabDelete={() => openModal("delete-search")}
+        onTabSave={() => openModal("save-search")}
+        pageInfo={pageInfo}
+        selected={listElements.length}
+        sort={getSortParams(params)}
+        tabs={tabs.map(tab => tab.name)}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        toolbar={
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("remove", {
+                ids: listElements
+              })
             }
-          />
-          <AttributeBulkDeleteDialog
-            confirmButtonState={attributeBulkDeleteOpts.status}
-            open={
-              params.action === "remove" && maybe(() => params.ids.length > 0)
-            }
-            onConfirm={() =>
-              attributeBulkDelete({ variables: { ids: params.ids } })
-            }
-            onClose={closeModal}
-            quantity={maybe(() => params.ids.length)}
-          />
-          <SaveFilterTabDialog
-            open={params.action === "save-search"}
-            confirmButtonState="default"
-            onClose={closeModal}
-            onSubmit={handleTabSave}
-          />
-          <DeleteFilterTabDialog
-            open={params.action === "delete-search"}
-            confirmButtonState="default"
-            onClose={closeModal}
-            onSubmit={handleTabDelete}
-            tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-          />
-        </>
-      )}
-    </AttributeBulkDeleteMutation>
+          >
+            <DeleteIcon />
+          </IconButton>
+        }
+      />
+      <AttributeBulkDeleteDialog
+        confirmButtonState={attributeBulkDeleteOpts.status}
+        open={params.action === "remove" && maybe(() => params.ids.length > 0)}
+        onConfirm={() =>
+          attributeBulkDelete({ variables: { ids: params.ids } })
+        }
+        onClose={closeModal}
+        quantity={maybe(() => params.ids.length)}
+      />
+      <SaveFilterTabDialog
+        open={params.action === "save-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={handleTabSave}
+      />
+      <DeleteFilterTabDialog
+        open={params.action === "delete-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={handleTabDelete}
+        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+      />
+    </>
   );
 };
 AttributeList.displayName = "AttributeList";

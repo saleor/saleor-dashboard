@@ -1,20 +1,19 @@
+import Decorator from "@saleor/storybook/Decorator";
+import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "@saleor/storybook/Decorator";
-import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import WebhookCreatePage, { WebhookCreatePageProps } from "./WebhookCreatePage";
 
 const props: WebhookCreatePageProps = {
+  appName: "App",
   disabled: false,
   errors: [],
-  fetchServiceAccounts: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
-  services: []
+  saveButtonBarState: "default"
 };
-storiesOf("Views / Webhooks / Create webhook", module)
+storiesOf("Views / Apps / Webhooks / Create webhook", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookCreatePage {...props} />)
   .add("loading", () => <WebhookCreatePage {...props} disabled={true} />)

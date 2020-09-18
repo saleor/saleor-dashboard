@@ -1,8 +1,12 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  productTypeDetailsFragment,
+  productTypeFragment
+} from "@saleor/fragments/productTypes";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { attributeFragment } from "@saleor/attributes/queries";
-import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment, TypedQuery } from "../queries";
+import { TypedQuery } from "../queries";
 import { ProductTypeCreateData } from "./types/ProductTypeCreateData";
 import {
   ProductTypeDetails,
@@ -12,37 +16,6 @@ import {
   ProductTypeList,
   ProductTypeListVariables
 } from "./types/ProductTypeList";
-
-export const productTypeFragment = gql`
-  fragment ProductTypeFragment on ProductType {
-    id
-    name
-    hasVariants
-    isShippingRequired
-    taxType {
-      description
-      taxCode
-    }
-  }
-`;
-
-export const productTypeDetailsFragment = gql`
-  ${attributeFragment}
-  ${productTypeFragment}
-  fragment ProductTypeDetailsFragment on ProductType {
-    ...ProductTypeFragment
-    productAttributes {
-      ...AttributeFragment
-    }
-    variantAttributes {
-      ...AttributeFragment
-    }
-    weight {
-      unit
-      value
-    }
-  }
-`;
 
 export const productTypeListQuery = gql`
   ${pageInfoFragment}

@@ -1,18 +1,17 @@
 import urlJoin from "url-join";
 
-import { stringifyQs } from "../utils/urls";
-
 import {
   ActiveTab,
   BulkAction,
   Dialog,
   Filters,
+  FiltersAsDictWithMultipleValues,
+  FiltersWithMultipleValues,
   Pagination,
   Sort,
-  TabActionDialog,
-  FiltersWithMultipleValues,
-  FiltersAsDictWithMultipleValues
+  TabActionDialog
 } from "../types";
+import { stringifyQs } from "../utils/urls";
 
 const productSection = "/products/";
 
@@ -24,6 +23,7 @@ export type ProductListUrlDialog =
   | "publish"
   | "unpublish"
   | "delete"
+  | "export"
   | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
   priceFrom = "priceFrom",

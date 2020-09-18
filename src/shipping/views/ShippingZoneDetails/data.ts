@@ -1,8 +1,9 @@
-import { ShippingZoneUrlQueryParams } from "@saleor/shipping/urls";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
+import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
+import { ShippingZoneUrlQueryParams } from "@saleor/shipping/urls";
+import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+
 import { FormData as ShippingZoneRateDialogFormData } from "../../components/ShippingZoneRateDialog";
 
 function getValue(value: string, hasLimits: boolean): number | null {
@@ -27,7 +28,7 @@ export function getCreateShippingRateVariables(
 
       minimumOrderPrice:
         params.type === ShippingMethodTypeEnum.PRICE
-          ? getValue(data.maxValue, data.noLimits)
+          ? getValue(data.minValue, data.noLimits)
           : null,
       minimumOrderWeight:
         params.type === ShippingMethodTypeEnum.WEIGHT

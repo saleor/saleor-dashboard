@@ -4,17 +4,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
-import TableCellHeader from "@saleor/components/TableCellHeader";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
@@ -142,8 +142,8 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 key={productType ? productType.id : "skeleton"}
                 onClick={productType ? onRowClick(productType.id) : undefined}
                 selected={isSelected}
-                data-tc="id"
-                data-tc-id={maybe(() => productType.id)}
+                data-test="id"
+                data-test-id={maybe(() => productType.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -156,7 +156,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 <TableCell className={classes.colName}>
                   {productType ? (
                     <>
-                      <span data-tc="name">{productType.name}</span>
+                      <span data-test="name">{productType.name}</span>
                       <Typography variant="caption">
                         {maybe(() => productType.hasVariants)
                           ? intl.formatMessage({

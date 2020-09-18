@@ -7,10 +7,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import classNames from "classnames";
-
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
@@ -20,7 +16,11 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import { maybe, renderCollection, getStringOrPlaceholder } from "../../../misc";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { getStringOrPlaceholder, maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 
@@ -41,6 +41,11 @@ const useStyles = makeStyles(
     },
     colQuantity: {
       textAlign: "center",
+      width: 120
+    },
+    colSku: {
+      textAlign: "right",
+      textOverflow: "ellipsis",
       width: 120
     },
     colTotal: {
@@ -165,6 +170,12 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                 />
               </span>
             </TableCell>
+            <TableCell className={classes.colSku}>
+              <FormattedMessage
+                defaultMessage="SKU"
+                description="ordered product sku"
+              />
+            </TableCell>
             <TableCell className={classes.colQuantity}>
               <FormattedMessage
                 defaultMessage="Quantity"
@@ -198,8 +209,11 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               >
                 {maybe(() => line.orderLine.productName) || <Skeleton />}
               </TableCellAvatar>
+              <TableCell className={classes.colSku}>
+                {line?.orderLine.productSku || <Skeleton />}
+              </TableCell>
               <TableCell className={classes.colQuantity}>
-                {maybe(() => line.quantity) || <Skeleton />}
+                {line?.quantity || <Skeleton />}
               </TableCell>
               <TableCell className={classes.colPrice}>
                 {maybe(() => line.orderLine.unitPrice.gross) ? (
@@ -273,6 +287,16 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
           <Button color="primary" onClick={onTrackingCodeAdd}>
             <FormattedMessage
               defaultMessage="Add tracking"
+              description="fulfillment group tracking number"
+            />
+          </Button>
+        </CardActions>
+      )}
+      {status === FulfillmentStatus.FULFILLED && fulfillment.trackingNumber && (
+        <CardActions>
+          <Button color="primary" onClick={onTrackingCodeAdd}>
+            <FormattedMessage
+              defaultMessage="Edit tracking"
               description="fulfillment group tracking number"
             />
           </Button>

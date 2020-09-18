@@ -1,9 +1,8 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableCell from "@material-ui/core/TableCell";
+import Draggable from "@saleor/icons/Draggable";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
-
-import Draggable from "@saleor/icons/Draggable";
 
 const useStyles = makeStyles(
   theme => ({

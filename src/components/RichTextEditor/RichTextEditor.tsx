@@ -1,7 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import { FormattedMessage } from "react-intl";
+import { CreateCSSProperties } from "@material-ui/styles/withStyles";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import classNames from "classnames";
 import { RawDraftContentState } from "draft-js";
 import {
@@ -12,17 +13,16 @@ import {
 } from "draftail";
 import isEqual from "lodash-es/isEqual";
 import React from "react";
-
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import ErrorBoundary from "react-error-boundary";
-import { CreateCSSProperties } from "@material-ui/styles/withStyles";
+import { FormattedMessage } from "react-intl";
+
 import BoldIcon from "../../icons/BoldIcon";
-import HeaderTwo from "../../icons/HeaderTwo";
+import HeaderOne from "../../icons/HeaderOne";
 import HeaderThree from "../../icons/HeaderThree";
+import HeaderTwo from "../../icons/HeaderTwo";
 import ItalicIcon from "../../icons/ItalicIcon";
 import LinkIcon from "../../icons/LinkIcon";
 import OrderedListIcon from "../../icons/OrderedListIcon";
-import HeaderOne from "../../icons/HeaderOne";
 import QuotationIcon from "../../icons/QuotationIcon";
 import StrikethroughIcon from "../../icons/StrikethroughIcon";
 import UnorderedListIcon from "../../icons/UnorderedListIcon";

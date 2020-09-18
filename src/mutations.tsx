@@ -4,12 +4,12 @@ import React from "react";
 import { Mutation, MutationFunction, MutationResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
+import { isJwtError } from "./auth/errors";
 import useNotifier from "./hooks/useNotifier";
+import useUser from "./hooks/useUser";
 import { commonMessages } from "./intl";
 import { getMutationStatus } from "./misc";
 import { MutationResultAdditionalProps } from "./types";
-import { isJwtError } from "./auth/errors";
-import useUser from "./hooks/useUser";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -39,6 +39,7 @@ export function TypedMutation<TData, TVariables>(
         onError={(err: ApolloError) => {
           if (err.networkError) {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }
@@ -47,15 +48,18 @@ export function TypedMutation<TData, TVariables>(
             "ReadOnlyException"
           ) {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.readOnly)
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
             user.logout();
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired)
             });
           } else {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }

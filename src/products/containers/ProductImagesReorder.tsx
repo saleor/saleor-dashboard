@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TypedMutationInnerProps } from "../../mutations";
-import { TypedProductImagesReorder } from "../mutations";
+import { useProductImagesReorder } from "../mutations";
 import {
   ProductImageReorder,
   ProductImageReorderVariables
@@ -19,12 +19,17 @@ interface ProductImagesReorderProviderProps
   }>;
 }
 
-const ProductImagesReorderProvider: React.FC<
-  ProductImagesReorderProviderProps
-> = ({ children, productId, productImages, ...mutationProps }) => (
-  <TypedProductImagesReorder {...mutationProps}>
-    {(mutate, mutationResult) =>
-      children(opts => {
+const ProductImagesReorderProvider: React.FC<ProductImagesReorderProviderProps> = ({
+  children,
+  productId,
+  productImages,
+  ...mutationProps
+}) => {
+  const [mutate, mutationResult] = useProductImagesReorder(mutationProps);
+
+  return (
+    <>
+      {children(opts => {
         const productImagesMap = productImages.reduce((prev, curr) => {
           prev[curr.id] = curr;
           return prev;
@@ -49,9 +54,9 @@ const ProductImagesReorderProvider: React.FC<
           ...opts,
           optimisticResponse
         });
-      }, mutationResult)
-    }
-  </TypedProductImagesReorder>
-);
+      }, mutationResult)}
+    </>
+  );
+};
 
 export default ProductImagesReorderProvider;

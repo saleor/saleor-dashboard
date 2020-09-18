@@ -1,13 +1,13 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { CollectionListUrlFilters } from "@saleor/collections/urls";
 import { createFilterStructure } from "@saleor/collections/components/CollectionListPage";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import { CollectionListUrlFilters } from "@saleor/collections/urls";
 import { CollectionPublished } from "@saleor/types/globalTypes";
-import { config } from "@test/intl";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { config } from "@test/intl";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

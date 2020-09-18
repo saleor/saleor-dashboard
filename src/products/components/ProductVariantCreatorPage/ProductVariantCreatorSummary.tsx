@@ -1,24 +1,24 @@
+import Card from "@material-ui/core/Card";
 import blue from "@material-ui/core/colors/blue";
 import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
-import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
-import classNames from "classnames";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import CardTitle from "@saleor/components/CardTitle";
+import Hr from "@saleor/components/Hr";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
-import CardTitle from "@saleor/components/CardTitle";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
-import Hr from "@saleor/components/Hr";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 import { VariantField } from "./reducer";
@@ -203,7 +203,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
             error => error.index === variantIndex
           );
           const variantFormErrors = getFormErrors(
-            ["priceOverride", "quantity", "sku"],
+            ["price", "quantity", "sku"],
             variantErrors
           );
 
@@ -234,9 +234,9 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     endAdornment: currencySymbol
                   }}
                   className={classes.input}
-                  error={!!variantFormErrors.priceOverride}
+                  error={!!variantFormErrors.price}
                   helperText={getBulkProductErrorMessage(
-                    variantFormErrors.priceOverride,
+                    variantFormErrors.price,
                     intl
                   )}
                   inputProps={{
@@ -244,7 +244,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     type: "number"
                   }}
                   fullWidth
-                  value={variant.priceOverride}
+                  value={variant.price}
                   onChange={event =>
                     onVariantDataChange(
                       variantIndex,

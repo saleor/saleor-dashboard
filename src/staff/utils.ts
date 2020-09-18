@@ -1,7 +1,7 @@
 import difference from "lodash-es/difference";
 
-import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
 import { StaffDetailsFormData } from "./components/StaffDetailsPage";
+import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
 
 /**
  * Return lists of groups which have to be added and removed from user.

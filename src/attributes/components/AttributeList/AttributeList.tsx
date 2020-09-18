@@ -3,20 +3,20 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
 export interface AttributeListProps
@@ -193,9 +193,9 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 key={attribute ? attribute.id : "skeleton"}
                 onClick={attribute && onRowClick(attribute.id)}
                 className={classes.link}
-                data-tc="id"
-                data-tc-id={maybe(() => attribute.id)}
-                data-tc-values={JSON.stringify(
+                data-test="id"
+                data-test-id={maybe(() => attribute.id)}
+                data-test-values={JSON.stringify(
                   maybe(() => attribute.values, [])
                 )}
               >
@@ -207,16 +207,16 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onChange={() => toggle(attribute.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colSlug} data-tc="slug">
+                <TableCell className={classes.colSlug} data-test="slug">
                   {attribute ? attribute.slug : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colName} data-tc="name">
+                <TableCell className={classes.colName} data-test="name">
                   {attribute ? attribute.name : <Skeleton />}
                 </TableCell>
                 <TableCell
                   className={classes.colVisible}
-                  data-tc="visible"
-                  data-tc-visible={maybe(() => attribute.visibleInStorefront)}
+                  data-test="visible"
+                  data-test-visible={maybe(() => attribute.visibleInStorefront)}
                 >
                   {attribute ? (
                     translateBoolean(attribute.visibleInStorefront, intl)
@@ -226,8 +226,8 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colSearchable}
-                  data-tc="searchable"
-                  data-tc-searchable={maybe(
+                  data-test="searchable"
+                  data-test-searchable={maybe(
                     () => attribute.filterableInDashboard
                   )}
                 >
@@ -239,8 +239,8 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colFaceted}
-                  data-tc="use-in-faceted-search"
-                  data-tc-use-in-faceted-search={maybe(
+                  data-test="use-in-faceted-search"
+                  data-test-use-in-faceted-search={maybe(
                     () => attribute.filterableInStorefront
                   )}
                 >

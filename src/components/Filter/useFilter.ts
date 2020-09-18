@@ -1,4 +1,4 @@
-import { useReducer, useEffect, Dispatch } from "react";
+import { Dispatch, useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
 import { IFilter, IFilterElement } from "./types";
@@ -17,7 +17,11 @@ function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
   const reset = () =>
     dispatchFilterAction({
       payload: {
-        new: initialFilter
+        new: initialFilter.map(each => ({
+          ...each,
+          active: false,
+          value: []
+        }))
       },
       type: "reset"
     });

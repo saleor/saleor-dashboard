@@ -1,8 +1,8 @@
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { commonMessages } from "@saleor/intl";
+import { PageErrorCode } from "@saleor/types/globalTypes";
 import { IntlShape } from "react-intl";
 
-import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
-import { PageErrorCode } from "@saleor/types/globalTypes";
-import { commonMessages } from "@saleor/intl";
 import commonErrorMessages from "./common";
 
 function getPageErrorMessage(

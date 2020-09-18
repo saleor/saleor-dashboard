@@ -1,23 +1,23 @@
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-
-import useWizard from "@saleor/hooks/useWizard";
-import PageHeader from "@saleor/components/PageHeader";
+import Typography from "@material-ui/core/Typography";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
+import PageHeader from "@saleor/components/PageHeader";
+import useWizard from "@saleor/hooks/useWizard";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
+import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
 import reduceProductVariantCreateFormData, {
   ProductVariantCreateReducerActionType
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
-import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
 
 const useStyles = makeStyles(
   theme => ({

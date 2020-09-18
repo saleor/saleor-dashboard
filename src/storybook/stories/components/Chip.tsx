@@ -1,7 +1,7 @@
+import Chip, { ChipProps } from "@saleor/components/Chip";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Chip, { ChipProps } from "@saleor/components/Chip";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

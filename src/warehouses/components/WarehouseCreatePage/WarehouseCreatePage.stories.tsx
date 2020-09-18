@@ -1,12 +1,12 @@
+import { countries } from "@saleor/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "@saleor/storybook/Decorator";
-import { countries } from "@saleor/fixtures";
-import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import WarehouseCreatePage, {
-  WarehouseCreatePageProps,
-  WarehouseCreatePageFormData
+  WarehouseCreatePageFormData,
+  WarehouseCreatePageProps
 } from "./WarehouseCreatePage";
 
 const props: WarehouseCreatePageProps = {

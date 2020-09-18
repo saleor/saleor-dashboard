@@ -1,13 +1,13 @@
+import { FilterContent, FilterContentProps } from "@saleor/components/Filter";
+import useFilter from "@saleor/components/Filter/useFilter";
+import {
+  createDateField,
+  createOptionsField,
+  createPriceField
+} from "@saleor/utils/filters/fields";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { FilterContent, FilterContentProps } from "@saleor/components/Filter";
-import {
-  createPriceField,
-  createDateField,
-  createOptionsField
-} from "@saleor/utils/filters/fields";
-import useFilter from "@saleor/components/Filter/useFilter";
 import Decorator from "../../Decorator";
 
 const props: FilterContentProps = {

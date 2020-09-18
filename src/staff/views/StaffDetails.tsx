@@ -1,6 +1,3 @@
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -10,8 +7,10 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { maybe, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
@@ -57,6 +56,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const handleChangePassword = (data: ChangeStaffPassword) => {
     if (data.passwordChange.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
@@ -88,6 +88,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberUpdate = (data: StaffMemberUpdate) => {
           if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -95,6 +96,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberDelete = (data: StaffMemberDelete) => {
           if (!maybe(() => data.staffDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffListUrl());
@@ -103,6 +105,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarUpdate = (data: StaffAvatarUpdate) => {
           if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -110,6 +113,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarDelete = (data: StaffAvatarDelete) => {
           if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(id));

@@ -1,7 +1,4 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -9,6 +6,9 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
@@ -25,9 +25,9 @@ import { SetCustomerDefaultAddress } from "../types/SetCustomerDefaultAddress";
 import { UpdateCustomerAddress } from "../types/UpdateCustomerAddress";
 import {
   customerAddressesUrl,
+  CustomerAddressesUrlDialog,
   CustomerAddressesUrlQueryParams,
-  customerUrl,
-  CustomerAddressesUrlDialog
+  customerUrl
 } from "../urls";
 
 interface CustomerAddressesProps {
@@ -53,6 +53,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressSetDefault.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -68,6 +69,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressUpdate.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -77,6 +79,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

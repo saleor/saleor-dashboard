@@ -10,11 +10,11 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
+import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { buttonMessages } from "@saleor/intl";
 import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";

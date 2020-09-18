@@ -6,10 +6,10 @@ import {
   BulkAction,
   Dialog,
   Filters,
+  FiltersWithMultipleValues,
   Pagination,
-  TabActionDialog,
   Sort,
-  FiltersWithMultipleValues
+  TabActionDialog
 } from "../types";
 import { SaleDetailsPageTab } from "./components/SaleDetailsPage";
 import { VoucherDetailsPageTab } from "./components/VoucherDetailsPage";

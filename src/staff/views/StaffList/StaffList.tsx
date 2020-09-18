@@ -1,7 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import urlJoin from "url-join";
-
 import { newPasswordUrl } from "@saleor/auth/urls";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -17,13 +13,16 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import React from "react";
+import { useIntl } from "react-intl";
+import urlJoin from "url-join";
 
 import StaffAddMemberDialog, {
   AddMemberFormData
@@ -134,6 +133,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const handleStaffMemberAddSuccess = (data: StaffMemberAdd) => {
     if (data.staffCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(staffMemberDetailsUrl(data.staffCreate.user.id));

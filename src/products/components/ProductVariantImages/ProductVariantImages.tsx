@@ -3,12 +3,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductImage } from "../../types/ProductImage";
+import { ProductImageFragment } from "@saleor/fragments/types/ProductImageFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -43,15 +42,13 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantImagesProps {
-  images?: ProductImage[];
+  images?: ProductImageFragment[];
   placeholderImage?: string;
   disabled: boolean;
   onImageAdd();
 }
 
-export const ProductVariantImages: React.FC<
-  ProductVariantImagesProps
-> = props => {
+export const ProductVariantImages: React.FC<ProductVariantImagesProps> = props => {
   const { disabled, images, onImageAdd } = props;
 
   const classes = useStyles(props);

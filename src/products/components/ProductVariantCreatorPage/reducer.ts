@@ -1,12 +1,13 @@
+import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
   remove,
   removeAtIndex,
   toggle,
-  updateAtIndex,
-  update
+  update,
+  updateAtIndex
 } from "@saleor/utils/lists";
-import { StockInput } from "@saleor/types/globalTypes";
+
 import { createVariants } from "./createVariants";
 import {
   ProductVariantCreateFormData,
@@ -300,7 +301,7 @@ function changeVariantData(
     ...state.variants[variantIndex]
   };
   if (field === "price") {
-    variant.priceOverride = value;
+    variant.price = value;
   } else if (field === "sku") {
     variant.sku = value;
   }

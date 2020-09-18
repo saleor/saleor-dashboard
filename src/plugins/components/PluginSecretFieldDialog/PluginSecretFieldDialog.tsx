@@ -4,9 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -17,6 +14,8 @@ import { maybe } from "@saleor/misc";
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { DialogProps } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PluginSecretFieldDialogFormData {
   value: string;

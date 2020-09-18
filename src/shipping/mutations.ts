@@ -1,8 +1,12 @@
+import { shippingErrorFragment } from "@saleor/fragments/errors";
+import {
+  shippingMethodFragment,
+  shippingZoneDetailsFragment
+} from "@saleor/fragments/shipping";
+import { countryFragment } from "@saleor/fragments/taxes";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import makeMutation from "@saleor/hooks/makeMutation";
-import { countryFragment } from "../taxes/queries";
-import { shippingMethodFragment, shippingZoneDetailsFragment } from "./queries";
 import {
   BulkDeleteShippingRate,
   BulkDeleteShippingRateVariables
@@ -39,13 +43,6 @@ import {
   UpdateShippingZone,
   UpdateShippingZoneVariables
 } from "./types/UpdateShippingZone";
-
-export const shippingErrorFragment = gql`
-  fragment ShippingErrorFragment on ShippingError {
-    code
-    field
-  }
-`;
 
 const deleteShippingZone = gql`
   ${shippingErrorFragment}

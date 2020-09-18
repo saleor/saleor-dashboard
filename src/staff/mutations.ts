@@ -1,8 +1,12 @@
-import gql from "graphql-tag";
+import {
+  accountErrorFragment,
+  staffErrorFragment
+} from "@saleor/fragments/errors";
+import { staffMemberDetailsFragment } from "@saleor/fragments/staff";
 import makeMutation from "@saleor/hooks/makeMutation";
-import { accountErrorFragment } from "@saleor/customers/mutations";
+import gql from "graphql-tag";
+
 import { TypedMutation } from "../mutations";
-import { staffMemberDetailsFragment } from "./queries";
 import {
   ChangeStaffPassword,
   ChangeStaffPasswordVariables
@@ -24,20 +28,6 @@ import {
   StaffMemberUpdate,
   StaffMemberUpdateVariables
 } from "./types/StaffMemberUpdate";
-
-export const staffErrorFragment = gql`
-  fragment StaffErrorFragment on StaffError {
-    code
-    field
-  }
-`;
-
-export const staffFragmentError = gql`
-  fragment StaffErrorFragment on StaffError {
-    code
-    field
-  }
-`;
 
 const staffMemberAddMutation = gql`
   ${staffErrorFragment}

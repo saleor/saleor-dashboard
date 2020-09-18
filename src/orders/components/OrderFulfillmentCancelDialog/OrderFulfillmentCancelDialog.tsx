@@ -5,20 +5,19 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import FormSpacer from "@saleor/components/FormSpacer";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { buttonMessages } from "@saleor/intl";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderFulfillmentCancelDialogFormData {
   warehouseId: string;
@@ -112,8 +111,8 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 {errors.length > 0 && (
                   <>
                     <FormSpacer />
-                    {errors.map(err => (
-                      <DialogContentText color="error">
+                    {errors.map((err, index) => (
+                      <DialogContentText color="error" key={index}>
                         {getOrderErrorMessage(err, intl)}
                       </DialogContentText>
                     ))}

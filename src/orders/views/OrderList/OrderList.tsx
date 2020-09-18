@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -12,31 +9,34 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { maybe, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import { useOrderDraftCreateMutation } from "../../mutations";
 import { useOrderListQuery } from "../../queries";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderListUrl,
+  OrderListUrlDialog,
   OrderListUrlQueryParams,
-  orderUrl,
-  OrderListUrlDialog
+  orderUrl
 } from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
-  getFilterTabs,
   getFilterOpts,
+  getFilterQueryParam,
+  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterQueryParam
+  saveFilterTab
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -56,6 +56,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
+      status: "success",
       text: intl.formatMessage({
         defaultMessage: "Order draft successfully created"
       })

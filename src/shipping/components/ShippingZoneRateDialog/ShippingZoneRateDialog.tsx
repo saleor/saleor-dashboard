@@ -6,9 +6,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -17,14 +14,17 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingZoneDetailsFragment_shippingMethods } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
-import { ShippingZoneDetailsFragment_shippingMethods } from "../../types/ShippingZoneDetailsFragment";
 import {
   getShippingPriceRateErrorMessage,
   getShippingWeightRateErrorMessage
@@ -37,6 +37,7 @@ export interface FormData {
   maxValue: string;
   isFree: boolean;
   price: string;
+  type: ShippingMethodTypeEnum;
 }
 
 export interface ShippingZoneRateDialogProps {
@@ -104,7 +105,8 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
           minValue: "",
           name: "",
           noLimits: false,
-          price: ""
+          price: "",
+          type: null
         }
       : {
           isFree: maybe(() => rate.price.amount === 0, false),
@@ -118,7 +120,8 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
               : maybe(() => rate.minimumOrderWeight.value.toString(), ""),
           name: maybe(() => rate.name, ""),
           noLimits: false,
-          price: maybe(() => rate.price.amount.toString(), "")
+          price: maybe(() => rate.price.amount.toString(), ""),
+          type: variant
         };
   if (action === "edit") {
     initialForm.noLimits = !initialForm.maxValue && !initialForm.minValue;

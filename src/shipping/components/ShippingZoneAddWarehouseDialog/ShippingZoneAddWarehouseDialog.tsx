@@ -3,28 +3,27 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-
+import TextField from "@material-ui/core/TextField";
+import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import { DialogProps } from "@saleor/types";
-import { AddressTypeInput } from "@saleor/customers/types";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
-import { buttonMessages } from "@saleor/intl";
-import Hr from "@saleor/components/Hr";
 import Form from "@saleor/components/Form";
-import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
+import Hr from "@saleor/components/Hr";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { AddressTypeInput } from "@saleor/customers/types";
+import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
+import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { buttonMessages } from "@saleor/intl";
+import { DialogProps } from "@saleor/types";
+import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZoneAddWarehouseDialogSubmitData
   extends AddressTypeInput {

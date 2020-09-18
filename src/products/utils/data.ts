@@ -1,7 +1,8 @@
-import { RawDraftContentState } from "draft-js";
-
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -10,12 +11,13 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { RawDraftContentState } from "draft-js";
+
 import { ProductAttributeInput } from "../components/ProductAttributes";
-import { VariantAttributeInput } from "../components/ProductVariantAttributes";
-import { ProductVariant } from "../types/ProductVariant";
-import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 import { ProductStockInput } from "../components/ProductStocks";
+import { VariantAttributeInput } from "../components/ProductVariantAttributes";
+import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
   id: string;
@@ -168,12 +170,15 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
   );
 }
 
-export interface ProductUpdatePageFormData {
+export interface ProductUpdatePageFormData extends MetadataFormData {
+  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
+  isAvailableForPurchase: boolean;
+  isAvailable: boolean;
   isPublished: boolean;
   name: string;
   publicationDate: string;
@@ -182,6 +187,7 @@ export interface ProductUpdatePageFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
+  visibleInListings: boolean;
 }
 
 export function getProductUpdatePageFormData(
@@ -189,7 +195,8 @@ export function getProductUpdatePageFormData(
   variants: ProductDetails_product_variants[]
 ): ProductUpdatePageFormData {
   return {
-    basePrice: maybe(() => product.basePrice.amount, 0),
+    availableForPurchase: product?.availableForPurchase,
+    basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
@@ -197,8 +204,12 @@ export function getProductUpdatePageFormData(
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
+    isAvailable: !!product?.isAvailable,
+    isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),
+    metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
+    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
@@ -212,6 +223,7 @@ export function getProductUpdatePageFormData(
       ""
     ),
     trackInventory: !!product?.variants[0]?.trackInventory,
+    visibleInListings: !!product?.visibleInListings,
     weight: product?.weight?.value.toString() || ""
   };
 }

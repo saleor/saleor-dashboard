@@ -3,10 +3,10 @@ import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import React from "react";
-
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { toggle } from "@saleor/utils/lists";
+import React from "react";
+
 import ColumnPickerButton from "./ColumnPickerButton";
 import ColumnPickerContent, {
   ColumnPickerContentProps

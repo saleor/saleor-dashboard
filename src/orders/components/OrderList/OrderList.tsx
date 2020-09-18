@@ -2,16 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
-import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import TableRow from "@material-ui/core/TableRow";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import {
   maybe,
@@ -19,10 +17,12 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { ListProps, SortPage } from "@saleor/types";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 
 const useStyles = makeStyles(

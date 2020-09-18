@@ -1,16 +1,14 @@
 import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
-import gql from "graphql-tag";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
+import { handleQueryAuthError } from "./auth";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
-import { commonMessages } from "./intl";
-import { maybe, RequireAtLeastOne } from "./misc";
-import { isJwtError } from "./auth/errors";
 import useUser from "./hooks/useUser";
+import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
@@ -80,27 +78,17 @@ export function TypedQuery<TData, TVariables>(
         skip={skip}
         context={{ useBatching: true }}
         errorPolicy="all"
+        onError={error =>
+          handleQueryAuthError(
+            error,
+            notify,
+            user.tokenRefresh,
+            user.logout,
+            intl
+          )
+        }
       >
         {(queryData: QueryResult<TData, TVariables>) => {
-          if (queryData.error) {
-            if (queryData.error.graphQLErrors.some(isJwtError)) {
-              user.logout();
-              notify({
-                text: intl.formatMessage(commonMessages.sessionExpired)
-              });
-            } else if (
-              !queryData.error.graphQLErrors.every(
-                err =>
-                  maybe(() => err.extensions.exception.code) ===
-                  "PermissionDenied"
-              )
-            ) {
-              notify({
-                text: intl.formatMessage(commonMessages.somethingWentWrong)
-              });
-            }
-          }
-
           const loadMore = (
             mergeFunc: (
               previousResults: TData,
@@ -161,12 +149,3 @@ export function TypedQuery<TData, TVariables>(
     );
   };
 }
-
-export const pageInfoFragment = gql`
-  fragment PageInfoFragment on PageInfo {
-    endCursor
-    hasNextPage
-    hasPreviousPage
-    startCursor
-  }
-`;

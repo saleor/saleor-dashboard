@@ -1,9 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import Skeleton from "@saleor/components/Skeleton";
 
 const useStyles = makeStyles(
   theme => ({
@@ -30,8 +29,12 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <div className={classes.headerContainer} data-tc="home-header">
-      <Typography className={classes.pageHeader} variant="h4">
+    <div className={classes.headerContainer} data-test="home-header">
+      <Typography
+        className={classes.pageHeader}
+        variant="h4"
+        data-test="welcomeHeader"
+      >
         {userName ? (
           <FormattedMessage
             defaultMessage="Hello there, {userName}"

@@ -1,10 +1,11 @@
-import { AttributeFilterInput } from "@saleor/types/globalTypes";
-import { maybe, parseBoolean } from "@saleor/misc";
-import { IFilterElement } from "@saleor/components/Filter";
 import {
-  AttributeListFilterOpts,
-  AttributeFilterKeys
+  AttributeFilterKeys,
+  AttributeListFilterOpts
 } from "@saleor/attributes/components/AttributeListPage";
+import { IFilterElement } from "@saleor/components/Filter";
+import { maybe, parseBoolean } from "@saleor/misc";
+import { AttributeFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -16,7 +17,7 @@ import {
   AttributeListUrlQueryParams
 } from "../../urls";
 
-export const PRODUCT_FILTERS_KEY = "productFilters";
+export const ATTRIBUTE_FILTERS_KEY = "attributeFilters";
 
 export function getFilterOpts(
   params: AttributeListUrlFilters
@@ -129,7 +130,7 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab
-} = createFilterTabUtils<AttributeListUrlFilters>(PRODUCT_FILTERS_KEY);
+} = createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   AttributeListUrlQueryParams,

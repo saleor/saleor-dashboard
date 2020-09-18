@@ -1,8 +1,8 @@
 /* eslint-disable sort-keys */
 
+import * as placeholderImage from "@assets/images/sample-product.jpg";
 import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
 import { warehouseList } from "@saleor/warehouses/fixtures";
-import * as placeholderImage from "@assets/images/sample-product.jpg";
 
 export const orderToFulfill: OrderFulfillData_order = {
   __typename: "Order",

@@ -1,4 +1,5 @@
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
+
 import {
   AllOrAttribute,
   Attribute,
@@ -45,7 +46,7 @@ function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantBulkCreateInput {
-  const priceOverride = getValueFromMode(attributes, data.price, "0");
+  const price = getValueFromMode(attributes, data.price, "0");
   const stocks = getValueFromMode(
     attributes,
     data.stock,
@@ -57,7 +58,7 @@ function createVariant(
       id: attribute.attributeId,
       values: [attribute.attributeValueSlug]
     })),
-    priceOverride,
+    price,
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({
       quantity,

@@ -1,10 +1,8 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -14,16 +12,23 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
-import { TypedProductBulkDeleteMutation } from "../../products/mutations";
-import { productBulkDelete } from "../../products/types/productBulkDelete";
+import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
 import {
   CategoryPageTab,
-  CategoryUpdatePage
+  CategoryUpdatePage,
+  FormData
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import {
   useCategoryBulkDeleteMutation,
@@ -38,8 +43,8 @@ import {
   categoryAddUrl,
   categoryListUrl,
   categoryUrl,
-  CategoryUrlQueryParams,
-  CategoryUrlDialog
+  CategoryUrlDialog,
+  CategoryUrlQueryParams
 } from "../urls";
 
 export interface CategoryDetailsProps {
@@ -64,6 +69,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
@@ -80,6 +87,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const handleCategoryDelete = (data: CategoryDelete) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Category deleted"
         })
@@ -99,6 +107,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       );
       if (backgroundImageError) {
         notify({
+          status: "error",
           text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }
@@ -113,6 +122,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();
@@ -124,6 +134,23 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     categoryBulkDeleteOpts
   ] = useCategoryBulkDeleteMutation({
     onCompleted: handleBulkCategoryDelete
+  });
+
+  const [
+    productBulkDelete,
+    productBulkDeleteOpts
+  ] = useProductBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.productBulkDelete.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        refetch();
+        reset();
+      }
+    }
   });
 
   const changeTab = (tabName: CategoryPageTab) => {
@@ -140,17 +167,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     CategoryUrlQueryParams
   >(navigate, params => categoryUrl(id, params), params);
 
-  const handleBulkProductDelete = (data: productBulkDelete) => {
-    if (data.productBulkDelete.errors.length === 0) {
-      closeModal();
-      notify({
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      refetch();
-      reset();
-    }
-  };
-
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     params.activeTab === CategoryPageTab.categories
       ? maybe(() => data.category.children.pageInfo)
@@ -159,194 +175,191 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params
   );
 
+  const handleUpdate = async (formData: FormData) => {
+    const result = await updateCategory({
+      variables: {
+        id,
+        input: {
+          backgroundImageAlt: formData.backgroundImageAlt,
+          descriptionJson: JSON.stringify(formData.description),
+          name: formData.name,
+          seo: {
+            description: formData.seoDescription,
+            title: formData.seoTitle
+          }
+        }
+      }
+    });
+
+    return result.data.categoryUpdate.errors;
+  };
+  const handleSubmit = createMetadataUpdateHandler(
+    data?.category,
+    handleUpdate,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
+
   return (
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
-      <TypedProductBulkDeleteMutation onCompleted={handleBulkProductDelete}>
-        {(productBulkDelete, productBulkDeleteOpts) => (
-          <>
-            <CategoryUpdatePage
-              changeTab={changeTab}
-              currentTab={params.activeTab}
-              category={maybe(() => data.category)}
-              disabled={loading}
-              errors={updateResult.data?.categoryUpdate.errors || []}
-              onAddCategory={() => navigate(categoryAddUrl(id))}
-              onAddProduct={() => navigate(productAddUrl)}
-              onBack={() =>
-                navigate(
-                  maybe(
-                    () => categoryUrl(data.category.parent.id),
-                    categoryListUrl()
-                  )
-                )
+      <CategoryUpdatePage
+        changeTab={changeTab}
+        currentTab={params.activeTab}
+        category={maybe(() => data.category)}
+        disabled={loading}
+        errors={updateResult.data?.categoryUpdate.errors || []}
+        onAddCategory={() => navigate(categoryAddUrl(id))}
+        onAddProduct={() => navigate(productAddUrl)}
+        onBack={() =>
+          navigate(
+            maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
+          )
+        }
+        onCategoryClick={id => () => navigate(categoryUrl(id))}
+        onDelete={() => openModal("delete")}
+        onImageDelete={() =>
+          updateCategory({
+            variables: {
+              id,
+              input: {
+                backgroundImage: null
               }
-              onCategoryClick={id => () => navigate(categoryUrl(id))}
-              onDelete={() => openModal("delete")}
-              onImageDelete={() =>
-                updateCategory({
-                  variables: {
-                    id,
-                    input: {
-                      backgroundImage: null
-                    }
-                  }
-                })
+            }
+          })
+        }
+        onImageUpload={file =>
+          updateCategory({
+            variables: {
+              id,
+              input: {
+                backgroundImage: file
               }
-              onImageUpload={file =>
-                updateCategory({
-                  variables: {
-                    id,
-                    input: {
-                      backgroundImage: file
-                    }
-                  }
-                })
-              }
-              onNextPage={loadNextPage}
-              onPreviousPage={loadPreviousPage}
-              pageInfo={pageInfo}
-              onProductClick={id => () => navigate(productUrl(id))}
-              onSubmit={formData =>
-                updateCategory({
-                  variables: {
-                    id,
-                    input: {
-                      backgroundImageAlt: formData.backgroundImageAlt,
-                      descriptionJson: JSON.stringify(formData.description),
-                      name: formData.name,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      }
-                    }
-                  }
-                })
-              }
-              products={maybe(() =>
-                data.category.products.edges.map(edge => edge.node)
-              )}
-              saveButtonBarState={updateResult.status}
-              subcategories={maybe(() =>
-                data.category.children.edges.map(edge => edge.node)
-              )}
-              subcategoryListToolbar={
-                <IconButton
-                  color="primary"
-                  onClick={() =>
-                    openModal("delete-categories", {
-                      ids: listElements
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
-              }
-              productListToolbar={
-                <IconButton
-                  color="primary"
-                  onClick={() =>
-                    openModal("delete-products", {
-                      ids: listElements
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
-              }
-              isChecked={isSelected}
-              selected={listElements.length}
-              toggle={toggle}
-              toggleAll={toggleAll}
-            />
-            <ActionDialog
-              confirmButtonState={deleteResult.status}
-              onClose={closeModal}
-              onConfirm={() => deleteCategory({ variables: { id } })}
-              open={params.action === "delete"}
-              title={intl.formatMessage({
-                defaultMessage: "Delete category",
-                description: "dialog title"
-              })}
-              variant="delete"
-            >
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="Are you sure you want to delete {categoryName}?"
-                  values={{
-                    categoryName: (
-                      <strong>{maybe(() => data.category.name, "...")}</strong>
-                    )
-                  }}
-                />
-              </DialogContentText>
-              <DialogContentText>
-                <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
-              </DialogContentText>
-            </ActionDialog>
-            <ActionDialog
-              open={
-                params.action === "delete-categories" &&
-                maybe(() => params.ids.length > 0)
-              }
-              confirmButtonState={categoryBulkDeleteOpts.status}
-              onClose={closeModal}
-              onConfirm={() =>
-                categoryBulkDelete({
-                  variables: { ids: params.ids }
-                }).then(() => refetch())
-              }
-              title={intl.formatMessage({
-                defaultMessage: "Delete categories",
-                description: "dialog title"
-              })}
-              variant="delete"
-            >
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-                  values={{
-                    counter: maybe(() => params.ids.length),
-                    displayQuantity: (
-                      <strong>{maybe(() => params.ids.length)}</strong>
-                    )
-                  }}
-                />
-              </DialogContentText>
-              <DialogContentText>
-                <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
-              </DialogContentText>
-            </ActionDialog>
-            <ActionDialog
-              open={params.action === "delete-products"}
-              confirmButtonState={productBulkDeleteOpts.status}
-              onClose={closeModal}
-              onConfirm={() =>
-                productBulkDelete({
-                  variables: { ids: params.ids }
-                }).then(() => refetch())
-              }
-              title={intl.formatMessage({
-                defaultMessage: "Delete products",
-                description: "dialog title"
-              })}
-              variant="delete"
-            >
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-                  values={{
-                    counter: maybe(() => params.ids.length),
-                    displayQuantity: (
-                      <strong>{maybe(() => params.ids.length)}</strong>
-                    )
-                  }}
-                />
-              </DialogContentText>
-            </ActionDialog>
-          </>
+            }
+          })
+        }
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
+        pageInfo={pageInfo}
+        onProductClick={id => () => navigate(productUrl(id))}
+        onSubmit={handleSubmit}
+        products={maybe(() =>
+          data.category.products.edges.map(edge => edge.node)
         )}
-      </TypedProductBulkDeleteMutation>
+        saveButtonBarState={updateResult.status}
+        subcategories={maybe(() =>
+          data.category.children.edges.map(edge => edge.node)
+        )}
+        subcategoryListToolbar={
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("delete-categories", {
+                ids: listElements
+              })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
+        }
+        productListToolbar={
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("delete-products", {
+                ids: listElements
+              })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
+        }
+        isChecked={isSelected}
+        selected={listElements.length}
+        toggle={toggle}
+        toggleAll={toggleAll}
+      />
+      <ActionDialog
+        confirmButtonState={deleteResult.status}
+        onClose={closeModal}
+        onConfirm={() => deleteCategory({ variables: { id } })}
+        open={params.action === "delete"}
+        title={intl.formatMessage({
+          defaultMessage: "Delete category",
+          description: "dialog title"
+        })}
+        variant="delete"
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete {categoryName}?"
+            values={{
+              categoryName: (
+                <strong>{maybe(() => data.category.name, "...")}</strong>
+              )
+            }}
+          />
+        </DialogContentText>
+        <DialogContentText>
+          <FormattedMessage defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront." />
+        </DialogContentText>
+      </ActionDialog>
+      <ActionDialog
+        open={
+          params.action === "delete-categories" &&
+          maybe(() => params.ids.length > 0)
+        }
+        confirmButtonState={categoryBulkDeleteOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          categoryBulkDelete({
+            variables: { ids: params.ids }
+          }).then(() => refetch())
+        }
+        title={intl.formatMessage({
+          defaultMessage: "Delete categories",
+          description: "dialog title"
+        })}
+        variant="delete"
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+            values={{
+              counter: maybe(() => params.ids.length),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            }}
+          />
+        </DialogContentText>
+        <DialogContentText>
+          <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+        </DialogContentText>
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "delete-products"}
+        confirmButtonState={productBulkDeleteOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          productBulkDelete({
+            variables: { ids: params.ids }
+          }).then(() => refetch())
+        }
+        title={intl.formatMessage({
+          defaultMessage: "Delete products",
+          description: "dialog title"
+        })}
+        variant="delete"
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+            values={{
+              counter: maybe(() => params.ids.length),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            }}
+          />
+        </DialogContentText>
+      </ActionDialog>
     </>
   );
 };

@@ -6,16 +6,13 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { sectionNames } from "@saleor/intl";
-import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
+import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import React from "react";
 import { useIntl } from "react-intl";
-import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 
 export interface FormData {
   events: WebhookEventTypeEnum[];
@@ -23,26 +20,23 @@ export interface FormData {
   name: string;
   secretKey: string | null;
   targetUrl: string;
-  serviceAccount: string;
   allEvents: boolean;
 }
 
 export interface WebhookCreatePageProps {
+  appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  fetchServiceAccounts: (data: string) => void;
   onBack: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
+  appName = "",
   disabled,
   errors,
   saveButtonBarState,
-  services,
-  fetchServiceAccounts,
   onBack,
   onSubmit
 }) => {
@@ -53,73 +47,51 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
     isActive: false,
     name: "",
     secretKey: "",
-    serviceAccount: "",
     targetUrl: ""
   };
-  const [selectedServiceAcccount, setSelectedServiceAcccount] = React.useState(
-    ""
-  );
-  const servicesChoiceList =
-    services?.map(node => ({
-      label: node.name,
-      value: node.id
-    })) || [];
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ data, hasChanged, submit, change }) => {
-        const handleServiceSelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedServiceAcccount,
-          servicesChoiceList
-        );
-        return (
-          <Container>
-            <AppHeader onBack={onBack}>
-              {intl.formatMessage(sectionNames.webhooks)}
-            </AppHeader>
-            <PageHeader
-              title={intl.formatMessage({
-                defaultMessage: "Create Webhook",
-                description: "header"
-              })}
-            />
-            <Grid>
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  fetchServiceAccounts={fetchServiceAccounts}
-                  serviceDisplayValue={selectedServiceAcccount}
-                  services={servicesChoiceList}
-                  serviceOnChange={handleServiceSelect}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookEvents
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <FormSpacer />
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || !hasChanged}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onSave={submit}
-            />
-          </Container>
-        );
-      }}
+      {({ data, hasChanged, submit, change }) => (
+        <Container>
+          <AppHeader onBack={onBack}>{appName}</AppHeader>
+          <PageHeader
+            title={intl.formatMessage({
+              defaultMessage: "Create Webhook",
+              description: "header"
+            })}
+          />
+          <Grid>
+            <div>
+              <WebhookInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </div>
+            <div>
+              <WebhookEvents
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+              <FormSpacer />
+              <WebhookStatus
+                data={data.isActive}
+                disabled={disabled}
+                onChange={change}
+              />
+            </div>
+          </Grid>
+          <SaveButtonBar
+            disabled={disabled || !hasChanged}
+            state={saveButtonBarState}
+            onCancel={onBack}
+            onSave={submit}
+          />
+        </Container>
+      )}
     </Form>
   );
 };

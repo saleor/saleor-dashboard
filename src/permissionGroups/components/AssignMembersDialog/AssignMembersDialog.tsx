@@ -1,32 +1,31 @@
-import { FormattedMessage, useIntl } from "react-intl";
-import InfiniteScroll from "react-infinite-scroller";
-import classNames from "classnames";
-
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
-import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@material-ui/core/styles";
-import { getUserName, getUserInitials } from "@saleor/misc";
-import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
-import useElementScroll from "@saleor/hooks/useElementScroll";
+import { Checkbox, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import React from "react";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
-import { Checkbox, Typography } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ConfirmButton, {
+  ConfirmButtonTransitionState
+} from "@saleor/components/ConfirmButton";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import useElementScroll from "@saleor/hooks/useElementScroll";
+import useSearchQuery from "@saleor/hooks/useSearchQuery";
+import { buttonMessages } from "@saleor/intl";
+import { getUserInitials, getUserName } from "@saleor/misc";
+import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
+import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
+import classNames from "classnames";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({

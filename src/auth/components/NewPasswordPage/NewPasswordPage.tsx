@@ -2,13 +2,12 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -87,7 +86,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               type="password"
               value={data.password}
               inputProps={{
-                "data-tc": "password"
+                "data-test": "password"
               }}
             />
             <FormSpacer />
@@ -110,7 +109,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 })
               }
               inputProps={{
-                "data-tc": "confirm-password"
+                "data-test": "confirm-password"
               }}
             />
             <FormSpacer />

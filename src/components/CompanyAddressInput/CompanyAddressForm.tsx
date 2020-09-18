@@ -1,22 +1,21 @@
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl, IntlShape } from "react-intl";
-
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
+import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import getShopErrorMessage from "@saleor/utils/errors/shop";
 import { getFormErrors } from "@saleor/utils/errors";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import getShopErrorMessage from "@saleor/utils/errors/shop";
 import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
-import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
 
 export interface CompanyAddressFormProps {
   countries: SingleAutocompleteChoiceType[];
@@ -161,7 +160,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           choices={countries}
           InputProps={{
             inputProps: {
-              autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+              autoComplete: "none"
             }
           }}
         />

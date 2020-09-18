@@ -1,10 +1,10 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import ShippingZoneCreatePage from "../components/ShippingZoneCreatePage";
 import { useShippingZoneCreate } from "../mutations";
 import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
@@ -19,6 +19,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
     onCompleted: data => {
       if (data.shippingZoneCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));

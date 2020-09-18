@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderVoid
@@ -12,6 +12,18 @@ export interface OrderVoid_orderVoid_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+}
+
+export interface OrderVoid_orderVoid_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderVoid_orderVoid_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface OrderVoid_orderVoid_order_billingAddress_country {
@@ -49,10 +61,23 @@ export interface OrderVoid_orderVoid_order_events {
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
+  invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
   type: OrderEventsEnum | null;
   user: OrderVoid_orderVoid_order_events_user | null;
+}
+
+export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  product: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant_product;
+  quantityAvailable: number;
 }
 
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -82,6 +107,7 @@ export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -113,6 +139,18 @@ export interface OrderVoid_orderVoid_order_fulfillments {
   warehouse: OrderVoid_orderVoid_order_fulfillments_warehouse | null;
 }
 
+export interface OrderVoid_orderVoid_order_lines_variant_product {
+  __typename: "Product";
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderVoid_orderVoid_order_lines_variant {
+  __typename: "ProductVariant";
+  product: OrderVoid_orderVoid_order_lines_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderVoid_orderVoid_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -140,6 +178,7 @@ export interface OrderVoid_orderVoid_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderVoid_orderVoid_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -246,9 +285,26 @@ export interface OrderVoid_orderVoid_order_availableShippingMethods {
   price: OrderVoid_orderVoid_order_availableShippingMethods_price | null;
 }
 
+export interface OrderVoid_orderVoid_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderVoid_orderVoid_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderVoid_orderVoid_order_metadata | null)[];
+  privateMetadata: (OrderVoid_orderVoid_order_privateMetadata | null)[];
   billingAddress: OrderVoid_orderVoid_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
@@ -271,6 +327,8 @@ export interface OrderVoid_orderVoid_order {
   user: OrderVoid_orderVoid_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
+  discount: OrderVoid_orderVoid_order_discount | null;
+  invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
 }
 
 export interface OrderVoid_orderVoid {

@@ -1,13 +1,12 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -22,7 +21,7 @@ const useStyles = makeStyles(
 
 interface ProductVariantPriceProps {
   currencySymbol?: string;
-  priceOverride?: string;
+  price?: string;
   costPrice?: string;
   errors: ProductErrorFragment[];
   loading?: boolean;
@@ -30,19 +29,12 @@ interface ProductVariantPriceProps {
 }
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const {
-    currencySymbol,
-    costPrice,
-    errors,
-    priceOverride,
-    loading,
-    onChange
-  } = props;
+  const { currencySymbol, costPrice, errors, price, loading, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["price_override", "cost_price"], errors);
+  const formErrors = getFormErrors(["price", "cost_price"], errors);
 
   return (
     <Card>
@@ -56,20 +48,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
         <div className={classes.grid}>
           <div>
             <PriceField
-              error={!!formErrors.price_override}
-              name="priceOverride"
+              error={!!formErrors.price}
+              name="price"
               label={intl.formatMessage({
-                defaultMessage: "Selling price override"
+                defaultMessage: "Price"
               })}
-              hint={
-                getProductErrorMessage(formErrors.price_override, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalPriceOverrideField"
-                })
-              }
-              value={priceOverride}
+              value={price}
               currencySymbol={currencySymbol}
               onChange={onChange}
               disabled={loading}
@@ -80,7 +64,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               error={!!formErrors.cost_price}
               name="costPrice"
               label={intl.formatMessage({
-                defaultMessage: "Cost price override"
+                defaultMessage: "Cost price"
               })}
               hint={
                 getProductErrorMessage(formErrors.cost_price, intl) ||

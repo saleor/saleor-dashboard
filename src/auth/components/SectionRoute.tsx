@@ -1,7 +1,7 @@
+import useUser from "@saleor/hooks/useUser";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 
-import useUser from "@saleor/hooks/useUser";
 import NotFound from "../../NotFound";
 import { PermissionEnum } from "../../types/globalTypes";
 import { hasPermission } from "../misc";

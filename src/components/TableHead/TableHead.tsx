@@ -11,7 +11,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Node } from "../../types";
-
 import Checkbox from "../Checkbox";
 
 export interface TableHeadProps extends MuiTableHeadProps {
@@ -28,23 +27,6 @@ const useStyles = makeStyles(
   theme => ({
     cell: {
       padding: 0
-    },
-    checkboxPartialSelect: {
-      "& input": {
-        "&:before": {
-          background: [theme.palette.background.paper, "!important"] as any,
-          border: `solid 1px ${theme.palette.primary.main}`,
-          content: "''"
-        },
-        background: theme.palette.background.paper
-      },
-      "&:after": {
-        background: theme.palette.primary.main,
-        content: "''",
-        height: 2,
-        position: "absolute",
-        width: 6
-      }
     },
     checkboxSelected: {
       backgroundColor: fade(theme.palette.primary.main, 0.05)
@@ -114,10 +96,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             })}
           >
             <Checkbox
-              className={classNames({
-                [classes.checkboxPartialSelect]:
-                  items && items.length > selected && selected > 0
-              })}
+              indeterminate={items && items.length > selected && selected > 0}
               checked={selected === 0 ? false : true}
               disabled={disabled}
               onChange={() => toggleAll(items, selected)}

@@ -1,8 +1,8 @@
 import { Omit } from "@material-ui/core";
+import { ShopErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { ShopErrorCode } from "@saleor/types/globalTypes";
 import SiteSettingsPage, {
   SiteSettingsPageProps
 } from "../../../siteSettings/components/SiteSettingsPage";

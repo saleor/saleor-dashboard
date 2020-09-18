@@ -11,11 +11,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import classNames from "classnames";
-import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -30,7 +25,12 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
-import { SearchAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAttributes";
+import classNames from "classnames";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { SearchAvailableAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAvailableAttributes";
 
 const useStyles = makeStyles(
   theme => ({
@@ -63,7 +63,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: string[];
   open: boolean;
-  attributes: SearchAttributes_productType_availableAttributes_edges_node[];
+  attributes: SearchAvailableAttributes_productType_availableAttributes_edges_node[];
   selected: string[];
   onClose: () => void;
   onFetch: (query: string) => void;

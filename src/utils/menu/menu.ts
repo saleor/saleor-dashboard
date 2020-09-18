@@ -131,10 +131,10 @@ function _toFlat<TMenuData = {}, TValue = string>(
     flatMenuItem,
     ...menuItem.children
       .map((child, childIndex) => _toFlat(child, childIndex, id))
-      .reduce((acc, curr) => [...acc, ...curr], [] as IFlatMenu<
-        TMenuData,
-        TValue
-      >)
+      .reduce(
+        (acc, curr) => [...acc, ...curr],
+        [] as IFlatMenu<TMenuData, TValue>
+      )
   ];
 }
 export function toFlat<TMenuData = {}, TValue = string>(
@@ -142,10 +142,10 @@ export function toFlat<TMenuData = {}, TValue = string>(
 ): IFlatMenu<TMenuData, TValue> {
   return menu
     .map((menuItem, menuItemIndex) => _toFlat(menuItem, menuItemIndex, null))
-    .reduce((acc, curr) => [...acc, ...curr], [] as IFlatMenu<
-      TMenuData,
-      TValue
-    >);
+    .reduce(
+      (acc, curr) => [...acc, ...curr],
+      [] as IFlatMenu<TMenuData, TValue>
+    );
 }
 
 function _fromFlat<TMenuData = {}, TValue = string>(

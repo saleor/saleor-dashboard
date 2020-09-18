@@ -1,15 +1,14 @@
+import { LocaleContext } from "@saleor/components/Locale";
 import moment from "moment-timezone";
 import { useContext } from "react";
 
-import { LocaleContext } from "@saleor/components/Locale";
-
-function useDateLocalize(): (date: string) => string {
+function useDateLocalize(): (date: string, format?: string) => string {
   const { locale } = useContext(LocaleContext);
 
-  return (date: string) =>
+  return (date: string, format?: string) =>
     moment(date)
       .locale(locale)
-      .format("ll");
+      .format(format || "ll");
 }
 
 export default useDateLocalize;

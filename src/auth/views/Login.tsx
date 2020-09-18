@@ -1,7 +1,7 @@
-import React from "react";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import React from "react";
+
 import LoginPage, { FormData } from "../components/LoginPage";
 import { passwordResetUrl } from "../urls";
 

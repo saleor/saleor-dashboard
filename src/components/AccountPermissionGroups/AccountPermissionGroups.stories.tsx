@@ -1,9 +1,10 @@
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
+import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import Decorator from "@saleor/storybook/Decorator";
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import Decorator from "@saleor/storybook/Decorator";
-import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
-import { AccountErrorCode } from "@saleor/types/globalTypes";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import AccountPermissionGroups, { AccountPermissionGroupsProps } from ".";
 

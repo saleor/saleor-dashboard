@@ -1,10 +1,9 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import FormSpacer from "@saleor/components/FormSpacer";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import FormSpacer from "@saleor/components/FormSpacer";
 
 const useStyles = makeStyles(
   {
@@ -24,9 +23,7 @@ export interface ResetPasswordSuccessPageProps {
   onBack: () => void;
 }
 
-const ResetPasswordSuccessPage: React.FC<
-  ResetPasswordSuccessPageProps
-> = props => {
+const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props => {
   const { onBack } = props;
 
   const classes = useStyles(props);

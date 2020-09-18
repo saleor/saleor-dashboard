@@ -5,9 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -20,6 +17,9 @@ import TableHead from "@saleor/components/TableHead";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
   ProductTypeDetails_productType_productAttributes,
   ProductTypeDetails_productType_variantAttributes
@@ -83,7 +83,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
 
   return (
     <Card
-      data-tc={
+      data-test={
         type === AttributeTypeEnum.PRODUCT
           ? "product-attributes"
           : "variant-attributes"
@@ -153,8 +153,8 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   }
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
-                  data-tc="id"
-                  data-tc-id={maybe(() => attribute.id)}
+                  data-test="id"
+                  data-test-id={maybe(() => attribute.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -164,14 +164,14 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-tc="name">
+                  <TableCell className={classes.colName} data-test="name">
                     {maybe(() => attribute.name) ? (
                       attribute.name
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.colSlug} data-tc="slug">
+                  <TableCell className={classes.colSlug} data-test="slug">
                     {maybe(() => attribute.slug) ? (
                       attribute.slug
                     ) : (

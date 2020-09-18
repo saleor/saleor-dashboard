@@ -1,5 +1,6 @@
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { IntlShape } from "react-intl";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+
 import getAccountErrorMessage from "./account";
 
 function getStaffErrorMessage(

@@ -1,19 +1,19 @@
+import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import { CollectionPublished } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import { CollectionPublished } from "@saleor/types/globalTypes";
 import CollectionListPage, {
   CollectionListPageProps
 } from "../../../collections/components/CollectionListPage";
 import { collections } from "../../../collections/fixtures";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 

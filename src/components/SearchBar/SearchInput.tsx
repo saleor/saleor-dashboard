@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
 import TextField from "@material-ui/core/TextField";
+import React from "react";
 
 import { SearchPageProps } from "../../types";
 import Debounce from "../Debounce";

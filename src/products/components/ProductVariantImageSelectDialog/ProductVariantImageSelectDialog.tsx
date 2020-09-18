@@ -4,12 +4,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
+import { ProductImageFragment } from "@saleor/fragments/types/ProductImageFragment";
+import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { buttonMessages } from "@saleor/intl";
-import { ProductImage } from "../../types/ProductImage";
 
 const useStyles = makeStyles(
   theme => ({
@@ -49,16 +48,14 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantImageSelectDialogProps {
-  images?: ProductImage[];
+  images?: ProductImageFragment[];
   selectedImages?: string[];
   open: boolean;
   onClose();
   onImageSelect(id: string);
 }
 
-const ProductVariantImageSelectDialog: React.FC<
-  ProductVariantImageSelectDialogProps
-> = props => {
+const ProductVariantImageSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
   const { images, open, selectedImages, onClose, onImageSelect } = props;
 
   const classes = useStyles(props);

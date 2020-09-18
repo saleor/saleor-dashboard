@@ -7,24 +7,24 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
+import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import LinkChoice from "@saleor/components/LinkChoice";
+import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import {
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
-import { ProductVariant_costPrice } from "../../types/ProductVariant";
 
 function getWarehouseChoices(
   variants: ProductDetails_product_variants[],
@@ -211,7 +211,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variant"
+              data-test="button-add-variant"
             >
               <FormattedMessage
                 defaultMessage="Create variant"
@@ -223,7 +223,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantsAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variants"
+              data-test="button-add-variants"
             >
               <FormattedMessage
                 defaultMessage="Create variants"
@@ -318,17 +318,17 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       onChange={() => toggle(variant.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-tc="name">
+                  <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colSku} data-tc="sku">
+                  <TableCell className={classes.colSku} data-test="sku">
                     {variant ? variant.sku : <Skeleton />}
                   </TableCell>
                   <Hidden smDown>
-                    <TableCell className={classes.colPrice} data-tc="price">
+                    <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
-                        variant.priceOverride ? (
-                          <Money money={variant.priceOverride} />
+                        variant.price ? (
+                          <Money money={variant.price} />
                         ) : fallbackPrice ? (
                           <Money money={fallbackPrice} />
                         ) : (
@@ -341,7 +341,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </Hidden>
                   <TableCell
                     className={classes.colInventory}
-                    data-tc="inventory"
+                    data-test="inventory"
                   >
                     {numAvailable === null ? (
                       <Skeleton />

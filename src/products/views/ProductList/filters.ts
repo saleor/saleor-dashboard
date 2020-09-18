@@ -1,22 +1,20 @@
-import isArray from "lodash-es/isArray";
-
-import { maybe, findValueInEnum } from "@saleor/misc";
+import { UseSearchResult } from "@saleor/hooks/makeSearch";
+import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   ProductFilterKeys,
   ProductListFilterOpts,
   ProductStatus
 } from "@saleor/products/components/ProductListPage";
-import { UseSearchResult } from "@saleor/hooks/makeSearch";
+import {
+  InitialProductFilterData_attributes_edges_node,
+  InitialProductFilterData_categories_edges_node,
+  InitialProductFilterData_collections_edges_node,
+  InitialProductFilterData_productTypes_edges_node
+} from "@saleor/products/types/InitialProductFilterData";
 import {
   SearchCategories,
   SearchCategoriesVariables
 } from "@saleor/searches/types/SearchCategories";
-import {
-  InitialProductFilterData_categories_edges_node,
-  InitialProductFilterData_collections_edges_node,
-  InitialProductFilterData_productTypes_edges_node,
-  InitialProductFilterData_attributes_edges_node
-} from "@saleor/products/types/InitialProductFilterData";
 import {
   SearchCollections,
   SearchCollectionsVariables
@@ -25,6 +23,8 @@ import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
+import isArray from "lodash-es/isArray";
+
 import { IFilterElement } from "../../../components/Filter";
 import {
   ProductFilterInput,
@@ -33,17 +33,18 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
+  dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getSingleEnumValueQueryParam,
-  dedupeFilter,
-  getMultipleValueQueryParam
+  getMultipleValueQueryParam,
+  getSingleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
+  ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
-  ProductListUrlQueryParams,
-  ProductListUrlFiltersWithMultipleValues
+  ProductListUrlFiltersWithMultipleValues,
+  ProductListUrlQueryParams
 } from "../../urls";
 
 export const PRODUCT_FILTERS_KEY = "productFilters";
@@ -295,4 +296,8 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   ProductListUrlQueryParams,
   ProductListUrlFilters
->(ProductListUrlFiltersEnum);
+>({
+  ...ProductListUrlFiltersEnum,
+  ...ProductListUrlFiltersWithMultipleValues,
+  ...ProductListUrlFiltersAsDictWithMultipleValues
+});

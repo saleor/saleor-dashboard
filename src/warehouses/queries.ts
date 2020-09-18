@@ -1,45 +1,16 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  warehouseDetailsFragment,
+  warehouseWithShippingFragment
+} from "@saleor/fragments/warehouses";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment } from "@saleor/queries";
-import { fragmentAddress } from "@saleor/orders/queries";
-import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";
 import {
   WarehouseDetails,
   WarehouseDetailsVariables
 } from "./types/WarehouseDetails";
-
-export const warehouseFragment = gql`
-  fragment WarehouseFragment on Warehouse {
-    id
-    name
-  }
-`;
-export const warehouseWithShippingFragment = gql`
-  ${warehouseFragment}
-  fragment WarehouseWithShippingFragment on Warehouse {
-    ...WarehouseFragment
-    shippingZones(first: 100) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
-export const warehouseDetailsFragment = gql`
-  ${fragmentAddress}
-  ${warehouseWithShippingFragment}
-  fragment WarehouseDetailsFragment on Warehouse {
-    ...WarehouseWithShippingFragment
-    address {
-      ...AddressFragment
-    }
-  }
-`;
+import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";
 
 const warehouseList = gql`
   ${warehouseWithShippingFragment}

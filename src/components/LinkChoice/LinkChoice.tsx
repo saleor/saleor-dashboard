@@ -1,17 +1,17 @@
-import React from "react";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import { FormChange } from "@saleor/hooks/useForm";
+import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import classNames from "classnames";
 import { codes } from "keycode";
+import React from "react";
 
-import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { FormChange } from "@saleor/hooks/useForm";
-import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import Link from "../Link";
+import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 
 const useStyles = makeStyles(
   theme => ({
@@ -145,7 +145,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
                 selected={choice.value === value}
                 key={choice.value}
                 onClick={() => handleChange(choice.value)}
-                data-tc="select-option"
+                data-test="select-option"
               >
                 {choice.label}
               </MenuItem>

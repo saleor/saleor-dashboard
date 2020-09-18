@@ -1,26 +1,20 @@
+import { warehouseErrorFragment } from "@saleor/fragments/errors";
+import { warehouseDetailsFragment } from "@saleor/fragments/warehouses";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import makeMutation from "@saleor/hooks/makeMutation";
 import {
   WarehouseCreate,
   WarehouseCreateVariables
 } from "./types/WarehouseCreate";
 import {
-  WarehouseUpdate,
-  WarehouseUpdateVariables
-} from "./types/WarehouseUpdate";
-import {
   WarehouseDelete,
   WarehouseDeleteVariables
 } from "./types/WarehouseDelete";
-import { warehouseDetailsFragment } from "./queries";
-
-export const warehouseErrorFragment = gql`
-  fragment WarehouseErrorFragment on WarehouseError {
-    code
-    field
-  }
-`;
+import {
+  WarehouseUpdate,
+  WarehouseUpdateVariables
+} from "./types/WarehouseUpdate";
 
 const deleteWarehouse = gql`
   ${warehouseErrorFragment}

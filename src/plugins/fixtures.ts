@@ -1,4 +1,5 @@
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+
 import { Plugin_plugin } from "./types/Plugin";
 import { Plugins_plugins_edges_node } from "./types/Plugins";
 

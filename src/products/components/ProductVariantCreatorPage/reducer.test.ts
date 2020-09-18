@@ -6,8 +6,8 @@ import {
   warehouses
 } from "./fixtures";
 import reducer, {
-  VariantField,
-  ProductVariantCreateReducerActionType
+  ProductVariantCreateReducerActionType,
+  VariantField
 } from "./reducer";
 
 function execActions<TState, TAction>(
@@ -250,9 +250,9 @@ describe("Reducer is able to", () => {
       }
     ]);
 
-    expect(state.variants[variantIndex].priceOverride).toBe(value);
-    expect(state.variants[variantIndex - 1].priceOverride).toBe(
-      fourthStep.variants[variantIndex - 1].priceOverride
+    expect(state.variants[variantIndex].price).toBe(value);
+    expect(state.variants[variantIndex - 1].price).toBe(
+      fourthStep.variants[variantIndex - 1].price
     );
     expect(state).toMatchSnapshot();
   });

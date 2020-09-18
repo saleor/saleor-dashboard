@@ -1,7 +1,11 @@
+import {
+  customerAddressesFragment,
+  customerDetailsFragment,
+  customerFragment
+} from "@saleor/fragments/customers";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
-import { fragmentAddress } from "../orders/queries";
 import { TypedQuery } from "../queries";
 import {
   CustomerAddresses,
@@ -13,50 +17,6 @@ import {
   CustomerDetailsVariables
 } from "./types/CustomerDetails";
 import { ListCustomers, ListCustomersVariables } from "./types/ListCustomers";
-
-export const customerFragment = gql`
-  fragment CustomerFragment on User {
-    id
-    email
-    firstName
-    lastName
-  }
-`;
-
-export const customerDetailsFragment = gql`
-  ${customerFragment}
-  ${fragmentAddress}
-  fragment CustomerDetailsFragment on User {
-    ...CustomerFragment
-    dateJoined
-    lastLogin
-    defaultShippingAddress {
-      ...AddressFragment
-    }
-    defaultBillingAddress {
-      ...AddressFragment
-    }
-    note
-    isActive
-  }
-`;
-
-export const customerAddressesFragment = gql`
-  ${customerFragment}
-  ${fragmentAddress}
-  fragment CustomerAddressesFragment on User {
-    ...CustomerFragment
-    addresses {
-      ...AddressFragment
-    }
-    defaultBillingAddress {
-      id
-    }
-    defaultShippingAddress {
-      id
-    }
-  }
-`;
 
 const customerList = gql`
   ${customerFragment}

@@ -1,8 +1,8 @@
-import { IntlShape, defineMessages } from "react-intl";
-
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
-import { DiscountErrorCode } from "@saleor/types/globalTypes";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { commonMessages } from "@saleor/intl";
+import { DiscountErrorCode } from "@saleor/types/globalTypes";
+import { defineMessages, IntlShape } from "react-intl";
+
 import commonErrorMessages from "./common";
 
 const messages = defineMessages({

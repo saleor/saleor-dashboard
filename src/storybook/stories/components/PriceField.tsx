@@ -1,7 +1,7 @@
+import PriceField from "@saleor/components/PriceField";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import PriceField from "@saleor/components/PriceField";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

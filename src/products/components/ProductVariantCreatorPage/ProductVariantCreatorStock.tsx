@@ -1,23 +1,23 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import CardSpacer from "@saleor/components/CardSpacer";
+import CardTitle from "@saleor/components/CardTitle";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import CardTitle from "@saleor/components/CardTitle";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { isSelected } from "@saleor/utils/lists";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode

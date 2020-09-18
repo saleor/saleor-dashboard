@@ -7,19 +7,18 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { ListActions, ListProps } from "@saleor/types";
-import { ShippingZoneFragment } from "../../types/ShippingZoneFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
   shippingZones: ShippingZoneFragment[];

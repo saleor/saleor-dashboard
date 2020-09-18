@@ -3,10 +3,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import classNames from "classnames";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import Typography from "@material-ui/core/Typography";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -24,14 +21,20 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
-import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
+import {
+  ProductList_products_edges_node,
+  ProductList_products_edges_node_pricing_priceRangeUndiscounted
+} from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
 import { getArrowDirection } from "@saleor/utils/sort";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -40,7 +43,7 @@ const useStyles = makeStyles(
         width: "auto"
       },
       colPrice: {
-        width: 200
+        width: 300
       },
       colPublished: {
         width: 200
@@ -64,6 +67,9 @@ const useStyles = makeStyles(
     colNameFixed: {},
     colNameHeader: {
       marginLeft: AVATAR_MARGIN
+    },
+    colNameWrapper: {
+      display: "block"
     },
     colPrice: {
       textAlign: "right"
@@ -98,7 +104,7 @@ interface ProductListProps
     ListActions,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
-  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
+  gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
 }
 
@@ -130,6 +136,51 @@ export const ProductList: React.FC<ProductListProps> = props => {
     isAttributeColumnValue
   );
   const numberOfColumns = 2 + settings.columns.length;
+
+  const getProductPrice = (
+    priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
+  ) => {
+    if (!priceRangeUndiscounted) {
+      return null;
+    }
+
+    const { start, stop } = priceRangeUndiscounted;
+    const {
+      gross: { amount: startAmount }
+    } = start;
+    const {
+      gross: { amount: stopAmount }
+    } = stop;
+
+    if (startAmount === stopAmount) {
+      return (
+        <Money
+          money={{
+            amount: startAmount,
+            currency: start.gross.currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: startAmount,
+              currency: start.gross.currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: stopAmount,
+              currency: stop.gross.currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -281,8 +332,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   key={product ? product.id : "skeleton"}
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
-                  data-tc="id"
-                  data-tc-id={maybe(() => product.id)}
+                  data-test="id"
+                  data-test-id={maybe(() => product.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -295,9 +346,30 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
-                    data-tc="name"
+                    data-test="name"
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {product?.productType ? (
+                      <div className={classes.colNameWrapper}>
+                        <span>{product.name}</span>
+                        {product?.productType && (
+                          <Typography variant="caption">
+                            {product.productType.hasVariants ? (
+                              <FormattedMessage
+                                defaultMessage="Configurable"
+                                description="product type"
+                              />
+                            ) : (
+                              <FormattedMessage
+                                defaultMessage="Simple"
+                                description="product type"
+                              />
+                            )}
+                          </Typography>
+                        )}
+                      </div>
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <DisplayColumn
                     column="productType"
@@ -305,7 +377,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colType}
-                      data-tc="product-type"
+                      data-test="product-type"
                     >
                       {product && product.productType ? (
                         product.productType.name
@@ -320,8 +392,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-tc="isPublished"
-                      data-tc-is-published={maybe(() => product.isPublished)}
+                      data-test="isPublished"
+                      data-test-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
                       maybe(() => product.isPublished !== undefined) ? (
@@ -348,8 +420,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colAttribute}
                       key={gridAttribute}
-                      data-tc="attribute"
-                      data-tc-attribute={getAttributeIdFromColumnValue(
+                      data-test="attribute"
+                      data-test-attribute={getAttributeIdFromColumnValue(
                         gridAttribute
                       )}
                     >
@@ -373,10 +445,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {maybe(() => product.basePrice) &&
-                      maybe(() => product.basePrice.amount) !== undefined &&
-                      maybe(() => product.basePrice.currency) !== undefined ? (
-                        <Money money={product.basePrice} />
+                      {product?.pricing?.priceRangeUndiscounted ? (
+                        getProductPrice(
+                          product?.pricing?.priceRangeUndiscounted
+                        )
                       ) : (
                         <Skeleton />
                       )}

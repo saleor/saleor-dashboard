@@ -1,11 +1,11 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
+import { getArrayQueryParam } from "@saleor/utils/urls";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
-import { getArrayQueryParam } from "@saleor/utils/urls";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
@@ -17,9 +17,9 @@ import {
   productPath,
   ProductUrlQueryParams,
   productVariantAddPath,
+  productVariantCreatorPath,
   productVariantEditPath,
-  ProductVariantEditUrlQueryParams,
-  productVariantCreatorPath
+  ProductVariantEditUrlQueryParams
 } from "./urls";
 import ProductCreate from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
@@ -52,7 +52,10 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
   return (
     <ProductUpdateComponent
       id={decodeURIComponent(match.params.id)}
-      params={params}
+      params={{
+        ...params,
+        ids: getArrayQueryParam(qs.ids)
+      }}
     />
   );
 };

@@ -9,10 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { filter } from "fuzzaldrin";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -24,6 +20,9 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
+import { filter } from "fuzzaldrin";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface FormData {
   allCountries: boolean;
@@ -58,9 +57,7 @@ const useStyles = makeStyles(
   }),
   { name: "DiscountCountrySelectDialog" }
 );
-const DiscountCountrySelectDialog: React.FC<
-  DiscountCountrySelectDialogProps
-> = props => {
+const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
   const {
     confirmButtonState,
     onClose,

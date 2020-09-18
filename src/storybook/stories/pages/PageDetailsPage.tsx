@@ -1,7 +1,7 @@
+import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { PageErrorCode } from "@saleor/types/globalTypes";
 import PageDetailsPage, {
   FormData,
   PageDetailsPageProps

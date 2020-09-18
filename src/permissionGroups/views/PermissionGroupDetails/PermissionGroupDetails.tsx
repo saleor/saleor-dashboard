@@ -1,37 +1,37 @@
-import React, { useState } from "react";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useShop from "@saleor/hooks/useShop";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { useIntl } from "react-intl";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Button } from "@material-ui/core";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import useBulkActions from "@saleor/hooks/useBulkActions";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
   permissionsDiff,
   usersDiff
 } from "@saleor/permissionGroups/utils";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useStaffMemberSearch from "@saleor/searches/useStaffMemberSearch";
-import useUser from "@saleor/hooks/useUser";
-import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
-import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
-import AssignMembersDialog from "../../components/AssignMembersDialog";
-import UnassignMembersDialog from "../../components/UnassignMembersDialog";
-import { usePermissionGroupDetailsQuery } from "../../queries";
-import { usePermissionGroupUpdate } from "../../mutations";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
+import AssignMembersDialog from "../../components/AssignMembersDialog";
+import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
+import UnassignMembersDialog from "../../components/UnassignMembersDialog";
+import { usePermissionGroupUpdate } from "../../mutations";
+import { usePermissionGroupDetailsQuery } from "../../queries";
+import { PermissionGroupUpdate } from "../../types/PermissionGroupUpdate";
 import {
   permissionGroupDetailsUrl,
-  PermissionGroupDetailsUrlQueryParams,
   PermissionGroupDetailsUrlDialog,
+  PermissionGroupDetailsUrlQueryParams,
   permissionGroupListUrl
 } from "../../urls";
-import { PermissionGroupUpdate } from "../../types/PermissionGroupUpdate";
 
 interface PermissionGroupDetailsProps {
   id: string;
@@ -66,6 +66,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
     if (data.permissionGroupUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();

@@ -1,24 +1,28 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import slugify from "slugify";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import {
+  AttributeDetailsFragment,
+  AttributeDetailsFragment_values
+} from "@saleor/fragments/types/AttributeDetailsFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import {
-  AttributeDetailsFragment,
-  AttributeDetailsFragment_values
-} from "../../types/AttributeDetailsFragment";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import React from "react";
+import { useIntl } from "react-intl";
+import slugify from "slugify";
+
 import AttributeDetails from "../AttributeDetails";
 import AttributeProperties from "../AttributeProperties";
 import AttributeValues from "../AttributeValues";
@@ -38,7 +42,7 @@ export interface AttributePageProps {
   onValueUpdate: (id: string) => void;
 }
 
-export interface AttributePageFormData {
+export interface AttributePageFormData extends MetadataFormData {
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
@@ -65,6 +69,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onValueUpdate
 }) => {
   const intl = useIntl();
+  const {
+    isMetadataModified,
+    isPrivateMetadataModified,
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   const initialForm: AttributePageFormData =
     attribute === null
       ? {
@@ -72,7 +82,9 @@ const AttributePage: React.FC<AttributePageProps> = ({
           filterableInDashboard: true,
           filterableInStorefront: true,
           inputType: AttributeInputTypeEnum.DROPDOWN,
+          metadata: [],
           name: "",
+          privateMetadata: [],
           slug: "",
           storefrontSearchPosition: "",
           valueRequired: true,
@@ -92,7 +104,11 @@ const AttributePage: React.FC<AttributePageProps> = ({
             () => attribute.inputType,
             AttributeInputTypeEnum.DROPDOWN
           ),
+          metadata: attribute?.metadata?.map(mapMetadataItemToInput),
           name: maybe(() => attribute.name, ""),
+          privateMetadata: attribute?.privateMetadata?.map(
+            mapMetadataItemToInput
+          ),
           slug: maybe(() => attribute.slug, ""),
           storefrontSearchPosition: maybe(
             () => attribute.storefrontSearchPosition.toString(),
@@ -102,66 +118,82 @@ const AttributePage: React.FC<AttributePageProps> = ({
           visibleInStorefront: maybe(() => attribute.visibleInStorefront, true)
         };
 
-  const handleSubmit = (data: AttributePageFormData) =>
+  const handleSubmit = (data: AttributePageFormData) => {
+    const metadata =
+      !attribute || isMetadataModified ? data.metadata : undefined;
+    const privateMetadata =
+      !attribute || isPrivateMetadataModified
+        ? data.privateMetadata
+        : undefined;
+
     onSubmit({
       ...data,
+      metadata,
+      privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase()
     });
+  };
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.attributes)}
-          </AppHeader>
-          <PageHeader
-            title={
-              attribute === null
-                ? intl.formatMessage({
-                    defaultMessage: "Create New Attribute",
-                    description: "page title"
-                  })
-                : maybe(() => attribute.name)
-            }
-          />
-          <Grid>
-            <div>
-              <AttributeDetails
-                canChangeType={attribute === null}
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <AttributeValues
-                disabled={disabled}
-                values={values}
-                onValueAdd={onValueAdd}
-                onValueDelete={onValueDelete}
-                onValueReorder={onValueReorder}
-                onValueUpdate={onValueUpdate}
-              />
-            </div>
-            <div>
-              <AttributeProperties
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={change}
-              />
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled}
-            state={saveButtonBarState}
-            onCancel={onBack}
-            onSave={submit}
-            onDelete={attribute === null ? undefined : onDelete}
-          />
-        </Container>
-      )}
+      {({ change, data, submit }) => {
+        const changeMetadata = makeMetadataChangeHandler(change);
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.attributes)}
+            </AppHeader>
+            <PageHeader
+              title={
+                attribute === null
+                  ? intl.formatMessage({
+                      defaultMessage: "Create New Attribute",
+                      description: "page title"
+                    })
+                  : maybe(() => attribute.name)
+              }
+            />
+            <Grid>
+              <div>
+                <AttributeDetails
+                  canChangeType={attribute === null}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <AttributeValues
+                  disabled={disabled}
+                  values={values}
+                  onValueAdd={onValueAdd}
+                  onValueDelete={onValueDelete}
+                  onValueReorder={onValueReorder}
+                  onValueUpdate={onValueUpdate}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
+              </div>
+              <div>
+                <AttributeProperties
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  onChange={change}
+                />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={disabled}
+              state={saveButtonBarState}
+              onCancel={onBack}
+              onSave={submit}
+              onDelete={attribute === null ? undefined : onDelete}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };

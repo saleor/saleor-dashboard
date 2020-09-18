@@ -1,7 +1,7 @@
+import ActionDialog from "@saleor/components/ActionDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ActionDialog from "@saleor/components/ActionDialog";
 import Decorator from "../../Decorator";
 
 storiesOf("Generics / ActionDialog", module)

@@ -1,8 +1,8 @@
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import TablePagination from "@saleor/components/TablePagination";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TablePagination from "@saleor/components/TablePagination";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

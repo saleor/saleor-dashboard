@@ -1,32 +1,13 @@
+import {
+  pluginsDetailsFragment,
+  pluginsFragment
+} from "@saleor/fragments/plugins";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";
-
-export const pluginsFragment = gql`
-  fragment PluginFragment on Plugin {
-    id
-    name
-    description
-    active
-  }
-`;
-
-export const pluginsDetailsFragment = gql`
-  ${pluginsFragment}
-  fragment PluginsDetailsFragment on Plugin {
-    ...PluginFragment
-    configuration {
-      name
-      type
-      value
-      helpText
-      label
-    }
-  }
-`;
 
 const pluginsList = gql`
   ${pluginsFragment}

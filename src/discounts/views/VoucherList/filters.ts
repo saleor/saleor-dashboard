@@ -1,27 +1,28 @@
-import {
-  VoucherFilterInput,
-  DiscountStatusEnum,
-  VoucherDiscountType
-} from "@saleor/types/globalTypes";
-import { maybe, findValueInEnum, joinDateTime } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
 import {
-  VoucherListFilterOpts,
-  VoucherFilterKeys
+  VoucherFilterKeys,
+  VoucherListFilterOpts
 } from "@saleor/discounts/components/VoucherListPage";
+import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
+import {
+  DiscountStatusEnum,
+  VoucherDiscountType,
+  VoucherFilterInput
+} from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
-  getMultipleEnumValueQueryParam,
-  getMinMaxQueryParam
+  getMinMaxQueryParam,
+  getMultipleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,
-  VoucherListUrlQueryParams,
-  VoucherListUrlFiltersWithMultipleValues
+  VoucherListUrlFiltersWithMultipleValues,
+  VoucherListUrlQueryParams
 } from "../../urls";
 
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
@@ -148,4 +149,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   VoucherListUrlQueryParams,
   VoucherListUrlFilters
->(VoucherListUrlFiltersEnum);
+>({
+  ...VoucherListUrlFiltersEnum,
+  ...VoucherListUrlFiltersWithMultipleValues
+});

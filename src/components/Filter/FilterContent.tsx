@@ -1,28 +1,28 @@
+import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
 import Radio from "@material-ui/core/Radio";
-import Typography from "@material-ui/core/Typography";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import React from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-import classNames from "classnames";
-
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { buttonMessages } from "@saleor/intl";
-import { TextField } from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import Hr from "../Hr";
+import { buttonMessages } from "@saleor/intl";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import Checkbox from "../Checkbox";
-import SingleSelectField from "../SingleSelectField";
-import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import FormSpacer from "../FormSpacer";
+import Hr from "../Hr";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import { IFilter, FieldType, FilterType } from "./types";
+import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
+import SingleSelectField from "../SingleSelectField";
 import Arrow from "./Arrow";
-import { FilterReducerAction } from "./reducer";
 import FilterAutocompleteField from "./FilterAutocompleteField";
 import FilterOptionField from "./FilterOptionField";
+import { FilterReducerAction } from "./reducer";
+import { FieldType, FilterType, IFilter } from "./types";
 
 export interface FilterContentProps<T extends string = string> {
   currencySymbol: string;
@@ -101,6 +101,8 @@ function getIsFilterMultipleChoices(
   ];
 }
 
+const filterFieldTestingContext = "filter-field";
+
 const FilterContent: React.FC<FilterContentProps> = ({
   currencySymbol,
   filters,
@@ -136,10 +138,19 @@ const FilterContent: React.FC<FilterContentProps> = ({
             <FormattedMessage defaultMessage="Filters" />
           </Typography>
           <div>
-            <Button className={classes.clear} onClick={onClear}>
+            <Button
+              data-test="clear"
+              className={classes.clear}
+              onClick={onClear}
+            >
               <FormattedMessage {...buttonMessages.clear} />
             </Button>
-            <Button color="primary" variant="contained" type="submit">
+            <Button
+              data-test="submit"
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
               <FormattedMessage {...buttonMessages.done} />
             </Button>
           </div>
@@ -151,7 +162,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
             <React.Fragment key={filterField.name}>
               <div className={classes.filterFieldBar}>
                 <FormControlLabel
-                  control={<Checkbox checked={filterField.active} />}
+                  control={
+                    <Checkbox
+                      data-test="filterGroupActive"
+                      data-test-id={filterField.name}
+                      checked={filterField.active}
+                    />
+                  }
                   label={filterField.label}
                   onChange={() =>
                     onFilterPropertyChange({
@@ -170,6 +187,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 <div className={classes.filterSettings}>
                   {filterField.type === FieldType.text && (
                     <TextField
+                      data-test={filterFieldTestingContext}
+                      data-test-id={filterField.name}
                       fullWidth
                       name={filterField.name}
                       InputProps={{
@@ -196,6 +215,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   ) && (
                     <>
                       <SingleSelectField
+                        data-test="filterFieldRangeTypeChoice"
                         choices={getIsFilterMultipleChoices(intl)}
                         value={
                           filterField.multiple
@@ -228,6 +248,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         {filterField.multiple ? (
                           <>
                             <TextField
+                              data-test={filterFieldTestingContext}
+                              data-test-id={filterField.name}
+                              data-test-range-type="min"
                               fullWidth
                               name={filterField.name + "_min"}
                               InputProps={{
@@ -265,6 +288,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
                               />
                             </span>
                             <TextField
+                              data-test={filterFieldTestingContext}
+                              data-test-id={filterField.name}
+                              data-test-range-type="max"
                               fullWidth
                               name={filterField.name + "_max"}
                               InputProps={{
@@ -298,6 +324,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
                           </>
                         ) : (
                           <TextField
+                            data-test={filterFieldTestingContext}
+                            data-test-id={filterField.name}
                             fullWidth
                             name={filterField.name}
                             InputProps={{
@@ -339,6 +367,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   )}
                   {filterField.type === FieldType.options && (
                     <FilterOptionField
+                      data-test={filterFieldTestingContext}
+                      data-test-id={filterField.name}
                       filterField={filterField}
                       onFilterPropertyChange={onFilterPropertyChange}
                     />
@@ -355,6 +385,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         <FormControlLabel
                           control={
                             <Radio
+                              data-test="filterFieldBoolean"
+                              data-test-is-checked={
+                                filterField.value[0] === option.value
+                              }
                               checked={filterField.value[0] === option.value}
                               color="primary"
                             />
@@ -378,6 +412,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   {filterField.type === FieldType.autocomplete &&
                     filterField.multiple && (
                       <FilterAutocompleteField
+                        data-test={filterFieldTestingContext}
+                        data-test-id={filterField.name}
                         displayValues={autocompleteDisplayValues}
                         filterField={filterField}
                         setDisplayValues={setAutocompleteDisplayValues}

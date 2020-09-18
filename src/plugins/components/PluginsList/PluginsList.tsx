@@ -5,19 +5,19 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListProps, SortPage } from "@saleor/types";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 
 export interface PluginListProps

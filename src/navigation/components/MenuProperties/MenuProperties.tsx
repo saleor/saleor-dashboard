@@ -1,14 +1,14 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
+import CardTitle from "@saleor/components/CardTitle";
+import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
+import { commonMessages } from "@saleor/intl";
+import { getFormErrors } from "@saleor/utils/errors";
+import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import CardTitle from "@saleor/components/CardTitle";
-import { commonMessages } from "@saleor/intl";
-import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
-import { getFormErrors } from "@saleor/utils/errors";
-import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import { MenuDetailsFormData } from "../MenuDetailsPage";
 
 export interface MenuPropertiesProps {

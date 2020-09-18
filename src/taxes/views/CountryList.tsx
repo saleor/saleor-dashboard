@@ -1,9 +1,9 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { configurationMenuUrl } from "../../configuration";
 import { maybe } from "../../misc";
 import CountryListPage from "../components/CountryListPage";
@@ -21,6 +21,7 @@ export const CountryList: React.FC = () => {
   const handleUpdateTaxSettings = (data: UpdateTaxSettings) => {
     if (data.shopSettingsUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -29,9 +30,15 @@ export const CountryList: React.FC = () => {
   const handleFetchTaxes = (data: FetchTaxes) => {
     if (data.shopFetchTaxRates.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully fetched tax rates"
         })
+      });
+    } else {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
   };

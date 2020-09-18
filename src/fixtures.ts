@@ -1,4 +1,5 @@
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
+import { User_userPermissions } from "./fragments/types/User";
 import {
   FetchMoreProps,
   FilterPageProps,
@@ -9,7 +10,6 @@ import {
   TabPageProps
 } from "./types";
 import { PermissionEnum } from "./types/globalTypes";
-import { User_userPermissions } from "./auth/types/User";
 
 const pageInfo = {
   hasNextPage: true,
@@ -370,7 +370,7 @@ export const permissions: ShopInfo_shop_permissions[] = [
     name: "Manage apps."
   },
   {
-    code: PermissionEnum.MANAGE_WEBHOOKS,
+    code: PermissionEnum.MANAGE_APPS,
     name: "Manage webhooks."
   }
 ].map(perm => ({

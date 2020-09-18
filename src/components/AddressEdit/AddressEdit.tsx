@@ -1,15 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl, IntlShape } from "react-intl";
-
 import { AddressTypeInput } from "@saleor/customers/types";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
+
 import FormSpacer from "../FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType

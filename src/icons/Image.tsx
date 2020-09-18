@@ -20,7 +20,8 @@ const Image = createSvgIcon(
         <stop offset="1" stopColor="#3EE7CD" />
       </linearGradient>
     </defs>
-  </>
-, "Image")
+  </>,
+  "Image"
+);
 
 export default Image;

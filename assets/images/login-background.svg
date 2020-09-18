@@ -95,7 +95,7 @@
 <stop stop-color="#412D79"/>
 <stop offset="1" stop-color="#1988BE"/>
 </linearGradient>
-<linearGradient id="paint6_linear" x1="-nan" y1="-nan" x2="-nan" y2="-nan" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint6_linear" x1="-99999" y1="-99999" x2="-99999" y2="-99999" gradientUnits="userSpaceOnUse">
 <stop stop-color="white" stop-opacity="0"/>
 <stop offset="1" stop-color="white"/>
 </linearGradient>
@@ -115,7 +115,7 @@
 <stop stop-color="white" stop-opacity="0"/>
 <stop offset="1" stop-color="#0DB3B1"/>
 </linearGradient>
-<linearGradient id="paint11_linear" x1="-nan" y1="-nan" x2="-nan" y2="-nan" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint11_linear" x1="-99999" y1="-99999" x2="-99999" y2="-99999" gradientUnits="userSpaceOnUse">
 <stop stop-color="white" stop-opacity="0"/>
 <stop offset="1" stop-color="white"/>
 </linearGradient>

@@ -5,15 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import isUrl from "is-url";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AutocompleteSelectMenu from "@saleor/components/AutocompleteSelectMenu";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -21,10 +18,12 @@ import { buttonMessages, sectionNames } from "@saleor/intl";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
-import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import { getFieldError, getFormErrors } from "@saleor/utils/errors";
 import getMenuErrorMessage from "@saleor/utils/errors/menu";
+import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
+import isUrl from "is-url";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {

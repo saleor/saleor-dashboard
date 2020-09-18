@@ -1,21 +1,20 @@
-import classNames from "classnames";
-import { GetItemPropsOptions } from "downshift";
-import React from "react";
-import SVG from "react-inlinesvg";
-import { FormattedMessage } from "react-intl";
-
 import chevronDown from "@assets/images/ChevronDown.svg";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
 import { FetchMoreProps } from "@saleor/types";
+import classNames from "classnames";
+import { GetItemPropsOptions } from "downshift";
+import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
 import Hr from "../Hr";
 
@@ -211,7 +210,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="multiautocomplete-select-option-add"
+                data-test="multiautocomplete-select-option-add"
                 onClick={add.onClick}
               >
                 <AddIcon color="primary" className={classes.addIcon} />
@@ -226,7 +225,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="multiautocomplete-select-option"
+                data-test="multiautocomplete-select-option"
               >
                 <AddIcon className={classes.addIcon} color="primary" />
                 <FormattedMessage
@@ -250,7 +249,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: value.value
                 })}
-                data-tc="multiautocomplete-select-option"
+                data-test="multiautocomplete-select-option"
               >
                 <Checkbox
                   className={classes.checkbox}
@@ -283,7 +282,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-tc="multiautocomplete-select-option"
+                  data-test="multiautocomplete-select-option"
                 >
                   <Checkbox
                     checked={false}
@@ -310,7 +309,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
           <MenuItem
             disabled={true}
             component="div"
-            data-tc="multiautocomplete-select-no-options"
+            data-test="multiautocomplete-select-no-options"
           >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>

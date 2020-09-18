@@ -3,14 +3,14 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money, { subtractMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe, transformPaymentStatus } from "../../../misc";
 import { OrderAction, OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -159,6 +159,20 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 )}
               </td>
             </tr>
+            {order?.discount?.amount > 0 && (
+              <tr>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Discount"
+                    description="order discount"
+                  />
+                </td>
+                <td />
+                <td className={classes.textRight}>
+                  -<Money money={order.discount} />
+                </td>
+              </tr>
+            )}
             <tr className={classes.totalRow}>
               <td>
                 <FormattedMessage

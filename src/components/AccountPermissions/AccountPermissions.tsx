@@ -1,20 +1,20 @@
-import React from "react";
-import { useIntl } from "react-intl";
+import {
+  Checkbox,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Checkbox
-} from "@material-ui/core";
 import useUser from "@saleor/hooks/useUser";
 import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -98,7 +98,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       {permissionsExceeded && (
         <>
           <CardContent>
-            <Typography>
+            <Typography variant="body2">
               {intl.formatMessage({
                 defaultMessage:
                   "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
@@ -108,7 +108,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           </CardContent>
           <hr className={classes.hr} />
           <CardContent>
-            <Typography>
+            <Typography variant="body2">
               {intl.formatMessage({
                 defaultMessage: "Available permissions",
                 description: "card section description"
@@ -127,7 +127,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       {!permissionsExceeded && (
         <>
           <CardContent>
-            <Typography>{description}</Typography>
+            <Typography variant="body2">{description}</Typography>
             <ListItem
               role={undefined}
               dense
@@ -136,6 +136,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             >
               <ListItemIcon>
                 <Checkbox
+                  color="primary"
                   edge="start"
                   checked={data.hasFullAccess}
                   disabled={disabled}
@@ -170,6 +171,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                     >
                       <ListItemIcon>
                         <Checkbox
+                          color="primary"
                           edge="start"
                           checked={
                             data.permissions.filter(
@@ -204,7 +206,9 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             <>
               <hr className={classes.hr} />
               <CardContent>
-                <Typography color="error">{errorMessage}</Typography>
+                <Typography variant="body2" color="error">
+                  {errorMessage}
+                </Typography>
               </CardContent>
             </>
           )}

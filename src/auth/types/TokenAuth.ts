@@ -9,7 +9,7 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface TokenAuth_tokenCreate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
   field: string | null;
   message: string | null;
 }
@@ -37,8 +37,9 @@ export interface TokenAuth_tokenCreate_user {
 
 export interface TokenAuth_tokenCreate {
   __typename: "CreateToken";
-  token: string | null;
   errors: TokenAuth_tokenCreate_errors[];
+  csrfToken: string | null;
+  token: string | null;
   user: TokenAuth_tokenCreate_user | null;
 }
 

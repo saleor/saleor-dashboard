@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
@@ -560,7 +560,7 @@
   },
   "src_dot_back": {
     "context": "button",
-    "string": "Back"
+    "string": "عودة"
   },
   "src_dot_cancel": {
     "context": "button",
@@ -738,11 +738,11 @@
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_1815688500": {
     "context": "collection",
-    "string": "since {date}"
+    "string": "منذ {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "ستكون ظاهر من  {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_946315389": {
     "string": "أضف عنوان محرك البحث و وصفه لتسهيل العثور على هذه الفئة"
@@ -753,11 +753,11 @@
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
     "context": "collection",
-    "string": "since {date}"
+    "string": "منذ {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "ستكون ظاهر من  {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2906897537": {
     "context": "switch button",
@@ -1076,7 +1076,7 @@
   },
   "src_dot_components_dot_ErrorPage_dot_1723676032": {
     "context": "button",
-    "string": "Back to home"
+    "string": "العودة إلى الصفحة الرئيسية"
   },
   "src_dot_components_dot_ErrorPage_dot_2736139139": {
     "string": "Ooops!..."
@@ -1114,7 +1114,7 @@
   },
   "src_dot_components_dot_Filter_dot_2683154806": {
     "context": "is filter range or value",
-    "string": "equal to"
+    "string": "يساوي"
   },
   "src_dot_components_dot_Filter_dot_2779594451": {
     "context": "filter range separator",
@@ -1126,7 +1126,7 @@
   },
   "src_dot_components_dot_Filter_dot_773313536": {
     "context": "is filter range or value",
-    "string": "between"
+    "string": "ما بين"
   },
   "src_dot_components_dot_Filter_dot_996289613": {
     "string": "فلاتر"
@@ -1145,7 +1145,7 @@
   },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
-    "string": "to {money}"
+    "string": "إلى {money}"
   },
   "src_dot_components_dot_MoneyRange_dot_1316359951": {
     "context": "money",
@@ -1153,7 +1153,7 @@
   },
   "src_dot_components_dot_MoneyRange_dot_3729849657": {
     "context": "money",
-    "string": "from {money}"
+    "string": "من {money}"
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
@@ -1406,19 +1406,19 @@
   },
   "src_dot_components_dot_WeightRange_dot_264731940": {
     "context": "weight",
-    "string": "to {value} {unit}"
+    "string": "إلى  {unit} {value}"
   },
   "src_dot_components_dot_WeightRange_dot_2892071052": {
     "context": "weight",
-    "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
+    "string": "{toValue} {toUnit} - {fromValue} {fromUnit}"
   },
   "src_dot_components_dot_WeightRange_dot_4256193688": {
     "context": "weight",
-    "string": "from {value} {unit}"
+    "string": "من  {unit} {value}"
   },
   "src_dot_components_dot_Weight_dot_2781622322": {
     "context": "weight",
-    "string": "{value} {وحدات}"
+    "string": "إلى  {unit} {value}"
   },
   "src_dot_configuration": {
     "context": "configuration section name",
@@ -1674,6 +1674,10 @@
   "src_dot_delete": {
     "context": "button",
     "string": "Delete"
+  },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
   },
   "src_dot_description": {
     "string": "الوصف"
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "وحدة حفظ الأوراق المالية"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Cancel Fulfillment"
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "خصم"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Preauthorized amount"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "المجموع"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Create Product"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Add Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
@@ -2808,6 +2820,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "وحدة حفظ الأوراق المالية"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -2902,14 +2918,14 @@
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1815688500": {
     "context": "page",
-    "string": "since {date}"
+    "string": "منذ {date}"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1996767833": {
     "string": "أضف عنوان محرك البحث و وصفه لتسهيل العثور على هذه الصفحة"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_2001551496": {
     "context": "page",
-    "string": "will be visible from {date}"
+    "string": "ستكون ظاهر من  {date}"
   },
   "src_dot_pages_dot_components_dot_PageInfo_dot_1116746286": {
     "context": "page content",
@@ -3460,11 +3476,11 @@
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_1815688500": {
     "context": "product",
-    "string": "since {date}"
+    "string": "منذ {date}"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2001551496": {
     "context": "product",
-    "string": "will be visible from {date}"
+    "string": "ستكون ظاهر من  {date}"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "أضف عنوان محرك البحث و وصفه لتسهيل العثور على هذا المنتج"
@@ -3522,7 +3538,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
-    "string": "Available"
+    "string": "متوفر"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
@@ -3621,27 +3637,24 @@
     "context": "header",
     "string": "عدد"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_1815688500": {
     "context": "product",
-    "string": "since {date}"
+    "string": "منذ {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2001551496": {
     "context": "product",
-    "string": "will be visible from {date}"
+    "string": "ستكون ظاهر من  {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "أضف عنوان محرك البحث و وصفه لتسهيل العثور على هذا المنتج"
@@ -3671,7 +3684,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_168343345": {
     "context": "variant attribute",
-    "string": "Attribute"
+    "string": "ميزة"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1808330403": {
     "context": "variant attribute",
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "متغير"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4083,7 +4089,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_3239722049": {
     "context": "account status",
-    "string": "inactive"
+    "string": "غير فعال"
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_636461959": {
     "context": "service name",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Create Service Account"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",

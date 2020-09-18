@@ -2,9 +2,23 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WeightUnitsEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: ProductVariantDetails
 // ====================================================
+
+export interface ProductVariantDetails_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductVariantDetails_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
 
 export interface ProductVariantDetails_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
@@ -47,7 +61,7 @@ export interface ProductVariantDetails_productVariant_images {
   url: string;
 }
 
-export interface ProductVariantDetails_productVariant_priceOverride {
+export interface ProductVariantDetails_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -105,18 +119,20 @@ export interface ProductVariantDetails_productVariant_stocks {
 
 export interface ProductVariantDetails_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
 export interface ProductVariantDetails_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (ProductVariantDetails_productVariant_metadata | null)[];
+  privateMetadata: (ProductVariantDetails_productVariant_privateMetadata | null)[];
   attributes: ProductVariantDetails_productVariant_attributes[];
   costPrice: ProductVariantDetails_productVariant_costPrice | null;
   images: (ProductVariantDetails_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: ProductVariantDetails_productVariant_priceOverride | null;
+  price: ProductVariantDetails_productVariant_price | null;
   product: ProductVariantDetails_productVariant_product;
   sku: string;
   stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;

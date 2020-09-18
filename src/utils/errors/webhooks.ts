@@ -1,8 +1,8 @@
+import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
+import { commonMessages } from "@saleor/intl";
+import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { IntlShape } from "react-intl";
 
-import { WebhookErrorCode } from "@saleor/types/globalTypes";
-import { commonMessages } from "@saleor/intl";
-import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 import commonErrorMessages from "./common";
 
 function getWebhookErrorMessage(

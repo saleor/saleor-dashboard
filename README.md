@@ -1,6 +1,6 @@
 # Saleor Dashboard
 
-![1 copy 2x](https://user-images.githubusercontent.com/5421321/47799917-8afd7a00-dd2b-11e8-88c7-63588e25bcea.png)
+![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)
 
 A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/mirumee/saleor/).
 
@@ -87,3 +87,5 @@ To build the application bundle run:
 ```
 $ npm run build
 ```
+
+#### Crafted with ❤️ by [Mirumee Software](https://mirumee.com)

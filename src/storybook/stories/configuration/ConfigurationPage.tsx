@@ -1,12 +1,11 @@
+import { createConfigurationMenu } from "@saleor/configuration";
+import ConfigurationPage from "@saleor/configuration/ConfigurationPage";
+import { User } from "@saleor/fragments/types/User";
+import { staffMember } from "@saleor/staff/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { User } from "@saleor/auth/types/User";
-import { createConfigurationMenu } from "@saleor/configuration";
-import ConfigurationPage from "@saleor/configuration/ConfigurationPage";
-import { staffMember } from "@saleor/staff/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
 
 const user = {
   __typename: staffMember.__typename,

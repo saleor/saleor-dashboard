@@ -4,10 +4,48 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Add sku column to fulfillment cards - #538 by @dominik-zeglen
+- Migrate product base price to variant prices - #555 by @orzechdev
+- Migrate old notifications to the new ones - #587 by @AlicjaSzu
+- Add background task manager - #574 by @dominik-zeglen
+- Handle task failure and fix task duplication - #588 by @dominik-zeglen
+- Move fragments to separate directory to avoid circular imports - #592 by @dominik-zeglen
+- Add order invoices management - #570 by @orzechdev
+- Add Cypress e2e runner - #584 by @krzysztofwolski
+- create Apps - #599 by @AlicjaSzu
+- Refactor authorization - #624 by @dominik-zeglen
+- Fix minor bugs - #628 by @dominik-zeglen
+- Add navigator button - #635 by @dominik-zeglen
+- Update to newest schema - #638 by @dominik-zeglen
+- Fix missing save button - #636 by @dominik-zeglen
+- Fix user avatars - #639 by @dominik-zeglen
+- Reset modal state after closing - #644 by @dominik-zeglen
+- Fix incorrect messages - #643 by @dominik-zeglen
+- Do not use devserver to run cypress tests - #650 by @dominik-zeglen
+- Fix updating product that has no variants - #649 by @dominik-zeglen
+- Update checkbox design - #651 by @dominik-zeglen
+- Add warehouse choice - #646 by @dominik-zeglen
+- Fix user management modal actions - #637 by @eaglesemanation
+- Fix navigator button rendering on safari browser - #656 by @dominik-zeglen
+- Use hooks instead of containers with render props in product mutations - #667 by @dominik-zeglen
+- Add apps and permission groups to navigator - #678 by @dominik-zeglen
+- Add metadata - #670 by @dominik-zeglen
+- Update order history information - #680 by @dominik-zeglen
+- Add metadata editor to creator views - #684 by @dominik-zeglen
+- Update product visibility card component - #679 by @AlicjaSzu
+- Update savebar design - #690 by @dominik-zeglen
+- Add metadata to orders - #688 by @dominik-zeglen
+- Add lazyload to locales - #692 by @eaglesemanation
+- Fix not closed address update modal with two confirmations - #699 by @orzechdev
+- Update schema with PositiveDecimal type - #695 by @AlicjaSzu
+- Restyle side menu - #697 by @dominik-zeglen
+- Add error info when fetching taxes - #701 by @dominik-zeglen
+
 ## 2.10.1
 
 - Add weight field and fix warehouse country selection - #597 by @dominik-zeglen
 - Fix weight based rate update - #604 by @dominik-zeglen
+- Add product export - #620 by @dominik-zeglen
 
 ## 2.10.0
 
@@ -58,6 +96,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
+- Fix updating order details on address change #711 - by @orzechdev
 
 ## 2.0.0
 

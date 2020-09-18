@@ -1,18 +1,18 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
   categoryListPath,
   CategoryListUrlQueryParams,
+  CategoryListUrlSortField,
   categoryPath,
-  CategoryUrlQueryParams,
-  CategoryListUrlSortField
+  CategoryUrlQueryParams
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView, { getActiveTab } from "./views/CategoryDetails";

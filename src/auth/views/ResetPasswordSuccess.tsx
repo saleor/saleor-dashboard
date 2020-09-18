@@ -1,6 +1,6 @@
+import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
-import useNavigator from "@saleor/hooks/useNavigator";
 import ResetPasswordSuccessPage from "../components/ResetPasswordSuccessPage";
 
 const ResetPasswordSuccessView: React.FC = () => {

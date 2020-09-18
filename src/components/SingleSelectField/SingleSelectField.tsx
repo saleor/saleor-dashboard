@@ -1,5 +1,6 @@
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { InputProps } from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -8,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { InputProps } from "@material-ui/core/Input";
 
 const useStyles = makeStyles(
   theme => ({
@@ -99,12 +99,21 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
       >
         {choices.length > 0 ? (
           choices.map(choice => (
-            <MenuItem value={choice.value} key={choice.value}>
+            <MenuItem
+              data-test="selectFieldOption"
+              data-test-id={choice.value}
+              value={choice.value}
+              key={choice.value}
+            >
               {choice.label}
             </MenuItem>
           ))
         ) : (
-          <MenuItem disabled={true}>
+          <MenuItem
+            data-test="selectFieldOption"
+            data-test-disabled
+            disabled={true}
+          >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>
         )}

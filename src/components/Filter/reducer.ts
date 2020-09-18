@@ -1,4 +1,5 @@
 import { update } from "@saleor/utils/lists";
+
 import { IFilter, IFilterElementMutableData } from "./types";
 
 export type FilterReducerActionType =

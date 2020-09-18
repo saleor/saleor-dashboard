@@ -1,10 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
@@ -27,9 +27,7 @@ interface OrderDraftDetailsSummaryProps {
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary: React.FC<
-  OrderDraftDetailsSummaryProps
-> = props => {
+const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
   const { order, onShippingMethodEdit } = props;
 
   const classes = useStyles(props);

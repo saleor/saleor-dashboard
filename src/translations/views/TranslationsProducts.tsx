@@ -1,11 +1,11 @@
-import { stringify as stringifyQs } from "qs";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { stringify as stringifyQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../misc";
 import { LanguageCodeEnum, TranslationInput } from "../../types/globalTypes";
 import TranslationsProductsPage, {
@@ -50,6 +50,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   const onUpdate = (data: UpdateProductTranslations) => {
     if (data.productTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

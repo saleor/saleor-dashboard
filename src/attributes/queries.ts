@@ -1,40 +1,16 @@
+import {
+  attributeDetailsFragment,
+  attributeFragment
+} from "@saleor/fragments/attributes";
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   AttributeDetails,
   AttributeDetailsVariables
 } from "./types/AttributeDetails";
 import { AttributeList, AttributeListVariables } from "./types/AttributeList";
-
-export const attributeFragment = gql`
-  fragment AttributeFragment on Attribute {
-    id
-    name
-    slug
-    visibleInStorefront
-    filterableInDashboard
-    filterableInStorefront
-  }
-`;
-
-export const attributeDetailsFragment = gql`
-  ${attributeFragment}
-  fragment AttributeDetailsFragment on Attribute {
-    ...AttributeFragment
-    availableInGrid
-    inputType
-    storefrontSearchPosition
-    valueRequired
-    values {
-      id
-      name
-      slug
-      type
-    }
-  }
-`;
 
 const attributeDetails = gql`
   ${attributeDetailsFragment}
@@ -44,7 +20,7 @@ const attributeDetails = gql`
     }
   }
 `;
-export const AttributeDetailsQuery = TypedQuery<
+export const useAttributeDetailsQuery = makeQuery<
   AttributeDetails,
   AttributeDetailsVariables
 >(attributeDetails);

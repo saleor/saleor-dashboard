@@ -1,13 +1,13 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { StaffListUrlFilters } from "@saleor/staff/urls";
 import { createFilterStructure } from "@saleor/staff/components/StaffListPage";
+import { StaffListUrlFilters } from "@saleor/staff/urls";
+import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { StaffMemberStatus } from "@saleor/types/globalTypes";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

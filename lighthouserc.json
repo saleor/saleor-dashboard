@@ -1,0 +1,9 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["http://localhost:3000/"],
+      "numberOfRuns": 5,
+      "staticDistDir": "./build/dashboard"
+    }
+  }
+}

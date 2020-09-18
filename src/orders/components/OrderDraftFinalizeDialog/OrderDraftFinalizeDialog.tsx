@@ -1,13 +1,12 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 export enum OrderDraftFinalizeWarning {
   NO_SHIPPING,
@@ -110,8 +109,8 @@ const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
         {errors.length > 0 && (
           <>
             <FormSpacer />
-            {errors.map(err => (
-              <DialogContentText color="error">
+            {errors.map((err, index) => (
+              <DialogContentText color="error" key={index}>
                 {getOrderErrorMessage(err, intl)}
               </DialogContentText>
             ))}

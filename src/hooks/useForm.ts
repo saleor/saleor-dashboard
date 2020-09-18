@@ -1,7 +1,7 @@
+import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash-es/isEqual";
 import { useState } from "react";
 
-import { toggle } from "@saleor/utils/lists";
 import useStateFromProps from "./useStateFromProps";
 
 export interface ChangeEvent<TData = any> {

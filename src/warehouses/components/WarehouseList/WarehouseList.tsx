@@ -1,24 +1,23 @@
+import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
-import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import IconButton from "@material-ui/core/IconButton";
+import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { WarehouseWithShippingFragment } from "@saleor/warehouses/types/WarehouseWithShippingFragment";
+import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -84,7 +83,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable data-test="warehouseList">
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -131,13 +130,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-tc="id"
-              data-tc-id={maybe(() => warehouse.id)}
+              data-test="warehouseEntry"
+              data-test-id={warehouse?.name.toLowerCase().replace(" ", "")}
             >
-              <TableCell className={classes.colName} data-tc="name">
+              <TableCell className={classes.colName} data-test="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
-              <TableCell className={classes.colZones} data-tc="zones">
+              <TableCell className={classes.colZones} data-test="zones">
                 {maybe<React.ReactNode>(
                   () =>
                     warehouse.shippingZones.edges
@@ -148,7 +147,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton color="primary">
+                  <IconButton color="primary" data-test="editButton">
                     <EditIcon />
                   </IconButton>
                   <IconButton
@@ -162,7 +161,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             </TableRow>
           ),
           () => (
-            <TableRow>
+            <TableRow data-test="emptyListMessage">
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No warehouses found" />
               </TableCell>

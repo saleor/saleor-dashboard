@@ -1,20 +1,20 @@
+import chevronDown from "@assets/images/ChevronDown.svg";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
-import Add from "@material-ui/icons/Add";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Add from "@material-ui/icons/Add";
+import useElementScroll, {
+  isScrolledToBottom
+} from "@saleor/hooks/useElementScroll";
+import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
-import chevronDown from "@assets/images/ChevronDown.svg";
-import useElementScroll, {
-  isScrolledToBottom
-} from "@saleor/hooks/useElementScroll";
-import { FetchMoreProps } from "@saleor/types";
 import Hr from "../Hr";
 
 const menuItemHeight = 46;
@@ -175,7 +175,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: ""
                 })}
-                data-tc="singleautocomplete-select-option"
+                data-test="singleautocomplete-select-option"
               >
                 <Typography color="textSecondary">
                   <FormattedMessage defaultMessage="None" />
@@ -189,7 +189,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="singleautocomplete-select-option-add"
+                data-test="singleautocomplete-select-option-add"
                 onClick={add.onClick}
               >
                 <Add color="primary" className={classes.add} />
@@ -205,7 +205,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="singleautocomplete-select-option"
+                data-test="singleautocomplete-select-option"
               >
                 <FormattedMessage
                   defaultMessage="Add new value: {value}"
@@ -237,7 +237,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-tc="singleautocomplete-select-option"
+                  data-test="singleautocomplete-select-option"
                 >
                   {suggestion.label}
                 </MenuItem>
@@ -256,7 +256,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
           <MenuItem
             disabled={true}
             component="div"
-            data-tc="singleautocomplete-select-no-options"
+            data-test="singleautocomplete-select-no-options"
           >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>

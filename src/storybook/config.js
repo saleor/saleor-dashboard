@@ -6,7 +6,7 @@ const req = requireContext("../", true, /.stories.tsx$/);
 
 function loadStories() {
   // Story autodiscovery
-  req.keys().forEach((filename) => req(filename));
+  req.keys().forEach(filename => req(filename));
 
   // Components
   require("./stories/components/ActionDialog");
@@ -134,6 +134,7 @@ function loadStories() {
   require("./stories/orders/OrderPaymentVoidDialog");
   require("./stories/orders/OrderProductAddDialog");
   require("./stories/orders/OrderShippingMethodEditDialog");
+  require("./stories/orders/OrderInvoiceList");
 
   // Product types
   require("./stories/productTypes/ProductTypeAttributeUnassignDialog");

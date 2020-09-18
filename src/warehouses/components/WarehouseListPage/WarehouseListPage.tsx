@@ -1,21 +1,21 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
 import {
   PageListProps,
   SearchPageProps,
-  TabPageProps,
-  SortPage
+  SortPage,
+  TabPageProps
 } from "@saleor/types";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
-import AppHeader from "@saleor/components/AppHeader";
-import { WarehouseWithShippingFragment } from "@saleor/warehouses/types/WarehouseWithShippingFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import WarehouseList from "../WarehouseList";
 
 export interface WarehouseListPageProps

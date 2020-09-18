@@ -1,12 +1,12 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import Form from "@saleor/components/Form";
 import { countries } from "@saleor/fixtures";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { ChoiceProvider } from "@saleor/storybook/mock";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps
 } from "./SingleAutocompleteSelectField";

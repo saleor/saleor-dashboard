@@ -1,9 +1,9 @@
+import useNavigator from "@saleor/hooks/useNavigator";
+import useUser from "@saleor/hooks/useUser";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { RouteComponentProps } from "react-router";
 
-import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import NewPasswordPage, {
   NewPasswordPageFormData
 } from "../components/NewPasswordPage";
@@ -19,7 +19,11 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
   const handleSetPassword = async (data: SetPassword) => {
     if (data.setPassword.errors.length === 0) {
-      loginByToken(data.setPassword.token, data.setPassword.user);
+      loginByToken(
+        data.setPassword.token,
+        data.setPassword.csrfToken,
+        data.setPassword.user
+      );
       navigate("/", true);
     }
   };

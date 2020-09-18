@@ -3,20 +3,20 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 
 const useStyles = makeStyles(
@@ -150,8 +150,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 onClick={collection ? onRowClick(collection.id) : undefined}
                 key={collection ? collection.id : "skeleton"}
                 selected={isSelected}
-                data-tc="id"
-                data-tc-id={maybe(() => collection.id)}
+                data-test="id"
+                data-test-id={maybe(() => collection.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -161,7 +161,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                     onChange={() => toggle(collection.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName} data-tc="name">
+                <TableCell className={classes.colName} data-test="name">
                   {maybe<React.ReactNode>(() => collection.name, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
@@ -172,8 +172,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 </TableCell>
                 <TableCell
                   className={classes.colAvailability}
-                  data-tc="published"
-                  data-tc-published={maybe(() => collection.isPublished)}
+                  data-test="published"
+                  data-test-published={maybe(() => collection.isPublished)}
                 >
                   {maybe(
                     () => (

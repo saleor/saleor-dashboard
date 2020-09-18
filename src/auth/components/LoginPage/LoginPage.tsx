@@ -2,12 +2,12 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
+import { DEMO_MODE } from "@saleor/config";
 import { commonMessages } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
   email: string;
@@ -54,12 +54,20 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
+  let initialFormData = { email: "", password: "" };
+  if (DEMO_MODE) {
+    initialFormData = {
+      email: "admin@example.com",
+      password: "admin"
+    };
+  }
+
   return (
-    <Form initial={{ email: "", password: "" }} onSubmit={onSubmit}>
+    <Form initial={initialFormData} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           {error && (
-            <div className={classes.panel}>
+            <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
               </Typography>
@@ -74,7 +82,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-tc": "email"
+              "data-test": "email"
             }}
           />
           <FormSpacer />
@@ -89,7 +97,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             type="password"
             value={data.password}
             inputProps={{
-              "data-tc": "password"
+              "data-test": "password"
             }}
           />
           <FormSpacer />
@@ -101,7 +109,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               variant="contained"
               onClick={handleSubmit}
               type="submit"
-              data-tc="submit"
+              data-test="submit"
             >
               <FormattedMessage defaultMessage="Login" description="button" />
             </Button>

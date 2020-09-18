@@ -1,7 +1,7 @@
+import ExternalLink from "@saleor/components/ExternalLink";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ExternalLink from "@saleor/components/ExternalLink";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

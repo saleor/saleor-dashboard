@@ -1,12 +1,3 @@
-import {
-  ContentState,
-  convertFromRaw,
-  convertToRaw,
-  RawDraftContentState
-} from "draft-js";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -17,9 +8,18 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
-import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
+import {
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+  RawDraftContentState
+} from "draft-js";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
@@ -122,25 +122,26 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 data={data}
                 errors={errors}
                 disabled={disabled}
-                hiddenMessage={intl.formatMessage(
-                  {
-                    defaultMessage: "will be visible from {date}",
-                    description: "page"
-                  },
-                  {
-                    date: localizeDate(data.publicationDate)
-                  }
-                )}
+                messages={{
+                  hiddenLabel: intl.formatMessage({
+                    defaultMessage: "Hidden",
+                    description: "page label"
+                  }),
+                  hiddenSecondLabel: intl.formatMessage(
+                    {
+                      defaultMessage: "will be visible from {date}",
+                      description: "page"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate, "L")
+                    }
+                  ),
+                  visibleLabel: intl.formatMessage({
+                    defaultMessage: "Visible",
+                    description: "page label"
+                  })
+                }}
                 onChange={change}
-                visibleMessage={intl.formatMessage(
-                  {
-                    defaultMessage: "since {date}",
-                    description: "page"
-                  },
-                  {
-                    date: localizeDate(data.publicationDate)
-                  }
-                )}
               />
             </div>
           </Grid>

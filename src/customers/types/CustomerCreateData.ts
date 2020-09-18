@@ -14,7 +14,7 @@ export interface CustomerCreateData_shop_countries {
 
 export interface CustomerCreateData_shop {
   __typename: "Shop";
-  countries: (CustomerCreateData_shop_countries | null)[];
+  countries: CustomerCreateData_shop_countries[];
 }
 
 export interface CustomerCreateData {

@@ -1,8 +1,7 @@
-import { IntlShape, defineMessages } from "react-intl";
-
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "./types/ProductErrorFragment";
+import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   attributeSlugUnique: {

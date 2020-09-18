@@ -1,8 +1,8 @@
 import Tooltip from "@material-ui/core/Tooltip";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import moment from "moment-timezone";
 import React from "react";
 
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { LocaleConsumer } from "../Locale";
 import { Consumer } from "./DateContext";
 

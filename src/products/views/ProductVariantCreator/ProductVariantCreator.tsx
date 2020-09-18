@@ -1,13 +1,13 @@
+import { WindowTitle } from "@saleor/components/WindowTitle";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
+import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
+import { useCreateMultipleVariantsData } from "@saleor/products/queries";
+import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useCreateMultipleVariantsData } from "@saleor/products/queries";
-import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { productUrl } from "@saleor/products/urls";
-import useShop from "@saleor/hooks/useShop";
 import ProductVariantCreatorPage from "../../components/ProductVariantCreatorPage";
 
 interface ProductVariantCreatorProps {
@@ -31,6 +31,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     onCompleted: data => {
       if (data.productVariantBulkCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage({
             defaultMessage: "Successfully created variants",
             description: "success message"
@@ -51,7 +52,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         })}
       />
       <ProductVariantCreatorPage
-        defaultPrice={data?.product?.basePrice.amount.toString()}
+        defaultPrice={data?.product?.pricing?.priceRangeUndiscounted?.start?.gross.amount.toString()}
         errors={
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []

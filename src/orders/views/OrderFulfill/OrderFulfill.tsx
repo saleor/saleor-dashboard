@@ -1,14 +1,13 @@
-import { useIntl } from "react-intl";
-import React from "react";
-
-import { useOrderFulfillData } from "@saleor/orders/queries";
-import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import { useOrderFulfill } from "@saleor/orders/mutations";
+import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useOrderFulfill } from "@saleor/orders/mutations";
-import useNotifier from "@saleor/hooks/useNotifier";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
@@ -35,6 +34,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       if (data.orderFulfill.errors.length === 0) {
         navigate(orderUrl(orderId), true);
         notify({
+          status: "success",
           text: intl.formatMessage({
             defaultMessage: "Fulfilled Items",
             description: "order fulfilled success message"

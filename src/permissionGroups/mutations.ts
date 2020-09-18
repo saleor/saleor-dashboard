@@ -1,8 +1,8 @@
+import { permissionGroupErrorFragment } from "@saleor/fragments/errors";
+import { permissionGroupDetailsFragment } from "@saleor/fragments/permissionGroups";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import makeMutation from "@saleor/hooks/makeMutation";
-
-import { permissionGroupDetailsFragment } from "./queries";
 import {
   PermissionGroupCreate,
   PermissionGroupCreateVariables
@@ -15,13 +15,6 @@ import {
   PermissionGroupUpdate,
   PermissionGroupUpdateVariables
 } from "./types/PermissionGroupUpdate";
-
-export const permissionGroupErrorFragment = gql`
-  fragment PermissionGroupErrorFragment on PermissionGroupError {
-    code
-    field
-  }
-`;
 
 export const permissionGroupDelete = gql`
   ${permissionGroupErrorFragment}

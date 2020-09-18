@@ -1,23 +1,22 @@
-import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { FormattedMessage, useIntl } from "react-intl";
-
-import { DialogProps } from "@saleor/types";
-import { buttonMessages } from "@saleor/intl";
-import Form from "@saleor/components/Form";
+import TextField from "@material-ui/core/TextField";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { buttonMessages } from "@saleor/intl";
+import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface StaffPasswordResetDialogFormData {
   newPassword: string;

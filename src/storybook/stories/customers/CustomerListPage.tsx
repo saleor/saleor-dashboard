@@ -1,18 +1,18 @@
+import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import CustomerListPage, {
   CustomerListPageProps
 } from "../../../customers/components/CustomerListPage";
 import { customerList } from "../../../customers/fixtures";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 

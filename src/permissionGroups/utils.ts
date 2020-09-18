@@ -1,9 +1,9 @@
+import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { User } from "@saleor/fragments/types/User";
 import difference from "lodash-es/difference";
 
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { User } from "@saleor/auth/types/User";
-import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
 /**
  * Will return true if group has all permissions available in shop assigned.

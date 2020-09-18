@@ -1,6 +1,11 @@
+import { menuErrorFragment } from "@saleor/fragments/errors";
+import {
+  menuItemFragment,
+  menuItemNestedFragment
+} from "@saleor/fragments/navigation";
 import gql from "graphql-tag";
+
 import { TypedMutation } from "../mutations";
-import { menuItemFragment, menuItemNestedFragment } from "./queries";
 import {
   MenuBulkDelete,
   MenuBulkDeleteVariables
@@ -16,13 +21,6 @@ import {
   MenuItemUpdateVariables
 } from "./types/MenuItemUpdate";
 import { MenuUpdate, MenuUpdateVariables } from "./types/MenuUpdate";
-
-const menuErrorFragment = gql`
-  fragment MenuErrorFragment on MenuError {
-    code
-    field
-  }
-`;
 
 const menuCreate = gql`
   ${menuErrorFragment}

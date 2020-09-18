@@ -1,23 +1,23 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  permissionGroupListPath,
-  permissionGroupDetailsPath,
+  MembersListUrlSortField,
   permissionGroupAddPath,
-  PermissionGroupListUrlQueryParams,
-  PermissionGroupListUrlSortField,
+  permissionGroupDetailsPath,
   PermissionGroupDetailsUrlQueryParams,
-  MembersListUrlSortField
+  permissionGroupListPath,
+  PermissionGroupListUrlQueryParams,
+  PermissionGroupListUrlSortField
 } from "./urls";
-import PermissionGroupListComponent from "./views/PermissionGroupList";
-import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
 import PermissionGroupCreate from "./views/PermissionGroupCreate";
+import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
+import PermissionGroupListComponent from "./views/PermissionGroupList";
 
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
   location

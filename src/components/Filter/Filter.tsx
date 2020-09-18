@@ -9,9 +9,9 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { FilterContent } from ".";
 import { IFilter, IFilterElement } from "./types";
 import useFilter from "./useFilter";
-import { FilterContent } from ".";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol: string;

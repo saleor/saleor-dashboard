@@ -51,7 +51,7 @@ export interface SiteSettings_shop {
   __typename: "Shop";
   authorizationKeys: (SiteSettings_shop_authorizationKeys | null)[];
   companyAddress: SiteSettings_shop_companyAddress | null;
-  countries: (SiteSettings_shop_countries | null)[];
+  countries: SiteSettings_shop_countries[];
   customerSetPasswordUrl: string | null;
   defaultMailSenderAddress: string | null;
   defaultMailSenderName: string | null;

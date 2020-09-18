@@ -1,17 +1,17 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { SaleListUrlFilters } from "@saleor/discounts/urls";
 import { createFilterStructure } from "@saleor/discounts/components/SaleListPage";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import { SaleListUrlFilters } from "@saleor/discounts/urls";
 import { date } from "@saleor/fixtures";
+import {
+  DiscountStatusEnum,
+  DiscountValueTypeEnum
+} from "@saleor/types/globalTypes";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import {
-  DiscountValueTypeEnum,
-  DiscountStatusEnum
-} from "@saleor/types/globalTypes";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

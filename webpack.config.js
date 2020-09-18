@@ -22,10 +22,12 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   hash: true,
   template: "./src/index.html"
 });
-const environmentPlugin = new webpack.EnvironmentPlugin([
-  "APP_MOUNT_URI",
-  "API_URI"
-]);
+const environmentPlugin = new webpack.EnvironmentPlugin({
+  API_URI: "",
+  APP_MOUNT_URI: "/",
+  DEMO_MODE: false,
+  GTM_ID: ""
+});
 
 const dashboardBuildPath = "build/dashboard/";
 
@@ -35,8 +37,8 @@ module.exports = (env, argv) => {
   let fileLoaderPath;
   let output;
 
-  if(!process.env.API_URI) {
-    throw new Error("Environment variable API_URI not set")
+  if (!process.env.API_URI) {
+    throw new Error("Environment variable API_URI not set");
   }
 
   if (!devMode) {

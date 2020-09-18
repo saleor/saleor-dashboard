@@ -1,0 +1,73 @@
+version: 2
+jobs:
+  build-lint-benchmark:
+    docker:
+      - image: circleci/node:14.4.0-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Install system dependencies
+          command: sudo apt-get install -y libpng-dev
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Build application
+          command: npm run build
+      - run:
+          name: Install Lighthouse tools
+          command: sudo npm install -g @lhci/cli
+      - run:
+          name: Lighthouse audit
+          command: npx lhci autorun --upload.target=temporary-public-storage
+
+  cypress:
+    docker:
+      - image: cypress/base:10
+        environment:
+          TERM: xterm
+    parallelism: 1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Npm CI
+          command: npm ci
+      - run:
+          command: npx cypress verify
+      - save_cache:
+          key: cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .cache/Cypress
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Running E2E tests
+          command: npm run test:e2e:run
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+
+workflows:
+  version: 2
+  qa:
+    jobs:
+      - build-lint-benchmark:
+          context: Lighthouse

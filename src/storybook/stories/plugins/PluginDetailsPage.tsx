@@ -1,3 +1,4 @@
+import { PluginErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -7,7 +8,6 @@ import PluginsDetailsPage, {
 } from "../../../plugins/components/PluginsDetailsPage";
 import { plugin } from "../../../plugins/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: PluginsDetailsPageProps = {
   disabled: false,
@@ -29,11 +29,20 @@ storiesOf("Views / Plugins / Plugin details", module)
   .add("form errors", () => (
     <PluginsDetailsPage
       {...props}
-      errors={([
-        "active",
-        "Username or account",
-        "Password or license"
-      ] as Array<keyof FormData>).map(formError)}
+      errors={[
+        ...(["active", "Username or account", "Password or license"] as Array<
+          keyof FormData
+        >).map(field => ({
+          __typename: "PluginError" as "PluginError",
+          code: PluginErrorCode.INVALID,
+          field
+        })),
+        {
+          __typename: "PluginError" as "PluginError",
+          code: PluginErrorCode.PLUGIN_MISCONFIGURED,
+          field: null
+        }
+      ]}
     />
   ))
   .add("not configurable", () => (

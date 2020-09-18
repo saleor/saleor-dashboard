@@ -1,13 +1,21 @@
-import { GraphQLError } from "graphql";
 import { findValueInEnum } from "@saleor/misc";
+import { GraphQLError } from "graphql";
 
 export enum JWTError {
-  invalid = "JSONWebTokenError",
-  expired = "JSONWebTokenExpired"
+  invalid = "InvalidTokenError",
+  invalidSignature = "InvalidSignatureError",
+  expired = "ExpiredSignatureError"
 }
 
 export function isJwtError(error: GraphQLError): boolean {
-  return !!findValueInEnum(error.extensions.exception.code, JWTError);
+  let jwtError: boolean;
+  try {
+    jwtError = !!findValueInEnum(error.extensions.exception.code, JWTError);
+  } catch (e) {
+    jwtError = false;
+  }
+
+  return jwtError;
 }
 
 export function isTokenExpired(error: GraphQLError): boolean {

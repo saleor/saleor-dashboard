@@ -1,6 +1,4 @@
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
-
+import { appsListUrl } from "@saleor/apps/urls";
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { categoryListUrl } from "@saleor/categories/urls";
 import { collectionListUrl } from "@saleor/collections/urls";
@@ -11,17 +9,19 @@ import { sectionNames } from "@saleor/intl";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { pageListUrl } from "@saleor/pages/urls";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
 import { productListUrl } from "@saleor/products/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
-import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
-import { webhookListUrl } from "@saleor/webhooks/urls";
 import { warehouseListUrl } from "@saleor/warehouses/urls";
+import { score } from "fuzzaldrin";
+import { IntlShape } from "react-intl";
+
 import { QuickSearchActionInput } from "../../types";
 
 interface View {
@@ -34,6 +34,10 @@ function searchInViews(
   navigate: UseNavigatorResult
 ): QuickSearchActionInput[] {
   const views: View[] = [
+    {
+      label: intl.formatMessage(sectionNames.apps),
+      url: appsListUrl()
+    },
     {
       label: intl.formatMessage(sectionNames.attributes),
       url: attributeListUrl()
@@ -71,6 +75,10 @@ function searchInViews(
       url: pageListUrl()
     },
     {
+      label: intl.formatMessage(sectionNames.permissionGroups),
+      url: permissionGroupListUrl()
+    },
+    {
       label: intl.formatMessage(sectionNames.plugins),
       url: pluginListUrl()
     },
@@ -85,10 +93,6 @@ function searchInViews(
     {
       label: intl.formatMessage(sectionNames.sales),
       url: saleListUrl()
-    },
-    {
-      label: intl.formatMessage(sectionNames.serviceAccounts),
-      url: serviceListUrl()
     },
     {
       label: intl.formatMessage(sectionNames.shipping),
@@ -113,10 +117,6 @@ function searchInViews(
     {
       label: intl.formatMessage(sectionNames.vouchers),
       url: voucherListUrl()
-    },
-    {
-      label: intl.formatMessage(sectionNames.webhooks),
-      url: webhookListUrl()
     },
     {
       label: intl.formatMessage(sectionNames.warehouses),

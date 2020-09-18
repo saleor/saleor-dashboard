@@ -1,8 +1,7 @@
-import { defineMessages, IntlShape } from "react-intl";
-
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
 import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
+import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";
 

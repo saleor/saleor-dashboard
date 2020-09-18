@@ -1,15 +1,15 @@
-import React from "react";
 import { permissions } from "@saleor/fixtures";
 import PermissionGroupDetailsPage, {
   PermissionGroupDetailsPageProps
 } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
-import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import {
   emptyPermissionGroup,
   permissionGroup,
   users
 } from "@saleor/permissionGroups/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
 const props: PermissionGroupDetailsPageProps = {
   disabled: false,

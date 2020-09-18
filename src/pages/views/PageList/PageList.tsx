@@ -2,9 +2,6 @@ import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -16,9 +13,12 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import PageListPage from "../../components/PageListPage/PageListPage";
 import { TypedPageBulkPublish, TypedPageBulkRemove } from "../../mutations";
 import { usePageListQuery } from "../../queries";
@@ -77,6 +77,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     if (data.pageBulkPublish.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Published pages",
           description: "notification"
@@ -91,6 +92,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     if (data.pageBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Removed pages",
           description: "notification"

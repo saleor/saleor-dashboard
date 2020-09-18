@@ -1,6 +1,5 @@
-import { useContext } from "react";
-
 import { ShopContext } from "@saleor/components/Shop";
+import { useContext } from "react";
 
 function useShop() {
   return useContext(ShopContext);

@@ -1,35 +1,37 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
-interface ProductVariantCreatePageFormData {
+interface ProductVariantCreatePageFormData extends MetadataFormData {
   costPrice: string;
   images: string[];
-  priceOverride: string;
+  price: string;
   quantity: string;
   sku: string;
   trackInventory: boolean;
@@ -83,11 +85,16 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     data: stocks,
     remove: removeStock
   } = useFormset<null, string>([]);
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: ProductVariantCreatePageFormData = {
     costPrice: "",
     images: maybe(() => product.images.map(image => image.id)),
-    priceOverride: "",
+    metadata: [],
+    price: "",
+    privateMetadata: [],
     quantity: "0",
     sku: "",
     trackInventory: true,
@@ -108,6 +115,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           changeAttributeData(id, value);
           triggerChange();
         };
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -135,7 +143,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <CardSpacer />
                 <ProductVariantPrice
                   errors={errors}
-                  priceOverride={data.priceOverride}
+                  price={data.price}
                   currencySymbol={currencySymbol}
                   costPrice={data.costPrice}
                   loading={disabled}
@@ -176,6 +184,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     removeStock(id);
                   }}
                 />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
             </Grid>
             <SaveButtonBar

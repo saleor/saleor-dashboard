@@ -1,6 +1,7 @@
+import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
+
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { CategoryDetails_category } from "./types/CategoryDetails";
-import { CategoryFragment } from "./types/CategoryFragment";
 
 export const categories: CategoryFragment[] = [
   {
@@ -104,11 +105,19 @@ export const category: (
   },
   descriptionJson: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Coffees",
   parent: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6Mw=="
   },
+  privateMetadata: [],
   products: {
     __typename: "ProductCountableConnection",
     edges: [
@@ -117,14 +126,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjA=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 83.3,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMQ==",
           isAvailable: true,
           name: "Gardner-Schultz",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -138,14 +164,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjE=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 68.27,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMg==",
           isAvailable: true,
           name: "James, Martinez and Murray",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -159,14 +202,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjI=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 21.43,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMw==",
           isAvailable: true,
           name: "Curtis, Joyce and Turner",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -180,14 +240,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjM=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 62.76,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNA==",
           isAvailable: true,
           name: "Davis, Brown and Ray",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -201,14 +278,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjQ=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 7.13,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNQ==",
           isAvailable: true,
           name: "Gallegos Ltd",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -222,14 +316,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjU=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 48.82,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNg==",
           isAvailable: true,
           name: "Franklin Inc",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -243,14 +354,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjY=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 27.34,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNw==",
           isAvailable: true,
           name: "Williams-Taylor",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -264,14 +392,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjc=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 75.42,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyOA==",
           isAvailable: true,
           name: "Riddle, Evans and Hicks",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -285,14 +430,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjg=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 86.62,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyOQ==",
           isAvailable: true,
           name: "Hebert-Sherman",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
@@ -306,14 +468,31 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjk=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 48.66,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDozMA==",
           isAvailable: true,
           name: "Carter and Sons",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",

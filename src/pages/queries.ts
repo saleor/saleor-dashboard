@@ -1,29 +1,10 @@
+import { pageDetailsFragment, pageFragment } from "@saleor/fragments/pages";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
 import { PageList, PageListVariables } from "./types/PageList";
-
-export const pageFragment = gql`
-  fragment PageFragment on Page {
-    id
-    title
-    slug
-    isPublished
-  }
-`;
-
-export const pageDetailsFragment = gql`
-  ${pageFragment}
-  fragment PageDetailsFragment on Page {
-    ...PageFragment
-    contentJson
-    seoTitle
-    seoDescription
-    publicationDate
-  }
-`;
 
 const pageList = gql`
   ${pageFragment}
