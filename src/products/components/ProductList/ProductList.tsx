@@ -458,7 +458,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
                                   description: "product status"
                                 })
                             }
-                            status={product.isPublished ? "success" : ""}
+                            status={product.isPublished ? "success" : (
+                              (rowPrivateMetadataMap['publish.allegro.errors'] !== undefined
+                                && rowPrivateMetadataMap['publish.allegro.errors'].length > 0) ? "" : "error")}
                           />
                         </Button>
                       ) : (
