@@ -42,7 +42,7 @@ const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = pr
           </Grid>
           <Grid item xs={4}>
             {privateMetadataMap && privateMetadataMap['publish.allegro.id'] !== undefined ?
-              <Link href={"https://allegro.pl/oferta/aukcja-" + privateMetadataMap['publish.allegro.id'] +
+              <Link href={"https://allegro.pl/offer/" + privateMetadataMap['publish.allegro.id'] +
               ((!isPublished && privateMetadataMap['publish.allegro.status'] === 'moderated') ? '/restore' : '')} target="_blank">
                 Przejdź do aukcji
               </Link>
