@@ -58,39 +58,6 @@ export interface ProductVariantAttributesFragment_productType {
   variantAttributes: (ProductVariantAttributesFragment_productType_variantAttributes | null)[] | null;
 }
 
-export interface ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_start_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductVariantAttributesFragment_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductVariantAttributesFragment_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductVariantAttributesFragment_pricing_priceRangeUndiscounted | null;
-}
-
 export interface ProductVariantAttributesFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -115,6 +82,5 @@ export interface ProductVariantAttributesFragment {
   id: string;
   attributes: ProductVariantAttributesFragment_attributes[];
   productType: ProductVariantAttributesFragment_productType;
-  pricing: ProductVariantAttributesFragment_pricing | null;
   channelListing: ProductVariantAttributesFragment_channelListing[] | null;
 }

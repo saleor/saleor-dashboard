@@ -196,20 +196,23 @@ export interface Product_variants_stocks {
   warehouse: Product_variants_stocks_warehouse;
 }
 
-export interface Product_variants_pricing_price_gross {
+export interface Product_variants_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface Product_variants_channelListing_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface Product_variants_pricing_price {
-  __typename: "TaxedMoney";
-  gross: Product_variants_pricing_price_gross;
-}
-
-export interface Product_variants_pricing {
-  __typename: "VariantPricingInfo";
-  price: Product_variants_pricing_price | null;
+export interface Product_variants_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: Product_variants_channelListing_channel;
+  price: Product_variants_channelListing_price | null;
 }
 
 export interface Product_variants {
@@ -220,7 +223,7 @@ export interface Product_variants {
   margin: number | null;
   stocks: (Product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  pricing: Product_variants_pricing | null;
+  channelListing: Product_variants_channelListing[] | null;
 }
 
 export interface Product_weight {
