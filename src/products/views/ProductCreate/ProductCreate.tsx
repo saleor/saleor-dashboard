@@ -99,9 +99,10 @@ export const ProductCreateView: React.FC = () => {
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
   const toggleAllChannels = (items: ChannelData[], selected: number) => {
-    setChannels([]);
     if (selected !== items.length) {
       setChannels(items);
+    } else {
+      setChannels([]);
     }
   };
 

@@ -122,9 +122,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
   const toggleAllChannels = (items: ChannelData[], selected: number) => {
-    setChannels([]);
     if (selected !== items.length) {
       setChannels(items);
+    } else {
+      setChannels([]);
     }
   };
   useEffect(() => {

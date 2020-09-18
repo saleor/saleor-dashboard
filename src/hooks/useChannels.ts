@@ -28,9 +28,10 @@ function useChannels(channels: Channel[]) {
   };
 
   const toggleAllChannels = (items: Channel[], selected: number) => {
-    setChannels([]);
     if (selected !== items.length) {
       setChannels(items);
+    } else {
+      setChannels([]);
     }
   };
 
