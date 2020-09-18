@@ -32,6 +32,7 @@ export interface CollectionDetailsFragment {
   metadata: (CollectionDetailsFragment_metadata | null)[];
   privateMetadata: (CollectionDetailsFragment_privateMetadata | null)[];
   backgroundImage: CollectionDetailsFragment_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

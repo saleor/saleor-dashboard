@@ -195,6 +195,7 @@ export interface Product {
   metadata: (Product_metadata | null)[];
   privateMetadata: (Product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;

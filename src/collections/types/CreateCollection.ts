@@ -34,6 +34,7 @@ export interface CreateCollection_collectionCreate_collection {
   metadata: (CreateCollection_collectionCreate_collection_metadata | null)[];
   privateMetadata: (CreateCollection_collectionCreate_collection_privateMetadata | null)[];
   backgroundImage: CreateCollection_collectionCreate_collection_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

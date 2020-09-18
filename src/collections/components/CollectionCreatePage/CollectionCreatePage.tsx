@@ -28,6 +28,7 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
   backgroundImageAlt: string;
   description: RawDraftContentState;
   name: string;
+  slug: string;
   publicationDate: string;
   isPublished: boolean;
   seoDescription: string;
@@ -55,7 +56,8 @@ const initialForm: CollectionCreatePageFormData = {
   privateMetadata: [],
   publicationDate: "",
   seoDescription: "",
-  seoTitle: ""
+  seoTitle: "",
+  slug: ""
 };
 
 const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
@@ -140,6 +142,8 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                     defaultMessage:
                       "Add search engine title and description to make this collection easier to find"
                   })}
+                  slug={data.slug}
+                  slugPlaceholder={data.name}
                   title={data.seoTitle}
                   titlePlaceholder={data.name}
                   onChange={change}

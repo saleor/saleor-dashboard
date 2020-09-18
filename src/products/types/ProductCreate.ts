@@ -201,6 +201,7 @@ export interface ProductCreate_productCreate_product {
   metadata: (ProductCreate_productCreate_product_metadata | null)[];
   privateMetadata: (ProductCreate_productCreate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;

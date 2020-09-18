@@ -24,6 +24,7 @@ export const categoryDetailsFragment = gql`
       url
     }
     name
+    slug
     descriptionJson
     seoDescription
     seoTitle

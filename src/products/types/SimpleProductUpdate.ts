@@ -201,6 +201,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   metadata: (SimpleProductUpdate_productUpdate_product_metadata | null)[];
   privateMetadata: (SimpleProductUpdate_productUpdate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;

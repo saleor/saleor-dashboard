@@ -147,6 +147,7 @@ export interface CategoryDetails_category {
   privateMetadata: (CategoryDetails_category_privateMetadata | null)[];
   backgroundImage: CategoryDetails_category_backgroundImage | null;
   name: string;
+  slug: string;
   descriptionJson: any;
   seoDescription: string | null;
   seoTitle: string | null;

@@ -201,6 +201,7 @@ export interface ProductUpdate_productUpdate_product {
   metadata: (ProductUpdate_productUpdate_product_metadata | null)[];
   privateMetadata: (ProductUpdate_productUpdate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -236,6 +237,7 @@ export interface ProductUpdateVariables {
   publicationDate?: any | null;
   category?: string | null;
   chargeTaxes: boolean;
+  slug?: string | null;
   collections?: (string | null)[] | null;
   descriptionJson?: any | null;
   isPublished: boolean;

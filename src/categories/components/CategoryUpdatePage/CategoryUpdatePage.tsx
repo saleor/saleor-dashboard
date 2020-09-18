@@ -118,7 +118,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         name: category.name || "",
         privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
         seoDescription: category.seoDescription || "",
-        seoTitle: category.seoTitle || ""
+        seoTitle: category.seoTitle || "",
+        slug: category?.slug || ""
       }
     : {
         backgroundImageAlt: "",
@@ -127,7 +128,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         name: "",
         privateMetadata: undefined,
         seoDescription: "",
-        seoTitle: ""
+        seoTitle: "",
+        slug: ""
       };
 
   const handleSubmit = (data: FormData) => {
@@ -179,6 +181,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               titlePlaceholder={data.name}
               description={data.seoDescription}
               descriptionPlaceholder={data.name}
+              slug={data.slug}
+              slugPlaceholder={data.name}
               loading={!category}
               onChange={change}
               disabled={disabled}

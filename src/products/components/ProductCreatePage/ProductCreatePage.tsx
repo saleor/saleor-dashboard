@@ -59,6 +59,7 @@ interface FormData extends MetadataFormData {
   isAvailableForPurchase: boolean;
   isPublished: boolean;
   name: string;
+  slug: string;
   productType: string;
   seoDescription: string;
   seoTitle: string;
@@ -156,6 +157,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     isPublished: false,
     metadata: [],
     name: "",
+    slug: "",
     privateMetadata: [],
     productType: "",
     publicationDate: "",
@@ -309,6 +311,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       "Add search engine title and description to make this product easier to find"
                   })}
                   title={data.seoTitle}
+                  slug={data.slug}
+                  slugPlaceholder={data.name}
                   titlePlaceholder={data.name}
                   description={data.seoDescription}
                   descriptionPlaceholder={data.seoTitle}

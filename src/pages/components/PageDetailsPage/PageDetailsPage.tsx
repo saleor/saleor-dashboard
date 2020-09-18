@@ -23,7 +23,6 @@ import { useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
-import PageSlug from "../PageSlug";
 
 export interface FormData {
   content: RawDraftContentState;
@@ -31,7 +30,6 @@ export interface FormData {
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
-  seoSlug: string;
   slug: string;
   title: string;
 }
@@ -108,6 +106,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   ""
                 )}
                 onChange={change}
+                slug={data.slug}
+                slugPlaceholder={data.title}
                 title={data.seoTitle}
                 titlePlaceholder={data.title}
                 helperText={intl.formatMessage({
