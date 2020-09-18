@@ -5,8 +5,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
-  createChannelsDataFromProduct,
-  createChannelsDataWithPrice
+  createChannelsDataWithPrice,
+  createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -108,7 +108,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product?.channelListing,
     channelsData?.channels
   );
-  const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+  const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product?.channelListing
   );
   const [currentChannels, setCurrentChannels] = useStateFromProps(
@@ -139,7 +139,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         data.productChannelListingUpdate.productChannelListingErrors.length ===
         0
       ) {
-        const updatedProductChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+        const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
           data.productChannelListingUpdate.product.channelListing
         );
         setCurrentChannels(updatedProductChannelsChoices);

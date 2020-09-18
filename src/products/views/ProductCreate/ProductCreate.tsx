@@ -1,5 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
-import { ChannelData, createChannelsData } from "@saleor/channels/utils";
+import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -64,7 +64,9 @@ export const ProductCreateView: React.FC = () => {
   );
 
   const { data: channelsData } = useChannelsList({});
-  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
+  const allChannels: ChannelData[] = createSortedChannelsData(
+    channelsData?.channels
+  );
   const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
 
   const handleSuccess = (productId: string) => {
@@ -96,6 +98,12 @@ export const ProductCreateView: React.FC = () => {
     set: setChannels,
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  const toggleAllChannels = (items: ChannelData[], selected: number) => {
+    setChannels([]);
+    if (selected !== items.length) {
+      setChannels(items);
+    }
+  };
 
   const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
 
@@ -157,7 +165,9 @@ export const ProductCreateView: React.FC = () => {
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
       <ProductCreatePage

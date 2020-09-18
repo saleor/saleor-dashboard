@@ -5,19 +5,39 @@ import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
+import Hr from "@saleor/components/Hr";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
+    content: {
+      "& hr": {
+        left: -24,
+        position: "relative",
+        width: "calc(100% + 48px)"
+      }
+    },
+    contentTitle: {
+      margin: theme.spacing(1, 0)
+    },
     dialog: {
-      marginBottom: theme.spacing(2),
+      marginBottom: -30,
       marginTop: theme.spacing(2)
     },
     label: {
       fontSize: 14
     },
+    option: {
+      "&:last-child": {
+        "& hr": {
+          display: "none"
+        }
+      },
+      margin: theme.spacing(1, 0)
+    },
     scrollArea: {
+      maxHeight: 400,
       overflowY: "scroll"
     },
     text: {
@@ -71,7 +91,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
       title={title}
       disabled={disabled}
     >
-      <div>
+      <div className={classes.content}>
         {!!contentType && (
           <Typography className={classes.text} variant="caption">
             <FormattedMessage
@@ -94,33 +114,42 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
         />
         <div className={classes.dialog}>
           {!!toggleAll && (
-            <ControlledCheckbox
-              checked={selected !== 0}
-              name="allchannels"
-              label={
-                <Typography className={classes.label}>
-                  <FormattedMessage defaultMessage="Available at all channels" />
-                </Typography>
-              }
-              onChange={() => toggleAll(channels, selected)}
-            />
+            <>
+              <ControlledCheckbox
+                checked={selected !== 0}
+                name="allchannels"
+                label={
+                  <Typography className={classes.label}>
+                    <FormattedMessage defaultMessage="Available at all channels" />
+                  </Typography>
+                }
+                onChange={() => toggleAll(channels, selected)}
+              />
+              <Hr />
+            </>
           )}
-          {channels.map(option =>
-            option.name.toLowerCase().includes(query) ? (
-              <div key={option.id}>
-                <ControlledCheckbox
-                  checked={isSelected(option)}
-                  name={option.name}
-                  label={
-                    <Typography className={classes.label}>
-                      {option.name}
-                    </Typography>
-                  }
-                  onChange={() => onChange(option)}
-                />
-              </div>
-            ) : null
-          )}
+          <Typography className={classes.contentTitle}>
+            <FormattedMessage defaultMessage="Channels A to Z" />
+          </Typography>
+          <div className={classes.scrollArea}>
+            {channels.map(option =>
+              option.name.toLowerCase().includes(query) ? (
+                <div key={option.id} className={classes.option}>
+                  <ControlledCheckbox
+                    checked={isSelected(option)}
+                    name={option.name}
+                    label={
+                      <Typography className={classes.label}>
+                        {option.name}
+                      </Typography>
+                    }
+                    onChange={() => onChange(option)}
+                  />
+                  <Hr />
+                </div>
+              ) : null
+            )}
+          </div>
         </div>
       </div>
     </ActionDialog>
