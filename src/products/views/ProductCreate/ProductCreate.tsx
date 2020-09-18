@@ -19,6 +19,7 @@ import { productListUrl, productUrl } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -66,9 +67,24 @@ export const ProductCreateView: React.FC = () => {
   const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
   const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
-    {}
-  );
+  const handleSuccess = (productId: string) => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        defaultMessage: "Product created"
+      })
+    });
+    navigate(productUrl(productId));
+  };
+
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
+    onCompleted: data => {
+      const productId = data.productChannelListingUpdate.product.id;
+      if (productId) {
+        handleSuccess(productId);
+      }
+    }
+  });
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
@@ -93,30 +109,25 @@ export const ProductCreateView: React.FC = () => {
     setChannelsModalOpen(false);
   };
 
-  const handleSuccess = (productId: string) => {
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "Product created"
-      })
-    });
-    navigate(productUrl(productId));
-  };
-
   const handleBack = () => navigate(productListUrl());
 
-  const [productCreate, productCreateOpts] = useProductCreateMutation({
-    onCompleted: data => {
-      const productId = data.productCreate.product.id;
-      if (productId) {
-        handleSuccess(productId);
-      }
-    }
-  });
+  const [productCreate, productCreateOpts] = useProductCreateMutation({});
   const [
     productVariantCreate,
     productVariantCreateOpts
-  ] = useVariantCreateMutation({});
+  ] = useVariantCreateMutation({
+    onCompleted: data => {
+      const errors = data.productVariantCreate.errors;
+      if (errors.length) {
+        errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
+      }
+    }
+  });
 
   const handleSubmit = createHandler(
     productTypes,
@@ -170,7 +181,10 @@ export const ProductCreateView: React.FC = () => {
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
             ?.productChannelListingErrors
         }
-        errors={productCreateOpts.data?.productCreate.errors || []}
+        errors={[
+          ...(productCreateOpts.data?.productCreate.errors || []),
+          ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
+        ]}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
         fetchProductTypes={searchProductTypes}

@@ -51,11 +51,14 @@ function getProductErrorMessage(
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.DUPLICATED_INPUT_ITEM:
         return intl.formatMessage(messages.duplicated);
+      case ProductErrorCode.UNIQUE:
+        if (err.field === "sku") {
+          return intl.formatMessage(messages.skuUnique);
+        }
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
-
   return undefined;
 }
 

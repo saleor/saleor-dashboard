@@ -60,39 +60,6 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   hasVariants: boolean;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_start_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing_priceRangeUndiscounted | null;
-}
-
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -172,20 +139,23 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   warehouse: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks_warehouse;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing_price_gross {
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing_price {
-  __typename: "TaxedMoney";
-  gross: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing_price_gross;
-}
-
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing {
-  __typename: "VariantPricingInfo";
-  price: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing_price | null;
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_channel;
+  price: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_price | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants {
@@ -196,7 +166,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   margin: number | null;
   stocks: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  pricing: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_pricing | null;
+  channelListing: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing[] | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product {
@@ -204,7 +174,6 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   id: string;
   attributes: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes[];
   productType: ProductChannelListingUpdate_productChannelListingUpdate_product_productType;
-  pricing: ProductChannelListingUpdate_productChannelListingUpdate_product_pricing | null;
   channelListing: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListing[] | null;
   name: string;
   descriptionJson: any;

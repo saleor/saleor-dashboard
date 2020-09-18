@@ -4030,6 +4030,9 @@
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
     "string": "Price"
   },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1136436546": {
+    "string": "Product price cannot be lower than 0."
+  },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
     "context": "tabel column header",
     "string": "Selling Price"

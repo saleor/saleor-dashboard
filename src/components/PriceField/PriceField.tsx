@@ -38,6 +38,7 @@ interface PriceFieldProps {
   name?: string;
   value?: string | number;
   InputProps?: InputProps;
+  required?: boolean;
   onChange(event: any);
 }
 
@@ -51,6 +52,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     currencySymbol,
     name,
     onChange,
+    required,
     value,
     InputProps
   } = props;
@@ -78,6 +80,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       }}
       name={name}
       disabled={disabled}
+      required={required}
       onChange={onChange}
     />
   );
