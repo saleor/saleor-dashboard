@@ -31,7 +31,8 @@ import {
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
   useProductVariantReorderMutation,
-  useSimpleProductUpdateMutation
+  useSimpleProductUpdateMutation,
+  useVariantCreateMutation
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -104,6 +105,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const shop = useShop();
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [
+    productVariantCreate,
+    productVariantCreateOpts
+  ] = useVariantCreateMutation({});
 
   const { data: channelsData } = useChannelsList({});
 
@@ -272,7 +277,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
       updateChannels,
-      updateVariantChannels
+      updateVariantChannels,
+      productVariantCreate
     ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
@@ -302,6 +308,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariantsOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
+    productVariantCreateOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
@@ -318,7 +325,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     searchCollectionsOpts?.data?.search?.edges || [].map(edge => edge.node);
   const errors = [
     ...(updateProductOpts.data.productUpdate.errors || []),
-    ...(updateSimpleProductOpts.data.productUpdate.errors || [])
+    ...(updateSimpleProductOpts.data.productUpdate.errors || []),
+    ...(productVariantCreateOpts?.data?.productVariantCreate.errors || [])
   ];
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
