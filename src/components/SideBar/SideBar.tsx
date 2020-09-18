@@ -9,7 +9,7 @@ import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { IMenuItem } from "../AppLayout/menuStructure";
 import ExpandButton from "./ExpandButton";
@@ -55,6 +55,14 @@ export interface IActiveSubMenu {
   label: string | null;
 }
 
+export const getConfigureMenuItem = (intl: IntlShape): IMenuItem => ({
+  ariaLabel: "configure",
+  icon: configurationIcon,
+  label: intl.formatMessage(sectionNames.configuration),
+  testingContextId: "configure",
+  url: configurationMenuUrl
+});
+
 const SideBar: React.FC<SideBarProps> = ({
   location,
   menuItems,
@@ -65,6 +73,7 @@ const SideBar: React.FC<SideBarProps> = ({
   const classes = useStyles({});
   const [isShrunk, setShrink] = useLocalStorage("isMenuSmall", false);
   const intl = useIntl();
+  const configureMenuItem = getConfigureMenuItem(intl);
 
   return (
     <div
@@ -107,13 +116,7 @@ const SideBar: React.FC<SideBarProps> = ({
               )
             }
             isMenuShrunk={isShrunk}
-            menuItem={{
-              ariaLabel: "configure",
-              icon: configurationIcon,
-              label: intl.formatMessage(sectionNames.configuration),
-              testingContextId: "configure",
-              url: configurationMenuUrl
-            }}
+            menuItem={configureMenuItem}
             onClick={onMenuItemClick}
           />
         )}
