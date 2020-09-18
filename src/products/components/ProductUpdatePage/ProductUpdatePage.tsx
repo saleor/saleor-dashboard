@@ -296,6 +296,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           triggerChange
         );
 
+        const formDisabled =
+          !data.sku ||
+          data.channelListing?.some(
+            channel => channel.price < 0 || !channel.price
+          );
+
         return (
           <>
             <Container>
@@ -350,7 +356,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       product={product}
                       fallbackPrice={
                         product?.variants?.length
-                          ? product.variants[0].pricing.price.gross
+                          ? product.variants[0].channelListing[0]?.price
                           : undefined
                       }
                       onRowClick={onVariantShow}
@@ -472,7 +478,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
                 state={saveButtonBarState}
-                disabled={disabled || (!hasChanged && !hasChannelChanged)}
+                disabled={
+                  disabled ||
+                  formDisabled ||
+                  (!hasChanged && !hasChannelChanged)
+                }
               />
             </Container>
           </>

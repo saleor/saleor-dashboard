@@ -4650,6 +4650,17 @@
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
     "string": "Cost price"
   },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1136436546": {
+    "string": "Product price cannot be lower than 0."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
+    "context": "tabel column header",
+    "string": "Selling Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
+    "context": "info text",
+    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_products_dot_components_dot_ProductVariantSetDefault_dot_3683859003": {
     "context": "set variant as default, button",
     "string": "Set as default"

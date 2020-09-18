@@ -6,7 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
-import Money from "@saleor/components/Money";
+// import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
@@ -22,7 +22,10 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import {
+  ProductList_products_edges_node
+  // ProductList_products_edges_node_pricing_priceRangeUndiscounted
+} from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -137,50 +140,50 @@ export const ProductList: React.FC<ProductListProps> = props => {
   );
   const numberOfColumns = 2 + settings.columns.length;
 
-  const getProductPrice = product => {
-    const priceRangeUndiscounted = product?.pricing?.priceRangeUndiscounted;
+  // const getProductPrice = (
+  //   priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
+  // ) => {
+  //   if (!priceRangeUndiscounted) {
+  //     return null;
+  //   }
 
-    if (!priceRangeUndiscounted) {
-      return "-";
-    }
+  //   const { start, stop } = priceRangeUndiscounted;
+  //   const {
+  //     gross: { amount: startAmount }
+  //   } = start;
+  //   const {
+  //     gross: { amount: stopAmount }
+  //   } = stop;
 
-    const { start, stop } = priceRangeUndiscounted;
-    const {
-      gross: { amount: startAmount }
-    } = start;
-    const {
-      gross: { amount: stopAmount }
-    } = stop;
-
-    if (startAmount === stopAmount) {
-      return (
-        <Money
-          money={{
-            amount: startAmount,
-            currency: start.gross.currency
-          }}
-        />
-      );
-    } else {
-      return (
-        <>
-          <Money
-            money={{
-              amount: startAmount,
-              currency: start.gross.currency
-            }}
-          />
-          {" - "}
-          <Money
-            money={{
-              amount: stopAmount,
-              currency: stop.gross.currency
-            }}
-          />
-        </>
-      );
-    }
-  };
+  //   if (startAmount === stopAmount) {
+  //     return (
+  //       <Money
+  //         money={{
+  //           amount: startAmount,
+  //           currency: start.gross.currency
+  //         }}
+  //       />
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <Money
+  //           money={{
+  //             amount: startAmount,
+  //             currency: start.gross.currency
+  //           }}
+  //         />
+  //         {" - "}
+  //         <Money
+  //           money={{
+  //             amount: stopAmount,
+  //             currency: stop.gross.currency
+  //           }}
+  //         />
+  //       </>
+  //     );
+  //   }
+  // };
 
   return (
     <div className={classes.tableContainer}>
@@ -437,7 +440,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {loading ? <Skeleton /> : getProductPrice(product)}
+                      {/* {product?.pricing?.priceRangeUndiscounted ? (
+                        getProductPrice(
+                          product?.pricing?.priceRangeUndiscounted
+                        )
+                      ) : (
+                        <Skeleton />
+                      )} */}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>

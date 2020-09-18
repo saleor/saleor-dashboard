@@ -196,7 +196,7 @@ export function getProductUpdatePageFormData(
   currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
-    basePrice: maybe(() => product.variants[0].pricing.price.gross.amount, 0),
+    basePrice: maybe(() => product.channelListing[0].discountedPrice.amount, 0),
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
     channelListing: currentChannels,
