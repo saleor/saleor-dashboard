@@ -135,6 +135,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
+        const formDisabled =
+          !data.sku ||
+          data.channelListing.some(
+            channel => channel.price < 0 || !channel.price
+          );
+
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -260,7 +266,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onSave={submit}
               state={saveButtonBarState}
               disabled={
-                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+                disabled ||
+                !onSubmit ||
+                formDisabled ||
+                (!hasChanged && !hasChannelChanged)
               }
             />
           </Container>
