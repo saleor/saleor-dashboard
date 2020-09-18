@@ -10,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import {
   useProductDeleteMutation,
@@ -177,6 +178,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onCompleted: data => {
       const errors = data?.productSetAvailabilityForPurchase?.errors;
       if (errors?.length === 0) {
+        const updatedProduct = data?.productSetAvailabilityForPurchase?.product;
+        setProduct(product => ({
+          ...product,
+          availableForPurchase: updatedProduct.availableForPurchase,
+          isAvailableForPurchase: updatedProduct.isAvailableForPurchase
+        }));
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -195,7 +202,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleBack = () => navigate(productListUrl());
 
-  const product = data?.product;
+  const [product, setProduct] = useStateFromProps(data?.product);
 
   if (product === null) {
     return <NotFoundPage onBack={handleBack} />;
