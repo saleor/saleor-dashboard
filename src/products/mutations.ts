@@ -54,6 +54,10 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 import {
+  ProductVariantSetDefault,
+  ProductVariantSetDefaultVariables
+} from "./types/ProductVariantSetDefault";
+import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "./types/SimpleProductUpdate";
@@ -129,6 +133,26 @@ export const useProductImagesReorder = makeMutation<
   ProductImageReorder,
   ProductImageReorderVariables
 >(productImagesReorder);
+
+const productVariantSetDefault = gql`
+  ${productErrorFragment}
+  ${productFragmentDetails}
+  mutation ProductVariantSetDefault($productId: ID!, $variantId: ID!) {
+    productVariantSetDefault(productId: $productId, variantId: $variantId) {
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
+      product {
+        ...Product
+      }
+    }
+  }
+`;
+
+export const useProductVariantSetDefaultMutation = makeMutation<
+  ProductVariantSetDefault,
+  ProductVariantSetDefaultVariables
+>(productVariantSetDefault);
 
 export const productUpdateMutation = gql`
   ${productErrorFragment}

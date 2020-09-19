@@ -294,6 +294,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <ProductVariants
                       disabled={disabled}
                       variants={variants}
+                      productId={product.id}
                       fallbackPrice={
                         product?.variants?.length
                           ? product.variants[0].price

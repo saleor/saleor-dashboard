@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -7,6 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import LinkChoice from "@saleor/components/LinkChoice";
@@ -16,6 +19,9 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { useProductVariantSetDefaultMutation } from "@saleor/products/mutations";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -64,8 +70,11 @@ function getWarehouseChoices(
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
+      colActions: {
+        width: 30
+      },
       colInventory: {
-        width: 300
+        width: 270
       },
       colName: {},
       colPrice: {
@@ -169,6 +178,7 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
+  productId: string;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
   onRowClick: (id: string) => () => void;
@@ -182,6 +192,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
     disabled,
     variants,
+    productId,
     fallbackPrice,
     onRowClick,
     onVariantAdd,
@@ -290,6 +301,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 description="product variant inventory status"
               />
             </TableCell>
+            <TableCell className={classes.colActions}></TableCell>
           </TableHead>
           <TableBody>
             {renderCollection(variants, variant => {
@@ -302,11 +314,54 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     )
                   : null;
 
+              const notify = useNotifier();
+
+              const getProductVariantSetDefaultVariables = (
+                productId: string,
+                variantId: string
+              ) => ({
+                variables: {
+                  productId,
+                  variantId
+                }
+              });
+
+              const [
+                productVariantSetDefault
+              ] = useProductVariantSetDefaultMutation({
+                onCompleted: data => {
+                  const errors = data.productVariantSetDefault.errors;
+                  if (errors.length) {
+                    errors.map(error =>
+                      notify({
+                        status: "error",
+                        text: getProductErrorMessage(error, intl)
+                      })
+                    );
+                  } else {
+                    notify({
+                      status: "success",
+                      text: intl.formatMessage({
+                        defaultMessage: "Default variant set successfully!"
+                      })
+                    });
+                  }
+                }
+              });
+
+              const onSetDefaultVariant = (variant, productId) => {
+                productVariantSetDefault(
+                  getProductVariantSetDefaultVariables(productId, variant.id)
+                );
+              };
+
               return (
                 <TableRow
                   selected={isSelected}
                   hover={!!variant}
-                  onClick={onRowClick(variant.id)}
+                  onClick={e => {
+                    e.preventDefault();
+                  }}
                   key={variant ? variant.id : "skeleton"}
                   className={classes.link}
                 >
@@ -353,6 +408,22 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                         numAvailable
                       )
                     )}
+                  </TableCell>
+                  <TableCell className={classes.colActions} data-test="actions">
+                    <CardMenu
+                      menuItems={[
+                        {
+                          label: intl.formatMessage({
+                            defaultMessage: "Set as default",
+                            description: "set variant as default, button"
+                          }),
+                          onSelect: () =>
+                            onSetDefaultVariant(variant, productId),
+                          testId: "setDefault"
+                        }
+                      ]}
+                      data-test="menu"
+                    />
                   </TableCell>
                 </TableRow>
               );
