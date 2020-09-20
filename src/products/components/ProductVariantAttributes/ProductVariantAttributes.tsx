@@ -2,11 +2,13 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
+import Hr from "@saleor/components/Hr";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
@@ -36,6 +38,25 @@ interface ProductVariantAttributesProps {
   onRemove: (id: string) => void;
   onEdit: () => void;
 }
+
+const useStyles = makeStyles(
+  theme => ({
+    attribute: {
+      "&:last-child": {
+        "& hr": {
+          display: "none"
+        }
+      }
+    },
+    option: {
+      alignItems: "center",
+      padding: theme.spacing(2, 0)
+    }
+  }),
+  {
+    name: "ProductVariantAttributes"
+  }
+);
 
 function getAttributeDisplayValue(
   id: string,
@@ -81,6 +102,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   onRemove
 }) => {
   const intl = useIntl();
+  const classes = useStyles({});
 
   return (
     <Card>
@@ -100,8 +122,9 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
             <Skeleton />
           ) : (
             attributes.map(attribute => (
-              <div key={attribute.id}>
-                <Grid>
+              <div key={attribute.id} className={classes.attribute}>
+                <Grid variant="uniform" className={classes.option}>
+                  <Typography>{attribute.label}</Typography>
                   <div>
                     <SingleAutocompleteSelectField
                       disabled={disabled}
@@ -110,7 +133,14 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                         attribute.value,
                         attributes
                       )}
-                      label={attribute.label}
+                      label={intl.formatMessage(
+                        {
+                          defaultMessage: "Attribute Value{required}"
+                        },
+                        {
+                          required: attribute.data.isRequired ? "*" : ""
+                        }
+                      )}
                       name={`attribute:${attribute.id}`}
                       onChange={event =>
                         onChange(attribute.id, event.target.value)
@@ -123,11 +153,6 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                       allowCustomValues
                       data-test="variant-attribute-input"
                     />
-                    {attribute.data.isRequired && (
-                      <Typography variant="caption">
-                        {intl.formatMessage({ defaultMessage: "Required" })}
-                      </Typography>
-                    )}
                   </div>
                   {!attribute.data.isRequired && (
                     <div>
@@ -140,7 +165,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                     </div>
                   )}
                 </Grid>
-                <FormSpacer />
+                <Hr />
               </div>
             ))
           )}
