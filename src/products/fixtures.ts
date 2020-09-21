@@ -279,6 +279,7 @@ export const product: (
         currency: "USD"
       },
       sku: "87192-94370",
+      default: false,
       stocks: [
         {
           __typename: "Stock",
@@ -321,6 +322,7 @@ export const product: (
       name: "silver",
       price: null,
       sku: "69055-15190",
+      default: false,
       stocks: [
         {
           __typename: "Stock",

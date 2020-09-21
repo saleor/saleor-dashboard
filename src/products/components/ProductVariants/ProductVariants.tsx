@@ -425,9 +425,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell
-                    onClick={e => e.stopPropagation()}
                     className={classes.colActions}
                     data-test="actions"
+                    onClick={e => e.stopPropagation()}
                   >
                     <CardMenu
                       menuItems={[
