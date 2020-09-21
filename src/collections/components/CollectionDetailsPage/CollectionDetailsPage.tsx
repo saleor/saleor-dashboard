@@ -103,7 +103,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
         publicationDate: maybe(() => collection.publicationDate, ""),
         seoDescription: maybe(() => collection.seoDescription, ""),
         seoTitle: maybe(() => collection.seoTitle, ""),
-        slug: collection.slug || ""
+        slug: collection?.slug || ""
       }}
       onSubmit={handleSubmit}
       confirmLeave
