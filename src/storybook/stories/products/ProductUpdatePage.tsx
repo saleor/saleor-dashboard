@@ -34,6 +34,7 @@ const props: ProductUpdatePageProps = {
   onImageUpload: () => undefined,
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
+  onVariantReorder: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
   placeholderImage,

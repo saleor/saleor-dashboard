@@ -54,6 +54,10 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 import {
+  ProductVariantReorder,
+  ProductVariantReorderVariables
+} from "./types/ProductVariantReorder";
+import {
   ProductVariantSetDefault,
   ProductVariantSetDefaultVariables
 } from "./types/ProductVariantSetDefault";
@@ -652,3 +656,22 @@ export const useProductSetAvailabilityForPurchase = makeMutation<
   ProductSetAvailabilityForPurchase,
   ProductSetAvailabilityForPurchaseVariables
 >(productSetAvailabilityForPurchase);
+
+const productVariantReorder = gql`
+  ${productErrorFragment}
+  ${productFragmentDetails}
+  mutation ProductVariantReorder($move: ReorderInput!, $productId: ID!) {
+    productVariantReorder(moves: [$move], productId: $productId) {
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
+      product {
+        ...Product
+      }
+    }
+  }
+`;
+export const useProductVariantReorderMutation = makeMutation<
+  ProductVariantReorder,
+  ProductVariantReorderVariables
+>(productVariantReorder);
