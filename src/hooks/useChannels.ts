@@ -27,6 +27,14 @@ function useChannels(channels: Channel[]) {
     setChannelsModalOpen(false);
   };
 
+  const toggleAllChannels = (items: Channel[], selected: number) => {
+    if (selected !== items.length) {
+      setChannels(items);
+    } else {
+      setChannels([]);
+    }
+  };
+
   return {
     channelListElements,
     channelsToggle,
@@ -36,7 +44,8 @@ function useChannels(channels: Channel[]) {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels
+    setCurrentChannels,
+    toggleAllChannels
   };
 }
 
