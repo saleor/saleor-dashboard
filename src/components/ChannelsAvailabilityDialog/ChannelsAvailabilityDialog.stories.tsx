@@ -17,12 +17,16 @@ const props: ChannelsAvailabilityDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  title: "Channels"
+  title: "Channels",
+  toggleAll: () => undefined
 };
 
 storiesOf("Generics / ChannelsAvailabilityDialog", module)
   .addDecorator(Decorator)
   .add("default", () => <ChannelsAvailabilityDialog {...props} />)
+  .add("with text", () => (
+    <ChannelsAvailabilityDialog {...props} contentType="order" />
+  ))
   .add("disabled", () => (
     <ChannelsAvailabilityDialog {...props} disabled={true} />
   ));

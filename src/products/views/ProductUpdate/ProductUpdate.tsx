@@ -5,8 +5,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
-  createChannelsDataFromProduct,
-  createChannelsDataWithPrice
+  createChannelsDataWithPrice,
+  createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -198,7 +198,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product?.channelListing,
     channelsData?.channels
   );
-  const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+  const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product?.channelListing
   );
   const [currentChannels, setCurrentChannels] = useStateFromProps(
@@ -211,6 +211,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     set: setChannels,
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  const toggleAllChannels = (items: ChannelData[], selected: number) => {
+    if (selected !== items.length) {
+      setChannels(items);
+    } else {
+      setChannels([]);
+    }
+  };
   useEffect(() => {
     if (!currentChannels.length && productChannelsChoices.length) {
       setCurrentChannels(productChannelsChoices);
@@ -223,7 +230,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         data.productChannelListingUpdate.productChannelListingErrors.length ===
         0
       ) {
-        const updatedProductChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+        const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
           data.productChannelListingUpdate.product.channelListing
         );
         setCurrentChannels(updatedProductChannelsChoices);
@@ -354,7 +361,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
       <ProductUpdatePage
