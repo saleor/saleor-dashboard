@@ -1,7 +1,8 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelShippingData,
-  createShippingChannels
+  createShippingChannels,
+  createSortedShippingChannels
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -64,7 +65,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   });
 
   const shippingChannels = createShippingChannels(channelsData?.channels);
-  const allChannels = createShippingChannels(channelsData?.channels);
+  const allChannels = createSortedShippingChannels(channelsData?.channels);
 
   const {
     channelListElements,
@@ -75,7 +76,8 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels
+    setCurrentChannels,
+    toggleAllChannels
   } = useChannels(shippingChannels);
 
   const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
@@ -118,7 +120,9 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
             defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
       <ShippingZoneRatesPage
