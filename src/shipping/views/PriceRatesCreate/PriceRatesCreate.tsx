@@ -1,7 +1,7 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelShippingData,
-  createShippingChannels
+  createSortedShippingChannels
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -60,7 +60,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
     }
   });
 
-  const allChannels = createShippingChannels(channelsData?.channels);
+  const allChannels = createSortedShippingChannels(channelsData?.channels);
 
   const {
     channelListElements,
@@ -71,7 +71,8 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels
+    setCurrentChannels,
+    toggleAllChannels
   } = useChannels(allChannels);
 
   const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
@@ -114,7 +115,9 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
             defaultMessage: "Manage Channel Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
 
