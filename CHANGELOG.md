@@ -40,6 +40,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update schema with PositiveDecimal type - #695 by @AlicjaSzu
 - Restyle side menu - #697 by @dominik-zeglen
 - Add error info when fetching taxes - #701 by @dominik-zeglen
+- Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
 
 ## 2.10.1
 
