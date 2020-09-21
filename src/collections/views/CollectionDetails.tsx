@@ -180,7 +180,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             seo: {
               description: formData.seoDescription,
               title: formData.seoTitle
-            }
+            },
+            slug: formData.slug
           };
           const isFeatured = data.shop.homepageCollection
             ? data.shop.homepageCollection.id === data.collection.id

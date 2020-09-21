@@ -1083,12 +1083,12 @@ export interface CollectionFilterInput {
 export interface CollectionInput {
   isPublished?: boolean | null;
   name?: string | null;
-  slug?: string | null;
   description?: string | null;
   descriptionJson?: any | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
+  slug?: string | null;
   publicationDate?: any | null;
 }
 
