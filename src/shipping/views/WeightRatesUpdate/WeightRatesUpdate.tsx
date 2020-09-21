@@ -1,7 +1,7 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import {
-  createShippingChannels,
-  createShippingChannelsFromRate
+  createShippingChannelsFromRate,
+  createSortedShippingChannels
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -81,7 +81,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
   });
   const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
-  const allChannels = createShippingChannels(channelsData?.channels);
+  const allChannels = createSortedShippingChannels(channelsData?.channels);
 
   const {
     channelListElements,
@@ -92,7 +92,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels
+    setCurrentChannels,
+    toggleAllChannels
   } = useChannels(shippingChannels);
 
   const [openModal, setOpenModal] = React.useState(false);
@@ -167,7 +168,9 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
             defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"
+          selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
         />
       )}
       <DeleteShippingRateDialog

@@ -18,9 +18,7 @@ export interface ChannelPriceData {
   price: number;
 }
 
-export const createChannelsData = (
-  data?: Channels_channels[]
-): ChannelData[] | [] =>
+export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
     currency: "",
     id: channel.id,
@@ -33,7 +31,7 @@ export const createChannelsData = (
 export const createChannelsDataWithPrice = (
   productData?: ProductDetails_product_channelListing[],
   data?: Channels_channels[]
-): ChannelData[] | [] => {
+): ChannelData[] => {
   if (data && productData) {
     const dataArr = data.map(channel => ({
       currency: channel.currencyCode,
@@ -61,7 +59,7 @@ export const createChannelsDataWithPrice = (
 
 export const createShippingChannels = (
   data?: Channels_channels[]
-): ChannelShippingData[] | [] =>
+): ChannelShippingData[] =>
   data?.map(channel => ({
     id: channel.id,
     maxValue: "",
@@ -72,7 +70,7 @@ export const createShippingChannels = (
 
 export const createShippingChannelsFromRate = (
   data?: ShippingZone_shippingZone_shippingMethods_channelListing[]
-): ChannelShippingData[] | [] =>
+): ChannelShippingData[] =>
   data?.map(channelData => ({
     id: channelData.channel.id,
     maxValue: channelData.maximumOrderPrice
@@ -103,3 +101,27 @@ export const createChannelsDataFromProduct = (
     price: option.discountedPrice ? option.discountedPrice.amount : null,
     publicationDate: option.publicationDate
   })) || [];
+
+export const createSortedChannelsDataFromProduct = (
+  productData?: ProductDetails_product_channelListing[]
+) =>
+  createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
+
+export const createSortedChannelsData = (data?: Channels_channels[]) =>
+  createChannelsData(data)?.sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
+
+export const createSortedShippingChannels = (data?: Channels_channels[]) =>
+  createShippingChannels(data)?.sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
+
+export const createSortedShippingChannelsFromRate = (
+  data?: ShippingZone_shippingZone_shippingMethods_channelListing[]
+) =>
+  createShippingChannelsFromRate(data)?.sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
