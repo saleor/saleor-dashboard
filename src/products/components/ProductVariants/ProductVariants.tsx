@@ -346,9 +346,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   } else {
                     notify({
                       status: "success",
-                      text: intl.formatMessage({
-                        defaultMessage: "Default variant set successfully!"
-                      })
+                      text: intl.formatMessage(
+                        {
+                          defaultMessage:
+                            "Variant {name} has been set as default!."
+                        },
+                        { name: variant.name }
+                      )
                     });
                   }
                 }
