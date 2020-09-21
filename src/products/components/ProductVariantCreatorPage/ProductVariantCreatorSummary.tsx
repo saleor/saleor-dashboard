@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
@@ -25,7 +26,7 @@ import { VariantField } from "./reducer";
 
 export interface ProductVariantCreatorSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
-  currencySymbol: string;
+  channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   warehouses: WarehouseFragment[];
@@ -40,6 +41,10 @@ export interface ProductVariantCreatorSummaryProps {
     value: string
   ) => void;
   onVariantDelete: (variantIndex: number) => void;
+  onVariantPriceDataChange: (
+    variantIndex: number,
+    value: { channelId: string; price: string }
+  ) => void;
 }
 type ClassKey =
   | "attributeValue"
@@ -135,10 +140,11 @@ function getVariantName(
 const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> = props => {
   const {
     attributes,
-    currencySymbol,
+    channelListings,
     data,
     errors,
     warehouses,
+    onVariantPriceDataChange,
     onVariantDataChange,
     onVariantDelete,
     onVariantStockDataChange
@@ -228,32 +234,41 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   )
                 )}
               </div>
-              <div className={classNames(classes.col, classes.colPrice)}>
-                <TextField
-                  InputProps={{
-                    endAdornment: currencySymbol
-                  }}
-                  className={classes.input}
-                  error={!!variantFormErrors.price}
-                  helperText={getBulkProductErrorMessage(
-                    variantFormErrors.price,
-                    intl
-                  )}
-                  inputProps={{
-                    min: 0,
-                    type: "number"
-                  }}
-                  fullWidth
-                  value={""}
-                  onChange={event =>
-                    onVariantDataChange(
-                      variantIndex,
-                      "price",
-                      event.target.value
-                    )
-                  }
-                />
-              </div>
+              {channelListings.map(listing => (
+                <div
+                  key={listing.id}
+                  className={classNames(classes.col, classes.colPrice)}
+                >
+                  {listing.name}
+                  <TextField
+                    InputProps={{
+                      endAdornment: listing.currency
+                    }}
+                    className={classes.input}
+                    error={!!variantFormErrors.price}
+                    helperText={getBulkProductErrorMessage(
+                      variantFormErrors.price,
+                      intl
+                    )}
+                    inputProps={{
+                      min: 0,
+                      type: "number"
+                    }}
+                    fullWidth
+                    value={
+                      variant.channelListings?.find(
+                        channel => channel.channelId === listing.id
+                      )?.price
+                    }
+                    onChange={event =>
+                      onVariantPriceDataChange(variantIndex, {
+                        channelId: listing.id,
+                        price: event.target.value
+                      })
+                    }
+                  />
+                </div>
+              ))}
               {variant.stocks.map(stock => (
                 <div
                   className={classNames(classes.col, classes.colStock)}

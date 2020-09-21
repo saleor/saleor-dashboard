@@ -48,13 +48,13 @@ function canHitNext(
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
-        if (data.price.value === "") {
+        if (data.price.channels === []) {
           return false;
         }
       } else if (data.price.mode === "attribute") {
         if (
           data.price.attribute === "" ||
-          data.price.values.some(attributeValue => attributeValue.value === "")
+          data.price.values.some(attributeValue => attributeValue.value === [])
         ) {
           return false;
         }
@@ -128,7 +128,7 @@ function getDescription(
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
   const {
     attributes,
-    channels,
+    channelListings,
     defaultPrice,
     errors,
     onSubmit,
@@ -139,7 +139,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const intl = useIntl();
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, channels, warehouses)
+    createInitialForm(attributes, channelListings, warehouses)
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
@@ -163,7 +163,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const reloadForm = () =>
     dispatchFormDataAction({
       reload: {
-        data: createInitialForm(attributes, channels, warehouses)
+        data: createInitialForm(attributes, channelListings, warehouses)
       },
       type: ProductVariantCreateReducerActionType.reload
     });
@@ -220,7 +220,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
-        channels={channels}
+        channelListings={channelListings}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}

@@ -17,8 +17,7 @@ import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
-  channels: ChannelPriceData[];
-  currencySymbol: string;
+  channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
@@ -28,8 +27,7 @@ export interface ProductVariantCreatorContentProps {
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
   attributes,
-  channels,
-  currencySymbol,
+  channelListings,
   data,
   dispatchFormDataAction,
   errors,
@@ -64,9 +62,8 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
       {step === ProductVariantCreatorStep.prices && (
         <ProductVariantCreatePriceAndSku
           attributes={selectedAttributes}
-          currencySymbol={currencySymbol}
-          channelListings={channels}
           data={data}
+          channelListings={channelListings}
           warehouses={warehouses}
           onApplyToAllChange={(mode, type) =>
             dispatchFormDataAction({
@@ -79,9 +76,10 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
-          onApplyToAllPriceChange={price =>
+          onApplyToAllPriceChange={(channelId, price) =>
             dispatchFormDataAction({
               changeApplyPriceToAllValue: {
+                channelId,
                 price
               },
               type:
@@ -109,9 +107,10 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
             })
           }
-          onAttributePriceChange={(valueId, price) =>
+          onAttributePriceChange={(valueId, price, channelId) =>
             dispatchFormDataAction({
               changeAttributeValuePrice: {
+                channelId,
                 price,
                 valueId
               },
@@ -143,7 +142,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
       {step === ProductVariantCreatorStep.summary && (
         <ProductVariantCreateSummary
           attributes={selectedAttributes}
-          currencySymbol={currencySymbol}
+          channelListings={channelListings}
           data={data}
           errors={errors}
           onVariantDataChange={(variantIndex, field, value) =>
@@ -154,6 +153,15 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                 variantIndex
               },
               type: ProductVariantCreateReducerActionType.changeVariantData
+            })
+          }
+          onVariantPriceDataChange={(variantIndex, value) =>
+            dispatchFormDataAction({
+              changeVariantPriceData: {
+                value,
+                variantIndex
+              },
+              type: ProductVariantCreateReducerActionType.changeVariantPriceData
             })
           }
           onVariantStockDataChange={(variantIndex, warehouse, value) =>

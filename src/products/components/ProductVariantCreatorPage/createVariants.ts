@@ -3,6 +3,7 @@ import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import {
   AllOrAttribute,
   Attribute,
+  Price,
   ProductVariantCreateFormData
 } from "./form";
 
@@ -14,7 +15,7 @@ type CreateVariantInput = CreateVariantAttributeValueInput[];
 
 function getAttributeValuePriceOrStock<T>(
   attributes: CreateVariantInput,
-  priceOrStock: AllOrAttribute<T>
+  priceOrStock: AllOrAttribute<T> | Price<T>
 ): T {
   const attribute = attributes.find(
     attribute => attribute.attributeId === priceOrStock.attribute
@@ -42,11 +43,26 @@ function getValueFromMode<T>(
   }
 }
 
+function getPriceFromMode<T>(
+  attributes: CreateVariantInput,
+  price: Price<T>,
+  skipValue: T
+): T {
+  switch (price.mode) {
+    case "all":
+      return price.channels;
+    case "attribute":
+      return getAttributeValuePriceOrStock(attributes, price);
+    case "skip":
+      return skipValue;
+  }
+}
+
 function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantBulkCreateInput {
-  // const price = getValueFromMode(attributes, data.price, "0");
+  const price = getPriceFromMode(attributes, data.price, []);
   const stocks = getValueFromMode(
     attributes,
     data.stock,
@@ -58,7 +74,7 @@ function createVariant(
       id: attribute.attributeId,
       values: [attribute.attributeValueSlug]
     })),
-    // price,
+    channelListings: price,
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({
       quantity,

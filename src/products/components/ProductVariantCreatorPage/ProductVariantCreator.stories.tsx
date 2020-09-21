@@ -1,4 +1,5 @@
 import { attributes } from "@saleor/attributes/fixtures";
+import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
@@ -8,7 +9,7 @@ import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
-import { AllOrAttribute, ProductVariantCreateFormData } from "./form";
+import { AllOrAttribute, Price, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
@@ -18,13 +19,18 @@ import { ProductVariantCreatorStep } from "./types";
 const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
 const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
-const price: AllOrAttribute<string> = {
+const channels = productChannels.map(channel => ({
+  channelId: channel.channel.id,
+  price: channel.discountedPrice.amount.toString()
+}));
+
+const price: Price<Array<{ channelId: string; price: string }>> = {
   attribute: selectedAttributes[0].id,
+  channels,
   mode: "attribute",
-  value: "2.79",
-  values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
+  values: selectedAttributes[0].values.map(attribute => ({
     slug: attribute.slug,
-    value: (attributeIndex + 4).toFixed(2)
+    value: channels // [...channels, prc]//{(attributeIndex + 4).toFixed(2)}
   }))
 };
 
@@ -61,12 +67,10 @@ const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
 
 const data: ProductVariantCreateFormData = {
   attributes: dataAttributes,
-  channelListings: [],
   price,
   stock,
   variants: createVariants({
     attributes: dataAttributes,
-    channelListings: [],
     price,
     stock,
     variants: [],
@@ -76,8 +80,12 @@ const data: ProductVariantCreateFormData = {
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
-  channels: [],
-  currencySymbol: "USD",
+  channelListings: productChannels.map(listing => ({
+    currency: listing.discountedPrice.currency,
+    id: listing.channel.id,
+    name: listing.channel.name,
+    price: listing.discountedPrice.amount
+  })),
   data: {
     ...data,
     variants: createVariants(data)

@@ -9,6 +9,13 @@ export interface AttributeValue<T> {
   value: T;
 }
 export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
+export interface Price<T> {
+  mode: VariantCreatorPricesAndSkuMode;
+  attribute: string;
+  channels: T;
+  values: Array<AttributeValue<T>>;
+}
+
 export interface AllOrAttribute<T> {
   mode: VariantCreatorPricesAndSkuMode;
   attribute: string;
@@ -21,8 +28,7 @@ export interface Attribute {
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
-  channelListings: ChannelPriceData[];
-  price: AllOrAttribute<string>;
+  price: Price<Array<{ channelId: string; price: string }>>;
   stock: AllOrAttribute<number[]>;
   variants: ProductVariantBulkCreateInput[];
   warehouses: string[];
@@ -32,24 +38,30 @@ export const createInitialForm = (
   attributes: ProductDetails_product_productType_variantAttributes[],
   channels: ChannelPriceData[],
   warehouses: WarehouseFragment[]
-): ProductVariantCreateFormData => ({
-  attributes: attributes.map(attribute => ({
-    id: attribute.id,
-    values: []
-  })),
-  channelListings: channels,
-  price: {
-    attribute: undefined,
-    mode: "all",
-    value: "",
-    values: []
-  },
-  stock: {
-    attribute: undefined,
-    mode: "all",
-    value: warehouses.length === 1 ? [0] : [],
-    values: []
-  },
-  variants: [],
-  warehouses: warehouses.length === 1 ? [warehouses[0].id] : []
-});
+): ProductVariantCreateFormData => {
+  const channelListings =
+    channels?.map(channel => ({
+      channelId: channel.id,
+      price: channel.price.toString()
+    })) || [];
+  return {
+    attributes: attributes.map(attribute => ({
+      id: attribute.id,
+      values: []
+    })),
+    price: {
+      attribute: undefined,
+      channels: channelListings,
+      mode: "all",
+      values: []
+    },
+    stock: {
+      attribute: undefined,
+      mode: "all",
+      value: warehouses.length === 1 ? [0] : [],
+      values: []
+    },
+    variants: [],
+    warehouses: warehouses.length === 1 ? [warehouses[0].id] : []
+  };
+};

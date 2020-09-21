@@ -17,15 +17,15 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant price and stock", () => {
-    const price = "49.99";
+    const price = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
 
     const data: ProductVariantCreateFormData = {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        mode: "all",
-        value: price
+        channels: price,
+        mode: "all"
       },
       stock: {
         ...thirdStep.stock,
@@ -51,7 +51,6 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant stock and attribute dependent price", () => {
-    const price = 49.99;
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -63,9 +62,9 @@ describe("Creates variant matrix", () => {
         ...thirdStep.price,
         attribute: attribute.id,
         mode: "attribute",
-        values: attribute.values.map((attributeValue, attributeValueIndex) => ({
+        values: attribute.values.map(attributeValue => ({
           slug: attributeValue,
-          value: (price * (attributeValueIndex + 1)).toString()
+          value: [{ channelId: "1", price: "2" }]
         }))
       },
       stock: {
@@ -106,7 +105,7 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant price and attribute dependent stock", () => {
-    const price = "49.99";
+    const price = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -116,8 +115,8 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        mode: "all",
-        value: price
+        channels: price,
+        mode: "all"
       },
       stock: {
         ...thirdStep.stock,
@@ -140,9 +139,9 @@ describe("Creates variant matrix", () => {
       )
     );
 
-    // variants.forEach(variant => {
-    //   expect(variant.price).toBe(price);
-    // });
+    variants.forEach(variant => {
+      expect(variant.channelListings).toBe(price);
+    });
 
     attribute.values.forEach((attributeValue, attributeValueIndex) => {
       variants
@@ -163,7 +162,6 @@ describe("Creates variant matrix", () => {
   });
 
   it("with attribute dependent price and stock", () => {
-    const price = 49.99;
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -175,9 +173,9 @@ describe("Creates variant matrix", () => {
         ...thirdStep.price,
         attribute: attribute.id,
         mode: "attribute",
-        values: attribute.values.map((attributeValue, attributeValueIndex) => ({
+        values: attribute.values.map(attributeValue => ({
           slug: attributeValue,
-          value: (price * (attributeValueIndex + 1)).toString()
+          value: [{ channelId: "1", price: "2" }]
         }))
       },
       stock: {

@@ -25,19 +25,45 @@ Object {
       ],
     },
   ],
-  "channelListings": Array [],
   "price": Object {
     "attribute": "attr-2",
+    "channels": Array [
+      Object {
+        "channelId": "1",
+        "price": "0",
+      },
+      Object {
+        "channelId": "2",
+        "price": "2",
+      },
+    ],
     "mode": "attribute",
-    "value": "",
     "values": Array [
       Object {
         "slug": "val-2-2",
-        "value": "24.99",
+        "value": Array [
+          Object {
+            "channelId": "1",
+            "price": "0",
+          },
+          Object {
+            "channelId": "2",
+            "price": "2",
+          },
+        ],
       },
       Object {
         "slug": "val-2-4",
-        "value": "26.99",
+        "value": Array [
+          Object {
+            "channelId": "1",
+            "price": "1",
+          },
+          Object {
+            "channelId": "2",
+            "price": "2",
+          },
+        ],
       },
     ],
   },
@@ -88,6 +114,16 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -127,6 +163,16 @@ Object {
           "values": Array [
             "val-4-5",
           ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
         },
       ],
       "sku": "",
@@ -170,6 +216,16 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -209,6 +265,16 @@ Object {
           "values": Array [
             "val-4-5",
           ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
         },
       ],
       "sku": "",
@@ -252,6 +318,16 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -291,6 +367,16 @@ Object {
           "values": Array [
             "val-4-5",
           ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
         },
       ],
       "sku": "",
@@ -334,6 +420,16 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -373,6 +469,16 @@ Object {
           "values": Array [
             "val-4-5",
           ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "2",
+          "price": "2",
         },
       ],
       "sku": "",
@@ -430,11 +536,10 @@ Object {
       ],
     },
   ],
-  "channelListings": Array [],
   "price": Object {
     "attribute": undefined,
+    "channels": Array [],
     "mode": "all",
-    "value": "",
     "values": Array [],
   },
   "stock": Object {
@@ -473,11 +578,10 @@ Object {
       ],
     },
   ],
-  "channelListings": Array [],
   "price": Object {
     "attribute": undefined,
+    "channels": Array [],
     "mode": "all",
-    "value": "",
     "values": Array [],
   },
   "stock": Object {
@@ -513,6 +617,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -554,6 +659,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -595,6 +701,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -636,6 +743,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -677,6 +785,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -718,6 +827,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -759,6 +869,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -800,6 +911,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -855,11 +967,10 @@ Object {
       ],
     },
   ],
-  "channelListings": Array [],
   "price": Object {
     "attribute": undefined,
+    "channels": Array [],
     "mode": "all",
-    "value": "",
     "values": Array [],
   },
   "stock": Object {
@@ -908,6 +1019,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -937,6 +1049,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -966,6 +1079,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -995,6 +1109,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1024,6 +1139,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1053,6 +1169,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1082,6 +1199,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1111,6 +1229,7 @@ Object {
           ],
         },
       ],
+      "channelListings": Array [],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1154,11 +1273,10 @@ Object {
       ],
     },
   ],
-  "channelListings": Array [],
   "price": Object {
     "attribute": undefined,
+    "channels": Array [],
     "mode": "all",
-    "value": "",
     "values": Array [],
   },
   "stock": Object {

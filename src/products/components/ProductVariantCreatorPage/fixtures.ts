@@ -4,6 +4,7 @@ import { createVariants } from "./createVariants";
 import {
   AllOrAttribute,
   createInitialForm,
+  Price,
   ProductVariantCreateFormData
 } from "./form";
 
@@ -98,18 +99,27 @@ export const thirdStep: ProductVariantCreateFormData = {
   warehouses: warehouses.map(warehouse => warehouse.id)
 };
 
-const price: AllOrAttribute<string> = {
+const price: Price<Array<{ channelId: string; price: string }>> = {
   attribute: thirdStep.attributes[1].id,
+  channels: [
+    { channelId: "1", price: "0" },
+    { channelId: "2", price: "2" }
+  ],
   mode: "attribute",
-  value: "",
   values: [
     {
       slug: thirdStep.attributes[1].values[0],
-      value: "24.99"
+      value: [
+        { channelId: "1", price: "0" },
+        { channelId: "2", price: "2" }
+      ]
     },
     {
       slug: thirdStep.attributes[1].values[1],
-      value: "26.99"
+      value: [
+        { channelId: "1", price: "1" },
+        { channelId: "2", price: "2" }
+      ]
     }
   ]
 };

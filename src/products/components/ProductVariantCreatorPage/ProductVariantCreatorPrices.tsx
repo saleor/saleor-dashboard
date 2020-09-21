@@ -48,19 +48,21 @@ const useStyles = makeStyles(
 export interface ProductVariantCreatorPricesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   channelListings: ChannelPriceData[];
-  currencySymbol: string;
   data: ProductVariantCreateFormData;
   onApplyToAllChange: (applyToAll: VariantCreatorPricesAndSkuMode) => void;
-  onApplyToAllPriceChange: (value: string) => void;
+  onApplyToAllPriceChange: (channelId: string, value: string) => void;
   onAttributeSelect: (id: string) => void;
-  onAttributeValueChange: (id: string, value: string) => void;
+  onAttributeValueChange: (
+    id: string,
+    value: string,
+    channelId: string
+  ) => void;
 }
 
 const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = props => {
   const {
     attributes,
     channelListings,
-    currencySymbol,
     data,
     onApplyToAllChange,
     onApplyToAllPriceChange,
@@ -95,16 +97,22 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             onChange={() => onApplyToAllChange("all")}
           />
           <FormSpacer />
-          {channelListings.map(listing => (
+          {channelListings?.map(listing => (
             <div key={listing.id} className={classes.shortInput}>
               <Typography variant="caption" className={classes.channelName}>
                 {listing.name}
               </Typography>
               <PriceField
                 name={`${listing.id}-variant-channel-price`}
-                value={listing.price}
+                value={
+                  data.price.channels.find(
+                    channel => channel.channelId === listing.id
+                  )?.price
+                }
                 currencySymbol={listing.currency}
-                onChange={event => onApplyToAllPriceChange(event.target.value)}
+                onChange={event =>
+                  onApplyToAllPriceChange(listing.id, event.target.value)
+                }
               />
             </div>
           ))}
@@ -143,45 +151,61 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
               </div>
             </Grid>
             {priceAttributeValues &&
-              priceAttributeValues.map(attributeValue => (
-                <React.Fragment key={attributeValue.id}>
-                  <Hr className={classes.hrAttribute} />
-                  <FormSpacer />
-                  <Grid variant="uniform">
-                    <div className={classes.label}>
-                      <Typography>{attributeValue.name}</Typography>
-                    </div>
-                    <div>
-                      <TextField
-                        label={intl.formatMessage({
-                          defaultMessage: "Price",
-                          description: "variant price",
-                          id: "productVariantCreatePricesSetPricePlaceholder"
-                        })}
-                        inputProps={{
-                          min: 0,
-                          type: "number"
-                        }}
-                        InputProps={{
-                          endAdornment: currencySymbol
-                        }}
-                        fullWidth
-                        value={
-                          data.price.values.find(
-                            value => value.slug === attributeValue.slug
-                          ).value
-                        }
-                        onChange={event =>
-                          onAttributeValueChange(
-                            attributeValue.slug,
-                            event.target.value
-                          )
-                        }
-                      />
-                    </div>
-                  </Grid>
-                </React.Fragment>
-              ))}
+              priceAttributeValues.map(attributeValue => {
+                const attributesChannels = data.price.values.find(
+                  value => value.slug === attributeValue.slug
+                ).value;
+                return (
+                  <React.Fragment key={attributeValue.id}>
+                    <Hr className={classes.hrAttribute} />
+                    <FormSpacer />
+                    <Grid variant="uniform">
+                      <div className={classes.label}>
+                        <Typography>{attributeValue.name}</Typography>
+                      </div>
+                      {channelListings?.map(listing => (
+                        <div key={listing.id}>
+                          <Typography
+                            variant="caption"
+                            className={classes.channelName}
+                          >
+                            {listing.name}
+                          </Typography>
+                          <TextField
+                            label={intl.formatMessage({
+                              defaultMessage: "Price",
+                              description: "variant price",
+                              id:
+                                "productVariantCreatePricesSetPricePlaceholder"
+                            })}
+                            inputProps={{
+                              min: 0,
+                              type: "number"
+                            }}
+                            InputProps={{
+                              endAdornment: listing.currency
+                            }}
+                            fullWidth
+                            value={
+                              attributesChannels.find(
+                                attrChannel =>
+                                  attrChannel.channelId === listing.id
+                              )?.price || ""
+                            }
+                            onChange={event =>
+                              onAttributeValueChange(
+                                attributeValue.slug,
+                                event.target.value,
+                                listing.id
+                              )
+                            }
+                          />
+                        </div>
+                      ))}
+                    </Grid>
+                  </React.Fragment>
+                );
+              })}
           </>
         )}
       </CardContent>
