@@ -17,9 +17,13 @@ import { decimal, weight } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";
-import { useVariantCreateMutation } from "../mutations";
+import {
+  useProductVariantReorderMutation,
+  useVariantCreateMutation
+} from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
+import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
   productId: string;
@@ -69,6 +73,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
   }
 
+  const [
+    reorderProductVariants,
+    reorderProductVariantsOpts
+  ] = useProductVariantReorderMutation({});
+
+  const handleVariantReorder = createVariantReorderHandler(product, variables =>
+    reorderProductVariants({ variables })
+  );
+
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
     const result = await variantCreate({
@@ -104,7 +117,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 
-  const disableForm = productLoading || variantCreateResult.loading;
+  const disableForm =
+    productLoading ||
+    variantCreateResult.loading ||
+    reorderProductVariantsOpts.loading;
 
   return (
     <>
@@ -126,6 +142,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
+        onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
