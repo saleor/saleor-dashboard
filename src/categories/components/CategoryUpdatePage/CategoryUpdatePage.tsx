@@ -36,6 +36,7 @@ export interface FormData extends MetadataFormData {
   backgroundImageAlt: string;
   description: RawDraftContentState;
   name: string;
+  slug: string;
   seoTitle: string;
   seoDescription: string;
 }
