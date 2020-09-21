@@ -180,6 +180,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: SimpleProductUpdate_productUpdate_product_variants_price | null;
   margin: number | null;
   stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;

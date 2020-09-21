@@ -174,6 +174,7 @@ export interface Product_variants {
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: Product_variants_price | null;
   margin: number | null;
   stocks: (Product_variants_stocks | null)[] | null;

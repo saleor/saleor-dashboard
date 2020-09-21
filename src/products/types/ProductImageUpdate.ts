@@ -180,6 +180,7 @@ export interface ProductImageUpdate_productImageUpdate_product_variants {
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: ProductImageUpdate_productImageUpdate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductImageUpdate_productImageUpdate_product_variants_stocks | null)[] | null;

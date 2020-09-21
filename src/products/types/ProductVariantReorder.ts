@@ -180,6 +180,7 @@ export interface ProductVariantReorder_productVariantReorder_product_variants {
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: ProductVariantReorder_productVariantReorder_product_variants_price | null;
   margin: number | null;
   stocks: (ProductVariantReorder_productVariantReorder_product_variants_stocks | null)[] | null;

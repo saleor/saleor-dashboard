@@ -4179,13 +4179,13 @@ input ProductVariantInput {
   weight: WeightScalar
 }
 
-type ProductVariantSetDefault {
+type ProductVariantReorder {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productErrors: [ProductError!]!
 }
 
-type ProductVariantReorder {
+type ProductVariantSetDefault {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productErrors: [ProductError!]!
@@ -4264,6 +4264,7 @@ type Query {
   digitalContents(before: String, after: String, first: Int, last: Int): DigitalContentCountableConnection
   attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID!): Attribute
+  defaultVariant: ProductVariant
   categories(filter: CategoryFilterInput, sortBy: CategorySortingInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   category(id: ID, slug: String): Category
   collection(id: ID, slug: String): Collection

@@ -180,6 +180,7 @@ export interface ProductImageCreate_productImageCreate_product_variants {
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: ProductImageCreate_productImageCreate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductImageCreate_productImageCreate_product_variants_stocks | null)[] | null;

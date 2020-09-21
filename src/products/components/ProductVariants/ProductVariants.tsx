@@ -95,6 +95,10 @@ const useStyles = makeStyles(
     },
     colSku: {},
     colStatus: {},
+    defaultVariant: {
+      color: "rgba(61, 61, 61, 0.6)",
+      display: "block"
+    },
     denseTable: {
       "& td, & th": {
         paddingRight: theme.spacing(3)
@@ -368,9 +372,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 <SortableTableRow
                   selected={isSelected}
                   hover={!!variant}
-                  onClick={e => {
-                    e.preventDefault();
-                  }}
+                  onClick={onRowClick(variant.id)}
                   key={variant ? variant.id : "skeleton"}
                   index={variantIndex || 0}
                   className={classes.link}
@@ -385,6 +387,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
+                    {variant && variant.default && (
+                      <span className={classes.defaultVariant}>default</span>
+                    )}
                   </TableCell>
                   <TableCell className={classes.colSku} data-test="sku">
                     {variant ? variant.sku : <Skeleton />}
@@ -419,7 +424,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       )
                     )}
                   </TableCell>
-                  <TableCell className={classes.colActions} data-test="actions">
+                  <TableCell
+                    onClick={e => e.stopPropagation()}
+                    className={classes.colActions}
+                    data-test="actions"
+                  >
                     <CardMenu
                       menuItems={[
                         {

@@ -180,6 +180,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   id: string;
   sku: string;
   name: string;
+  default: boolean;
   price: ProductVariantSetDefault_productVariantSetDefault_product_variants_price | null;
   margin: number | null;
   stocks: (ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks | null)[] | null;

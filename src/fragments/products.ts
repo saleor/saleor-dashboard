@@ -160,6 +160,7 @@ export const productFragmentDetails = gql`
       id
       sku
       name
+      default
       price {
         ...Money
       }
