@@ -5,6 +5,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -56,6 +57,8 @@ import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 
+export type ProductUpdatePageSubmitNextAction = "warehouse-configure";
+
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorFragment[];
@@ -72,6 +75,7 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
+  submitNextAction?: ProductUpdatePageSubmitNextAction;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
@@ -85,6 +89,8 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageUpload(file: File);
   onSeoClick?();
   onSubmit?(data: ProductUpdatePageSubmitData);
+  onSubmitReject?(nextAction?: ProductUpdatePageSubmitNextAction);
+  setSubmitNextAction?(nextAction: ProductUpdatePageSubmitNextAction);
   onVariantAdd?();
   onSetDefaultVariant();
   onWarehouseConfigure();
@@ -124,17 +130,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageUpload,
   onSeoClick,
   onSubmit,
+  onSubmitReject,
   onVariantAdd,
   onVariantsAdd,
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
-  onWarehouseConfigure,
   isChecked,
   selected,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
+  submitNextAction,
+  setSubmitNextAction
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -372,7 +380,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           triggerChange();
                           removeStock(id);
                         }}
-                        onWarehouseConfigure={onWarehouseConfigure}
+                        onWarehouseConfigure={() => {
+                          setSubmitNextAction("warehouse-configure");
+                          if (disabled || !onSubmit || !hasChanged) {
+                            onSubmitReject("warehouse-configure");
+                          }
+                        }}
                       />
                     </>
                   )}
@@ -461,6 +474,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onSave={submit}
                 state={saveButtonBarState}
                 disabled={disabled || !hasChanged}
+              />
+              <LeaveScreenDialog
+                onSaveChanges={() => {
+                  submit();
+                }}
+                onRejectChanges={() => {
+                  onSubmitReject("warehouse-configure");
+                }}
+                onClose={() => setSubmitNextAction(null)}
+                open={submitNextAction === "warehouse-configure"}
+                confirmButtonState={saveButtonBarState}
               />
             </Container>
           </>

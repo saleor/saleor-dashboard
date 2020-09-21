@@ -2,52 +2,54 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
-import Form from "../Form";
 
 export interface LeaveScreenDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSaveChanges: () => void;
+  onRejectChanges: () => void;
 }
 
 const LeaveScreenDialog: React.FC<LeaveScreenDialogProps> = ({
   confirmButtonState,
   onClose,
-  onSubmit,
+  onSaveChanges,
+  onRejectChanges,
   open
 }) => (
   <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-    <Form onSubmit={onSubmit}>
-      {({ submit }) => (
-        <>
-          <DialogContent>
-            <FormattedMessage
-              defaultMessage="You're leaving this screen. Do you want to save previously made changes?"
-              description="leaving screen warning message"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={onClose}>
-              <FormattedMessage {...buttonMessages.cancel} />
-            </Button>
-            <ConfirmButton
-              transitionState={confirmButtonState}
-              color="primary"
-              variant="contained"
-              onClick={submit}
-            >
-              <FormattedMessage {...buttonMessages.save} />
-            </ConfirmButton>
-          </DialogActions>
-        </>
-      )}
-    </Form>
+    <DialogTitle>
+      <FormattedMessage
+        defaultMessage="You're leaving this screen"
+        description="leaving screen warning header"
+      />
+    </DialogTitle>
+    <DialogContent>
+      <FormattedMessage
+        defaultMessage="Do you want to save previously made changes?"
+        description="leaving screen warning message"
+      />
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onRejectChanges}>
+        <FormattedMessage {...buttonMessages.no} />
+      </Button>
+      <ConfirmButton
+        transitionState={confirmButtonState}
+        color="primary"
+        variant="contained"
+        onClick={onSaveChanges}
+      >
+        <FormattedMessage {...buttonMessages.yes} />
+      </ConfirmButton>
+    </DialogActions>
   </Dialog>
 );
 LeaveScreenDialog.displayName = "LeaveScreenDialog";

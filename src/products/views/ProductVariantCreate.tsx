@@ -1,11 +1,9 @@
-import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -18,7 +16,8 @@ import { useIntl } from "react-intl";
 
 import { decimal, weight } from "../../misc";
 import ProductVariantCreatePage, {
-  ProductVariantCreatePageSubmitData
+  ProductVariantCreatePageSubmitData,
+  ProductVariantCreatePageSubmitNextAction
 } from "../components/ProductVariantCreatePage";
 import {
   useProductVariantReorderMutation,
@@ -28,8 +27,6 @@ import { useProductVariantCreateQuery } from "../queries";
 import {
   productListUrl,
   productUrl,
-  productVariantAddUrl,
-  ProductVariantAddUrlDialog,
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
 } from "../urls";
@@ -41,10 +38,8 @@ interface ProductVariantCreateProps {
 }
 
 export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
-  productId,
-  params
+  productId
 }) => {
-  const { action } = params;
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -63,7 +58,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
     onCompleted: data => {
-      if (data.productVariantCreate.errors.length === 0) {
+      if (data.productVariantCreate.errors.length === 0 && !submitNextAction) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -94,11 +89,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantReorder = createVariantReorderHandler(product, variables =>
     reorderProductVariants({ variables })
   );
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductVariantAddUrlDialog,
-    ProductVariantAddUrlQueryParams
-  >(navigate, params => productVariantAddUrl(productId, params), params);
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
@@ -135,6 +125,18 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 
+  const [submitNextAction, setSubmitNextAction] = React.useState<
+    ProductVariantCreatePageSubmitNextAction
+  >(null);
+  const handleSubmitNextAction = (
+    nextAction?: ProductVariantCreatePageSubmitNextAction
+  ) => {
+    const action = nextAction || submitNextAction;
+    if (action === "warehouse-configure") {
+      navigate(warehouseListPath);
+    }
+  };
+
   const disableForm =
     productLoading ||
     variantCreateResult.loading ||
@@ -158,21 +160,24 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
         product={data?.product}
         onBack={handleBack}
-        onSubmit={handleSubmit}
+        onSubmit={async data => {
+          const errors = await handleSubmit(data);
+          if (errors?.length === 0) {
+            handleSubmitNextAction();
+          } else {
+            setSubmitNextAction(null);
+          }
+        }}
+        onSubmitReject={handleSubmitNextAction}
         onVariantClick={handleVariantClick}
         onVariantReorder={handleVariantReorder}
-        onWarehouseConfigure={() => openModal("leave-screen")}
         saveButtonBarState={variantCreateResult.status}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
         weightUnit={shop?.defaultWeightUnit}
-      />
-      <LeaveScreenDialog
-        onSubmit={() => navigate(warehouseListPath)}
-        onClose={closeModal}
-        open={action === "leave-screen"}
-        confirmButtonState="default"
+        submitNextAction={submitNextAction}
+        setSubmitNextAction={setSubmitNextAction}
       />
     </>
   );

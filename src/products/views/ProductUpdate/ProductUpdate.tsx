@@ -3,7 +3,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
-import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -39,7 +38,9 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../../misc";
-import ProductUpdatePage from "../../components/ProductUpdatePage";
+import ProductUpdatePage, {
+  ProductUpdatePageSubmitNextAction
+} from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
 import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -66,7 +67,6 @@ interface ProductUpdateProps {
 }
 
 export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
-  const { action } = params;
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
@@ -281,6 +281,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     null
   );
 
+  const [submitNextAction, setSubmitNextAction] = React.useState<
+    ProductUpdatePageSubmitNextAction
+  >(null);
+  const handleSubmitNextAction = (
+    nextAction?: ProductUpdatePageSubmitNextAction
+  ) => {
+    const action = nextAction || submitNextAction;
+    if (action === "warehouse-configure") {
+      navigate(warehouseListPath);
+    }
+  };
+
   return (
     <>
       <WindowTitle title={maybe(() => data.product.name)} />
@@ -306,7 +318,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
-        onSubmit={handleSubmit}
+        onSubmit={async data => {
+          const errors = await handleSubmit(data);
+          if (errors?.length === 0) {
+            handleSubmitNextAction();
+          } else {
+            setSubmitNextAction(null);
+          }
+        }}
+        onSubmitReject={handleSubmitNextAction}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>
@@ -315,7 +335,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
-        onWarehouseConfigure={() => openModal("leave-screen")}
         toolbar={
           <IconButton
             color="primary"
@@ -346,6 +365,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
+        submitNextAction={submitNextAction}
+        setSubmitNextAction={setSubmitNextAction}
       />
       <ActionDialog
         open={params.action === "remove"}
@@ -396,12 +417,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-      <LeaveScreenDialog
-        onSubmit={() => navigate(warehouseListPath)}
-        onClose={closeModal}
-        open={action === "leave-screen"}
-        confirmButtonState="default"
-      />
     </>
   );
 };

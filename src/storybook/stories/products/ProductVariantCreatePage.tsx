@@ -26,7 +26,6 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
-      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("with errors", () => (
@@ -59,7 +58,6 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
-      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -76,7 +74,6 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
-      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("add first variant", () => (
@@ -96,6 +93,5 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
-      onWarehouseConfigure={() => undefined}
     />
   ));

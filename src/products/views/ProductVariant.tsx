@@ -21,7 +21,8 @@ import { useIntl } from "react-intl";
 import { decimal, weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
-  ProductVariantPageSubmitData
+  ProductVariantPageSubmitData,
+  ProductVariantPageSubmitNextAction
 } from "../components/ProductVariantPage";
 import {
   useProductVariantReorderMutation,
@@ -199,6 +200,18 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  const [submitNextAction, setSubmitNextAction] = React.useState<
+    ProductVariantPageSubmitNextAction
+  >(null);
+  const handleSubmitNextAction = (
+    nextAction?: ProductVariantPageSubmitNextAction
+  ) => {
+    const action = nextAction || submitNextAction;
+    if (action === "warehouse-configure") {
+      navigate(warehouseListPath);
+    }
+  };
+
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
@@ -218,12 +231,21 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={handleSubmit}
+        onSubmit={async data => {
+          const errors = await handleSubmit(data);
+          if (errors?.length === 0) {
+            handleSubmitNextAction();
+          } else {
+            setSubmitNextAction(null);
+          }
+        }}
+        onSubmitReject={handleSubmitNextAction}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
-        onWarehouseConfigure={() => openModal("leave-screen")}
+        submitNextAction={submitNextAction}
+        setSubmitNextAction={setSubmitNextAction}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}
@@ -239,7 +261,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         name={data?.productVariant?.name}
       />
       <LeaveScreenDialog
-        onSubmit={() => navigate(warehouseListPath)}
+        onSaveChanges={() => navigate(warehouseListPath)}
+        onRejectChanges={() => navigate(warehouseListPath)}
         onClose={closeModal}
         open={action === "leave-screen"}
         confirmButtonState="default"
