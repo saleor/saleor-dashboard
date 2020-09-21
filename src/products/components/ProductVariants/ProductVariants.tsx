@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -7,7 +5,6 @@ import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
-import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import LinkChoice from "@saleor/components/LinkChoice";
@@ -21,9 +18,6 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { useProductVariantSetDefaultMutation } from "@saleor/products/mutations";
-import { getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -33,6 +27,7 @@ import {
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
+import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 function getWarehouseChoices(
   variants: ProductDetails_product_variants[],
@@ -323,51 +318,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     )
                   : null;
 
-              const notify = useNotifier();
-
-              const getProductVariantSetDefaultVariables = (
-                productId: string,
-                variantId: string
-              ) => ({
-                variables: {
-                  productId,
-                  variantId
-                }
-              });
-
-              const [
-                productVariantSetDefault
-              ] = useProductVariantSetDefaultMutation({
-                onCompleted: data => {
-                  const errors = data.productVariantSetDefault.errors;
-                  if (errors.length) {
-                    errors.map(error =>
-                      notify({
-                        status: "error",
-                        text: getProductErrorMessage(error, intl)
-                      })
-                    );
-                  } else {
-                    notify({
-                      status: "success",
-                      text: intl.formatMessage(
-                        {
-                          defaultMessage:
-                            "Variant {name} has been set as default!."
-                        },
-                        { name: variant.name }
-                      )
-                    });
-                  }
-                }
-              });
-
-              const onSetDefaultVariant = (variant, productId) => {
-                productVariantSetDefault(
-                  getProductVariantSetDefaultVariables(productId, variant.id)
-                );
-              };
-
               return (
                 <SortableTableRow
                   selected={isSelected}
@@ -429,20 +379,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     data-test="actions"
                     onClick={e => e.stopPropagation()}
                   >
-                    <CardMenu
-                      menuItems={[
-                        {
-                          label: intl.formatMessage({
-                            defaultMessage: "Set as default",
-                            description: "set variant as default, button"
-                          }),
-                          onSelect: () =>
-                            onSetDefaultVariant(variant, productId),
-                          testId: "setDefault"
-                        }
-                      ]}
-                      data-test="menu"
-                    />
+                    <ProductVariantSetDefault
+                      variant={variant}
+                      productId={productId}
+                    ></ProductVariantSetDefault>
                   </TableCell>
                 </SortableTableRow>
               );
