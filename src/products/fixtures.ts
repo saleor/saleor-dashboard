@@ -258,6 +258,7 @@ export const product: (
   variants: [
     {
       __typename: "ProductVariant",
+      default: false,
       id: "pv75934",
       images: [
         {
@@ -279,7 +280,6 @@ export const product: (
         currency: "USD"
       },
       sku: "87192-94370",
-      default: false,
       stocks: [
         {
           __typename: "Stock",
@@ -305,6 +305,7 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
+      default: false,
       id: "pv68615",
       images: [
         {
@@ -322,7 +323,6 @@ export const product: (
       name: "silver",
       price: null,
       sku: "69055-15190",
-      default: false,
       stocks: [
         {
           __typename: "Stock",
