@@ -96,7 +96,6 @@ const SeoForm: React.FC<SeoFormProps> = props => {
   const toggleExpansion = () => setExpansionStatus(!expanded);
   const shouldDisplayHelperText = () => helperText && !expanded;
 
-  console.log({ slug });
   return (
     <Card>
       <CardTitle

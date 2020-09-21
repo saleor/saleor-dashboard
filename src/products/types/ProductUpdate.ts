@@ -237,7 +237,6 @@ export interface ProductUpdateVariables {
   publicationDate?: any | null;
   category?: string | null;
   chargeTaxes: boolean;
-  slug?: string | null;
   collections?: (string | null)[] | null;
   descriptionJson?: any | null;
   isPublished: boolean;

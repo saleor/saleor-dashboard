@@ -253,6 +253,7 @@ export const product: (
   seoDescription: "Seo description",
   seoTitle: "Seo title",
   sku: "59661-34207",
+  slug: "Borders",
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
   url: "/example-url",
   variants: [

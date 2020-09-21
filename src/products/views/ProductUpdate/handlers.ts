@@ -55,6 +55,7 @@ export function createUpdateHandler(
         description: data.seoDescription,
         title: data.seoTitle
       },
+      slug: data.slug,
       visibleInListings: data.visibleInListings
     };
 

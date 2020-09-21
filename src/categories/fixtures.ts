@@ -511,7 +511,8 @@ export const category: (
     }
   },
   seoDescription: null,
-  seoTitle: null
+  seoTitle: null,
+  slug: "coffees"
 });
 export const errors = [
   {
