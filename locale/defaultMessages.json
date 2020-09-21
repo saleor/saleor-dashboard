@@ -4382,11 +4382,15 @@
     "context": "product label",
     "string": "Published"
   },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1935535842": {
-    "string": "Required"
+  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1657839837": {
+    "string": "Attribute Value{required}"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_301135124": {
     "string": "Configurable attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_328193388": {
+    "context": "number of product attributes",
+    "string": "{number,plural,one{{number} Attribute} other{{number} Attributes}}"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",

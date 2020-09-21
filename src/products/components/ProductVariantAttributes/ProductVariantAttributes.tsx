@@ -4,9 +4,9 @@ import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import SingleAutocompleteSelectField, {
@@ -18,8 +18,9 @@ import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { buttonMessages } from "@saleor/intl";
 import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
+import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
   isRequired: boolean;
@@ -48,9 +49,42 @@ const useStyles = makeStyles(
         }
       }
     },
+    card: {
+      overflow: "visible"
+    },
+    cardContent: {
+      "&:last-child": {
+        paddingBottom: theme.spacing(1)
+      },
+      paddingTop: theme.spacing(1)
+    },
+    error: {
+      padding: theme.spacing(2, 0)
+    },
+    expansionBar: {
+      display: "flex"
+    },
+    expansionBarButton: {
+      marginBottom: theme.spacing(1)
+    },
+    expansionBarButtonIcon: {
+      transition: theme.transitions.duration.short + "ms"
+    },
+    expansionBarLabel: {
+      color: theme.palette.text.disabled,
+      fontSize: 14
+    },
+    expansionBarLabelContainer: {
+      alignItems: "center",
+      display: "flex",
+      flex: 1
+    },
     option: {
       alignItems: "center",
       padding: theme.spacing(2, 0)
+    },
+    rotate: {
+      transform: "rotate(180deg)"
     }
   }),
   {
@@ -103,9 +137,11 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const [expanded, setExpansionStatus] = React.useState(true);
+  const toggleExpansion = () => setExpansionStatus(!expanded);
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Configurable attributes"
@@ -116,72 +152,103 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
           </Button>
         }
       />
-      <CardContent>
+      <CardContent className={classes.cardContent}>
+        <div className={classes.expansionBar}>
+          <div className={classes.expansionBarLabelContainer}>
+            <Typography className={classes.expansionBarLabel} variant="caption">
+              <FormattedMessage
+                defaultMessage="{number,plural,one{{number} Attribute} other{{number} Attributes}}"
+                description="number of product attributes"
+                values={{
+                  number: attributes.length
+                }}
+              />
+            </Typography>
+          </div>
+          <IconButton
+            className={classes.expansionBarButton}
+            onClick={toggleExpansion}
+            data-test="product-attributes-expand"
+          >
+            <ArrowDropDownIcon
+              className={classNames(classes.expansionBarButtonIcon, {
+                [classes.rotate]: expanded
+              })}
+            />
+          </IconButton>
+        </div>
+
         <div>
           {attributes === undefined ? (
             <Skeleton />
           ) : (
+            expanded &&
+            !!attributes.length &&
             attributes.map(attribute => (
-              <div key={attribute.id} className={classes.attribute}>
-                <Grid variant="uniform" className={classes.option}>
-                  <Typography>{attribute.label}</Typography>
-                  <div>
-                    <SingleAutocompleteSelectField
-                      disabled={disabled}
-                      displayValue={getAttributeDisplayValue(
-                        attribute.id,
-                        attribute.value,
-                        attributes
-                      )}
-                      label={intl.formatMessage(
-                        {
-                          defaultMessage: "Attribute Value{required}"
-                        },
-                        {
-                          required: attribute.data.isRequired ? "*" : ""
-                        }
-                      )}
-                      name={`attribute:${attribute.id}`}
-                      onChange={event =>
-                        onChange(attribute.id, event.target.value)
-                      }
-                      value={getAttributeValue(attribute.id, attributes)}
-                      choices={getAttributeValueChoices(
-                        attribute.id,
-                        attributes
-                      )}
-                      allowCustomValues
-                      data-test="variant-attribute-input"
-                    />
-                  </div>
-                  {!attribute.data.isRequired && (
-                    <div>
-                      <IconButton
-                        color="primary"
-                        onClick={() => onRemove(attribute.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </div>
-                  )}
-                </Grid>
+              <>
                 <Hr />
-              </div>
+                <div key={attribute.id} className={classes.attribute}>
+                  <Grid variant="uniform" className={classes.option}>
+                    <Typography>{attribute.label}</Typography>
+                    <div>
+                      <SingleAutocompleteSelectField
+                        disabled={disabled}
+                        displayValue={getAttributeDisplayValue(
+                          attribute.id,
+                          attribute.value,
+                          attributes
+                        )}
+                        label={intl.formatMessage(
+                          {
+                            defaultMessage: "Attribute Value{required}"
+                          },
+                          {
+                            required: attribute.data.isRequired ? "*" : ""
+                          }
+                        )}
+                        name={`attribute:${attribute.id}`}
+                        onChange={event =>
+                          onChange(attribute.id, event.target.value)
+                        }
+                        value={getAttributeValue(attribute.id, attributes)}
+                        choices={getAttributeValueChoices(
+                          attribute.id,
+                          attributes
+                        )}
+                        allowCustomValues
+                        data-test="variant-attribute-input"
+                      />
+                    </div>
+                    {!attribute.data.isRequired && (
+                      <div>
+                        <IconButton
+                          color="primary"
+                          onClick={() => onRemove(attribute.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </div>
+                    )}
+                  </Grid>
+                </div>
+              </>
             ))
           )}
+          {!!errors.length && (
+            <>
+              <Hr />
+              <div className={classes.error}>
+                {errors
+                  .filter(error => error.field === "attributes")
+                  .map(error => (
+                    <Typography color="error" key={error.code}>
+                      {getProductVariantAttributeErrorMessage(error, intl)}
+                    </Typography>
+                  ))}
+              </div>
+            </>
+          )}
         </div>
-        {errors.length > 0 && (
-          <>
-            <FormSpacer />
-            {errors
-              .filter(error => error.field === "attributes")
-              .map(error => (
-                <Typography color="error" key={error.code}>
-                  {getProductVariantAttributeErrorMessage(error, intl)}
-                </Typography>
-              ))}
-          </>
-        )}
       </CardContent>
     </Card>
   );
