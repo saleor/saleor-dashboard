@@ -56,12 +56,24 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2)
     },
     header: {
+      display: "grid",
+      gridTemplateAreas: `"headerAnchor headerToolbar"`,
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateAreas: `"headerToolbar" 
+        "headerAnchor"`
+      },
+      marginBottom: theme.spacing(3)
+    },
+    headerAnchor: {
+      gridArea: "headerAnchor"
+    },
+    headerToolbar: {
+      display: "flex",
+      gridArea: "headerToolbar",
+      height: 40,
       [theme.breakpoints.down("sm")]: {
         height: "auto"
-      },
-      display: "flex",
-      height: 40,
-      marginBottom: theme.spacing(3)
+      }
     },
 
     root: {
@@ -162,39 +174,43 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 <div>
                   <Container>
                     <div className={classes.header}>
-                      {isMdUp && <div ref={appHeaderAnchor} />}
-                      {!isMdUp && (
-                        <SideBarDrawer
-                          menuItems={menuStructure}
-                          location={location.pathname}
-                          user={user}
-                          renderConfigure={renderConfigure}
-                          onMenuItemClick={navigate}
-                        />
-                      )}
-                      <div className={classes.spacer} />
-                      <div className={classes.userBar}>
-                        <ThemeSwitch
-                          className={classes.darkThemeSwitch}
-                          checked={isDark}
-                          onClick={toggleTheme}
-                        />
-                        <NavigatorButton
-                          isMac={navigator.platform
-                            .toLowerCase()
-                            .includes("mac")}
-                          onClick={() => setNavigatorVisibility(true)}
-                        />
-                        <UserChip
-                          onLogout={logout}
-                          onProfileClick={() =>
-                            navigate(staffMemberDetailsUrl(user.id))
-                          }
-                          user={user}
-                        />
+                      <div
+                        className={classes.headerAnchor}
+                        ref={appHeaderAnchor}
+                      />
+                      <div className={classes.headerToolbar}>
+                        {!isMdUp && (
+                          <SideBarDrawer
+                            menuItems={menuStructure}
+                            location={location.pathname}
+                            user={user}
+                            renderConfigure={renderConfigure}
+                            onMenuItemClick={navigate}
+                          />
+                        )}
+                        <div className={classes.spacer} />
+                        <div className={classes.userBar}>
+                          <ThemeSwitch
+                            className={classes.darkThemeSwitch}
+                            checked={isDark}
+                            onClick={toggleTheme}
+                          />
+                          <NavigatorButton
+                            isMac={navigator.platform
+                              .toLowerCase()
+                              .includes("mac")}
+                            onClick={() => setNavigatorVisibility(true)}
+                          />
+                          <UserChip
+                            onLogout={logout}
+                            onProfileClick={() =>
+                              navigate(staffMemberDetailsUrl(user.id))
+                            }
+                            user={user}
+                          />
+                        </div>
                       </div>
                     </div>
-                    {!isMdUp && <div ref={appHeaderAnchor} />}
                   </Container>
                 </div>
                 <main className={classes.view}>

@@ -40,6 +40,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update schema with PositiveDecimal type - #695 by @AlicjaSzu
 - Restyle side menu - #697 by @dominik-zeglen
 - Add error info when fetching taxes - #701 by @dominik-zeglen
+- Fix return to previous page on screen size change - #710 by @orzechdev
 
 ## 2.10.1
 
