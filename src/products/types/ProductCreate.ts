@@ -244,6 +244,7 @@ export interface ProductCreateVariables {
   productType: string;
   sku?: string | null;
   seo?: SeoInput | null;
+  slug?: string | null;
   stocks: StockInput[];
   trackInventory: boolean;
   weight?: any | null;

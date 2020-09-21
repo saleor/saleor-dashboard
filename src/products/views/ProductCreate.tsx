@@ -95,6 +95,7 @@ export const ProductCreateView: React.FC = () => {
           title: formData.seoTitle
         },
         sku: formData.sku,
+        slug: formData.slug,
         stocks: formData.stocks.map(stock => ({
           quantity: parseInt(stock.value, 0),
           warehouse: stock.id
