@@ -111,6 +111,11 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_priva
   value: string;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_category {
   __typename: "Category";
   id: string;
@@ -180,7 +185,6 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   id: string;
   sku: string;
   name: string;
-  default: boolean;
   price: ProductVariantSetDefault_productVariantSetDefault_product_variants_price | null;
   margin: number | null;
   stocks: (ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks | null)[] | null;
@@ -205,6 +209,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant | null;
   category: ProductVariantSetDefault_productVariantSetDefault_product_category | null;
   collections: (ProductVariantSetDefault_productVariantSetDefault_product_collections | null)[] | null;
   margin: ProductVariantSetDefault_productVariantSetDefault_product_margin | null;

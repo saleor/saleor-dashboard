@@ -115,6 +115,7 @@ export const product: (
       name: "Winter sale"
     }
   ],
+  defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
   descriptionJson: JSON.stringify(content),
   id: "p10171",
   images: [
@@ -258,7 +259,6 @@ export const product: (
   variants: [
     {
       __typename: "ProductVariant",
-      default: false,
       id: "pv75934",
       images: [
         {
@@ -305,7 +305,6 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
-      default: false,
       id: "pv68615",
       images: [
         {

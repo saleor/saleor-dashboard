@@ -24,6 +24,7 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ReorderAction } from "../../../types";
 import {
+  ProductDetails_product,
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
@@ -179,7 +180,7 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
-  productId: string;
+  product: ProductDetails_product;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
   onVariantReorder: ReorderAction;
@@ -194,7 +195,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
     disabled,
     variants,
-    productId,
+    product,
     fallbackPrice,
     onRowClick,
     onVariantAdd,
@@ -310,6 +311,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           <SortableTableBody onSortEnd={onVariantReorder}>
             {renderCollection(variants, (variant, variantIndex) => {
               const isSelected = variant ? isChecked(variant.id) : false;
+              const isDefault =
+                product.defaultVariant &&
+                product.defaultVariant.id === variant.id;
               const numAvailable =
                 variant && variant.stocks
                   ? variant.stocks.reduce(
@@ -337,7 +341,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
-                    {variant && variant.default && (
+                    {isDefault && (
                       <span className={classes.defaultVariant}>default</span>
                     )}
                   </TableCell>
@@ -381,7 +385,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   >
                     <ProductVariantSetDefault
                       variant={variant}
-                      productId={productId}
+                      productId={product.id}
                     ></ProductVariantSetDefault>
                   </TableCell>
                 </SortableTableRow>
