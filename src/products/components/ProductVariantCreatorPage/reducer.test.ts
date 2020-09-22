@@ -1,5 +1,8 @@
+import { attributes as attributesFixture } from "@saleor/attributes/fixtures";
+
 import {
   attributes,
+  firstStep,
   fourthStep,
   secondStep,
   thirdStep,
@@ -19,6 +22,33 @@ function execActions<TState, TAction>(
 }
 
 describe("Reducer is able to", () => {
+  it("choose attributes", () => {
+    const state = execActions(firstStep, reducer, [
+      {
+        chooseAttribute: {
+          attributeId: attributes[0].id
+        },
+        type: ProductVariantCreateReducerActionType.chooseAttribute
+      }
+    ]);
+
+    expect(state.attributes).toHaveLength(1);
+    expect(state).toMatchSnapshot();
+  });
+  it("toggle attributes", () => {
+    const state = execActions(firstStep, reducer, [
+      {
+        toggleAttributes: {
+          list: attributesFixture,
+          selected: attributesFixture.length
+        },
+        type: ProductVariantCreateReducerActionType.toggleAttributes
+      }
+    ]);
+
+    expect(state.attributes).toHaveLength(0);
+    expect(state).toMatchSnapshot();
+  });
   it("select attribute values", () => {
     const state = execActions(secondStep, reducer, [
       {
@@ -68,7 +98,7 @@ describe("Reducer is able to", () => {
 
     expect(state.attributes[0].values).toHaveLength(2);
     expect(state.attributes[1].values).toHaveLength(2);
-    expect(state.attributes[2].values).toHaveLength(2);
+    // expect(state.attributes[2].values).toHaveLength(2);
     expect(state).toMatchSnapshot();
   });
 

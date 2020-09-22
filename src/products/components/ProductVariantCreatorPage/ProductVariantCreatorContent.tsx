@@ -1,7 +1,6 @@
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { ListActionsWithoutToolbar } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
@@ -16,9 +15,7 @@ import {
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
 
-export interface ProductVariantCreatorContentProps
-  extends ListActionsWithoutToolbar {
-  attributesListElements: string[];
+export interface ProductVariantCreatorContentProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
@@ -30,19 +27,17 @@ export interface ProductVariantCreatorContentProps
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
   attributes,
-  attributesListElements,
   currencySymbol,
   data,
   dispatchFormDataAction,
   errors,
   step,
-  warehouses,
-  ...listProps
+  warehouses
 }) => {
   const selectedAttributes = attributes.filter(attribute =>
     isSelected(
       attribute.id,
-      attributesListElements.map(dataAttribute => dataAttribute),
+      data.attributes.map(dataAttribute => dataAttribute.id),
       (a, b) => a === b
     )
   );
@@ -51,7 +46,24 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
       {step === ProductVariantCreatorStep.attributes && (
         <ProductVariantChooseAttributes
           attributes={attributes}
-          {...listProps}
+          data={data}
+          onValueClick={attributeId =>
+            dispatchFormDataAction({
+              chooseAttribute: {
+                attributeId
+              },
+              type: ProductVariantCreateReducerActionType.chooseAttribute
+            })
+          }
+          onToggleAll={(list, selected) =>
+            dispatchFormDataAction({
+              toggleAttributes: {
+                list,
+                selected
+              },
+              type: ProductVariantCreateReducerActionType.toggleAttributes
+            })
+          }
         />
       )}
       {step === ProductVariantCreatorStep.values && (

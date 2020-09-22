@@ -1,11 +1,9 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import useListActions from "@saleor/hooks/useListActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
 import { useCreateMultipleVariantsData } from "@saleor/products/queries";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -43,24 +41,6 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
       }
     }
   });
-
-  const { isSelected, listElements, set, toggle } = useListActions(
-    data?.product?.productType?.variantAttributes?.map(
-      attribute => attribute.id
-    ) || []
-  );
-  const toggleAll = (
-    items: ProductDetails_product_productType_variantAttributes[],
-    selected: number
-  ) => {
-    const allItems = items.map(item => item.id);
-    const requiredItems = items.filter(item => !!item.valueRequired);
-    if (selected !== allItems.length) {
-      set(allItems);
-    } else {
-      set(requiredItems.map(item => item.id));
-    }
-  };
   const shop = useShop();
 
   return (
@@ -85,11 +65,6 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           })
         }
         warehouses={data?.warehouses.edges.map(edge => edge.node) || []}
-        isChecked={isSelected}
-        attributesListElements={listElements}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
       />
     </>
   );

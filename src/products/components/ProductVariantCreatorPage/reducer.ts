@@ -29,7 +29,8 @@ export enum ProductVariantCreateReducerActionType {
   changeVariantData,
   changeVariantStockData,
   changeWarehouses,
-  chooseAttributes,
+  chooseAttribute,
+  toggleAttributes,
   deleteVariant,
   reload,
   selectValue
@@ -64,9 +65,12 @@ export interface ProductVariantCreateReducerAction {
   changeWarehouses?: {
     warehouseId: string;
   };
-  chooseAttributes?: {
+  chooseAttribute?: {
+    attributeId: string;
+  };
+  toggleAttributes?: {
     list: ProductDetails_product_productType_variantAttributes[];
-    selected: string[];
+    selected: number;
   };
   deleteVariant?: {
     variantIndex: number;
@@ -132,20 +136,36 @@ function selectValue(
     }
   };
 }
-
-function chooseAttributes(
+function chooseAttribute(
   prevState: ProductVariantCreateFormData,
-  list: ProductDetails_product_productType_variantAttributes[],
-  selected: string[]
+  attributeId: string
 ) {
+  const attributes = prevState.attributes;
+  const selected = attributes.find(attr => attr.id === attributeId);
+
   return {
     ...prevState,
-    attributes: list
-      .filter(item => selected.find(id => id === item.id))
-      .map(attribute => ({
-        id: attribute.id,
-        values: []
-      }))
+    attributes: selected
+      ? attributes.filter(attribute => attribute.id !== attributeId)
+      : [...attributes, { id: attributeId, values: [] }]
+  };
+}
+
+function toggleAttributes(
+  prevState: ProductVariantCreateFormData,
+  list: ProductDetails_product_productType_variantAttributes[],
+  selected: number
+) {
+  const allItems = list.map(item => item.id);
+
+  return {
+    ...prevState,
+    attributes:
+      selected === allItems.length
+        ? list
+            .filter(item => item.valueRequired)
+            .map(item => ({ id: item.id, values: [] }))
+        : list
   };
 }
 
@@ -416,11 +436,13 @@ function reduceProductVariantCreateFormData(
   action: ProductVariantCreateReducerAction
 ) {
   switch (action.type) {
-    case ProductVariantCreateReducerActionType.chooseAttributes:
-      return chooseAttributes(
+    case ProductVariantCreateReducerActionType.chooseAttribute:
+      return chooseAttribute(prevState, action.chooseAttribute.attributeId);
+    case ProductVariantCreateReducerActionType.toggleAttributes:
+      return toggleAttributes(
         prevState,
-        action.chooseAttributes.list,
-        action.chooseAttributes.selected
+        action.toggleAttributes.list,
+        action.toggleAttributes.selected
       );
     case ProductVariantCreateReducerActionType.selectValue:
       return selectValue(

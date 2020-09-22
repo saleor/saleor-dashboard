@@ -31,10 +31,12 @@ export const createInitialForm = (
   price: string,
   warehouses: WarehouseFragment[]
 ): ProductVariantCreateFormData => ({
-  attributes: attributes.map(attribute => ({
-    id: attribute.id,
-    values: []
-  })),
+  attributes: attributes
+    .filter(attribute => attribute.valueRequired)
+    .map(attribute => ({
+      id: attribute.id,
+      values: []
+    })),
   price: {
     attribute: undefined,
     mode: "all",

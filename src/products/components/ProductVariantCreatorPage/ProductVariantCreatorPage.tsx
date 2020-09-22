@@ -5,7 +5,6 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
-import { ListActionsWithoutToolbar } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -84,8 +83,6 @@ export interface ProductVariantCreatePageProps
   defaultPrice: string;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
-type ProductVariantCreatePageWithListProps = ProductVariantCreatePageProps &
-  ListActionsWithoutToolbar;
 
 function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
   switch (step) {
@@ -140,18 +137,13 @@ function getDescription(
   }
 }
 
-const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> = props => {
+const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
   const {
-    attributesListElements,
     attributes,
     defaultPrice,
     errors,
     onSubmit,
     warehouses,
-    isChecked,
-    selected,
-    toggle,
-    toggleAll,
     ...contentProps
   } = props;
   const classes = useStyles(props);
@@ -173,15 +165,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
     ],
     {
       onTransition: (_, nextStep) => {
-        if (nextStep === ProductVariantCreatorStep.values) {
-          dispatchFormDataAction({
-            chooseAttributes: {
-              list: attributes,
-              selected: attributesListElements
-            },
-            type: ProductVariantCreateReducerActionType.chooseAttributes
-          });
-        }
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
             type: ProductVariantCreateReducerActionType.reload
@@ -250,16 +233,11 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageWithListProps> 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
-        attributesListElements={attributesListElements}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
         step={step}
         warehouses={warehouses}
-        isChecked={isChecked}
-        selected={selected}
-        toggle={toggle}
-        toggleAll={toggleAll}
       />
     </Container>
   );

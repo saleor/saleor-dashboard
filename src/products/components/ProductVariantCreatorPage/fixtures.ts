@@ -57,6 +57,11 @@ export const warehouses: WarehouseFragment[] = [
   }
 ];
 
+export const firstStep: ProductVariantCreateFormData = {
+  ...createInitialForm([], "10.99", warehouses),
+  attributes: []
+};
+
 export const secondStep: ProductVariantCreateFormData = {
   ...createInitialForm([], "10.99", warehouses),
   attributes: [

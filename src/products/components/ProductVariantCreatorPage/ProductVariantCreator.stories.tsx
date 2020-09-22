@@ -73,8 +73,7 @@ const data: ProductVariantCreateFormData = {
   warehouses: selectedWarehouses.map(warehouse => warehouse.id)
 };
 const props: ProductVariantCreatorContentProps = {
-  attributes: [0, 1, 4, 6].map(index => attributes[index]),
-  attributesListElements: dataAttributes.map(attribute => attribute.id),
+  attributes: selectedAttributes,
   currencySymbol: "USD",
   data: {
     ...data,
@@ -82,18 +81,20 @@ const props: ProductVariantCreatorContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
-  isChecked: () => undefined,
-  selected: 0,
-  step: ProductVariantCreatorStep.values,
-  toggle: () => undefined,
-  toggleAll: () => undefined,
+  step: ProductVariantCreatorStep.attributes,
   warehouses: warehouseList
 };
 
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(storyFn => <Container>{storyFn()}</Container>)
   .addDecorator(Decorator)
-  .add("choose values", () => <ProductVariantCreatorContent {...props} />);
+  .add("choose attributes", () => <ProductVariantCreatorContent {...props} />)
+  .add("choose values", () => (
+    <ProductVariantCreatorContent
+      {...props}
+      step={ProductVariantCreatorStep.values}
+    />
+  ));
 
 storiesOf(
   "Views / Products / Create multiple variants / prices and SKUs",

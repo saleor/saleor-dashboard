@@ -10,13 +10,19 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { ListActionsWithoutToolbar } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ProductVariantChooseAttributesProps
-  extends ListActionsWithoutToolbar {
+import { ProductVariantCreateFormData } from "./form";
+
+export interface ProductVariantChooseAttributesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  data: ProductVariantCreateFormData;
+  onToggleAll: (
+    list: ProductDetails_product_productType_variantAttributes[],
+    selected: number
+  ) => void;
+  onValueClick: (attributeId: string) => void;
 }
 
 const numberOfColumns = 6;
@@ -31,12 +37,13 @@ const useStyles = makeStyles(
 );
 
 const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesProps> = props => {
-  const { attributes, isChecked, selected, toggle, toggleAll } = props;
+  const { attributes, data, onToggleAll, onValueClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   const positive = intl.formatMessage(commonMessages.yes);
   const negative = intl.formatMessage(commonMessages.no);
+  const selected = data?.attributes.length;
 
   return (
     <Card>
@@ -51,7 +58,7 @@ const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesPro
                   }
                   checked={selected !== 0}
                   disabled={!attributes?.length}
-                  onChange={() => toggleAll(attributes, selected)}
+                  onChange={() => onToggleAll(attributes, selected)}
                 />
               </TableCell>
             )}
@@ -88,7 +95,9 @@ const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesPro
           {renderCollection(
             attributes,
             attribute => {
-              const isSelected = attribute ? isChecked(attribute.id) : false;
+              const isSelected = attribute
+                ? !!data.attributes.find(attr => attr.id === attribute.id)
+                : false;
               return (
                 <TableRow key={attribute ? attribute.id : "skeleton"}>
                   <TableCell padding="checkbox">
@@ -96,7 +105,7 @@ const ProductVariantChooseAttributes: React.FC<ProductVariantChooseAttributesPro
                       checked={isSelected}
                       disabled={!!attribute.valueRequired}
                       disableClickPropagation
-                      onChange={() => toggle(attribute.id)}
+                      onChange={() => onValueClick(attribute.id)}
                     />
                   </TableCell>
                   <TableCell>{attribute?.slug || <Skeleton />}</TableCell>

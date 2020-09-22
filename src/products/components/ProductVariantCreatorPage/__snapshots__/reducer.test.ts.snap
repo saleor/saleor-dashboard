@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Reducer is able to choose attributes 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [],
+    },
+  ],
+  "price": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": Array [],
+    "values": Array [],
+  },
+  "variants": Array [],
+  "warehouses": Array [],
+}
+`;
+
 exports[`Reducer is able to modify individual variant price 1`] = `
 Object {
   "attributes": Array [
@@ -2393,5 +2418,25 @@ Object {
     "wh-2",
     "wh-4",
   ],
+}
+`;
+
+exports[`Reducer is able to toggle attributes 1`] = `
+Object {
+  "attributes": Array [],
+  "price": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": Array [],
+    "values": Array [],
+  },
+  "variants": Array [],
+  "warehouses": Array [],
 }
 `;

@@ -58,6 +58,9 @@ const useStyles = makeStyles(
       },
       paddingTop: theme.spacing(1)
     },
+    deleteBtn: {
+      minWidth: 52
+    },
     error: {
       padding: theme.spacing(2, 0)
     },
@@ -85,6 +88,12 @@ const useStyles = makeStyles(
     },
     rotate: {
       transform: "rotate(180deg)"
+    },
+    selectContainer: {
+      "& button": {
+        marginLeft: theme.spacing(1)
+      },
+      display: "flex"
     }
   }),
   {
@@ -190,7 +199,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                 <div key={attribute.id} className={classes.attribute}>
                   <Grid variant="uniform" className={classes.option}>
                     <Typography>{attribute.label}</Typography>
-                    <div>
+                    <div className={classes.selectContainer}>
                       <SingleAutocompleteSelectField
                         disabled={disabled}
                         displayValue={getAttributeDisplayValue(
@@ -218,17 +227,17 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                         allowCustomValues
                         data-test="variant-attribute-input"
                       />
-                    </div>
-                    {!attribute.data.isRequired && (
-                      <div>
-                        <IconButton
-                          color="primary"
-                          onClick={() => onRemove(attribute.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                      <div className={classes.deleteBtn}>
+                        {!attribute.data.isRequired && (
+                          <IconButton
+                            color="primary"
+                            onClick={() => onRemove(attribute.id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </Grid>
                 </div>
               </>
