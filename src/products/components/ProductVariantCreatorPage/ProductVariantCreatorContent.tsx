@@ -163,15 +163,6 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
               type: ProductVariantCreateReducerActionType.changeVariantPriceData
             })
           }
-          onVariantPriceDataChange={(variantIndex, value) =>
-            dispatchFormDataAction({
-              changeVariantPriceData: {
-                value,
-                variantIndex
-              },
-              type: ProductVariantCreateReducerActionType.changeVariantPriceData
-            })
-          }
           onVariantStockDataChange={(variantIndex, warehouse, value) =>
             dispatchFormDataAction({
               changeVariantStockData: {
