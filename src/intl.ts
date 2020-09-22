@@ -40,7 +40,7 @@ export const commonMessages = defineMessages({
     defaultMessage: "First Name"
   },
   generalInformations: {
-    defaultMessage: "General Informations"
+    defaultMessage: "General Information"
   },
   lastName: {
     defaultMessage: "Last Name"
