@@ -94,7 +94,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
   const intl = useIntl();
   const [expanded, setExpansionStatus] = React.useState(false);
   const toggleExpansion = () => setExpansionStatus(!expanded);
-  const shouldDisplayHelperText = () => helperText && !expanded;
+  const shouldDisplayHelperText = helperText && !expanded;
 
   return (
     <Card>
@@ -112,7 +112,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
         }
       />
       <CardContent>
-        {shouldDisplayHelperText() && (
+        {shouldDisplayHelperText && (
           <Typography
             className={classNames({ [classes.helperText]: expanded })}
           >
