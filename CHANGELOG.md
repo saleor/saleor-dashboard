@@ -43,6 +43,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix return to previous page on screen size change - #710 by @orzechdev
 - Add variants reordering possibility - #716 by @orzechdev
 - Fix avatar change button - #719 by @orzechdev
+- Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
 
 ## 2.10.1
 
