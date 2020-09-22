@@ -41,7 +41,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add error info when fetching taxes - #701 by @dominik-zeglen
 - Fix return to previous page on screen size change - #710 by @orzechdev
 - Fix updating order details on address change #711 - by @orzechdev
-- Add no warehouses info in variant creator #713 - by @orzechdev
+- Add no warehouses info when working with stock quantities #713 - by @orzechdev
 - Add variants reordering possibility - #716 by @orzechdev
 - Fix avatar change button - #719 by @orzechdev
 - Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
