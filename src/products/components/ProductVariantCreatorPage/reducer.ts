@@ -53,7 +53,6 @@ export interface ProductVariantCreateReducerAction {
     warehouseIndex: number;
   };
   changeVariantData?: {
-    field: VariantField;
     value: string;
     variantIndex: number;
   };
@@ -241,7 +240,7 @@ function changeApplyPriceToAttributeId(
   );
   const values = attribute.values.map(slug => ({
     slug,
-    value: [] // ""
+    value: []
   }));
 
   return {
@@ -281,11 +280,12 @@ function changeApplyPriceToAllValue(
   channelId: string,
   price: string
 ): ProductVariantCreateFormData {
-  const prevChannels = { ...state.price.channels };
-  const channelIndex = prevChannels.findIndex(
+  const prevChannels = [...state.price.channels];
+  const channelIndex = prevChannels?.findIndex(
     channel => channelId === channel.channelId
   );
   prevChannels[channelIndex] = { channelId, price };
+
   return {
     ...state,
     price: {
@@ -357,10 +357,18 @@ function changeVariantPriceData(
   const channelIndex = variant.channelListings.findIndex(
     listing => listing.channelId === channelId
   );
-  variant.channelListings[channelIndex] = { channelId, price };
+  const updatedVariant = {
+    ...variant,
+    channelListings: updateAtIndex(
+      { channelId, price },
+      [...variant.channelListings],
+      channelIndex
+    )
+  };
+
   return {
     ...state,
-    variants: updateAtIndex(variant, state.variants, variantIndex)
+    variants: updateAtIndex(updatedVariant, [...state.variants], variantIndex)
   };
 }
 
