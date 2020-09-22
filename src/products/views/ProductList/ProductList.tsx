@@ -150,6 +150,18 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     params
   });
 
+  React.useEffect(() => {
+    const allegroNieopublikowaneLabel = "Allegro - nieopublikowane";
+    const allegroOpublikowaneLabel = "Allegro - opublikowane";
+
+    if (tabs.filter(tab => tab.name === allegroNieopublikowaneLabel).length === 0) {
+      saveFilterTab(allegroNieopublikowaneLabel, {allegroStatus: "moderated", status: "hidden"});
+    }
+    if (tabs.filter(tab => tab.name === allegroNieopublikowaneLabel).length === 0) {
+      saveFilterTab(allegroOpublikowaneLabel, {allegroStatus: "published", status: "published"});
+    }
+  }, []);
+
   const handleTabChange = (tab: number) => {
     reset();
     navigate(

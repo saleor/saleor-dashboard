@@ -29,7 +29,8 @@ export enum ProductListUrlFiltersEnum {
   priceTo = "priceTo",
   status = "status",
   stockStatus = "stockStatus",
-  query = "query"
+  query = "query",
+  allegroStatus = "allegroStatus"
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",

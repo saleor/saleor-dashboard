@@ -641,11 +641,6 @@ export enum ProductTypeSortField {
   SHIPPING_REQUIRED = "SHIPPING_REQUIRED",
 }
 
-export enum ProductPublishType {
-  AUCTION = "AUCTION",
-  BUY_NOW = "BUY_NOW",
-}
-
 export enum SaleSortField {
   END_DATE = "END_DATE",
   NAME = "NAME",
@@ -1194,6 +1189,7 @@ export interface ProductFilterInput {
   productType?: string | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
+  allegroStatus?: string | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;

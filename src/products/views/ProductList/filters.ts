@@ -196,6 +196,7 @@ export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
   return {
+    allegroStatus: params.allegroStatus !== undefined ? params.allegroStatus : null,
     attributes: !!params.attributes
       ? Object.keys(params.attributes).map(key => ({
           slug: key,
