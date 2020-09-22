@@ -88,9 +88,11 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onSeoClick?();
-  onSubmit?(data: ProductUpdatePageSubmitData);
-  onSubmitReject?(nextAction?: ProductUpdatePageSubmitNextAction);
-  setSubmitNextAction?(nextAction: ProductUpdatePageSubmitNextAction);
+  onSubmit?(
+    data: ProductUpdatePageSubmitData,
+    nextAction?: ProductUpdatePageSubmitNextAction
+  );
+  onSubmitSkip?(nextAction?: ProductUpdatePageSubmitNextAction);
   onVariantAdd?();
   onSetDefaultVariant();
   onWarehouseConfigure();
@@ -130,7 +132,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageUpload,
   onSeoClick,
   onSubmit,
-  onSubmitReject,
+  onSubmitSkip,
   onVariantAdd,
   onVariantsAdd,
   onSetDefaultVariant,
@@ -140,9 +142,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   selected,
   toggle,
   toggleAll,
-  toolbar,
-  submitNextAction,
-  setSubmitNextAction
+  toolbar
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -201,6 +201,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
+  const [modalWithAction, setModalWithAction] = React.useState<
+    ProductUpdatePageSubmitNextAction
+  >(null);
+
   const handleSubmit = (data: ProductUpdatePageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
@@ -208,15 +212,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       : undefined;
 
     if (product.productType.hasVariants) {
-      onSubmit({
-        ...data,
-        addStocks: [],
-        attributes,
-        metadata,
-        privateMetadata,
-        removeStocks: [],
-        updateStocks: []
-      });
+      onSubmit(
+        {
+          ...data,
+          addStocks: [],
+          attributes,
+          metadata,
+          privateMetadata,
+          removeStocks: [],
+          updateStocks: []
+        },
+        modalWithAction
+      );
     } else {
       const dataStocks = stocks.map(stock => stock.id);
       const variantStocks = product.variants[0]?.stocks.map(
@@ -224,20 +231,25 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       );
       const stockDiff = diff(variantStocks, dataStocks);
 
-      onSubmit({
-        ...data,
-        addStocks: stocks.filter(stock =>
-          stockDiff.added.some(addedStock => addedStock === stock.id)
-        ),
-        attributes,
-        metadata,
-        privateMetadata,
-        removeStocks: stockDiff.removed,
-        updateStocks: stocks.filter(
-          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-        )
-      });
+      onSubmit(
+        {
+          ...data,
+          addStocks: stocks.filter(stock =>
+            stockDiff.added.some(addedStock => addedStock === stock.id)
+          ),
+          attributes,
+          metadata,
+          privateMetadata,
+          removeStocks: stockDiff.removed,
+          updateStocks: stocks.filter(
+            stock =>
+              !stockDiff.added.some(addedStock => addedStock === stock.id)
+          )
+        },
+        modalWithAction
+      );
     }
+    setModalWithAction(null);
   };
 
   return (
@@ -381,9 +393,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           removeStock(id);
                         }}
                         onWarehouseConfigure={() => {
-                          setSubmitNextAction("warehouse-configure");
                           if (disabled || !onSubmit || !hasChanged) {
-                            onSubmitReject("warehouse-configure");
+                            onSubmitSkip("warehouse-configure");
+                          } else {
+                            setModalWithAction("warehouse-configure");
                           }
                         }}
                       />
@@ -480,10 +493,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   submit();
                 }}
                 onRejectChanges={() => {
-                  onSubmitReject("warehouse-configure");
+                  onSubmitSkip("warehouse-configure");
                 }}
-                onClose={() => setSubmitNextAction(null)}
-                open={submitNextAction === "warehouse-configure"}
+                onClose={() => setModalWithAction(null)}
+                open={modalWithAction === "warehouse-configure"}
                 confirmButtonState={saveButtonBarState}
               />
             </Container>

@@ -91,7 +91,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   );
 
   const handleBack = () => navigate(productUrl(productId));
-  const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
+  const handleCreate = async (
+    formData: ProductVariantCreatePageSubmitData,
+    nextAction?: ProductVariantCreatePageSubmitNextAction
+  ) => {
+    setSubmitNextAction(nextAction);
+
     const result = await variantCreate({
       variables: {
         input: {
@@ -160,15 +165,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
         product={data?.product}
         onBack={handleBack}
-        onSubmit={async data => {
-          const errors = await handleSubmit(data);
+        onSubmit={async (data, nextAction) => {
+          const errors = await handleSubmit(data, nextAction);
           if (errors?.length === 0) {
-            handleSubmitNextAction();
+            handleSubmitNextAction(nextAction);
           } else {
             setSubmitNextAction(null);
           }
         }}
-        onSubmitReject={handleSubmitNextAction}
+        onSubmitSkip={handleSubmitNextAction}
         onVariantClick={handleVariantClick}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
@@ -176,8 +181,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
         weightUnit={shop?.defaultWeightUnit}
-        submitNextAction={submitNextAction}
-        setSubmitNextAction={setSubmitNextAction}
       />
     </>
   );

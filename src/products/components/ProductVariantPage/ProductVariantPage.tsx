@@ -65,14 +65,15 @@ interface ProductVariantPageProps {
   placeholderImage?: string;
   header: string;
   warehouses: WarehouseFragment[];
-  submitNextAction?: ProductVariantPageSubmitNextAction;
   onVariantReorder: ReorderAction;
   onAdd();
   onBack();
   onDelete();
-  onSubmit(data: ProductVariantPageSubmitData);
-  onSubmitReject?(nextAction?: ProductVariantPageSubmitNextAction);
-  setSubmitNextAction?(nextAction: ProductVariantPageSubmitNextAction);
+  onSubmit(
+    data: ProductVariantPageSubmitData,
+    nextAction?: ProductVariantPageSubmitNextAction
+  );
+  onSubmitSkip?(nextAction?: ProductVariantPageSubmitNextAction);
   onImageSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
@@ -93,13 +94,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onDelete,
   onImageSelect,
   onSubmit,
-  onSubmitReject,
+  onSubmitSkip,
   onVariantClick,
   onVariantReorder,
   onSetDefaultVariant,
-  onWarehouseConfigure,
-  submitNextAction,
-  setSubmitNextAction
+  onWarehouseConfigure
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -149,6 +148,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     weight: variant?.weight?.value.toString() || ""
   };
 
+  const [modalWithAction, setModalWithAction] = React.useState<
+    ProductVariantPageSubmitNextAction
+  >(null);
+
   const handleSubmit = (data: ProductVariantPageFormData) => {
     const dataStocks = stocks.map(stock => stock.id);
     const variantStocks = variant.stocks.map(stock => stock.warehouse.id);
@@ -158,19 +161,23 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
-      ...data,
-      addStocks: stocks.filter(stock =>
-        stockDiff.added.some(addedStock => addedStock === stock.id)
-      ),
-      attributes,
-      metadata,
-      privateMetadata,
-      removeStocks: stockDiff.removed,
-      updateStocks: stocks.filter(
-        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-      )
-    });
+    onSubmit(
+      {
+        ...data,
+        addStocks: stocks.filter(stock =>
+          stockDiff.added.some(addedStock => addedStock === stock.id)
+        ),
+        attributes,
+        metadata,
+        privateMetadata,
+        removeStocks: stockDiff.removed,
+        updateStocks: stocks.filter(
+          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+        )
+      },
+      modalWithAction
+    );
+    setModalWithAction(null);
   };
 
   return (
@@ -276,9 +283,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         removeStock(id);
                       }}
                       onWarehouseConfigure={() => {
-                        setSubmitNextAction("warehouse-configure");
                         if (!onSubmit || !hasChanged) {
-                          onSubmitReject("warehouse-configure");
+                          onSubmitSkip("warehouse-configure");
+                        } else {
+                          setModalWithAction("warehouse-configure");
                         }
                       }}
                     />
@@ -298,10 +306,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     submit();
                   }}
                   onRejectChanges={() => {
-                    onSubmitReject("warehouse-configure");
+                    onSubmitSkip("warehouse-configure");
                   }}
-                  onClose={() => setSubmitNextAction(null)}
-                  open={submitNextAction === "warehouse-configure"}
+                  onClose={() => setModalWithAction(null)}
+                  open={modalWithAction === "warehouse-configure"}
                   confirmButtonState={saveButtonBarState}
                 />
               </>

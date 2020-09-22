@@ -318,15 +318,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
-        onSubmit={async data => {
+        onSubmit={async (data, nextAction) => {
           const errors = await handleSubmit(data);
           if (errors?.length === 0) {
-            handleSubmitNextAction();
+            handleSubmitNextAction(nextAction);
           } else {
             setSubmitNextAction(null);
           }
         }}
-        onSubmitReject={handleSubmitNextAction}
+        onSubmitSkip={handleSubmitNextAction}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>
@@ -365,8 +365,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
-        submitNextAction={submitNextAction}
-        setSubmitNextAction={setSubmitNextAction}
       />
       <ActionDialog
         open={params.action === "remove"}

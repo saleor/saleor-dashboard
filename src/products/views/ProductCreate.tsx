@@ -97,7 +97,12 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({}) => {
     }
   });
 
-  const handleCreate = async (formData: ProductCreatePageSubmitData) => {
+  const handleCreate = async (
+    formData: ProductCreatePageSubmitData,
+    nextAction?: ProductCreatePageSubmitNextAction
+  ) => {
+    setSubmitNextAction(nextAction);
+
     const result = await productCreate({
       variables: {
         input: {
@@ -198,15 +203,15 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({}) => {
           edge => edge.node
         )}
         onBack={handleBack}
-        onSubmit={async data => {
-          const errors = await handleSubmit(data);
+        onSubmit={async (data, nextAction) => {
+          const errors = await handleSubmit(data, nextAction);
           if (errors?.length === 0) {
-            handleSubmitNextAction();
+            handleSubmitNextAction(nextAction);
           } else {
             setSubmitNextAction(null);
           }
         }}
-        onSubmitReject={handleSubmitNextAction}
+        onSubmitSkip={handleSubmitNextAction}
         saveButtonBarState={productCreateOpts.status}
         fetchMoreCategories={{
           hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
@@ -223,8 +228,6 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({}) => {
           loading: searchProductTypesOpts.loading,
           onFetchMore: loadMoreProductTypes
         }}
-        submitNextAction={submitNextAction}
-        setSubmitNextAction={setSubmitNextAction}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }

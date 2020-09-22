@@ -231,21 +231,19 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={async data => {
+        onSubmit={async (data, nextAction) => {
           const errors = await handleSubmit(data);
           if (errors?.length === 0) {
-            handleSubmitNextAction();
+            handleSubmitNextAction(nextAction);
           } else {
             setSubmitNextAction(null);
           }
         }}
-        onSubmitReject={handleSubmitNextAction}
+        onSubmitSkip={handleSubmitNextAction}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
-        submitNextAction={submitNextAction}
-        setSubmitNextAction={setSubmitNextAction}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

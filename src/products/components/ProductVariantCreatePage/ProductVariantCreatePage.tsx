@@ -57,14 +57,13 @@ interface ProductVariantCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;
-  submitNextAction?: ProductVariantCreatePageSubmitNextAction;
   onBack: () => void;
-  onSubmit: (data: ProductVariantCreatePageSubmitData) => void;
-  onSubmitReject?: (
+  onSubmit: (
+    data: ProductVariantCreatePageSubmitData,
     nextAction?: ProductVariantCreatePageSubmitNextAction
   ) => void;
-  setSubmitNextAction?: (
-    nextAction: ProductVariantCreatePageSubmitNextAction
+  onSubmitSkip?: (
+    nextAction?: ProductVariantCreatePageSubmitNextAction
   ) => void;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: ReorderAction;
@@ -81,11 +80,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   weightUnit,
   onBack,
   onSubmit,
-  onSubmitReject,
+  onSubmitSkip,
   onVariantClick,
-  onVariantReorder,
-  submitNextAction,
-  setSubmitNextAction
+  onVariantReorder
 }) => {
   const intl = useIntl();
   const attributeInput = React.useMemo(
@@ -117,12 +114,21 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     weight: ""
   };
 
-  const handleSubmit = (data: ProductVariantCreatePageFormData) =>
-    onSubmit({
-      ...data,
-      attributes,
-      stocks
-    });
+  const [modalWithAction, setModalWithAction] = React.useState<
+    ProductVariantCreatePageSubmitNextAction
+  >(null);
+
+  const handleSubmit = (data: ProductVariantCreatePageFormData) => {
+    onSubmit(
+      {
+        ...data,
+        attributes,
+        stocks
+      },
+      modalWithAction
+    );
+    setModalWithAction(null);
+  };
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
@@ -202,9 +208,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     removeStock(id);
                   }}
                   onWarehouseConfigure={() => {
-                    setSubmitNextAction("warehouse-configure");
                     if (disabled || !onSubmit || !hasChanged) {
-                      onSubmitReject("warehouse-configure");
+                      onSubmitSkip("warehouse-configure");
+                    } else {
+                      setModalWithAction("warehouse-configure");
                     }
                   }}
                 />
@@ -233,10 +240,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 submit();
               }}
               onRejectChanges={() => {
-                onSubmitReject("warehouse-configure");
+                onSubmitSkip("warehouse-configure");
               }}
-              onClose={() => setSubmitNextAction(null)}
-              open={submitNextAction === "warehouse-configure"}
+              onClose={() => setModalWithAction(null)}
+              open={modalWithAction === "warehouse-configure"}
               confirmButtonState={saveButtonBarState}
             />
           </Container>
