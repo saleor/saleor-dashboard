@@ -153,7 +153,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Configurable attributes"
+          defaultMessage: "Configurable Attributes"
         })}
         toolbar={
           <Button color="primary" onClick={onEdit}>

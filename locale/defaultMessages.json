@@ -4367,18 +4367,30 @@
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
   },
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2232321263": {
+    "context": "product publication date label",
+    "string": "will become published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2341910657": {
+    "context": "product label",
+    "string": "Not published"
+  },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
+  },
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_3640454975": {
+    "context": "product label",
+    "string": "Published"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1657839837": {
     "string": "Attribute Value{required}"
   },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_301135124": {
-    "string": "Configurable attributes"
-  },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_328193388": {
     "context": "number of product attributes",
     "string": "{number,plural,one{{number} Attribute} other{{number} Attributes}}"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_535204714": {
+    "string": "Configurable Attributes"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",
