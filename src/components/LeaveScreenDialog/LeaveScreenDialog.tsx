@@ -3,7 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { buttonMessages } from "@saleor/intl";
+import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -39,7 +39,7 @@ const LeaveScreenDialog: React.FC<LeaveScreenDialogProps> = ({
     </DialogContent>
     <DialogActions>
       <Button onClick={onRejectChanges}>
-        <FormattedMessage {...buttonMessages.no} />
+        <FormattedMessage {...commonMessages.no} />
       </Button>
       <ConfirmButton
         transitionState={confirmButtonState}
@@ -47,7 +47,7 @@ const LeaveScreenDialog: React.FC<LeaveScreenDialogProps> = ({
         variant="contained"
         onClick={onSaveChanges}
       >
-        <FormattedMessage {...buttonMessages.yes} />
+        <FormattedMessage {...commonMessages.yes} />
       </ConfirmButton>
     </DialogActions>
   </Dialog>

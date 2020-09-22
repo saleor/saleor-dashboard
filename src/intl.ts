@@ -136,10 +136,6 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Next",
     description: "go to next step, button"
   },
-  no: {
-    defaultMessage: "No",
-    description: "button"
-  },
   ok: {
     defaultMessage: "OK",
     description: "button"
@@ -166,10 +162,6 @@ export const buttonMessages = defineMessages({
   },
   undo: {
     defaultMessage: "Undo",
-    description: "button"
-  },
-  yes: {
-    defaultMessage: "Yes",
     description: "button"
   }
 });
