@@ -19,6 +19,7 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { ReorderAction } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
@@ -60,6 +61,7 @@ interface ProductVariantPageProps {
   placeholderImage?: string;
   header: string;
   warehouses: WarehouseFragment[];
+  onVariantReorder: ReorderAction;
   onAdd();
   onBack();
   onDelete();
@@ -82,7 +84,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onDelete,
   onImageSelect,
   onSubmit,
-  onVariantClick
+  onVariantClick,
+  onVariantReorder
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -188,6 +191,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           return onVariantClick(variantId);
                         }
                       }}
+                      onReorder={onVariantReorder}
                     />
                   </div>
                   <div>

@@ -83,9 +83,6 @@ const useStyles = makeStyles(
     imageUploadActive: {
       zIndex: 1
     },
-    imageUploadIcon: {
-      display: "none"
-    },
     imageUploadIconActive: {
       display: "block"
     },
@@ -253,7 +250,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
               className={classes.imageUpload}
               isActiveClassName={classes.imageUploadActive}
               disableClick={true}
-              iconContainerClassName={classes.imageUploadIcon}
+              hideUploadIcon={true}
               iconContainerActiveClassName={classes.imageUploadIconActive}
               onImageUpload={handleImageUpload}
             >

@@ -18,7 +18,7 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { FetchMoreProps, ListActions } from "@saleor/types";
+import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -73,6 +73,7 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
+  onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
   onBack?();
   onDelete();
@@ -120,6 +121,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantAdd,
   onVariantsAdd,
   onVariantShow,
+  onVariantReorder,
   isChecked,
   selected,
   toggle,
@@ -302,6 +304,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
                       onVariantsAdd={onVariantsAdd}
+                      onVariantReorder={onVariantReorder}
                       toolbar={toolbar}
                       isChecked={isChecked}
                       selected={selected}

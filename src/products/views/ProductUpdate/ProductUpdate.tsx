@@ -10,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import {
   useProductDeleteMutation,
@@ -19,6 +20,7 @@ import {
   useProductSetAvailabilityForPurchase,
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
+  useProductVariantReorderMutation,
   useSimpleProductUpdateMutation
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -51,7 +53,8 @@ import {
 import {
   createImageReorderHandler,
   createImageUploadHandler,
-  createUpdateHandler
+  createUpdateHandler,
+  createVariantReorderHandler
 } from "./handlers";
 
 interface ProductUpdateProps {
@@ -177,6 +180,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onCompleted: data => {
       const errors = data?.productSetAvailabilityForPurchase?.errors;
       if (errors?.length === 0) {
+        const updatedProduct = data?.productSetAvailabilityForPurchase?.product;
+        setProduct(product => ({
+          ...product,
+          availableForPurchase: updatedProduct.availableForPurchase,
+          isAvailableForPurchase: updatedProduct.isAvailableForPurchase
+        }));
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -195,7 +204,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleBack = () => navigate(productListUrl());
 
-  const product = data?.product;
+  const [product, setProduct] = useStateFromProps(data?.product);
 
   if (product === null) {
     return <NotFoundPage onBack={handleBack} />;
@@ -225,12 +234,22 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductImages({ variables })
   );
 
+  const [
+    reorderProductVariants,
+    reorderProductVariantsOpts
+  ] = useProductVariantReorderMutation({});
+
+  const handleVariantReorder = createVariantReorderHandler(product, variables =>
+    reorderProductVariants({ variables })
+  );
+
   const disableFormSave =
     createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
     updateProductOpts.loading ||
     productAvailabilityOpts.loading ||
+    reorderProductVariantsOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
@@ -282,6 +301,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
+        onVariantReorder={handleVariantReorder}
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}

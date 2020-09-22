@@ -5890,6 +5890,10 @@
     "context": "webhook events",
     "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
+    "context": "event",
+    "string": "Product updated"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
     "context": "event",
     "string": "Order fully paid"

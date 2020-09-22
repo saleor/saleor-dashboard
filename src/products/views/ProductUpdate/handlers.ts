@@ -14,11 +14,15 @@ import {
   ProductUpdate,
   ProductUpdateVariables
 } from "@saleor/products/types/ProductUpdate";
+import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
+import { ProductVariantDetails_productVariant_product } from "@saleor/products/types/ProductVariantDetails";
+import { ProductVariantReorderVariables } from "@saleor/products/types/ProductVariantReorder";
 import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
@@ -92,20 +96,13 @@ export function createUpdateHandler(
       isAvailableForPurchase !== product.isAvailableForPurchase ||
       availableForPurchase !== product.availableForPurchase
     ) {
-      const isAvailable =
-        availableForPurchase && !isAvailableForPurchase
-          ? true
-          : isAvailableForPurchase;
-
-      const availabilityResult = await setProductAvailability({
-        isAvailable,
-        productId: product.id,
-        startDate: isAvailableForPurchase
-          ? null
-          : availableForPurchase !== ""
-          ? availableForPurchase
-          : null
+      const variables = getProductAvailabilityVariables({
+        availableForPurchase,
+        isAvailableForPurchase,
+        productId: product.id
       });
+
+      const availabilityResult = await setProductAvailability(variables);
       errors = [
         ...errors,
         ...availabilityResult.data.productSetAvailabilityForPurchase.errors
@@ -137,6 +134,24 @@ export function createImageReorderHandler(
     ids = arrayMove(ids, oldIndex, newIndex);
     reorderProductImages({
       imagesIds: ids,
+      productId: product.id
+    });
+  };
+}
+
+export function createVariantReorderHandler(
+  product:
+    | ProductDetails_product
+    | ProductVariantDetails_productVariant_product
+    | ProductVariantCreateData_product,
+  reorderProductVariants: (variables: ProductVariantReorderVariables) => void
+) {
+  return ({ newIndex, oldIndex }: ReorderEvent) => {
+    reorderProductVariants({
+      move: {
+        id: product.variants[oldIndex].id,
+        sortOrder: newIndex - oldIndex
+      },
       productId: product.id
     });
   };

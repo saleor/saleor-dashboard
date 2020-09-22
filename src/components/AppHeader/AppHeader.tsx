@@ -34,7 +34,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(0.5),
       transition: theme.transitions.duration.standard + "ms",
       [theme.breakpoints.down("sm")]: {
-        margin: theme.spacing(4, 0, 3, 0)
+        margin: theme.spacing(4, 0, 0, 0)
       }
     },
     skeleton: {

@@ -34,6 +34,14 @@ const useStyles = makeStyles(
       position: "relative",
       width: 120
     },
+    avatarActionText: {
+      "&:hover": {
+        textDecoration: "underline"
+      },
+      color: "#fff",
+      cursor: "pointer",
+      fontSize: 12
+    },
     avatarDefault: {
       "& div": {
         color: "#fff",
@@ -47,17 +55,10 @@ const useStyles = makeStyles(
       width: 120
     },
     avatarHover: {
-      "& p": {
-        "&:hover": {
-          textDecoration: "underline"
-        },
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        fontSize: 12,
-        fontWeight: 500
-      },
       background: "#00000080",
       borderRadius: "100%",
+      fontSize: 12,
+      fontWeight: 500,
       height: 120,
       opacity: 0,
       padding: theme.spacing(2.5, 0),
@@ -155,13 +156,19 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
               {canEditAvatar && (
                 <div className={classes.avatarHover}>
                   <SVG src={photoIcon} />
-                  <Typography onClick={clickImgInput}>
+                  <Typography
+                    onClick={clickImgInput}
+                    className={classes.avatarActionText}
+                  >
                     <FormattedMessage
                       defaultMessage="Change photo"
                       description="button"
                     />
                   </Typography>
-                  <Typography onClick={onImageDelete}>
+                  <Typography
+                    onClick={onImageDelete}
+                    className={classes.avatarActionText}
+                  >
                     <FormattedMessage
                       defaultMessage="Delete photo"
                       description="button"
