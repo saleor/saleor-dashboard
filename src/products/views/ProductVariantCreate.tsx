@@ -52,17 +52,19 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
     onCompleted: data => {
-      if (data.productVariantCreate.errors.length === 0 && !submitNextAction) {
+      if (data.productVariantCreate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-        navigate(
-          productVariantEditUrl(
-            productId,
-            data.productVariantCreate.productVariant.id
-          )
-        );
+        if (!submitNextAction) {
+          navigate(
+            productVariantEditUrl(
+              productId,
+              data.productVariantCreate.productVariant.id
+            )
+          );
+        }
       }
     }
   });
