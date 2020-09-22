@@ -16,10 +16,7 @@ import { stringifyQs } from "../utils/urls";
 const productSection = "/products/";
 
 export const productAddPath = urlJoin(productSection, "add");
-export type ProductAddUrlDialog = "leave-screen";
-export type ProductAddUrlQueryParams = Dialog<ProductAddUrlDialog>;
-export const productAddUrl = (params?: ProductAddUrlQueryParams) =>
-  productAddPath + "?" + stringifyQs(params);
+export const productAddUrl = productAddPath;
 
 export const productListPath = productSection;
 export type ProductListUrlDialog =
@@ -69,14 +66,14 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
 
 export const productPath = (id: string) => urlJoin(productSection + id);
-export type ProductUrlDialog = "remove" | "remove-variants" | "leave-screen";
+export type ProductUrlDialog = "remove" | "remove-variants";
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog>;
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
   productPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
-export type ProductVariantEditUrlDialog = "remove" | "leave-screen";
+export type ProductVariantEditUrlDialog = "remove";
 export type ProductVariantEditUrlQueryParams = Dialog<
   ProductVariantEditUrlDialog
 >;
@@ -99,17 +96,8 @@ export const productVariantCreatorUrl = (productId: string) =>
 
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
-export type ProductVariantAddUrlDialog = "leave-screen";
-export type ProductVariantAddUrlQueryParams = Dialog<
-  ProductVariantAddUrlDialog
->;
-export const productVariantAddUrl = (
-  productId: string,
-  params?: ProductVariantAddUrlQueryParams
-): string =>
-  productVariantAddPath(encodeURIComponent(productId)) +
-  "?" +
-  stringifyQs(params);
+export const productVariantAddUrl = (productId: string): string =>
+  productVariantAddPath(encodeURIComponent(productId));
 
 export const productImagePath = (productId: string, imageId: string) =>
   urlJoin(productSection, productId, "image", imageId);

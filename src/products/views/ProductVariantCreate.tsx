@@ -24,17 +24,11 @@ import {
   useVariantCreateMutation
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
-import {
-  productListUrl,
-  productUrl,
-  ProductVariantAddUrlQueryParams,
-  productVariantEditUrl
-} from "../urls";
+import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
   productId: string;
-  params: ProductVariantAddUrlQueryParams;
 }
 
 export const ProductVariant: React.FC<ProductVariantCreateProps> = ({

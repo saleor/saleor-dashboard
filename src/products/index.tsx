@@ -9,7 +9,6 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
-  ProductAddUrlQueryParams,
   productImagePath,
   ProductImageUrlQueryParams,
   productListPath,
@@ -18,12 +17,11 @@ import {
   productPath,
   ProductUrlQueryParams,
   productVariantAddPath,
-  ProductVariantAddUrlQueryParams,
   productVariantCreatorPath,
   productVariantEditPath,
   ProductVariantEditUrlQueryParams
 } from "./urls";
-import ProductCreateComponent from "./views/ProductCreate";
+import ProductCreate from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
@@ -45,13 +43,6 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   );
 
   return <ProductListComponent params={params} />;
-};
-
-const ProductCreate: React.FC<RouteComponentProps> = () => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductAddUrlQueryParams = qs;
-
-  return <ProductCreateComponent params={params} />;
 };
 
 const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
@@ -100,17 +91,11 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
-}) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductVariantAddUrlQueryParams = qs;
-
-  return (
-    <ProductVariantCreateComponent
-      productId={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
-};
+}) => (
+  <ProductVariantCreateComponent
+    productId={decodeURIComponent(match.params.id)}
+  />
+);
 
 const ProductVariantCreator: React.FC<RouteComponentProps<{
   id: string;

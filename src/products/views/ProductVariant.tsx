@@ -1,5 +1,4 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -54,7 +53,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   productId,
   params
 }) => {
-  const { action } = params;
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -82,7 +80,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const [openModal, closeModal] = createDialogActionHandlers<
+  const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
   >(
@@ -257,13 +255,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         }
         open={params.action === "remove"}
         name={data?.productVariant?.name}
-      />
-      <LeaveScreenDialog
-        onSaveChanges={() => navigate(warehouseListPath)}
-        onRejectChanges={() => navigate(warehouseListPath)}
-        onClose={closeModal}
-        open={action === "leave-screen"}
-        confirmButtonState="default"
       />
     </>
   );

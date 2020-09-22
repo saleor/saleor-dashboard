@@ -28,13 +28,9 @@ import {
   useProductCreateMutation,
   useProductSetAvailabilityForPurchase
 } from "../mutations";
-import { ProductAddUrlQueryParams, productListUrl, productUrl } from "../urls";
+import { productListUrl, productUrl } from "../urls";
 
-interface ProductCreateViewProps {
-  params: ProductAddUrlQueryParams;
-}
-
-export const ProductCreateView: React.FC<ProductCreateViewProps> = ({}) => {
+export const ProductCreateView: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
