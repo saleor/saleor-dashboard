@@ -62,7 +62,11 @@ function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantBulkCreateInput {
-  const price = getPriceFromMode(attributes, data.price, []);
+  const price = getPriceFromMode(
+    attributes,
+    data.price,
+    data.price.channels.map(channel => ({ ...channel, price: "" }))
+  );
   const stocks = getValueFromMode(
     attributes,
     data.stock,

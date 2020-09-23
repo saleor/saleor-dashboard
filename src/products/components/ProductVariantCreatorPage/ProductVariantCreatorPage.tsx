@@ -69,7 +69,13 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return data.variants.every(variant => variant.sku !== "");
+      return data.variants.every(
+        variant =>
+          variant.sku !== "" &&
+          variant.channelListings.every(
+            channel => channel.price !== "" && parseInt(channel.price, 10) >= 0
+          )
+      );
 
     default:
       return false;

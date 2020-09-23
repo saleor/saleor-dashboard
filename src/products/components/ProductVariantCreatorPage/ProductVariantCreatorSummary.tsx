@@ -275,6 +275,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                           channel => channel.channelId === listing.id
                         )?.price
                       }
+                      required
                       onChange={event =>
                         onVariantPriceDataChange(variantIndex, {
                           channelId: listing.id,

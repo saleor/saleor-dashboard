@@ -128,7 +128,8 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                       }
                       label={intl.formatMessage({
                         defaultMessage: "Price",
-                        description: "input label"
+                        description: "input label",
+                        id: "productVariantCreatePricesSetPricePlaceholder"
                       })}
                       currencySymbol={listing.currency}
                       onChange={event =>
@@ -148,6 +149,15 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
               defaultMessage: "Apply unique prices by attribute to each SKU"
             })}
             onChange={() => onApplyToAllChange("attribute")}
+          />
+          <FormSpacer />
+          <FormControlLabel
+            value="skip"
+            control={<Radio color="primary" />}
+            label={intl.formatMessage({
+              defaultMessage: "Skip pricing for now"
+            })}
+            onChange={() => onApplyToAllChange("skip")}
           />
         </RadioGroup>
         {data.price.mode === "attribute" && (

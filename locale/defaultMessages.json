@@ -3958,6 +3958,9 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2783195765": {
     "string": "Apply single price to all SKUs"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2877822536": {
+    "string": "Skip pricing for now"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3387090508": {
     "string": "Apply unique stock by attribute to each SKU"
   },
