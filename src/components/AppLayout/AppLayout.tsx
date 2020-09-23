@@ -75,9 +75,10 @@ const useStyles = makeStyles(
         height: "auto"
       }
     },
-
     root: {
-      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "flex"
+      },
       width: `100%`
     },
     spacer: {

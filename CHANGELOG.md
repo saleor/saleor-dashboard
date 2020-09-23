@@ -44,6 +44,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add variants reordering possibility - #716 by @orzechdev
 - Fix avatar change button - #719 by @orzechdev
 - Allow product variant to be set as default - #721 by @tomaszszymanski129
+- Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
 
 ## 2.10.1
 
