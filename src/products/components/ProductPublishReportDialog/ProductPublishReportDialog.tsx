@@ -25,6 +25,9 @@ const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = pr
   const { open, onClose, privateMetadataMap, isPublished } = props;
   const classes = useStyles(props);
 
+  const offerUrlPart = (!isPublished && privateMetadataMap &&
+    privateMetadataMap['publish.allegro.status'] === "moderated") ? "offer" : "oferta";
+
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>Raport publikacji</DialogTitle>
@@ -42,7 +45,7 @@ const ProductPublishReportDialog: React.FC<ProductPublishReportDialogProps> = pr
           </Grid>
           <Grid item xs={4}>
             {privateMetadataMap && privateMetadataMap['publish.allegro.id'] !== undefined ?
-              <Link href={"https://allegro.pl/offer/" + privateMetadataMap['publish.allegro.id'] +
+              <Link href={"https://allegro.pl/" + offerUrlPart + "/" + privateMetadataMap['publish.allegro.id'] +
               ((!isPublished && privateMetadataMap['publish.allegro.status'] === 'moderated') ? '/restore' : '')} target="_blank">
                 Przejdź do aukcji
               </Link>
