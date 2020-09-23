@@ -44,6 +44,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add variants reordering possibility - #716 by @orzechdev
 - Fix avatar change button - #719 by @orzechdev
 - Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
+- Fix misaligned rich text draft controls - #725 by @orzechdev
 
 ## 2.10.1
 

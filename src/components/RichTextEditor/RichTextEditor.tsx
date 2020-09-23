@@ -137,7 +137,6 @@ const useStyles = makeStyles(
               "&:hover": {
                 background: fade(theme.palette.primary.main, 0.3)
               },
-              alignItems: "center",
               background: "none",
               border: "none",
               borderRight: `1px ${theme.palette.divider} solid`,
