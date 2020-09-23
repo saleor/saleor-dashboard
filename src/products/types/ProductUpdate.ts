@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductUpdate
@@ -58,12 +58,19 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   values: (ProductUpdate_productUpdate_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductUpdate_productUpdate_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductUpdate_productUpdate_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductUpdate_productUpdate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductUpdate_productUpdate_product_productType_taxType | null;
 }
 
 export interface ProductUpdate_productUpdate_product_pricing_priceRangeUndiscounted_start_gross {
@@ -192,6 +199,12 @@ export interface ProductUpdate_productUpdate_product_weight {
   value: number;
 }
 
+export interface ProductUpdate_productUpdate_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductUpdate_productUpdate_product {
   __typename: "Product";
   id: string;
@@ -216,6 +229,7 @@ export interface ProductUpdate_productUpdate_product {
   images: (ProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: ProductUpdate_productUpdate_product_weight | null;
+  taxType: ProductUpdate_productUpdate_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
 }
@@ -232,15 +246,5 @@ export interface ProductUpdate {
 
 export interface ProductUpdateVariables {
   id: string;
-  attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
-  category?: string | null;
-  chargeTaxes: boolean;
-  collections?: (string | null)[] | null;
-  descriptionJson?: any | null;
-  isPublished: boolean;
-  name?: string | null;
-  basePrice?: any | null;
-  seo?: SeoInput | null;
-  visibleInListings?: boolean | null;
+  input: ProductInput;
 }

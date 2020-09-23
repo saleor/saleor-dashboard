@@ -52,12 +52,19 @@ export interface Product_productType_variantAttributes {
   values: (Product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface Product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface Product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (Product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: Product_productType_taxType | null;
 }
 
 export interface Product_pricing_priceRangeUndiscounted_start_gross {
@@ -186,6 +193,12 @@ export interface Product_weight {
   value: number;
 }
 
+export interface Product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface Product {
   __typename: "Product";
   id: string;
@@ -210,6 +223,7 @@ export interface Product {
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
+  taxType: Product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
 }

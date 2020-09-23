@@ -174,20 +174,22 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   availableForPurchase: string;
   basePrice: number;
   category: string | null;
-  collections: string[];
+  changeTaxCode: boolean;
   chargeTaxes: boolean;
+  collections: string[];
   description: RawDraftContentState;
-  isAvailableForPurchase: boolean;
   isAvailable: boolean;
+  isAvailableForPurchase: boolean;
   isPublished: boolean;
   name: string;
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
+  taxCode: string;
   trackInventory: boolean;
-  weight: string;
   visibleInListings: boolean;
+  weight: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -198,6 +200,8 @@ export function getProductUpdatePageFormData(
     availableForPurchase: product?.availableForPurchase,
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
+    changeTaxCode:
+      product?.productType.taxType.taxCode !== product?.taxType.taxCode,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
@@ -222,6 +226,7 @@ export function getProductUpdatePageFormData(
           : undefined,
       ""
     ),
+    taxCode: product?.taxType.taxCode,
     trackInventory: !!product?.variants[0]?.trackInventory,
     visibleInListings: !!product?.visibleInListings,
     weight: product?.weight?.value.toString() || ""

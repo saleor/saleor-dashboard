@@ -58,12 +58,19 @@ export interface ProductImageCreate_productImageCreate_product_productType_varia
   values: (ProductImageCreate_productImageCreate_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductImageCreate_productImageCreate_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductImageCreate_productImageCreate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductImageCreate_productImageCreate_product_productType_taxType | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start_gross {
@@ -192,6 +199,12 @@ export interface ProductImageCreate_productImageCreate_product_weight {
   value: number;
 }
 
+export interface ProductImageCreate_productImageCreate_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product {
   __typename: "Product";
   id: string;
@@ -216,6 +229,7 @@ export interface ProductImageCreate_productImageCreate_product {
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
   weight: ProductImageCreate_productImageCreate_product_weight | null;
+  taxType: ProductImageCreate_productImageCreate_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
 }

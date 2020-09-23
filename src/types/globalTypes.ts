@@ -1341,6 +1341,28 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
+export interface ProductCreateInput {
+  attributes?: (AttributeValueInput | null)[] | null;
+  publicationDate?: any | null;
+  category?: string | null;
+  chargeTaxes?: boolean | null;
+  collections?: (string | null)[] | null;
+  description?: string | null;
+  descriptionJson?: any | null;
+  isPublished?: boolean | null;
+  name?: string | null;
+  slug?: string | null;
+  taxCode?: string | null;
+  seo?: SeoInput | null;
+  weight?: any | null;
+  sku?: string | null;
+  trackInventory?: boolean | null;
+  basePrice?: any | null;
+  visibleInListings?: boolean | null;
+  productType: string;
+  stocks?: StockInput[] | null;
+}
+
 export interface ProductFilterInput {
   isPublished?: boolean | null;
   collections?: (string | null)[] | null;
@@ -1354,6 +1376,26 @@ export interface ProductFilterInput {
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+}
+
+export interface ProductInput {
+  attributes?: (AttributeValueInput | null)[] | null;
+  publicationDate?: any | null;
+  category?: string | null;
+  chargeTaxes?: boolean | null;
+  collections?: (string | null)[] | null;
+  description?: string | null;
+  descriptionJson?: any | null;
+  isPublished?: boolean | null;
+  name?: string | null;
+  slug?: string | null;
+  taxCode?: string | null;
+  seo?: SeoInput | null;
+  weight?: any | null;
+  sku?: string | null;
+  trackInventory?: boolean | null;
+  basePrice?: any | null;
+  visibleInListings?: boolean | null;
 }
 
 export interface ProductOrder {
