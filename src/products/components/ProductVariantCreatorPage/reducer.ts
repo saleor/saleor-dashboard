@@ -285,7 +285,6 @@ function changeApplyPriceToAllValue(
     channel => channelId === channel.channelId
   );
   prevChannels[channelIndex] = { channelId, price };
-
   return {
     ...state,
     price: {
@@ -365,7 +364,6 @@ function changeVariantPriceData(
       channelIndex
     )
   };
-
   return {
     ...state,
     variants: updateAtIndex(updatedVariant, [...state.variants], variantIndex)

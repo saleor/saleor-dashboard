@@ -3907,7 +3907,7 @@
     "string": "Delete Variant"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
-    "context": "variant price",
+    "context": "variant price, header",
     "string": "Price"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1346828628": {
@@ -3932,6 +3932,10 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2158649399": {
     "context": "product attribute values, page title",
     "string": "Choose Values"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2330516954": {
+    "context": "variant channel price",
+    "string": "{channel} Price"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2478977538": {
     "context": "attribute values, variant creation step",

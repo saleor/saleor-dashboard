@@ -8,6 +8,12 @@ import {
   ProductVariantCreateFormData
 } from "./form";
 
+export const channels = [
+  { currency: "USD", id: "channel-1", name: "Channel1", price: 1 },
+  { currency: "USD", id: "channel-2", name: "Channel2", price: 2 },
+  { currency: "USD", id: "channel-3", name: "Channel3", price: 3 }
+];
+
 export const attributes = [
   {
     id: "attr-1",
@@ -59,7 +65,7 @@ export const warehouses: WarehouseFragment[] = [
 ];
 
 export const secondStep: ProductVariantCreateFormData = {
-  ...createInitialForm([], [], warehouses),
+  ...createInitialForm([], channels, warehouses),
   attributes: [
     {
       id: attributes[0].id,
@@ -102,23 +108,26 @@ export const thirdStep: ProductVariantCreateFormData = {
 const price: Price<Array<{ channelId: string; price: string }>> = {
   attribute: thirdStep.attributes[1].id,
   channels: [
-    { channelId: "1", price: "0" },
-    { channelId: "2", price: "2" }
+    { channelId: channels[0].id, price: "0" },
+    { channelId: channels[1].id, price: "2" },
+    { channelId: channels[2].id, price: "2" }
   ],
   mode: "attribute",
   values: [
     {
       slug: thirdStep.attributes[1].values[0],
       value: [
-        { channelId: "1", price: "0" },
-        { channelId: "2", price: "2" }
+        { channelId: channels[0].id, price: "0" },
+        { channelId: channels[1].id, price: "2" },
+        { channelId: channels[2].id, price: "2" }
       ]
     },
     {
       slug: thirdStep.attributes[1].values[1],
       value: [
-        { channelId: "1", price: "1" },
-        { channelId: "2", price: "2" }
+        { channelId: channels[0].id, price: "0" },
+        { channelId: channels[1].id, price: "2" },
+        { channelId: channels[2].id, price: "2" }
       ]
     }
   ]

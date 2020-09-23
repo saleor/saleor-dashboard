@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reducer is able to modify individual variant stock 1`] = `
+exports[`Reducer is able to modify individual variant price 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -29,11 +29,15 @@ Object {
     "attribute": "attr-2",
     "channels": Array [
       Object {
-        "channelId": "1",
+        "channelId": "channel-1",
         "price": "0",
       },
       Object {
-        "channelId": "2",
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
         "price": "2",
       },
     ],
@@ -43,11 +47,15 @@ Object {
         "slug": "val-2-2",
         "value": Array [
           Object {
-            "channelId": "1",
+            "channelId": "channel-1",
             "price": "0",
           },
           Object {
-            "channelId": "2",
+            "channelId": "channel-2",
+            "price": "2",
+          },
+          Object {
+            "channelId": "channel-3",
             "price": "2",
           },
         ],
@@ -56,11 +64,15 @@ Object {
         "slug": "val-2-4",
         "value": Array [
           Object {
-            "channelId": "1",
-            "price": "1",
+            "channelId": "channel-1",
+            "price": "0",
           },
           Object {
-            "channelId": "2",
+            "channelId": "channel-2",
+            "price": "2",
+          },
+          Object {
+            "channelId": "channel-3",
             "price": "2",
           },
         ],
@@ -116,11 +128,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
+          "channelId": "channel-1",
           "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -167,11 +183,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
+          "channelId": "channel-1",
           "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -218,11 +238,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
-          "price": "1",
+          "channelId": "channel-1",
+          "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -269,11 +293,570 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
-          "price": "1",
+          "channelId": "channel-1",
+          "price": "7",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 80,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 85,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 105,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 20,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 75,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 80,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 85,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 105,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 20,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 75,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 80,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 85,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 105,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+  ],
+  "warehouses": Array [
+    "wh-1",
+    "wh-2",
+    "wh-3",
+    "wh-4",
+  ],
+}
+`;
+
+exports[`Reducer is able to modify individual variant stock 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "attribute": "attr-2",
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "0",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "2",
+      },
+    ],
+    "mode": "attribute",
+    "values": Array [
+      Object {
+        "slug": "val-2-2",
+        "value": Array [
+          Object {
+            "channelId": "channel-1",
+            "price": "0",
+          },
+          Object {
+            "channelId": "channel-2",
+            "price": "2",
+          },
+          Object {
+            "channelId": "channel-3",
+            "price": "2",
+          },
+        ],
+      },
+      Object {
+        "slug": "val-2-4",
+        "value": Array [
+          Object {
+            "channelId": "channel-1",
+            "price": "0",
+          },
+          Object {
+            "channelId": "channel-2",
+            "price": "2",
+          },
+          Object {
+            "channelId": "channel-3",
+            "price": "2",
+          },
+        ],
+      },
+    ],
+  },
+  "stock": Object {
+    "attribute": "attr-4",
+    "mode": "attribute",
+    "value": Array [],
+    "values": Array [
+      Object {
+        "slug": "val-4-1",
+        "value": Array [
+          50,
+          20,
+          45,
+          75,
+        ],
+      },
+      Object {
+        "slug": "val-4-5",
+        "value": Array [
+          80,
+          50,
+          85,
+          105,
+        ],
+      },
+    ],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 20,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 75,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 80,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 85,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 105,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "2",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 50,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 20,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 75,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "0",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -320,11 +903,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
+          "channelId": "channel-1",
           "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -371,11 +958,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
+          "channelId": "channel-1",
           "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -422,11 +1013,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
-          "price": "1",
+          "channelId": "channel-1",
+          "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -473,11 +1068,15 @@ Object {
       ],
       "channelListings": Array [
         Object {
-          "channelId": "1",
-          "price": "1",
+          "channelId": "channel-1",
+          "price": "0",
         },
         Object {
-          "channelId": "2",
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
           "price": "2",
         },
       ],
@@ -538,7 +1137,20 @@ Object {
   ],
   "price": Object {
     "attribute": undefined,
-    "channels": Array [],
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "1",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
     "mode": "all",
     "values": Array [],
   },
@@ -550,6 +1162,973 @@ Object {
   },
   "variants": Array [],
   "warehouses": Array [],
+}
+`;
+
+exports[`Reducer is able to select price for all variants 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "attribute": undefined,
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "22.99",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
+    "mode": "all",
+    "values": Array [],
+  },
+  "stock": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": Array [
+      0,
+      0,
+      0,
+      0,
+    ],
+    "values": Array [],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "22.99",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+  ],
+  "warehouses": Array [
+    "wh-1",
+    "wh-2",
+    "wh-3",
+    "wh-4",
+  ],
+}
+`;
+
+exports[`Reducer is able to select price to each attribute value 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "attribute": "attr-1",
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "1",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
+    "mode": "attribute",
+    "values": Array [
+      Object {
+        "slug": "val-1-1",
+        "value": Array [
+          Object {
+            "channelId": "channel-1",
+            "price": "45.99",
+          },
+        ],
+      },
+      Object {
+        "slug": "val-1-7",
+        "value": Array [
+          Object {
+            "channelId": "channel-2",
+            "price": "51.99",
+          },
+        ],
+      },
+    ],
+  },
+  "stock": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": Array [
+      0,
+      0,
+      0,
+      0,
+    ],
+    "values": Array [],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "45.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "45.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "45.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "45.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-2",
+          "price": "51.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-2",
+          "price": "51.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-2",
+          "price": "51.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-2",
+          "price": "51.99",
+        },
+      ],
+      "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
+    },
+  ],
+  "warehouses": Array [
+    "wh-1",
+    "wh-2",
+    "wh-3",
+    "wh-4",
+  ],
 }
 `;
 
@@ -580,7 +2159,20 @@ Object {
   ],
   "price": Object {
     "attribute": undefined,
-    "channels": Array [],
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "1",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
     "mode": "all",
     "values": Array [],
   },
@@ -617,7 +2209,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -659,7 +2264,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -701,7 +2319,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -743,7 +2374,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -785,7 +2429,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -827,7 +2484,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -869,7 +2539,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -911,7 +2594,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -969,7 +2665,20 @@ Object {
   ],
   "price": Object {
     "attribute": undefined,
-    "channels": Array [],
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "1",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
     "mode": "all",
     "values": Array [],
   },
@@ -1019,7 +2728,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1049,7 +2771,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1079,7 +2814,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1109,7 +2857,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1139,7 +2900,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1169,7 +2943,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1199,7 +2986,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1229,7 +3029,20 @@ Object {
           ],
         },
       ],
-      "channelListings": Array [],
+      "channelListings": Array [
+        Object {
+          "channelId": "channel-1",
+          "price": "1",
+        },
+        Object {
+          "channelId": "channel-2",
+          "price": "2",
+        },
+        Object {
+          "channelId": "channel-3",
+          "price": "3",
+        },
+      ],
       "sku": "",
       "stocks": Array [
         Object {
@@ -1275,7 +3088,20 @@ Object {
   ],
   "price": Object {
     "attribute": undefined,
-    "channels": Array [],
+    "channels": Array [
+      Object {
+        "channelId": "channel-1",
+        "price": "1",
+      },
+      Object {
+        "channelId": "channel-2",
+        "price": "2",
+      },
+      Object {
+        "channelId": "channel-3",
+        "price": "3",
+      },
+    ],
     "mode": "all",
     "values": Array [],
   },
