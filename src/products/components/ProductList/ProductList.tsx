@@ -118,6 +118,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     pageInfo,
     products,
     selected,
+    loading,
     sort,
     toggle,
     toggleAll,
@@ -137,11 +138,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
   );
   const numberOfColumns = 2 + settings.columns.length;
 
-  const getProductPrice = (
-    priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
-  ) => {
+  const getProductPrice = product => {
+    const priceRangeUndiscounted = product?.pricing?.priceRangeUndiscounted;
+
     if (!priceRangeUndiscounted) {
-      return null;
+      return "-";
     }
 
     const { start, stop } = priceRangeUndiscounted;
@@ -182,6 +183,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     }
   };
 
+  console.log(123, { loading });
   return (
     <div className={classes.tableContainer}>
       <ResponsiveTable className={classes.table}>
@@ -445,13 +447,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {product?.pricing?.priceRangeUndiscounted ? (
-                        getProductPrice(
-                          product?.pricing?.priceRangeUndiscounted
-                        )
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {loading ? <Skeleton /> : getProductPrice(product)}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>
