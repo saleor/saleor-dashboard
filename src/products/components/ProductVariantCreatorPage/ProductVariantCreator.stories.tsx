@@ -30,7 +30,7 @@ const price: Price<Array<{ channelId: string; price: string }>> = {
   mode: "attribute",
   values: selectedAttributes[0].values.map(attribute => ({
     slug: attribute.slug,
-    value: channels // [...channels, prc]//{(attributeIndex + 4).toFixed(2)}
+    value: channels
   }))
 };
 
