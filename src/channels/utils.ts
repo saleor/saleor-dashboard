@@ -15,12 +15,12 @@ export interface ChannelPriceData {
   id: string;
   name: string;
   currency: string;
-  price: number;
+  price: number | null;
 }
 
 export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
-    currency: "",
+    currency: channel.currencyCode,
     id: channel.id,
     isPublished: false,
     name: channel.name,

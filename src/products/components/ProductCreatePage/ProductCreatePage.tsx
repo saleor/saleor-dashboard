@@ -177,7 +177,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       stocks,
       ...data
     });
-
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
       {({
@@ -233,12 +232,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
-
+        const productTypeChoice = productTypeChoiceList?.find(
+          choice => choice.id === data.productType
+        );
         const formDisabled =
-          !data.sku ||
-          data.channelListing.some(
-            channel => channel.price < 0 || !channel.price
-          );
+          !productTypeChoice?.hasVariants &&
+          (!data.sku ||
+            data.channelListing.some(
+              channel => channel.price < 0 || !channel.price
+            ));
 
         return (
           <Container>

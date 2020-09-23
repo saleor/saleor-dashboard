@@ -21,7 +21,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
   const intl = useIntl();
   const { data } = useCreateMultipleVariantsData({
     displayLoader: true,
-    variables: { channel: "default-channel", id }
+    variables: { id }
   });
   const [
     bulkProductVariantCreate,
@@ -50,16 +50,15 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         })}
       />
       <ProductVariantCreatorPage
-        defaultPrice={data?.product?.channelListing[0]?.discountedPrice.amount.toString()}
         errors={
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []
         }
         channelListings={data?.product?.channelListing?.map(listing => ({
-          currency: listing.discountedPrice.currency,
+          currency: listing.channel.currencyCode,
           id: listing.channel.id,
           name: listing.channel.name,
-          price: listing.discountedPrice.amount
+          price: null
         }))}
         attributes={data?.product?.productType?.variantAttributes || []}
         onSubmit={inputs =>

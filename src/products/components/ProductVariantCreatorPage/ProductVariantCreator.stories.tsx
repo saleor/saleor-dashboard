@@ -59,6 +59,7 @@ const dataAttributes = selectedAttributes.map(attribute => ({
 const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
   {
     __typename: "BulkProductError",
+    channels: [channels[0].channelId],
     code: ProductErrorCode.UNIQUE,
     field: "sku",
     index: 3
@@ -173,9 +174,5 @@ storiesOf("Views / Products / Create multiple variants / summary", module)
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(Decorator)
   .add("interactive", () => (
-    <ProductVariantCreatorPage
-      {...props}
-      defaultPrice="10.99"
-      onSubmit={() => undefined}
-    />
+    <ProductVariantCreatorPage {...props} onSubmit={() => undefined} />
   ));

@@ -106,8 +106,10 @@ const useStyles = makeStyles<
       columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: props =>
-        `minmax(240px, auto) repeat(${props.data.variants[0].channelListings
-          .length + props.data.variants[0].stocks.length}, 140px) 140px 64px`,
+        `minmax(180px, auto) repeat(${props.data.variants[0].channelListings
+          .length +
+          props.data.variants[0].stocks
+            .length}, minmax(100px, auto)) 140px 64px`,
       overflowX: "scroll",
       rowGap: theme.spacing() + "px"
     }
@@ -240,40 +242,49 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   )
                 )}
               </div>
-              {channelListings.map(listing => (
-                <div
-                  key={listing.id}
-                  className={classNames(classes.col, classes.colPrice)}
-                >
-                  <TextField
-                    InputProps={{
-                      endAdornment: listing.currency
-                    }}
-                    className={classes.input}
-                    error={!!variantFormErrors.price}
-                    helperText={getBulkProductErrorMessage(
-                      variantFormErrors.price,
-                      intl
-                    )}
-                    inputProps={{
-                      min: 0,
-                      type: "number"
-                    }}
-                    fullWidth
-                    value={
-                      variant.channelListings?.find(
-                        channel => channel.channelId === listing.id
-                      )?.price
-                    }
-                    onChange={event =>
-                      onVariantPriceDataChange(variantIndex, {
-                        channelId: listing.id,
-                        price: event.target.value
-                      })
-                    }
-                  />
-                </div>
-              ))}
+              {channelListings.map(listing => {
+                const error = variantFormErrors.price?.channels?.find(
+                  id => id === listing.id
+                );
+                return (
+                  <div
+                    key={listing.id}
+                    className={classNames(classes.col, classes.colPrice)}
+                  >
+                    <TextField
+                      InputProps={{
+                        endAdornment: listing.currency
+                      }}
+                      className={classes.input}
+                      error={!!error}
+                      helperText={
+                        error
+                          ? getBulkProductErrorMessage(
+                              variantFormErrors.price,
+                              intl
+                            )
+                          : ""
+                      }
+                      inputProps={{
+                        min: 0,
+                        type: "number"
+                      }}
+                      fullWidth
+                      value={
+                        variant.channelListings?.find(
+                          channel => channel.channelId === listing.id
+                        )?.price
+                      }
+                      onChange={event =>
+                        onVariantPriceDataChange(variantIndex, {
+                          channelId: listing.id,
+                          price: event.target.value
+                        })
+                      }
+                    />
+                  </div>
+                );
+              })}
               {variant.stocks.map(stock => (
                 <div
                   className={classNames(classes.col, classes.colStock)}

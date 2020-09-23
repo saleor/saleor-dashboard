@@ -33,6 +33,9 @@ const useStyles = makeStyles(
     label: {
       fontSize: 14
     },
+    notFound: {
+      paddingBottom: theme.spacing(2)
+    },
     option: {
       "&:last-child": {
         "& hr": {
@@ -86,7 +89,9 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange] = React.useState("");
-
+  const filteredChannels = channels.filter(option =>
+    option.name.toLowerCase().includes(query.toLowerCase())
+  );
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
@@ -138,8 +143,8 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
             <FormattedMessage defaultMessage="Channels A to Z" />
           </Typography>
           <div className={classes.scrollArea}>
-            {channels.map(option =>
-              option.name.toLowerCase().includes(query) ? (
+            {filteredChannels.length ? (
+              filteredChannels.map(option => (
                 <div key={option.id} className={classes.option}>
                   <ControlledCheckbox
                     checked={isSelected(option)}
@@ -153,7 +158,11 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
                   />
                   <Hr />
                 </div>
-              ) : null
+              ))
+            ) : (
+              <div className={classes.notFound}>
+                <FormattedMessage defaultMessage="No Channels found" />
+              </div>
             )}
           </div>
         </div>

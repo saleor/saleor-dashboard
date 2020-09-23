@@ -42,7 +42,7 @@ export const createInitialForm = (
   const channelListings =
     channels?.map(channel => ({
       channelId: channel.id,
-      price: channel.price.toString()
+      price: channel.price?.toString() || ""
     })) || [];
   return {
     attributes: attributes.map(attribute => ({

@@ -6,7 +6,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-// import { ProductVariant_channelListing } from "@saleor/fragments/types/ProductVariant";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
@@ -165,6 +164,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               set,
               triggerChange
             );
+            const formDisabled = data.channelListing?.some(
+              channel => channel.price < 0 || !channel.price
+            );
             return (
               <>
                 <Grid variant="inverted">
@@ -235,7 +237,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   </div>
                 </Grid>
                 <SaveButtonBar
-                  disabled={loading || !hasChanged}
+                  disabled={loading || formDisabled || !hasChanged}
                   state={saveButtonBarState}
                   onCancel={onBack}
                   onDelete={onDelete}

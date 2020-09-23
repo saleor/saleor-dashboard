@@ -50,8 +50,7 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeDate(new Date(dateNow).toString(), "L");
-
+  const todayDate = localizeDate(new Date(dateNow).toString(), "YYYY-MM-DD");
   const availableDateText =
     publicationDate && !isPublished
       ? intl.formatMessage(

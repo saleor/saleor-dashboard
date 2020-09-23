@@ -13,4 +13,5 @@ export interface BulkProductErrorFragment {
   field: string | null;
   code: ProductErrorCode;
   index: number | null;
+  channels: string[] | null;
 }

@@ -48,7 +48,10 @@ function canHitNext(
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
-        if (data.price.channels === []) {
+        if (
+          data.price.channels === [] ||
+          data.price.channels.some(channel => parseInt(channel.price, 10) < 0)
+        ) {
           return false;
         }
       } else if (data.price.mode === "attribute") {
@@ -78,7 +81,6 @@ export interface ProductVariantCreatePageProps
     ProductVariantCreatorContentProps,
     "data" | "dispatchFormDataAction" | "step" | "onStepClick"
   > {
-  defaultPrice: string;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
@@ -129,7 +131,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const {
     attributes,
     channelListings,
-    defaultPrice,
     errors,
     onSubmit,
     warehouses,

@@ -27,7 +27,7 @@ const useStyles = makeStyles(
   theme => ({
     attrInputsContainer: {
       display: "grid",
-      gap: theme.spacing() + "px",
+      gap: theme.spacing(2) + "px",
       gridTemplateColumns:
         "minmax(80px, 150px) repeat(auto-fit, minmax(150px, 250px))"
     },
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
     },
     inputsContainer: {
       display: "grid",
-      gap: theme.spacing() + "px",
+      gap: theme.spacing(2) + "px",
       gridTemplateColumns: "repeat(auto-fit, minmax(150px, 250px))"
     },
     label: {
@@ -107,28 +107,39 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             })}
             onChange={() => onApplyToAllChange("all")}
           />
-          <FormSpacer />
-          <div className={classes.inputsContainer}>
-            {channelListings?.map(listing => (
-              <div key={listing.id}>
-                <Typography variant="caption" className={classes.channelName}>
-                  {listing.name}
-                </Typography>
-                <PriceField
-                  name={`${listing.id}-variant-channel-price`}
-                  value={
-                    data.price.channels.find(
-                      channel => channel.channelId === listing.id
-                    )?.price
-                  }
-                  currencySymbol={listing.currency}
-                  onChange={event =>
-                    onApplyToAllPriceChange(listing.id, event.target.value)
-                  }
-                />
+          {data.price.mode === "all" && (
+            <>
+              <FormSpacer />
+              <div className={classes.inputsContainer}>
+                {channelListings?.map(listing => (
+                  <div key={listing.id}>
+                    <Typography
+                      variant="caption"
+                      className={classes.channelName}
+                    >
+                      {listing.name}
+                    </Typography>
+                    <PriceField
+                      name={`${listing.id}-variant-channel-price`}
+                      value={
+                        data.price.channels.find(
+                          channel => channel.channelId === listing.id
+                        )?.price
+                      }
+                      label={intl.formatMessage({
+                        defaultMessage: "Price",
+                        description: "input label"
+                      })}
+                      currencySymbol={listing.currency}
+                      onChange={event =>
+                        onApplyToAllPriceChange(listing.id, event.target.value)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
           <FormSpacer />
           <FormControlLabel
             value="attribute"
@@ -187,7 +198,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                           <TextField
                             label={intl.formatMessage({
                               defaultMessage: "Price",
-                              description: "variant price",
+                              description: "input label",
                               id:
                                 "productVariantCreatePricesSetPricePlaceholder"
                             })}

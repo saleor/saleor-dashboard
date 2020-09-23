@@ -242,10 +242,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         );
 
         const formDisabled =
-          !data.sku ||
-          data.channelListing?.some(
-            channel => channel.price < 0 || !channel.price
-          );
+          !product?.productType.hasVariants &&
+          (!data.sku ||
+            data.channelListing?.some(
+              channel => channel.price < 0 || !channel.price
+            ));
 
         return (
           <>

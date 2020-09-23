@@ -236,7 +236,7 @@
     "string": "Taxes"
   },
   "productVariantCreatePricesSetPricePlaceholder": {
-    "context": "variant price",
+    "context": "input label",
     "string": "Price"
   },
   "productVariantCreatePricesStockInputLabel": {
@@ -1112,6 +1112,9 @@
   "src_dot_components_dot_ChannelsAvailabilityDialog_dot_1528830621": {
     "string": "Select channels you want for {contentType} to be available on"
   },
+  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_1866672276": {
+    "string": "No Channels found"
+  },
   "src_dot_components_dot_ChannelsAvailabilityDialog_dot_3630122739": {
     "string": "Available at all channels"
   },
@@ -1454,6 +1457,9 @@
   "src_dot_components_dot_NotFoundPage_dot_678743710": {
     "context": "button",
     "string": "Go back to dashboard"
+  },
+  "src_dot_components_dot_PriceField_dot_1136436546": {
+    "string": "Product price cannot be lower than 0."
   },
   "src_dot_components_dot_RadioGroupField_dot_4205644805": {
     "string": "No results found"
@@ -4045,9 +4051,6 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
     "string": "Price"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1136436546": {
-    "string": "Product price cannot be lower than 0."
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
     "context": "tabel column header",
