@@ -185,6 +185,7 @@ interface ProductVariantsProps extends ListActions {
   fallbackPrice?: ProductVariant_costPrice;
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
+  onSetDefaultVariant(variant: ProductDetails_product_variants);
   onVariantAdd?();
   onVariantsAdd?();
 }
@@ -201,6 +202,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     onVariantAdd,
     onVariantsAdd,
     onVariantReorder,
+    onSetDefaultVariant,
     isChecked,
     selected,
     toggle,
@@ -384,8 +386,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     onClick={e => e.stopPropagation()}
                   >
                     <ProductVariantSetDefault
-                      variant={variant}
-                      productId={product.id}
+                      onSetDefaultVariant={() => onSetDefaultVariant(variant)}
                     ></ProductVariantSetDefault>
                   </TableCell>
                 </SortableTableRow>

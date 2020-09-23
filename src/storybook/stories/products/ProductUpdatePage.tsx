@@ -32,6 +32,7 @@ const props: ProductUpdatePageProps = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
+  onSetDefaultVariant: () => undefined,
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
   onVariantReorder: () => undefined,
