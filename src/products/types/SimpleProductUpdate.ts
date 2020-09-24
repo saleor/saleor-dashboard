@@ -827,6 +827,7 @@ export interface SimpleProductUpdateVariables {
   productVariantId: string;
   productVariantInput: ProductVariantInput;
   seo?: SeoInput | null;
+  slug?: string | null;
   addStocks: StockInput[];
   deleteStocks: string[];
   updateStocks: StockInput[];

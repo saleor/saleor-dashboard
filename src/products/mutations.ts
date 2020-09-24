@@ -203,6 +203,7 @@ export const simpleProductUpdateMutation = gql`
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
     $seo: SeoInput
+    $slug: String
     $addStocks: [StockInput!]!
     $deleteStocks: [ID!]!
     $updateStocks: [StockInput!]!
@@ -222,6 +223,7 @@ export const simpleProductUpdateMutation = gql`
         name: $name
         basePrice: $basePrice
         seo: $seo
+        slug: $slug
         weight: $weight
         visibleInListings: $visibleInListings
       }
