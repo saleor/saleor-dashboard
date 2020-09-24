@@ -45,9 +45,14 @@ export const productFragment = gql`
       channel {
         id
         name
+        currencyCode
       }
       isPublished
       publicationDate
+      discountedPrice {
+        amount
+        currency
+      }
     }
   }
 `;

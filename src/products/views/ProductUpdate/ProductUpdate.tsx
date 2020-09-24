@@ -291,10 +291,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateSimpleProductOpts?.data?.productVariantUpdate?.errors
   );
 
-  const categories =
-    searchCategoriesOpts?.data?.search?.edges || [].map(edge => edge.node);
-  const collections =
-    searchCollectionsOpts?.data?.search?.edges || [].map(edge => edge.node);
+  const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
+    edge => edge.node
+  );
+  const collections = (searchCollectionsOpts?.data?.search?.edges || []).map(
+    edge => edge.node
+  );
   const errors = [
     ...(updateProductOpts?.data?.productUpdate?.errors || []),
     ...(updateSimpleProductOpts?.data?.productUpdate?.errors || []),

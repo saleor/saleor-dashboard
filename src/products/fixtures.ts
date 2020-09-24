@@ -395,6 +395,11 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
         isPublished: true,
         publicationDate: "2020-07-14"
       },
@@ -434,6 +439,11 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
         isPublished: true,
         publicationDate: "2020-07-14"
       },
@@ -443,6 +453,11 @@ export const products = (
           __typename: "Channel",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -485,6 +500,7 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -495,6 +511,7 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
         },
@@ -593,18 +610,31 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
       },
+
       {
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -647,8 +677,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -657,8 +693,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -701,8 +743,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -711,8 +759,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -755,8 +809,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -765,8 +825,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -809,8 +875,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -819,8 +891,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -863,8 +941,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -873,8 +957,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -917,8 +1007,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -927,8 +1023,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -971,8 +1073,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -981,8 +1089,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1025,8 +1139,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1035,8 +1155,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1079,8 +1205,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1089,8 +1221,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1133,8 +1271,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1143,8 +1287,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1187,8 +1337,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1197,8 +1353,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1241,8 +1403,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1251,8 +1419,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1295,8 +1469,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1305,8 +1485,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
@@ -1349,8 +1535,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1359,8 +1551,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"

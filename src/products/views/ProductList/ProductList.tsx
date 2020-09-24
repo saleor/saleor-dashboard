@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -15,6 +16,7 @@ import {
 } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -107,7 +109,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 5
     }
   });
+  const [selectedChannel, setSelectedChannel] = useLocalStorage(
+    "productsListChannel",
+    ""
+  );
   const { data: channelsData } = useChannelsList({});
+  const channelChoices = channelsData?.channels?.map(channel => ({
+    label: channel.name,
+    value: channel.id
+  }));
 
   React.useEffect(
     () =>
@@ -241,6 +251,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   };
 
+  const handleChannelSelectConfirm = (channel: string) => {
+    setSelectedChannel(channel);
+    closeModal();
+  };
+
   return (
     <AvailableInGridAttributesQuery
       variables={{ first: 6, ids: filterColumnIds(settings.columns) }}
@@ -339,9 +354,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 onTabSave={() => openModal("save-search")}
                 onTabDelete={() => openModal("delete-search")}
                 onTabChange={handleTabChange}
+                onSettingsOpen={() => openModal("settings")}
                 initialSearch={params.query || ""}
                 tabs={getFilterTabs().map(tab => tab.name)}
                 channelsCount={channelsData?.channels?.length}
+                selectedChannel={selectedChannel}
+              />
+              <ChannelSettingsDialog
+                channelsChoices={channelChoices}
+                defaultChoice={selectedChannel}
+                open={params.action === "settings"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onConfirm={handleChannelSelectConfirm}
               />
               <ActionDialog
                 open={params.action === "delete"}

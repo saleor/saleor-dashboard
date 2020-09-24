@@ -40,7 +40,9 @@ const props: ProductListPageProps = {
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
+  onSettingsOpen: () => undefined,
   products,
+  selectedChannel: productListFixture[0].channelListing[0].channel.id,
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"]
