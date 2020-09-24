@@ -99,7 +99,8 @@ const useStyles = makeStyles(
     denseTable: {
       "& td, & th": {
         paddingRight: theme.spacing(3)
-      }
+      },
+      width: "auto"
     },
     link: {
       cursor: "pointer"
