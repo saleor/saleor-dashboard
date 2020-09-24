@@ -22,10 +22,7 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
-import {
-  ProductList_products_edges_node,
-  ProductList_products_edges_node_pricing_priceRangeUndiscounted
-} from "@saleor/products/types/ProductList";
+import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -106,6 +103,7 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
@@ -183,7 +181,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     }
   };
 
-  console.log(123, { loading });
   return (
     <div className={classes.tableContainer}>
       <ResponsiveTable className={classes.table}>
