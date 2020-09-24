@@ -32,6 +32,8 @@ interface Error {
   code: ProductErrorCode | PageErrorCode;
 }
 
+const SLUG_REGEX = /^[a-z0-9]+(?:[\-a-z0-9]+)*$/;
+
 const useStyles = makeStyles(
   theme => ({
     addressBar: {
@@ -116,8 +118,11 @@ const SeoForm: React.FC<SeoFormProps> = props => {
   const classes = useStyles(props);
 
   const intl = useIntl();
+
   const [expanded, setExpansionStatus] = React.useState(false);
+
   const toggleExpansion = () => setExpansionStatus(!expanded);
+
   const shouldDisplayHelperText = helperText && !expanded;
 
   const getFilteredErrors = () =>
@@ -155,7 +160,13 @@ const SeoForm: React.FC<SeoFormProps> = props => {
       : getPageErrorMessage(error as PageErrorFragment, intl);
   };
 
-  // .replace(/[^\x00-\x7F]/g, "")
+  const handleSlugChange = event => {
+    const { value } = event.target;
+
+    if (value === "" || !!value.match(SLUG_REGEX)) {
+      onChange(event);
+    }
+  };
 
   return (
     <Card>
@@ -208,7 +219,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               value={slug?.slice(0, 69)}
               disabled={loading || disabled}
               placeholder={slug || slugify(slugPlaceholder, { lower: true })}
-              onChange={onChange}
+              onChange={handleSlugChange}
               fullWidth
             />
             <FormSpacer />
