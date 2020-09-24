@@ -207,6 +207,7 @@ export const product: (
     name: "Versatile",
     taxType: {
       __typename: "TaxType",
+      description: "standard",
       taxCode: "standard"
     },
     variantAttributes: [
@@ -257,6 +258,7 @@ export const product: (
   sku: "59661-34207",
   taxType: {
     __typename: "TaxType",
+    description: "standard",
     taxCode: "standard"
   },
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
