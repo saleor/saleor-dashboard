@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
@@ -92,7 +93,7 @@ const useStyles = makeStyles(
     colSku: {},
     colStatus: {},
     defaultVariant: {
-      color: "rgba(61, 61, 61, 0.6)",
+      color: fade(theme.palette.text.secondary, 0.6),
       display: "block"
     },
     denseTable: {
@@ -387,7 +388,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   >
                     <ProductVariantSetDefault
                       onSetDefaultVariant={() => onSetDefaultVariant(variant)}
-                    ></ProductVariantSetDefault>
+                    />
                   </TableCell>
                 </SortableTableRow>
               );

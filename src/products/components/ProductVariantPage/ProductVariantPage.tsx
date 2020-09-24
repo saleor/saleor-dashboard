@@ -169,9 +169,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {maybe(() => variant.product.name)}
         </AppHeader>
         <PageHeader title={header}>
-          <ProductVariantSetDefault
-            onSetDefaultVariant={onSetDefaultVariant}
-          ></ProductVariantSetDefault>
+          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
         </PageHeader>
         <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
           {({ change, data, hasChanged, submit, triggerChange }) => {
