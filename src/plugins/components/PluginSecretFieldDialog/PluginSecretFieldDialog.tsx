@@ -63,6 +63,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
           <>
             <DialogContent>
               <TextField
+                autoComplete="off"
                 fullWidth
                 label={field && field.label}
                 name="value"
