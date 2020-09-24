@@ -145,13 +145,13 @@ const SeoForm: React.FC<SeoFormProps> = props => {
     }
 
     if (error) {
-      return getSlugErrorHelperText();
+      return getSlugErrorText();
     }
 
     return "";
   };
 
-  const getSlugErrorHelperText = () => {
+  const getSlugErrorText = () => {
     const error = getError(SeoField.slug);
     const { __typename: type } = error;
 
