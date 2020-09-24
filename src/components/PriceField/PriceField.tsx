@@ -68,7 +68,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         hint ? (
           hint
         ) : hasWrongValue ? (
-          <FormattedMessage defaultMessage="Product price cannot be lower than 0." />
+          <FormattedMessage defaultMessage="Price cannot be lower than 0." />
         ) : (
           ""
         )
@@ -85,6 +85,10 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         ) : (
           <span />
         ),
+        type: "number"
+      }}
+      inputProps={{
+        min: 0,
         type: "number"
       }}
       name={name}

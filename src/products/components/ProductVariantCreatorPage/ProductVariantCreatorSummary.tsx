@@ -11,6 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
+import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
@@ -251,13 +252,11 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     key={listing.id}
                     className={classNames(classes.col, classes.colPrice)}
                   >
-                    <TextField
-                      InputProps={{
-                        endAdornment: listing.currency
-                      }}
+                    <PriceField
                       className={classes.input}
+                      currencySymbol={listing.currency}
                       error={!!error}
-                      helperText={
+                      hint={
                         error
                           ? getBulkProductErrorMessage(
                               variantFormErrors.price,
@@ -265,11 +264,6 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                             )
                           : ""
                       }
-                      inputProps={{
-                        min: 0,
-                        type: "number"
-                      }}
-                      fullWidth
                       value={
                         variant.channelListings?.find(
                           channel => channel.channelId === listing.id
