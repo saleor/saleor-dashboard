@@ -15,16 +15,6 @@ function useOnSetDefaultVariant(
   const notify = useNotifier();
   const intl = useIntl();
 
-  const getProductVariantSetDefaultVariables = (
-    productId: string,
-    variantId: string
-  ) => ({
-    variables: {
-      productId,
-      variantId
-    }
-  });
-
   const [productVariantSetDefault] = useProductVariantSetDefaultMutation({
     onCompleted: data => {
       const errors = data.productVariantSetDefault.errors;
@@ -52,12 +42,12 @@ function useOnSetDefaultVariant(
   });
 
   const onSetDefaultVariant = (selectedVariant = null) => {
-    productVariantSetDefault(
-      getProductVariantSetDefaultVariables(
+    productVariantSetDefault({
+      variables: {
         productId,
-        variant ? variant.id : selectedVariant.id
-      )
-    );
+        variantId: variant ? variant.id : selectedVariant.id
+      }
+    });
   };
 
   return onSetDefaultVariant;

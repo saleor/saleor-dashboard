@@ -315,8 +315,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             {renderCollection(variants, (variant, variantIndex) => {
               const isSelected = variant ? isChecked(variant.id) : false;
               const isDefault =
-                product.defaultVariant &&
-                product.defaultVariant.id === variant.id;
+                variant && product?.defaultVariant?.id === variant?.id;
               const numAvailable =
                 variant && variant.stocks
                   ? variant.stocks.reduce(
@@ -345,7 +344,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
                     {isDefault && (
-                      <span className={classes.defaultVariant}>default</span>
+                      <span className={classes.defaultVariant}>
+                        {intl.formatMessage({
+                          defaultMessage: "default",
+                          description: "default variant label"
+                        })}
+                      </span>
                     )}
                   </TableCell>
                   <TableCell className={classes.colSku} data-test="sku">

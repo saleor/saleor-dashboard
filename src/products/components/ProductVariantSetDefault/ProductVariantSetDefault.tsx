@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductVariantSetDefaultProps {
-  onSetDefaultVariant();
+  onSetDefaultVariant: () => void;
 }
 
 const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
@@ -19,7 +19,7 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
             defaultMessage: "Set as default",
             description: "set variant as default, button"
           }),
-          onSelect: () => onSetDefaultVariant(),
+          onSelect: onSetDefaultVariant,
           testId: "setDefault"
         }
       ]}
@@ -27,4 +27,6 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
     />
   );
 };
+
+ProductVariantSetDefault.displayName = "ProductVariantSetDefault";
 export default ProductVariantSetDefault;

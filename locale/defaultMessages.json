@@ -4536,6 +4536,10 @@
     "context": "product variant inventory",
     "string": "Unavailable"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1120495519": {
+    "context": "default variant label",
+    "string": "default"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1134347598": {
     "context": "product variant price",
     "string": "Price"
