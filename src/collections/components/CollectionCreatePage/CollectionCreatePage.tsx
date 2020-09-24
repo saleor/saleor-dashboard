@@ -135,6 +135,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <SeoForm
+                  isCreating={true}
                   description={data.seoDescription}
                   disabled={disabled}
                   descriptionPlaceholder=""

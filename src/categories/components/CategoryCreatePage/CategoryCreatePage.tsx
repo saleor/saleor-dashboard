@@ -79,6 +79,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               />
               <CardSpacer />
               <SeoForm
+                isCreating={true}
                 helperText={intl.formatMessage({
                   defaultMessage:
                     "Add search engine title and description to make this category easier to find"

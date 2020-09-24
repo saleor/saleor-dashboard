@@ -306,6 +306,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   </>
                 )}
                 <SeoForm
+                  isCreating={true}
                   helperText={intl.formatMessage({
                     defaultMessage:
                       "Add search engine title and description to make this product easier to find"
