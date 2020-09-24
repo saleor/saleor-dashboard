@@ -4,6 +4,7 @@ import {
 } from "@saleor/fragments/collections";
 import {
   collectionsErrorFragment,
+  productErrorFragment,
   shopErrorFragment
 } from "@saleor/fragments/errors";
 import gql from "graphql-tag";
@@ -233,7 +234,7 @@ export const TypedCollectionBulkDelete = TypedMutation<
 >(collectionBulkDelete);
 
 const collectionBulkPublish = gql`
-  ${collectionsErrorFragment}
+  ${productErrorFragment}
   mutation CollectionBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     collectionBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors: productErrors {

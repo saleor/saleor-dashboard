@@ -1,4 +1,3 @@
-import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -28,7 +27,20 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
+import {
+  AvailableInGridAttributesQuery,
+  useInitialProductFilterDataQuery,
+  useProductListQuery
+} from "@saleor/products/queries";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
+import {
+  productAddUrl,
+  productListUrl,
+  ProductListUrlDialog,
+  ProductListUrlQueryParams,
+  ProductListUrlSortField,
+  productUrl
+} from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -41,20 +53,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
 import { TypedProductBulkDeleteMutation } from "../../mutations";
-import {
-  AvailableInGridAttributesQuery,
-  TypedProductListQuery,
-  useInitialProductFilterDataQuery
-} from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
-import {
-  productAddUrl,
-  productListUrl,
-  ProductListUrlDialog,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
-} from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
@@ -180,12 +179,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
+  const currencySymbol = shop?.defaultCurrency || "USD";
   const filter = getFilterVariables(params);
   const sort = getSortQueryVariables(params);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
+      channel: "default-channel",
       filter,
       sort
     }),
@@ -194,26 +194,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    initialFilterData?.attributes?.edges?.map(edge => edge.node) || [],
     {
-      initial: maybe(
-        () => initialFilterData.categories.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.categories?.edges?.map(edge => edge.node) || [],
       search: searchCategories
     },
     {
-      initial: maybe(
-        () => initialFilterData.collections.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.collections?.edges?.map(edge => edge.node) || [],
       search: searchCollections
     },
     {
-      initial: maybe(
-        () => initialFilterData.productTypes.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.productTypes?.edges?.map(edge => edge.node) || [],
       search: searchProductTypes
     }
   );
@@ -224,208 +218,174 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       .map(getAttributeIdFromColumnValue);
   }
 
+  const { data, loading, refetch } = useProductListQuery({
+    displayLoader: true,
+    variables: queryVariables
+  });
+
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+    data?.products?.pageInfo,
+    paginationState,
+    params
+  );
+
+  const handleBulkDelete = (data: productBulkDelete) => {
+    if (data.productBulkDelete.errors.length === 0) {
+      closeModal();
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      reset();
+      refetch();
+    }
+  };
+
   return (
     <AvailableInGridAttributesQuery
       variables={{ first: 6, ids: filterColumnIds(settings.columns) }}
     >
       {attributes => (
-        <TypedProductListQuery displayLoader variables={queryVariables}>
-          {({ data, loading, refetch }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.products.pageInfo),
-              paginationState,
-              params
-            );
-
-            const handleBulkDelete = (data: productBulkDelete) => {
-              if (data.productBulkDelete.errors.length === 0) {
-                closeModal();
-                notify({
-                  status: "success",
-                  text: intl.formatMessage(commonMessages.savedChanges)
-                });
-                reset();
-                refetch();
-              }
-            };
-            return (
-              <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
-                {(productBulkDelete, productBulkDeleteOpts) => (
-                  <>
-                    <ProductListPage
-                      activeAttributeSortId={params.attributeId}
-                      sort={{
-                        asc: params.asc,
-                        sort: params.sort
-                      }}
-                      onSort={handleSort}
-                      availableInGridAttributes={maybe(
-                        () =>
-                          attributes.data.availableInGrid.edges.map(
-                            edge => edge.node
-                          ),
-                        []
-                      )}
-                      currencySymbol={currencySymbol}
-                      currentTab={currentTab}
-                      defaultSettings={
-                        defaultListSettings[ListViews.PRODUCT_LIST]
-                      }
-                      filterOpts={filterOpts}
-                      gridAttributes={maybe(
-                        () => attributes.data.grid.edges.map(edge => edge.node),
-                        []
-                      )}
-                      totalGridAttributes={maybe(
-                        () => attributes.data.availableInGrid.totalCount,
-                        0
-                      )}
-                      settings={settings}
-                      loading={attributes.loading}
-                      hasMore={maybe(
-                        () =>
-                          attributes.data.availableInGrid.pageInfo.hasNextPage,
-                        false
-                      )}
-                      onAdd={() => navigate(productAddUrl)}
-                      disabled={loading}
-                      products={maybe(() =>
-                        data.products.edges.map(edge => edge.node)
-                      )}
-                      onFetchMore={() =>
-                        attributes.loadMore(
-                          (prev, next) => {
-                            if (
-                              prev.availableInGrid.pageInfo.endCursor ===
-                              next.availableInGrid.pageInfo.endCursor
-                            ) {
-                              return prev;
-                            }
-                            return {
-                              ...prev,
-                              availableInGrid: {
-                                ...prev.availableInGrid,
-                                edges: [
-                                  ...prev.availableInGrid.edges,
-                                  ...next.availableInGrid.edges
-                                ],
-                                pageInfo: next.availableInGrid.pageInfo
-                              }
-                            };
-                          },
-                          {
-                            after:
-                              attributes.data.availableInGrid.pageInfo.endCursor
-                          }
-                        )
-                      }
-                      onNextPage={loadNextPage}
-                      onPreviousPage={loadPreviousPage}
-                      onUpdateListSettings={updateListSettings}
-                      pageInfo={pageInfo}
-                      onRowClick={id => () => navigate(productUrl(id))}
-                      onAll={resetFilters}
-                      toolbar={
-                        <>
-                          <Button
-                            color="primary"
-                            onClick={() =>
-                              openModal("unpublish", {
-                                ids: listElements
-                              })
-                            }
-                          >
-                            <FormattedMessage
-                              defaultMessage="Unpublish"
-                              description="unpublish product, button"
-                            />
-                          </Button>
-                          <Button
-                            color="primary"
-                            onClick={() =>
-                              openModal("publish", {
-                                ids: listElements
-                              })
-                            }
-                          >
-                            <FormattedMessage
-                              defaultMessage="Publish"
-                              description="publish product, button"
-                            />
-                          </Button>
-                          <IconButton
-                            color="primary"
-                            onClick={() =>
-                              openModal("delete", {
-                                ids: listElements
-                              })
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </>
-                      }
-                      isChecked={isSelected}
-                      selected={listElements.length}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      onSearchChange={handleSearchChange}
-                      onFilterChange={changeFilters}
-                      onTabSave={() => openModal("save-search")}
-                      onTabDelete={() => openModal("delete-search")}
-                      onTabChange={handleTabChange}
-                      initialSearch={params.query || ""}
-                      tabs={getFilterTabs().map(tab => tab.name)}
-                      channelsCount={channelsData?.channels?.length}
-                    />
-                    <ActionDialog
-                      open={params.action === "delete"}
-                      confirmButtonState={productBulkDeleteOpts.status}
-                      onClose={closeModal}
-                      onConfirm={() =>
-                        productBulkDelete({
-                          variables: { ids: params.ids }
-                        })
-                      }
-                      title={intl.formatMessage({
-                        defaultMessage: "Delete Products",
-                        description: "dialog header"
-                      })}
-                      variant="delete"
-                    >
-                      <DialogContentText>
-                        <FormattedMessage
-                          defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-                          description="dialog content"
-                          values={{
-                            counter: maybe(() => params.ids.length),
-                            displayQuantity: (
-                              <strong>{maybe(() => params.ids.length)}</strong>
-                            )
-                          }}
-                        />
-                      </DialogContentText>
-                    </ActionDialog>
-
-                    <SaveFilterTabDialog
-                      open={params.action === "save-search"}
-                      confirmButtonState="default"
-                      onClose={closeModal}
-                      onSubmit={handleFilterTabSave}
-                    />
-                    <DeleteFilterTabDialog
-                      open={params.action === "delete-search"}
-                      confirmButtonState="default"
-                      onClose={closeModal}
-                      onSubmit={handleFilterTabDelete}
-                      tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                    />
-                  </>
+        <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
+          {(productBulkDelete, productBulkDeleteOpts) => (
+            <>
+              <ProductListPage
+                activeAttributeSortId={params.attributeId}
+                sort={{
+                  asc: params.asc,
+                  sort: params.sort
+                }}
+                onSort={handleSort}
+                availableInGridAttributes={maybe(
+                  () =>
+                    attributes.data.availableInGrid.edges.map(
+                      edge => edge.node
+                    ),
+                  []
                 )}
-              </TypedProductBulkDeleteMutation>
-            );
-          }}
-        </TypedProductListQuery>
+                currencySymbol={currencySymbol}
+                currentTab={currentTab}
+                defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
+                filterOpts={filterOpts}
+                gridAttributes={maybe(
+                  () => attributes.data.grid.edges.map(edge => edge.node),
+                  []
+                )}
+                totalGridAttributes={maybe(
+                  () => attributes.data.availableInGrid.totalCount,
+                  0
+                )}
+                settings={settings}
+                loading={attributes.loading}
+                hasMore={maybe(
+                  () => attributes.data.availableInGrid.pageInfo.hasNextPage,
+                  false
+                )}
+                onAdd={() => navigate(productAddUrl)}
+                disabled={loading}
+                products={maybe(() =>
+                  data.products.edges.map(edge => edge.node)
+                )}
+                onFetchMore={() =>
+                  attributes.loadMore(
+                    (prev, next) => {
+                      if (
+                        prev.availableInGrid.pageInfo.endCursor ===
+                        next.availableInGrid.pageInfo.endCursor
+                      ) {
+                        return prev;
+                      }
+                      return {
+                        ...prev,
+                        availableInGrid: {
+                          ...prev.availableInGrid,
+                          edges: [
+                            ...prev.availableInGrid.edges,
+                            ...next.availableInGrid.edges
+                          ],
+                          pageInfo: next.availableInGrid.pageInfo
+                        }
+                      };
+                    },
+                    {
+                      after: attributes.data.availableInGrid.pageInfo.endCursor
+                    }
+                  )
+                }
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                onUpdateListSettings={updateListSettings}
+                pageInfo={pageInfo}
+                onRowClick={id => () => navigate(productUrl(id))}
+                onAll={resetFilters}
+                toolbar={
+                  <IconButton
+                    color="primary"
+                    onClick={() =>
+                      openModal("delete", {
+                        ids: listElements
+                      })
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+                isChecked={isSelected}
+                selected={listElements.length}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                onSearchChange={handleSearchChange}
+                onFilterChange={changeFilters}
+                onTabSave={() => openModal("save-search")}
+                onTabDelete={() => openModal("delete-search")}
+                onTabChange={handleTabChange}
+                initialSearch={params.query || ""}
+                tabs={getFilterTabs().map(tab => tab.name)}
+                channelsCount={channelsData?.channels?.length}
+              />
+              <ActionDialog
+                open={params.action === "delete"}
+                confirmButtonState={productBulkDeleteOpts.status}
+                onClose={closeModal}
+                onConfirm={() =>
+                  productBulkDelete({
+                    variables: { ids: params.ids }
+                  })
+                }
+                title={intl.formatMessage({
+                  defaultMessage: "Delete Products",
+                  description: "dialog header"
+                })}
+                variant="delete"
+              >
+                <DialogContentText>
+                  <FormattedMessage
+                    defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+                    description="dialog content"
+                    values={{
+                      counter: params?.ids?.length,
+                      displayQuantity: <strong>{params?.ids?.length}</strong>
+                    }}
+                  />
+                </DialogContentText>
+              </ActionDialog>
+
+              <SaveFilterTabDialog
+                open={params.action === "save-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleFilterTabSave}
+              />
+              <DeleteFilterTabDialog
+                open={params.action === "delete-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleFilterTabDelete}
+                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+              />
+            </>
+          )}
+        </TypedProductBulkDeleteMutation>
       )}
     </AvailableInGridAttributesQuery>
   );

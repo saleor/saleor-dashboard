@@ -1,6 +1,5 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
-  fragmentMoney,
   fragmentVariant,
   productFragment,
   productFragmentDetails,
@@ -93,7 +92,6 @@ export const useInitialProductFilterDataQuery = makeQuery<
 >(initialProductFilterDataQuery);
 
 const productListQuery = gql`
-  ${fragmentMoney}
   ${productFragment}
   query ProductList(
     $first: Int
@@ -136,10 +134,9 @@ const productListQuery = gql`
     }
   }
 `;
-export const TypedProductListQuery = TypedQuery<
-  ProductList,
-  ProductListVariables
->(productListQuery);
+export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
+  productListQuery
+);
 
 const productDetailsQuery = gql`
   ${productFragmentDetails}
