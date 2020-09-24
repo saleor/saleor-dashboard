@@ -99,7 +99,7 @@ function selectValue(
       ? toggle(
           {
             slug: valueSlug,
-            value: [] // ""
+            value: []
           },
           prevState.price.values,
           (a, b) => a.slug === b.slug

@@ -4,7 +4,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
@@ -150,6 +149,81 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             })}
             onChange={() => onApplyToAllChange("attribute")}
           />
+          {data.price.mode === "attribute" && (
+            <>
+              <FormSpacer />
+              <Grid variant="uniform">
+                <div className={classes.label}>
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="Choose attribute"
+                      description="variant attribute"
+                    />
+                  </Typography>
+                </div>
+                <div>
+                  <SingleSelectField
+                    choices={attributeChoices}
+                    label={intl.formatMessage({
+                      defaultMessage: "Attribute",
+                      description: "variant attribute"
+                    })}
+                    value={data.price.attribute}
+                    onChange={event => onAttributeSelect(event.target.value)}
+                  />
+                </div>
+              </Grid>
+              {priceAttributeValues &&
+                priceAttributeValues.map(attributeValue => {
+                  const attributesChannels = data.price.values.find(
+                    value => value.slug === attributeValue.slug
+                  ).value;
+                  return (
+                    <React.Fragment key={attributeValue.id}>
+                      <Hr className={classes.hrAttribute} />
+                      <FormSpacer />
+                      <div className={classes.attrInputsContainer}>
+                        <div className={classes.label}>
+                          <Typography>{attributeValue.name}</Typography>
+                        </div>
+                        {channelListings?.map(listing => (
+                          <div key={listing.id}>
+                            <Typography
+                              variant="caption"
+                              className={classes.channelName}
+                            >
+                              {listing.name}
+                            </Typography>
+                            <PriceField
+                              label={intl.formatMessage({
+                                defaultMessage: "Price",
+                                description: "input label",
+                                id:
+                                  "productVariantCreatePricesSetPricePlaceholder"
+                              })}
+                              currencySymbol={listing.currency}
+                              value={
+                                attributesChannels.find(
+                                  attrChannel =>
+                                    attrChannel.channelId === listing.id
+                                )?.price || ""
+                              }
+                              onChange={event =>
+                                onAttributeValueChange(
+                                  attributeValue.slug,
+                                  event.target.value,
+                                  listing.id
+                                )
+                              }
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+            </>
+          )}
           <FormSpacer />
           <FormControlLabel
             value="skip"
@@ -160,88 +234,6 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             onChange={() => onApplyToAllChange("skip")}
           />
         </RadioGroup>
-        {data.price.mode === "attribute" && (
-          <>
-            <FormSpacer />
-            <Grid variant="uniform">
-              <div className={classes.label}>
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="Choose attribute"
-                    description="variant attribute"
-                  />
-                </Typography>
-              </div>
-              <div>
-                <SingleSelectField
-                  choices={attributeChoices}
-                  label={intl.formatMessage({
-                    defaultMessage: "Attribute",
-                    description: "variant attribute"
-                  })}
-                  value={data.price.attribute}
-                  onChange={event => onAttributeSelect(event.target.value)}
-                />
-              </div>
-            </Grid>
-            {priceAttributeValues &&
-              priceAttributeValues.map(attributeValue => {
-                const attributesChannels = data.price.values.find(
-                  value => value.slug === attributeValue.slug
-                ).value;
-                return (
-                  <React.Fragment key={attributeValue.id}>
-                    <Hr className={classes.hrAttribute} />
-                    <FormSpacer />
-                    <div className={classes.attrInputsContainer}>
-                      <div className={classes.label}>
-                        <Typography>{attributeValue.name}</Typography>
-                      </div>
-                      {channelListings?.map(listing => (
-                        <div key={listing.id}>
-                          <Typography
-                            variant="caption"
-                            className={classes.channelName}
-                          >
-                            {listing.name}
-                          </Typography>
-                          <TextField
-                            label={intl.formatMessage({
-                              defaultMessage: "Price",
-                              description: "input label",
-                              id:
-                                "productVariantCreatePricesSetPricePlaceholder"
-                            })}
-                            inputProps={{
-                              min: 0,
-                              type: "number"
-                            }}
-                            InputProps={{
-                              endAdornment: listing.currency
-                            }}
-                            fullWidth
-                            value={
-                              attributesChannels.find(
-                                attrChannel =>
-                                  attrChannel.channelId === listing.id
-                              )?.price || ""
-                            }
-                            onChange={event =>
-                              onAttributeValueChange(
-                                attributeValue.slug,
-                                event.target.value,
-                                listing.id
-                              )
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </React.Fragment>
-                );
-              })}
-          </>
-        )}
       </CardContent>
     </Card>
   );

@@ -59,15 +59,15 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   } = props;
 
   const classes = useStyles(props);
-  const hasWrongValue = value < 0;
+  const minValue = 0;
   return (
     <TextField
       className={className}
-      error={error || hasWrongValue}
+      error={error || value < minValue}
       helperText={
         hint ? (
           hint
-        ) : hasWrongValue ? (
+        ) : value < minValue ? (
           <FormattedMessage defaultMessage="Price cannot be lower than 0." />
         ) : (
           ""
@@ -88,7 +88,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         type: "number"
       }}
       inputProps={{
-        min: 0,
+        min: minValue,
         type: "number"
       }}
       name={name}

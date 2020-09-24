@@ -5,6 +5,7 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
+import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -69,12 +70,10 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return data.variants.every(
+      return !data.variants.some(
         variant =>
-          variant.sku !== "" &&
-          variant.channelListings.every(
-            channel => channel.price !== "" && parseInt(channel.price, 10) >= 0
-          )
+          variant.sku === "" ||
+          variant.channelListings.some(channel => validatePrice(channel.price))
       );
 
     default:

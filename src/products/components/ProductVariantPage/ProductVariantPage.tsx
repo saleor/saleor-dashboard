@@ -19,6 +19,7 @@ import {
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
+import { validatePrice } from "@saleor/products/utils/validation";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -164,8 +165,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               set,
               triggerChange
             );
-            const formDisabled = data.channelListing?.some(
-              channel => channel.price < 0 || !channel.price
+            const formDisabled = data.channelListing?.some(channel =>
+              validatePrice(channel.price)
             );
             return (
               <>
