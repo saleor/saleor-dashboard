@@ -115,6 +115,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
           error={!!formErrors.customerSetPasswordUrl}
           fullWidth
           autoComplete="off"
+          type="url"
           name="customerSetPasswordUrl"
           label={intl.formatMessage({
             defaultMessage: "Customer password reset URL"
