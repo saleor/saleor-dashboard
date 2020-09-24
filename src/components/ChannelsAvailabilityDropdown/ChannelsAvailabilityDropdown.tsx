@@ -48,7 +48,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
               count: channels.length
             }
           )}
-          status={currentChannel.isPublished ? "success" : "error"}
+          status={currentChannel?.isPublished ? "success" : "error"}
         />
       </div>
       <Menu
@@ -104,13 +104,13 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             <MenuItem key={channelData.channel.id} className={classes.menuItem}>
               <StatusLabel
                 label={channelData.channel.name}
-                status={channelData.isPublished ? "success" : "error"}
+                status={channelData?.isPublished ? "success" : "error"}
               />
               <div>
                 <Typography variant="caption" className={classes.caption}>
-                  {channelData.isPublished
+                  {channelData?.isPublished
                     ? publishedText
-                    : channelData.publicationDate && !channelData.isPublished
+                    : channelData.publicationDate && !channelData?.isPublished
                     ? notPublishedText
                     : intl.formatMessage({
                         defaultMessage: "hidden",
