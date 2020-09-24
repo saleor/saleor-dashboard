@@ -200,8 +200,7 @@ export function getProductUpdatePageFormData(
     availableForPurchase: product?.availableForPurchase,
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
-    changeTaxCode:
-      product?.productType.taxType.taxCode !== product?.taxType.taxCode,
+    changeTaxCode: !!product?.taxType.taxCode,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),

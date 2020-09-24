@@ -60,9 +60,7 @@ export function createUpdateHandler(
           description: data.seoDescription,
           title: data.seoTitle
         },
-        taxCode: data.changeTaxCode
-          ? data.taxCode
-          : product.productType.taxType.taxCode,
+        taxCode: data.changeTaxCode ? data.taxCode : null,
         visibleInListings: data.visibleInListings
       }
     };

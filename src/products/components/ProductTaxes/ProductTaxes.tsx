@@ -60,7 +60,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = ({
           checked={data.changeTaxCode}
           disabled={disabled}
           label={intl.formatMessage({
-            defaultMessage: "Change default product’s tax rate",
+            defaultMessage: "Override the product type's tax rate",
             description: "checkbox"
           })}
           name="changeTaxCode"

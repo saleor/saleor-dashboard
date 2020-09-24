@@ -7,6 +7,7 @@ import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import { useTaxTypeListt } from "@saleor/taxes/queries";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -60,6 +61,7 @@ export const ProductCreateView: React.FC = () => {
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const taxTypes = useTaxTypeListt({});
 
   const handleBack = () => navigate(productListUrl());
 
@@ -115,6 +117,7 @@ export const ProductCreateView: React.FC = () => {
             quantity: parseInt(stock.value, 0),
             warehouse: stock.id
           })),
+          taxCode: formData.changeTaxCode ? formData.taxCode : undefined,
           trackInventory: formData.trackInventory,
           visibleInListings: formData.visibleInListings,
           weight: weight(formData.weight)
@@ -195,6 +198,7 @@ export const ProductCreateView: React.FC = () => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
+        taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
       />
     </>
