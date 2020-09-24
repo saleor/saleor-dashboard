@@ -42,7 +42,7 @@ const props: ProductListPageProps = {
   gridAttributes: attributes,
   onSettingsOpen: () => undefined,
   products,
-  selectedChannel: productListFixture[0].channelListing[0].channel.id,
+  selectedChannel: "123",
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"]
