@@ -45,6 +45,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix avatar change button - #719 by @orzechdev
 - Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
 - Fix misaligned rich text draft controls - #725 by @orzechdev
+- Allow taxes to be configured per product - #728 by @dominik-zeglen
 
 ## 2.10.1
 

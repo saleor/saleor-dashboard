@@ -4322,9 +4322,6 @@
     "context": "product price",
     "string": "Price"
   },
-  "src_dot_products_dot_components_dot_ProductPricing_dot_3015886868": {
-    "string": "Charge taxes for this item"
-  },
   "src_dot_products_dot_components_dot_ProductShipping_dot_1325966144": {
     "context": "product shipping",
     "string": "Shipping"
@@ -4358,6 +4355,18 @@
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
+  },
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_1943864488": {
+    "context": "checkbox",
+    "string": "Charge taxes on this product"
+  },
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_2022558114": {
+    "context": "select tax ratte",
+    "string": "Tax Rate"
+  },
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_2771905943": {
+    "context": "checkbox",
+    "string": "Override the product type's tax rate"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2232321263": {
     "context": "product publication date label",
