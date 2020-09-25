@@ -28,23 +28,25 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 }
 
 const useStyles = makeStyles(
-  theme => ({
-    iconCell: {
+  {
+    colActions: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing(0.5)
+      width: 80
+    },
+    colName: {
+      width: "auto"
+    },
+    colProducts: {
+      textAlign: "right",
+      width: 140
     },
     tableRow: {
       cursor: "pointer"
     },
-    textRight: {
-      textAlign: "right"
-    },
-    wideColumn: {
-      width: "60%"
-    }
-  }),
+    textRight: {}
+  },
   { name: "DiscountCollections" }
 );
 
@@ -88,6 +90,12 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colProducts} />
+          <col className={classes.colActions} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
@@ -96,7 +104,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
-          <TableCell className={classes.wideColumn}>
+          <TableCell className={classes.colName}>
             <FormattedMessage defaultMessage="Collection name" />
           </TableCell>
           <TableCell className={classes.textRight}>
@@ -141,19 +149,19 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                       onChange={() => toggle(collection.id)}
                     />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.colName}>
                     {maybe<React.ReactNode>(
                       () => collection.name,
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.textRight}>
+                  <TableCell className={classes.colProducts}>
                     {maybe<React.ReactNode>(
                       () => collection.products.totalCount,
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.iconCell}>
+                  <TableCell className={classes.colActions}>
                     <IconButton
                       disabled={!collection || disabled}
                       onClick={event => {

@@ -32,11 +32,16 @@ export interface FormData {
 const useStyles = makeStyles(
   {
     avatar: {
-      "&:first-child": {
+      "&&:first-child": {
         paddingLeft: 0
-      }
+      },
+      width: 72
     },
     checkboxCell: {
+      paddingLeft: 0,
+      width: 88
+    },
+    colName: {
       paddingLeft: 0
     },
     overflow: {
@@ -44,10 +49,6 @@ const useStyles = makeStyles(
     },
     scrollArea: {
       overflowY: "scroll"
-    },
-    wideCell: {
-      paddingLeft: 0,
-      width: "100%"
     }
   },
   { name: "AssignProductDialog" }
@@ -148,7 +149,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
                       />
-                      <TableCell className={classes.wideCell}>
+                      <TableCell className={classes.colName}>
                         {product.name}
                       </TableCell>
                       <TableCell

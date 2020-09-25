@@ -68,6 +68,8 @@ interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
   staffMembers: StaffList_staffUsers_edges_node[];
 }
 
+const numberOfColumns = 2;
+
 const StaffList: React.FC<StaffListProps> = props => {
   const {
     settings,
@@ -119,7 +121,7 @@ const StaffList: React.FC<StaffListProps> = props => {
       <TableFooter>
         <TableRow>
           <TablePagination
-            colSpan={3}
+            colSpan={numberOfColumns}
             settings={settings}
             hasNextPage={
               pageInfo && !disabled ? pageInfo.hasNextPage : undefined

@@ -26,16 +26,19 @@ import {
 } from "../../types/ProductTypeDetails";
 
 const useStyles = makeStyles(
-  theme => ({
-    colName: {},
-    colSlug: {
-      width: 300
-    },
-    iconCell: {
+  {
+    colAction: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing(1.5)
+      width: 80
+    },
+    colGrab: {
+      width: 60
+    },
+    colName: {},
+    colSlug: {
+      width: 300
     },
     link: {
       cursor: "pointer"
@@ -43,7 +46,7 @@ const useStyles = makeStyles(
     textLeft: {
       textAlign: "left"
     }
-  }),
+  },
   { name: "ProductTypeAttributes" }
 );
 
@@ -115,6 +118,13 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col className={classes.colGrab} />
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colSlug} />
+          <col className={classes.colAction} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           disabled={disabled}
@@ -178,7 +188,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.iconCell}>
+                  <TableCell className={classes.colAction}>
                     <IconButton
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)

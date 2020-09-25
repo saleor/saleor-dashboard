@@ -22,12 +22,17 @@ import { ProductVariantDetails_productVariant } from "../../types/ProductVariant
 
 const useStyles = makeStyles(
   theme => ({
+    colAvatar: {
+      width: 64
+    },
     colName: {
-      paddingLeft: 0,
-      textAlign: [["left"], "!important"] as any
+      paddingLeft: 0
     },
     link: {
       cursor: "pointer"
+    },
+    noHandle: {
+      textAlign: "right"
     },
     tabActive: {
       "& > td:first-child": {
@@ -92,6 +97,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
               onClick={variant ? () => onRowClick(variant.id) : undefined}
             >
               <TableCellAvatar
+                className={classes.colAvatar}
                 thumbnail={maybe(
                   () => variant.images[0].url,
                   fallbackThumbnail
@@ -115,8 +121,17 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             </TableRow>
           ) : (
             <TableRow>
-              <TableCellAvatar className={classes.tabActive} thumbnail={null} />
-              <TableCell className={classes.colName} colSpan={2}>
+              <TableCellAvatar
+                alignRight
+                className={classNames(
+                  classes.colAvatar,
+                  classes.tabActive,
+                  classes.noHandle
+                )}
+                thumbnail={null}
+                colSpan={2}
+              />
+              <TableCell className={classes.colName}>
                 <FormattedMessage
                   defaultMessage="New Variant"
                   description="variant name"

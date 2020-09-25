@@ -15,8 +15,8 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { ListActions, ListProps } from "@saleor/types";
+import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,17 +28,15 @@ export interface ShippingZonesListProps extends ListProps, ListActions {
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colCountries: {},
-      colName: { width: 200 }
-    },
-    alignRight: {
+    colAction: {
       "&:last-child": {
         paddingRight: theme.spacing(1)
       },
-      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+      width: 80
     },
-    colCountries: {},
+    colCountries: {
+      width: 180
+    },
     colName: {
       paddingLeft: 0
     },
@@ -49,7 +47,7 @@ const useStyles = makeStyles(
   { name: "ShippingZonesList" }
 );
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
@@ -108,12 +106,15 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           <TableCell className={classes.colCountries}>
             <FormattedMessage defaultMessage="Countries" />
           </TableCell>
-          <TableCell />
+          <TableCell className={classes.colAction} />
         </TableHead>
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={4}
+              colSpan={getFooterColSpanWithBulkActions(
+                shippingZones,
+                numberOfColumns
+              )}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
@@ -161,7 +162,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.alignRight}>
+                  <TableCell className={classes.colAction}>
                     <IconButton
                       color="primary"
                       disabled={disabled}

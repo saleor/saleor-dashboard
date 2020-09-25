@@ -28,18 +28,16 @@ export interface PluginListProps
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colAction: {
-        "& svg": {
-          color: theme.palette.primary.main
-        },
-        textAlign: "right" as "right"
+    colAction: {
+      "& svg": {
+        color: theme.palette.primary.main
       },
-      colActive: {},
-      colName: {}
+      textAlign: "right",
+      width: 200
     },
-    colAction: {},
-    colActive: {},
+    colActive: {
+      width: 200
+    },
     colName: {},
     link: {
       cursor: "pointer"
@@ -48,7 +46,7 @@ const useStyles = makeStyles(
   { name: "PluginsList" }
 );
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const PluginList: React.FC<PluginListProps> = props => {
   const {
