@@ -49,9 +49,6 @@ const useStyles = makeStyles(
       overflow: "hidden"
     },
     root: {
-      [theme.breakpoints.down("sm")]: {
-        height: "auto"
-      },
       height: 500,
       maxWidth: 600,
       outline: 0,
