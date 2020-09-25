@@ -10,6 +10,7 @@ import ProductCreatePage, {
 import { product as productFixture } from "../../../products/fixtures";
 import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
+import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture("");
 
@@ -34,6 +35,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      taxTypes={taxTypes}
       weightUnit="kg"
     />
   ))
@@ -56,6 +58,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={undefined}
+      taxTypes={taxTypes}
       weightUnit="kg"
     />
   ))
@@ -84,6 +87,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      taxTypes={taxTypes}
       weightUnit="kg"
     />
   ));

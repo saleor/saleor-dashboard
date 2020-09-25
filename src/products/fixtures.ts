@@ -206,8 +206,11 @@ export const product: (
     hasVariants: true,
     id: "pt76406",
     name: "Versatile",
-    seoDescription: "Omnis rerum ea. Fugit dignissimos modi est rerum",
-    seoTitle: "Ergonomic Plastic Bacon",
+    taxType: {
+      __typename: "TaxType",
+      description: "standard",
+      taxCode: "standard"
+    },
     variantAttributes: [
       {
         __typename: "Attribute",
@@ -255,6 +258,11 @@ export const product: (
   seoTitle: "Seo title",
   sku: "59661-34207",
   slug: "Borders",
+  taxType: {
+    __typename: "TaxType",
+    description: "standard",
+    taxCode: "standard"
+  },
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
   url: "/example-url",
   variants: [

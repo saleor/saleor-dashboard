@@ -2,7 +2,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -23,7 +22,6 @@ const useStyles = makeStyles(
 interface ProductPricingProps {
   currency?: string;
   data: {
-    chargeTaxes: boolean;
     basePrice: number;
   };
   disabled: boolean;
@@ -46,17 +44,7 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
           defaultMessage: "Pricing",
           description: "product pricing"
         })}
-      >
-        <ControlledCheckbox
-          name="chargeTaxes"
-          label={intl.formatMessage({
-            defaultMessage: "Charge taxes for this item"
-          })}
-          checked={data.chargeTaxes}
-          onChange={onChange}
-          disabled={disabled}
-        />
-      </CardTitle>
+      />
       <CardContent>
         <div className={classes.root}>
           <PriceField

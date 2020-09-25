@@ -26,3 +26,9 @@ export const shopTaxesFragment = gql`
     displayGrossPrices
   }
 `;
+export const taxTypeFragment = gql`
+  fragment TaxTypeFragment on TaxType {
+    description
+    taxCode
+  }
+`;

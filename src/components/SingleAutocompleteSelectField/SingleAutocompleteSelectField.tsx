@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
+import classNames from "classnames";
 import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -27,6 +28,7 @@ const useStyles = makeStyles(
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
+  className?: string;
   error?: boolean;
   name: string;
   displayValue: string;
@@ -51,6 +53,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   const {
     add,
     allowCustomValues,
+    className,
     choices,
     disabled,
     displayValue,
@@ -122,7 +125,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               );
 
             return (
-              <div className={classes.container} {...rest}>
+              <div
+                className={classNames(classes.container, className)}
+                {...rest}
+              >
                 <TextField
                   InputProps={{
                     ...InputProps,

@@ -298,6 +298,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
+        taxTypes={data?.taxTypes}
         variants={maybe(() => product.variants)}
         onBack={handleBack}
         onDelete={() => openModal("remove")}

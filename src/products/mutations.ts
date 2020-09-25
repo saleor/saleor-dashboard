@@ -161,38 +161,8 @@ export const useProductVariantSetDefaultMutation = makeMutation<
 export const productUpdateMutation = gql`
   ${productErrorFragment}
   ${productFragmentDetails}
-  mutation ProductUpdate(
-    $id: ID!
-    $attributes: [AttributeValueInput]
-    $publicationDate: Date
-    $category: ID
-    $chargeTaxes: Boolean!
-    $collections: [ID]
-    $descriptionJson: JSONString
-    $isPublished: Boolean!
-    $name: String
-    $basePrice: PositiveDecimal
-    $seo: SeoInput
-    $slug: String
-    $visibleInListings: Boolean
-  ) {
-    productUpdate(
-      id: $id
-      input: {
-        attributes: $attributes
-        publicationDate: $publicationDate
-        category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
-        descriptionJson: $descriptionJson
-        isPublished: $isPublished
-        name: $name
-        basePrice: $basePrice
-        seo: $seo
-        slug: $slug
-        visibleInListings: $visibleInListings
-      }
-    ) {
+  mutation ProductUpdate($id: ID!, $input: ProductInput!) {
+    productUpdate(id: $id, input: $input) {
       errors: productErrors {
         ...ProductErrorFragment
       }
@@ -215,43 +185,14 @@ export const simpleProductUpdateMutation = gql`
   ${fragmentVariant}
   mutation SimpleProductUpdate(
     $id: ID!
-    $attributes: [AttributeValueInput]
-    $publicationDate: Date
-    $category: ID
-    $chargeTaxes: Boolean!
-    $collections: [ID]
-    $descriptionJson: JSONString
-    $isPublished: Boolean!
-    $name: String
-    $basePrice: PositiveDecimal
+    $input: ProductInput!
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
-    $seo: SeoInput
-    $slug: String
     $addStocks: [StockInput!]!
     $deleteStocks: [ID!]!
     $updateStocks: [StockInput!]!
-    $weight: WeightScalar
-    $visibleInListings: Boolean
   ) {
-    productUpdate(
-      id: $id
-      input: {
-        attributes: $attributes
-        publicationDate: $publicationDate
-        category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
-        descriptionJson: $descriptionJson
-        isPublished: $isPublished
-        name: $name
-        basePrice: $basePrice
-        seo: $seo
-        slug: $slug
-        weight: $weight
-        visibleInListings: $visibleInListings
-      }
-    ) {
+    productUpdate(id: $id, input: $input) {
       errors: productErrors {
         ...ProductErrorFragment
       }
@@ -310,46 +251,8 @@ export const useSimpleProductUpdateMutation = makeMutation<
 export const productCreateMutation = gql`
   ${productErrorFragment}
   ${productFragmentDetails}
-  mutation ProductCreate(
-    $attributes: [AttributeValueInput]
-    $publicationDate: Date
-    $category: ID!
-    $chargeTaxes: Boolean!
-    $collections: [ID]
-    $descriptionJson: JSONString
-    $isPublished: Boolean!
-    $name: String!
-    $basePrice: PositiveDecimal
-    $productType: ID!
-    $sku: String
-    $seo: SeoInput
-    $slug: String
-    $stocks: [StockInput!]!
-    $trackInventory: Boolean!
-    $weight: WeightScalar
-    $visibleInListings: Boolean
-  ) {
-    productCreate(
-      input: {
-        attributes: $attributes
-        publicationDate: $publicationDate
-        category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
-        descriptionJson: $descriptionJson
-        isPublished: $isPublished
-        name: $name
-        basePrice: $basePrice
-        productType: $productType
-        sku: $sku
-        seo: $seo
-        slug: $slug
-        stocks: $stocks
-        trackInventory: $trackInventory
-        weight: $weight
-        visibleInListings: $visibleInListings
-      }
-    ) {
+  mutation ProductCreate($input: ProductCreateInput!) {
+    productCreate(input: $input) {
       errors: productErrors {
         ...ProductErrorFragment
       }

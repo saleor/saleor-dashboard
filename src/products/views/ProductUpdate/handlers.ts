@@ -41,26 +41,29 @@ export function createUpdateHandler(
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
-      attributes: data.attributes.map(attribute => ({
-        id: attribute.id,
-        values: attribute.value[0] === "" ? [] : attribute.value
-      })),
-      basePrice: decimal(data.basePrice),
-      category: data.category,
-      chargeTaxes: data.chargeTaxes,
-      collections: data.collections,
-      descriptionJson: JSON.stringify(data.description),
       id: product.id,
-      isPublished: data.isPublished,
-      name: data.name,
-      publicationDate:
-        data.publicationDate !== "" ? data.publicationDate : null,
-      seo: {
-        description: data.seoDescription,
-        title: data.seoTitle
-      },
-      slug: data.slug,
-      visibleInListings: data.visibleInListings
+      input: {
+        attributes: data.attributes.map(attribute => ({
+          id: attribute.id,
+          values: attribute.value[0] === "" ? [] : attribute.value
+        })),
+        basePrice: decimal(data.basePrice),
+        category: data.category,
+        chargeTaxes: data.chargeTaxes,
+        collections: data.collections,
+        descriptionJson: JSON.stringify(data.description),
+        isPublished: data.isPublished,
+        name: data.name,
+        publicationDate:
+          data.publicationDate !== "" ? data.publicationDate : null,
+        seo: {
+          description: data.seoDescription,
+          title: data.seoTitle
+        },
+        slug: data.slug,
+        taxCode: data.changeTaxCode ? data.taxCode : null,
+        visibleInListings: data.visibleInListings
+      }
     };
 
     let errors: Array<
@@ -75,13 +78,16 @@ export function createUpdateHandler(
         ...productVariables,
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         deleteStocks: data.removeStocks,
+        input: {
+          ...productVariables.input,
+          weight: weight(data.weight)
+        },
         productVariantId: product.variants[0].id,
         productVariantInput: {
           sku: data.sku,
           trackInventory: data.trackInventory
         },
-        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
-        weight: weight(data.weight)
+        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
       errors = [
         ...result.data.productUpdate.errors,

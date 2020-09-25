@@ -12,6 +12,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
+import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture(placeholderImage);
 
@@ -41,6 +42,7 @@ const props: ProductUpdatePageProps = {
   placeholderImage,
   product,
   saveButtonBarState: "default",
+  taxTypes,
   variants: product.variants,
   warehouses: warehouseList
 };

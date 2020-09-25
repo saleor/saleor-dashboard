@@ -10,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
@@ -52,6 +53,7 @@ import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
@@ -69,6 +71,7 @@ export interface ProductUpdatePageProps extends ListActions {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
+  taxTypes: TaxTypeFragment[];
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
@@ -111,6 +114,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   warehouses,
+  taxTypes,
   onBack,
   onDelete,
   onImageDelete,
@@ -161,6 +165,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, []))
   );
 
+  const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
+    product?.taxType.description
+  );
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -177,6 +185,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const currency =
     product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
+  const taxTypeChoices =
+    taxTypes?.map(taxType => ({
+      label: taxType.description,
+      value: taxType.taxCode
+    })) || [];
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
@@ -246,6 +259,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           triggerChange
         );
         const changeMetadata = makeMetadataChangeHandler(change);
+        const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
+          change,
+          setSelectedTaxType,
+          taxTypeChoices
+        );
 
         return (
           <>
@@ -421,6 +439,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       })
                     }}
                     onChange={change}
+                  />
+                  <CardSpacer />
+                  <ProductTaxes
+                    data={data}
+                    disabled={disabled}
+                    selectedTaxTypeDisplayName={selectedTaxType}
+                    taxTypes={taxTypes}
+                    onChange={change}
+                    onTaxTypeChange={handleTaxTypeSelect}
                   />
                 </div>
               </Grid>

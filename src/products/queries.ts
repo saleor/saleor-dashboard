@@ -6,6 +6,7 @@ import {
   productFragmentDetails,
   productVariantAttributesFragment
 } from "@saleor/fragments/products";
+import { taxTypeFragment } from "@saleor/fragments/taxes";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
@@ -166,9 +167,13 @@ export const useCountAllProducts = makeQuery<CountAllProducts, null>(
 
 const productDetailsQuery = gql`
   ${productFragmentDetails}
+  ${taxTypeFragment}
   query ProductDetails($id: ID!) {
     product(id: $id) {
       ...Product
+    }
+    taxTypes {
+      ...TaxTypeFragment
     }
   }
 `;
