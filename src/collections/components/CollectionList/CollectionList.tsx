@@ -51,7 +51,7 @@ interface CollectionListProps
   collections: CollectionList_collections_edges_node[];
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 4;
 
 const CollectionList: React.FC<CollectionListProps> = props => {
   const {

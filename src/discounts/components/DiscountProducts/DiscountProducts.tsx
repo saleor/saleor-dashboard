@@ -44,7 +44,7 @@ const useStyles = makeStyles(
       width: "auto"
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN + theme.spacing(3)
     },
     colPublished: {
       width: 150
@@ -102,6 +102,13 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colType} />
+          <col className={classes.colPublished} />
+          <col className={classes.colActions} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
@@ -124,7 +131,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
               description="product is published"
             />
           </TableCell>
-          <TableCell />
+          <TableCell className={classes.colActions} />
         </TableHead>
         <TableFooter>
           <TableRow>

@@ -63,6 +63,14 @@ const useStyles = makeStyles(
   { name: "TableHead" }
 );
 
+function getColSpan(colSpan: number, dragRows: boolean): number {
+  if (dragRows) {
+    return colSpan - 2;
+  }
+
+  return colSpan - 1;
+}
+
 const TableHead: React.FC<TableHeadProps> = props => {
   const {
     children,
@@ -107,7 +115,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
           <>
             <TableCell
               className={classNames(classes.root)}
-              colSpan={colSpan - 1}
+              colSpan={getColSpan(colSpan, dragRows)}
             >
               <div className={classes.container}>
                 {selected && (

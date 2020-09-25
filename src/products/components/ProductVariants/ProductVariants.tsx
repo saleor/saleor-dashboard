@@ -73,15 +73,18 @@ const useStyles = makeStyles(
         width: 30
       },
       colInventory: {
-        width: 270
+        width: 200
       },
       colName: {},
       colPrice: {
-        width: 150
+        width: 135
       },
       colSku: {
         width: 200
       }
+    },
+    colGrab: {
+      width: 60
     },
     colInventory: {
       textAlign: "right"
@@ -278,6 +281,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
       )}
       {hasVariants && (
         <ResponsiveTable className={classes.denseTable}>
+          <colgroup>
+            <col className={classes.colGrab} />
+            <col />
+            <col className={classes.colName} />
+            <col className={classes.colSku} />
+            <col className={classes.colPrice} />
+            <col className={classes.colInventory} />
+          </colgroup>
           <TableHead
             colSpan={numberOfColumns}
             selected={selected}

@@ -38,7 +38,8 @@ import {
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      paddingLeft: 0
+      paddingLeft: 0,
+      width: 64
     },
     colName: {
       paddingLeft: 0
