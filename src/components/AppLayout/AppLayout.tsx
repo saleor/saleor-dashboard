@@ -90,24 +90,13 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2)
     },
     header: {
-      display: "grid",
-      gridTemplateAreas: `"headerAnchor headerToolbar"`,
       [theme.breakpoints.down("sm")]: {
         height: 88,
         marginBottom: 0
       },
-      marginBottom: theme.spacing(3)
-    },
-    headerAnchor: {
-      gridArea: "headerAnchor"
-    },
-    headerToolbar: {
       display: "flex",
-      gridArea: "headerToolbar",
       height: 40,
-      [theme.breakpoints.down("sm")]: {
-        height: "auto"
-      }
+      marginBottom: theme.spacing(3)
     },
     isMenuSmall: {
       "& path": {
