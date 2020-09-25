@@ -4,36 +4,6 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-<<<<<<< HEAD
-## 2.11.0-rc.6
-
-- Add error info when fetching taxes - #701 by @dominik-zeglen
-- Add variants reordering possibility - #716 by @orzechdev
-- Fix avatar change button - #719 by @orzechdev
-- Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
-- Allow product variant to be set as default - #721 by @tomaszszymanski129
-- Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
-- Fix misaligned rich text draft controls - #725 by @orzechdev
-- Allow taxes to be configured per product - #728 by @dominik-zeglen
-
-## 2.11.0-rc.5
-
-- Update savebar design - #690 by @dominik-zeglen
-- Add metadata to orders - #688 by @dominik-zeglen
-- Add lazyload to locales - #692 by @eaglesemanation
-- Fix not closed address update modal with two confirmations - #699 by @orzechdev
-- Update schema with PositiveDecimal type - #695 by @AlicjaSzu
-
-## 2.11.0-rc.4
-
-- Update order history information - #680 by @dominik-zeglen
-- Add metadata editor to creator views - #684 by @dominik-zeglen
-- Update product visibility card component - #679 by @AlicjaSzu
-
-## 2.11.0-rc.3
-
-=======
->>>>>>> Bump version to 2.11.0-rc.5
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
 - Migrate product base price to variant prices - #555 by @orzechdev
 - Migrate old notifications to the new ones - #587 by @AlicjaSzu
@@ -68,6 +38,15 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add lazyload to locales - #692 by @eaglesemanation
 - Fix not closed address update modal with two confirmations - #699 by @orzechdev
 - Update schema with PositiveDecimal type - #695 by @AlicjaSzu
+- Add error info when fetching taxes - #701 by @dominik-zeglen
+- Fix return to previous page on screen size change - #710 by @orzechdev
+- Add variants reordering possibility - #716 by @orzechdev
+- Fix avatar change button - #719 by @orzechdev
+- Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
+- Allow product variant to be set as default - #721 by @tomaszszymanski129
+- Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
+- Fix misaligned rich text draft controls - #725 by @orzechdev
+- Allow taxes to be configured per product - #728 by @dominik-zeglen
 
 ## 2.10.1
 
@@ -124,7 +103,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
-- Fix updating order details on address change #711 - by @orzechdev
 
 ## 2.0.0
 
