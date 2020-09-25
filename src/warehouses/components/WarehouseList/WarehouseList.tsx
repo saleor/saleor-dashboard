@@ -131,7 +131,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
               data-test="warehouseEntry"
-              data-test-id={warehouse?.name.toLowerCase().replace(" ", "")}
+              data-testid={warehouse?.name.toLowerCase().replace(" ", "")}
             >
               <TableCell className={classes.colName} data-test="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}

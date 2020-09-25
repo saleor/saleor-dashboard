@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys */
 export const PRODUCTS_SELECTORS = {
-  products: "[data-test='submenu-item-label'][data-test-id='products']",
+  products: "[href='/dashboard/products?']",
   createProductBtn: "[data-test='add-product']",
   productNameInput: "[name='name']",
   productTypeInput: "[data-test='product-type']",

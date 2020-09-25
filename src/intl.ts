@@ -196,7 +196,7 @@ export const sectionNames = defineMessages({
     description: "draft orders section name"
   },
   home: {
-    defaultMessage: "Dashboard",
+    defaultMessage: "Home",
     description: "home section name"
   },
   navigation: {
