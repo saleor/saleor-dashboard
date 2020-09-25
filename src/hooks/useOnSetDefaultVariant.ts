@@ -31,7 +31,7 @@ function useOnSetDefaultVariant(
             status: "success",
             text: intl.formatMessage(
               {
-                defaultMessage: "Variant {name} has been set as default!."
+                defaultMessage: "Variant {name} has been set as default."
               },
               { name: variant.name }
             )
