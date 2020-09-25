@@ -186,7 +186,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
-          }
+          },
+          slug: formData.slug
         }
       }
     });

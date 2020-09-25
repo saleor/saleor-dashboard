@@ -71,6 +71,7 @@ export interface CollectionDetails_collection {
   metadata: (CollectionDetails_collection_metadata | null)[];
   privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

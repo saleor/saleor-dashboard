@@ -34,6 +34,7 @@ export interface CollectionUpdate_collectionUpdate_collection {
   metadata: (CollectionUpdate_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdate_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdate_collectionUpdate_collection_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

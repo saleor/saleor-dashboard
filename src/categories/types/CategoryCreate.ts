@@ -38,6 +38,7 @@ export interface CategoryCreate_categoryCreate_category {
   privateMetadata: (CategoryCreate_categoryCreate_category_privateMetadata | null)[];
   backgroundImage: CategoryCreate_categoryCreate_category_backgroundImage | null;
   name: string;
+  slug: string;
   descriptionJson: any;
   seoDescription: string | null;
   seoTitle: string | null;

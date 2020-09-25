@@ -182,6 +182,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   isAvailableForPurchase: boolean;
   isPublished: boolean;
   name: string;
+  slug: string;
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
@@ -225,6 +226,7 @@ export function getProductUpdatePageFormData(
           : undefined,
       ""
     ),
+    slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
     trackInventory: !!product?.variants[0]?.trackInventory,
     visibleInListings: !!product?.visibleInListings,

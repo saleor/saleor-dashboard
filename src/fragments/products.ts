@@ -113,6 +113,7 @@ export const productFragmentDetails = gql`
     ...ProductVariantAttributesFragment
     ...MetadataFragment
     name
+    slug
     descriptionJson
     seoTitle
     seoDescription

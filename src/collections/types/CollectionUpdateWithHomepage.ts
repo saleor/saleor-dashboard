@@ -56,6 +56,7 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
   metadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

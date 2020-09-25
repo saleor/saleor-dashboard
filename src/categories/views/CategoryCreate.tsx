@@ -52,7 +52,8 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
-          }
+          },
+          slug: formData.slug
         },
         parent: parentId || null
       }

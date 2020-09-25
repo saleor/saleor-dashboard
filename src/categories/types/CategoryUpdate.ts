@@ -38,6 +38,7 @@ export interface CategoryUpdate_categoryUpdate_category {
   privateMetadata: (CategoryUpdate_categoryUpdate_category_privateMetadata | null)[];
   backgroundImage: CategoryUpdate_categoryUpdate_category_backgroundImage | null;
   name: string;
+  slug: string;
   descriptionJson: any;
   seoDescription: string | null;
   seoTitle: string | null;

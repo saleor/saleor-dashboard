@@ -33,6 +33,7 @@ export interface CollectionDetailsPageFormData extends MetadataFormData {
   backgroundImageAlt: string;
   description: RawDraftContentState;
   name: string;
+  slug: string;
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
@@ -101,7 +102,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
         ),
         publicationDate: maybe(() => collection.publicationDate, ""),
         seoDescription: maybe(() => collection.seoDescription, ""),
-        seoTitle: maybe(() => collection.seoTitle, "")
+        seoTitle: maybe(() => collection.seoTitle, ""),
+        slug: collection?.slug || ""
       }}
       onSubmit={handleSubmit}
       confirmLeave
@@ -149,6 +151,9 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     defaultMessage:
                       "Add search engine title and description to make this collection easier to find"
                   })}
+                  errors={errors}
+                  slug={data.slug}
+                  slugPlaceholder={data.name}
                   title={data.seoTitle}
                   titlePlaceholder={maybe(() => collection.name)}
                   onChange={change}

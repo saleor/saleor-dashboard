@@ -167,5 +167,6 @@ export const collection: (
   },
   publicationDate: "2018-08-25T18:45:54.125Z",
   seoDescription: "",
-  seoTitle: ""
+  seoTitle: "",
+  slug: "summer-collection"
 });

@@ -219,6 +219,7 @@ export interface ProductImageCreate_productImageCreate_product {
   metadata: (ProductImageCreate_productImageCreate_product_metadata | null)[];
   privateMetadata: (ProductImageCreate_productImageCreate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;

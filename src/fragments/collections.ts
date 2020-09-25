@@ -20,6 +20,7 @@ export const collectionDetailsFragment = gql`
       alt
       url
     }
+    slug
     descriptionJson
     publicationDate
     seoDescription

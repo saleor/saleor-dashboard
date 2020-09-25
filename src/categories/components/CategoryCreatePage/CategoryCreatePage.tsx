@@ -19,6 +19,7 @@ import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 export interface FormData extends MetadataFormData {
   description: RawDraftContentState;
   name: string;
+  slug: string;
   seoTitle: string;
   seoDescription: string;
 }
@@ -29,7 +30,8 @@ const initialData: FormData = {
   name: "",
   privateMetadata: [],
   seoDescription: "",
-  seoTitle: ""
+  seoTitle: "",
+  slug: ""
 };
 
 export interface CategoryCreatePageProps {
@@ -77,10 +79,13 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               />
               <CardSpacer />
               <SeoForm
+                allowEmptySlug={true}
                 helperText={intl.formatMessage({
                   defaultMessage:
                     "Add search engine title and description to make this category easier to find"
                 })}
+                slug={data.slug}
+                slugPlaceholder={data.name}
                 title={data.seoTitle}
                 titlePlaceholder={data.name}
                 description={data.seoDescription}

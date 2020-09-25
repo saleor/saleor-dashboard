@@ -23,7 +23,6 @@ import { useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
-import PageSlug from "../PageSlug";
 
 export interface FormData {
   content: RawDraftContentState;
@@ -39,6 +38,7 @@ export interface PageDetailsPageProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   page: PageDetails_page;
+  allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
@@ -56,6 +56,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
+  const pageExists = page !== null;
 
   const initialForm: FormData = {
     content: maybe(
@@ -78,7 +79,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
           </AppHeader>
           <PageHeader
             title={
-              page === null
+              !pageExists
                 ? intl.formatMessage({
                     defaultMessage: "Create Page",
                     description: "page header"
@@ -97,6 +98,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
               <CardSpacer />
               <SeoForm
+                errors={errors}
+                allowEmptySlug={!pageExists}
                 description={data.seoDescription}
                 disabled={disabled}
                 descriptionPlaceholder={maybe(
@@ -107,6 +110,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   ""
                 )}
                 onChange={change}
+                slug={data.slug}
+                slugPlaceholder={data.title}
                 title={data.seoTitle}
                 titlePlaceholder={data.title}
                 helperText={intl.formatMessage({
@@ -116,12 +121,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
             </div>
             <div>
-              <PageSlug
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
               <CardSpacer />
               <VisibilityCard
                 data={data}

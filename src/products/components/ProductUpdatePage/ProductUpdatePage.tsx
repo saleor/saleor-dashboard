@@ -374,6 +374,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <SeoForm
+                    errors={errors}
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
                     description={data.seoDescription}
@@ -382,6 +383,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         .getPlainText()
                         .slice(0, 300)
                     )}
+                    slug={data.slug}
+                    slugPlaceholder={data.name}
                     loading={disabled}
                     onClick={onSeoClick}
                     onChange={change}

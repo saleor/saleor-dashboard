@@ -257,6 +257,7 @@ export const product: (
   seoDescription: "Seo description",
   seoTitle: "Seo title",
   sku: "59661-34207",
+  slug: "Borders",
   taxType: {
     __typename: "TaxType",
     description: "standard",

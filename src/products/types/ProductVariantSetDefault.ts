@@ -58,12 +58,19 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_produ
   values: (ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductVariantSetDefault_productVariantSetDefault_product_productType_taxType | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_start_gross {
@@ -197,6 +204,12 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_weigh
   value: number;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product {
   __typename: "Product";
   id: string;
@@ -206,6 +219,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   metadata: (ProductVariantSetDefault_productVariantSetDefault_product_metadata | null)[];
   privateMetadata: (ProductVariantSetDefault_productVariantSetDefault_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -222,6 +236,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   images: (ProductVariantSetDefault_productVariantSetDefault_product_images | null)[] | null;
   variants: (ProductVariantSetDefault_productVariantSetDefault_product_variants | null)[] | null;
   weight: ProductVariantSetDefault_productVariantSetDefault_product_weight | null;
+  taxType: ProductVariantSetDefault_productVariantSetDefault_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
 }

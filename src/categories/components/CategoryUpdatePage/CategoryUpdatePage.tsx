@@ -36,6 +36,7 @@ export interface FormData extends MetadataFormData {
   backgroundImageAlt: string;
   description: RawDraftContentState;
   name: string;
+  slug: string;
   seoTitle: string;
   seoDescription: string;
 }
@@ -118,7 +119,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         name: category.name || "",
         privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
         seoDescription: category.seoDescription || "",
-        seoTitle: category.seoTitle || ""
+        seoTitle: category.seoTitle || "",
+        slug: category?.slug || ""
       }
     : {
         backgroundImageAlt: "",
@@ -127,7 +129,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         name: "",
         privateMetadata: undefined,
         seoDescription: "",
-        seoTitle: ""
+        seoTitle: "",
+        slug: ""
       };
 
   const handleSubmit = (data: FormData) => {
@@ -175,10 +178,13 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 defaultMessage:
                   "Add search engine title and description to make this category easier to find"
               })}
+              errors={errors}
               title={data.seoTitle}
               titlePlaceholder={data.name}
               description={data.seoDescription}
               descriptionPlaceholder={data.name}
+              slug={data.slug}
+              slugPlaceholder={data.name}
               loading={!category}
               onChange={change}
               disabled={disabled}
