@@ -24,6 +24,9 @@ const messages = defineMessages({
   duplicatedInputItem: {
     defaultMessage: "Variant with these attributes already exists"
   },
+  nameAlreadyTaken: {
+    defaultMessage: "This name is already taken. Please provide another."
+  },
   skuUnique: {
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
@@ -59,6 +62,8 @@ function getProductErrorMessage(
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.INVALID:
         return intl.formatMessage(commonErrorMessages.invalid);
+      case ProductErrorCode.UNIQUE:
+        return intl.formatMessage(messages.nameAlreadyTaken);
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
