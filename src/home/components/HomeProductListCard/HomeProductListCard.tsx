@@ -136,7 +136,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
             ),
             () => (
               <TableRow>
-                <TableCell className={classes.noProducts}>
+                <TableCell colSpan={3} className={classes.noProducts}>
                   <Typography>
                     <FormattedMessage
                       defaultMessage="No products found"
