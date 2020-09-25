@@ -46,6 +46,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Allow product variant to be set as default - #721 by @tomaszszymanski129
 - Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
 - Fix misaligned rich text draft controls - #725 by @orzechdev
+- Allow taxes to be configured per product - #728 by @dominik-zeglen
 
 ## 2.10.1
 

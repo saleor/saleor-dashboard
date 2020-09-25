@@ -21,13 +21,13 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { ICONBUTTON_SIZE } from "@saleor/theme";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ export interface ProductStockFormData {
 export interface ProductStocksProps {
   data: ProductStockFormData;
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
   onChange: FormsetChange;
@@ -121,6 +121,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const warehousesToAssign = warehouses.filter(
     warehouse => !stocks.some(stock => stock.id === warehouse.id)
   );
+  const formErrors = getFormErrors(["sku"], errors);
 
   return (
     <Card>
@@ -135,9 +136,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         <div className={classes.skuInputContainer}>
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "sku")}
+            error={!!formErrors.sku}
             fullWidth
-            helperText={getFieldError(errors, "sku")?.message}
+            helperText={getProductErrorMessage(formErrors.sku, intl)}
             label={intl.formatMessage({
               defaultMessage: "SKU (Stock Keeping Unit)"
             })}

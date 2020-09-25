@@ -58,12 +58,19 @@ export interface ProductVariantReorder_productVariantReorder_product_productType
   values: (ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductVariantReorder_productVariantReorder_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductVariantReorder_productVariantReorder_product_productType_taxType | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_pricing_priceRangeUndiscounted_start_gross {
@@ -197,6 +204,12 @@ export interface ProductVariantReorder_productVariantReorder_product_weight {
   value: number;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product {
   __typename: "Product";
   id: string;
@@ -222,6 +235,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   images: (ProductVariantReorder_productVariantReorder_product_images | null)[] | null;
   variants: (ProductVariantReorder_productVariantReorder_product_variants | null)[] | null;
   weight: ProductVariantReorder_productVariantReorder_product_weight | null;
+  taxType: ProductVariantReorder_productVariantReorder_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
 }

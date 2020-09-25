@@ -124,6 +124,8 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
+const sliceSize = 20;
+
 const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
   const {
     add,
@@ -147,6 +149,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const [calledForMore, setCalledForMore] = React.useState(false);
+  const [slice, setSlice] = React.useState(sliceSize);
 
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
@@ -154,8 +157,17 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     if (!calledForMore && onFetchMore && scrolledToBottom) {
       onFetchMore();
       setCalledForMore(true);
+    } else if (scrolledToBottom) {
+      setSlice(slice => slice + sliceSize);
     }
   }, [scrolledToBottom]);
+
+  React.useEffect(() => {
+    setSlice(sliceSize);
+    anchor.current.scrollTo({
+      top: 0
+    });
+  }, [choices?.length]);
 
   React.useEffect(() => {
     if (calledForMore && !loading) {
@@ -219,7 +231,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             {choices.length > 0 && (!!add || displayCustomValue) && (
               <Hr className={classes.hr} />
             )}
-            {choices.map((suggestion, index) => {
+            {choices.slice(0, slice).map((suggestion, index) => {
               const choiceIndex = getChoiceIndex(
                 index,
                 emptyOption,

@@ -7,6 +7,7 @@ import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import { useTaxTypeList } from "@saleor/taxes/queries";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -60,6 +61,7 @@ export const ProductCreateView: React.FC = () => {
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const taxTypes = useTaxTypeList({});
 
   const handleBack = () => navigate(productListUrl());
 
@@ -91,32 +93,35 @@ export const ProductCreateView: React.FC = () => {
   const handleCreate = async (formData: ProductCreatePageSubmitData) => {
     const result = await productCreate({
       variables: {
-        attributes: formData.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value
-        })),
-        basePrice: decimal(formData.basePrice),
-        category: formData.category,
-        chargeTaxes: formData.chargeTaxes,
-        collections: formData.collections,
-        descriptionJson: JSON.stringify(formData.description),
-        isPublished: formData.isPublished,
-        name: formData.name,
-        productType: formData.productType,
-        publicationDate:
-          formData.publicationDate !== "" ? formData.publicationDate : null,
-        seo: {
-          description: formData.seoDescription,
-          title: formData.seoTitle
-        },
-        sku: formData.sku,
-        stocks: formData.stocks.map(stock => ({
-          quantity: parseInt(stock.value, 0),
-          warehouse: stock.id
-        })),
-        trackInventory: formData.trackInventory,
-        visibleInListings: formData.visibleInListings,
-        weight: weight(formData.weight)
+        input: {
+          attributes: formData.attributes.map(attribute => ({
+            id: attribute.id,
+            values: attribute.value
+          })),
+          basePrice: decimal(formData.basePrice),
+          category: formData.category,
+          chargeTaxes: formData.chargeTaxes,
+          collections: formData.collections,
+          descriptionJson: JSON.stringify(formData.description),
+          isPublished: formData.isPublished,
+          name: formData.name,
+          productType: formData.productType,
+          publicationDate:
+            formData.publicationDate !== "" ? formData.publicationDate : null,
+          seo: {
+            description: formData.seoDescription,
+            title: formData.seoTitle
+          },
+          sku: formData.sku,
+          stocks: formData.stocks.map(stock => ({
+            quantity: parseInt(stock.value, 0),
+            warehouse: stock.id
+          })),
+          taxCode: formData.changeTaxCode ? formData.taxCode : undefined,
+          trackInventory: formData.trackInventory,
+          visibleInListings: formData.visibleInListings,
+          weight: weight(formData.weight)
+        }
       }
     });
 
@@ -193,6 +198,7 @@ export const ProductCreateView: React.FC = () => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
+        taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
       />
     </>

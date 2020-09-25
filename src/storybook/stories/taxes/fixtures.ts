@@ -1,3 +1,5 @@
+import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
+
 import { CountryList_shop_countries } from "../../../taxes/types/CountryList";
 import { TaxRateType } from "../../../types/globalTypes";
 
@@ -2714,3 +2716,84 @@ export const countries: CountryList = [
     vat: null
   }
 ].filter(country => country.vat);
+
+/* eslint-disable sort-keys */
+export const taxTypes: TaxTypeFragment[] = [
+  {
+    description: "accommodation",
+    taxCode: "accommodation",
+    __typename: "TaxType"
+  },
+  {
+    description: "admission to cultural events",
+    taxCode: "admission to cultural events",
+    __typename: "TaxType"
+  },
+  {
+    description: "admission to entertainment events",
+    taxCode: "admission to entertainment events",
+    __typename: "TaxType"
+  },
+  {
+    description: "admission to sporting events",
+    taxCode: "admission to sporting events",
+    __typename: "TaxType"
+  },
+  { description: "advertising", taxCode: "advertising", __typename: "TaxType" },
+  {
+    description: "agricultural supplies",
+    taxCode: "agricultural supplies",
+    __typename: "TaxType"
+  },
+  {
+    description: "baby foodstuffs",
+    taxCode: "baby foodstuffs",
+    __typename: "TaxType"
+  },
+  { description: "bikes", taxCode: "bikes", __typename: "TaxType" },
+  { description: "books", taxCode: "books", __typename: "TaxType" },
+  {
+    description: "childrens clothing",
+    taxCode: "childrens clothing",
+    __typename: "TaxType"
+  },
+  {
+    description: "domestic fuel",
+    taxCode: "domestic fuel",
+    __typename: "TaxType"
+  },
+  {
+    description: "domestic services",
+    taxCode: "domestic services",
+    __typename: "TaxType"
+  },
+  { description: "e-books", taxCode: "e-books", __typename: "TaxType" },
+  { description: "foodstuffs", taxCode: "foodstuffs", __typename: "TaxType" },
+  { description: "hotels", taxCode: "hotels", __typename: "TaxType" },
+  { description: "medical", taxCode: "medical", __typename: "TaxType" },
+  { description: "newspapers", taxCode: "newspapers", __typename: "TaxType" },
+  {
+    description: "passenger transport",
+    taxCode: "passenger transport",
+    __typename: "TaxType"
+  },
+  {
+    description: "pharmaceuticals",
+    taxCode: "pharmaceuticals",
+    __typename: "TaxType"
+  },
+  {
+    description: "property renovations",
+    taxCode: "property renovations",
+    __typename: "TaxType"
+  },
+  { description: "restaurants", taxCode: "restaurants", __typename: "TaxType" },
+  {
+    description: "social housing",
+    taxCode: "social housing",
+    __typename: "TaxType"
+  },
+  { description: "standard", taxCode: "standard", __typename: "TaxType" },
+  { description: "water", taxCode: "water", __typename: "TaxType" },
+  { description: "wine", taxCode: "wine", __typename: "TaxType" }
+];
