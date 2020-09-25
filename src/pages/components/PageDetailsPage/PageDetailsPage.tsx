@@ -38,7 +38,7 @@ export interface PageDetailsPageProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   page: PageDetails_page;
-  isCreating?: boolean;
+  allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
@@ -56,7 +56,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-  const pageExists = page === null;
+  const pageExists = page !== null;
 
   const initialForm: FormData = {
     content: maybe(
@@ -79,7 +79,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
           </AppHeader>
           <PageHeader
             title={
-              pageExists
+              !pageExists
                 ? intl.formatMessage({
                     defaultMessage: "Create Page",
                     description: "page header"
@@ -99,7 +99,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <CardSpacer />
               <SeoForm
                 errors={errors}
-                isCreating={pageExists}
+                allowEmptySlug={!pageExists}
                 description={data.seoDescription}
                 disabled={disabled}
                 descriptionPlaceholder={maybe(

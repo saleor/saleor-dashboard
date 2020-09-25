@@ -81,7 +81,7 @@ interface SeoFormProps {
   errors?: Array<PageErrorFragment | ProductErrorFragment>;
   loading?: boolean;
   helperText?: string;
-  isCreating?: boolean;
+  allowEmptySlug?: boolean;
   title: string;
   slug: string;
   slugPlaceholder?: string;
@@ -97,7 +97,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
     disabled,
     errors = [],
     helperText,
-    isCreating = false,
+    allowEmptySlug = false,
     loading,
     title,
     slug,
@@ -124,15 +124,11 @@ const SeoForm: React.FC<SeoFormProps> = props => {
   const getSlugHelperMessage = () => {
     const error = !!getError(SeoField.slug);
 
-    if (isCreating && !error) {
+    if (allowEmptySlug && !error) {
       return intl.formatMessage(seoFieldMessage);
     }
 
-    if (error) {
-      return getSlugErrorMessage();
-    }
-
-    return "";
+    return error ? getSlugErrorMessage() : "";
   };
 
   const getSlugErrorMessage = () => {
@@ -144,7 +140,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
       : getPageErrorMessage(error as PageErrorFragment, intl);
   };
 
-  const handleSlugChange = event => {
+  const handleSlugChange = (event: React.ChangeEvent<any>) => {
     const { value } = event.target;
 
     if (value === "" || SLUG_REGEX.test(value)) {
@@ -152,7 +148,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
     }
   };
 
-  const getError = fieldName => getFieldError(errors, fieldName);
+  const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
     <Card>
@@ -211,7 +207,6 @@ const SeoForm: React.FC<SeoFormProps> = props => {
             <FormSpacer />
             <TextField
               name={SeoField.title}
-              error={!!getError(SeoField.title)}
               label={
                 <div className={classes.labelContainer}>
                   <div className={classes.label}>
@@ -240,7 +235,6 @@ const SeoForm: React.FC<SeoFormProps> = props => {
             />
             <FormSpacer />
             <TextField
-              error={!!getError(SeoField.description)}
               name={SeoField.description}
               label={
                 <div className={classes.labelContainer}>
