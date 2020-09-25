@@ -185,6 +185,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductList
           {...listProps}
+          loading={loading}
           gridAttributes={gridAttributes}
           settings={settings}
           onUpdateListSettings={onUpdateListSettings}
