@@ -7,7 +7,7 @@ import { getProductAvailabilityVariables } from "@saleor/products/utils/handlers
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { useTaxTypeListt } from "@saleor/taxes/queries";
+import { useTaxTypeList } from "@saleor/taxes/queries";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -61,7 +61,7 @@ export const ProductCreateView: React.FC = () => {
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
-  const taxTypes = useTaxTypeListt({});
+  const taxTypes = useTaxTypeList({});
 
   const handleBack = () => navigate(productListUrl());
 

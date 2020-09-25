@@ -32,4 +32,4 @@ const taxTypeList = gql`
     }
   }
 `;
-export const useTaxTypeListt = makeQuery<TaxTypeList, {}>(taxTypeList);
+export const useTaxTypeList = makeQuery<TaxTypeList, {}>(taxTypeList);
