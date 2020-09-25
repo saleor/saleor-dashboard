@@ -111,6 +111,11 @@ export interface SimpleProductUpdate_productUpdate_product_privateMetadata {
   value: string;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -205,6 +210,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: SimpleProductUpdate_productUpdate_product_defaultVariant | null;
   category: SimpleProductUpdate_productUpdate_product_category | null;
   collections: (SimpleProductUpdate_productUpdate_product_collections | null)[] | null;
   margin: SimpleProductUpdate_productUpdate_product_margin | null;

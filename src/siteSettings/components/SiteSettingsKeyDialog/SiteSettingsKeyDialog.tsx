@@ -70,6 +70,7 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
               />
               <FormSpacer />
               <TextField
+                autoComplete="off"
                 error={!!formErrors.key}
                 fullWidth
                 label={intl.formatMessage({
@@ -83,6 +84,7 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
               />
               <FormSpacer />
               <TextField
+                autoComplete="off"
                 error={!!formErrors.password}
                 fullWidth
                 label={intl.formatMessage({

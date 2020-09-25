@@ -83,6 +83,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onSeoClick?();
   onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
+  onSetDefaultVariant();
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
@@ -120,6 +121,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSubmit,
   onVariantAdd,
   onVariantsAdd,
+  onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
   isChecked,
@@ -296,6 +298,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <ProductVariants
                       disabled={disabled}
                       variants={variants}
+                      product={product}
                       fallbackPrice={
                         product?.variants?.length
                           ? product.variants[0].price
@@ -305,6 +308,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       onVariantAdd={onVariantAdd}
                       onVariantsAdd={onVariantsAdd}
                       onVariantReorder={onVariantReorder}
+                      onSetDefaultVariant={onSetDefaultVariant}
                       toolbar={toolbar}
                       isChecked={isChecked}
                       selected={selected}

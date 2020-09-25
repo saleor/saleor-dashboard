@@ -111,6 +111,11 @@ export interface ProductImageUpdate_productImageUpdate_product_privateMetadata {
   value: string;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -205,6 +210,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductImageUpdate_productImageUpdate_product_defaultVariant | null;
   category: ProductImageUpdate_productImageUpdate_product_category | null;
   collections: (ProductImageUpdate_productImageUpdate_product_collections | null)[] | null;
   margin: ProductImageUpdate_productImageUpdate_product_margin | null;

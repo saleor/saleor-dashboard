@@ -9,6 +9,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
@@ -272,6 +273,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...maybe(() => updateProductOpts.data.productUpdate.errors, []),
     ...maybe(() => updateSimpleProductOpts.data.productUpdate.errors, [])
   ];
+  const onSetDefaultVariant = useOnSetDefaultVariant(
+    product ? product.id : null,
+    null
+  );
 
   return (
     <>
@@ -281,6 +286,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         collections={collections}
         defaultWeightUnit={shop?.defaultWeightUnit}
         disabled={disableFormSave}
+        onSetDefaultVariant={onSetDefaultVariant}
         errors={errors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}

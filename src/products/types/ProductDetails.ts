@@ -105,6 +105,11 @@ export interface ProductDetails_product_privateMetadata {
   value: string;
 }
 
+export interface ProductDetails_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductDetails_product_category {
   __typename: "Category";
   id: string;
@@ -199,6 +204,7 @@ export interface ProductDetails_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductDetails_product_defaultVariant | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
   margin: ProductDetails_product_margin | null;

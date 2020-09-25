@@ -111,6 +111,11 @@ export interface ProductVariantReorder_productVariantReorder_product_privateMeta
   value: string;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_category {
   __typename: "Category";
   id: string;
@@ -205,6 +210,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductVariantReorder_productVariantReorder_product_defaultVariant | null;
   category: ProductVariantReorder_productVariantReorder_product_category | null;
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;
   margin: ProductVariantReorder_productVariantReorder_product_margin | null;
