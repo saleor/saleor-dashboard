@@ -66,10 +66,6 @@ const useStyles = makeStyles(
         "&:not(:hover)": {
           backgroundColor: theme.palette.background.paper
         },
-        [theme.breakpoints.down("sm")]: {
-          border: "none",
-          borderRadius: 16
-        },
         border: `1px solid ${theme.palette.divider}`,
         height: 40,
         marginRight: theme.spacing(2),

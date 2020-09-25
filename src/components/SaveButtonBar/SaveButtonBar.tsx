@@ -5,7 +5,6 @@ import Portal from "@material-ui/core/Portal";
 import { makeStyles } from "@material-ui/core/styles";
 import useWindowScroll from "@saleor/hooks/useWindowScroll";
 import { buttonMessages } from "@saleor/intl";
-import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,20 +17,11 @@ import Container from "../Container";
 
 const useStyles = makeStyles(
   theme => ({
-    applyShadow: {
-      "&$card": {
-        boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.16)"
-      }
-    },
     button: {
       marginRight: theme.spacing(1)
     },
     cancelButton: {
       marginRight: theme.spacing(2)
-    },
-    card: {
-      boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.16)",
-      transition: theme.transitions.duration.shortest + "ms"
     },
     content: {
       "&:last-child": {
@@ -89,7 +79,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const intl = useIntl();
   const scrollPosition = useWindowScroll();
   const scrolledToBottom =
-    scrollPosition.y + window.innerHeight - document.body.scrollHeight >= -5;
+    scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
 
   return (
     <AppActionContext.Consumer>
@@ -98,11 +88,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
           <Portal container={anchor.current}>
             <div className={classes.root} {...rest}>
               <Container>
-                <Card
-                  className={classNames(classes.card, {
-                    [classes.applyShadow]: !scrolledToBottom
-                  })}
-                >
+                <Card elevation={scrolledToBottom ? 0 : 16}>
                   <CardContent className={classes.content}>
                     {!!onDelete && (
                       <Button

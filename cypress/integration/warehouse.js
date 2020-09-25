@@ -7,7 +7,7 @@ describe("Warehouse settings", () => {
   xit("Warehouse section visible in the configuration", () => {
     cy.visit("/configuration/")
       .loginUser()
-      .get("[data-test-id=warehouses][data-test=settingsSubsection]")
+      .get("[data-testid=warehouses][data-test=settingsSubsection]")
       .click();
     cy.location("pathname").should("eq", "/warehouses/");
   });
