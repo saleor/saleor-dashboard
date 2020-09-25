@@ -178,6 +178,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 defaultMessage:
                   "Add search engine title and description to make this category easier to find"
               })}
+              errors={errors}
               title={data.seoTitle}
               titlePlaceholder={data.name}
               description={data.seoDescription}

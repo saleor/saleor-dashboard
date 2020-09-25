@@ -151,6 +151,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     defaultMessage:
                       "Add search engine title and description to make this collection easier to find"
                   })}
+                  errors={errors}
                   slug={data.slug}
                   slugPlaceholder={data.name}
                   title={data.seoTitle}
