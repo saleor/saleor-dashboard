@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
@@ -24,9 +25,11 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ReorderAction } from "../../../types";
 import {
+  ProductDetails_product,
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
+import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 function getWarehouseChoices(
   variants: ProductDetails_product_variants[],
@@ -66,8 +69,11 @@ function getWarehouseChoices(
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
+      colActions: {
+        width: 30
+      },
       colInventory: {
-        width: 300
+        width: 270
       },
       colName: {},
       colPrice: {
@@ -86,10 +92,15 @@ const useStyles = makeStyles(
     },
     colSku: {},
     colStatus: {},
+    defaultVariant: {
+      color: fade(theme.palette.text.secondary, 0.6),
+      display: "block"
+    },
     denseTable: {
       "& td, & th": {
         paddingRight: theme.spacing(3)
-      }
+      },
+      width: "auto"
     },
     link: {
       cursor: "pointer"
@@ -171,10 +182,12 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
+  product: ProductDetails_product;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
+  onSetDefaultVariant(variant: ProductDetails_product_variants);
   onVariantAdd?();
   onVariantsAdd?();
 }
@@ -185,11 +198,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
     disabled,
     variants,
+    product,
     fallbackPrice,
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
     onVariantReorder,
+    onSetDefaultVariant,
     isChecked,
     selected,
     toggle,
@@ -295,10 +310,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 description="product variant inventory status"
               />
             </TableCell>
+            <TableCell className={classes.colActions}></TableCell>
           </TableHead>
           <SortableTableBody onSortEnd={onVariantReorder}>
             {renderCollection(variants, (variant, variantIndex) => {
               const isSelected = variant ? isChecked(variant.id) : false;
+              const isDefault =
+                variant && product?.defaultVariant?.id === variant?.id;
               const numAvailable =
                 variant && variant.stocks
                   ? variant.stocks.reduce(
@@ -326,6 +344,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
+                    {isDefault && (
+                      <span className={classes.defaultVariant}>
+                        {intl.formatMessage({
+                          defaultMessage: "default",
+                          description: "default variant label"
+                        })}
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell className={classes.colSku} data-test="sku">
                     {variant ? variant.sku : <Skeleton />}
@@ -359,6 +385,15 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                         numAvailable
                       )
                     )}
+                  </TableCell>
+                  <TableCell
+                    className={classes.colActions}
+                    data-test="actions"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <ProductVariantSetDefault
+                      onSetDefaultVariant={() => onSetDefaultVariant(variant)}
+                    />
                   </TableCell>
                 </SortableTableRow>
               );

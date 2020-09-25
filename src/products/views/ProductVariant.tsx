@@ -3,6 +3,7 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -127,6 +128,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     reorderProductVariantsOpts
   ] = useProductVariantReorderMutation({});
 
+  const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
+
   const handleVariantReorder = createVariantReorderHandler(
     variant?.product,
     variables => reorderProductVariants({ variables })
@@ -199,6 +202,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       <ProductVariantPage
         defaultWeightUnit={shop?.defaultWeightUnit}
         errors={errors}
+        onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}
         loading={disableFormSave}
         placeholderImage={placeholderImg}

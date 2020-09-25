@@ -114,6 +114,9 @@ export const productFragmentDetails = gql`
     descriptionJson
     seoTitle
     seoDescription
+    defaultVariant {
+      id
+    }
     category {
       id
       name

@@ -2733,6 +2733,9 @@
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_placed": {
     "string": "Order #{orderId} was placed"
   },
+  "src_dot_hooks_dot_3382262667": {
+    "string": "Variant {name} has been set as default."
+  },
   "src_dot_lastName": {
     "string": "Last Name"
   },
@@ -4521,6 +4524,10 @@
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
     "string": "Cost price"
   },
+  "src_dot_products_dot_components_dot_ProductVariantSetDefault_dot_3683859003": {
+    "context": "set variant as default, button",
+    "string": "Set as default"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1001303107": {
     "context": "product variant inventory",
     "string": "Unavailable in all locations"
@@ -4528,6 +4535,10 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_1033175132": {
     "context": "product variant inventory",
     "string": "Unavailable"
+  },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1120495519": {
+    "context": "default variant label",
+    "string": "default"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1134347598": {
     "context": "product variant price",

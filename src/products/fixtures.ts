@@ -115,6 +115,7 @@ export const product: (
       name: "Winter sale"
     }
   ],
+  defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
   descriptionJson: JSON.stringify(content),
   id: "p10171",
   images: [

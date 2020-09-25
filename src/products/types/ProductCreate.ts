@@ -111,6 +111,11 @@ export interface ProductCreate_productCreate_product_privateMetadata {
   value: string;
 }
 
+export interface ProductCreate_productCreate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductCreate_productCreate_product_category {
   __typename: "Category";
   id: string;
@@ -204,6 +209,7 @@ export interface ProductCreate_productCreate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductCreate_productCreate_product_defaultVariant | null;
   category: ProductCreate_productCreate_product_category | null;
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;
   margin: ProductCreate_productCreate_product_margin | null;

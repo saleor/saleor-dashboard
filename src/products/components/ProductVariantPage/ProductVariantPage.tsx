@@ -35,6 +35,7 @@ import ProductVariantImages from "../ProductVariantImages";
 import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
+import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 export interface ProductVariantPageFormData extends MetadataFormData {
   costPrice: string;
@@ -68,6 +69,7 @@ interface ProductVariantPageProps {
   onSubmit(data: ProductVariantPageSubmitData);
   onImageSelect(id: string);
   onVariantClick(variantId: string);
+  onSetDefaultVariant();
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -85,7 +87,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onImageSelect,
   onSubmit,
   onVariantClick,
-  onVariantReorder
+  onVariantReorder,
+  onSetDefaultVariant
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -165,7 +168,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         <AppHeader onBack={onBack}>
           {maybe(() => variant.product.name)}
         </AppHeader>
-        <PageHeader title={header} />
+        <PageHeader title={header}>
+          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+        </PageHeader>
         <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
           {({ change, data, hasChanged, submit, triggerChange }) => {
             const handleAttributeChange: FormsetChange = (id, value) => {
