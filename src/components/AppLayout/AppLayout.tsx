@@ -439,12 +439,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                           checked={isDark}
                           onClick={toggleTheme}
                         />
-                        <NavigatorButton
-                          isMac={navigator.platform
-                            .toLowerCase()
-                            .includes("mac")}
-                          onClick={() => setNavigatorVisibility(true)}
-                        />
+                        <Hidden smDown>
+                          <NavigatorButton
+                            isMac={navigator.platform
+                              .toLowerCase()
+                              .includes("mac")}
+                            onClick={() => setNavigatorVisibility(true)}
+                          />
+                        </Hidden>
                         <div className={classes.userMenuContainer} ref={anchor}>
                           <Chip
                             avatar={
