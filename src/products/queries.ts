@@ -201,6 +201,7 @@ export const productFragmentDetails = gql`
       name
       hasVariants
     }
+    jsonPrivateMetadata
   }
 `;
 

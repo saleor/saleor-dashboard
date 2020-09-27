@@ -188,6 +188,7 @@ export interface ProductDetails_product {
   publicationDate: any | null;
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
+  jsonPrivateMetadata?: any;
 }
 
 export interface ProductDetails {

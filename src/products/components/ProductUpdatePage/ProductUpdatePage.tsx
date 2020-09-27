@@ -14,6 +14,7 @@ import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductBundleContent from "@saleor/products/components/ProductBundleContent";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions } from "@saleor/types";
@@ -368,6 +369,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       }
                     )}
                   />
+                  <CardSpacer />
+                  <ProductBundleContent content={maybe(() => JSON.parse(product.jsonPrivateMetadata)["bundle.content"])} />
                 </div>
               </Grid>
               <SaveButtonBar
