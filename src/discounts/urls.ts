@@ -29,7 +29,7 @@ export enum SaleListUrlFiltersWithMultipleValues {
 }
 export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
   FiltersWithMultipleValues<SaleListUrlFiltersWithMultipleValues>;
-export type SaleListUrlDialog = "remove" | TabActionDialog;
+export type SaleListUrlDialog = "remove" | "settings" | TabActionDialog;
 export enum SaleListUrlSortField {
   name = "name",
   endDate = "end-date",

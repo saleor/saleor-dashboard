@@ -43,7 +43,9 @@ const props: SaleListPageProps = {
       value: [DiscountStatusEnum.ACTIVE]
     }
   },
+  onSettingsOpen: () => undefined,
   sales: saleList,
+  selectedChannel: "123",
   sort: {
     ...sortPageProps.sort,
     sort: SaleListUrlSortField.name

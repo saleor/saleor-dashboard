@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -8,6 +9,7 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -65,10 +67,22 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    SaleListUrlDialog,
+    SaleListUrlQueryParams
+  >(navigate, saleListUrl, params);
+
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("salesListChannel", { closeModal, openModal });
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
+      channel: selectedChannel,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
@@ -99,11 +113,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     navigate,
     params
   });
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    SaleListUrlDialog,
-    SaleListUrlQueryParams
-  >(navigate, saleListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -162,6 +171,14 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
+            <ChannelSettingsDialog
+              channelsChoices={channelChoices}
+              defaultChoice={selectedChannel}
+              open={params.action === "settings"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onConfirm={handleChannelSelectConfirm}
+            />
             <SaleListPage
               currencySymbol={currencySymbol}
               currentTab={currentTab}
@@ -202,6 +219,8 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
+              selectedChannel={selectedChannel}
+              onSettingsOpen={() => openModal("settings")}
             />
             <ActionDialog
               confirmButtonState={saleBulkDeleteOpts.status}

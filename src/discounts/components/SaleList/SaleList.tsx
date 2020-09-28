@@ -5,6 +5,8 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Checkbox from "@saleor/components/Checkbox";
 import Date from "@saleor/components/Date";
+import Money from "@saleor/components/Money";
+import Percent from "@saleor/components/Percent";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
@@ -13,6 +15,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { SaleType } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -25,6 +28,7 @@ export interface SaleListProps
     SortPage<SaleListUrlSortField> {
   defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
+  selectedChannel: string;
 }
 
 const useStyles = makeStyles(
@@ -73,6 +77,7 @@ const SaleList: React.FC<SaleListProps> = props => {
     onSort,
     pageInfo,
     sales,
+    selectedChannel,
     isChecked,
     selected,
     sort,
@@ -165,7 +170,9 @@ const SaleList: React.FC<SaleListProps> = props => {
           sales,
           sale => {
             const isSelected = sale ? isChecked(sale.id) : false;
-
+            const channel = sale?.channelListing?.find(
+              lisiting => lisiting.channel.id === selectedChannel
+            );
             return (
               <TableRow
                 className={!!sale ? classes.tableRow : undefined}
@@ -204,7 +211,24 @@ const SaleList: React.FC<SaleListProps> = props => {
                 <TableCell
                   className={classes.colValue}
                   onClick={sale ? onRowClick(sale.id) : undefined}
-                ></TableCell>
+                >
+                  {sale && sale.type && channel?.discountValue ? (
+                    sale.type === SaleType.FIXED ? (
+                      <Money
+                        money={{
+                          amount: channel.discountValue,
+                          currency: channel.currency
+                        }}
+                      />
+                    ) : channel?.discountValue ? (
+                      <Percent amount={channel.discountValue} />
+                    ) : (
+                      "-"
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
+                </TableCell>
               </TableRow>
             );
           },

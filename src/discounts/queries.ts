@@ -91,12 +91,13 @@ export const saleDetails = gql`
   ${saleDetailsFragment}
   query SaleDetails(
     $id: ID!
+    $channel: String
     $after: String
     $before: String
     $first: Int
     $last: Int
   ) {
-    sale(id: $id) {
+    sale(id: $id, channel: $channel) {
       ...SaleDetailsFragment
     }
   }

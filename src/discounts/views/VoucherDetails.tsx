@@ -7,6 +7,7 @@ import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -65,6 +66,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const paginate = usePaginator();
   const notify = useNotifier();
   const shop = useShop();
+  const [selectedChannel] = useLocalStorage("vouchersListChannel", "");
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -152,7 +154,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                     <TypedVoucherDetails
                       displayLoader
                       variables={{
-                        channel: "default-channel",
+                        channel: selectedChannel,
                         id,
                         ...paginationState
                       }}

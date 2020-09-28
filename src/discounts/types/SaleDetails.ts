@@ -144,6 +144,7 @@ export interface SaleDetails {
 
 export interface SaleDetailsVariables {
   id: string;
+  channel?: string | null;
   after?: string | null;
   before?: string | null;
   first?: number | null;
