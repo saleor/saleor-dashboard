@@ -38,9 +38,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../../misc";
-import ProductUpdatePage, {
-  ProductUpdatePageSubmitNextAction
-} from "../../components/ProductUpdatePage";
+import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
 import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -281,14 +279,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     null
   );
 
-  const handleSubmitNextAction = (
-    nextAction?: ProductUpdatePageSubmitNextAction
-  ) => {
-    if (nextAction === "warehouse-configure") {
-      navigate(warehouseListPath);
-    }
-  };
-
   return (
     <>
       <WindowTitle title={maybe(() => data.product.name)} />
@@ -316,11 +306,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageReorder={handleImageReorder}
         onSubmit={async (data, nextAction) => {
           const errors = await handleSubmit(data);
-          if (errors?.length === 0) {
-            handleSubmitNextAction(nextAction);
+          if (errors?.length === 0 && nextAction) {
+            nextAction();
           }
         }}
-        onSubmitSkip={handleSubmitNextAction}
+        onWarehouseConfigure={() => navigate(warehouseListPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>

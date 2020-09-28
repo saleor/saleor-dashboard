@@ -5,7 +5,6 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -57,8 +56,6 @@ import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 
-export type ProductUpdatePageSubmitNextAction = "warehouse-configure";
-
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorFragment[];
@@ -75,7 +72,6 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
-  submitNextAction?: ProductUpdatePageSubmitNextAction;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
@@ -88,13 +84,10 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onSeoClick?();
-  onSubmit?(
-    data: ProductUpdatePageSubmitData,
-    nextAction?: ProductUpdatePageSubmitNextAction
-  );
-  onSubmitSkip?(nextAction?: ProductUpdatePageSubmitNextAction);
+  onSubmit?(data: ProductUpdatePageSubmitData, nextAction?: () => void);
   onVariantAdd?();
   onSetDefaultVariant();
+  onWarehouseConfigure();
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
@@ -131,12 +124,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageUpload,
   onSeoClick,
   onSubmit,
-  onSubmitSkip,
   onVariantAdd,
   onVariantsAdd,
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
+  onWarehouseConfigure,
   isChecked,
   selected,
   toggle,
@@ -200,11 +193,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const [modalWithAction, setModalWithAction] = React.useState<
-    ProductUpdatePageSubmitNextAction
-  >(null);
-
-  const handleSubmit = (data: ProductUpdatePageFormData) => {
+  const handleSubmit = (
+    data: ProductUpdatePageFormData,
+    nextAction: () => void
+  ) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
@@ -221,7 +213,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           removeStocks: [],
           updateStocks: []
         },
-        modalWithAction
+        nextAction
       );
     } else {
       const dataStocks = stocks.map(stock => stock.id);
@@ -245,15 +237,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               !stockDiff.added.some(addedStock => addedStock === stock.id)
           )
         },
-        modalWithAction
+        nextAction
       );
     }
-    setModalWithAction(null);
   };
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({
+        change,
+        data,
+        hasChanged,
+        submit,
+        triggerChange,
+        toggleValue,
+        askToLeave
+      }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -393,9 +392,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         }}
                         onWarehouseConfigure={() => {
                           if (disabled || !onSubmit || !hasChanged) {
-                            onSubmitSkip("warehouse-configure");
+                            onWarehouseConfigure();
                           } else {
-                            setModalWithAction("warehouse-configure");
+                            askToLeave(onWarehouseConfigure);
                           }
                         }}
                       />
@@ -486,17 +485,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onSave={submit}
                 state={saveButtonBarState}
                 disabled={disabled || !hasChanged}
-              />
-              <LeaveScreenDialog
-                onSaveChanges={() => {
-                  submit();
-                }}
-                onRejectChanges={() => {
-                  onSubmitSkip("warehouse-configure");
-                }}
-                onClose={() => setModalWithAction(null)}
-                open={modalWithAction === "warehouse-configure"}
-                confirmButtonState={saveButtonBarState}
               />
             </Container>
           </>

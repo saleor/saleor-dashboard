@@ -14,6 +14,9 @@ export interface ChangeEvent<TData = any> {
 export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
 export interface UseFormResult<T> {
+  askToLeave: (action: () => void | null) => void;
+  leaveAction: () => void | null;
+  leaveModal: boolean;
   change: FormChange;
   data: T;
   hasChanged: boolean;
@@ -51,13 +54,15 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initial: T,
-  onSubmit: (data: T) => void
+  onSubmit: (data: T, nextAction: () => void) => void
 ): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
   const [data, setData] = useStateFromProps(initial, {
     mergeFunc: merge,
     onRefresh: newData => handleRefresh(data, newData, setChanged)
   });
+  const [leaveModal, setLeaveModal] = useState<boolean>(false);
+  const [leaveAction, setLeaveAction] = useState<() => void>(null);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
@@ -107,17 +112,26 @@ function useForm<T extends FormData>(
   }
 
   function submit() {
-    return onSubmit(data);
+    onSubmit(data, leaveAction);
+    setLeaveModal(false);
   }
 
   function triggerChange() {
     setChanged(true);
   }
 
+  function askToLeave(action: () => void | null) {
+    setLeaveModal(() => !!action);
+    setLeaveAction(() => action);
+  }
+
   return {
+    askToLeave,
     change,
     data,
     hasChanged,
+    leaveAction,
+    leaveModal,
     reset,
     set,
     submit,
