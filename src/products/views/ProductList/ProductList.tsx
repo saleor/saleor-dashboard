@@ -15,8 +15,8 @@ import {
   ProductListColumns
 } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -109,15 +109,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 5
     }
   });
-  const [selectedChannel, setSelectedChannel] = useLocalStorage(
-    "productsListChannel",
-    ""
-  );
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
+
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel,
+    selectedChannelSlug
+  } = useChannelsSettings("productsListChannel", { closeModal, openModal });
+
   const { data: channelsData } = useChannelsList({});
-  const channelChoices = channelsData?.channels?.map(channel => ({
-    label: channel.name,
-    value: channel.id
-  }));
 
   React.useEffect(
     () =>
@@ -139,17 +144,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         ? tabs.length + 1
         : 0
       : parseInt(params.activeTab, 0);
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductListUrlDialog,
-    ProductListUrlQueryParams
-  >(navigate, productListUrl, params);
-
-  React.useEffect(() => {
-    if (!selectedChannel) {
-      openModal("settings");
-    }
-  }, [selectedChannel]);
 
   const [
     changeFilters,
@@ -201,7 +195,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
-      channel: selectedChannel,
+      channel: selectedChannelSlug,
       filter,
       sort
     }),
@@ -255,11 +249,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       reset();
       refetch();
     }
-  };
-
-  const handleChannelSelectConfirm = (channel: string) => {
-    setSelectedChannel(channel);
-    closeModal();
   };
 
   return (

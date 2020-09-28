@@ -75,14 +75,15 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const {
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel
+    selectedChannel,
+    selectedChannelSlug
   } = useChannelsSettings("salesListChannel", { closeModal, openModal });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      channel: selectedChannel,
+      channel: selectedChannelSlug,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),

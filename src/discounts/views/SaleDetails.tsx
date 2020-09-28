@@ -7,7 +7,6 @@ import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -67,7 +66,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
-  const [selectedChannel] = useLocalStorage("salesListChannel", "");
   const intl = useIntl();
   const {
     search: searchCategories,
@@ -151,7 +149,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                     <TypedSaleDetails
                       displayLoader
                       variables={{
-                        channel: selectedChannel,
+                        channel: "default-channel",
                         id,
                         ...paginationState
                       }}
