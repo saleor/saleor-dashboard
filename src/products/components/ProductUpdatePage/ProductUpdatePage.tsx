@@ -95,7 +95,6 @@ export interface ProductUpdatePageProps extends ListActions {
   onSubmitSkip?(nextAction?: ProductUpdatePageSubmitNextAction);
   onVariantAdd?();
   onSetDefaultVariant();
-  onWarehouseConfigure();
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {

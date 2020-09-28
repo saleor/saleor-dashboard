@@ -77,7 +77,6 @@ interface ProductVariantPageProps {
   onImageSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
-  onWarehouseConfigure();
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -97,8 +96,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onSubmitSkip,
   onVariantClick,
   onVariantReorder,
-  onSetDefaultVariant,
-  onWarehouseConfigure
+  onSetDefaultVariant
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
