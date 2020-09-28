@@ -51,6 +51,9 @@ const useStyles = makeStyles(
       pointerEvents: "none",
       width: "100%"
     },
+    colEmail: {
+      width: 400
+    },
     statusText: {
       color: "#9E9D9D"
     },
@@ -89,6 +92,10 @@ const StaffList: React.FC<StaffListProps> = props => {
 
   return (
     <ResponsiveTable>
+      <colgroup>
+        <col />
+        <col className={classes.colEmail} />
+      </colgroup>
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -186,7 +193,7 @@ const StaffList: React.FC<StaffListProps> = props => {
           ),
           () => (
             <TableRow>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No staff members found" />
               </TableCell>
             </TableRow>
