@@ -5426,6 +5426,9 @@
   "src_dot_utils_dot_errors_dot_permissionOutOfScope": {
     "string": "Those permissions are out of your scope"
   },
+  "src_dot_utils_dot_errors_dot_priceInvalid": {
+    "string": "Product price cannot be lower than 0."
+  },
   "src_dot_utils_dot_errors_dot_shippingNotApplicable": {
     "context": "error message",
     "string": "Shipping method is not valid for chosen shipping address"

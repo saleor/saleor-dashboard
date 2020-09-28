@@ -20,6 +20,9 @@ const messages = defineMessages({
   duplicated: {
     defaultMessage: "The same object cannot be in both lists"
   },
+  priceInvalid: {
+    defaultMessage: "Product price cannot be lower than 0."
+  },
   skuUnique: {
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
@@ -48,6 +51,9 @@ function getProductErrorMessage(
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.INVALID:
+        if (err.field === "price") {
+          return intl.formatMessage(messages.priceInvalid);
+        }
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.DUPLICATED_INPUT_ITEM:
         return intl.formatMessage(messages.duplicated);
