@@ -1,5 +1,5 @@
-import { productChannels } from "@saleor/channels/fixtures";
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
+import { product } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -10,7 +10,7 @@ import ChannelsAvailability, {
 
 const props: ChannelsAvailabilityProps = {
   allChannelsCount: 4,
-  channels: createChannelsDataFromProduct(productChannels),
+  channels: createChannelsDataFromProduct(product("")),
   onChange: () => undefined,
   openModal: () => undefined,
   selectedChannelsCount: 3

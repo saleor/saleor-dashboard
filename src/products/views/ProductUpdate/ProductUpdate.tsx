@@ -105,11 +105,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const product = data?.product;
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
-    product?.channelListing,
+    product,
     channelsData?.channels
   );
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-    product?.channelListing
+    product
   );
   const [currentChannels, setCurrentChannels] = useStateFromProps(
     productChannelsChoices
@@ -141,7 +141,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         0
       ) {
         const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-          data.productChannelListingUpdate.product.channelListing
+          data.productChannelListingUpdate.product
         );
         setCurrentChannels(updatedProductChannelsChoices);
       } else {

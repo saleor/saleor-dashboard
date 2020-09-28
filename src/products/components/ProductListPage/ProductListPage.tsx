@@ -194,6 +194,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           gridAttributes={gridAttributes}
           settings={settings}
           channelsCount={channelsCount}
+          selectedChannel={selectedChannel}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>

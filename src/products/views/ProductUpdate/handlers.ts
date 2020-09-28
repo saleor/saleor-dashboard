@@ -161,9 +161,7 @@ export function createUpdateHandler(
         });
       }
     }
-    const productChannels = createChannelsDataFromProduct(
-      product.channelListing
-    );
+    const productChannels = createChannelsDataFromProduct(product);
     const diffChannels = diff(
       productChannels,
       data.channelListing,

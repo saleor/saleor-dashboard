@@ -404,6 +404,7 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -419,6 +420,7 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
         },

@@ -145,6 +145,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
+  React.useEffect(() => {
+    if (!selectedChannel) {
+      openModal("settings");
+    }
+  }, [selectedChannel]);
+
   const [
     changeFilters,
     resetFilters,
@@ -195,7 +201,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
-      channel: "default-channel",
+      channel: selectedChannel,
       filter,
       sort
     }),
