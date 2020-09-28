@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -8,6 +9,7 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -65,9 +67,21 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    VoucherListUrlDialog,
+    VoucherListUrlQueryParams
+  >(navigate, voucherListUrl, params);
+
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("vouchersListChannel", { closeModal, openModal });
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
+      channel: selectedChannel,
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
@@ -100,11 +114,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     params
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    VoucherListUrlDialog,
-    VoucherListUrlQueryParams
-  >(navigate, voucherListUrl, params);
-
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -129,7 +138,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.vouchers.pageInfo),
+    data?.vouchers?.pageInfo,
     paginationState,
     params
   );
@@ -147,7 +156,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
+  const currencySymbol = shop?.defaultCurrency || "USD";
 
   return (
     <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
@@ -162,6 +171,14 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
+            <ChannelSettingsDialog
+              channelsChoices={channelChoices}
+              defaultChoice={selectedChannel}
+              open={params.action === "settings"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onConfirm={handleChannelSelectConfirm}
+            />
             <VoucherListPage
               currencySymbol={currencySymbol}
               currentTab={currentTab}
@@ -174,7 +191,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
               tabs={tabs.map(tab => tab.name)}
-              defaultCurrency={maybe(() => shop.defaultCurrency)}
               settings={settings}
               vouchers={maybe(() => data.vouchers.edges.map(edge => edge.node))}
               disabled={loading}
@@ -202,6 +218,8 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
+              selectedChannel={selectedChannel}
+              onSettingsOpen={() => openModal("settings")}
             />
             <ActionDialog
               confirmButtonState={voucherBulkDeleteOpts.status}

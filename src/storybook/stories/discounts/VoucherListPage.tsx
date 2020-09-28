@@ -27,7 +27,6 @@ const props: VoucherListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   ...filterPageProps,
-  defaultCurrency: "USD",
   filterOpts: {
     saleType: {
       active: false,
@@ -52,6 +51,8 @@ const props: VoucherListPageProps = {
       }
     }
   },
+  onSettingsOpen: () => undefined,
+  selectedChannel: "123",
   sort: {
     ...sortPageProps.sort,
     sort: VoucherListUrlSortField.code

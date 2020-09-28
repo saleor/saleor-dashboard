@@ -60,7 +60,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
-    variables: { id }
+    variables: { channel: "default-channel", id }
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<

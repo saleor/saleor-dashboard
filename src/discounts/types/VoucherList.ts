@@ -20,6 +20,27 @@ export interface VoucherList_vouchers_edges_node_minSpent {
   amount: number;
 }
 
+export interface VoucherList_vouchers_edges_node_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface VoucherList_vouchers_edges_node_channelListing_minSpent {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VoucherList_vouchers_edges_node_channelListing {
+  __typename: "VoucherChannelListing";
+  id: string;
+  channel: VoucherList_vouchers_edges_node_channelListing_channel;
+  discountValue: number;
+  currency: string;
+  minSpent: VoucherList_vouchers_edges_node_channelListing_minSpent | null;
+}
+
 export interface VoucherList_vouchers_edges_node {
   __typename: "Voucher";
   id: string;
@@ -28,10 +49,11 @@ export interface VoucherList_vouchers_edges_node {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number;
+  discountValue: number | null;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
   minSpent: VoucherList_vouchers_edges_node_minSpent | null;
   minCheckoutItemsQuantity: number | null;
+  channelListing: VoucherList_vouchers_edges_node_channelListing[] | null;
 }
 
 export interface VoucherList_vouchers_edges {
@@ -58,6 +80,7 @@ export interface VoucherList {
 }
 
 export interface VoucherListVariables {
+  channel?: string | null;
   after?: string | null;
   before?: string | null;
   first?: number | null;

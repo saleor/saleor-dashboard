@@ -9,7 +9,15 @@ export const saleFragment = gql`
     type
     startDate
     endDate
-    value
+    channelListing {
+      id
+      channel {
+        id
+        name
+      }
+      discountValue
+      currency
+    }
   }
 `;
 
@@ -88,6 +96,19 @@ export const voucherFragment = gql`
       amount
     }
     minCheckoutItemsQuantity
+    channelListing {
+      id
+      channel {
+        id
+        name
+      }
+      discountValue
+      currency
+      minSpent {
+        amount
+        currency
+      }
+    }
   }
 `;
 

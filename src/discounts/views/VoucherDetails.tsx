@@ -23,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
-import { decimal, joinDateTime, maybe } from "../../misc";
+import { joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import {
   DiscountValueTypeEnum,
@@ -151,7 +151,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                   {(voucherDelete, voucherDeleteOpts) => (
                     <TypedVoucherDetails
                       displayLoader
-                      variables={{ id, ...paginationState }}
+                      variables={{
+                        channel: "default-channel",
+                        id,
+                        ...paginationState
+                      }}
                     >
                       {({ data, loading }) => {
                         const tabPageInfo =
@@ -300,11 +304,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                         formData.applyOncePerCustomer,
                                       applyOncePerOrder:
                                         formData.applyOncePerOrder,
-                                      discountValue:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? 100
-                                          : decimal(formData.value),
+
                                       discountValueType:
                                         formData.discountType.toString() ===
                                         "SHIPPING"
@@ -316,11 +316,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                             formData.endTime
                                           )
                                         : null,
-                                      minAmountSpent:
-                                        formData.requirementsPicker !==
-                                        RequirementsPicker.ORDER
-                                          ? 0
-                                          : parseFloat(formData.minSpent),
                                       minCheckoutItemsQuantity:
                                         formData.requirementsPicker !==
                                         RequirementsPicker.ITEM

@@ -14,6 +14,20 @@ export interface SaleCreate_saleCreate_errors {
   field: string | null;
 }
 
+export interface SaleCreate_saleCreate_sale_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleCreate_saleCreate_sale_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleCreate_saleCreate_sale_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleCreate_saleCreate_sale {
   __typename: "Sale";
   id: string;
@@ -21,7 +35,7 @@ export interface SaleCreate_saleCreate_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleCreate_saleCreate_sale_channelListing[] | null;
 }
 
 export interface SaleCreate_saleCreate {

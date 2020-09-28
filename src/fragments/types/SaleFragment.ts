@@ -8,6 +8,20 @@ import { SaleType } from "./../../types/globalTypes";
 // GraphQL fragment: SaleFragment
 // ====================================================
 
+export interface SaleFragment_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleFragment_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleFragment_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleFragment {
   __typename: "Sale";
   id: string;
@@ -15,5 +29,5 @@ export interface SaleFragment {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleFragment_channelListing[] | null;
 }

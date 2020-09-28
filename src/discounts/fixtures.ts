@@ -13,54 +13,132 @@ import { VoucherList_vouchers_edges_node } from "./types/VoucherList";
 export const saleList: SaleList_sales_edges_node[] = [
   {
     __typename: "Sale" as "Sale",
+    channelListing: [
+      {
+        __typename: "SaleChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "1"
+      }
+    ],
     endDate: null,
     id: "U2FsZTo0",
     name: "Happy front day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType,
-    value: 40
+    type: "PERCENTAGE" as SaleType
   },
   {
     __typename: "Sale" as "Sale",
+    channelListing: [
+      {
+        __typename: "SaleChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "2"
+      }
+    ],
     endDate: null,
     id: "U2FsZTo1",
     name: "Happy minute day!",
     startDate: "2019-01-03",
-    type: "FIXED" as SaleType,
-    value: 30
+    type: "FIXED" as SaleType
   },
   {
     __typename: "Sale" as "Sale",
+    channelListing: [
+      {
+        __typename: "SaleChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "3"
+      }
+    ],
     endDate: null,
     id: "U2FsZTox",
     name: "Happy class day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType,
-    value: 10
+    type: "PERCENTAGE" as SaleType
   },
   {
     __typename: "Sale" as "Sale",
+    channelListing: [
+      {
+        __typename: "SaleChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "4"
+      }
+    ],
     endDate: null,
     id: "U2FsZToy",
     name: "Happy human day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType,
-    value: 20
+    type: "PERCENTAGE" as SaleType
   },
   {
     __typename: "Sale" as "Sale",
+    channelListing: [
+      {
+        __typename: "SaleChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "5"
+      }
+    ],
     endDate: null,
     id: "U2FsZToz",
     name: "Happy year day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType,
-    value: 10
+    type: "PERCENTAGE" as SaleType
   }
 ];
 
 export const voucherList: VoucherList_vouchers_edges_node[] = [
   {
     __typename: "Voucher" as "Voucher",
+    channelListing: [
+      {
+        __typename: "VoucherChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "1",
+        minSpent: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        }
+      }
+    ],
     code: "FREE2019",
     countries: [
       {
@@ -80,6 +158,24 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
   },
   {
     __typename: "Voucher" as "Voucher",
+    channelListing: [
+      {
+        __typename: "VoucherChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        currency: "USD",
+        discountValue: 1,
+        id: "1",
+        minSpent: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        }
+      }
+    ],
     code: "FREE2020",
     countries: [],
     discountValue: 25,
@@ -124,6 +220,19 @@ export const sale: SaleDetails_sale = {
     },
     totalCount: 2
   },
+  channelListing: [
+    {
+      __typename: "SaleChannelListing",
+      channel: {
+        __typename: "Channel",
+        id: "123",
+        name: "Channel1"
+      },
+      currency: "USD",
+      discountValue: 1,
+      id: "1"
+    }
+  ],
   collections: {
     __typename: "CollectionCountableConnection",
     edges: [
@@ -234,8 +343,7 @@ export const sale: SaleDetails_sale = {
     totalCount: 4
   },
   startDate: "2019-01-03",
-  type: "PERCENTAGE" as SaleType,
-  value: 30
+  type: "PERCENTAGE" as SaleType
 };
 
 export const voucherDetails: VoucherDetails_voucher = {
@@ -254,6 +362,24 @@ export const voucherDetails: VoucherDetails_voucher = {
     },
     totalCount: 0
   },
+  channelListing: [
+    {
+      __typename: "VoucherChannelListing",
+      channel: {
+        __typename: "Channel",
+        id: "123",
+        name: "Channel1"
+      },
+      currency: "USD",
+      discountValue: 1,
+      id: "1",
+      minSpent: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
+      }
+    }
+  ],
   code: "DISCOUNT",
   collections: {
     __typename: "CollectionCountableConnection",

@@ -113,4 +113,5 @@ export interface ShippingZone {
 
 export interface ShippingZoneVariables {
   id: string;
+  channel?: string | null;
 }

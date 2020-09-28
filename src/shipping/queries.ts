@@ -37,8 +37,8 @@ export const useShippingZoneList = makeQuery<
 
 const shippingZone = gql`
   ${shippingZoneDetailsFragment}
-  query ShippingZone($id: ID!) {
-    shippingZone(id: $id) {
+  query ShippingZone($id: ID!, $channel: String) {
+    shippingZone(id: $id, channel: $channel) {
       ...ShippingZoneDetailsFragment
     }
   }

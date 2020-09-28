@@ -79,7 +79,7 @@ export enum VoucherListUrlFiltersWithMultipleValues {
 }
 export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum> &
   FiltersWithMultipleValues<VoucherListUrlFiltersWithMultipleValues>;
-export type VoucherListUrlDialog = "remove" | TabActionDialog;
+export type VoucherListUrlDialog = "remove" | "settings" | TabActionDialog;
 export enum VoucherListUrlSortField {
   code = "code",
   endDate = "end-date",

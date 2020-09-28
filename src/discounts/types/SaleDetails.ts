@@ -8,6 +8,20 @@ import { SaleType } from "./../../types/globalTypes";
 // GraphQL query operation: SaleDetails
 // ====================================================
 
+export interface SaleDetails_sale_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleDetails_sale_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleDetails_sale_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleDetails_sale_products_edges_node_productType {
   __typename: "ProductType";
   id: string;
@@ -118,7 +132,7 @@ export interface SaleDetails_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleDetails_sale_channelListing[] | null;
   products: SaleDetails_sale_products | null;
   categories: SaleDetails_sale_categories | null;
   collections: SaleDetails_sale_collections | null;
