@@ -63,8 +63,12 @@ export function createChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        isPublished: isPublished || channel.isPublished,
-        publicationDate: publicationDate || channel.publicationDate
+        isPublished:
+          typeof isPublished === "boolean" ? isPublished : channel.isPublished,
+        publicationDate:
+          typeof publicationDate !== "undefined"
+            ? publicationDate
+            : channel.publicationDate
       },
       ...channelListing.slice(channelIndex + 1)
     ];

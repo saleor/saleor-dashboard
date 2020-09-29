@@ -33,6 +33,9 @@ const messages = defineMessages({
   nameAlreadyTaken: {
     defaultMessage: "This name is already taken. Please provide another."
   },
+  priceInvalid: {
+    defaultMessage: "Product price cannot be lower than 0."
+  },
   skuUnique: {
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
@@ -69,6 +72,9 @@ function getProductErrorMessage(
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.INVALID:
+        if (err.field === "price") {
+          return intl.formatMessage(messages.priceInvalid);
+        }
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.UNIQUE:
         if (err.field === "sku") {
