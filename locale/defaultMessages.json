@@ -316,19 +316,11 @@
   },
   "productVariantWarehouseSectionDescription": {
     "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please {configureWarehouseUrl}"
-  },
-  "productVariantWarehouseSectionDescriptionLink": {
-    "context": "no warehouses info",
-    "string": "configure a warehouse"
+    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
   },
   "productWarehouseSectionDescription": {
     "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the product please {configureWarehouseUrl}"
-  },
-  "productWarehouseSectionDescriptionLink": {
-    "context": "no warehouses info",
-    "string": "configure a warehouse"
+    "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",

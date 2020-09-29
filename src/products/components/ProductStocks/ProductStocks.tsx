@@ -191,18 +191,12 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             {hasVariants ? (
               <>
                 <FormattedMessage
-                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please {configureWarehouseUrl}"
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
                   description="no warehouses info"
                   id="productVariantWarehouseSectionDescription"
                   values={{
-                    configureWarehouseUrl: (
-                      <Link onClick={onWarehouseConfigure}>
-                        <FormattedMessage
-                          defaultMessage="configure a warehouse"
-                          description="no warehouses info"
-                          id="productVariantWarehouseSectionDescriptionLink"
-                        />
-                      </Link>
+                    a: chunks => (
+                      <Link onClick={onWarehouseConfigure}>{chunks}</Link>
                     )
                   }}
                 />
@@ -210,18 +204,12 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             ) : (
               <>
                 <FormattedMessage
-                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please {configureWarehouseUrl}"
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
                   description="no warehouses info"
                   id="productWarehouseSectionDescription"
                   values={{
-                    configureWarehouseUrl: (
-                      <Link onClick={onWarehouseConfigure}>
-                        <FormattedMessage
-                          defaultMessage="configure a warehouse"
-                          description="no warehouses info"
-                          id="productWarehouseSectionDescriptionLink"
-                        />
-                      </Link>
+                    a: chunks => (
+                      <Link onClick={onWarehouseConfigure}>{chunks}</Link>
                     )
                   }}
                 />
