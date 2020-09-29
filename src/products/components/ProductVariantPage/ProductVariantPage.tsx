@@ -13,6 +13,7 @@ import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
+import { validatePrice } from "@saleor/products/utils/validation";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 
@@ -129,82 +130,88 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             price: listing.price.amount
           }))}
         >
-          {({ change, data, handlers, hasChanged, submit }) => (
-            <>
-              <Grid variant="inverted">
-                <div>
-                  <ProductVariantNavigation
-                    current={variant ? variant.id : undefined}
-                    defaultVariantId={defaultVariantId}
-                    fallbackThumbnail={maybe(
-                      () => variant.product.thumbnail.url
-                    )}
-                    variants={maybe(() => variant.product.variants)}
-                    onAdd={onAdd}
-                    onRowClick={(variantId: string) => {
-                      if (variant) {
-                        return onVariantClick(variantId);
-                      }
-                    }}
-                    onReorder={onVariantReorder}
-                  />
-                </div>
-                <div>
-                  <ProductVariantAttributes
-                    attributes={data.attributes}
-                    disabled={loading}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                  />
-                  <CardSpacer />
-                  <ProductVariantImages
-                    disabled={loading}
-                    images={images}
-                    placeholderImage={placeholderImage}
-                    onImageAdd={toggleModal}
-                  />
-                  <CardSpacer />
-                  <ProductVariantPrice
-                    ProductVariantChannelListings={data.channelListing}
-                    errors={channelErrors}
-                    loading={loading}
-                    onChange={handlers.changeChannels}
-                  />
-                  <CardSpacer />
-                  <ProductShipping
-                    data={data}
-                    disabled={loading}
-                    errors={errors}
-                    weightUnit={variant?.weight?.unit || defaultWeightUnit}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <ProductStocks
-                    data={data}
-                    disabled={loading}
-                    hasVariants={true}
-                    errors={errors}
-                    stocks={data.stocks}
-                    warehouses={warehouses}
-                    onChange={handlers.changeStock}
-                    onFormDataChange={change}
-                    onWarehouseStockAdd={handlers.addStock}
-                    onWarehouseStockDelete={handlers.deleteStock}
-                    onWarehouseConfigure={onWarehouseConfigure}
-                  />
-                  <CardSpacer />
-                  <Metadata data={data} onChange={handlers.changeMetadata} />
-                </div>
-              </Grid>
-              <SaveButtonBar
-                disabled={loading || !hasChanged}
-                state={saveButtonBarState}
-                onCancel={onBack}
-                onDelete={onDelete}
-                onSave={submit}
-              />
-            </>
-          )}
+          {({ change, data, handlers, hasChanged, submit }) => {
+            const formDisabled = data.channelListing?.some(channel =>
+              validatePrice(channel.price)
+            );
+
+            return (
+              <>
+                <Grid variant="inverted">
+                  <div>
+                    <ProductVariantNavigation
+                      current={variant ? variant.id : undefined}
+                      defaultVariantId={defaultVariantId}
+                      fallbackThumbnail={maybe(
+                        () => variant.product.thumbnail.url
+                      )}
+                      variants={maybe(() => variant.product.variants)}
+                      onAdd={onAdd}
+                      onRowClick={(variantId: string) => {
+                        if (variant) {
+                          return onVariantClick(variantId);
+                        }
+                      }}
+                      onReorder={onVariantReorder}
+                    />
+                  </div>
+                  <div>
+                    <ProductVariantAttributes
+                      attributes={data.attributes}
+                      disabled={loading}
+                      errors={errors}
+                      onChange={handlers.selectAttribute}
+                    />
+                    <CardSpacer />
+                    <ProductVariantImages
+                      disabled={loading}
+                      images={images}
+                      placeholderImage={placeholderImage}
+                      onImageAdd={toggleModal}
+                    />
+                    <CardSpacer />
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListing}
+                      errors={channelErrors}
+                      loading={loading}
+                      onChange={handlers.changeChannels}
+                    />
+                    <CardSpacer />
+                    <ProductShipping
+                      data={data}
+                      disabled={loading}
+                      errors={errors}
+                      weightUnit={variant?.weight?.unit || defaultWeightUnit}
+                      onChange={change}
+                    />
+                    <CardSpacer />
+                    <ProductStocks
+                      data={data}
+                      disabled={loading}
+                      hasVariants={true}
+                      errors={errors}
+                      stocks={data.stocks}
+                      warehouses={warehouses}
+                      onChange={handlers.changeStock}
+                      onFormDataChange={change}
+                      onWarehouseStockAdd={handlers.addStock}
+                      onWarehouseStockDelete={handlers.deleteStock}
+                      onWarehouseConfigure={onWarehouseConfigure}
+                    />
+                    <CardSpacer />
+                    <Metadata data={data} onChange={handlers.changeMetadata} />
+                  </div>
+                </Grid>
+                <SaveButtonBar
+                  disabled={loading || formDisabled || !hasChanged}
+                  state={saveButtonBarState}
+                  onCancel={onBack}
+                  onDelete={onDelete}
+                  onSave={submit}
+                />
+              </>
+            );
+          }}
         </ProductVariantUpdateForm>
       </Container>
       {variant && (
