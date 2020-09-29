@@ -80,55 +80,58 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const scrollPosition = useWindowScroll();
   const scrolledToBottom =
     scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
+  const shouldDisplay = onDelete || !disabled;
 
   return (
     <AppActionContext.Consumer>
       {anchor =>
         anchor ? (
           <Portal container={anchor.current}>
-            <div className={classes.root} {...rest}>
-              <Container>
-                <Card elevation={scrolledToBottom ? 0 : 16}>
-                  <CardContent className={classes.content}>
-                    {!!onDelete && (
+            {shouldDisplay && (
+              <div className={classes.root} {...rest}>
+                <Container>
+                  <Card elevation={scrolledToBottom ? 0 : 16}>
+                    <CardContent className={classes.content}>
+                      {!!onDelete && (
+                        <Button
+                          variant="contained"
+                          onClick={onDelete}
+                          className={classes.deleteButton}
+                          data-test="button-bar-delete"
+                        >
+                          {labels && labels.delete
+                            ? labels.delete
+                            : intl.formatMessage(buttonMessages.delete)}
+                        </Button>
+                      )}
+                      <div className={classes.spacer} />
                       <Button
-                        variant="contained"
-                        onClick={onDelete}
-                        className={classes.deleteButton}
-                        data-test="button-bar-delete"
+                        className={classes.cancelButton}
+                        variant="text"
+                        onClick={onCancel}
+                        data-test="button-bar-cancel"
                       >
-                        {labels && labels.delete
-                          ? labels.delete
-                          : intl.formatMessage(buttonMessages.delete)}
+                        {maybe(
+                          () => labels.cancel,
+                          intl.formatMessage(buttonMessages.back)
+                        )}
                       </Button>
-                    )}
-                    <div className={classes.spacer} />
-                    <Button
-                      className={classes.cancelButton}
-                      variant="text"
-                      onClick={onCancel}
-                      data-test="button-bar-cancel"
-                    >
-                      {maybe(
-                        () => labels.cancel,
-                        intl.formatMessage(buttonMessages.back)
-                      )}
-                    </Button>
-                    <ConfirmButton
-                      disabled={disabled}
-                      onClick={onSave}
-                      transitionState={state}
-                      data-test="button-bar-confirm"
-                    >
-                      {maybe(
-                        () => labels.save,
-                        intl.formatMessage(buttonMessages.save)
-                      )}
-                    </ConfirmButton>
-                  </CardContent>
-                </Card>
-              </Container>
-            </div>
+                      <ConfirmButton
+                        disabled={disabled}
+                        onClick={onSave}
+                        transitionState={state}
+                        data-test="button-bar-confirm"
+                      >
+                        {maybe(
+                          () => labels.save,
+                          intl.formatMessage(buttonMessages.save)
+                        )}
+                      </ConfirmButton>
+                    </CardContent>
+                  </Card>
+                </Container>
+              </div>
+            )}
           </Portal>
         ) : null
       }
