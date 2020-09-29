@@ -83,8 +83,6 @@ export function getProductVariantAttributeErrorMessage(
 ): string {
   if (err) {
     switch (err.code) {
-      case ProductErrorCode.REQUIRED:
-        return intl.formatMessage(messages.attributeRequired);
       case ProductErrorCode.UNIQUE:
         return intl.formatMessage(messages.variantUnique);
       default:

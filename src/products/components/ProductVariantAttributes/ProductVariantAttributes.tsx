@@ -8,10 +8,10 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -27,7 +27,7 @@ export type VariantAttributeInput = FormsetAtomicData<
 interface ProductVariantAttributesProps {
   attributes: VariantAttributeInput[];
   disabled: boolean;
-  errors: VariantCreate_productVariantCreate_errors[];
+  errors: ProductErrorFragment[];
   onChange: FormsetChange<VariantAttributeInputData>;
 }
 
@@ -84,31 +84,46 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
           {attributes === undefined ? (
             <Skeleton />
           ) : (
-            attributes.map(attribute => (
-              <SingleAutocompleteSelectField
-                key={attribute.id}
-                disabled={disabled}
-                displayValue={getAttributeDisplayValue(
-                  attribute.id,
-                  attribute.value,
-                  attributes
-                )}
-                label={attribute.label}
-                name={`attribute:${attribute.id}`}
-                onChange={event => onChange(attribute.id, event.target.value)}
-                value={getAttributeValue(attribute.id, attributes)}
-                choices={getAttributeValueChoices(attribute.id, attributes)}
-                allowCustomValues
-                data-test="variant-attribute-input"
-              />
-            ))
+            attributes.map(attribute => {
+              const error = errors.find(
+                err => err.attributeId === attribute.id
+              );
+
+              return (
+                <SingleAutocompleteSelectField
+                  key={attribute.id}
+                  disabled={disabled}
+                  displayValue={getAttributeDisplayValue(
+                    attribute.id,
+                    attribute.value,
+                    attributes
+                  )}
+                  emptyOption
+                  error={!!error}
+                  helperText={getProductVariantAttributeErrorMessage(
+                    error,
+                    intl
+                  )}
+                  label={attribute.label}
+                  name={`attribute:${attribute.id}`}
+                  onChange={event => onChange(attribute.id, event.target.value)}
+                  value={getAttributeValue(attribute.id, attributes)}
+                  choices={getAttributeValueChoices(attribute.id, attributes)}
+                  allowCustomValues
+                  data-test="variant-attribute-input"
+                />
+              );
+            })
           )}
         </Grid>
         {errors.length > 0 && (
           <>
             <FormSpacer />
             {errors
-              .filter(error => error.field === "attributes")
+              .filter(
+                error =>
+                  error.field === "attributes" && error.attributeId === null
+              )
               .map(error => (
                 <Typography color="error" key={error.code}>
                   {getProductVariantAttributeErrorMessage(error, intl)}
