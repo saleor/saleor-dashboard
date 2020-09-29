@@ -17,6 +17,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
+import { validatePrice } from "@saleor/products/utils/validation";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -135,11 +136,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
+        const productTypeChoice = productTypeChoiceList?.find(
+          choice => choice.id === data.productType.id
+        );
         const formDisabled =
-          !data.sku ||
-          data.channelListing.some(
-            channel => channel.price < 0 || !channel.price
-          );
+          !productTypeChoice?.hasVariants &&
+          (!data.sku ||
+            data.channelListing.some(channel => validatePrice(channel.price)));
 
         return (
           <Container>
