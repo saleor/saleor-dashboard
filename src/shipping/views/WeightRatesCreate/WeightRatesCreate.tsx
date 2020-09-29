@@ -1,6 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import {
-  ChannelShippingData,
   createShippingChannels,
   createSortedShippingChannels
 } from "@saleor/channels/utils";
@@ -76,7 +75,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels,
     toggleAllChannels
   } = useChannels(shippingChannels);
 
@@ -127,9 +125,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
       )}
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
-        onChannelsChange={(data: ChannelShippingData[]) =>
-          setCurrentChannels(data)
-        }
         shippingChannels={currentChannels}
         defaultCurrency={shop?.defaultCurrency}
         disabled={
@@ -141,6 +136,10 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
         onSubmit={handleSubmit}
         onBack={handleBack}
         errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
+        channelErrors={
+          updateShippingMethodChannelListingOpts?.data
+            ?.shippingMethodChannelListingUpdate?.errors || []
+        }
         openChannelsModal={handleChannelsModalOpen}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />

@@ -110,13 +110,12 @@ const voucherDetails = gql`
   ${voucherDetailsFragment}
   query VoucherDetails(
     $id: ID!
-    $channel: String
     $after: String
     $before: String
     $first: Int
     $last: Int
   ) {
-    voucher(id: $id, channel: $channel) {
+    voucher(id: $id) {
       ...VoucherDetailsFragment
     }
   }

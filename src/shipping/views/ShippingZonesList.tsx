@@ -71,7 +71,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 
   const { data, loading, refetch } = useShippingZoneList({
     displayLoader: true,
-    variables: { channel: selectedChannel, ...paginationState }
+    variables: paginationState
   });
 
   const [deleteShippingZone, deleteShippingZoneOpts] = useShippingZoneDelete({

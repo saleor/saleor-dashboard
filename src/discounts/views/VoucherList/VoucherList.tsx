@@ -75,14 +75,12 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const {
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel,
-    selectedChannelSlug
+    selectedChannel
   } = useChannelsSettings("vouchersListChannel", { closeModal, openModal });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
-      channel: selectedChannelSlug,
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)

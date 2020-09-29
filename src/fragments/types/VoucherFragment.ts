@@ -14,12 +14,6 @@ export interface VoucherFragment_countries {
   country: string;
 }
 
-export interface VoucherFragment_minSpent {
-  __typename: "Money";
-  currency: string;
-  amount: number;
-}
-
 export interface VoucherFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -49,9 +43,7 @@ export interface VoucherFragment {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number | null;
   countries: (VoucherFragment_countries | null)[] | null;
-  minSpent: VoucherFragment_minSpent | null;
   minCheckoutItemsQuantity: number | null;
   channelListing: VoucherFragment_channelListing[] | null;
 }

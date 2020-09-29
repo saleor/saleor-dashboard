@@ -14,12 +14,6 @@ export interface VoucherList_vouchers_edges_node_countries {
   country: string;
 }
 
-export interface VoucherList_vouchers_edges_node_minSpent {
-  __typename: "Money";
-  currency: string;
-  amount: number;
-}
-
 export interface VoucherList_vouchers_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -49,9 +43,7 @@ export interface VoucherList_vouchers_edges_node {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number | null;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
-  minSpent: VoucherList_vouchers_edges_node_minSpent | null;
   minCheckoutItemsQuantity: number | null;
   channelListing: VoucherList_vouchers_edges_node_channelListing[] | null;
 }

@@ -20,11 +20,11 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
+  channelListing: ChannelShippingData[];
   name: string;
   noLimits: boolean;
   minValue: string;
   maxValue: string;
-  price: string;
   type: ShippingMethodTypeEnum;
 }
 
@@ -34,13 +34,13 @@ export interface ShippingZoneRatesPageProps {
   defaultCurrency: string;
   disabled: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
+  channelErrors: ShippingErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
   openChannelsModal: () => void;
-  onChannelsChange: (data: ChannelShippingData[]) => void;
   variant: ShippingMethodTypeEnum;
 }
 
@@ -48,6 +48,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   allChannelsCount,
   shippingChannels,
   defaultCurrency,
+  channelErrors,
   disabled,
   errors,
   onBack,
@@ -56,26 +57,24 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   openChannelsModal,
   rate,
   saveButtonBarState,
-  onChannelsChange,
   variant
 }) => {
   const intl = useIntl();
-
-  const initialForm = {
+  const initialForm: FormData = {
+    channelListing: shippingChannels,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
     noLimits: false,
-    price: rate?.price?.amount.toString() || "",
     type: rate?.type || null
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, set, submit, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
-          shippingChannels,
-          onChannelsChange,
+          data,
+          set,
           triggerChange
         );
 
@@ -109,7 +108,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <CardSpacer />
                 {variant === ShippingMethodTypeEnum.PRICE ? (
                   <OrderValue
-                    channels={shippingChannels}
+                    channels={data.channelListing}
+                    errors={channelErrors}
                     noLimits={data.noLimits}
                     disabled={disabled}
                     defaultCurrency={defaultCurrency}
@@ -128,10 +128,11 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 )}
                 <CardSpacer />
                 <PricingCard
-                  channels={shippingChannels}
+                  channels={data.channelListing}
                   onChange={handleChannelsChange}
                   disabled={disabled}
                   defaultCurrency={defaultCurrency}
+                  errors={channelErrors}
                 />
                 <CardSpacer />
               </div>

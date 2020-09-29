@@ -19,11 +19,11 @@ const defaultChannels = [
 
 const props: ShippingZoneRatesPageProps = {
   allChannelsCount: 3,
+  channelErrors: [],
   defaultCurrency: "USD",
   disabled: false,
   errors: [],
   onBack: () => undefined,
-  onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,

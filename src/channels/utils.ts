@@ -65,13 +65,13 @@ export const createShippingChannelsFromRate = (
   data?.map(channelData => ({
     id: channelData.channel.id,
     maxValue: channelData.maximumOrderPrice
-      ? channelData.maximumOrderPrice.toString()
+      ? channelData.maximumOrderPrice.amount.toString()
       : "",
     minValue: channelData.minimumOrderPrice
-      ? channelData.minimumOrderPrice.toString()
+      ? channelData.minimumOrderPrice.amount.toString()
       : "",
     name: channelData.channel.name,
-    price: channelData.price ? channelData.price.toString() : ""
+    price: channelData.price ? channelData.price.amount.toString() : ""
   })) || [];
 export interface ChannelShippingData {
   id: string;

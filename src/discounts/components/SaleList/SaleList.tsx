@@ -212,7 +212,7 @@ const SaleList: React.FC<SaleListProps> = props => {
                   className={classes.colValue}
                   onClick={sale ? onRowClick(sale.id) : undefined}
                 >
-                  {sale && sale.type && channel?.discountValue ? (
+                  {sale?.type && channel?.discountValue ? (
                     sale.type === SaleType.FIXED ? (
                       <Money
                         money={{
@@ -225,6 +225,8 @@ const SaleList: React.FC<SaleListProps> = props => {
                     ) : (
                       "-"
                     )
+                  ) : sale && !channel ? (
+                    "_"
                   ) : (
                     <Skeleton />
                   )}

@@ -8,34 +8,16 @@ import { ShippingMethodChannelListingInput, WeightUnitsEnum, ShippingMethodTypeE
 // GraphQL mutation operation: ShippingMethodChannelListingUpdate
 // ====================================================
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_channel {
@@ -75,12 +57,9 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderPrice | null;
   minimumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight | null;
-  maximumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderPrice | null;
   maximumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
-  price: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
   channelListing: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing[] | null;
 }

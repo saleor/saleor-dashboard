@@ -213,7 +213,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
             const channel = voucher?.channelListing?.find(
-              lisiting => lisiting.channel.id === selectedChannel
+              listing => listing.channel.id === selectedChannel
             );
             return (
               <TableRow

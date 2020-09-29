@@ -12,6 +12,7 @@ const props: PricingCardProps = {
   ),
   defaultCurrency: "USD",
   disabled: false,
+  errors: [],
   onChange: () => undefined
 };
 

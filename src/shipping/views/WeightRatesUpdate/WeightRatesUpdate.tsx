@@ -28,7 +28,6 @@ import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
-import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -92,64 +91,55 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
-    setCurrentChannels,
     toggleAllChannels
   } = useChannels(shippingChannels);
 
   const [openModal, setOpenModal] = React.useState(false);
 
-  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate({
-    onCompleted: data => {
-      const errors = data.shippingPriceUpdate.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
+    {}
+  );
 
-        const diffChannels = diff(
-          shippingChannels,
-          currentChannels,
-          (a, b) => a.id === b.id
-        );
-
-        if (diffChannels.removed.length || diffChannels.added.length) {
-          updateShippingMethodChannelListing({
-            variables: getShippingMethodChannelVariables(
-              rateId,
-              currentChannels,
-              diffChannels.removed
-            )
-          });
-        }
-      } else {
-        errors.map(err =>
-          notify({
-            status: "error",
-            text: getShippingErrorMessage(err, intl)
-          })
-        );
-      }
-    }
-  });
+  const handleSuccess = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+  };
 
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        handleSuccess();
         navigate(shippingZoneUrl(id));
       }
     }
   });
 
   const handleDelete = () => setOpenModal(true);
-  const handleSubmit = (data: FormData) =>
-    updateShippingRate({
+  const handleSubmit = async (data: FormData) => {
+    const response = await updateShippingRate({
       variables: getUpdateShippingWeightRateVariables(data, id, rateId)
     });
+    const errors = response.data.shippingPriceUpdate.errors;
+    if (errors.length === 0) {
+      handleSuccess();
+      updateShippingMethodChannelListing({
+        variables: getShippingMethodChannelVariables(
+          rateId,
+          currentChannels,
+          data.channelListing
+        )
+      });
+    } else {
+      errors.map(err =>
+        notify({
+          status: "error",
+          text: getShippingErrorMessage(err, intl)
+        })
+      );
+    }
+  };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
@@ -189,7 +179,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        onChannelsChange={setCurrentChannels}
         defaultCurrency={shop?.defaultCurrency}
         disabled={
           loading ||
@@ -202,6 +191,10 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         onBack={handleBack}
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
+        channelErrors={
+          updateShippingMethodChannelListingOpts?.data
+            ?.shippingMethodChannelListingUpdate?.errors || []
+        }
         openChannelsModal={handleChannelsModalOpen}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />

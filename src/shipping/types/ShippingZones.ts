@@ -43,7 +43,6 @@ export interface ShippingZones {
 }
 
 export interface ShippingZonesVariables {
-  channel?: string | null;
   first?: number | null;
   after?: string | null;
   last?: number | null;

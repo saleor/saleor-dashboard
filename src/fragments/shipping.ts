@@ -15,27 +15,15 @@ export const shippingMethodFragment = gql`
   ${fragmentMoney}
   fragment ShippingMethodFragment on ShippingMethod {
     id
-    minimumOrderPrice {
-      amount
-      currency
-    }
     minimumOrderWeight {
       unit
       value
-    }
-    maximumOrderPrice {
-      amount
-      currency
     }
     maximumOrderWeight {
       unit
       value
     }
     name
-    price {
-      amount
-      currency
-    }
     type
     channelListing {
       id

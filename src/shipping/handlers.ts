@@ -4,27 +4,32 @@ import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippi
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import { diff } from "fast-array-diff";
 
 export const createChannelsChangeHandler = (
-  selectedChannels: ChannelShippingData[],
-  setSelectedChannels: (channels: ChannelShippingData[]) => void,
+  data: ShippingZoneRatesPageFormData,
+  updateChannels: (data: ShippingZoneRatesPageFormData) => void,
   triggerChange: () => void
 ) => (
   channelId: string,
   value: { maxValue: string; minValue: string; price: string }
 ) => {
-  const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
-  const channel = selectedChannels[itemIndex];
-  setSelectedChannels([
-    ...selectedChannels.slice(0, itemIndex),
-    {
-      ...channel,
-      maxValue: value.maxValue,
-      minValue: value.minValue,
-      price: value.price
-    },
-    ...selectedChannels.slice(itemIndex + 1)
-  ]);
+  const { channelListing } = data;
+  const itemIndex = channelListing.findIndex(item => item.id === channelId);
+  const channel = channelListing[itemIndex];
+  updateChannels({
+    ...data,
+    channelListing: [
+      ...channelListing.slice(0, itemIndex),
+      {
+        ...channel,
+        maxValue: value.maxValue,
+        minValue: value.minValue,
+        price: value.price
+      },
+      ...channelListing.slice(itemIndex + 1)
+    ]
+  });
   triggerChange();
 };
 
@@ -93,24 +98,29 @@ export function getUpdateShippingWeightRateVariables(
     }
   };
 }
-
 export function getShippingMethodChannelVariables(
   id: string,
-  addChannels?: ChannelShippingData[],
-  removeChannels?: ChannelShippingData[]
+  shippingChannels?: ChannelShippingData[],
+  formChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
+  const diffChannels = diff(
+    shippingChannels,
+    formChannels,
+    (a, b) => a.id === b.id
+  );
+
   return {
     id,
     input: {
       addChannels:
-        addChannels?.map(channel => ({
+        formChannels?.map(channel => ({
           channelId: channel.id,
-          maxValue: channel.maxValue || null,
-          minValue: channel.minValue || null,
+          maximumOrderPrice: channel.maxValue || null,
+          minimumOrderPrice: channel.minValue || null,
           price: channel.price || null
         })) || [],
-      removeChannels: removeChannels
-        ? removeChannels.map(removedChannel => removedChannel.id)
+      removeChannels: diffChannels.removed
+        ? diffChannels.removed.map(removedChannel => removedChannel.id)
         : []
     }
   };

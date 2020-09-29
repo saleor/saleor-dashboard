@@ -2,7 +2,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
-import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -118,23 +117,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const {
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel,
-    selectedChannelSlug
+    selectedChannel
   } = useChannelsSettings("productsListChannel", { closeModal, openModal });
 
-  const { data: channelsData } = useChannelsList({});
-
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
+  React.useEffect(() => {
+    const action = selectedChannel
+      ? {}
+      : { action: "settings" as ProductListUrlDialog };
+    navigate(
+      productListUrl({
+        ...{ ...params, ...action },
+        ...DEFAULT_INITIAL_PAGINATION_DATA
+      }),
+      true
+    );
+  }, [settings.rowNumber]);
 
   const tabs = getFilterTabs();
 
@@ -195,7 +192,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
-      channel: selectedChannelSlug,
       filter,
       sort
     }),
@@ -352,7 +348,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 onSettingsOpen={() => openModal("settings")}
                 initialSearch={params.query || ""}
                 tabs={getFilterTabs().map(tab => tab.name)}
-                channelsCount={channelsData?.channels?.length}
+                channelsCount={channelChoices?.length}
                 selectedChannel={selectedChannel}
               />
               <ChannelSettingsDialog

@@ -20,12 +20,6 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_countries {
   country: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_minSpent {
-  __typename: "Money";
-  currency: string;
-  amount: number;
-}
-
 export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -158,9 +152,7 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number | null;
   countries: (VoucherCataloguesAdd_voucherCataloguesAdd_voucher_countries | null)[] | null;
-  minSpent: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
   channelListing: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing[] | null;
   type: VoucherTypeEnum;

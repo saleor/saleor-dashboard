@@ -13,19 +13,12 @@ const shippingZones = gql`
   ${pageInfoFragment}
   ${shippingZoneFragment}
   query ShippingZones(
-    $channel: String
     $first: Int
     $after: String
     $last: Int
     $before: String
   ) {
-    shippingZones(
-      channel: $channel
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-    ) {
+    shippingZones(first: $first, after: $after, last: $last, before: $before) {
       edges {
         node {
           ...ShippingZoneFragment
@@ -44,8 +37,8 @@ export const useShippingZoneList = makeQuery<
 
 const shippingZone = gql`
   ${shippingZoneDetailsFragment}
-  query ShippingZone($id: ID!, $channel: String) {
-    shippingZone(id: $id, channel: $channel) {
+  query ShippingZone($id: ID!) {
+    shippingZone(id: $id) {
       ...ShippingZoneDetailsFragment
     }
   }

@@ -86,14 +86,9 @@ export const voucherFragment = gql`
     endDate
     usageLimit
     discountValueType
-    discountValue
     countries {
       code
       country
-    }
-    minSpent {
-      currency
-      amount
     }
     minCheckoutItemsQuantity
     channelListing {

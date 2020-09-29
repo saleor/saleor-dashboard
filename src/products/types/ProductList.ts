@@ -99,5 +99,4 @@ export interface ProductListVariables {
   before?: string | null;
   filter?: ProductFilterInput | null;
   sort?: ProductOrder | null;
-  channel?: string | null;
 }

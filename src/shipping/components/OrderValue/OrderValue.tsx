@@ -10,6 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,6 +23,7 @@ interface Value {
 }
 export interface OrderValueProps {
   channels: ChannelShippingData[];
+  errors: ShippingErrorFragment[];
   defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;

@@ -147,12 +147,10 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
         country: "Germany"
       }
     ],
-    discountValue: 100,
     discountValueType: "PERCENTAGE" as DiscountValueTypeEnum,
     endDate: null,
     id: "Vm91Y2hlcjox",
     minCheckoutItemsQuantity: null,
-    minSpent: null,
     startDate: "2019-01-03",
     usageLimit: null
   },
@@ -178,16 +176,10 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
     ],
     code: "FREE2020",
     countries: [],
-    discountValue: 25,
     discountValueType: "FIXED" as DiscountValueTypeEnum,
     endDate: null,
     id: "Vm91Y2hlcjoy",
     minCheckoutItemsQuantity: 0,
-    minSpent: {
-      __typename: "Money" as "Money",
-      amount: 200,
-      currency: "USD"
-    },
     startDate: "2019-01-03",
     usageLimit: 150
   }
@@ -400,16 +392,10 @@ export const voucherDetails: VoucherDetails_voucher = {
       country: "Germany"
     }
   ],
-  discountValue: 25,
   discountValueType: DiscountValueTypeEnum.FIXED,
   endDate: null,
   id: "Vm91Y2hlcjoy",
   minCheckoutItemsQuantity: 0,
-  minSpent: {
-    __typename: "Money",
-    amount: 200,
-    currency: "USD"
-  },
   products: {
     __typename: "ProductCountableConnection",
     edges: [],
