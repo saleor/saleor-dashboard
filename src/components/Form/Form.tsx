@@ -39,7 +39,7 @@ function Form<T>(props: FormProps<T>) {
       {children(renderProps)}
       <LeaveScreenDialog
         onSaveChanges={renderProps.submit}
-        onRejectChanges={renderProps.leaveAction}
+        onRejectChanges={renderProps.leaveAction.current}
         onClose={() => renderProps.askToLeave(null)}
         open={!!renderProps.leaveModal}
         confirmButtonState="default"

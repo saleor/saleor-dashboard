@@ -1,6 +1,6 @@
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash-es/isEqual";
-import { useState } from "react";
+import { MutableRefObject, useRef, useState } from "react";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -15,7 +15,7 @@ export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
 export interface UseFormResult<T> {
   askToLeave: (action: () => void | null) => void;
-  leaveAction: () => void | null;
+  leaveAction: MutableRefObject<() => void | null>;
   leaveModal: boolean;
   change: FormChange;
   data: T;
@@ -62,7 +62,7 @@ function useForm<T extends FormData>(
     onRefresh: newData => handleRefresh(data, newData, setChanged)
   });
   const [leaveModal, setLeaveModal] = useState<boolean>(false);
-  const [leaveAction, setLeaveAction] = useState<() => void>(null);
+  const leaveAction = useRef<() => void>(null);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
@@ -112,7 +112,7 @@ function useForm<T extends FormData>(
   }
 
   function submit() {
-    onSubmit(data, leaveAction);
+    onSubmit(data, leaveAction.current);
     setLeaveModal(false);
   }
 
@@ -122,7 +122,7 @@ function useForm<T extends FormData>(
 
   function askToLeave(action: () => void | null) {
     setLeaveModal(() => !!action);
-    setLeaveAction(() => action);
+    leaveAction.current = action;
   }
 
   return {
