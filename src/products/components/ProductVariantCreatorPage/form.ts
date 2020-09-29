@@ -4,23 +4,27 @@ import { ProductDetails_product_productType_variantAttributes } from "@saleor/pr
 
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 
+export interface ChannelPrice {
+  channelId: string;
+  price: string;
+}
+
 export interface AttributeValue<T> {
   slug: string;
   value: T;
 }
 export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
-export interface Price<T> {
+export interface Price {
   mode: VariantCreatorPricesAndSkuMode;
   attribute: string;
-  channels: T;
-  values: Array<AttributeValue<T>>;
+  channels: ChannelPrice[];
+  values: Array<AttributeValue<ChannelPrice[]>>;
 }
-
-export interface AllOrAttribute<T> {
+export interface Stock {
   mode: VariantCreatorPricesAndSkuMode;
   attribute: string;
-  value: T;
-  values: Array<AttributeValue<T>>;
+  value: number[];
+  values: Array<AttributeValue<number[]>>;
 }
 export interface Attribute {
   id: string;
@@ -28,8 +32,8 @@ export interface Attribute {
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
-  price: Price<Array<{ channelId: string; price: string }>>;
-  stock: AllOrAttribute<number[]>;
+  price: Price;
+  stock: Stock;
   variants: ProductVariantBulkCreateInput[];
   warehouses: string[];
 }

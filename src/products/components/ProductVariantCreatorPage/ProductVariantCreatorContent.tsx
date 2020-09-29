@@ -145,13 +145,13 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
           channelListings={channelListings}
           data={data}
           errors={errors}
-          onVariantDataChange={(variantIndex, value) =>
+          onVariantSkuChange={(variantIndex, value) =>
             dispatchFormDataAction({
-              changeVariantData: {
+              changeVariantSku: {
                 value,
                 variantIndex
               },
-              type: ProductVariantCreateReducerActionType.changeVariantData
+              type: ProductVariantCreateReducerActionType.changeVariantSku
             })
           }
           onVariantPriceDataChange={(variantIndex, value) =>

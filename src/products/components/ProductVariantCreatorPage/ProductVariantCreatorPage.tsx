@@ -49,16 +49,17 @@ function canHitNext(
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
-        if (
-          data.price.channels === [] ||
-          data.price.channels.some(channel => parseInt(channel.price, 10) < 0)
-        ) {
+        if (data.price.channels.some(channel => validatePrice(channel.price))) {
           return false;
         }
       } else if (data.price.mode === "attribute") {
         if (
-          data.price.attribute === "" ||
-          data.price.values.some(attributeValue => attributeValue.value === [])
+          !data.price.attribute ||
+          data.price.values.some(
+            attribute =>
+              attribute.value.length < data.price.channels.length ||
+              attribute.value.some(channel => validatePrice(channel.price))
+          )
         ) {
           return false;
         }

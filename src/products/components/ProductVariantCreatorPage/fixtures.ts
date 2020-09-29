@@ -1,14 +1,15 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 
 import { createVariants } from "./createVariants";
 import {
-  AllOrAttribute,
   createInitialForm,
   Price,
-  ProductVariantCreateFormData
+  ProductVariantCreateFormData,
+  Stock
 } from "./form";
 
-export const channels = [
+export const channels: ChannelPriceData[] = [
   { currency: "USD", id: "channel-1", name: "Channel1", price: 1 },
   { currency: "USD", id: "channel-2", name: "Channel2", price: 2 },
   { currency: "USD", id: "channel-3", name: "Channel3", price: 3 }
@@ -105,7 +106,7 @@ export const thirdStep: ProductVariantCreateFormData = {
   warehouses: warehouses.map(warehouse => warehouse.id)
 };
 
-const price: Price<Array<{ channelId: string; price: string }>> = {
+const price: Price = {
   attribute: thirdStep.attributes[1].id,
   channels: [
     { channelId: channels[0].id, price: "0" },
@@ -132,7 +133,7 @@ const price: Price<Array<{ channelId: string; price: string }>> = {
     }
   ]
 };
-const stock: AllOrAttribute<number[]> = {
+const stock: Stock = {
   attribute: thirdStep.attributes[2].id,
   mode: "attribute",
   value: [],

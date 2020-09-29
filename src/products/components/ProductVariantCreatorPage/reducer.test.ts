@@ -6,6 +6,7 @@ import {
   thirdStep,
   warehouses
 } from "./fixtures";
+import { ChannelPrice } from "./form";
 import reducer, { ProductVariantCreateReducerActionType } from "./reducer";
 
 function execActions<TState, TAction>(
@@ -235,7 +236,7 @@ describe("Reducer is able to", () => {
   });
 
   it("modify individual variant price", () => {
-    const value = { channelId: channels[0].id, price: "7" };
+    const value: ChannelPrice = { channelId: channels[0].id, price: "7" };
     const variantIndex = 3;
 
     const state = execActions(fourthStep, reducer, [

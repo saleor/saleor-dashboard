@@ -25,7 +25,7 @@ export enum ProductVariantCreateReducerActionType {
   changeApplyStockToAttributeId,
   changeAttributeValuePrice,
   changeAttributeValueStock,
-  changeVariantData,
+  changeVariantSku,
   changeVariantPriceData,
   changeVariantStockData,
   changeWarehouses,
@@ -33,7 +33,6 @@ export enum ProductVariantCreateReducerActionType {
   reload,
   selectValue
 }
-export type VariantField = "sku";
 export interface ProductVariantCreateReducerAction {
   applyPriceOrStockToAll?: {
     mode: VariantCreatorPricesAndSkuMode;
@@ -52,7 +51,7 @@ export interface ProductVariantCreateReducerAction {
     quantity: number;
     warehouseIndex: number;
   };
-  changeVariantData?: {
+  changeVariantSku?: {
     value: string;
     variantIndex: number;
   };
@@ -308,7 +307,7 @@ function changeApplyStockToAllValue(
   };
 }
 
-function changeVariantData(
+function changeVariantSku(
   state: ProductVariantCreateFormData,
   value: string,
   variantIndex: number
@@ -478,11 +477,11 @@ function reduceProductVariantCreateFormData(
         action.changeApplyStockToAllValue.warehouseIndex,
         action.changeApplyStockToAllValue.quantity
       );
-    case ProductVariantCreateReducerActionType.changeVariantData:
-      return changeVariantData(
+    case ProductVariantCreateReducerActionType.changeVariantSku:
+      return changeVariantSku(
         prevState,
-        action.changeVariantData.value,
-        action.changeVariantData.variantIndex
+        action.changeVariantSku.value,
+        action.changeVariantSku.variantIndex
       );
     case ProductVariantCreateReducerActionType.changeVariantPriceData:
       return changeVariantPriceData(

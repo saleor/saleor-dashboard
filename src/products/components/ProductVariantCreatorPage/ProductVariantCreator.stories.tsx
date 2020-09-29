@@ -9,7 +9,12 @@ import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
-import { AllOrAttribute, Price, ProductVariantCreateFormData } from "./form";
+import {
+  ChannelPrice,
+  Price,
+  ProductVariantCreateFormData,
+  Stock
+} from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
@@ -19,12 +24,12 @@ import { ProductVariantCreatorStep } from "./types";
 const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
 const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
-const channels = productChannels.map(channel => ({
+const channels: ChannelPrice[] = productChannels.map(channel => ({
   channelId: channel.channel.id,
   price: channel.discountedPrice.amount.toString()
 }));
 
-const price: Price<Array<{ channelId: string; price: string }>> = {
+const price: Price = {
   attribute: selectedAttributes[0].id,
   channels,
   mode: "attribute",
@@ -34,7 +39,7 @@ const price: Price<Array<{ channelId: string; price: string }>> = {
   }))
 };
 
-const stock: AllOrAttribute<number[]> = {
+const stock: Stock = {
   attribute: selectedAttributes[0].id,
   mode: "attribute",
   value: selectedWarehouses.map(

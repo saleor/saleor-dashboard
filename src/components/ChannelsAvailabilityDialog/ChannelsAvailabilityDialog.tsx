@@ -6,6 +6,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
+import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -89,9 +90,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange] = React.useState("");
-  const filteredChannels = channels.filter(option =>
-    option.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredChannels = filter(channels, query, { key: "name" });
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}

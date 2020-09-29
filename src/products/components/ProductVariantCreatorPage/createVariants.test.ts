@@ -3,7 +3,7 @@ import {
   createVariants
 } from "./createVariants";
 import { attributes, channels, thirdStep } from "./fixtures";
-import { ProductVariantCreateFormData } from "./form";
+import { ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 describe("Creates variant matrix", () => {
   it("with proper size", () => {
@@ -17,7 +17,7 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant price and stock", () => {
-    const channels = [{ channelId: "1", price: "2" }];
+    const channels: ChannelPrice[] = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
 
     const data: ProductVariantCreateFormData = {
@@ -110,7 +110,7 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant price and attribute dependent stock", () => {
-    const price = [{ channelId: "1", price: "2" }];
+    const price: ChannelPrice[] = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id

@@ -22,7 +22,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
-import { ProductVariantCreateFormData } from "./form";
+import { ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 export interface ProductVariantCreatorSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
@@ -30,17 +30,14 @@ export interface ProductVariantCreatorSummaryProps {
   data: ProductVariantCreateFormData;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   warehouses: WarehouseFragment[];
-  onVariantDataChange: (variantIndex: number, value: string) => void;
+  onVariantSkuChange: (variantIndex: number, value: string) => void;
   onVariantStockDataChange: (
     variantIndex: number,
     warehouseId: string,
     value: string
   ) => void;
   onVariantDelete: (variantIndex: number) => void;
-  onVariantPriceDataChange: (
-    variantIndex: number,
-    value: { channelId: string; price: string }
-  ) => void;
+  onVariantPriceDataChange: (variantIndex: number, value: ChannelPrice) => void;
 }
 type ClassKey =
   | "attributeValue"
@@ -147,7 +144,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
     errors,
     warehouses,
     onVariantPriceDataChange,
-    onVariantDataChange,
+    onVariantSkuChange,
     onVariantDelete,
     onVariantStockDataChange
   } = props;
@@ -319,7 +316,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   fullWidth
                   value={variant.sku}
                   onChange={event =>
-                    onVariantDataChange(variantIndex, event.target.value)
+                    onVariantSkuChange(variantIndex, event.target.value)
                   }
                 />
               </div>
