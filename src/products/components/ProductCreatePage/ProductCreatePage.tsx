@@ -24,6 +24,7 @@ import {
   getChoices,
   ProductType
 } from "@saleor/products/utils/data";
+import { validatePrice } from "@saleor/products/utils/validation";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
@@ -225,7 +226,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       attributes,
       stocks
     });
-
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
       {({
@@ -282,12 +282,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           set,
           triggerChange
         );
-
+        const productTypeChoice = productTypeChoiceList?.find(
+          choice => choice.id === data.productType
+        );
         const formDisabled =
-          !data.sku ||
-          data.channelListing.some(
-            channel => channel.price < 0 || !channel.price
-          );
+          !productTypeChoice?.hasVariants &&
+          (!data.sku ||
+            data.channelListing.some(channel => validatePrice(channel.price)));
 
         return (
           <Container>

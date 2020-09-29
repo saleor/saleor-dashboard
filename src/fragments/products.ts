@@ -57,7 +57,6 @@ export const productFragment = gql`
 `;
 
 export const productVariantAttributesFragment = gql`
-  ${fragmentMoney}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
