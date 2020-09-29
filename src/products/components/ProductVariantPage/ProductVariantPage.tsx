@@ -23,6 +23,7 @@ import {
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
+import { validatePrice } from "@saleor/products/utils/validation";
 import { ReorderAction } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -210,6 +211,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               set,
               triggerChange
             );
+            const formDisabled = data.channelListing?.some(channel =>
+              validatePrice(channel.price)
+            );
             return (
               <>
                 <Grid variant="inverted">
@@ -294,7 +298,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   </div>
                 </Grid>
                 <SaveButtonBar
-                  disabled={loading || !hasChanged}
+                  disabled={loading || formDisabled || !hasChanged}
                   state={saveButtonBarState}
                   onCancel={onBack}
                   onDelete={onDelete}

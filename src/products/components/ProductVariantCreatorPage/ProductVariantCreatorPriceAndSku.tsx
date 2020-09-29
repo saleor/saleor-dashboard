@@ -15,17 +15,20 @@ export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatorPriceAndSkuProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   channelListings: ChannelPriceData[];
-  currencySymbol: string;
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];
   onApplyToAllChange: (
     value: VariantCreatorPricesAndSkuMode,
     type: PriceOrStock
   ) => void;
-  onApplyToAllPriceChange: (value: string) => void;
+  onApplyToAllPriceChange: (channelId: string, value: string) => void;
   onApplyToAllStockChange: (quantity: number, warehouseIndex: number) => void;
   onAttributeSelect: (id: string, type: PriceOrStock) => void;
-  onAttributePriceChange: (id: string, value: string) => void;
+  onAttributePriceChange: (
+    id: string,
+    value: string,
+    channelId: string
+  ) => void;
   onAttributeStockChange: (
     id: string,
     quantity: number,
@@ -37,7 +40,6 @@ export interface ProductVariantCreatorPriceAndSkuProps {
 const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSkuProps> = ({
   attributes,
   channelListings,
-  currencySymbol,
   data,
   warehouses,
   onApplyToAllChange,
@@ -52,7 +54,6 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
     <ProductVariantCreatorPrices
       attributes={attributes}
       channelListings={channelListings}
-      currencySymbol={currencySymbol}
       data={data}
       onApplyToAllChange={value => onApplyToAllChange(value, "price")}
       onApplyToAllPriceChange={onApplyToAllPriceChange}

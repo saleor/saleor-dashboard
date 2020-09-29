@@ -62,6 +62,7 @@ export const bulkProductErrorFragment = gql`
     field
     code
     index
+    channels
   }
 `;
 export const bulkStockErrorFragment = gql`
