@@ -316,7 +316,7 @@
   },
   "productVariantWarehouseSectionDescription": {
     "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please"
+    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please {configureWarehouseUrl}"
   },
   "productVariantWarehouseSectionDescriptionLink": {
     "context": "no warehouses info",
@@ -324,7 +324,7 @@
   },
   "productWarehouseSectionDescription": {
     "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the product please"
+    "string": "There are no warehouses set up for your store. To add stock quantity to the product please {configureWarehouseUrl}"
   },
   "productWarehouseSectionDescriptionLink": {
     "context": "no warehouses info",

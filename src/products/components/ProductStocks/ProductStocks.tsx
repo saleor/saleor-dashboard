@@ -191,32 +191,40 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             {hasVariants ? (
               <>
                 <FormattedMessage
-                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please"
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please {configureWarehouseUrl}"
                   description="no warehouses info"
                   id="productVariantWarehouseSectionDescription"
-                />{" "}
-                <Link onClick={onWarehouseConfigure}>
-                  <FormattedMessage
-                    defaultMessage="configure a warehouse"
-                    description="no warehouses info"
-                    id="productVariantWarehouseSectionDescriptionLink"
-                  />
-                </Link>
+                  values={{
+                    configureWarehouseUrl: (
+                      <Link onClick={onWarehouseConfigure}>
+                        <FormattedMessage
+                          defaultMessage="configure a warehouse"
+                          description="no warehouses info"
+                          id="productVariantWarehouseSectionDescriptionLink"
+                        />
+                      </Link>
+                    )
+                  }}
+                />
               </>
             ) : (
               <>
                 <FormattedMessage
-                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please"
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please {configureWarehouseUrl}"
                   description="no warehouses info"
                   id="productWarehouseSectionDescription"
-                />{" "}
-                <Link onClick={onWarehouseConfigure}>
-                  <FormattedMessage
-                    defaultMessage="configure a warehouse"
-                    description="no warehouses info"
-                    id="productWarehouseSectionDescriptionLink"
-                  />
-                </Link>
+                  values={{
+                    configureWarehouseUrl: (
+                      <Link onClick={onWarehouseConfigure}>
+                        <FormattedMessage
+                          defaultMessage="configure a warehouse"
+                          description="no warehouses info"
+                          id="productWarehouseSectionDescriptionLink"
+                        />
+                      </Link>
+                    )
+                  }}
+                />
               </>
             )}
           </Typography>
