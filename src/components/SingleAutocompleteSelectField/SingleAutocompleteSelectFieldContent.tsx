@@ -177,7 +177,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
 
   return (
     <Paper className={classes.root}>
-      <div className={classes.content} ref={anchor}>
+      <div
+        className={classes.content}
+        ref={anchor}
+        data-test="autocomplete-dropdown"
+      >
         {choices.length > 0 || displayCustomValue ? (
           <>
             {emptyOption && (
