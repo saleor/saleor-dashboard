@@ -176,12 +176,12 @@ export const ProductCreateView: React.FC = () => {
         currentChannels={currentChannels}
         hasChannelChanged={allChannels?.length !== currentChannels?.length}
         currency={shop?.defaultCurrency}
-        categories={
-          searchCategoryOpts?.data?.search?.edges || [].map(edge => edge.node)
-        }
-        collections={
-          searchCollectionOpts?.data?.search?.edges || [].map(edge => edge.node)
-        }
+        categories={(searchCategoryOpts?.data?.search?.edges || []).map(
+          edge => edge.node
+        )}
+        collections={(searchCollectionOpts?.data?.search?.edges || []).map(
+          edge => edge.node
+        )}
         disabled={
           productCreateOpts.loading ||
           productVariantCreateOpts.loading ||

@@ -6,6 +6,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
+import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,6 +33,9 @@ const useStyles = makeStyles(
     },
     label: {
       fontSize: 14
+    },
+    notFound: {
+      paddingBottom: theme.spacing(2)
     },
     option: {
       "&:last-child": {
@@ -86,7 +90,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange] = React.useState("");
-
+  const filteredChannels = filter(channels, query, { key: "name" });
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
@@ -138,8 +142,8 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
             <FormattedMessage defaultMessage="Channels A to Z" />
           </Typography>
           <div className={classes.scrollArea}>
-            {channels.map(option =>
-              option.name.toLowerCase().includes(query) ? (
+            {filteredChannels.length ? (
+              filteredChannels.map(option => (
                 <div key={option.id} className={classes.option}>
                   <ControlledCheckbox
                     checked={isSelected(option)}
@@ -153,7 +157,11 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
                   />
                   <Hr />
                 </div>
-              ) : null
+              ))
+            ) : (
+              <div className={classes.notFound}>
+                <FormattedMessage defaultMessage="No Channels found" />
+              </div>
             )}
           </div>
         </div>

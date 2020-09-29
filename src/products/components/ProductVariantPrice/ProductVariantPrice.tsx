@@ -15,6 +15,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import { renderCollection } from "@saleor/misc";
 import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
 import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
+import { getFormErrors } from "@saleor/utils/errors";
+import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -68,6 +70,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const { errors, ProductVariantChannelListings, loading, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const formErrors = getFormErrors(["price"], errors);
 
   return (
     <Card>
@@ -112,10 +115,9 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {renderCollection(
               ProductVariantChannelListings,
               (listing, index) => {
-                const error = errors?.filter(
-                  error => error.channels[0] === listing.id
+                const error = formErrors.price?.channels?.find(
+                  id => id === listing.id
                 );
-                const hasWrongValue = listing?.price < 0;
                 return (
                   <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
@@ -123,7 +125,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!error?.length || hasWrongValue}
+                          error={!!error?.length}
                           label={intl.formatMessage({
                             defaultMessage: "Price"
                           })}
@@ -134,13 +136,8 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           disabled={loading}
                           required
                           hint={
-                            error?.length
-                              ? error[0].message
-                              : hasWrongValue
-                              ? intl.formatMessage({
-                                  defaultMessage:
-                                    "Product price cannot be lower than 0."
-                                })
+                            error
+                              ? getProductErrorMessage(formErrors.price, intl)
                               : ""
                           }
                         />

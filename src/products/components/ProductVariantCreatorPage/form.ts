@@ -4,16 +4,27 @@ import { ProductDetails_product_productType_variantAttributes } from "@saleor/pr
 
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 
+export interface ChannelPrice {
+  channelId: string;
+  price: string;
+}
+
 export interface AttributeValue<T> {
   slug: string;
   value: T;
 }
 export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
-export interface AllOrAttribute<T> {
+export interface Price {
   mode: VariantCreatorPricesAndSkuMode;
   attribute: string;
-  value: T;
-  values: Array<AttributeValue<T>>;
+  channels: ChannelPrice[];
+  values: Array<AttributeValue<ChannelPrice[]>>;
+}
+export interface Stock {
+  mode: VariantCreatorPricesAndSkuMode;
+  attribute: string;
+  value: number[];
+  values: Array<AttributeValue<number[]>>;
 }
 export interface Attribute {
   id: string;
@@ -21,9 +32,8 @@ export interface Attribute {
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
-  channelListings: ChannelPriceData[];
-  price: AllOrAttribute<string>;
-  stock: AllOrAttribute<number[]>;
+  price: Price;
+  stock: Stock;
   variants: ProductVariantBulkCreateInput[];
   warehouses: string[];
 }
@@ -32,24 +42,30 @@ export const createInitialForm = (
   attributes: ProductDetails_product_productType_variantAttributes[],
   channels: ChannelPriceData[],
   warehouses: WarehouseFragment[]
-): ProductVariantCreateFormData => ({
-  attributes: attributes.map(attribute => ({
-    id: attribute.id,
-    values: []
-  })),
-  channelListings: channels,
-  price: {
-    attribute: undefined,
-    mode: "all",
-    value: "",
-    values: []
-  },
-  stock: {
-    attribute: undefined,
-    mode: "all",
-    value: warehouses.length === 1 ? [0] : [],
-    values: []
-  },
-  variants: [],
-  warehouses: warehouses.length === 1 ? [warehouses[0].id] : []
-});
+): ProductVariantCreateFormData => {
+  const channelListings =
+    channels?.map(channel => ({
+      channelId: channel.id,
+      price: channel.price?.toString() || ""
+    })) || [];
+  return {
+    attributes: attributes.map(attribute => ({
+      id: attribute.id,
+      values: []
+    })),
+    price: {
+      attribute: undefined,
+      channels: channelListings,
+      mode: "all",
+      values: []
+    },
+    stock: {
+      attribute: undefined,
+      mode: "all",
+      value: warehouses.length === 1 ? [0] : [],
+      values: []
+    },
+    variants: [],
+    warehouses: warehouses.length === 1 ? [warehouses[0].id] : []
+  };
+};
