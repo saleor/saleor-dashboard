@@ -16,8 +16,7 @@ import { useIntl } from "react-intl";
 
 import { decimal, weight } from "../../misc";
 import ProductVariantCreatePage, {
-  ProductVariantCreatePageSubmitData,
-  ProductVariantCreatePageSubmitNextAction
+  ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";
 import {
   useProductVariantReorderMutation,
@@ -57,14 +56,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-        if (!submitNextAction) {
-          navigate(
-            productVariantEditUrl(
-              productId,
-              data.productVariantCreate.productVariant.id
-            )
-          );
-        }
+        navigate(
+          productVariantEditUrl(
+            productId,
+            data.productVariantCreate.productVariant.id
+          )
+        );
       }
     }
   });
@@ -87,12 +84,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   );
 
   const handleBack = () => navigate(productUrl(productId));
-  const handleCreate = async (
-    formData: ProductVariantCreatePageSubmitData,
-    nextAction?: ProductVariantCreatePageSubmitNextAction
-  ) => {
-    setSubmitNextAction(nextAction);
-
+  const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
     const result = await variantCreate({
       variables: {
         input: {
@@ -126,18 +118,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 
-  const [submitNextAction, setSubmitNextAction] = React.useState<
-    ProductVariantCreatePageSubmitNextAction
-  >(null);
-  const handleSubmitNextAction = (
-    nextAction?: ProductVariantCreatePageSubmitNextAction
-  ) => {
-    const action = nextAction || submitNextAction;
-    if (action === "warehouse-configure") {
-      navigate(warehouseListPath);
-    }
-  };
-
   const disableForm =
     productLoading ||
     variantCreateResult.loading ||
@@ -161,16 +141,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
         product={data?.product}
         onBack={handleBack}
-        onSubmit={async (data, nextAction) => {
-          const errors = await handleSubmit(data, nextAction);
-          if (errors?.length === 0) {
-            handleSubmitNextAction(nextAction);
-          } else {
-            setSubmitNextAction(null);
-          }
-        }}
-        onSubmitSkip={handleSubmitNextAction}
+        onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
+        onWarehouseConfigure={() => navigate(warehouseListPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
         warehouses={

@@ -84,7 +84,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onSeoClick?();
-  onSubmit?(data: ProductUpdatePageSubmitData, nextAction?: () => void);
+  onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
   onSetDefaultVariant();
   onWarehouseConfigure();
@@ -193,28 +193,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const handleSubmit = (
-    data: ProductUpdatePageFormData,
-    nextAction: () => void
-  ) => {
+  const handleSubmit = (data: ProductUpdatePageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
       : undefined;
 
     if (product.productType.hasVariants) {
-      onSubmit(
-        {
-          ...data,
-          addStocks: [],
-          attributes,
-          metadata,
-          privateMetadata,
-          removeStocks: [],
-          updateStocks: []
-        },
-        nextAction
-      );
+      onSubmit({
+        ...data,
+        addStocks: [],
+        attributes,
+        metadata,
+        privateMetadata,
+        removeStocks: [],
+        updateStocks: []
+      });
     } else {
       const dataStocks = stocks.map(stock => stock.id);
       const variantStocks = product.variants[0]?.stocks.map(
@@ -222,37 +216,25 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       );
       const stockDiff = diff(variantStocks, dataStocks);
 
-      onSubmit(
-        {
-          ...data,
-          addStocks: stocks.filter(stock =>
-            stockDiff.added.some(addedStock => addedStock === stock.id)
-          ),
-          attributes,
-          metadata,
-          privateMetadata,
-          removeStocks: stockDiff.removed,
-          updateStocks: stocks.filter(
-            stock =>
-              !stockDiff.added.some(addedStock => addedStock === stock.id)
-          )
-        },
-        nextAction
-      );
+      onSubmit({
+        ...data,
+        addStocks: stocks.filter(stock =>
+          stockDiff.added.some(addedStock => addedStock === stock.id)
+        ),
+        attributes,
+        metadata,
+        privateMetadata,
+        removeStocks: stockDiff.removed,
+        updateStocks: stocks.filter(
+          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+        )
+      });
     }
   };
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({
-        change,
-        data,
-        hasChanged,
-        submit,
-        triggerChange,
-        toggleValue,
-        askToLeave
-      }) => {
+      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -390,13 +372,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           triggerChange();
                           removeStock(id);
                         }}
-                        onWarehouseConfigure={() => {
-                          if (disabled || !onSubmit || !hasChanged) {
-                            onWarehouseConfigure();
-                          } else {
-                            askToLeave(onWarehouseConfigure);
-                          }
-                        }}
+                        onWarehouseConfigure={onWarehouseConfigure}
                       />
                     </>
                   )}

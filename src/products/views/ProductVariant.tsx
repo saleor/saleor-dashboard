@@ -20,8 +20,7 @@ import { useIntl } from "react-intl";
 import { decimal, weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
-  ProductVariantPageSubmitData,
-  ProductVariantPageSubmitNextAction
+  ProductVariantPageSubmitData
 } from "../components/ProductVariantPage";
 import {
   useProductVariantReorderMutation,
@@ -198,14 +197,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
-  const handleSubmitNextAction = (
-    nextAction?: ProductVariantPageSubmitNextAction
-  ) => {
-    if (nextAction === "warehouse-configure") {
-      navigate(warehouseListPath);
-    }
-  };
-
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
@@ -225,13 +216,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={async (data, nextAction) => {
-          const errors = await handleSubmit(data);
-          if (errors?.length === 0) {
-            handleSubmitNextAction(nextAction);
-          }
-        }}
-        onSubmitSkip={handleSubmitNextAction}
+        onSubmit={handleSubmit}
+        onWarehouseConfigure={() => navigate(warehouseListPath)}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}

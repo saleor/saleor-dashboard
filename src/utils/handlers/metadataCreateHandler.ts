@@ -10,19 +10,16 @@ import {
   UpdatePrivateMetadataVariables
 } from "../metadata/types/UpdatePrivateMetadata";
 
-function createMetadataCreateHandler<
-  T extends MetadataFormData,
-  N extends string
->(
-  create: (data: T, nextAction?: N) => Promise<string>,
+function createMetadataCreateHandler<T extends MetadataFormData>(
+  create: (data: T) => Promise<string>,
   setMetadata: MutationFunction<UpdateMetadata, UpdateMetadataVariables>,
   setPrivateMetadata: MutationFunction<
     UpdatePrivateMetadata,
     UpdatePrivateMetadataVariables
   >
 ) {
-  return async (data: T, nextAction?: N) => {
-    const id = await create(data, nextAction);
+  return async (data: T) => {
+    const id = await create(data);
 
     if (id === null) {
       return null;

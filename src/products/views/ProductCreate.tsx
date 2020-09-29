@@ -20,8 +20,7 @@ import { useIntl } from "react-intl";
 
 import { decimal, weight } from "../../misc";
 import ProductCreatePage, {
-  ProductCreatePageSubmitData,
-  ProductCreatePageSubmitNextAction
+  ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
 import {
   useProductCreateMutation,
@@ -73,7 +72,7 @@ export const ProductCreateView: React.FC = () => {
   ] = useProductSetAvailabilityForPurchase({
     onCompleted: data => {
       const errors = data?.productSetAvailabilityForPurchase?.errors;
-      if (errors?.length === 0 && !submitNextAction) {
+      if (errors?.length === 0) {
         navigate(productUrl(data.productSetAvailabilityForPurchase.product.id));
       }
     }
@@ -92,12 +91,7 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleCreate = async (
-    formData: ProductCreatePageSubmitData,
-    nextAction?: ProductCreatePageSubmitNextAction
-  ) => {
-    setSubmitNextAction(nextAction);
-
+  const handleCreate = async (formData: ProductCreatePageSubmitData) => {
     const result = await productCreate({
       variables: {
         input: {
@@ -157,18 +151,6 @@ export const ProductCreateView: React.FC = () => {
     updatePrivateMetadata
   );
 
-  const [submitNextAction, setSubmitNextAction] = React.useState<
-    ProductCreatePageSubmitNextAction
-  >(null);
-  const handleSubmitNextAction = (
-    nextAction?: ProductCreatePageSubmitNextAction
-  ) => {
-    const action = nextAction || submitNextAction;
-    if (action === "warehouse-configure") {
-      navigate(warehouseListPath);
-    }
-  };
-
   return (
     <>
       <WindowTitle
@@ -198,15 +180,8 @@ export const ProductCreateView: React.FC = () => {
           edge => edge.node
         )}
         onBack={handleBack}
-        onSubmit={async (data, nextAction) => {
-          const errors = await handleSubmit(data, nextAction);
-          if (errors?.length === 0) {
-            handleSubmitNextAction(nextAction);
-          } else {
-            setSubmitNextAction(null);
-          }
-        }}
-        onSubmitSkip={handleSubmitNextAction}
+        onSubmit={handleSubmit}
+        onWarehouseConfigure={() => navigate(warehouseListPath)}
         saveButtonBarState={productCreateOpts.status}
         fetchMoreCategories={{
           hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,

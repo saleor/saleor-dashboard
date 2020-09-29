@@ -1593,14 +1593,6 @@
     "context": "button",
     "string": "{languageName} - {languageCode}"
   },
-  "src_dot_components_dot_LeaveScreenDialog_dot_1295493095": {
-    "context": "leaving screen warning header",
-    "string": "You're leaving this screen"
-  },
-  "src_dot_components_dot_LeaveScreenDialog_dot_4066894204": {
-    "context": "leaving screen warning message",
-    "string": "Do you want to save previously made changes?"
-  },
   "src_dot_components_dot_ListField_dot_3099331554": {
     "context": "button",
     "string": "Add"

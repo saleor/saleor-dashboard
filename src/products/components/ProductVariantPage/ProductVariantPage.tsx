@@ -4,7 +4,6 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import LeaveScreenDialog from "@saleor/components/LeaveScreenDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -54,8 +53,6 @@ export interface ProductVariantPageSubmitData
   removeStocks: string[];
 }
 
-export type ProductVariantPageSubmitNextAction = "warehouse-configure";
-
 interface ProductVariantPageProps {
   defaultWeightUnit: string;
   variant?: ProductVariant;
@@ -69,14 +66,11 @@ interface ProductVariantPageProps {
   onAdd();
   onBack();
   onDelete();
-  onSubmit(
-    data: ProductVariantPageSubmitData,
-    nextAction?: ProductVariantPageSubmitNextAction
-  );
-  onSubmitSkip?(nextAction?: ProductVariantPageSubmitNextAction);
+  onSubmit(data: ProductVariantPageSubmitData);
   onImageSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
+  onWarehouseConfigure();
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -93,10 +87,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onDelete,
   onImageSelect,
   onSubmit,
-  onSubmitSkip,
   onVariantClick,
   onVariantReorder,
-  onSetDefaultVariant
+  onSetDefaultVariant,
+  onWarehouseConfigure
 }) => {
   const attributeInput = React.useMemo(
     () => getAttributeInputFromVariant(variant),
@@ -146,10 +140,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     weight: variant?.weight?.value.toString() || ""
   };
 
-  const [modalWithAction, setModalWithAction] = React.useState<
-    ProductVariantPageSubmitNextAction
-  >(null);
-
   const handleSubmit = (data: ProductVariantPageFormData) => {
     const dataStocks = stocks.map(stock => stock.id);
     const variantStocks = variant.stocks.map(stock => stock.warehouse.id);
@@ -159,23 +149,19 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
       ? data.privateMetadata
       : undefined;
 
-    onSubmit(
-      {
-        ...data,
-        addStocks: stocks.filter(stock =>
-          stockDiff.added.some(addedStock => addedStock === stock.id)
-        ),
-        attributes,
-        metadata,
-        privateMetadata,
-        removeStocks: stockDiff.removed,
-        updateStocks: stocks.filter(
-          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-        )
-      },
-      modalWithAction
-    );
-    setModalWithAction(null);
+    onSubmit({
+      ...data,
+      addStocks: stocks.filter(stock =>
+        stockDiff.added.some(addedStock => addedStock === stock.id)
+      ),
+      attributes,
+      metadata,
+      privateMetadata,
+      removeStocks: stockDiff.removed,
+      updateStocks: stocks.filter(
+        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+      )
+    });
   };
 
   return (
@@ -280,13 +266,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         triggerChange();
                         removeStock(id);
                       }}
-                      onWarehouseConfigure={() => {
-                        if (!onSubmit || !hasChanged) {
-                          onSubmitSkip("warehouse-configure");
-                        } else {
-                          setModalWithAction("warehouse-configure");
-                        }
-                      }}
+                      onWarehouseConfigure={onWarehouseConfigure}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={changeMetadata} />
@@ -298,17 +278,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   onCancel={onBack}
                   onDelete={onDelete}
                   onSave={submit}
-                />
-                <LeaveScreenDialog
-                  onSaveChanges={() => {
-                    submit();
-                  }}
-                  onRejectChanges={() => {
-                    onSubmitSkip("warehouse-configure");
-                  }}
-                  onClose={() => setModalWithAction(null)}
-                  open={modalWithAction === "warehouse-configure"}
-                  confirmButtonState={saveButtonBarState}
                 />
               </>
             );

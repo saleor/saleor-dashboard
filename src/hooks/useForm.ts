@@ -1,6 +1,6 @@
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash-es/isEqual";
-import { MutableRefObject, useRef, useState } from "react";
+import { useState } from "react";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -14,9 +14,6 @@ export interface ChangeEvent<TData = any> {
 export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
 export interface UseFormResult<T> {
-  askToLeave: (action: () => void | null) => void;
-  leaveAction: MutableRefObject<() => void | null>;
-  leaveModal: boolean;
   change: FormChange;
   data: T;
   hasChanged: boolean;
@@ -54,15 +51,13 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initial: T,
-  onSubmit: (data: T, nextAction: () => void) => void
+  onSubmit: (data: T) => void
 ): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
   const [data, setData] = useStateFromProps(initial, {
     mergeFunc: merge,
     onRefresh: newData => handleRefresh(data, newData, setChanged)
   });
-  const [leaveModal, setLeaveModal] = useState<boolean>(false);
-  const leaveAction = useRef<() => void>(null);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
@@ -112,26 +107,17 @@ function useForm<T extends FormData>(
   }
 
   function submit() {
-    onSubmit(data, leaveAction.current);
-    setLeaveModal(false);
+    return onSubmit(data);
   }
 
   function triggerChange() {
     setChanged(true);
   }
 
-  function askToLeave(action: () => void | null) {
-    setLeaveModal(() => !!action);
-    leaveAction.current = action;
-  }
-
   return {
-    askToLeave,
     change,
     data,
     hasChanged,
-    leaveAction,
-    leaveModal,
     reset,
     set,
     submit,

@@ -304,12 +304,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
-        onSubmit={async (data, nextAction) => {
-          const errors = await handleSubmit(data);
-          if (errors?.length === 0 && nextAction) {
-            nextAction();
-          }
-        }}
+        onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseListPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}

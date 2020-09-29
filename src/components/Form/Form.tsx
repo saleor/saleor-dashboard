@@ -1,14 +1,12 @@
 import useForm, { UseFormResult } from "@saleor/hooks/useForm";
 import React from "react";
 
-import LeaveScreenDialog from "../LeaveScreenDialog";
-
 export interface FormProps<T> {
   children: (props: UseFormResult<T>) => React.ReactNode;
   confirmLeave?: boolean;
   initial?: T;
   resetOnSubmit?: boolean;
-  onSubmit?: (data: T, nextAction: () => void) => void;
+  onSubmit?: (data: T) => void;
 }
 
 function Form<T>(props: FormProps<T>) {
@@ -34,18 +32,7 @@ function Form<T>(props: FormProps<T>) {
     submit();
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {children(renderProps)}
-      <LeaveScreenDialog
-        onSaveChanges={renderProps.submit}
-        onRejectChanges={renderProps.leaveAction.current}
-        onClose={() => renderProps.askToLeave(null)}
-        open={!!renderProps.leaveModal}
-        confirmButtonState="default"
-      />
-    </form>
-  );
+  return <form onSubmit={handleSubmit}>{children(renderProps)}</form>;
 }
 Form.displayName = "Form";
 
