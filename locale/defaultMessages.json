@@ -4795,14 +4795,6 @@
     "context": "waiting for export to end, header",
     "string": "Exporting CSV"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
-    "context": "publish product, button",
-    "string": "Publish"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
-    "context": "unpublish product, button",
-    "string": "Unpublish"
-  },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
     "string": "Delete Products"

@@ -4,6 +4,7 @@ import {
 } from "@saleor/fragments/collections";
 import {
   collectionsErrorFragment,
+  productErrorFragment,
   shopErrorFragment
 } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
@@ -233,7 +234,7 @@ export const useCollectionBulkDelete = makeMutation<
 >(collectionBulkDelete);
 
 const collectionBulkPublish = gql`
-  ${collectionsErrorFragment}
+  ${productErrorFragment}
   mutation CollectionBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     collectionBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors: productErrors {
