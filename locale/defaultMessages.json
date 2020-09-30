@@ -777,7 +777,7 @@
     "string": "Settings"
   },
   "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_2721512922": {
-    "context": "delete channel",
+    "context": "channel settings",
     "string": "Configure the way information are presented in catalog section of Dashboard."
   },
   "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_645871430": {

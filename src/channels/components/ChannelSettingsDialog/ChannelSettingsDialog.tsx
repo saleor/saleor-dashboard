@@ -48,7 +48,7 @@ const ChannelSettingsDialog: React.FC<ChannelSettingsDialogProps> = ({
         <Typography>
           <FormattedMessage
             defaultMessage="Configure the way information are presented in catalog section of Dashboard."
-            description="delete channel"
+            description="channel settings"
           />
         </Typography>
         <div className={classes.select}>
