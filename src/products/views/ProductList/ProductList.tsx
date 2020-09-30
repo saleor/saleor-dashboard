@@ -30,7 +30,21 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
+import {
+  useAvailableInGridAttributesQuery,
+  useCountAllProducts,
+  useInitialProductFilterDataQuery,
+  useProductListQuery
+} from "@saleor/products/queries";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
+import {
+  productAddUrl,
+  productListUrl,
+  ProductListUrlDialog,
+  ProductListUrlQueryParams,
+  ProductListUrlSortField,
+  productUrl
+} from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -48,20 +62,6 @@ import {
   useProductBulkDeleteMutation,
   useProductExport
 } from "../../mutations";
-import {
-  useAvailableInGridAttributesQuery,
-  useCountAllProducts,
-  useInitialProductFilterDataQuery,
-  useProductListQuery
-} from "../../queries";
-import {
-  productAddUrl,
-  productListUrl,
-  ProductListUrlDialog,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
-} from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
@@ -222,12 +222,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
+  const currencySymbol = shop?.defaultCurrency || "USD";
   const filter = getFilterVariables(params);
   const sort = getSortQueryVariables(params);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
+      channel: "default-channel",
       filter,
       sort
     }),
@@ -266,32 +267,26 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    initialFilterData?.attributes?.edges?.map(edge => edge.node) || [],
     {
-      initial: maybe(
-        () => initialFilterData.categories.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.categories?.edges?.map(edge => edge.node) || [],
       search: searchCategories
     },
     {
-      initial: maybe(
-        () => initialFilterData.collections.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.collections?.edges?.map(edge => edge.node) || [],
       search: searchCollections
     },
     {
-      initial: maybe(
-        () => initialFilterData.productTypes.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.productTypes?.edges?.map(edge => edge.node) || [],
       search: searchProductTypes
     }
   );
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.products.pageInfo),
+    data?.products?.pageInfo,
     paginationState,
     params
   );
@@ -408,8 +403,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              counter: params?.ids?.length,
+              displayQuantity: <strong>{params?.ids?.length}</strong>
             }}
           />
         </DialogContentText>
