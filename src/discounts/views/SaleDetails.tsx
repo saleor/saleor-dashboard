@@ -149,7 +149,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                     <TypedSaleDetails
                       displayLoader
                       variables={{
-                        channel: "default-channel",
                         id,
                         ...paginationState
                       }}

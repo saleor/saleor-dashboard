@@ -55,7 +55,6 @@ export const voucherList = gql`
   ${pageInfoFragment}
   ${voucherFragment}
   query VoucherList(
-    $channel: String
     $after: String
     $before: String
     $first: Int
@@ -64,7 +63,6 @@ export const voucherList = gql`
     $sort: VoucherSortingInput
   ) {
     vouchers(
-      channel: $channel
       after: $after
       before: $before
       first: $first
@@ -91,13 +89,12 @@ export const saleDetails = gql`
   ${saleDetailsFragment}
   query SaleDetails(
     $id: ID!
-    $channel: String
     $after: String
     $before: String
     $first: Int
     $last: Int
   ) {
-    sale(id: $id, channel: $channel) {
+    sale(id: $id) {
       ...SaleDetailsFragment
     }
   }

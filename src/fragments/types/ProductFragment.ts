@@ -44,7 +44,6 @@ export interface ProductFragment {
   id: string;
   name: string;
   thumbnail: ProductFragment_thumbnail | null;
-  isAvailable: boolean | null;
   productType: ProductFragment_productType;
   channelListing: ProductFragment_channelListing[] | null;
 }

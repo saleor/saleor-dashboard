@@ -72,7 +72,6 @@ export interface VoucherList {
 }
 
 export interface VoucherListVariables {
-  channel?: string | null;
   after?: string | null;
   before?: string | null;
   first?: number | null;

@@ -35,7 +35,6 @@ export const productFragment = gql`
     thumbnail {
       url
     }
-    isAvailable
     productType {
       id
       name

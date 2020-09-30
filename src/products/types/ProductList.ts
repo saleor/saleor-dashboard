@@ -63,7 +63,6 @@ export interface ProductList_products_edges_node {
   id: string;
   name: string;
   thumbnail: ProductList_products_edges_node_thumbnail | null;
-  isAvailable: boolean | null;
   productType: ProductList_products_edges_node_productType;
   channelListing: ProductList_products_edges_node_channelListing[] | null;
   attributes: ProductList_products_edges_node_attributes[];
