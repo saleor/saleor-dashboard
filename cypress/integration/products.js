@@ -20,6 +20,9 @@ describe("Products", () => {
       .type("Visible test product")
       .get(PRODUCTS_SELECTORS.productTypeInput)
       .click()
+      .get(PRODUCTS_SELECTORS.autocompleteDropdown) // trying to fill autocomplete before dropdown will cause error
+      .get(PRODUCTS_SELECTORS.productTypeInput)
+      .click()
       .type("Cushion")
       .get(PRODUCTS_SELECTORS.categoryItem)
       .should("have.length", 1)
