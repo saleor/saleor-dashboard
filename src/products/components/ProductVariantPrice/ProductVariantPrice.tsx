@@ -67,7 +67,12 @@ interface ProductVariantPriceProps {
 const numberOfColumns = 2;
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const { errors, ProductVariantChannelListings, loading, onChange } = props;
+  const {
+    errors = [],
+    ProductVariantChannelListings,
+    loading,
+    onChange
+  } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const formErrors = getFormErrors(["price"], errors);

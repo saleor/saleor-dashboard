@@ -68,32 +68,35 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
+    setCurrentChannels,
     toggleAllChannels
   } = useChannels(allChannels);
 
-  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
-    onCompleted: data => {
-      const errors = data.shippingPriceCreate.errors;
-      if (errors.length === 0) {
-        updateShippingMethodChannelListing({
-          variables: getShippingMethodChannelVariables(
-            data.shippingPriceCreate.shippingMethod.id,
-            currentChannels
-          )
-        });
-      } else {
-        errors.map(err =>
-          notify({ status: "error", text: getShippingErrorMessage(err, intl) })
-        );
-      }
-    }
-  });
+  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate(
+    {}
+  );
 
-  const handleSubmit = (data: FormData) =>
-    createShippingRate({
+  const handleSubmit = async (data: FormData) => {
+    const response = await createShippingRate({
       variables: getCreateShippingPriceRateVariables(data, id)
     });
-
+    const errors = response.data.shippingPriceCreate.errors;
+    if (errors.length === 0) {
+      updateShippingMethodChannelListing({
+        variables: getShippingMethodChannelVariables(
+          response.data.shippingPriceCreate.shippingMethod.id,
+          data.channelListing
+        )
+      });
+    } else {
+      errors.map(err =>
+        notify({
+          status: "error",
+          text: getShippingErrorMessage(err, intl)
+        })
+      );
+    }
+  };
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   return (
@@ -135,6 +138,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
             ?.shippingMethodChannelListingUpdate?.errors || []
         }
         openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.PRICE}
       />
     </>

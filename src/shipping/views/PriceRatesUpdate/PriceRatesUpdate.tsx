@@ -84,6 +84,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
+    setCurrentChannels,
     toggleAllChannels
   } = useChannels(shippingChannels);
 
@@ -119,8 +120,8 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          shippingChannels,
-          formData.channelListing
+          formData.channelListing,
+          shippingChannels
         )
       });
     } else {
@@ -188,6 +189,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
             ?.shippingMethodChannelListingUpdate?.errors || []
         }
         openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.PRICE}
       />
     </>

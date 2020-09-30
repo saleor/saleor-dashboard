@@ -40,6 +40,7 @@ export interface ShippingZoneRatesPageProps {
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
+  onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
 }
@@ -54,6 +55,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onBack,
   onDelete,
   onSubmit,
+  onChannelsChange,
   openChannelsModal,
   rate,
   saveButtonBarState,
@@ -71,10 +73,10 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, set, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
-          data,
-          set,
+          shippingChannels,
+          onChannelsChange,
           triggerChange
         );
 

@@ -390,6 +390,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           onFetchMore: loadMoreCollections
         }}
         openChannelsModal={() => setChannelsModalOpen(true)}
+        onChannelsChange={setCurrentChannels}
       />
       <ActionDialog
         open={params.action === "remove"}

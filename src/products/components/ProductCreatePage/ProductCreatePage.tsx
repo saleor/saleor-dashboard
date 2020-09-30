@@ -94,6 +94,7 @@ interface ProductCreatePageProps {
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -119,6 +120,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onBack,
   fetchProductTypes,
   onSubmit,
+  onChannelsChange,
   openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
@@ -180,15 +182,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     });
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({
-        change,
-        data,
-        hasChanged,
-        set,
-        submit,
-        triggerChange,
-        toggleValue
-      }) => {
+      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -224,13 +218,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
 
         const handleChannelsChange = createChannelsChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
         const handleChannelPriceChange = createChannelsPriceChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
         const productTypeChoice = productTypeChoiceList?.find(

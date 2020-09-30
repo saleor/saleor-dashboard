@@ -79,6 +79,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -123,6 +124,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  onChannelsChange,
   openChannelsModal,
   onSeoClick,
   onSubmit,
@@ -197,15 +199,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({
-        change,
-        data,
-        hasChanged,
-        set,
-        submit,
-        triggerChange,
-        toggleValue
-      }) => {
+      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -232,13 +226,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           triggerChange
         );
         const handleChannelChange = createChannelsChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
         const handleChannelPriceChange = createChannelsPriceChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
 

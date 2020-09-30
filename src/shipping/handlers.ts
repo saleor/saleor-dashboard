@@ -7,29 +7,25 @@ import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 
 export const createChannelsChangeHandler = (
-  data: ShippingZoneRatesPageFormData,
-  updateChannels: (data: ShippingZoneRatesPageFormData) => void,
+  selectedChannels: ChannelShippingData[],
+  setSelectedChannels: (channels: ChannelShippingData[]) => void,
   triggerChange: () => void
 ) => (
   channelId: string,
   value: { maxValue: string; minValue: string; price: string }
 ) => {
-  const { channelListing } = data;
-  const itemIndex = channelListing.findIndex(item => item.id === channelId);
-  const channel = channelListing[itemIndex];
-  updateChannels({
-    ...data,
-    channelListing: [
-      ...channelListing.slice(0, itemIndex),
-      {
-        ...channel,
-        maxValue: value.maxValue,
-        minValue: value.minValue,
-        price: value.price
-      },
-      ...channelListing.slice(itemIndex + 1)
-    ]
-  });
+  const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
+  const channel = selectedChannels[itemIndex];
+  setSelectedChannels([
+    ...selectedChannels.slice(0, itemIndex),
+    {
+      ...channel,
+      maxValue: value.maxValue,
+      minValue: value.minValue,
+      price: value.price
+    },
+    ...selectedChannels.slice(itemIndex + 1)
+  ]);
   triggerChange();
 };
 
@@ -100,14 +96,14 @@ export function getUpdateShippingWeightRateVariables(
 }
 export function getShippingMethodChannelVariables(
   id: string,
-  shippingChannels?: ChannelShippingData[],
-  formChannels?: ChannelShippingData[]
+  formChannels: ChannelShippingData[],
+  prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
-  const diffChannels = diff(
-    shippingChannels,
-    formChannels,
-    (a, b) => a.id === b.id
-  );
+  const removeChannels = prevChannels
+    ? diff(formChannels, prevChannels, (a, b) => a.id === b.id).removed?.map(
+        removedChannel => removedChannel.id
+      )
+    : [];
 
   return {
     id,
@@ -119,9 +115,7 @@ export function getShippingMethodChannelVariables(
           minimumOrderPrice: channel.minValue || null,
           price: channel.price || null
         })) || [],
-      removeChannels: diffChannels.removed
-        ? diffChannels.removed.map(removedChannel => removedChannel.id)
-        : []
+      removeChannels
     }
   };
 }

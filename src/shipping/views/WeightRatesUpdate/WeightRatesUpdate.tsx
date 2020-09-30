@@ -61,15 +61,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   ] = useShippingMethodChannelListingUpdate({
     onCompleted: data => {
       const errors = data.shippingMethodChannelListingUpdate.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Channels saved",
-            description: "notification text"
-          })
-        });
-      } else {
+      if (errors.length) {
         errors.map(err =>
           notify({
             status: "error",
@@ -91,6 +83,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
+    setCurrentChannels,
     toggleAllChannels
   } = useChannels(shippingChannels);
 
@@ -127,8 +120,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          currentChannels,
-          data.channelListing
+          data.channelListing,
+          shippingChannels
         )
       });
     } else {
@@ -196,6 +189,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
             ?.shippingMethodChannelListingUpdate?.errors || []
         }
         openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />
     </>

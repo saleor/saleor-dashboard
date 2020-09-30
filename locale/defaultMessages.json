@@ -4698,10 +4698,6 @@
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
     "string": "Manage Channels Availability"
   },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_4092948954": {
-    "context": "notification text",
-    "string": "Channels saved"
-  },
   "src_dot_shipping_dot_weight": {
     "context": "error message",
     "string": "Maximum weight cannot be lower than minimum"

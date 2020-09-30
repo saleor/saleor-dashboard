@@ -24,6 +24,7 @@ const props: ShippingZoneRatesPageProps = {
   disabled: false,
   errors: [],
   onBack: () => undefined,
+  onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
