@@ -20,7 +20,7 @@ const useStyles = makeStyles(
     separator: {
       marginTop: theme.spacing(3),
       textAlign: "center",
-      width: "100%"s
+      width: "100%"
     },
     widgetContainer: {
       marginTop: theme.spacing(2)

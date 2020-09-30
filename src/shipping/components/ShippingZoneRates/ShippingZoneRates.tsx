@@ -121,10 +121,9 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           {renderCollection(
             rates,
             rate => {
-              const channel =
-                rate?.channelListing?.find(
-                  listing => listing.channel.id === selectedChannel
-                ) || rate?.channelListing[0];
+              const channel = rate?.channelListing?.find(
+                listing => listing.channel.id === selectedChannel
+              );
               return (
                 <TableRow
                   hover={!!rate}
@@ -137,7 +136,9 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   <TableCell>
                     {maybe<React.ReactNode>(
                       () =>
-                        variant === "price" ? (
+                        rate && !channel ? (
+                          "-"
+                        ) : variant === "price" ? (
                           <MoneyRange
                             from={channel.minimumOrderPrice}
                             to={channel.maximumOrderPrice}
@@ -153,9 +154,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   </TableCell>
                   <TableCell>
                     {maybe<React.ReactNode>(
-                      () => (
-                        <Money money={channel.price} />
-                      ),
+                      () =>
+                        rate && !channel ? (
+                          "-"
+                        ) : (
+                          <Money money={channel.price} />
+                        ),
                       <Skeleton />
                     )}
                   </TableCell>
