@@ -111,9 +111,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-      } else {
-        setErrors(data.productVariantUpdate.errors);
       }
+      setErrors(data.productVariantUpdate.errors);
     }
   });
 
