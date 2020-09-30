@@ -29,7 +29,6 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
   const handleClick = event => setAnchorEl(event.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
-
   return (
     <div onClick={e => e.stopPropagation()}>
       <div
