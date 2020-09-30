@@ -30,10 +30,7 @@ function useChannelsSettings(key: string, { openModal, closeModal }: Actions) {
   return {
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel,
-    selectedChannelSlug:
-      channelsData?.channels?.find(channel => channel.id === selectedChannel)
-        ?.slug || ""
+    selectedChannel
   };
 }
 
