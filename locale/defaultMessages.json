@@ -4167,14 +4167,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
-    "context": "publish product, button",
-    "string": "Publish"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
-    "context": "unpublish product, button",
-    "string": "Unpublish"
-  },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
     "string": "Delete Products"
