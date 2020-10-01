@@ -52,7 +52,7 @@ function getAttributeValue(
   attributes: VariantAttributeInput[]
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
-  return attribute.value;
+  return attribute?.value === null ? undefined : attribute.value;
 }
 
 function getAttributeValueChoices(
