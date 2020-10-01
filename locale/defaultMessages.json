@@ -4516,6 +4516,10 @@
     "context": "button",
     "string": "Choose photos"
   },
+  "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_1120495519": {
+    "context": "default variant label",
+    "string": "default"
+  },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_2153006789": {
     "context": "section header",
     "string": "Variants"
