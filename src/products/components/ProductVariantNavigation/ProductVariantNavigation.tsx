@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import CardTitle from "@saleor/components/CardTitle";
@@ -27,6 +28,10 @@ const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0
+    },
+    defaultVariant: {
+      color: fade(theme.palette.text.secondary, 0.6),
+      display: "block"
     },
     firstVariant: {
       width: 88
@@ -57,6 +62,7 @@ const useStyles = makeStyles(
 
 interface ProductVariantNavigationProps {
   current?: string;
+  defaultVariantId?: string;
   fallbackThumbnail: string;
   variants:
     | ProductVariantDetails_productVariant[]
@@ -69,6 +75,7 @@ interface ProductVariantNavigationProps {
 const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props => {
   const {
     current,
+    defaultVariantId,
     fallbackThumbnail,
     variants,
     onAdd,
@@ -89,28 +96,37 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
       />
       <ResponsiveTable>
         <SortableTableBody onSortEnd={onReorder}>
-          {renderCollection(variants, (variant, variantIndex) => (
-            <SortableTableRow
-              hover={!!variant}
-              key={variant ? variant.id : "skeleton"}
-              index={variantIndex || 0}
-              className={classNames(classes.link, {
-                [classes.tabActive]: variant && variant.id === current
-              })}
-              onClick={variant ? () => onRowClick(variant.id) : undefined}
-            >
-              <TableCellAvatar
-                className={classes.colAvatar}
-                thumbnail={maybe(
-                  () => variant.images[0].url,
-                  fallbackThumbnail
-                )}
-              />
-              <TableCell className={classes.colName}>
-                {variant ? variant.name || variant.sku : <Skeleton />}
-              </TableCell>
-            </SortableTableRow>
-          ))}
+          {renderCollection(variants, (variant, variantIndex) => {
+            const isDefault = variant && variant.id === defaultVariantId;
+            const isActive = variant && variant.id === current;
+            return (
+              <SortableTableRow
+                hover={!!variant}
+                key={variant ? variant.id : "skeleton"}
+                index={variantIndex || 0}
+                className={classNames(classes.link, {
+                  [classes.tabActive]: isActive
+                })}
+                onClick={variant ? () => onRowClick(variant.id) : undefined}
+              >
+                <TableCellAvatar
+                  className={classes.colAvatar}
+                  thumbnail={variant?.images[0]?.url || fallbackThumbnail}
+                />
+                <TableCell className={classes.colName}>
+                  {variant ? variant.name || variant.sku : <Skeleton />}
+                  {isDefault && (
+                    <span className={classes.defaultVariant}>
+                      {intl.formatMessage({
+                        defaultMessage: "default",
+                        description: "default variant label"
+                      })}
+                    </span>
+                  )}
+                </TableCell>
+              </SortableTableRow>
+            );
+          })}
           {onAdd ? (
             <TableRow>
               <TableCell colSpan={3}>

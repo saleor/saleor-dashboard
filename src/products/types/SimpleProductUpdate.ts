@@ -346,6 +346,11 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   images: (SimpleProductUpdate_productVariantUpdate_productVariant_product_variants_images | null)[] | null;
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
@@ -354,6 +359,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   name: string;
   thumbnail: SimpleProductUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
   variants: (SimpleProductUpdate_productVariantUpdate_productVariant_product_variants | null)[] | null;
+  defaultVariant: SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks_warehouse {
@@ -497,6 +503,11 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   images: (SimpleProductUpdate_productVariantStocksCreate_productVariant_product_variants_images | null)[] | null;
 }
 
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product {
   __typename: "Product";
   id: string;
@@ -505,6 +516,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_thumbnail | null;
   variants: (SimpleProductUpdate_productVariantStocksCreate_productVariant_product_variants | null)[] | null;
+  defaultVariant: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_stocks_warehouse {
@@ -647,6 +659,11 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   images: (SimpleProductUpdate_productVariantStocksDelete_productVariant_product_variants_images | null)[] | null;
 }
 
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product {
   __typename: "Product";
   id: string;
@@ -655,6 +672,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_thumbnail | null;
   variants: (SimpleProductUpdate_productVariantStocksDelete_productVariant_product_variants | null)[] | null;
+  defaultVariant: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_stocks_warehouse {
@@ -798,6 +816,11 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   images: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_variants_images | null)[] | null;
 }
 
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product {
   __typename: "Product";
   id: string;
@@ -806,6 +829,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
   variants: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_variants | null)[] | null;
+  defaultVariant: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse {

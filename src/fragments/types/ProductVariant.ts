@@ -99,6 +99,11 @@ export interface ProductVariant_product_variants {
   images: (ProductVariant_product_variants_images | null)[] | null;
 }
 
+export interface ProductVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductVariant_product {
   __typename: "Product";
   id: string;
@@ -107,6 +112,7 @@ export interface ProductVariant_product {
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
   variants: (ProductVariant_product_variants | null)[] | null;
+  defaultVariant: ProductVariant_product_defaultVariant | null;
 }
 
 export interface ProductVariant_stocks_warehouse {
