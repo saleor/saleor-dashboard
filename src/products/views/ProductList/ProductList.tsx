@@ -246,9 +246,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       refetch();
     }
   };
-  const onSettingsOpen = !!channelChoices?.length
-    ? { onSettingsOpen: () => openModal("settings") }
-    : {};
 
   return (
     <AvailableInGridAttributesQuery
@@ -352,7 +349,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 tabs={getFilterTabs().map(tab => tab.name)}
                 channelsCount={channelChoices?.length}
                 selectedChannel={selectedChannel}
-                {...onSettingsOpen}
+                onSettingsOpen={
+                  !!channelChoices?.length
+                    ? () => openModal("settings")
+                    : undefined
+                }
               />
               {!!channelChoices?.length && (
                 <ChannelSettingsDialog

@@ -156,9 +156,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
-  const onSettingsOpen = !!channelChoices.length
-    ? { onSettingsOpen: () => openModal("settings") }
-    : {};
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
@@ -173,7 +170,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
-            {!!channelChoices.length && (
+            {!!channelChoices?.length && (
               <ChannelSettingsDialog
                 channelsChoices={channelChoices}
                 defaultChoice={selectedChannel}
@@ -224,7 +221,11 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                 </IconButton>
               }
               selectedChannel={selectedChannel}
-              {...onSettingsOpen}
+              onSettingsOpen={
+                !!channelChoices?.length
+                  ? () => openModal("settings")
+                  : undefined
+              }
             />
             <ActionDialog
               confirmButtonState={saleBulkDeleteOpts.status}
