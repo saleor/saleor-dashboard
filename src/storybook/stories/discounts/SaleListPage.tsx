@@ -56,4 +56,12 @@ storiesOf("Views / Discounts / Sale list", module)
   .addDecorator(Decorator)
   .add("default", () => <SaleListPage {...props} />)
   .add("loading", () => <SaleListPage {...props} sales={undefined} />)
-  .add("no data", () => <SaleListPage {...props} sales={[]} />);
+  .add("no data", () => <SaleListPage {...props} sales={[]} />)
+  .add("no channels", () => (
+    <SaleListPage
+      {...props}
+      sales={saleList.map(sale => ({ ...sale, channelListing: [] }))}
+      selectedChannel=""
+      onSettingsOpen={undefined}
+    />
+  ));

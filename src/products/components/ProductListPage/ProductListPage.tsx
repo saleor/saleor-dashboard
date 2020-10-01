@@ -47,7 +47,7 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   selectedChannel: string;
-  onSettingsOpen: () => void;
+  onSettingsOpen?: () => void;
 }
 
 const useStyles = makeStyles(
@@ -129,18 +129,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.products)}>
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
-            }
-          ]}
-        />
+        {!!onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Settings",
+                  description: "button"
+                }),
+                onSelect: onSettingsOpen
+              }
+            ]}
+          />
+        )}
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}

@@ -156,6 +156,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
   const currencySymbol = shop?.defaultCurrency || "USD";
+  const onSettingsOpen = !!channelChoices?.length
+    ? { onSettingsOpen: () => openModal("settings") }
+    : {};
 
   return (
     <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
@@ -170,14 +173,16 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
-            <ChannelSettingsDialog
-              channelsChoices={channelChoices}
-              defaultChoice={selectedChannel}
-              open={params.action === "settings"}
-              confirmButtonState="default"
-              onClose={closeModal}
-              onConfirm={handleChannelSelectConfirm}
-            />
+            {!!channelChoices?.length && (
+              <ChannelSettingsDialog
+                channelsChoices={channelChoices}
+                defaultChoice={selectedChannel}
+                open={params.action === "settings"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onConfirm={handleChannelSelectConfirm}
+              />
+            )}
             <VoucherListPage
               currencySymbol={currencySymbol}
               currentTab={currentTab}
@@ -218,7 +223,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                 </IconButton>
               }
               selectedChannel={selectedChannel}
-              onSettingsOpen={() => openModal("settings")}
+              {...onSettingsOpen}
             />
             <ActionDialog
               confirmButtonState={voucherBulkDeleteOpts.status}

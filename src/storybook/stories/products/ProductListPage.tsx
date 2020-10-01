@@ -62,4 +62,13 @@ storiesOf("Views / Products / Product list", module)
     />
   ))
   .add("with data", () => <ProductListPage {...props} products={products} />)
-  .add("no data", () => <ProductListPage {...props} products={[]} />);
+  .add("no data", () => <ProductListPage {...props} products={[]} />)
+  .add("no channels", () => (
+    <ProductListPage
+      {...props}
+      channelsCount={0}
+      onSettingsOpen={undefined}
+      selectedChannel={""}
+      products={products.map(product => ({ ...product, channelListing: [] }))}
+    />
+  ));

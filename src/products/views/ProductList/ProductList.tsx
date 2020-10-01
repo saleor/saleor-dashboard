@@ -246,6 +246,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       refetch();
     }
   };
+  const onSettingsOpen = !!channelChoices?.length
+    ? { onSettingsOpen: () => openModal("settings") }
+    : {};
 
   return (
     <AvailableInGridAttributesQuery
@@ -345,20 +348,22 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 onTabSave={() => openModal("save-search")}
                 onTabDelete={() => openModal("delete-search")}
                 onTabChange={handleTabChange}
-                onSettingsOpen={() => openModal("settings")}
                 initialSearch={params.query || ""}
                 tabs={getFilterTabs().map(tab => tab.name)}
                 channelsCount={channelChoices?.length}
                 selectedChannel={selectedChannel}
+                {...onSettingsOpen}
               />
-              <ChannelSettingsDialog
-                channelsChoices={channelChoices}
-                defaultChoice={selectedChannel}
-                open={params.action === "settings"}
-                confirmButtonState="default"
-                onClose={closeModal}
-                onConfirm={handleChannelSelectConfirm}
-              />
+              {!!channelChoices?.length && (
+                <ChannelSettingsDialog
+                  channelsChoices={channelChoices}
+                  defaultChoice={selectedChannel}
+                  open={params.action === "settings"}
+                  confirmButtonState="default"
+                  onClose={closeModal}
+                  onConfirm={handleChannelSelectConfirm}
+                />
+              )}
               <ActionDialog
                 open={params.action === "delete"}
                 confirmButtonState={productBulkDeleteOpts.status}

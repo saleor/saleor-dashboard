@@ -34,7 +34,7 @@ export interface SaleListPageProps
   defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
   selectedChannel: string;
-  onSettingsOpen: () => void;
+  onSettingsOpen?: () => void;
 }
 const useStyles = makeStyles(
   theme => ({
@@ -68,18 +68,20 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
-            }
-          ]}
-        />
+        {!!onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Settings",
+                  description: "button"
+                }),
+                onSelect: onSettingsOpen
+              }
+            ]}
+          />
+        )}
         <Button onClick={onAdd} variant="contained" color="primary">
           <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>

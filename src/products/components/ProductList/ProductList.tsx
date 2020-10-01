@@ -140,12 +140,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
   const numberOfColumns = 2 + settings.columns.length;
 
   const getProductPrice = (
-    channels: ProductList_products_edges_node_channelListing[]
+    channel: ProductList_products_edges_node_channelListing
   ) => {
-    const channel =
-      channels.find(listing => listing.channel.id === selectedChannel) ||
-      channels[0];
-
     if (channel?.discountedPrice) {
       return (
         <Money
@@ -158,7 +154,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
         />
       );
     }
-    return null;
+    return "-";
   };
 
   return (
@@ -309,7 +305,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-
+              const channel =
+                product?.channelListing.find(
+                  listing => listing.channel.id === selectedChannel
+                ) || product?.channelListing[0];
               return (
                 <TableRow
                   selected={isSelected}
@@ -376,10 +375,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       data-test="availability"
                       data-test-availability={!!product?.channelListing?.length}
                     >
-                      {product?.channelListing !== undefined ? (
+                      {product && !product?.channelListing?.length ? (
+                        "-"
+                      ) : product?.channelListing !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={product?.channelListing[0]}
+                          currentChannel={channel}
                           channels={product?.channelListing}
                         />
                       ) : (
@@ -417,7 +418,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell className={classes.colPrice}>
                       {product?.channelListing ? (
-                        getProductPrice(product?.channelListing)
+                        getProductPrice(channel)
                       ) : (
                         <Skeleton />
                       )}

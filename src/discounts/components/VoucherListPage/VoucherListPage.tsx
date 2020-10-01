@@ -33,7 +33,7 @@ export interface VoucherListPageProps
     TabPageProps {
   vouchers: VoucherList_vouchers_edges_node[];
   selectedChannel: string;
-  onSettingsOpen: () => void;
+  onSettingsOpen?: () => void;
 }
 const useStyles = makeStyles(
   theme => ({
@@ -67,18 +67,20 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
-            }
-          ]}
-        />
+        {onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Settings",
+                  description: "button"
+                }),
+                onSelect: onSettingsOpen
+              }
+            ]}
+          />
+        )}
         <Button onClick={onAdd} variant="contained" color="primary">
           <FormattedMessage
             defaultMessage="Create voucher"
