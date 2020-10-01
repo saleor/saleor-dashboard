@@ -136,7 +136,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, submit }) => {
+      {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -185,7 +185,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled}
+              disabled={disabled || !hasChanged}
               state={saveButtonBarState}
               onCancel={onBack}
               onSave={submit}
