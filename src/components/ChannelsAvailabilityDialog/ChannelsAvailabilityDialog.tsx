@@ -1,7 +1,11 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelShippingData,
+  ChannelVoucherData
+} from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
@@ -56,7 +60,7 @@ const useStyles = makeStyles(
   { name: "ChannelsAvailabilityDialog" }
 );
 
-type ChannelOption = ChannelData | ChannelShippingData;
+type ChannelOption = ChannelData | ChannelShippingData | ChannelVoucherData;
 
 export interface ChannelsAvailabilityDialogProps {
   isSelected: (option: ChannelOption) => boolean;

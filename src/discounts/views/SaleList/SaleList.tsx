@@ -156,7 +156,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
-  const onSettingsOpen = !!channelChoices.length
+  const onSettingsOpen = !!channelChoices?.length
     ? { onSettingsOpen: () => openModal("settings") }
     : {};
 
@@ -173,7 +173,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
-            {!!channelChoices.length && (
+            {!!channelChoices?.length && (
               <ChannelSettingsDialog
                 channelsChoices={channelChoices}
                 defaultChoice={selectedChannel}

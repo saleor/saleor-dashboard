@@ -36,6 +36,7 @@ storiesOf("Views / Discounts / Voucher create", module)
         "value"
       ] as Array<keyof FormData>).map(field => ({
         __typename: "DiscountError",
+        channels: [],
         code: DiscountErrorCode.INVALID,
         field
       }))}

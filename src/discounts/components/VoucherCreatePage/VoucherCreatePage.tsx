@@ -1,3 +1,4 @@
+import { ChannelVoucherData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -6,6 +7,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { createChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
@@ -26,6 +28,7 @@ import VoucherValue from "../VoucherValue";
 export interface FormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
+  channelListing: ChannelVoucherData[];
   code: string;
   discountType: DiscountValueTypeEnum;
   endDate: string;
@@ -33,7 +36,6 @@ export interface FormData {
   hasEndDate: boolean;
   hasUsageLimit: boolean;
   minCheckoutItemsQuantity: string;
-  minSpent: string;
   requirementsPicker: RequirementsPicker;
   startDate: string;
   startTime: string;
@@ -48,6 +50,7 @@ export interface VoucherCreatePageProps {
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
+  onChannelsChange?: () => void;
   onSubmit: (data: FormData) => void;
 }
 
@@ -57,6 +60,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   errors,
   saveButtonBarState,
   onBack,
+  onChannelsChange,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -64,6 +68,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
+    channelListing: [],
     code: "",
     discountType: DiscountValueTypeEnum.FIXED,
     endDate: "",
@@ -71,7 +76,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     hasEndDate: false,
     hasUsageLimit: false,
     minCheckoutItemsQuantity: "0",
-    minSpent: "0",
     requirementsPicker: RequirementsPicker.NONE,
     startDate: "",
     startTime: "",
@@ -82,77 +86,85 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.vouchers)}
-          </AppHeader>
-          <PageHeader
-            title={intl.formatMessage({
-              defaultMessage: "Create Voucher",
-              description: "page header"
-            })}
-          />
-          <Grid>
-            <div>
-              <VoucherInfo
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={change}
-                variant="create"
-              />
-              <CardSpacer />
-              <VoucherTypes
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              {data.discountType.toString() !== "SHIPPING" ? (
-                <VoucherValue
+      {({ change, data, hasChanged, submit, triggerChange }) => {
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListing,
+          onChannelsChange,
+          triggerChange
+        );
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.vouchers)}
+            </AppHeader>
+            <PageHeader
+              title={intl.formatMessage({
+                defaultMessage: "Create Voucher",
+                description: "page header"
+              })}
+            />
+            <Grid>
+              <div>
+                <VoucherInfo
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  onChange={change}
+                  variant="create"
+                />
+                <CardSpacer />
+                <VoucherTypes
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                {data.discountType.toString() !== "SHIPPING" ? (
+                  <VoucherValue
+                    data={data}
+                    disabled={disabled}
+                    defaultCurrency={defaultCurrency}
+                    errors={errors}
+                    onChange={change}
+                    variant="create"
+                  />
+                ) : null}
+                <CardSpacer />
+                <VoucherRequirements
+                  data={data}
+                  disabled={disabled}
+                  defaultCurrency={defaultCurrency}
+                  errors={errors}
+                  onChannelChange={handleChannelChange}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <VoucherLimits
                   data={data}
                   disabled={disabled}
                   defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
-                  variant="create"
                 />
-              ) : null}
-              <CardSpacer />
-              <VoucherRequirements
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <VoucherLimits
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <VoucherDates
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled || !hasChanged}
-            onCancel={onBack}
-            onSave={submit}
-            state={saveButtonBarState}
-          />
-        </Container>
-      )}
+                <CardSpacer />
+                <VoucherDates
+                  data={data}
+                  disabled={disabled}
+                  defaultCurrency={defaultCurrency}
+                  errors={errors}
+                  onChange={change}
+                />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={disabled || !hasChanged}
+              onCancel={onBack}
+              onSave={submit}
+              state={saveButtonBarState}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };

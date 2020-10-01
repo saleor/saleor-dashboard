@@ -117,7 +117,7 @@ const voucherDetails = gql`
     }
   }
 `;
-export const TypedVoucherDetails = TypedQuery<
+export const useVoucherDetails = makeQuery<
   VoucherDetails,
   VoucherDetailsVariables
 >(voucherDetails);

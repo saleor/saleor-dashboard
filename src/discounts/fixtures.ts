@@ -18,6 +18,7 @@ export const saleList: SaleList_sales_edges_node[] = [
         __typename: "SaleChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -39,6 +40,7 @@ export const saleList: SaleList_sales_edges_node[] = [
         __typename: "SaleChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -60,6 +62,7 @@ export const saleList: SaleList_sales_edges_node[] = [
         __typename: "SaleChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -81,6 +84,7 @@ export const saleList: SaleList_sales_edges_node[] = [
         __typename: "SaleChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -102,6 +106,7 @@ export const saleList: SaleList_sales_edges_node[] = [
         __typename: "SaleChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -126,6 +131,7 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
         __typename: "VoucherChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -161,6 +167,7 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
         __typename: "VoucherChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
         },
@@ -217,6 +224,7 @@ export const sale: SaleDetails_sale = {
       __typename: "SaleChannelListing",
       channel: {
         __typename: "Channel",
+        currencyCode: "USD",
         id: "123",
         name: "Channel1"
       },
@@ -359,6 +367,7 @@ export const voucherDetails: VoucherDetails_voucher = {
       __typename: "VoucherChannelListing",
       channel: {
         __typename: "Channel",
+        currencyCode: "USD",
         id: "123",
         name: "Channel1"
       },

@@ -12,6 +12,7 @@ export interface VoucherCreate_voucherCreate_errors {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
+  channels: string[] | null;
 }
 
 export interface VoucherCreate_voucherCreate_voucher_countries {
@@ -24,6 +25,7 @@ export interface VoucherCreate_voucherCreate_voucher_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface VoucherCreate_voucherCreate_voucher_channelListing_minSpent {
