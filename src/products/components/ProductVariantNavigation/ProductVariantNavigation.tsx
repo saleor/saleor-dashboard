@@ -17,7 +17,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
 import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
@@ -118,8 +118,8 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                   {isDefault && (
                     <span className={classes.defaultVariant}>
                       {intl.formatMessage({
-                        defaultMessage: "default",
-                        description: "default variant label"
+                        defaultMessage: "Default",
+                        description: "default product variant indicator"
                       })}
                     </span>
                   )}
