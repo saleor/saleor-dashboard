@@ -97,7 +97,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
         <CardContent className={classes.cardContent}>
           <Typography
             dangerouslySetInnerHTML={{
-              __html: message.replace("\n", "<br />")
+              __html: message.replace(/\n/g, "<br />")
             }}
           />
         </CardContent>
