@@ -1,11 +1,13 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -65,6 +67,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const { data: channelsData } = useChannelsList({});
 
   const handleCollectionUpdate = (data: CollectionUpdate) => {
     if (data.collectionUpdate.errors.length === 0) {
@@ -156,6 +160,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const handleBack = () => navigate(collectionListUrl());
 
+  const [selectedChannel] = useLocalStorage("collectionListChannel", "");
+
   return (
     <TypedCollectionDetailsQuery
       displayLoader
@@ -163,7 +169,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     >
       {({ data, loading }) => {
         const collection = data?.collection;
-
         if (collection === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
@@ -293,6 +298,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               selected={listElements.length}
               toggle={toggle}
               toggleAll={toggleAll}
+              channelsCount={channelsData?.channels?.length}
+              selectedChannel={selectedChannel}
             />
             <AssignProductDialog
               confirmButtonState={assignProductOpts.status}
