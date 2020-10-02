@@ -1,6 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import {
-  ChannelShippingData,
   createShippingChannels,
   createSortedShippingChannels
 } from "@saleor/channels/utils";
@@ -80,28 +79,31 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     toggleAllChannels
   } = useChannels(shippingChannels);
 
-  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
-    onCompleted: data => {
-      const errors = data.shippingPriceCreate.errors;
-      if (errors.length === 0) {
-        updateShippingMethodChannelListing({
-          variables: getShippingMethodChannelVariables(
-            data.shippingPriceCreate.shippingMethod.id,
-            currentChannels
-          )
-        });
-      } else {
-        errors.map(err =>
-          notify({ status: "error", text: getShippingErrorMessage(err, intl) })
-        );
-      }
-    }
-  });
+  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate(
+    {}
+  );
 
-  const handleSubmit = (data: FormData) =>
-    createShippingRate({
+  const handleSubmit = async (data: FormData) => {
+    const response = await createShippingRate({
       variables: getCreateShippingWeightRateVariables(data, id)
     });
+    const errors = response.data.shippingPriceCreate.errors;
+    if (errors.length === 0) {
+      updateShippingMethodChannelListing({
+        variables: getShippingMethodChannelVariables(
+          response.data.shippingPriceCreate.shippingMethod.id,
+          data.channelListing
+        )
+      });
+    } else {
+      errors.map(err =>
+        notify({
+          status: "error",
+          text: getShippingErrorMessage(err, intl)
+        })
+      );
+    }
+  };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
@@ -127,9 +129,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
       )}
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
-        onChannelsChange={(data: ChannelShippingData[]) =>
-          setCurrentChannels(data)
-        }
         shippingChannels={currentChannels}
         defaultCurrency={shop?.defaultCurrency}
         disabled={
@@ -141,7 +140,12 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
         onSubmit={handleSubmit}
         onBack={handleBack}
         errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
+        channelErrors={
+          updateShippingMethodChannelListingOpts?.data
+            ?.shippingMethodChannelListingUpdate?.errors || []
+        }
         openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />
     </>

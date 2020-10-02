@@ -20,34 +20,16 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   country: string;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing_channel {
@@ -87,12 +69,9 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderPrice | null;
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;
-  maximumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderPrice | null;
   maximumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
-  price: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
   channelListing: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListing[] | null;
 }

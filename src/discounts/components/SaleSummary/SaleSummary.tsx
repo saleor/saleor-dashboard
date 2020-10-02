@@ -46,12 +46,12 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ defaultCurrency, sale }) => {
               sale.type === SaleType.FIXED ? (
                 <Money
                   money={{
-                    amount: sale.value,
+                    amount: 0,
                     currency: defaultCurrency
                   }}
                 />
               ) : (
-                <Percent amount={sale.value} />
+                <Percent amount={0} />
               ),
             <Skeleton />
           )}

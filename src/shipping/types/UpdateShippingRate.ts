@@ -14,34 +14,16 @@ export interface UpdateShippingRate_shippingPriceUpdate_errors {
   field: string | null;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_channel {
@@ -81,12 +63,9 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelLi
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderPrice | null;
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;
-  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderPrice | null;
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
-  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
   channelListing: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing[] | null;
 }

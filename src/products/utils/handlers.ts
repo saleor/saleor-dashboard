@@ -1,8 +1,8 @@
+import { ChannelData } from "@saleor/channels/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { ProductVariantPageFormData } from "@saleor/products/components/ProductVariantPage";
-import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
@@ -19,13 +19,11 @@ export function createAttributeChangeHandler(
 }
 
 export function createChannelsPriceChangeHandler(
-  data: ProductUpdatePageFormData,
-  updateChannels: (data: ProductUpdatePageFormData) => void,
+  channelListing: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, price: number) => {
-    const { channelListing } = data;
-
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -37,14 +35,14 @@ export function createChannelsPriceChangeHandler(
       },
       ...channelListing.slice(channelIndex + 1)
     ];
-    updateChannels({ ...data, channelListing: updatedChannels });
+    updateChannels(updatedChannels);
     triggerChange();
   };
 }
 
 export function createChannelsChangeHandler(
-  data: ProductUpdatePageFormData,
-  updateChannels: (data: ProductUpdatePageFormData) => void,
+  channelListing: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
   return (
@@ -54,8 +52,6 @@ export function createChannelsChangeHandler(
       publicationDate
     }: { isPublished: boolean; publicationDate: string | null }
   ) => {
-    const { channelListing } = data;
-
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -72,7 +68,7 @@ export function createChannelsChangeHandler(
       },
       ...channelListing.slice(channelIndex + 1)
     ];
-    updateChannels({ ...data, channelListing: updatedChannels });
+    updateChannels(updatedChannels);
     triggerChange();
   };
 }

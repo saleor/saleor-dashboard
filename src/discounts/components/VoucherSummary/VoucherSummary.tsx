@@ -66,12 +66,12 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
               voucher.discountValueType === DiscountValueTypeEnum.FIXED ? (
                 <Money
                   money={{
-                    amount: voucher.discountValue,
+                    amount: voucher?.channelListing[0]?.discountValue,
                     currency: defaultCurrency
                   }}
                 />
               ) : (
-                <Percent amount={voucher.discountValue} />
+                <Percent amount={voucher?.channelListing[0]?.discountValue} />
               ),
             <Skeleton />
           )}
@@ -121,7 +121,12 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         </Typography>
         <Typography>
           {maybe<React.ReactNode>(
-            () => (voucher.minSpent ? <Money money={voucher.minSpent} /> : "-"),
+            () =>
+              voucher?.channelListing[0]?.minSpent ? (
+                <Money money={voucher?.channelListing[0]?.minSpent} />
+              ) : (
+                "-"
+              ),
             <Skeleton />
           )}
         </Typography>

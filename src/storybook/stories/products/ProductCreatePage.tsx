@@ -39,6 +39,7 @@ storiesOf("Views / Products / Create product", module)
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
+      onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}
       saveButtonBarState="default"
@@ -68,6 +69,7 @@ storiesOf("Views / Products / Create product", module)
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
+      onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}
       saveButtonBarState="default"
@@ -116,6 +118,7 @@ storiesOf("Views / Products / Create product", module)
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
+      onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}
       saveButtonBarState="default"

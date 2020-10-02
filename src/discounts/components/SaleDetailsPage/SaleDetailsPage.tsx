@@ -119,7 +119,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     startDate: splitDateTime(maybe(() => sale.startDate, "")).date,
     startTime: splitDateTime(maybe(() => sale.startDate, "")).time,
     type: maybe(() => sale.type, SaleTypeEnum.FIXED),
-    value: maybe(() => sale.value.toString(), "")
+    value: ""
   };
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
