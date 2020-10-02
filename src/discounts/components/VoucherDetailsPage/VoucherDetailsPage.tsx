@@ -76,6 +76,7 @@ export interface VoucherDetailsPageProps
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetails_voucher;
+  selectedChannel: string;
   onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
@@ -131,9 +132,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
-
   let requirementsPickerInitValue;
-  if (maybe(() => voucher.minSpent.amount) > 0) {
+  if (voucher?.channelListing[0]?.minSpent.amount > 0) {
     requirementsPickerInitValue = RequirementsPicker.ORDER;
   } else if (maybe(() => voucher.minCheckoutItemsQuantity) > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
@@ -157,13 +157,13 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       () => voucher.minCheckoutItemsQuantity.toString(),
       "0"
     ),
-    minSpent: maybe(() => voucher.minSpent.amount.toString(), "0"),
+    minSpent: "0",
     requirementsPicker: requirementsPickerInitValue,
     startDate: splitDateTime(maybe(() => voucher.startDate, "")).date,
     startTime: splitDateTime(maybe(() => voucher.startDate, "")).time,
     type: maybe(() => voucher.type, VoucherTypeEnum.ENTIRE_ORDER),
     usageLimit: maybe(() => voucher.usageLimit.toString(), "0"),
-    value: maybe(() => voucher.discountValue, 0)
+    value: 0
   };
 
   return (

@@ -37,6 +37,7 @@ const props: ProductUpdatePageProps = {
   header: product.name,
   images: product.images,
   onBack: () => undefined,
+  onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,

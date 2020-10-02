@@ -396,6 +396,7 @@ export enum CountryCode {
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -547,12 +548,14 @@ export enum OrderErrorCode {
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
+  CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
   MISSING_CHANNEL = "MISSING_CHANNEL",
+  NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
@@ -1086,6 +1089,7 @@ export interface CategorySortingInput {
 }
 
 export interface ChannelCreateInput {
+  isActive?: boolean | null;
   name: string;
   slug: string;
   currencyCode: string;
@@ -1096,6 +1100,7 @@ export interface ChannelDeleteInput {
 }
 
 export interface ChannelUpdateInput {
+  isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
 }
@@ -1679,11 +1684,9 @@ export interface VoucherInput {
   startDate?: any | null;
   endDate?: any | null;
   discountValueType?: DiscountValueTypeEnum | null;
-  discountValue?: any | null;
   products?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
-  minAmountSpent?: any | null;
   minCheckoutItemsQuantity?: number | null;
   countries?: (string | null)[] | null;
   applyOncePerOrder?: boolean | null;

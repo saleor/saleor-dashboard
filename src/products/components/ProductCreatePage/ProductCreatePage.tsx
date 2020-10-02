@@ -62,6 +62,7 @@ interface ProductCreatePageProps {
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onSubmit?(data: ProductCreateData);
 }
@@ -90,8 +91,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchProductTypes,
   weightUnit,
   onSubmit,
-  openChannelsModal,
-  onWarehouseConfigure
+  onChannelsChange,
+  onWarehouseConfigure,
+  openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
 
@@ -128,6 +130,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
+      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       currentChannels={currentChannels}

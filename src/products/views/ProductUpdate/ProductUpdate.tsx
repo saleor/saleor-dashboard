@@ -195,11 +195,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const product = data?.product;
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
-    product?.channelListing,
+    product,
     channelsData?.channels
   );
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-    product?.channelListing
+    product
   );
   const [currentChannels, setCurrentChannels] = useStateFromProps(
     productChannelsChoices
@@ -231,7 +231,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         0
       ) {
         const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-          data.productChannelListingUpdate.product.channelListing
+          data.productChannelListingUpdate.product
         );
         setCurrentChannels(updatedProductChannelsChoices);
       } else {
@@ -326,10 +326,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateSimpleProductOpts.data.productVariantUpdate.errors
   );
 
-  const categories =
-    searchCategoriesOpts?.data?.search?.edges || [].map(edge => edge.node);
-  const collections =
-    searchCollectionsOpts?.data?.search?.edges || [].map(edge => edge.node);
+  const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
+    edge => edge.node
+  );
+  const collections = (searchCollectionsOpts?.data?.search?.edges || []).map(
+    edge => edge.node
+  );
   const errors = [
     ...(updateProductOpts.data.productUpdate.errors || []),
     ...(updateSimpleProductOpts.data.productUpdate.errors || []),
@@ -431,6 +433,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           onFetchMore: loadMoreCollections
         }}
         openChannelsModal={() => setChannelsModalOpen(true)}
+        onChannelsChange={setCurrentChannels}
       />
       <ActionDialog
         open={params.action === "remove"}

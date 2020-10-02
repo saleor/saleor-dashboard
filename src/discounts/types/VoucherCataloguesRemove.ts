@@ -20,10 +20,25 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_countri
   country: string;
 }
 
-export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minSpent {
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing_minSpent {
   __typename: "Money";
-  currency: string;
   amount: number;
+  currency: string;
+}
+
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing {
+  __typename: "VoucherChannelListing";
+  id: string;
+  channel: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing_channel;
+  discountValue: number;
+  currency: string;
+  minSpent: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing_minSpent | null;
 }
 
 export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_products_edges_node_productType {
@@ -137,10 +152,9 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number;
   countries: (VoucherCataloguesRemove_voucherCataloguesRemove_voucher_countries | null)[] | null;
-  minSpent: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
+  channelListing: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_channelListing[] | null;
   type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;

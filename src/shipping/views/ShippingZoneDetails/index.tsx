@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -62,6 +63,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     displayLoader: true,
     variables: { id }
   });
+
+  const [selectedChannel] = useLocalStorage("shippingListChannel", "");
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -180,6 +183,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
+        selectedChannel={selectedChannel}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
