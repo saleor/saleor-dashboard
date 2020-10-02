@@ -14,6 +14,20 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
   field: string | null;
 }
 
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node_productType {
   __typename: "ProductType";
   id: string;
@@ -124,7 +138,7 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing[] | null;
   products: SaleCataloguesAdd_saleCataloguesAdd_sale_products | null;
   categories: SaleCataloguesAdd_saleCataloguesAdd_sale_categories | null;
   collections: SaleCataloguesAdd_saleCataloguesAdd_sale_collections | null;

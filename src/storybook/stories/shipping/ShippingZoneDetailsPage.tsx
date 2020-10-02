@@ -27,6 +27,7 @@ const props: ShippingZoneDetailsPageProps = {
   onWeightRateAdd: () => undefined,
   onWeightRateEdit: () => undefined,
   saveButtonBarState: "default",
+  selectedChannel: "12345",
   shippingZone,
   warehouses: warehouseList
 };

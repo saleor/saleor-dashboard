@@ -14,6 +14,20 @@ export interface SaleUpdate_saleUpdate_errors {
   field: string | null;
 }
 
+export interface SaleUpdate_saleUpdate_sale_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleUpdate_saleUpdate_sale_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleUpdate_saleUpdate_sale_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleUpdate_saleUpdate_sale {
   __typename: "Sale";
   id: string;
@@ -21,7 +35,7 @@ export interface SaleUpdate_saleUpdate_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleUpdate_saleUpdate_sale_channelListing[] | null;
 }
 
 export interface SaleUpdate_saleUpdate {

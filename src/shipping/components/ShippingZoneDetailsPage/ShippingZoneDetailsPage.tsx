@@ -37,6 +37,7 @@ export interface ShippingZoneDetailsPageProps
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedChannel: string;
   shippingZone: ShippingZoneDetailsFragment;
   warehouses: ShippingZoneDetailsFragment_warehouses[];
   onBack: () => void;
@@ -80,6 +81,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   onWeightRateAdd,
   onWeightRateEdit,
   saveButtonBarState,
+  selectedChannel,
   shippingZone,
   warehouses
 }) => {
@@ -157,6 +159,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     method => method.type === ShippingMethodTypeEnum.PRICE
                   )}
                   variant="price"
+                  selectedChannel={selectedChannel}
                 />
                 <CardSpacer />
                 <ShippingZoneRates
@@ -168,6 +171,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     method => method.type === ShippingMethodTypeEnum.WEIGHT
                   )}
                   variant="weight"
+                  selectedChannel={selectedChannel}
                 />
               </div>
               <div>

@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useChannelsList } from "@saleor/channels/queries";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -16,6 +16,7 @@ import {
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -127,19 +128,30 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 100
     }
   });
-  const { data: channelsData } = useChannelsList({});
 
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
+
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("productsListChannel", { closeModal, openModal });
+
+  React.useEffect(() => {
+    const action = selectedChannel
+      ? {}
+      : { action: "settings" as ProductListUrlDialog };
+    navigate(
+      productListUrl({
+        ...{ ...params, ...action },
+        ...DEFAULT_INITIAL_PAGINATION_DATA
+      }),
+      true
+    );
+  }, [settings.rowNumber]);
 
   const tabs = getFilterTabs();
 
@@ -150,10 +162,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductListUrlDialog,
-    ProductListUrlQueryParams
-  >(navigate, productListUrl, params);
   const countAllProducts = useCountAllProducts({});
 
   const [exportProducts, exportProductsOpts] = useProductExport({
@@ -228,7 +236,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
-      channel: "default-channel",
       filter,
       sort
     }),
@@ -381,8 +388,22 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
-        channelsCount={channelsData?.channels?.length}
+        channelsCount={channelChoices?.length}
+        selectedChannel={selectedChannel}
+        onSettingsOpen={
+          !!channelChoices?.length ? () => openModal("settings") : undefined
+        }
       />
+      {!!channelChoices?.length && (
+        <ChannelSettingsDialog
+          channelsChoices={channelChoices}
+          defaultChoice={selectedChannel}
+          open={params.action === "settings"}
+          confirmButtonState="default"
+          onClose={closeModal}
+          onConfirm={handleChannelSelectConfirm}
+        />
+      )}
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}

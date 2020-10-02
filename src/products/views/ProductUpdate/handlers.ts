@@ -64,6 +64,31 @@ const getSimpleProductErrors = (data: SimpleProductUpdate) => [
   ...data.productVariantStocksUpdate.errors
 ];
 
+const getChannelsVariables = (
+  data: ProductUpdatePageSubmitData,
+  product: ProductDetails_product
+) => {
+  const productChannels = createChannelsDataFromProduct(product);
+  const diffChannels = diff(
+    productChannels,
+    data.channelListing,
+    (a, b) => a.id === b.id
+  );
+  return {
+    id: product.id,
+    input: {
+      addChannels: data.channelListing.map(channel => ({
+        channelId: channel.id,
+        isPublished: channel.isPublished,
+        publicationDate: channel.publicationDate
+      })),
+      removeChannels: diffChannels.removed?.map(
+        removedChannel => removedChannel.id
+      )
+    }
+  };
+};
+
 export function createUpdateHandler(
   product: ProductDetails_product,
   updateProduct: (
@@ -111,6 +136,10 @@ export function createUpdateHandler(
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
       errors = result.data.productUpdate.errors;
+
+      updateChannels({
+        variables: getChannelsVariables(data, product)
+      });
     } else {
       if (!product.variants.length) {
         const productVariantResult = await productVariantCreate({
@@ -141,6 +170,9 @@ export function createUpdateHandler(
               }))
             }
           });
+          updateChannels({
+            variables: getChannelsVariables(data, product)
+          });
           const result = await updateSimpleProduct(
             getSimpleProductVariables(productVariables, data, variantId)
           );
@@ -156,6 +188,9 @@ export function createUpdateHandler(
         );
         errors = getSimpleProductErrors(result.data);
 
+        await updateChannels({
+          variables: getChannelsVariables(data, product)
+        });
         updateVariantChannels({
           variables: {
             id: product.variants[0].id,
@@ -167,29 +202,7 @@ export function createUpdateHandler(
         });
       }
     }
-    const productChannels = createChannelsDataFromProduct(
-      product.channelListing
-    );
-    const diffChannels = diff(
-      productChannels,
-      data.channelListing,
-      (a, b) => a.id === b.id
-    );
-    updateChannels({
-      variables: {
-        id: product.id,
-        input: {
-          addChannels: data.channelListing.map(channel => ({
-            channelId: channel.id,
-            isPublished: channel.isPublished,
-            publicationDate: channel.publicationDate
-          })),
-          removeChannels: diffChannels.removed?.map(
-            removedChannel => removedChannel.id
-          )
-        }
-      }
-    });
+
     return errors;
   };
 }

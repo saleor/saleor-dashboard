@@ -148,7 +148,10 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                   {(saleDelete, saleDeleteOpts) => (
                     <TypedSaleDetails
                       displayLoader
-                      variables={{ id, ...paginationState }}
+                      variables={{
+                        id,
+                        ...paginationState
+                      }}
                     >
                       {({ data, loading }) => {
                         const tabPageInfo =
