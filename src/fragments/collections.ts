@@ -1,4 +1,4 @@
-import { channelProductFragment } from "@saleor/fragments/products";
+import { channelListingProductFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 export const collectionFragment = gql`
@@ -30,7 +30,7 @@ export const collectionDetailsFragment = gql`
 // https://github.com/apollographql/apollo-client/issues/2496
 // https://github.com/apollographql/apollo-client/issues/3468
 export const collectionProductFragment = gql`
-  ${channelProductFragment}
+  ${channelListingProductFragment}
   fragment CollectionProductFragment on Product {
     id
     name

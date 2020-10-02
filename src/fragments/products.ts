@@ -28,7 +28,7 @@ export const fragmentProductImage = gql`
   }
 `;
 
-export const channelProductFragment = gql`
+export const channelListingProductFragment = gql`
   fragment ChannelListingProductFragment on ProductChannelListing {
     isPublished
     publicationDate
@@ -45,7 +45,7 @@ export const channelProductFragment = gql`
 `;
 
 export const productFragment = gql`
-  ${channelProductFragment}
+  ${channelListingProductFragment}
   fragment ProductFragment on Product {
     id
     name
@@ -116,7 +116,7 @@ export const productFragmentDetails = gql`
   ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${stockFragment}
-  ${channelProductFragment}
+  ${channelListingProductFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     name
