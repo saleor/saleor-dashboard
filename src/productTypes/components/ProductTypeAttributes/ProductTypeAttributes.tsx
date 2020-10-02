@@ -125,26 +125,28 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           <col className={classes.colSlug} />
           <col className={classes.colAction} />
         </colgroup>
-        <TableHead
-          colSpan={numberOfColumns}
-          disabled={disabled}
-          dragRows
-          selected={selected}
-          items={attributes}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>
-            <FormattedMessage defaultMessage="Attribute name" />
-          </TableCell>
-          <TableCell className={classes.colName}>
-            <FormattedMessage
-              defaultMessage="Slug"
-              description="attribute internal name"
-            />
-          </TableCell>
-          <TableCell />
-        </TableHead>
+        {attributes?.length > 0 && (
+          <TableHead
+            colSpan={numberOfColumns}
+            disabled={disabled}
+            dragRows
+            selected={selected}
+            items={attributes}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colName}>
+              <FormattedMessage defaultMessage="Attribute name" />
+            </TableCell>
+            <TableCell className={classes.colName}>
+              <FormattedMessage
+                defaultMessage="Slug"
+                description="attribute internal name"
+              />
+            </TableCell>
+            <TableCell />
+          </TableHead>
+        )}
         <SortableTableBody onSortEnd={onAttributeReorder}>
           {renderCollection(
             attributes,
