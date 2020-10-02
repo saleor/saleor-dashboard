@@ -28,7 +28,24 @@ export const fragmentProductImage = gql`
   }
 `;
 
+export const channelProductFragment = gql`
+  fragment ChannelListingProductFragment on ProductChannelListing {
+    isPublished
+    publicationDate
+    discountedPrice {
+      amount
+      currency
+    }
+    channel {
+      id
+      name
+      currencyCode
+    }
+  }
+`;
+
 export const productFragment = gql`
+  ${channelProductFragment}
   fragment ProductFragment on Product {
     id
     name
@@ -41,17 +58,7 @@ export const productFragment = gql`
       hasVariants
     }
     channelListing {
-      channel {
-        id
-        name
-        currencyCode
-      }
-      isPublished
-      publicationDate
-      discountedPrice {
-        amount
-        currency
-      }
+      ...ChannelListingProductFragment
     }
   }
 `;
@@ -109,6 +116,7 @@ export const productFragmentDetails = gql`
   ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${stockFragment}
+  ${channelProductFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     name
@@ -138,17 +146,7 @@ export const productFragmentDetails = gql`
     isAvailable
     chargeTaxes
     channelListing {
-      channel {
-        id
-        name
-        currencyCode
-      }
-      isPublished
-      publicationDate
-      discountedPrice {
-        amount
-        currency
-      }
+      ...ChannelListingProductFragment
     }
     images {
       ...ProductImageFragment

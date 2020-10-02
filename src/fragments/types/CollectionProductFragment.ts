@@ -17,10 +17,32 @@ export interface CollectionProductFragment_thumbnail {
   url: string;
 }
 
+export interface CollectionProductFragment_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CollectionProductFragment_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CollectionProductFragment_channelListing {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: CollectionProductFragment_channelListing_discountedPrice | null;
+  channel: CollectionProductFragment_channelListing_channel;
+}
+
 export interface CollectionProductFragment {
   __typename: "Product";
   id: string;
   name: string;
   productType: CollectionProductFragment_productType;
   thumbnail: CollectionProductFragment_thumbnail | null;
+  channelListing: CollectionProductFragment_channelListing[] | null;
 }
