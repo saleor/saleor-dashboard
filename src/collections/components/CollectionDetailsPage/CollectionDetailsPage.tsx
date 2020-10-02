@@ -42,10 +42,12 @@ export interface CollectionDetailsPageFormData extends MetadataFormData {
 }
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
+  channelsCount: number;
   collection: CollectionDetails_collection;
   errors: ProductErrorFragment[];
   isFeatured: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedChannel: string;
   onBack: () => void;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
@@ -55,11 +57,13 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+  channelsCount,
   collection,
   disabled,
   errors,
   isFeatured,
   saveButtonBarState,
+  selectedChannel,
   onBack,
   onCollectionRemove,
   onImageDelete,
@@ -139,6 +143,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 <CardSpacer />
                 <CollectionProducts
                   disabled={disabled}
+                  channelsCount={channelsCount}
+                  selectedChannel={selectedChannel}
                   collection={collection}
                   {...collectionProductsProps}
                 />
