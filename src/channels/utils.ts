@@ -1,5 +1,5 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
-import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
+import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListing } from "@saleor/shipping/types/ShippingZone";
 import { uniqBy } from "lodash";
 export interface ChannelData {
@@ -29,10 +29,10 @@ export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   })) || [];
 
 export const createChannelsDataWithPrice = (
-  productData?: ProductDetails_product_channelListing[],
+  productData?: ProductDetails_product,
   data?: Channels_channels[]
 ): ChannelData[] => {
-  if (data && productData) {
+  if (data && productData?.channelListing) {
     const dataArr = data.map(channel => ({
       currency: channel.currencyCode,
       id: channel.id,
@@ -42,16 +42,7 @@ export const createChannelsDataWithPrice = (
       publicationDate: null
     }));
 
-    const productDataArr = productData.map(listing => ({
-      currency: listing.discountedPrice
-        ? listing.discountedPrice.currency
-        : data.find(channel => channel.id === listing.channel.id).currencyCode,
-      id: listing.channel.id,
-      isPublished: listing.isPublished,
-      name: listing.channel.name,
-      price: listing.discountedPrice ? listing.discountedPrice.amount : null,
-      publicationDate: listing.publicationDate
-    }));
+    const productDataArr = createChannelsDataFromProduct(productData);
     return uniqBy([...productDataArr, ...dataArr], obj => obj.id);
   }
   return [];
@@ -74,13 +65,13 @@ export const createShippingChannelsFromRate = (
   data?.map(channelData => ({
     id: channelData.channel.id,
     maxValue: channelData.maximumOrderPrice
-      ? channelData.maximumOrderPrice.toString()
+      ? channelData.maximumOrderPrice.amount.toString()
       : "",
     minValue: channelData.minimumOrderPrice
-      ? channelData.minimumOrderPrice.toString()
+      ? channelData.minimumOrderPrice.amount.toString()
       : "",
     name: channelData.channel.name,
-    price: channelData.price ? channelData.price.toString() : ""
+    price: channelData.price ? channelData.price.amount.toString() : ""
   })) || [];
 export interface ChannelShippingData {
   id: string;
@@ -91,19 +82,24 @@ export interface ChannelShippingData {
 }
 
 export const createChannelsDataFromProduct = (
-  productData?: ProductDetails_product_channelListing[]
+  productData?: ProductDetails_product
 ) =>
-  productData?.map(option => ({
-    currency: option.discountedPrice ? option.discountedPrice.currency : "",
-    id: option.channel.id,
-    isPublished: option.isPublished,
-    name: option.channel.name,
-    price: option.discountedPrice ? option.discountedPrice.amount : null,
-    publicationDate: option.publicationDate
-  })) || [];
+  productData?.channelListing?.map(option => {
+    const price = productData.variants[0]?.channelListing.find(
+      listing => listing.channel.id === option.channel.id
+    )?.price;
+    return {
+      currency: price ? price.currency : "",
+      id: option.channel.id,
+      isPublished: option.isPublished,
+      name: option.channel.name,
+      price: price ? price.amount : null,
+      publicationDate: option.publicationDate
+    };
+  }) || [];
 
 export const createSortedChannelsDataFromProduct = (
-  productData?: ProductDetails_product_channelListing[]
+  productData?: ProductDetails_product
 ) =>
   createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)

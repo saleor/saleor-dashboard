@@ -20,8 +20,7 @@ export const productAddUrl = productAddPath;
 
 export const productListPath = productSection;
 export type ProductListUrlDialog =
-  | "publish"
-  | "unpublish"
+  | "settings"
   | "delete"
   | "export"
   | TabActionDialog;
