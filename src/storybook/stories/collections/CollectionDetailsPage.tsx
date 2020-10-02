@@ -20,6 +20,7 @@ const collection = collectionFixture(
 const props: Omit<CollectionDetailsPageProps, "classes"> = {
   ...listActionsProps,
   ...pageListProps.default,
+  channelsCount: 2,
   collection,
   disabled: false,
   errors: [],
@@ -30,7 +31,8 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   onImageUpload: () => undefined,
   onProductUnassign: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
+  selectedChannel: "123"
 };
 
 storiesOf("Views / Collections / Collection details", module)

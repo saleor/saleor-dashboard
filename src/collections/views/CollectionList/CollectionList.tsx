@@ -2,12 +2,14 @@ import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -109,6 +111,12 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     CollectionListUrlQueryParams
   >(navigate, collectionListUrl, params);
 
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("collectionListChannel", { closeModal, openModal });
+
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -164,197 +172,215 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
-    <TypedCollectionBulkDelete onCompleted={handleCollectionBulkDelete}>
-      {(collectionBulkDelete, collectionBulkDeleteOpts) => (
-        <TypedCollectionBulkPublish onCompleted={handleCollectionBulkPublish}>
-          {(collectionBulkPublish, collectionBulkPublishOpts) => (
-            <>
-              <CollectionListPage
-                currencySymbol={currencySymbol}
-                currentTab={currentTab}
-                filterOpts={getFilterOpts(params)}
-                initialSearch={params.query || ""}
-                onSearchChange={handleSearchChange}
-                onFilterChange={changeFilters}
-                onAdd={() => navigate(collectionAddUrl)}
-                onAll={resetFilters}
-                onTabChange={handleTabChange}
-                onTabDelete={() => openModal("delete-search")}
-                onTabSave={() => openModal("save-search")}
-                tabs={tabs.map(tab => tab.name)}
-                disabled={loading}
-                collections={maybe(() =>
-                  data.collections.edges.map(edge => edge.node)
-                )}
-                settings={settings}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                onSort={handleSort}
-                onUpdateListSettings={updateListSettings}
-                pageInfo={pageInfo}
-                sort={getSortParams(params)}
-                onRowClick={id => () => navigate(collectionUrl(id))}
-                toolbar={
-                  <>
-                    <Button
-                      color="primary"
-                      onClick={() =>
-                        openModal("unpublish", {
-                          ids: listElements
-                        })
-                      }
-                    >
-                      <FormattedMessage
-                        defaultMessage="Unpublish"
-                        description="unpublish collections"
-                      />
-                    </Button>
-                    <Button
-                      color="primary"
-                      onClick={() =>
-                        openModal("publish", {
-                          ids: listElements
-                        })
-                      }
-                    >
-                      <FormattedMessage
-                        defaultMessage="Publish"
-                        description="publish collections"
-                      />
-                    </Button>
-                    <IconButton
-                      color="primary"
-                      onClick={() =>
-                        openModal("remove", {
-                          ids: listElements
-                        })
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                }
-                isChecked={isSelected}
-                selected={listElements.length}
-                toggle={toggle}
-                toggleAll={toggleAll}
-              />
-              <ActionDialog
-                open={
-                  params.action === "publish" &&
-                  maybe(() => params.ids.length > 0)
-                }
-                onClose={closeModal}
-                confirmButtonState={collectionBulkPublishOpts.status}
-                onConfirm={() =>
-                  collectionBulkPublish({
-                    variables: {
-                      ids: params.ids,
-                      isPublished: true
-                    }
-                  })
-                }
-                variant="default"
-                title={intl.formatMessage({
-                  defaultMessage: "Publish collections",
-                  description: "dialog title"
-                })}
-              >
-                <DialogContentText>
-                  <FormattedMessage
-                    defaultMessage="{counter,plural,one{Are you sure you want to publish this collection?} other{Are you sure you want to publish {displayQuantity} collections?}}"
-                    values={{
-                      counter: maybe(() => params.ids.length),
-                      displayQuantity: (
-                        <strong>{maybe(() => params.ids.length)}</strong>
-                      )
-                    }}
-                  />
-                </DialogContentText>
-              </ActionDialog>
-              <ActionDialog
-                open={
-                  params.action === "unpublish" &&
-                  maybe(() => params.ids.length > 0)
-                }
-                onClose={closeModal}
-                confirmButtonState={collectionBulkPublishOpts.status}
-                onConfirm={() =>
-                  collectionBulkPublish({
-                    variables: {
-                      ids: params.ids,
-                      isPublished: false
-                    }
-                  })
-                }
-                variant="default"
-                title={intl.formatMessage({
-                  defaultMessage: "Unpublish collections",
-                  description: "dialog title"
-                })}
-              >
-                <DialogContentText>
-                  <FormattedMessage
-                    defaultMessage="{counter,plural,one{Are you sure you want to unpublish this collection?} other{Are you sure you want to unpublish {displayQuantity} collections?}}"
-                    values={{
-                      counter: maybe(() => params.ids.length),
-                      displayQuantity: (
-                        <strong>{maybe(() => params.ids.length)}</strong>
-                      )
-                    }}
-                  />
-                </DialogContentText>
-              </ActionDialog>
-              <ActionDialog
-                open={
-                  params.action === "remove" &&
-                  maybe(() => params.ids.length > 0)
-                }
-                onClose={closeModal}
-                confirmButtonState={collectionBulkDeleteOpts.status}
-                onConfirm={() =>
-                  collectionBulkDelete({
-                    variables: {
-                      ids: params.ids
-                    }
-                  })
-                }
-                variant="delete"
-                title={intl.formatMessage({
-                  defaultMessage: "Delete collections",
-                  description: "dialog title"
-                })}
-              >
-                <DialogContentText>
-                  <FormattedMessage
-                    defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-                    values={{
-                      counter: maybe(() => params.ids.length),
-                      displayQuantity: (
-                        <strong>{maybe(() => params.ids.length)}</strong>
-                      )
-                    }}
-                  />
-                </DialogContentText>
-              </ActionDialog>
-              <SaveFilterTabDialog
-                open={params.action === "save-search"}
-                confirmButtonState="default"
-                onClose={closeModal}
-                onSubmit={handleTabSave}
-              />
-              <DeleteFilterTabDialog
-                open={params.action === "delete-search"}
-                confirmButtonState="default"
-                onClose={closeModal}
-                onSubmit={handleTabDelete}
-                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-              />
-            </>
-          )}
-        </TypedCollectionBulkPublish>
+    <>
+      {!!channelChoices?.length && (
+        <ChannelSettingsDialog
+          channelsChoices={channelChoices}
+          defaultChoice={selectedChannel}
+          open={params.action === "settings"}
+          confirmButtonState="default"
+          onClose={closeModal}
+          onConfirm={handleChannelSelectConfirm}
+        />
       )}
-    </TypedCollectionBulkDelete>
+      <TypedCollectionBulkDelete onCompleted={handleCollectionBulkDelete}>
+        {(collectionBulkDelete, collectionBulkDeleteOpts) => (
+          <TypedCollectionBulkPublish onCompleted={handleCollectionBulkPublish}>
+            {(collectionBulkPublish, collectionBulkPublishOpts) => (
+              <>
+                <CollectionListPage
+                  currencySymbol={currencySymbol}
+                  currentTab={currentTab}
+                  filterOpts={getFilterOpts(params)}
+                  initialSearch={params.query || ""}
+                  onSearchChange={handleSearchChange}
+                  onFilterChange={changeFilters}
+                  onAdd={() => navigate(collectionAddUrl)}
+                  onAll={resetFilters}
+                  onTabChange={handleTabChange}
+                  onTabDelete={() => openModal("delete-search")}
+                  onTabSave={() => openModal("save-search")}
+                  tabs={tabs.map(tab => tab.name)}
+                  disabled={loading}
+                  collections={maybe(() =>
+                    data.collections.edges.map(edge => edge.node)
+                  )}
+                  settings={settings}
+                  onNextPage={loadNextPage}
+                  onPreviousPage={loadPreviousPage}
+                  onSort={handleSort}
+                  onUpdateListSettings={updateListSettings}
+                  pageInfo={pageInfo}
+                  sort={getSortParams(params)}
+                  onRowClick={id => () => navigate(collectionUrl(id))}
+                  toolbar={
+                    <>
+                      <Button
+                        color="primary"
+                        onClick={() =>
+                          openModal("unpublish", {
+                            ids: listElements
+                          })
+                        }
+                      >
+                        <FormattedMessage
+                          defaultMessage="Unpublish"
+                          description="unpublish collections"
+                        />
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={() =>
+                          openModal("publish", {
+                            ids: listElements
+                          })
+                        }
+                      >
+                        <FormattedMessage
+                          defaultMessage="Publish"
+                          description="publish collections"
+                        />
+                      </Button>
+                      <IconButton
+                        color="primary"
+                        onClick={() =>
+                          openModal("remove", {
+                            ids: listElements
+                          })
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </>
+                  }
+                  isChecked={isSelected}
+                  selected={listElements.length}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  selectedChannel={selectedChannel}
+                  onSettingsOpen={
+                    !!channelChoices?.length
+                      ? () => openModal("settings")
+                      : undefined
+                  }
+                />
+                <ActionDialog
+                  open={
+                    params.action === "publish" &&
+                    maybe(() => params.ids.length > 0)
+                  }
+                  onClose={closeModal}
+                  confirmButtonState={collectionBulkPublishOpts.status}
+                  onConfirm={() =>
+                    collectionBulkPublish({
+                      variables: {
+                        ids: params.ids,
+                        isPublished: true
+                      }
+                    })
+                  }
+                  variant="default"
+                  title={intl.formatMessage({
+                    defaultMessage: "Publish collections",
+                    description: "dialog title"
+                  })}
+                >
+                  <DialogContentText>
+                    <FormattedMessage
+                      defaultMessage="{counter,plural,one{Are you sure you want to publish this collection?} other{Are you sure you want to publish {displayQuantity} collections?}}"
+                      values={{
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
+                        )
+                      }}
+                    />
+                  </DialogContentText>
+                </ActionDialog>
+                <ActionDialog
+                  open={
+                    params.action === "unpublish" &&
+                    maybe(() => params.ids.length > 0)
+                  }
+                  onClose={closeModal}
+                  confirmButtonState={collectionBulkPublishOpts.status}
+                  onConfirm={() =>
+                    collectionBulkPublish({
+                      variables: {
+                        ids: params.ids,
+                        isPublished: false
+                      }
+                    })
+                  }
+                  variant="default"
+                  title={intl.formatMessage({
+                    defaultMessage: "Unpublish collections",
+                    description: "dialog title"
+                  })}
+                >
+                  <DialogContentText>
+                    <FormattedMessage
+                      defaultMessage="{counter,plural,one{Are you sure you want to unpublish this collection?} other{Are you sure you want to unpublish {displayQuantity} collections?}}"
+                      values={{
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
+                        )
+                      }}
+                    />
+                  </DialogContentText>
+                </ActionDialog>
+                <ActionDialog
+                  open={
+                    params.action === "remove" &&
+                    maybe(() => params.ids.length > 0)
+                  }
+                  onClose={closeModal}
+                  confirmButtonState={collectionBulkDeleteOpts.status}
+                  onConfirm={() =>
+                    collectionBulkDelete({
+                      variables: {
+                        ids: params.ids
+                      }
+                    })
+                  }
+                  variant="delete"
+                  title={intl.formatMessage({
+                    defaultMessage: "Delete collections",
+                    description: "dialog title"
+                  })}
+                >
+                  <DialogContentText>
+                    <FormattedMessage
+                      defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+                      values={{
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
+                        )
+                      }}
+                    />
+                  </DialogContentText>
+                </ActionDialog>
+                <SaveFilterTabDialog
+                  open={params.action === "save-search"}
+                  confirmButtonState="default"
+                  onClose={closeModal}
+                  onSubmit={handleTabSave}
+                />
+                <DeleteFilterTabDialog
+                  open={params.action === "delete-search"}
+                  confirmButtonState="default"
+                  onClose={closeModal}
+                  onSubmit={handleTabDelete}
+                  tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                />
+              </>
+            )}
+          </TypedCollectionBulkPublish>
+        )}
+      </TypedCollectionBulkDelete>
+    </>
   );
 };
 export default CollectionList;

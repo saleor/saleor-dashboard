@@ -888,6 +888,10 @@
     "context": "field is optional",
     "string": "(Optional)"
   },
+  "src_dot_collections_dot_components_dot_CollectionListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
+  },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_1631917001": {
     "context": "tab name",
     "string": "All Collections"
@@ -935,9 +939,9 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_collections_dot_components_dot_CollectionProducts_dot_3640454975": {
-    "context": "product is published",
-    "string": "Published"
+  "src_dot_collections_dot_components_dot_CollectionProducts_dot_3326160357": {
+    "context": "product availability",
+    "string": "Availability"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_4114667680": {
     "context": "products in collection",
