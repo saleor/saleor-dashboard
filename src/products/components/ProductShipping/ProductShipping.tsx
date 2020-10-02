@@ -49,7 +49,9 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
             onChange={onChange}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">{weightUnit}</InputAdornment>
+                <InputAdornment position="end">
+                  {weightUnit || ""}
+                </InputAdornment>
               ),
               inputProps: {
                 min: 0

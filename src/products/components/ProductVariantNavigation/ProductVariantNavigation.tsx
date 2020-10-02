@@ -90,7 +90,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             <SortableTableRow
               hover={!!variant}
               key={variant ? variant.id : "skeleton"}
-              index={variantIndex}
+              index={variantIndex || 0}
               className={classNames(classes.link, {
                 [classes.tabActive]: variant && variant.id === current
               })}
