@@ -246,6 +246,7 @@ export const ProductCreateView: React.FC = () => {
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={() => setChannelsModalOpen(true)}
+        onChannelsChange={setCurrentChannels}
       />
     </>
   );

@@ -36,6 +36,7 @@ const props: VoucherDetailsPageProps = {
   onTabClick: () => undefined,
   productListToolbar: null,
   saveButtonBarState: "default",
+  selectedChannel: "123",
   voucher: voucherDetails
 };
 

@@ -47,12 +47,17 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
+  selectedChannel: string;
+  onSettingsOpen?: () => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
     columnPicker: {
-      margin: theme.spacing(0, 3)
+      marginRight: theme.spacing(3)
+    },
+    settings: {
+      marginRight: theme.spacing(2)
     }
   }),
   { name: "ProductListPage" }
@@ -79,10 +84,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onFetchMore,
     onFilterChange,
     onSearchChange,
+    onSettingsOpen,
     onTabChange,
     onTabDelete,
     onTabSave,
     onUpdateListSettings,
+    selectedChannel,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -125,6 +132,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.products)}>
         <CardMenu
+          className={classes.settings}
           menuItems={[
             {
               label: intl.formatMessage({
@@ -133,6 +141,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
+            },
+            onSettingsOpen && {
+              label: intl.formatMessage({
+                defaultMessage: "Settings",
+                description: "button"
+              }),
+              onSelect: onSettingsOpen
             }
           ]}
           data-test="menu"
@@ -191,6 +206,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           gridAttributes={gridAttributes}
           settings={settings}
           channelsCount={channelsCount}
+          selectedChannel={selectedChannel}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>

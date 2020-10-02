@@ -70,6 +70,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -118,6 +119,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  onChannelsChange,
   openChannelsModal,
   onSeoClick,
   onSubmit,
@@ -166,6 +168,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
+      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       currentChannels={currentChannels}

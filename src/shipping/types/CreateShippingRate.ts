@@ -20,34 +20,16 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {
   country: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_channel {
@@ -87,12 +69,9 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderPrice | null;
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderWeight | null;
-  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderPrice | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
-  price: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
   channelListing: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing[] | null;
 }
@@ -113,34 +92,16 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   warehouses: (CreateShippingRate_shippingPriceCreate_shippingZone_warehouses | null)[] | null;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_channel {
@@ -180,12 +141,9 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelLi
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderPrice | null;
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderWeight | null;
-  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderPrice | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderWeight | null;
   name: string;
-  price: CreateShippingRate_shippingPriceCreate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
   channelListing: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing[] | null;
 }

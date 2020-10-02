@@ -143,18 +143,23 @@ export const getChannelsInput = (channels: ChannelPriceData[]) =>
     }
   }));
 
-interface ProductAvailabilityArgs {
-  availableForPurchase: string | null;
-  isAvailableForPurchase: boolean;
-  productId: string;
-}
+export const getAvailabilityVariables = (channels: ChannelData[]) =>
+  channels.map(channel => {
+    const { isAvailableForPurchase, availableForPurchase } = channel;
+    const isAvailable =
+      availableForPurchase && !isAvailableForPurchase
+        ? true
+        : isAvailableForPurchase;
 
-export const getProductAvailabilityVariables = ({
-  isAvailableForPurchase,
-  availableForPurchase,
-  productId
-}: ProductAvailabilityArgs) => ({
-  isAvailable: isAvailableForPurchase,
-  productId,
-  startDate: availableForPurchase || null
-});
+    return {
+      availableForPurchaseDate:
+        isAvailableForPurchase || availableForPurchase === ""
+          ? null
+          : availableForPurchase,
+      channelId: channel.id,
+      isAvailableForPurchase: isAvailable,
+      isPublished: channel.isPublished,
+      publicationDate: channel.publicationDate,
+      visibleInListings: channel.visibleInListings
+    };
+  });

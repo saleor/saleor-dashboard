@@ -12,6 +12,7 @@ const props: OrderValueProps = {
   ),
   defaultCurrency: "USD",
   disabled: false,
+  errors: [],
   noLimits: false,
   onChange: () => undefined,
   onChannelsChange: () => undefined

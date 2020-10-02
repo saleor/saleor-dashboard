@@ -24,6 +24,13 @@ export interface ProductList_products_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
+}
+
+export interface ProductList_products_edges_node_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
 export interface ProductList_products_edges_node_channelListing {
@@ -31,6 +38,7 @@ export interface ProductList_products_edges_node_channelListing {
   channel: ProductList_products_edges_node_channelListing_channel;
   isPublished: boolean;
   publicationDate: any | null;
+  discountedPrice: ProductList_products_edges_node_channelListing_discountedPrice | null;
 }
 
 export interface ProductList_products_edges_node_attributes_attribute {
@@ -55,7 +63,6 @@ export interface ProductList_products_edges_node {
   id: string;
   name: string;
   thumbnail: ProductList_products_edges_node_thumbnail | null;
-  isAvailable: boolean | null;
   productType: ProductList_products_edges_node_productType;
   channelListing: ProductList_products_edges_node_channelListing[] | null;
   attributes: ProductList_products_edges_node_attributes[];
@@ -92,5 +99,4 @@ export interface ProductListVariables {
   before?: string | null;
   filter?: ProductFilterInput | null;
   sort?: ProductOrder | null;
-  channel?: string | null;
 }

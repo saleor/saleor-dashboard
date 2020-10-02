@@ -4,6 +4,7 @@ import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippi
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import { diff } from "fast-array-diff";
 
 export const createChannelsChangeHandler = (
   selectedChannels: ChannelShippingData[],
@@ -93,25 +94,28 @@ export function getUpdateShippingWeightRateVariables(
     }
   };
 }
-
 export function getShippingMethodChannelVariables(
   id: string,
-  addChannels?: ChannelShippingData[],
-  removeChannels?: ChannelShippingData[]
+  formChannels: ChannelShippingData[],
+  prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
+  const removeChannels = prevChannels
+    ? diff(formChannels, prevChannels, (a, b) => a.id === b.id).removed?.map(
+        removedChannel => removedChannel.id
+      )
+    : [];
+
   return {
     id,
     input: {
       addChannels:
-        addChannels?.map(channel => ({
+        formChannels?.map(channel => ({
           channelId: channel.id,
-          maxValue: channel.maxValue || null,
-          minValue: channel.minValue || null,
+          maximumOrderPrice: channel.maxValue || null,
+          minimumOrderPrice: channel.minValue || null,
           price: channel.price || null
         })) || [],
-      removeChannels: removeChannels
-        ? removeChannels.map(removedChannel => removedChannel.id)
-        : []
+      removeChannels
     }
   };
 }

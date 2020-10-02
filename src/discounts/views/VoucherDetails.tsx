@@ -7,6 +7,7 @@ import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -23,7 +24,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
-import { decimal, joinDateTime, maybe } from "../../misc";
+import { joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import {
   DiscountValueTypeEnum,
@@ -92,6 +93,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const [selectedChannel] = useLocalStorage("vouchersListChannel", "");
+
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: VoucherDetailsPageTab) => {
     reset();
@@ -155,7 +158,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                   {(voucherDelete, voucherDeleteOpts) => (
                     <TypedVoucherDetails
                       displayLoader
-                      variables={{ id, ...paginationState }}
+                      variables={{
+                        id,
+                        ...paginationState
+                      }}
                     >
                       {({ data, loading }) => {
                         const tabPageInfo =
@@ -208,10 +214,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               input: {
                                 applyOncePerCustomer: data.applyOncePerCustomer,
                                 applyOncePerOrder: data.applyOncePerOrder,
-                                discountValue:
-                                  data.discountType.toString() === "SHIPPING"
-                                    ? 100
-                                    : decimal(data.value),
                                 discountValueType:
                                   data.discountType.toString() === "SHIPPING"
                                     ? DiscountValueTypeEnum.PERCENTAGE
@@ -219,11 +221,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 endDate: data.hasEndDate
                                   ? joinDateTime(data.endDate, data.endTime)
                                   : null,
-                                minAmountSpent:
-                                  data.requirementsPicker !==
-                                  RequirementsPicker.ORDER
-                                    ? 0
-                                    : parseFloat(data.minSpent),
                                 minCheckoutItemsQuantity:
                                   data.requirementsPicker !==
                                   RequirementsPicker.ITEM
@@ -270,6 +267,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 voucherUpdateOpts.data?.voucherUpdate.errors ||
                                 []
                               }
+                              selectedChannel={selectedChannel}
                               pageInfo={pageInfo}
                               onNextPage={loadNextPage}
                               onPreviousPage={loadPreviousPage}
