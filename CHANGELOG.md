@@ -47,7 +47,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
 - Fix misaligned rich text draft controls - #725 by @orzechdev
 - Allow taxes to be configured per product - #728 by @dominik-zeglen
-
+- Fix style of product type attributes empty table - #744 by @orzechdev
 
 ## 2.10.1
 
