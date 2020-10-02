@@ -22,6 +22,13 @@ export interface ProductFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
+}
+
+export interface ProductFragment_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
 export interface ProductFragment_channelListing {
@@ -29,6 +36,7 @@ export interface ProductFragment_channelListing {
   channel: ProductFragment_channelListing_channel;
   isPublished: boolean;
   publicationDate: any | null;
+  discountedPrice: ProductFragment_channelListing_discountedPrice | null;
 }
 
 export interface ProductFragment {
@@ -36,7 +44,6 @@ export interface ProductFragment {
   id: string;
   name: string;
   thumbnail: ProductFragment_thumbnail | null;
-  isAvailable: boolean | null;
   productType: ProductFragment_productType;
   channelListing: ProductFragment_channelListing[] | null;
 }

@@ -772,6 +772,18 @@
     "context": "channel currency",
     "string": "Currency"
   },
+  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_1391686013": {
+    "context": "dialog header",
+    "string": "Settings"
+  },
+  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_2721512922": {
+    "context": "channel settings",
+    "string": "Configure the way information are presented in catalog section of Dashboard."
+  },
+  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_645871430": {
+    "context": "select label",
+    "string": "Show prices for"
+  },
   "src_dot_channels_dot_components_dot_ChannelStatus_dot_1004218338": {
     "context": "inactive",
     "string": "Inactive"
@@ -1971,6 +1983,10 @@
     "context": "sale name",
     "string": "Name"
   },
+  "src_dot_discounts_dot_components_dot_SaleListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
+  },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_1866913828": {
     "string": "Search Sale"
   },
@@ -2119,6 +2135,10 @@
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
     "string": "All Vouchers"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1930485532": {
     "string": "Search Voucher"
@@ -3758,6 +3778,10 @@
     "context": "product price",
     "string": "Price"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
     "string": "Create Product"
@@ -4609,6 +4633,10 @@
     "context": "header",
     "string": "Shipping"
   },
+  "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
+  },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_120574110": {
     "context": "sort shipping methods by zone, section header",
     "string": "Shipping By Zone"
@@ -4652,10 +4680,6 @@
   "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
     "string": "Manage Channel Availability"
   },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_4092948954": {
-    "context": "notification text",
-    "string": "Channels saved"
-  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
     "string": "Delete Shipping Zone"
@@ -4673,10 +4697,6 @@
   },
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
     "string": "Manage Channels Availability"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_4092948954": {
-    "context": "notification text",
-    "string": "Channels saved"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",
@@ -5580,6 +5600,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
     "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
+    "context": "event",
+    "string": "Product updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
     "context": "event",

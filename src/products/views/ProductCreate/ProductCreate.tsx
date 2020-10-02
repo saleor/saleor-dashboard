@@ -226,6 +226,7 @@ export const ProductCreateView: React.FC = () => {
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
         openChannelsModal={() => setChannelsModalOpen(true)}
+        onChannelsChange={setCurrentChannels}
       />
     </>
   );

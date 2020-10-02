@@ -3,13 +3,14 @@ import CardContent from "@material-ui/core/CardContent";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,6 +23,7 @@ interface Value {
 }
 export interface OrderValueProps {
   channels: ChannelShippingData[];
+  errors: ShippingErrorFragment[];
   defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;
@@ -115,14 +117,12 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                     <Typography>{channel.name}</Typography>
                   </TableCell>
                   <TableCell>
-                    <TextField
+                    <PriceField
                       disabled={disabled}
-                      fullWidth
                       label={intl.formatMessage({
                         defaultMessage: "Min Value"
                       })}
                       name={`minValue:${channel.name}`}
-                      type="number"
                       value={channel.minValue}
                       onChange={e =>
                         onChannelsChange(channel.id, {
@@ -130,20 +130,16 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           minValue: e.target.value
                         })
                       }
-                      InputProps={{
-                        endAdornment: defaultCurrency
-                      }}
+                      currencySymbol={defaultCurrency}
                     />
                   </TableCell>
                   <TableCell>
-                    <TextField
+                    <PriceField
                       disabled={disabled}
-                      fullWidth
                       label={intl.formatMessage({
                         defaultMessage: "Max Value"
                       })}
                       name={`maxValue:${channel.name}`}
-                      type="number"
                       value={channel.maxValue}
                       onChange={e =>
                         onChannelsChange(channel.id, {
@@ -151,9 +147,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           maxValue: e.target.value
                         })
                       }
-                      InputProps={{
-                        endAdornment: defaultCurrency
-                      }}
+                      currencySymbol={defaultCurrency}
                     />
                   </TableCell>
                 </TableRow>

@@ -3,12 +3,13 @@ import CardContent from "@material-ui/core/CardContent";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
+import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,6 +23,7 @@ interface Value {
 
 export interface PricingCardProps {
   channels: ChannelShippingData[];
+  errors: ShippingErrorFragment[];
   defaultCurrency: string;
   disabled: boolean;
   onChange: (channelId: string, value: Value) => void;
@@ -37,7 +39,6 @@ export const PricingCard: React.FC<PricingCardProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   return (
     <Card>
       <CardTitle
@@ -80,15 +81,13 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                   <Typography>{channel.name}</Typography>
                 </TableCell>
                 <TableCell>
-                  <TextField
+                  <PriceField
                     disabled={disabled}
-                    fullWidth
                     label={intl.formatMessage({
                       defaultMessage: "Price",
                       description: "column title"
                     })}
                     name="price"
-                    type="number"
                     value={channel.price}
                     onChange={e =>
                       onChange(channel.id, {
@@ -96,9 +95,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                         price: e.target.value
                       })
                     }
-                    InputProps={{
-                      endAdornment: defaultCurrency
-                    }}
+                    currencySymbol={defaultCurrency}
                   />
                 </TableCell>
               </TableRow>

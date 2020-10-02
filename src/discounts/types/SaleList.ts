@@ -8,6 +8,20 @@ import { SaleFilterInput, SaleSortingInput, SaleType } from "./../../types/globa
 // GraphQL query operation: SaleList
 // ====================================================
 
+export interface SaleList_sales_edges_node_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleList_sales_edges_node_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleList_sales_edges_node_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleList_sales_edges_node {
   __typename: "Sale";
   id: string;
@@ -15,7 +29,7 @@ export interface SaleList_sales_edges_node {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleList_sales_edges_node_channelListing[] | null;
 }
 
 export interface SaleList_sales_edges {

@@ -6,7 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
-// import Money from "@saleor/components/Money";
+import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
@@ -23,8 +23,8 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import {
-  ProductList_products_edges_node
-  // ProductList_products_edges_node_pricing_priceRangeUndiscounted
+  ProductList_products_edges_node,
+  ProductList_products_edges_node_channelListing
 } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
@@ -106,6 +106,7 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  selectedChannel: string;
   channelsCount: number;
 }
 
@@ -128,60 +129,33 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onPreviousPage,
     onUpdateListSettings,
     onRowClick,
-    onSort
+    onSort,
+    selectedChannel
   } = props;
 
   const classes = useStyles(props);
-
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
   const numberOfColumns = 2 + settings.columns.length;
 
-  // const getProductPrice = (
-  //   priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
-  // ) => {
-  //   if (!priceRangeUndiscounted) {
-  //     return null;
-  //   }
-
-  //   const { start, stop } = priceRangeUndiscounted;
-  //   const {
-  //     gross: { amount: startAmount }
-  //   } = start;
-  //   const {
-  //     gross: { amount: stopAmount }
-  //   } = stop;
-
-  //   if (startAmount === stopAmount) {
-  //     return (
-  //       <Money
-  //         money={{
-  //           amount: startAmount,
-  //           currency: start.gross.currency
-  //         }}
-  //       />
-  //     );
-  //   } else {
-  //     return (
-  //       <>
-  //         <Money
-  //           money={{
-  //             amount: startAmount,
-  //             currency: start.gross.currency
-  //           }}
-  //         />
-  //         {" - "}
-  //         <Money
-  //           money={{
-  //             amount: stopAmount,
-  //             currency: stop.gross.currency
-  //           }}
-  //         />
-  //       </>
-  //     );
-  //   }
-  // };
+  const getProductPrice = (
+    channel: ProductList_products_edges_node_channelListing
+  ) => {
+    if (channel?.discountedPrice) {
+      return (
+        <Money
+          money={{
+            amount: channel.discountedPrice?.amount,
+            currency: channel.discountedPrice?.currency
+              ? channel.discountedPrice?.currency
+              : channel.channel.currencyCode
+          }}
+        />
+      );
+    }
+    return "-";
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -331,7 +305,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-
+              const channel =
+                product?.channelListing.find(
+                  listing => listing.channel.id === selectedChannel
+                ) || product?.channelListing[0];
               return (
                 <TableRow
                   selected={isSelected}
@@ -398,10 +375,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       data-test="availability"
                       data-test-availability={!!product?.channelListing?.length}
                     >
-                      {product?.channelListing !== undefined ? (
+                      {product && !product?.channelListing?.length ? (
+                        "-"
+                      ) : product?.channelListing !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={product?.channelListing[0]}
+                          currentChannel={channel}
                           channels={product?.channelListing}
                         />
                       ) : (
@@ -438,13 +417,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {/* {product?.pricing?.priceRangeUndiscounted ? (
-                        getProductPrice(
-                          product?.pricing?.priceRangeUndiscounted
-                        )
+                      {product?.channelListing ? (
+                        getProductPrice(channel)
                       ) : (
                         <Skeleton />
-                      )} */}
+                      )}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>

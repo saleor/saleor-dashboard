@@ -6,7 +6,7 @@ import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, joinDateTime, maybe } from "../../misc";
+import { joinDateTime, maybe } from "../../misc";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -52,10 +52,6 @@ export const VoucherDetails: React.FC = () => {
                     applyOncePerCustomer: formData.applyOncePerCustomer,
                     applyOncePerOrder: formData.applyOncePerOrder,
                     code: formData.code,
-                    discountValue:
-                      formData.discountType.toString() === "SHIPPING"
-                        ? 100
-                        : decimal(formData.value),
                     discountValueType:
                       formData.discountType.toString() === "SHIPPING"
                         ? DiscountValueTypeEnum.PERCENTAGE
@@ -63,10 +59,6 @@ export const VoucherDetails: React.FC = () => {
                     endDate: formData.hasEndDate
                       ? joinDateTime(formData.endDate, formData.endTime)
                       : null,
-                    minAmountSpent:
-                      formData.requirementsPicker !== RequirementsPicker.ORDER
-                        ? 0
-                        : parseFloat(formData.minSpent),
                     minCheckoutItemsQuantity:
                       formData.requirementsPicker !== RequirementsPicker.ITEM
                         ? 0

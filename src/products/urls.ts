@@ -19,11 +19,7 @@ export const productAddPath = urlJoin(productSection, "add");
 export const productAddUrl = productAddPath;
 
 export const productListPath = productSection;
-export type ProductListUrlDialog =
-  | "publish"
-  | "unpublish"
-  | "delete"
-  | TabActionDialog;
+export type ProductListUrlDialog = "settings" | "delete" | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
   priceFrom = "priceFrom",
   priceTo = "priceTo",
