@@ -20,6 +20,12 @@ export interface ProductList_products_edges_node_productType {
   hasVariants: boolean;
 }
 
+export interface ProductList_products_edges_node_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductList_products_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -27,18 +33,12 @@ export interface ProductList_products_edges_node_channelListing_channel {
   currencyCode: string;
 }
 
-export interface ProductList_products_edges_node_channelListing_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductList_products_edges_node_channelListing {
   __typename: "ProductChannelListing";
-  channel: ProductList_products_edges_node_channelListing_channel;
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: ProductList_products_edges_node_channelListing_discountedPrice | null;
+  channel: ProductList_products_edges_node_channelListing_channel;
 }
 
 export interface ProductList_products_edges_node_attributes_attribute {

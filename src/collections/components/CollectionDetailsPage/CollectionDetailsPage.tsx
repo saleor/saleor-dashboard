@@ -2,10 +2,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -27,10 +24,12 @@ import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
+  channelsCount: number;
   collection: CollectionDetails_collection;
   errors: ProductErrorFragment[];
   isFeatured: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedChannel: string;
   onBack: () => void;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
@@ -40,11 +39,13 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+  channelsCount,
   collection,
   disabled,
   errors,
   isFeatured,
   saveButtonBarState,
+  selectedChannel,
   onBack,
   onCollectionRemove,
   onImageDelete,
@@ -89,6 +90,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <CardSpacer />
               <CollectionProducts
                 disabled={disabled}
+                channelsCount={channelsCount}
+                selectedChannel={selectedChannel}
                 collection={collection}
                 {...collectionProductsProps}
               />
@@ -134,20 +137,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     })
                   }}
                   onChange={change}
-                >
-                  <FormSpacer />
-                  <Hr />
-                  <ControlledCheckbox
-                    name={"isFeatured" as keyof CollectionUpdateData}
-                    label={intl.formatMessage({
-                      defaultMessage: "Feature on Homepage",
-                      description: "switch button"
-                    })}
-                    checked={data.isFeatured}
-                    onChange={change}
-                    disabled={disabled}
-                  />
-                </VisibilityCard>
+                  disabled={disabled}
+                />
               </div>
             </div>
           </Grid>

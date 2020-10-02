@@ -96,11 +96,43 @@ export const collection: (
     edges: [
       {
         __typename: "ProductCountableEdge",
-        cursor: "YXJyYXljb25uZWN0aW9uOjA=",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: true,
+              publicationDate: "2020-07-14"
+            },
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "124",
+                name: "Channel2"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: false,
+              publicationDate: "2020-07-30"
+            }
+          ],
           id: "UHJvZHVjdDoxNw==",
-          isPublished: true,
           name: "Murray Inc",
           productType: {
             __typename: "ProductType",
@@ -112,11 +144,43 @@ export const collection: (
       },
       {
         __typename: "ProductCountableEdge",
-        cursor: "YXJyYXljb25uZWN0aW9uOjE=",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: true,
+              publicationDate: "2020-07-14"
+            },
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "124",
+                name: "Channel2"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: false,
+              publicationDate: "2020-07-30"
+            }
+          ],
           id: "UHJvZHVjdDoyNw==",
-          isPublished: true,
           name: "Williams-Taylor",
           productType: {
             __typename: "ProductType",
@@ -128,11 +192,43 @@ export const collection: (
       },
       {
         __typename: "ProductCountableEdge",
-        cursor: "YXJyYXljb25uZWN0aW9uOjI=",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: true,
+              publicationDate: "2020-07-14"
+            },
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "124",
+                name: "Channel2"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: false,
+              publicationDate: "2020-07-30"
+            }
+          ],
           id: "UHJvZHVjdDoyOQ==",
-          isPublished: true,
           name: "Hebert-Sherman",
           productType: {
             __typename: "ProductType",
@@ -144,11 +240,43 @@ export const collection: (
       },
       {
         __typename: "ProductCountableEdge",
-        cursor: "YXJyYXljb25uZWN0aW9uOjM=",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: true,
+              publicationDate: "2020-07-14"
+            },
+            {
+              __typename: "ProductChannelListing",
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "124",
+                name: "Channel2"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isPublished: false,
+              publicationDate: "2020-07-30"
+            }
+          ],
           id: "UHJvZHVjdDo1Mw==",
-          isPublished: true,
           name: "Estes, Johnson and Graham",
           productType: {
             __typename: "ProductType",
