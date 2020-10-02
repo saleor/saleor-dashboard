@@ -14,6 +14,20 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_errors {
   field: string | null;
 }
 
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListing {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListing_channel;
+  discountValue: number;
+  currency: string;
+}
+
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_productType {
   __typename: "ProductType";
   id: string;
@@ -124,7 +138,7 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListing: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListing[] | null;
   products: SaleCataloguesRemove_saleCataloguesRemove_sale_products | null;
   categories: SaleCataloguesRemove_saleCataloguesRemove_sale_categories | null;
   collections: SaleCataloguesRemove_saleCataloguesRemove_sale_collections | null;

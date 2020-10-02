@@ -13,7 +13,6 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -108,6 +107,7 @@ interface ProductCreatePageProps {
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -136,11 +136,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchProductTypes,
   weightUnit,
   onSubmit,
-  openChannelsModal,
-  onWarehouseConfigure
+  onChannelsChange,
+  onWarehouseConfigure,
+  openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   const initialProductType = productTypeChoiceList?.find(
     productType => initial?.productType === productType.id
@@ -228,15 +228,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     });
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({
-        change,
-        data,
-        hasChanged,
-        set,
-        submit,
-        triggerChange,
-        toggleValue
-      }) => {
+      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -273,13 +265,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         const handleChannelsChange = createChannelsChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
         const handleChannelPriceChange = createChannelsPriceChangeHandler(
-          data,
-          set,
+          data.channelListing,
+          onChannelsChange,
           triggerChange
         );
         const productTypeChoice = productTypeChoiceList?.find(

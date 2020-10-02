@@ -392,8 +392,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -402,15 +408,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo2MQ==",
-    isAvailable: true,
     name: "Nebula Night Sky Paint",
     productType: {
       __typename: "ProductType",
@@ -431,8 +442,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -441,15 +458,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo2NA==",
-    isAvailable: true,
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
@@ -470,8 +492,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -480,15 +508,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo2NQ==",
-    isAvailable: true,
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
@@ -524,8 +557,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -534,15 +573,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3NQ==",
-    isAvailable: true,
     name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
@@ -578,8 +622,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -588,15 +638,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3Ng==",
-    isAvailable: true,
     name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
@@ -632,25 +687,37 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
       },
+
       {
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3Mg==",
-    isAvailable: true,
     name: "Apple Juice",
     productType: {
       __typename: "ProductType",
@@ -686,8 +753,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -696,15 +769,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3MQ==",
-    isAvailable: true,
     name: "Orange Juice",
     productType: {
       __typename: "ProductType",
@@ -740,8 +818,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -750,15 +834,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3NA==",
-    isAvailable: true,
     name: "Banana Juice",
     productType: {
       __typename: "ProductType",
@@ -794,8 +883,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -804,15 +899,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3OQ==",
-    isAvailable: true,
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
@@ -848,8 +948,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -858,15 +964,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3Mw==",
-    isAvailable: true,
     name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
@@ -902,8 +1013,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -912,15 +1029,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo3OA==",
-    isAvailable: true,
     name: "Green Juice",
     productType: {
       __typename: "ProductType",
@@ -956,8 +1078,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -966,15 +1094,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo4OQ==",
-    isAvailable: true,
     name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
@@ -1010,8 +1143,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1020,15 +1159,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMDc=",
-    isAvailable: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -1064,8 +1208,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1074,15 +1224,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMDg=",
-    isAvailable: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -1118,8 +1273,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1128,15 +1289,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMDk=",
-    isAvailable: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -1172,8 +1338,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1182,15 +1354,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMTA=",
-    isAvailable: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -1226,8 +1403,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1236,15 +1419,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMTU=",
-    isAvailable: true,
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
@@ -1280,8 +1468,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1290,15 +1484,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMTY=",
-    isAvailable: true,
     name: "Blue Hoodie",
     productType: {
       __typename: "ProductType",
@@ -1334,8 +1533,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1344,15 +1549,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMTc=",
-    isAvailable: true,
     name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
@@ -1388,8 +1598,14 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "123",
           name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: true,
         publicationDate: "2020-07-14"
@@ -1398,15 +1614,20 @@ export const products = (
         __typename: "ProductChannelListing",
         channel: {
           __typename: "Channel",
+          currencyCode: "USD",
           id: "124",
           name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
         },
         isPublished: false,
         publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDo4NQ==",
-    isAvailable: true,
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",

@@ -28,7 +28,6 @@ import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
-import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -62,15 +61,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   ] = useShippingMethodChannelListingUpdate({
     onCompleted: data => {
       const errors = data.shippingMethodChannelListingUpdate.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Channels saved",
-            description: "notification text"
-          })
-        });
-      } else {
+      if (errors.length) {
         errors.map(err =>
           notify({
             status: "error",
@@ -99,57 +90,49 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
 
   const [openModal, setOpenModal] = React.useState(false);
 
-  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate({
-    onCompleted: data => {
-      const errors = data.shippingPriceUpdate.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
+    {}
+  );
 
-        const diffChannels = diff(
-          shippingChannels,
-          currentChannels,
-          (a, b) => a.id === b.id
-        );
-
-        if (diffChannels.removed.length || diffChannels.added.length) {
-          updateShippingMethodChannelListing({
-            variables: getShippingMethodChannelVariables(
-              rateId,
-              currentChannels,
-              diffChannels.removed
-            )
-          });
-        }
-      } else {
-        errors.map(err =>
-          notify({
-            status: "error",
-            text: getShippingErrorMessage(err, intl)
-          })
-        );
-      }
-    }
-  });
+  const handleSuccess = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+  };
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        handleSuccess();
         navigate(shippingZoneUrl(id));
       }
     }
   });
 
   const handleDelete = () => setOpenModal(true);
-  const handleSubmit = (formData: FormData) =>
-    updateShippingRate({
+  const handleSubmit = async (formData: FormData) => {
+    const response = await updateShippingRate({
       variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
     });
+    const errors = response.data.shippingPriceUpdate.errors;
+    if (errors.length === 0) {
+      handleSuccess();
+      updateShippingMethodChannelListing({
+        variables: getShippingMethodChannelVariables(
+          rateId,
+          formData.channelListing,
+          shippingChannels
+        )
+      });
+    } else {
+      errors.map(err =>
+        notify({
+          status: "error",
+          text: getShippingErrorMessage(err, intl)
+        })
+      );
+    }
+  };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
@@ -189,7 +172,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        onChannelsChange={setCurrentChannels}
         defaultCurrency={shop?.defaultCurrency}
         disabled={
           loading ||
@@ -202,7 +184,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onBack={handleBack}
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
+        channelErrors={
+          updateShippingMethodChannelListingOpts?.data
+            ?.shippingMethodChannelListingUpdate?.errors || []
+        }
         openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.PRICE}
       />
     </>

@@ -14,10 +14,25 @@ export interface VoucherDetails_voucher_countries {
   country: string;
 }
 
-export interface VoucherDetails_voucher_minSpent {
+export interface VoucherDetails_voucher_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface VoucherDetails_voucher_channelListing_minSpent {
   __typename: "Money";
-  currency: string;
   amount: number;
+  currency: string;
+}
+
+export interface VoucherDetails_voucher_channelListing {
+  __typename: "VoucherChannelListing";
+  id: string;
+  channel: VoucherDetails_voucher_channelListing_channel;
+  discountValue: number;
+  currency: string;
+  minSpent: VoucherDetails_voucher_channelListing_minSpent | null;
 }
 
 export interface VoucherDetails_voucher_products_edges_node_productType {
@@ -131,10 +146,9 @@ export interface VoucherDetails_voucher {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number;
   countries: (VoucherDetails_voucher_countries | null)[] | null;
-  minSpent: VoucherDetails_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
+  channelListing: VoucherDetails_voucher_channelListing[] | null;
   type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;
