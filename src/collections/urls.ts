@@ -23,6 +23,7 @@ export type CollectionListUrlDialog =
   | "publish"
   | "unpublish"
   | "remove"
+  | "settings"
   | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",

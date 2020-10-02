@@ -34,7 +34,8 @@ const props: CollectionListPageProps = {
     sort: CollectionListUrlSortField.name
   },
   ...tabPageProps,
-  collections
+  collections,
+  selectedChannel: "123"
 };
 
 storiesOf("Views / Collections / Collection list", module)

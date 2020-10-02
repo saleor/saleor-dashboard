@@ -8,6 +8,7 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
+import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -56,6 +57,8 @@ const useStyles = makeStyles(
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
+  channelsCount: number;
+  selectedChannel: string;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
@@ -63,6 +66,7 @@ const numberOfColumns = 5;
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const {
+    channelsCount,
     collection,
     disabled,
     onAdd,
@@ -71,6 +75,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     onProductUnassign,
     onRowClick,
     pageInfo,
+    selectedChannel,
     isChecked,
     selected,
     toggle,
@@ -138,8 +143,8 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
-              defaultMessage="Published"
-              description="product is published"
+              defaultMessage="Availability"
+              description="product availability"
             />
           </TableCell>
           <TableCell className={classes.colActions} />
@@ -148,9 +153,9 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           <TableRow>
             <TablePagination
               colSpan={numberOfColumns}
-              hasNextPage={maybe(() => pageInfo.hasNextPage)}
+              hasNextPage={pageInfo?.hasNextPage}
               onNextPage={onNextPage}
-              hasPreviousPage={maybe(() => pageInfo.hasPreviousPage)}
+              hasPreviousPage={pageInfo?.hasPreviousPage}
               onPreviousPage={onPreviousPage}
             />
           </TableRow>
@@ -160,6 +165,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             maybe(() => collection.products.edges.map(edge => edge.node)),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
+              const channel =
+                product?.channelListing.find(
+                  listing => listing.channel.id === selectedChannel
+                ) || product?.channelListing[0];
 
               return (
                 <TableRow
@@ -186,6 +195,19 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => product.productType.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colType}>
+                    {product && !product?.channelListing?.length ? (
+                      "-"
+                    ) : product?.channelListing !== undefined ? (
+                      <ChannelsAvailabilityDropdown
+                        allChannelsCount={channelsCount}
+                        currentChannel={channel}
+                        channels={product?.channelListing}
+                      />
+                    ) : (
                       <Skeleton />
                     )}
                   </TableCell>
