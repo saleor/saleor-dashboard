@@ -40,8 +40,13 @@ const getChannelsVariables = (
           discountValue:
             formData.discountType.toString() === "SHIPPING"
               ? 100
-              : formData.value,
-          minAmountSpent: channel.minSpent || null
+              : channel.discountValue,
+          minAmountSpent:
+            formData.requirementsPicker === RequirementsPicker.NONE
+              ? null
+              : formData.requirementsPicker === RequirementsPicker.ITEM
+              ? 0
+              : channel.minSpent
         })) || [],
       removeChannels
     }
@@ -60,13 +65,11 @@ export function createUpdateHandler(
 ) {
   return (formData: FormData) => {
     const { id } = voucher;
-
     updateVoucher({
       id,
       input: {
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
-
         discountValueType:
           formData.discountType.toString() === "SHIPPING"
             ? DiscountValueTypeEnum.PERCENTAGE

@@ -123,8 +123,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   <VoucherValue
                     data={data}
                     disabled={disabled}
-                    defaultCurrency={defaultCurrency}
                     errors={errors}
+                    onChannelChange={handleChannelChange}
                     onChange={change}
                     variant="create"
                   />
@@ -133,7 +133,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <VoucherRequirements
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChannelChange={handleChannelChange}
                   onChange={change}

@@ -67,7 +67,6 @@ export interface FormData {
   startTime: string;
   type: VoucherTypeEnum;
   usageLimit: string;
-  value: number;
 }
 
 export interface VoucherDetailsPageProps
@@ -176,8 +175,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     startDate: splitDateTime(maybe(() => voucher.startDate, "")).date,
     startTime: splitDateTime(maybe(() => voucher.startDate, "")).time,
     type: maybe(() => voucher.type, VoucherTypeEnum.ENTIRE_ORDER),
-    usageLimit: maybe(() => voucher.usageLimit.toString(), "0"),
-    value: 0
+    usageLimit: maybe(() => voucher.usageLimit.toString(), "0")
   };
 
   return (
@@ -218,9 +216,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   <VoucherValue
                     data={data}
                     disabled={disabled}
-                    defaultCurrency={defaultCurrency}
                     errors={errors}
                     onChange={change}
+                    onChannelChange={handleChannelChange}
                     variant="update"
                   />
                 ) : null}
@@ -364,7 +362,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <VoucherRequirements
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                   onChannelChange={handleChannelChange}

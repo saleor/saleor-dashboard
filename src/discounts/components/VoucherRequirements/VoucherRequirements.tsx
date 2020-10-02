@@ -12,6 +12,7 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
+import { ChannelInput } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { renderCollection } from "@saleor/misc";
@@ -25,11 +26,10 @@ import { useStyles } from "./styles";
 
 interface VoucherRequirementsProps {
   data: FormData;
-  defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  onChannelChange: (channelId: string, minSpent: number) => void;
+  onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
 
 const numberOfColumns = 2;
@@ -158,7 +158,10 @@ const VoucherRequirements = ({
                                     : ""
                                 }
                                 onChange={e =>
-                                  onChannelChange(listing.id, e.target.value)
+                                  onChannelChange(listing.id, {
+                                    discountValue: listing.discountValue,
+                                    minSpent: parseInt(e.target.value, 10)
+                                  })
                                 }
                               />
                             ) : (

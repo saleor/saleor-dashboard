@@ -1,11 +1,16 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 
+export interface ChannelInput {
+  discountValue: number;
+  minSpent: number;
+}
+
 export function createChannelsChangeHandler(
   channelListing: ChannelVoucherData[],
   updateChannels: (data: ChannelVoucherData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, minSpent: number) => {
+  return (id: string, input: ChannelInput) => {
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -13,7 +18,7 @@ export function createChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        minSpent
+        ...input
       },
       ...channelListing.slice(channelIndex + 1)
     ];
