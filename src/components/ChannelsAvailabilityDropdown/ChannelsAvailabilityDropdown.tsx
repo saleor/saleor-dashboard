@@ -16,6 +16,10 @@ export interface ChannelsAvailabilityDropdownProps {
   currentChannel: ProductList_products_edges_node_channelListing;
 }
 
+const isActive = (
+  channelData: ProductList_products_edges_node_channelListing
+) => channelData.isPublished;
+
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
   allChannelsCount,
   channels,
@@ -48,11 +52,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
               count: channels.length
             }
           )}
-          status={
-            currentChannel.isPublished && currentChannel.publicationDate
-              ? "success"
-              : "error"
-          }
+          status={isActive(currentChannel) ? "success" : "error"}
         />
       </div>
       <Menu
@@ -108,7 +108,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             <MenuItem key={channelData.channel.id} className={classes.menuItem}>
               <StatusLabel
                 label={channelData.channel.name}
-                status={channelData.isPublished ? "success" : "error"}
+                status={isActive(channelData) ? "success" : "error"}
               />
               <div>
                 <Typography variant="caption" className={classes.caption}>
@@ -116,6 +116,8 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
                     ? publishedText
                     : channelData.publicationDate && !channelData.isPublished
                     ? notPublishedText
+                    : channelData.isPublished
+                    ? ""
                     : intl.formatMessage({
                         defaultMessage: "hidden",
                         description: "product channel publication status"
