@@ -131,7 +131,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                   classes.tabActive,
                   classes.noHandle,
                   {
-                    [classes.firstVariant]: variants.length === 0
+                    [classes.firstVariant]: variants?.length === 0
                   }
                 )}
                 thumbnail={null}

@@ -7,6 +7,14 @@ export const productErrorFragment = gql`
   }
 `;
 
+export const productErrorWithAttributesFragment = gql`
+  ${productErrorFragment}
+  fragment ProductErrorWithAttributesFragment on ProductError {
+    ...ProductErrorFragment
+    attributes
+  }
+`;
+
 export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code

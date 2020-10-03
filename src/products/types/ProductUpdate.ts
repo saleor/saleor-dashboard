@@ -12,6 +12,7 @@ export interface ProductUpdate_productUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_attribute_values {

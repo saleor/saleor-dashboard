@@ -152,8 +152,10 @@ storiesOf("Views / Products / Product edit", module)
       ] as Array<keyof ProductUpdatePageFormData | "attributes">).map(
         field => ({
           __typename: "ProductError",
-          attributeId:
-            field === "attributes" ? product.attributes[0].attribute.id : null,
+          attributes:
+            field === "attributes"
+              ? [product.attributes[0].attribute.id]
+              : null,
           code: ProductErrorCode.INVALID,
           field
         })

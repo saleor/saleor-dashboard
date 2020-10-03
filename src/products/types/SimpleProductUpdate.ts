@@ -12,6 +12,7 @@ export interface SimpleProductUpdate_productUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_attributes_attribute_values {
@@ -251,6 +252,7 @@ export interface SimpleProductUpdate_productVariantUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_metadata {

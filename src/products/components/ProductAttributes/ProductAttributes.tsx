@@ -13,7 +13,7 @@ import MultiAutocompleteSelectField, {
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import { ProductDetails_product_attributes_attribute_values } from "@saleor/products/types/ProductDetails";
@@ -35,7 +35,7 @@ export type ProductAttributeInput = FormsetAtomicData<
 export interface ProductAttributesProps {
   attributes: ProductAttributeInput[];
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
 }
@@ -174,8 +174,8 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
           <>
             <Hr />
             {attributes.map((attribute, attributeIndex) => {
-              const error = errors.find(
-                err => err.attributeId === attribute.id
+              const error = errors.find(err =>
+                err.attributes?.includes(attribute.id)
               );
 
               return (
@@ -201,7 +201,7 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
                               ).name,
                             attribute.value[0]
                           )}
-                          emptyOption
+                          emptyOption={!attribute.data.isRequired}
                           error={!!error}
                           helperText={getProductErrorMessage(error, intl)}
                           name={`attribute:${attribute.label}`}

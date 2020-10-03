@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -48,7 +48,7 @@ export interface ProductVariantCreatePageSubmitData
 interface ProductVariantCreatePageProps {
   currencySymbol: string;
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   header: string;
   product: ProductVariantCreateData_product;
   saveButtonBarState: ConfirmButtonTransitionState;

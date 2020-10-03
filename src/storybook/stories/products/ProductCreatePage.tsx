@@ -68,13 +68,23 @@ storiesOf("Views / Products / Create product", module)
     <ProductCreatePage
       currency="USD"
       disabled={false}
-      errors={(["name", "productType", "category", "sku"] as Array<
-        keyof ProductCreatePageSubmitData
-      >).map(field => ({
-        __typename: "ProductError",
-        code: ProductErrorCode.INVALID,
-        field
-      }))}
+      errors={([
+        "attributes",
+        "name",
+        "productType",
+        "category",
+        "sku"
+      ] as Array<keyof ProductCreatePageSubmitData | "attributes">).map(
+        field => ({
+          __typename: "ProductError",
+          attributes:
+            field === "attributes"
+              ? [productTypes[0].productAttributes[0].id]
+              : null,
+          code: ProductErrorCode.INVALID,
+          field
+        })
+      )}
       header="Add product"
       collections={product.collections}
       fetchCategories={() => undefined}
@@ -83,6 +93,9 @@ storiesOf("Views / Products / Create product", module)
       fetchMoreCategories={fetchMoreProps}
       fetchMoreCollections={fetchMoreProps}
       fetchMoreProductTypes={fetchMoreProps}
+      initial={{
+        productType: productTypes[0].id
+      }}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}

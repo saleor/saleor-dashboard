@@ -8,7 +8,7 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
@@ -27,7 +27,7 @@ export type VariantAttributeInput = FormsetAtomicData<
 interface ProductVariantAttributesProps {
   attributes: VariantAttributeInput[];
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   onChange: FormsetChange<VariantAttributeInputData>;
 }
 
@@ -85,8 +85,8 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
             <Skeleton />
           ) : (
             attributes.map(attribute => {
-              const error = errors.find(
-                err => err.attributeId === attribute.id
+              const error = errors.find(err =>
+                err.attributes?.includes(attribute.id)
               );
 
               return (
@@ -122,7 +122,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
             {errors
               .filter(
                 error =>
-                  error.field === "attributes" && error.attributeId === null
+                  error.field === "attributes" && error.attributes === null
               )
               .map(error => (
                 <Typography color="error" key={error.code}>

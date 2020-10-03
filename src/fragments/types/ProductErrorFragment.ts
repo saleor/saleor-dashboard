@@ -10,7 +10,6 @@ import { ProductErrorCode } from "./../../types/globalTypes";
 
 export interface ProductErrorFragment {
   __typename: "ProductError";
-  attributeId: string | null;
   code: ProductErrorCode;
   field: string | null;
 }

@@ -12,6 +12,7 @@ export interface VariantUpdate_productVariantUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_metadata {
