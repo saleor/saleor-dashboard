@@ -186,9 +186,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(channel =>
-          validatePrice(channel.minSpent)
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.minSpent) ||
+            validatePrice(channel.discountValue)
         );
+
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -392,7 +395,10 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <ChannelsAvailability
                   selectedChannelsCount={data.channelListing.length}
                   allChannelsCount={allChannelsCount}
-                  channels={data.channelListing}
+                  channelsList={data.channelListing.map(channel => ({
+                    id: channel.id,
+                    name: channel.name
+                  }))}
                   disabled={disabled}
                   openModal={openChannelsModal}
                 />

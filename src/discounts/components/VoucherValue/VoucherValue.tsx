@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -122,13 +121,16 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                                   )
                                 : ""
                             }
-                            name={"value" as keyof FormData}
-                            onChange={e =>
+                            name={"value"}
+                            onChange={e => {
+                              const value = e.target.value;
                               onChannelChange(listing.id, {
-                                discountValue: parseInt(e.target.value, 10),
+                                discountValue: !value
+                                  ? null
+                                  : parseInt(value, 10),
                                 minSpent: listing.minSpent
-                              })
-                            }
+                              });
+                            }}
                             label={intl.formatMessage({
                               defaultMessage: "Discount Value"
                             })}
@@ -177,7 +179,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             onChange={onChange}
           />
         )}
-        <Hr className={classes.hr} />
         <FormSpacer />
         <ControlledCheckbox
           name={"applyOncePerOrder" as keyof FormData}

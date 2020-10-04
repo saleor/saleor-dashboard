@@ -25,7 +25,7 @@ import {
 import SaleCreateView from "./views/SaleCreate";
 import SaleDetailsViewComponent from "./views/SaleDetails";
 import SaleListViewComponent from "./views/SaleList";
-import VoucherCreateView from "./views/VoucherCreate";
+import VoucherCreateView from "./views/VoucherCreate/VoucherCreate";
 import VoucherDetailsViewComponent from "./views/VoucherDetails";
 import VoucherListViewComponent from "./views/VoucherList";
 

@@ -3,6 +3,12 @@ import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListing } from "@saleor/shipping/types/ShippingZone";
 import { uniqBy } from "lodash";
+
+export interface Channel {
+  id: string;
+  name: string;
+}
+
 export interface ChannelData {
   id: string;
   isPublished: boolean;
@@ -27,18 +33,21 @@ export interface ChannelVoucherData {
   minSpent: number | null;
 }
 
+export const createVoucherChannels = (data?: Channels_channels[]) =>
+  data?.map(channel => ({
+    currency: channel.currencyCode,
+    discountValue: null,
+    id: channel.id,
+    minSpent: null,
+    name: channel.name
+  }));
+
 export const createChannelsDataWithDiscountPrice = (
   voucherData?: VoucherDetails_voucher,
   data?: Channels_channels[]
 ): ChannelVoucherData[] => {
   if (data && voucherData?.channelListing) {
-    const dataArr = data.map(channel => ({
-      currency: channel.currencyCode,
-      discountValue: null,
-      id: channel.id,
-      minSpent: null,
-      name: channel.name
-    }));
+    const dataArr = createVoucherChannels(data);
 
     const voucherDataArr = createChannelsDataFromVoucher(voucherData);
     return uniqBy([...voucherDataArr, ...dataArr], obj => obj.id);
@@ -158,6 +167,11 @@ export const createSortedShippingChannelsFromRate = (
   data?: ShippingZone_shippingZone_shippingMethods_channelListing[]
 ) =>
   createShippingChannelsFromRate(data)?.sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
+
+export const createSortedVoucherData = (data?: Channels_channels[]) =>
+  createVoucherChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 

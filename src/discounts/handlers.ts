@@ -1,8 +1,8 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 
 export interface ChannelInput {
-  discountValue: number;
-  minSpent: number;
+  discountValue: number | null;
+  minSpent: number | null;
 }
 
 export function createChannelsChangeHandler(

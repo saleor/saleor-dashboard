@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createVoucherChannels } from "@saleor/channels/utils";
 import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -8,12 +10,19 @@ import VoucherCreatePage, {
 } from "../../../discounts/components/VoucherCreatePage";
 import Decorator from "../../Decorator";
 
+const channels = createVoucherChannels(channelsList);
+
 const props: VoucherCreatePageProps = {
+  allChannelsCount: channels.length,
+  channelListing: channels,
   defaultCurrency: "USD",
   disabled: false,
   errors: [],
+  hasChannelChanged: false,
   onBack: () => undefined,
+  onChannelsChange: () => undefined,
   onSubmit: () => undefined,
+  openChannelsModal: () => undefined,
   saveButtonBarState: "default"
 };
 

@@ -1,6 +1,7 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -10,6 +11,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { createChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -45,30 +47,38 @@ export interface FormData {
 }
 
 export interface VoucherCreatePageProps {
+  allChannelsCount: number;
+  channelListing: ChannelVoucherData[];
+  hasChannelChanged: boolean;
   defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onChannelsChange?: () => void;
+  onChannelsChange: (data: ChannelVoucherData[]) => void;
+  openChannelsModal: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
+  allChannelsCount,
+  channelListing = [],
   defaultCurrency,
   disabled,
   errors,
   saveButtonBarState,
   onBack,
   onChannelsChange,
-  onSubmit
+  onSubmit,
+  hasChannelChanged,
+  openChannelsModal
 }) => {
   const intl = useIntl();
 
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
-    channelListing: [],
+    channelListing,
     code: "",
     discountType: DiscountValueTypeEnum.FIXED,
     endDate: "",
@@ -91,6 +101,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           data.channelListing,
           onChannelsChange,
           triggerChange
+        );
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.minSpent) ||
+            validatePrice(channel.discountValue)
         );
         return (
           <Container>
@@ -120,14 +135,17 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   onChange={change}
                 />
                 {data.discountType.toString() !== "SHIPPING" ? (
-                  <VoucherValue
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChannelChange={handleChannelChange}
-                    onChange={change}
-                    variant="create"
-                  />
+                  <>
+                    <CardSpacer />
+                    <VoucherValue
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      onChannelChange={handleChannelChange}
+                      onChange={change}
+                      variant="create"
+                    />
+                  </>
                 ) : null}
                 <CardSpacer />
                 <VoucherRequirements
@@ -154,9 +172,23 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   onChange={change}
                 />
               </div>
+              <div>
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
+                  channelsList={data.channelListing.map(channel => ({
+                    id: channel.id,
+                    name: channel.name
+                  }))}
+                  disabled={disabled}
+                  openModal={openChannelsModal}
+                />
+              </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled || !hasChanged}
+              disabled={
+                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+              }
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}

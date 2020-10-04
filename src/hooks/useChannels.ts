@@ -1,8 +1,9 @@
+import { Channel } from "@saleor/channels/utils";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { useState } from "react";
 
-function useChannels<T extends { id: string }>(channels: T[]) {
+function useChannels<T extends Channel>(channels: T[]) {
   const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);
 
   const [currentChannels, setCurrentChannels] = useStateFromProps(channels);

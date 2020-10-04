@@ -157,12 +157,15 @@ const VoucherRequirements = ({
                                     ? listing.minSpent
                                     : ""
                                 }
-                                onChange={e =>
+                                onChange={e => {
+                                  const value = e.target.value;
                                   onChannelChange(listing.id, {
                                     discountValue: listing.discountValue,
-                                    minSpent: parseInt(e.target.value, 10)
-                                  })
-                                }
+                                    minSpent: !value
+                                      ? null
+                                      : parseInt(e.target.value, 10)
+                                  });
+                                }}
                               />
                             ) : (
                               <Skeleton />
