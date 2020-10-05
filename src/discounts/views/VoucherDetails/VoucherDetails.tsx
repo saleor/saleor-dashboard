@@ -274,7 +274,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             title={intl.formatMessage(sectionNames.vouchers)}
                           />
                           <VoucherDetailsPage
-                            defaultCurrency={shop?.defaultCurrency}
                             voucher={data?.voucher}
                             allChannelsCount={allChannels?.length}
                             channelListing={currentChannels}

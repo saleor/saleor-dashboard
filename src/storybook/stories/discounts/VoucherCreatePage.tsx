@@ -15,7 +15,6 @@ const channels = createVoucherChannels(channelsList);
 const props: VoucherCreatePageProps = {
   allChannelsCount: channels.length,
   channelListing: channels,
-  defaultCurrency: "USD",
   disabled: false,
   errors: [],
   hasChannelChanged: false,

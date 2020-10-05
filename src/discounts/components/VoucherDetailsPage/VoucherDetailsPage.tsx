@@ -75,7 +75,6 @@ export interface VoucherDetailsPageProps
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
     > {
   activeTab: VoucherDetailsPageTab;
-  defaultCurrency: string;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetails_voucher;
@@ -110,7 +109,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   allChannelsCount,
   channelListing = [],
-  defaultCurrency,
   disabled,
   errors,
   pageInfo,
@@ -139,6 +137,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   toggle,
   toggleAll,
   selected,
+  selectedChannel,
   isChecked,
   categoryListToolbar,
   collectionListToolbar,
@@ -370,7 +369,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <VoucherLimits
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                 />
@@ -378,21 +376,23 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <DiscountDates
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                 />
               </div>
               <div>
                 <VoucherSummary
-                  defaultCurrency={defaultCurrency}
                   voucher={voucher}
+                  selectedChannel={selectedChannel}
                 />
                 <CardSpacer />
                 <ChannelsAvailability
                   selectedChannelsCount={data.channelListing.length}
                   allChannelsCount={allChannelsCount}
-                  channels={data.channelListing}
+                  channelsList={data.channelListing.map(channel => ({
+                    id: channel.id,
+                    name: channel.name
+                  }))}
                   disabled={disabled}
                   openModal={openChannelsModal}
                 />

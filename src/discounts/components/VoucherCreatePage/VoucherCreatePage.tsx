@@ -50,7 +50,6 @@ export interface VoucherCreatePageProps {
   allChannelsCount: number;
   channelListing: ChannelVoucherData[];
   hasChannelChanged: boolean;
-  defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -63,7 +62,6 @@ export interface VoucherCreatePageProps {
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   allChannelsCount,
   channelListing = [],
-  defaultCurrency,
   disabled,
   errors,
   saveButtonBarState,
@@ -159,7 +157,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <VoucherLimits
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                 />
@@ -167,7 +164,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <VoucherDates
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                 />

@@ -19,17 +19,20 @@ import { translateVoucherTypes } from "../../translations";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 
 export interface VoucherSummaryProps {
-  defaultCurrency: string;
   voucher: VoucherDetails_voucher;
+  selectedChannel: string;
 }
 
 const VoucherSummary: React.FC<VoucherSummaryProps> = ({
-  defaultCurrency,
+  selectedChannel,
   voucher
 }) => {
   const intl = useIntl();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
+  const channel = voucher?.channelListing?.find(
+    listing => listing.channel.id === selectedChannel
+  );
 
   return (
     <Card>
@@ -61,18 +64,20 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
           />
         </Typography>
         <Typography>
-          {maybe<React.ReactNode>(
-            () =>
-              voucher.discountValueType === DiscountValueTypeEnum.FIXED ? (
-                <Money
-                  money={{
-                    amount: voucher?.channelListing[0]?.discountValue,
-                    currency: defaultCurrency
-                  }}
-                />
-              ) : (
-                <Percent amount={voucher?.channelListing[0]?.discountValue} />
-              ),
+          {voucher && channel?.discountValue ? (
+            voucher.discountValueType === DiscountValueTypeEnum.FIXED ? (
+              <Money
+                money={{
+                  amount: channel.discountValue,
+                  currency: channel.channel.currencyCode
+                }}
+              />
+            ) : channel?.discountValue ? (
+              <Percent amount={channel.discountValue} />
+            ) : (
+              "-"
+            )
+          ) : (
             <Skeleton />
           )}
         </Typography>
@@ -120,13 +125,13 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
           />
         </Typography>
         <Typography>
-          {maybe<React.ReactNode>(
-            () =>
-              voucher?.channelListing[0]?.minSpent ? (
-                <Money money={voucher?.channelListing[0]?.minSpent} />
-              ) : (
-                "-"
-              ),
+          {voucher && channel?.minSpent ? (
+            channel?.minSpent ? (
+              <Money money={channel.minSpent} />
+            ) : (
+              "-"
+            )
+          ) : (
             <Skeleton />
           )}
         </Typography>
