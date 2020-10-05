@@ -64,8 +64,9 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
           />
         </Typography>
         <Typography>
-          {voucher && channel?.discountValue ? (
-            voucher.discountValueType === DiscountValueTypeEnum.FIXED ? (
+          {voucher ? (
+            voucher.discountValueType === DiscountValueTypeEnum.FIXED &&
+            channel?.discountValue ? (
               <Money
                 money={{
                   amount: channel.discountValue,
@@ -125,7 +126,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
           />
         </Typography>
         <Typography>
-          {voucher && channel?.minSpent ? (
+          {voucher ? (
             channel?.minSpent ? (
               <Money money={channel.minSpent} />
             ) : (

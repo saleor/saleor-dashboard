@@ -1,5 +1,6 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import {
   VoucherChannelListingUpdate,
@@ -15,43 +16,7 @@ import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
 } from "@saleor/types/globalTypes";
-import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
-
-const getChannelsVariables = (
-  id: string,
-  formData: FormData,
-  prevChannels?: ChannelVoucherData[]
-) => {
-  const removeChannels = prevChannels
-    ? diff(
-        prevChannels,
-        formData.channelListing,
-        (a, b) => a.id === b.id
-      ).removed?.map(removedChannel => removedChannel.id)
-    : [];
-
-  return {
-    id,
-    input: {
-      addChannels:
-        formData.channelListing?.map(channel => ({
-          channelId: channel.id,
-          discountValue:
-            formData.discountType.toString() === "SHIPPING"
-              ? 100
-              : channel.discountValue,
-          minAmountSpent:
-            formData.requirementsPicker === RequirementsPicker.NONE
-              ? null
-              : formData.requirementsPicker === RequirementsPicker.ITEM
-              ? 0
-              : channel.minSpent
-        })) || [],
-      removeChannels
-    }
-  };
-};
 
 export function createUpdateHandler(
   voucher: VoucherDetails_voucher,
