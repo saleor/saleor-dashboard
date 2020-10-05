@@ -37,6 +37,12 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
 
   const formErrors = getFormErrors(["basePrice"], errors);
 
+  const handlePriceChange = event => {
+    if (/^\d*(\.\d+)?$/.test(event.target.value)) {
+      onChange(event);
+    }
+  };
+
   return (
     <Card>
       <CardTitle
@@ -58,7 +64,7 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
             name="basePrice"
             value={data.basePrice}
             currencySymbol={currency}
-            onChange={onChange}
+            onChange={handlePriceChange}
             InputProps={{
               inputProps: {
                 min: 0

@@ -36,6 +36,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
 
   const formErrors = getFormErrors(["price", "cost_price"], errors);
 
+  const handlePriceChange = event => {
+    if (/^\d*(\.\d+)?$/.test(event.target.value)) {
+      onChange(event);
+    }
+  };
+
   return (
     <Card>
       <CardTitle
@@ -55,8 +61,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               })}
               value={price}
               currencySymbol={currencySymbol}
-              onChange={onChange}
+              onChange={handlePriceChange}
               disabled={loading}
+              InputProps={{
+                inputProps: {
+                  min: "0"
+                }
+              }}
             />
           </div>
           <div>
@@ -76,8 +87,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               }
               value={costPrice}
               currencySymbol={currencySymbol}
-              onChange={onChange}
+              onChange={handlePriceChange}
               disabled={loading}
+              InputProps={{
+                inputProps: {
+                  min: "0"
+                }
+              }}
             />
           </div>
         </div>
