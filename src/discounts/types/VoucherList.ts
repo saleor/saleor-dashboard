@@ -18,6 +18,7 @@ export interface VoucherList_vouchers_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface VoucherList_vouchers_edges_node_channelListing_minSpent {

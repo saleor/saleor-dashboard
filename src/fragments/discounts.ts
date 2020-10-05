@@ -14,6 +14,7 @@ export const saleFragment = gql`
       channel {
         id
         name
+        currencyCode
       }
       discountValue
       currency
@@ -96,6 +97,7 @@ export const voucherFragment = gql`
       channel {
         id
         name
+        currencyCode
       }
       discountValue
       currency
