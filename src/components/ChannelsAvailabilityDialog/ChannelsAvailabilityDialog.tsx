@@ -1,7 +1,10 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelShippingData,
+  ChannelVoucherData
+} from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
@@ -10,53 +13,9 @@ import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    content: {
-      "& hr": {
-        left: -24,
-        position: "relative",
-        width: "calc(100% + 48px)"
-      }
-    },
-    contentTitle: {
-      margin: theme.spacing(1, 0)
-    },
-    dialog: {
-      marginBottom: -30,
-      marginTop: theme.spacing(2)
-    },
-    input: {
-      "& label": {
-        overflowX: "inherit"
-      }
-    },
-    label: {
-      fontSize: 14
-    },
-    notFound: {
-      paddingBottom: theme.spacing(2)
-    },
-    option: {
-      "&:last-child": {
-        "& hr": {
-          display: "none"
-        }
-      },
-      margin: theme.spacing(1, 0)
-    },
-    scrollArea: {
-      maxHeight: 400,
-      overflowY: "scroll"
-    },
-    text: {
-      marginBottom: 5
-    }
-  }),
-  { name: "ChannelsAvailabilityDialog" }
-);
+import { useStyles } from "./styles";
 
-type ChannelOption = ChannelData | ChannelShippingData;
+type ChannelOption = ChannelData | ChannelShippingData | ChannelVoucherData;
 
 export interface ChannelsAvailabilityDialogProps {
   isSelected: (option: ChannelOption) => boolean;
