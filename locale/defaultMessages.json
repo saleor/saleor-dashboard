@@ -2213,8 +2213,8 @@
     "context": "column title",
     "string": "Value"
   },
-  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1212528161": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price.Price will be converted to channel’s currency"
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_2746532349": {
     "context": "voucher requirements, header",
@@ -2290,11 +2290,11 @@
     "context": "voucher application, switch button",
     "string": "Only once per order"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1960678372": {
     "string": "Voucher Specific Information"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherValue_dot_2864235987": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_4097816011": {
     "string": "No channels found"
