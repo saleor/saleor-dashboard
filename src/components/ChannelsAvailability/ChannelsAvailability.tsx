@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ChannelData } from "@saleor/channels/utils";
+import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
@@ -18,12 +18,17 @@ import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityProps {
   channels: ChannelData[];
+  channelsList: ChannelList[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
   onChange?: (id: string, data: Value) => void;
   openModal: () => void;
 }
+export type ChannelsAvailabilityProps = RequireOnlyOne<
+  ChannelsAvailability,
+  "channels" | "channelsList"
+>;
 
 interface ChannelProps {
   disabled?: boolean;
@@ -152,6 +157,7 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
 
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
   const {
+    channelsList,
     selectedChannelsCount,
     allChannelsCount,
     channels,
@@ -202,8 +208,8 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             ? channels.map(data => (
                 <Channel key={data.id} data={data} onChange={onChange} />
               ))
-            : shippingChannels
-            ? shippingChannels.map(data => (
+            : channelsList
+            ? channelsList.map(data => (
                 <React.Fragment key={data.id}>
                   <div className={classes.channelItem}>
                     <div className={classes.channelName}>

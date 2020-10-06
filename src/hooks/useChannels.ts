@@ -1,9 +1,9 @@
-import { ChannelShippingData as Channel } from "@saleor/channels/utils";
+import { Channel } from "@saleor/channels/utils";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { useState } from "react";
 
-function useChannels(channels: Channel[]) {
+function useChannels<T extends Channel>(channels: T[]) {
   const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);
 
   const [currentChannels, setCurrentChannels] = useStateFromProps(channels);
@@ -13,7 +13,7 @@ function useChannels(channels: Channel[]) {
     listElements: channelListElements,
     set: setChannels,
     toggle: channelsToggle
-  } = useListActions<Channel>(currentChannels, (a, b) => a.id === b.id);
+  } = useListActions<T>(currentChannels, (a, b) => a.id === b.id);
 
   const handleChannelsModalClose = () => {
     setChannelsModalOpen(false);
@@ -27,7 +27,7 @@ function useChannels(channels: Channel[]) {
     setChannelsModalOpen(false);
   };
 
-  const toggleAllChannels = (items: Channel[], selected: number) => {
+  const toggleAllChannels = (items: T[], selected: number) => {
     if (selected !== items.length) {
       setChannels(items);
     } else {

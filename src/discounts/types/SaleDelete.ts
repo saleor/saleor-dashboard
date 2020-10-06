@@ -12,6 +12,7 @@ export interface SaleDelete_saleDelete_errors {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
+  channels: string[] | null;
 }
 
 export interface SaleDelete_saleDelete {
