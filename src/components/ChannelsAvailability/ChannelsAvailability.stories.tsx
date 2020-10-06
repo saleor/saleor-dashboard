@@ -8,9 +8,14 @@ import ChannelsAvailability, {
   ChannelsAvailabilityProps
 } from "./ChannelsAvailability";
 
+const productChannels = createChannelsDataFromProduct(product(""));
+
 const props: ChannelsAvailabilityProps = {
   allChannelsCount: 4,
-  channels: createChannelsDataFromProduct(product("")),
+  channelsList: productChannels.map(channel => ({
+    id: channel.id,
+    name: channel.name
+  })),
   onChange: () => undefined,
   openModal: () => undefined,
   selectedChannelsCount: 3
@@ -18,4 +23,11 @@ const props: ChannelsAvailabilityProps = {
 
 storiesOf("Generics / ChannelsAvailability", module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelsAvailability {...props} />);
+  .add("default", () => <ChannelsAvailability {...props} />)
+  .add("with onChange", () => (
+    <ChannelsAvailability
+      {...props}
+      channelsList={undefined}
+      channels={productChannels}
+    />
+  ));
