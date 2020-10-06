@@ -24,7 +24,7 @@ export interface SaleValueProps {
   data: FormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
-  onChange: (channelId: string, discountValue: number) => void;
+  onChange: (channelId: string, discountValue: string) => void;
 }
 
 const numberOfColumns = 2;
@@ -102,13 +102,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
                                 : ""
                             }
                             name={"value"}
-                            onChange={e => {
-                              const value = e.target.value;
-                              onChange(
-                                listing.id,
-                                !value ? null : parseInt(value, 10)
-                              );
-                            }}
+                            onChange={e => onChange(listing.id, e.target.value)}
                             label={intl.formatMessage({
                               defaultMessage: "Discount Value",
                               description: "sale discount"

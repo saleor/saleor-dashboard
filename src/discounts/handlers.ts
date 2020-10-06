@@ -2,11 +2,17 @@ import { ChannelSaleData, ChannelVoucherData } from "@saleor/channels/utils";
 import { FormData as SaleFormData } from "@saleor/discounts/components/SaleDetailsPage";
 import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { RequirementsPicker } from "@saleor/discounts/types";
+import { RequireOnlyOne } from "@saleor/misc";
 import { diff } from "fast-array-diff";
-export interface ChannelInput {
-  discountValue: number;
-  minSpent: number;
+export interface ChannelArgs {
+  discountValue: string;
+  minSpent: string;
 }
+
+export type ChannelInput = RequireOnlyOne<
+  ChannelArgs,
+  "discountValue" | "minSpent"
+>;
 
 export function createChannelsChangeHandler(
   channelListing: ChannelVoucherData[],
@@ -16,12 +22,16 @@ export function createChannelsChangeHandler(
   return (id: string, input: ChannelInput) => {
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
-
+    const { discountValue, minSpent } = input;
     const updatedChannels = [
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        ...input
+        ...(minSpent !== undefined
+          ? { minSpent: minSpent ? parseInt(minSpent, 10) : null }
+          : {
+              discountValue: discountValue ? parseInt(discountValue, 10) : null
+            })
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -35,7 +45,7 @@ export function createSaleChannelsChangeHandler(
   updateChannels: (data: ChannelSaleData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, discountValue: number) => {
+  return (id: string, discountValue: string) => {
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -43,7 +53,7 @@ export function createSaleChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        discountValue
+        discountValue: !discountValue ? null : parseInt(discountValue, 10)
       },
       ...channelListing.slice(channelIndex + 1)
     ];
