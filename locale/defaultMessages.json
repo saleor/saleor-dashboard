@@ -2213,6 +2213,13 @@
   "src_dot_discounts_dot_components_dot_VoucherList_dot_79160621": {
     "string": "No vouchers found"
   },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1148029984": {
+    "context": "column title",
+    "string": "Value"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_2746532349": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
@@ -2224,6 +2231,13 @@
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_3740704788": {
     "context": "voucher requirement",
     "string": "Minimum quantity of items"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
   },
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_653777456": {
     "context": "voucher requirement",
@@ -2265,6 +2279,10 @@
     "context": "voucher discount type",
     "string": "Fixed Amount"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_1134347598": {
+    "context": "column title",
+    "string": "Price"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1148029984": {
     "context": "section header",
     "string": "Value"
@@ -2276,11 +2294,21 @@
     "context": "voucher application, switch button",
     "string": "Only once per order"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1960678372": {
     "string": "Voucher Specific Information"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_4097816011": {
+    "string": "No channels found"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_4189095909": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
   },
   "src_dot_discounts_dot_order": {
     "context": "voucher discount",
@@ -2294,13 +2322,6 @@
     "context": "voucher discount",
     "string": "Shipment"
   },
-  "src_dot_discounts_dot_views_dot_1162257691": {
-    "string": "Deleted voucher"
-  },
-  "src_dot_discounts_dot_views_dot_1402402714": {
-    "context": "dialog header",
-    "string": "Unassign Collections From Voucher"
-  },
   "src_dot_discounts_dot_views_dot_1457489953": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {saleName}?"
@@ -2313,10 +2334,6 @@
     "context": "dialog header",
     "string": "Unassign Collections From Sale"
   },
-  "src_dot_discounts_dot_views_dot_2072403265": {
-    "context": "dialog header",
-    "string": "Unassign Products From Voucher"
-  },
   "src_dot_discounts_dot_views_dot_2353723060": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
@@ -2324,17 +2341,9 @@
   "src_dot_discounts_dot_views_dot_2534378844": {
     "string": "Removed sale"
   },
-  "src_dot_discounts_dot_views_dot_2669520431": {
-    "context": "dialog header",
-    "string": "Unassign Categories From Voucher"
-  },
   "src_dot_discounts_dot_views_dot_3215481647": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "src_dot_discounts_dot_views_dot_3261917848": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {voucherCode}?"
   },
   "src_dot_discounts_dot_views_dot_3395246518": {
     "context": "dialog header",
@@ -2347,16 +2356,9 @@
     "context": "dialog header",
     "string": "Delete Sale"
   },
-  "src_dot_discounts_dot_views_dot_655651329": {
-    "string": "Successfully created voucher"
-  },
   "src_dot_discounts_dot_views_dot_767268203": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
-  },
-  "src_dot_discounts_dot_views_dot_895379508": {
-    "context": "dialog header",
-    "string": "Delete Voucher"
   },
   "src_dot_discounts_dot_views_dot_SaleList_dot_2809303671": {
     "context": "dialog header",
@@ -2365,6 +2367,50 @@
   "src_dot_discounts_dot_views_dot_SaleList_dot_372098008": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherCreate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherCreate_dot_655651329": {
+    "string": "Successfully created voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1162257691": {
+    "string": "Deleted voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1402402714": {
+    "context": "dialog header",
+    "string": "Unassign Collections From Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2072403265": {
+    "context": "dialog header",
+    "string": "Unassign Products From Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2353723060": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2669520431": {
+    "context": "dialog header",
+    "string": "Unassign Categories From Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3215481647": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3261917848": {
+    "context": "dialog content",
+    "string": "Are you sure you want to delete {voucherCode}?"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_767268203": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_895379508": {
+    "context": "dialog header",
+    "string": "Delete Voucher"
   },
   "src_dot_discounts_dot_views_dot_VoucherList_dot_2983742638": {
     "context": "dialog content",

@@ -12,6 +12,7 @@ export interface SaleDetailsFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface SaleDetailsFragment_channelListing {

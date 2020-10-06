@@ -12,6 +12,7 @@ export interface SaleList_sales_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface SaleList_sales_edges_node_channelListing {

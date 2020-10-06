@@ -18,6 +18,7 @@ export interface VoucherDetails_voucher_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface VoucherDetails_voucher_channelListing_minSpent {

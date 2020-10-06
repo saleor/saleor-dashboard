@@ -18,6 +18,7 @@ export const discountErrorFragment = gql`
   fragment DiscountErrorFragment on DiscountError {
     code
     field
+    channels
   }
 `;
 
