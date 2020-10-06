@@ -1662,6 +1662,17 @@ export interface UserSortingInput {
   field: UserSortField;
 }
 
+export interface VoucherChannelListingAddInput {
+  channelId: string;
+  discountValue?: any | null;
+  minAmountSpent?: any | null;
+}
+
+export interface VoucherChannelListingInput {
+  addChannels?: VoucherChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface VoucherFilterInput {
   status?: (DiscountStatusEnum | null)[] | null;
   timesUsed?: IntRangeInput | null;

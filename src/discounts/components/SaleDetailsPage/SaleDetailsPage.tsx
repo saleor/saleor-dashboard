@@ -258,7 +258,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <DiscountDates
                 data={data}
                 disabled={disabled}
-                defaultCurrency={defaultCurrency}
                 errors={errors}
                 onChange={change}
               />

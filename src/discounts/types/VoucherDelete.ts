@@ -12,6 +12,7 @@ export interface VoucherDelete_voucherDelete_errors {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
+  channels: string[] | null;
 }
 
 export interface VoucherDelete_voucherDelete {

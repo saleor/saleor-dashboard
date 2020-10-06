@@ -37,7 +37,6 @@ export interface SaleCreatePageProps {
 }
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
-  defaultCurrency,
   disabled,
   errors,
   onSubmit,
@@ -83,7 +82,6 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               <DiscountDates
                 data={data}
                 disabled={disabled}
-                defaultCurrency={defaultCurrency}
                 errors={errors}
                 onChange={change}
               />

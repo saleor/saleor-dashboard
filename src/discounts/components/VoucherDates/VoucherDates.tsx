@@ -14,8 +14,7 @@ import { useIntl } from "react-intl";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherDatesProps {
-  data: VoucherDetailsPageFormData;
-  defaultCurrency: string;
+  data: FormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
