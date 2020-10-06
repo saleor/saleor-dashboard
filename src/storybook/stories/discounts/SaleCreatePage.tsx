@@ -25,6 +25,7 @@ storiesOf("Views / Discounts / Sale create", module)
       {...props}
       errors={["name", "startDate", "endDate", "value"].map(field => ({
         __typename: "DiscountError",
+        channels: [],
         code: DiscountErrorCode.INVALID,
         field
       }))}

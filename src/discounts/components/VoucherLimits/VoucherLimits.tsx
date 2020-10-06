@@ -13,7 +13,6 @@ import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherLimitsProps {
   data: FormData;
-  defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
