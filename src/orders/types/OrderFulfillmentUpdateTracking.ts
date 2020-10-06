@@ -70,12 +70,14 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
@@ -141,12 +143,14 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_product;
   quantityAvailable: number;
 }

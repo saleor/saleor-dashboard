@@ -70,12 +70,14 @@ export interface OrderCapture_orderCapture_order_events {
 
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
@@ -141,12 +143,14 @@ export interface OrderCapture_orderCapture_order_fulfillments {
 
 export interface OrderCapture_orderCapture_order_lines_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderCapture_orderCapture_order_lines_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderCapture_orderCapture_order_lines_variant_product;
   quantityAvailable: number;
 }

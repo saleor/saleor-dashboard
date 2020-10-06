@@ -8,12 +8,14 @@
 
 export interface OrderLineFragment_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderLineFragment_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderLineFragment_variant_product;
   quantityAvailable: number;
 }

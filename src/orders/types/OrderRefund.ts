@@ -70,12 +70,14 @@ export interface OrderRefund_orderRefund_order_events {
 
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
@@ -141,12 +143,14 @@ export interface OrderRefund_orderRefund_order_fulfillments {
 
 export interface OrderRefund_orderRefund_order_lines_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderRefund_orderRefund_order_lines_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderRefund_orderRefund_order_lines_variant_product;
   quantityAvailable: number;
 }

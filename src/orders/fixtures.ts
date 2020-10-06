@@ -947,8 +947,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
             },
             variant: {
               __typename: "ProductVariant",
+              id: "dsfsfuhb",
               product: {
                 __typename: "Product",
+                id: "345678393",
                 isAvailableForPurchase: true,
                 isPublished: true
               },
@@ -997,8 +999,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
             },
             variant: {
               __typename: "ProductVariant",
+              id: "dsfsfuhb",
               product: {
                 __typename: "Product",
+                id: "345678393",
                 isAvailableForPurchase: true,
                 isPublished: true
               },
@@ -1052,8 +1056,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       },
       variant: {
         __typename: "ProductVariant",
+        id: "dsfsfuhb",
         product: {
           __typename: "Product",
+          id: "345678393",
           isAvailableForPurchase: true,
           isPublished: true
         },
@@ -1087,8 +1093,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       },
       variant: {
         __typename: "ProductVariant",
+        id: "dsfsfuhb",
         product: {
           __typename: "Product",
+          id: "345678393",
           isAvailableForPurchase: true,
           isPublished: true
         },
@@ -1220,8 +1228,10 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       },
       variant: {
         __typename: "ProductVariant",
+        id: "dsfsfuhb",
         product: {
           __typename: "Product",
+          id: "345678393",
           isAvailableForPurchase: true,
           isPublished: true
         },
@@ -1255,8 +1265,10 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       },
       variant: {
         __typename: "ProductVariant",
+        id: "dsfsfuhb",
         product: {
           __typename: "Product",
+          id: "345678393",
           isAvailableForPurchase: true,
           isPublished: true
         },
