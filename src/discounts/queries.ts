@@ -8,7 +8,6 @@ import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { SaleDetails, SaleDetailsVariables } from "./types/SaleDetails";
 import { SaleList, SaleListVariables } from "./types/SaleList";
 import {
@@ -99,7 +98,7 @@ export const saleDetails = gql`
     }
   }
 `;
-export const TypedSaleDetails = TypedQuery<SaleDetails, SaleDetailsVariables>(
+export const useSaleDetails = makeQuery<SaleDetails, SaleDetailsVariables>(
   saleDetails
 );
 

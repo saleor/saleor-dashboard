@@ -21,6 +21,10 @@ import {
   SaleCataloguesRemove,
   SaleCataloguesRemoveVariables
 } from "./types/SaleCataloguesRemove";
+import {
+  SaleChannelListingUpdate,
+  SaleChannelListingUpdateVariables
+} from "./types/SaleChannelListingUpdate";
 import { SaleCreate, SaleCreateVariables } from "./types/SaleCreate";
 import { SaleDelete, SaleDeleteVariables } from "./types/SaleDelete";
 import { SaleUpdate, SaleUpdateVariables } from "./types/SaleUpdate";
@@ -160,6 +164,28 @@ export const TypedSaleBulkDelete = TypedMutation<
   SaleBulkDelete,
   SaleBulkDeleteVariables
 >(saleBulkDelete);
+
+const saleChannelListingUpdate = gql`
+  ${discountErrorFragment}
+  ${saleFragment}
+  mutation SaleChannelListingUpdate(
+    $id: ID!
+    $input: SaleChannelListingInput!
+  ) {
+    saleChannelListingUpdate(id: $id, input: $input) {
+      errors: discountErrors {
+        ...DiscountErrorFragment
+      }
+      sale {
+        ...SaleFragment
+      }
+    }
+  }
+`;
+export const useSaleChannelListingUpdate = makeMutation<
+  SaleChannelListingUpdate,
+  SaleChannelListingUpdateVariables
+>(saleChannelListingUpdate);
 
 const voucherChannelListingUpdate = gql`
   ${discountErrorFragment}

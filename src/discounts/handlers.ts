@@ -1,4 +1,5 @@
-import { ChannelVoucherData } from "@saleor/channels/utils";
+import { ChannelSaleData, ChannelVoucherData } from "@saleor/channels/utils";
+import { FormData as SaleFormData } from "@saleor/discounts/components/SaleDetailsPage";
 import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { diff } from "fast-array-diff";
@@ -21,6 +22,28 @@ export function createChannelsChangeHandler(
       {
         ...channel,
         ...input
+      },
+      ...channelListing.slice(channelIndex + 1)
+    ];
+    updateChannels(updatedChannels);
+    triggerChange();
+  };
+}
+
+export function createSaleChannelsChangeHandler(
+  channelListing: ChannelSaleData[],
+  updateChannels: (data: ChannelSaleData[]) => void,
+  triggerChange: () => void
+) {
+  return (id: string, discountValue: number) => {
+    const channelIndex = channelListing.findIndex(channel => channel.id === id);
+    const channel = channelListing[channelIndex];
+
+    const updatedChannels = [
+      ...channelListing.slice(0, channelIndex),
+      {
+        ...channel,
+        discountValue
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -58,6 +81,32 @@ export const getChannelsVariables = (
               : formData.requirementsPicker === RequirementsPicker.ITEM
               ? 0
               : channel.minSpent
+        })) || [],
+      removeChannels
+    }
+  };
+};
+
+export const getSaleChannelsVariables = (
+  id: string,
+  formData: SaleFormData,
+  prevChannels?: ChannelSaleData[]
+) => {
+  const removeChannels = prevChannels
+    ? diff(
+        prevChannels,
+        formData.channelListing,
+        (a, b) => a.id === b.id
+      ).removed?.map(removedChannel => removedChannel.id)
+    : [];
+
+  return {
+    id,
+    input: {
+      addChannels:
+        formData.channelListing?.map(channel => ({
+          channelId: channel.id,
+          discountValue: channel.discountValue
         })) || [],
       removeChannels
     }
