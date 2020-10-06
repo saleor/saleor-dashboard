@@ -12,12 +12,14 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
+  channels: string[] | null;
 }
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListing {

@@ -19,7 +19,6 @@ interface DiscountDatesProps {
     startDate: string;
     startTime: string;
   };
-  defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
