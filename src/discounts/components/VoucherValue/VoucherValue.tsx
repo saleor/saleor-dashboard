@@ -122,15 +122,11 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                                 : ""
                             }
                             name={"value"}
-                            onChange={e => {
-                              const value = e.target.value;
+                            onChange={e =>
                               onChannelChange(listing.id, {
-                                discountValue: !value
-                                  ? null
-                                  : parseInt(value, 10),
-                                minSpent: listing.minSpent
-                              });
-                            }}
+                                discountValue: e.target.value
+                              })
+                            }
                             label={intl.formatMessage({
                               defaultMessage: "Discount Value"
                             })}

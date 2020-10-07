@@ -144,11 +144,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
+  const channel = voucher?.channelListing?.find(
+    listing => listing.channel.id === selectedChannel
+  );
   let requirementsPickerInitValue;
-  if (voucher?.channelListing[0]?.minSpent?.amount > 0) {
-    requirementsPickerInitValue = RequirementsPicker.ORDER;
-  } else if (maybe(() => voucher.minCheckoutItemsQuantity) > 0) {
+  if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
+  } else if (channel?.minSpent?.amount > 0) {
+    requirementsPickerInitValue = RequirementsPicker.ORDER;
   } else {
     requirementsPickerInitValue = RequirementsPicker.NONE;
   }
@@ -185,8 +188,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(channel =>
-          validatePrice(channel.minSpent)
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.discountValue) ||
+            (data.requirementsPicker === RequirementsPicker.ORDER &&
+              validatePrice(channel.minSpent))
         );
         return (
           <Container>

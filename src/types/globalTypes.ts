@@ -1519,6 +1519,16 @@ export interface ReorderInput {
   sortOrder?: number | null;
 }
 
+export interface SaleChannelListingAddInput {
+  channelId: string;
+  discountValue: any;
+}
+
+export interface SaleChannelListingInput {
+  addChannels?: SaleChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface SaleFilterInput {
   status?: (DiscountStatusEnum | null)[] | null;
   saleType?: DiscountValueTypeEnum | null;
