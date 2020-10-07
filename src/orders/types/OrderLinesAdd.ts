@@ -261,6 +261,13 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order {
   __typename: "Order";
   id: string;
@@ -288,6 +295,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
   discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
   invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
+  channel: OrderLinesAdd_draftOrderLinesCreate_order_channel;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

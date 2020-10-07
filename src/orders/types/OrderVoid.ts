@@ -261,6 +261,13 @@ export interface OrderVoid_orderVoid_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderVoid_orderVoid_order_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
@@ -288,6 +295,7 @@ export interface OrderVoid_orderVoid_order {
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   discount: OrderVoid_orderVoid_order_discount | null;
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
+  channel: OrderVoid_orderVoid_order_channel;
 }
 
 export interface OrderVoid_orderVoid {

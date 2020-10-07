@@ -9,7 +9,6 @@ import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { Choice, Choices } from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
@@ -41,9 +40,6 @@ const useStyles = makeStyles(
 export interface OrderDraftPageProps
   extends FetchMoreProps,
     UserPermissionProps {
-  channelsChoices: Choices;
-  selectedChannel: Choice;
-  onChannelChange: (channel: Choice) => void;
   disabled: boolean;
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
@@ -53,7 +49,6 @@ export interface OrderDraftPageProps
     label: string;
   }>;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedChannelName?: string;
   fetchUsers: (query: string) => void;
   onBack: () => void;
   onBillingAddressEdit: () => void;
@@ -95,10 +90,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     order,
     users,
     usersLoading,
-    userPermissions,
-    channelsChoices,
-    selectedChannel,
-    onChannelChange
+    userPermissions
   } = props;
   const classes = useStyles(props);
 
@@ -138,7 +130,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <Grid>
         <div>
           <OrderDraftDetails
-            disabled={!selectedChannel}
+            disabled={!order.channel}
             order={order}
             onOrderLineAdd={onOrderLineAdd}
             onOrderLineChange={onOrderLineChange}
@@ -164,12 +156,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onShippingAddressEdit={onShippingAddressEdit}
           />
           <CardSpacer />
-          <DraftOrderChannelSectionCard
-            channelsChoices={channelsChoices}
-            selectedChoice={selectedChannel}
-            disabled={disabled}
-            onChange={onChannelChange}
-          />
+          <DraftOrderChannelSectionCard channelName={order?.channel?.name} />
         </div>
       </Grid>
       <SaveButtonBar

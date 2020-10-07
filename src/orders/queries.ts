@@ -164,12 +164,15 @@ export const searchOrderVariant = gql`
             id
             name
             sku
-            pricing {
-              priceUndiscounted {
-                net {
-                  amount
-                  currency
-                }
+            channelListing {
+              channel {
+                id
+                name
+                currencyCode
+              }
+              price {
+                amount
+                currency
               }
             }
           }

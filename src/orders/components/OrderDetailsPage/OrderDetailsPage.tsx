@@ -50,7 +50,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
     code: string;
     label: string;
   }>;
-  selectedChannelName: string;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -89,8 +88,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onProfileView,
     onInvoiceClick,
     onInvoiceGenerate,
-    onInvoiceSend,
-    selectedChannelName
+    onInvoiceSend
   } = props;
   const classes = useStyles(props);
 
@@ -189,7 +187,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             onProfileView={onProfileView}
           />
           <CardSpacer />
-          <OrderChannelSectionCard selectedChannelName={selectedChannelName} />
+          <OrderChannelSectionCard selectedChannelName={order?.channel?.name} />
           <CardSpacer />
           <OrderInvoiceList
             invoices={order?.invoices}

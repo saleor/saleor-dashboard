@@ -11,20 +11,23 @@ export interface SearchOrderVariant_search_edges_node_thumbnail {
   url: string;
 }
 
-export interface SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted_net {
+export interface SearchOrderVariant_search_edges_node_variants_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_channelListing_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted {
-  __typename: "TaxedMoney";
-  net: SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted_net;
-}
-
-export interface SearchOrderVariant_search_edges_node_variants_pricing {
-  __typename: "VariantPricingInfo";
-  priceUndiscounted: SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted | null;
+export interface SearchOrderVariant_search_edges_node_variants_channelListing {
+  __typename: "ProductVariantChannelListing";
+  channel: SearchOrderVariant_search_edges_node_variants_channelListing_channel;
+  price: SearchOrderVariant_search_edges_node_variants_channelListing_price | null;
 }
 
 export interface SearchOrderVariant_search_edges_node_variants {
@@ -32,7 +35,7 @@ export interface SearchOrderVariant_search_edges_node_variants {
   id: string;
   name: string;
   sku: string;
-  pricing: SearchOrderVariant_search_edges_node_variants_pricing | null;
+  channelListing: SearchOrderVariant_search_edges_node_variants_channelListing[] | null;
 }
 
 export interface SearchOrderVariant_search_edges_node {

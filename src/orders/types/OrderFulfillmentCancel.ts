@@ -261,6 +261,13 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
@@ -288,6 +295,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
+  channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

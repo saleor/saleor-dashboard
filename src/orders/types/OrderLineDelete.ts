@@ -261,6 +261,13 @@ export interface OrderLineDelete_draftOrderLineDelete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLineDelete_draftOrderLineDelete_order_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderLineDelete_draftOrderLineDelete_order {
   __typename: "Order";
   id: string;
@@ -288,6 +295,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order {
   availableShippingMethods: (OrderLineDelete_draftOrderLineDelete_order_availableShippingMethods | null)[] | null;
   discount: OrderLineDelete_draftOrderLineDelete_order_discount | null;
   invoices: (OrderLineDelete_draftOrderLineDelete_order_invoices | null)[] | null;
+  channel: OrderLineDelete_draftOrderLineDelete_order_channel;
 }
 
 export interface OrderLineDelete_draftOrderLineDelete {

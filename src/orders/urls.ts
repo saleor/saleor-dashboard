@@ -61,7 +61,7 @@ export enum OrderDraftListUrlFiltersEnum {
   query = "query"
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
-export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export type OrderDraftListUrlDialog = "remove" | "settings" | TabActionDialog;
 export enum OrderDraftListUrlSortField {
   number = "number",
   customer = "customer",

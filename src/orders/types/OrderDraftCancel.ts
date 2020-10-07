@@ -261,6 +261,13 @@ export interface OrderDraftCancel_draftOrderDelete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order {
   __typename: "Order";
   id: string;
@@ -288,6 +295,7 @@ export interface OrderDraftCancel_draftOrderDelete_order {
   availableShippingMethods: (OrderDraftCancel_draftOrderDelete_order_availableShippingMethods | null)[] | null;
   discount: OrderDraftCancel_draftOrderDelete_order_discount | null;
   invoices: (OrderDraftCancel_draftOrderDelete_order_invoices | null)[] | null;
+  channel: OrderDraftCancel_draftOrderDelete_order_channel;
 }
 
 export interface OrderDraftCancel_draftOrderDelete {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode } from "./../../types/globalTypes";
+import { DraftOrderCreateInput, OrderErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftCreate
@@ -27,4 +27,8 @@ export interface OrderDraftCreate_draftOrderCreate {
 
 export interface OrderDraftCreate {
   draftOrderCreate: OrderDraftCreate_draftOrderCreate | null;
+}
+
+export interface OrderDraftCreateVariables {
+  input: DraftOrderCreateInput;
 }
