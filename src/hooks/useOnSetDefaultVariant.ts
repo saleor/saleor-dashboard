@@ -26,14 +26,19 @@ function useOnSetDefaultVariant(
           })
         );
       } else {
-        if (variant) {
+        const defaultVariant = data.productVariantSetDefault.product.variants.find(
+          variant =>
+            variant.id ===
+            data.productVariantSetDefault.product.defaultVariant.id
+        );
+        if (defaultVariant) {
           notify({
             status: "success",
             text: intl.formatMessage(
               {
                 defaultMessage: "Variant {name} has been set as default."
               },
-              { name: variant.name }
+              { name: defaultVariant.name }
             )
           });
         }
