@@ -19,6 +19,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm5lcDoy",
+    isActive: true,
     name: "Test",
     slug: "test"
   },
@@ -26,6 +27,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm7lbDoy213",
+    isActive: true,
     name: "Channel",
     slug: "channel"
   },
@@ -33,6 +35,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbn5lbDoytr",
+    isActive: true,
     name: "Channel test",
     slug: "channeltest"
   },
@@ -40,6 +43,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm5lbDo5bot",
+    isActive: true,
     name: "Channel USD",
     slug: "channel-usd"
   },
@@ -47,6 +51,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm7lbDoyr0tr",
+    isActive: true,
     name: "Channel",
     slug: "channel2"
   },
@@ -54,6 +59,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbn5lbDoyya",
+    isActive: true,
     name: "Channel test",
     slug: "channeltest4"
   },
@@ -61,6 +67,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm5lbDo5w0z",
+    isActive: true,
     name: "Channel USD",
     slug: "channel-usd1"
   }
@@ -70,6 +77,7 @@ export const channel: Channel_channel = {
   __typename: "Channel",
   currencyCode: "zl",
   id: "Q2hhbm5lbDov78",
+  isActive: true,
   name: "Test",
   slug: "test"
 };

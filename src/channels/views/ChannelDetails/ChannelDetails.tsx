@@ -10,7 +10,11 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelUpdateInput } from "../../../types/globalTypes";
-import { useChannelUpdateMutation } from "../../mutations";
+import {
+  useChannelActivateMutation,
+  useChannelDeactivateMutation,
+  useChannelUpdateMutation
+} from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { useChannelDetails } from "../../queries";
 import { ChannelUpdate } from "../../types/ChannelUpdate";
@@ -46,6 +50,13 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
     onCompleted: onSubmit
   });
 
+  const [activateChannel, activateChannelOpts] = useChannelActivateMutation({});
+
+  const [
+    deactivateChannel,
+    deactivateChannelOpts
+  ] = useChannelDeactivateMutation({});
+
   const handleSubmit = (data: ChannelUpdateInput) =>
     updateChannel({
       variables: {
@@ -70,10 +81,18 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
         <ChannelDetailsPage
           channel={data?.channel}
           disabled={updateChannelOpts.loading || loading}
+          disabledStatus={
+            activateChannelOpts.loading || deactivateChannelOpts.loading
+          }
           editableCurrency={false}
           errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
           onSubmit={handleSubmit}
           onBack={handleBack}
+          updateChannelStatus={() =>
+            data?.channel?.isActive
+              ? deactivateChannel({ variables: { id } })
+              : activateChannel({ variables: { id } })
+          }
           saveButtonBarState={updateChannelOpts.status}
         />
       </Container>

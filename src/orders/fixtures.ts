@@ -1225,6 +1225,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1239,6 +1240,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {
@@ -1261,6 +1263,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1275,6 +1278,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {
@@ -1297,6 +1301,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1311,6 +1316,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {
@@ -1344,6 +1350,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1358,6 +1365,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {
@@ -1380,6 +1388,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1394,6 +1403,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {
@@ -1416,6 +1426,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "123",
+              isActive: true,
               name: "Channel1"
             },
             price: {
@@ -1430,6 +1441,7 @@ export const orderLineSearch = (
               __typename: "Channel",
               currencyCode: "USD",
               id: "124",
+              isActive: true,
               name: "Channel2"
             },
             price: {

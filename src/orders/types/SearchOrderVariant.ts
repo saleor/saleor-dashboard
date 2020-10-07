@@ -14,6 +14,7 @@ export interface SearchOrderVariant_search_edges_node_thumbnail {
 export interface SearchOrderVariant_search_edges_node_variants_channelListing_channel {
   __typename: "Channel";
   id: string;
+  isActive: boolean;
   name: string;
   currencyCode: string;
 }

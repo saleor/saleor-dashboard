@@ -289,7 +289,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                       {maybe(() => product.variants, []).map(
                         (variant, variantIndex) =>
                           variant.channelListing.some(
-                            listing => listing.channel.id === selectedChannel
+                            listing =>
+                              listing.channel.id === selectedChannel &&
+                              listing.channel.isActive
                           ) ? (
                             <TableRow key={variant.id}>
                               <TableCell />

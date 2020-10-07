@@ -93,30 +93,6 @@ export interface Product_collections {
   name: string;
 }
 
-export interface Product_margin {
-  __typename: "Margin";
-  start: number | null;
-  stop: number | null;
-}
-
-export interface Product_purchaseCost_start {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_purchaseCost_stop {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_purchaseCost {
-  __typename: "MoneyRange";
-  start: Product_purchaseCost_start | null;
-  stop: Product_purchaseCost_stop | null;
-}
-
 export interface Product_images {
   __typename: "ProductImage";
   id: string;
@@ -181,8 +157,6 @@ export interface Product {
   seoDescription: string | null;
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;
-  margin: Product_margin | null;
-  purchaseCost: Product_purchaseCost | null;
   isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (Product_images | null)[] | null;

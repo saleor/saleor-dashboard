@@ -11,6 +11,7 @@ import { ChannelCreateInput, ChannelErrorCode } from "./../../types/globalTypes"
 export interface ChannelCreate_channelCreate_channel {
   __typename: "Channel";
   id: string;
+  isActive: boolean;
   name: string;
   slug: string;
   currencyCode: string;

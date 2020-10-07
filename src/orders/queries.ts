@@ -167,6 +167,7 @@ export const searchOrderVariant = gql`
             channelListing {
               channel {
                 id
+                isActive
                 name
                 currencyCode
               }
