@@ -2579,6 +2579,17 @@
     "context": "sale discount",
     "string": "Discount Value"
   },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_1615342575": {
+    "context": "channels sale info",
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
+  },
   "src_dot_discounts_dot_components_dot_VoucherCreatePage_dot_1357216572": {
     "context": "page header",
     "string": "Create Voucher"
@@ -2821,41 +2832,47 @@
     "context": "voucher discount",
     "string": "Shipment"
   },
-  "src_dot_discounts_dot_views_dot_1457489953": {
+  "src_dot_discounts_dot_views_dot_SaleCreate_dot_3707049729": {
+    "string": "Successfully created sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleCreate_dot_480188715": {
+    "string": "Manage Sales Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1457489953": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {saleName}?"
   },
-  "src_dot_discounts_dot_views_dot_1827854264": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1827854264": {
     "context": "dialog header",
     "string": "Unassign Categories From Sale"
   },
-  "src_dot_discounts_dot_views_dot_1952217501": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1952217501": {
     "context": "dialog header",
     "string": "Unassign Collections From Sale"
   },
-  "src_dot_discounts_dot_views_dot_2353723060": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2353723060": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
   },
-  "src_dot_discounts_dot_views_dot_2534378844": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2534378844": {
     "string": "Removed sale"
   },
-  "src_dot_discounts_dot_views_dot_3215481647": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3215481647": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
-  "src_dot_discounts_dot_views_dot_3395246518": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3395246518": {
     "context": "dialog header",
     "string": "Unassign Products From Sale"
   },
-  "src_dot_discounts_dot_views_dot_3707049729": {
-    "string": "Successfully created sale"
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3823295269": {
+    "string": "Manage Channel Availability"
   },
-  "src_dot_discounts_dot_views_dot_506030254": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_506030254": {
     "context": "dialog header",
     "string": "Delete Sale"
   },
-  "src_dot_discounts_dot_views_dot_767268203": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_767268203": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
   },
