@@ -102,8 +102,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         );
         const formDisabled = data.channelListing?.some(
           channel =>
-            validatePrice(channel.minSpent) ||
-            validatePrice(channel.discountValue)
+            validatePrice(channel.discountValue) ||
+            (data.requirementsPicker === RequirementsPicker.ORDER &&
+              validatePrice(channel.minSpent))
         );
         return (
           <Container>
