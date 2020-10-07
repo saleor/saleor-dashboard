@@ -22,7 +22,7 @@ import {
   voucherPath,
   VoucherUrlQueryParams
 } from "./urls";
-import SaleCreateView from "./views/SaleCreate";
+import SaleCreateView from "./views/SaleCreate/SaleCreate";
 import SaleDetailsViewComponent from "./views/SaleDetails";
 import SaleListViewComponent from "./views/SaleList";
 import VoucherCreateView from "./views/VoucherCreate";

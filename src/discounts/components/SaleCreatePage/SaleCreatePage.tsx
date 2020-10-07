@@ -1,5 +1,7 @@
+import { ChannelSaleData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -17,6 +19,7 @@ import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
 
 export interface FormData {
+  channelListing: ChannelSaleData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -28,24 +31,30 @@ export interface FormData {
 }
 
 export interface SaleCreatePageProps {
-  defaultCurrency: string;
+  allChannelsCount: number;
+  channelListing: ChannelSaleData[];
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
+  openChannelsModal: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
+  allChannelsCount,
+  channelListing = [],
   disabled,
   errors,
   onSubmit,
+  openChannelsModal,
   saveButtonBarState,
   onBack
 }) => {
   const intl = useIntl();
 
   const initialForm: FormData = {
+    channelListing,
     endDate: "",
     endTime: "",
     hasEndDate: false,
@@ -84,6 +93,18 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
+              />
+            </div>
+            <div>
+              <ChannelsAvailability
+                selectedChannelsCount={data.channelListing.length}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListing.map(channel => ({
+                  id: channel.id,
+                  name: channel.name
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
               />
             </div>
           </Grid>
