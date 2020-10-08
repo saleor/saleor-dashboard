@@ -37,6 +37,7 @@ const props: OrderDraftListPageProps = {
     }
   },
   onAdd: () => undefined,
+  onSettingsOpen: () => undefined,
   orders,
   sort: {
     ...sortPageProps.sort,
