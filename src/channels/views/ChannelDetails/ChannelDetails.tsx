@@ -2,10 +2,12 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { sectionNames } from "@saleor/intl";
+import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -41,6 +43,13 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
     }
   };
 
+  const handleError = (error: ChannelErrorFragment) => {
+    notify({
+      status: "error",
+      text: getChannelsErrorMessage(error, intl)
+    });
+  };
+
   const { data, loading } = useChannelDetails({
     displayLoader: true,
     variables: { id }
@@ -50,12 +59,26 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
     onCompleted: onSubmit
   });
 
-  const [activateChannel, activateChannelOpts] = useChannelActivateMutation({});
+  const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
+    onCompleted: data => {
+      const errors = data.channelActivate.errors;
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+    }
+  });
 
   const [
     deactivateChannel,
     deactivateChannelOpts
-  ] = useChannelDeactivateMutation({});
+  ] = useChannelDeactivateMutation({
+    onCompleted: data => {
+      const errors = data.channelDeactivate.errors;
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+    }
+  });
 
   const handleSubmit = (data: ChannelUpdateInput) =>
     updateChannel({
