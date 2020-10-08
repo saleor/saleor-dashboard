@@ -105,6 +105,25 @@ storiesOf("Views / Products / Product edit", module)
       }}
     />
   ))
+  .add("no stock, no variants and no warehouses", () => (
+    <ProductUpdatePage
+      {...props}
+      warehouses={[]}
+      product={{
+        ...product,
+        productType: {
+          ...product.productType,
+          hasVariants: false
+        },
+        variants: [
+          {
+            ...product.variants[0],
+            stocks: []
+          }
+        ]
+      }}
+    />
+  ))
   .add("no product attributes", () => (
     <ProductUpdatePage
       {...props}
