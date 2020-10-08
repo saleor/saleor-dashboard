@@ -1,4 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -62,21 +63,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [
     updateChannels,
     updateChannelsOpts
-  ] = useProductVariantChannelListingUpdate({
-    onCompleted: data => {
-      if (
-        data.productVariantChannelListingUpdate.productChannelListingErrors
-          .length === 0
-      ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Channels updated"
-          })
-        });
-      }
-    }
-  });
+  ] = useProductVariantChannelListingUpdate({});
+
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
@@ -95,7 +83,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     if (
       data.channelListing.some(
         (channel, index) =>
-          channel.price !== variant.channelListing[index].price.amount
+          channel.price !== variant.channelListing[index]?.price.amount
       )
     ) {
       updateChannels({
@@ -114,6 +102,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     <TypedProductVariantQuery displayLoader variables={{ id: variantId }}>
       {({ data, loading }) => {
         const variant = data?.productVariant;
+        const channels = createVariantChannels(variant);
 
         if (variant === null) {
           return <NotFoundPage onBack={handleBack} />;
@@ -177,6 +166,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                   <WindowTitle title={data?.productVariant?.name} />
                   <ProductVariantPage
                     errors={errors}
+                    channels={channels}
                     channelErrors={
                       updateChannelsOpts?.data
                         ?.productVariantChannelListingUpdate

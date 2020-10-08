@@ -15,6 +15,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListActions from "@saleor/hooks/useListActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -115,6 +116,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productChannelsChoices
   );
 
+  const [selectedChannel] = useLocalStorage("productsListChannel", "");
+
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,
@@ -159,6 +162,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateVariantChannels,
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdate({});
+
+  const channelChoices = product?.channelListing.map(listing => ({
+    label: listing.channel.name,
+    value: listing.channel.id
+  }));
 
   const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -338,6 +346,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         categories={categories}
         collections={collections}
         currentChannels={currentChannels}
+        channelChoices={channelChoices}
+        selectedChannel={selectedChannel}
         disabled={disableFormSave}
         errors={errors}
         channelsErrors={channelsErrors}

@@ -9,6 +9,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset from "@saleor/hooks/useFormset";
@@ -60,6 +61,8 @@ export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
+  channelChoices: SingleAutocompleteChoiceType[];
+  selectedChannel: string;
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -101,6 +104,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
+  channelChoices,
   channelsErrors,
   allChannelsCount,
   currentChannels = [],
@@ -133,6 +137,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantShow,
   isChecked,
   selected,
+  selectedChannel,
   toggle,
   toggleAll,
   toolbar
@@ -291,11 +296,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <ProductVariants
                       disabled={disabled}
                       variants={variants}
-                      fallbackPrice={
-                        product?.variants?.length
-                          ? product.variants[0].channelListing[0]?.price
-                          : undefined
-                      }
+                      selectedChannel={selectedChannel}
+                      channelChoices={channelChoices}
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
                       onVariantsAdd={onVariantsAdd}

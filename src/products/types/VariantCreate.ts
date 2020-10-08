@@ -68,6 +68,25 @@ export interface VariantCreate_productVariantCreate_productVariant_product_thumb
   url: string;
 }
 
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: VariantCreate_productVariantCreate_productVariant_product_channelListing_channel;
+  discountedPrice: VariantCreate_productVariantCreate_productVariant_product_channelListing_discountedPrice | null;
+}
+
 export interface VariantCreate_productVariantCreate_productVariant_product_variants_images {
   __typename: "ProductImage";
   id: string;
@@ -88,6 +107,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   images: (VariantCreate_productVariantCreate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
+  channelListing: VariantCreate_productVariantCreate_productVariant_product_channelListing[] | null;
   variants: (VariantCreate_productVariantCreate_productVariant_product_variants | null)[] | null;
 }
 

@@ -15,7 +15,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
-import { ProductVariant_channelListing_price } from "@saleor/fragments/types/ProductVariant";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -170,7 +170,8 @@ function getAvailabilityLabel(
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
-  fallbackPrice?: ProductVariant_channelListing_price;
+  selectedChannel: string;
+  channelChoices: SingleAutocompleteChoiceType[];
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
   onVariantsAdd?();
@@ -180,14 +181,15 @@ const numberOfColumns = 5;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
+    channelChoices,
     disabled,
     variants,
-    fallbackPrice,
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
     isChecked,
     selected,
+    selectedChannel,
     toggle,
     toggleAll,
     toolbar
@@ -196,6 +198,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
   const intl = useIntl();
   const [warehouse, setWarehouse] = React.useState<string>(null);
+  const [channelChoice, setChannelChoice] = useStateFromProps(
+    channelChoices.some(choice => choice.value === selectedChannel)
+      ? selectedChannel
+      : channelChoices[0]?.value
+  );
   const hasVariants = maybe(() => variants.length > 0, true);
 
   return (
@@ -236,6 +243,19 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
       {variants.length > 0 ? (
         <CardContent className={classes.warehouseSelectContainer}>
+          <Typography className={classes.warehouseLabel}>
+            <FormattedMessage
+              defaultMessage="Channel"
+              description="variant channle"
+            />
+          </Typography>
+          <LinkChoice
+            className={classes.select}
+            choices={channelChoices}
+            name="channels"
+            value={channelChoice}
+            onChange={event => setChannelChoice(event.target.value)}
+          />
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
               defaultMessage="Available inventory at:"
@@ -301,6 +321,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       0
                     )
                   : null;
+              const channel = variant.channelListing.find(
+                listing => listing.channel.id === channelChoice
+              );
 
               return (
                 <TableRow
@@ -327,12 +350,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   <Hidden smDown>
                     <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
-                        variant.channelListing[0]?.price ? (
-                          <Money money={variant.channelListing[0]?.price} />
-                        ) : fallbackPrice ? (
-                          <Money money={fallbackPrice} />
+                        channel?.price ? (
+                          <Money money={channel?.price} />
                         ) : (
-                          <Skeleton />
+                          "-"
                         )
                       ) : (
                         <Skeleton />

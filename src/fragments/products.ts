@@ -208,6 +208,16 @@ export const fragmentVariant = gql`
       thumbnail {
         url
       }
+      channelListing {
+        channel {
+          id
+          name
+          currencyCode
+        }
+        discountedPrice {
+          ...Money
+        }
+      }
       variants {
         id
         name
