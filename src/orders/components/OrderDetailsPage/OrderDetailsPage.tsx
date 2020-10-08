@@ -59,7 +59,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedChannelName: string;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -102,8 +101,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onInvoiceClick,
     onInvoiceGenerate,
     onInvoiceSend,
-    onSubmit,
-    selectedChannelName
+    onSubmit
   } = props;
   const classes = useStyles(props);
 
@@ -233,7 +231,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 <CardSpacer />
                 <OrderChannelSectionCard
-                  selectedChannelName={selectedChannelName}
+                  selectedChannelName={order?.channel?.name}
                 />
                 <CardSpacer />
                 <OrderInvoiceList

@@ -10,9 +10,15 @@ import { useStyles } from "../styles";
 
 export interface ChannelStatusProps {
   isActive: boolean;
+  disabled: boolean;
+  updateChannelStatus: () => void;
 }
 
-export const ChannelStatus: React.FC<ChannelStatusProps> = ({ isActive }) => {
+export const ChannelStatus: React.FC<ChannelStatusProps> = ({
+  disabled,
+  isActive,
+  updateChannelStatus
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -38,7 +44,12 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({ isActive }) => {
             />
           )}
         </Typography>
-        <Button color="primary" className={classes.activeBtn}>
+        <Button
+          color="primary"
+          className={classes.activeBtn}
+          disabled={disabled}
+          onClick={() => updateChannelStatus()}
+        >
           {isActive ? (
             <FormattedMessage
               defaultMessage="Deactivate"

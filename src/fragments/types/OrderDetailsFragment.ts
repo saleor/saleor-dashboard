@@ -298,6 +298,14 @@ export interface OrderDetailsFragment_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetailsFragment_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
@@ -327,4 +335,5 @@ export interface OrderDetailsFragment {
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
   discount: OrderDetailsFragment_discount | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
+  channel: OrderDetailsFragment_channel;
 }

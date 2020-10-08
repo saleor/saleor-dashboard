@@ -11,6 +11,7 @@ export const channelErrorFragment = gql`
 export const channelDetailsFragment = gql`
   fragment ChannelDetailsFragment on Channel {
     id
+    isActive
     name
     slug
     currencyCode
