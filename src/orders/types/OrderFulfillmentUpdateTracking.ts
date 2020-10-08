@@ -261,6 +261,14 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {
   __typename: "Order";
   id: string;
@@ -288,6 +296,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   availableShippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discount | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
+  channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking {

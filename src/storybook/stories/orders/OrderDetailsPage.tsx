@@ -37,7 +37,6 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
   order,
-  selectedChannelName: "Channel",
   userPermissions: adminUserPermissions
 };
 

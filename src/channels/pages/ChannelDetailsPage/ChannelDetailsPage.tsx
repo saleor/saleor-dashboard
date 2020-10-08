@@ -12,11 +12,13 @@ import { Channel_channel } from "../../types/Channel";
 export interface ChannelDetailsPageProps {
   channel?: Channel_channel;
   disabled: boolean;
+  disabledStatus?: boolean;
   editableCurrency?: boolean;
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack?: () => void;
   onSubmit?: (data: FormData) => void;
+  updateChannelStatus?: () => void;
 }
 
 const initialData: FormData = {
@@ -28,11 +30,13 @@ const initialData: FormData = {
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   channel,
   disabled,
+  disabledStatus,
   editableCurrency = true,
   errors,
   onBack,
   onSubmit,
-  saveButtonBarState
+  saveButtonBarState,
+  updateChannelStatus
 }) => (
   <Form onSubmit={onSubmit} initial={channel || initialData}>
     {({ change, data, hasChanged, submit }) => (
@@ -47,9 +51,15 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
               errors={errors}
             />
           </div>
-          <div>
-            <ChannelStatus isActive={false} />
-          </div>
+          {!!updateChannelStatus && (
+            <div>
+              <ChannelStatus
+                isActive={channel?.isActive}
+                disabled={disabledStatus}
+                updateChannelStatus={updateChannelStatus}
+              />
+            </div>
+          )}
         </Grid>
         <SaveButtonBar
           onCancel={onBack}

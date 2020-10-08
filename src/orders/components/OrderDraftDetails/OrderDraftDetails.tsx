@@ -42,7 +42,8 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           description: "section header"
         })}
         toolbar={
-          !disabled && (
+          !disabled &&
+          order?.channel?.isActive && (
             <Button color="primary" variant="text" onClick={onOrderLineAdd}>
               <FormattedMessage
                 defaultMessage="Add products"

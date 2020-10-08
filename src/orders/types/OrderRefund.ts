@@ -261,6 +261,14 @@ export interface OrderRefund_orderRefund_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderRefund_orderRefund_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderRefund_orderRefund_order {
   __typename: "Order";
   id: string;
@@ -288,6 +296,7 @@ export interface OrderRefund_orderRefund_order {
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
   discount: OrderRefund_orderRefund_order_discount | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
+  channel: OrderRefund_orderRefund_order_channel;
 }
 
 export interface OrderRefund_orderRefund {
