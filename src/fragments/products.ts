@@ -143,19 +143,6 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    margin {
-      start
-      stop
-    }
-    purchaseCost {
-      start {
-        ...Money
-      }
-      stop {
-        ...Money
-      }
-    }
-    isAvailableForPurchase
     isAvailable
     chargeTaxes
     channelListing {
@@ -180,8 +167,7 @@ export const productFragmentDetails = gql`
           currencyCode
         }
         price {
-          amount
-          currency
+          ...Money
         }
       }
     }

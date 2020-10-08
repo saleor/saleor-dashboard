@@ -188,10 +188,6 @@
   "menuPropertiesMenuTitle": {
     "string": "Menu Title"
   },
-  "orderChannelNotSet": {
-    "context": "customer is not set in draft order",
-    "string": "Channel not set"
-  },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
     "string": "Not set"
@@ -3031,10 +3027,6 @@
     "context": "section header",
     "string": "Sales channel"
   },
-  "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_2342703674": {
-    "context": "input label",
-    "string": "Select Channel"
-  },
   "src_dot_orders_dot_components_dot_OrderAddressEditDialog_dot_3278396777": {
     "context": "dialog header",
     "string": "Edit Shipping Address"
@@ -3195,6 +3187,10 @@
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
     "context": "button",
     "string": "Finalize anyway"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -3519,6 +3515,10 @@
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
     "context": "generate invoice button",
     "string": "Generate"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_1391686013": {
+    "context": "button",
+    "string": "Settings"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",

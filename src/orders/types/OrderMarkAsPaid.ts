@@ -304,6 +304,14 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   __typename: "Order";
   id: string;
@@ -333,6 +341,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
   discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
+  channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {

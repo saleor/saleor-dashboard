@@ -170,5 +170,11 @@ export const fragmentOrderDetails = gql`
     invoices {
       ...InvoiceFragment
     }
+    channel {
+      isActive
+      id
+      name
+      currencyCode
+    }
   }
 `;
