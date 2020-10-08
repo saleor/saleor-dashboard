@@ -298,6 +298,14 @@ export interface OrderDetails_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetails_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderDetails_order {
   __typename: "Order";
   id: string;
@@ -327,6 +335,7 @@ export interface OrderDetails_order {
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
   discount: OrderDetails_order_discount | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
+  channel: OrderDetails_order_channel;
 }
 
 export interface OrderDetails_shop_countries {

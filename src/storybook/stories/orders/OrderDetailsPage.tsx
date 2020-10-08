@@ -40,7 +40,6 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onSubmit: () => undefined,
   order,
   saveButtonBarState: "default",
-  selectedChannelName: "Channel",
   userPermissions: adminUserPermissions
 };
 

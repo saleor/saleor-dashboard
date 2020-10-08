@@ -9,6 +9,7 @@
 export interface Channel_channel {
   __typename: "Channel";
   id: string;
+  isActive: boolean;
   name: string;
   slug: string;
   currencyCode: string;

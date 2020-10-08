@@ -9,11 +9,13 @@ import ChannelDetailsPage, {
 
 const props: ChannelDetailsPageProps = {
   disabled: false,
+  disabledStatus: false,
   editableCurrency: true,
   errors: [],
   onBack: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
+  updateChannelStatus: () => undefined
 };
 
 storiesOf("Views / Channels / Channel details", module)
