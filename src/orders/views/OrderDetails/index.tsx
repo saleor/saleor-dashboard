@@ -54,6 +54,7 @@ import OrderOperations from "../../containers/OrderOperations";
 import { TypedOrderDetailsQuery, useOrderVariantSearch } from "../../queries";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import {
+  orderDraftListUrl,
   orderFulfillUrl,
   orderListUrl,
   orderUrl,
@@ -515,7 +516,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onDraftFinalize={() => openModal("finalize")}
                           onDraftRemove={() => openModal("cancel")}
                           onOrderLineAdd={() => openModal("add-order-line")}
-                          onBack={() => navigate(orderListUrl())}
+                          onBack={() => navigate(orderDraftListUrl())}
                           order={order}
                           countries={maybe(() => data.shop.countries, []).map(
                             country => ({
