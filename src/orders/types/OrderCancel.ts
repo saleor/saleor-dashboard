@@ -263,6 +263,7 @@ export interface OrderCancel_orderCancel_order_invoices {
 
 export interface OrderCancel_orderCancel_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

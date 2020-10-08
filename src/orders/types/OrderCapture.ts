@@ -263,6 +263,7 @@ export interface OrderCapture_orderCapture_order_invoices {
 
 export interface OrderCapture_orderCapture_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

@@ -263,6 +263,7 @@ export interface OrderVoid_orderVoid_order_invoices {
 
 export interface OrderVoid_orderVoid_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

@@ -158,6 +158,7 @@ export const fragmentOrderDetails = gql`
       ...InvoiceFragment
     }
     channel {
+      isActive
       id
       name
       currencyCode

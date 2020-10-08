@@ -263,6 +263,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_invoices {
 
 export interface OrderLineDelete_draftOrderLineDelete_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

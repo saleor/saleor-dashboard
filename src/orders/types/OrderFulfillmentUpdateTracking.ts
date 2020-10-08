@@ -263,6 +263,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

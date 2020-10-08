@@ -257,6 +257,7 @@ export interface OrderDetailsFragment_invoices {
 
 export interface OrderDetailsFragment_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

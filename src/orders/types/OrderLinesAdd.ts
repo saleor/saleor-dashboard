@@ -263,6 +263,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_invoices {
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

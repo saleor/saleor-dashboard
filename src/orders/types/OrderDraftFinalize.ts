@@ -263,6 +263,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
 
 export interface OrderDraftFinalize_draftOrderComplete_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;

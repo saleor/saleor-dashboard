@@ -263,6 +263,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel {
   __typename: "Channel";
+  isActive: boolean;
   id: string;
   name: string;
   currencyCode: string;
