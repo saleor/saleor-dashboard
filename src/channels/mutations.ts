@@ -5,7 +5,15 @@ import {
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
+import {
+  ChannelActivate,
+  ChannelActivateVariables
+} from "./types/ChannelActivate";
 import { ChannelCreate, ChannelCreateVariables } from "./types/ChannelCreate";
+import {
+  ChannelDeactivate,
+  ChannelDeactivateVariables
+} from "./types/ChannelDeactivate";
 import { ChannelDelete, ChannelDeleteVariables } from "./types/ChannelDelete";
 import { ChannelUpdate, ChannelUpdateVariables } from "./types/ChannelUpdate";
 
@@ -54,6 +62,36 @@ export const channelDeleteMutation = gql`
   }
 `;
 
+export const channelActivateMutation = gql`
+  ${channelErrorFragment}
+  ${channelDetailsFragment}
+  mutation ChannelActivate($id: ID!) {
+    channelActivate(id: $id) {
+      channel {
+        ...ChannelDetailsFragment
+      }
+      errors: channelErrors {
+        ...ChannelErrorFragment
+      }
+    }
+  }
+`;
+
+export const channelDeactivateMutation = gql`
+  ${channelErrorFragment}
+  ${channelDetailsFragment}
+  mutation ChannelDeactivate($id: ID!) {
+    channelDeactivate(id: $id) {
+      channel {
+        ...ChannelDetailsFragment
+      }
+      errors: channelErrors {
+        ...ChannelErrorFragment
+      }
+    }
+  }
+`;
+
 export const useChannelCreateMutation = makeMutation<
   ChannelCreate,
   ChannelCreateVariables
@@ -68,3 +106,12 @@ export const useChannelDeleteMutation = makeMutation<
   ChannelDelete,
   ChannelDeleteVariables
 >(channelDeleteMutation);
+
+export const useChannelActivateMutation = makeMutation<
+  ChannelActivate,
+  ChannelActivateVariables
+>(channelActivateMutation);
+export const useChannelDeactivateMutation = makeMutation<
+  ChannelDeactivate,
+  ChannelDeactivateVariables
+>(channelDeactivateMutation);

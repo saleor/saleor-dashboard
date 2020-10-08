@@ -1174,6 +1174,19 @@ export interface DateTimeRangeInput {
   lte?: any | null;
 }
 
+export interface DraftOrderCreateInput {
+  billingAddress?: AddressInput | null;
+  user?: string | null;
+  userEmail?: string | null;
+  discount?: any | null;
+  shippingAddress?: AddressInput | null;
+  shippingMethod?: string | null;
+  voucher?: string | null;
+  customerNote?: string | null;
+  channel?: string | null;
+  lines?: (OrderLineCreateInput | null)[] | null;
+}
+
 export interface DraftOrderInput {
   billingAddress?: AddressInput | null;
   user?: string | null;

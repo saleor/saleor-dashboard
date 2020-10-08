@@ -5,7 +5,9 @@ import React from "react";
 import ChannelStatus, { ChannelStatusProps } from "./ChannelStatus";
 
 const props: ChannelStatusProps = {
-  isActive: false
+  disabled: false,
+  isActive: false,
+  updateChannelStatus: () => undefined
 };
 
 storiesOf("Views / Channels / Channel status", module)
