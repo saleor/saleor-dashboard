@@ -1,6 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
-import { channelsList } from "@saleor/channels/fixtures";
 import { adminUserPermissions, fetchMoreProps } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -13,20 +12,13 @@ import Decorator from "../../Decorator";
 
 const order = draftOrder(placeholderImage);
 
-const channelsChoices = channelsList.map(channel => ({
-  label: channel.name,
-  value: channel.id
-}));
-
 const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
-  channelsChoices,
   countries,
   disabled: false,
   fetchUsers: () => undefined,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
-  onChannelChange: () => undefined,
   onCustomerEdit: () => undefined,
   onDraftFinalize: () => undefined,
   onDraftRemove: () => undefined,
@@ -40,7 +32,6 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onShippingMethodEdit: undefined,
   order,
   saveButtonBarState: "default",
-  selectedChannel: channelsChoices[0],
   userPermissions: adminUserPermissions,
   users: clients,
   usersLoading: false
@@ -54,9 +45,6 @@ storiesOf("Views / Orders / Order draft", module)
   ))
   .add("without lines", () => (
     <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
-  ))
-  .add("without selected channel", () => (
-    <OrderDraftPage {...props} selectedChannel={undefined} />
   ))
   .add("no user permissions", () => (
     <OrderDraftPage {...props} userPermissions={[]} />

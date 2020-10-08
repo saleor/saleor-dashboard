@@ -140,16 +140,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
         >
           <FormattedMessage defaultMessage="Customer" />
         </TableCellHeader>
-        <TableCellHeader
-          direction={
-            sort.sort === OrderDraftListUrlSortField.total
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
-          textAlign="right"
-          onClick={() => onSort(OrderDraftListUrlSortField.total)}
-          className={classes.colTotal}
-        >
+        <TableCellHeader textAlign="right" className={classes.colTotal}>
           <FormattedMessage
             defaultMessage="Total"
             description="order draft total price"
