@@ -101,6 +101,7 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  onWarehouseConfigure: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -124,7 +125,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onBack,
   fetchProductTypes,
   weightUnit,
-  onSubmit
+  onSubmit,
+  onWarehouseConfigure
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -297,6 +299,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     <ProductStocks
                       data={data}
                       disabled={disabled}
+                      hasVariants={false}
                       onFormDataChange={change}
                       errors={errors}
                       stocks={stocks}
@@ -320,6 +323,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                         triggerChange();
                         removeStock(id);
                       }}
+                      onWarehouseConfigure={onWarehouseConfigure}
                     />
                     <CardSpacer />
                   </>

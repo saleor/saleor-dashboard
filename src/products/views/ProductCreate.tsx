@@ -14,6 +14,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -180,6 +181,7 @@ export const ProductCreateView: React.FC = () => {
         )}
         onBack={handleBack}
         onSubmit={handleSubmit}
+        onWarehouseConfigure={() => navigate(warehouseAddPath)}
         saveButtonBarState={productCreateOpts.status}
         fetchMoreCategories={{
           hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,

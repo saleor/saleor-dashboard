@@ -10,6 +10,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -142,6 +143,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
+        onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
         warehouses={

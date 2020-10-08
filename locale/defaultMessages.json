@@ -302,6 +302,10 @@
     "context": "variant stock, header",
     "string": "Stock"
   },
+  "productVariantCreatorWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. You can configure variants without providing stock quantities."
+  },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
     "string": "Warehouses"
@@ -309,6 +313,14 @@
   "productVariantPriceOptionalCostPriceField": {
     "context": "optional field",
     "string": "Optional"
+  },
+  "productVariantWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
+  },
+  "productWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",

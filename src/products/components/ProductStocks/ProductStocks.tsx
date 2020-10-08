@@ -21,6 +21,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import Link from "@saleor/components/Link";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
@@ -41,12 +42,14 @@ export interface ProductStocksProps {
   data: ProductStockFormData;
   disabled: boolean;
   errors: ProductErrorFragment[];
+  hasVariants: boolean;
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
   onChange: FormsetChange;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
+  onWarehouseConfigure: () => void;
 }
 
 const useStyles = makeStyles(
@@ -74,6 +77,9 @@ const useStyles = makeStyles(
       "&:not(:last-of-type)": {
         marginBottom: theme.spacing(2)
       }
+    },
+    noWarehouseInfo: {
+      marginTop: theme.spacing()
     },
     paper: {
       padding: theme.spacing(2)
@@ -105,13 +111,15 @@ const useStyles = makeStyles(
 const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
   disabled,
+  hasVariants,
   errors,
   stocks,
   warehouses,
   onChange,
   onFormDataChange,
   onWarehouseStockAdd,
-  onWarehouseStockDelete
+  onWarehouseStockDelete,
+  onWarehouseConfigure
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -178,108 +186,143 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             </span>
           </div>
         </Typography>
-      </CardContent>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Warehouse Name"
-                description="tabel column header"
-              />
-            </TableCell>
-            <TableCell className={classes.colQuantity}>
-              <FormattedMessage
-                defaultMessage="Quantity Available"
-                description="tabel column header"
-              />
-            </TableCell>
-            <TableCell className={classes.colAction} />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {renderCollection(stocks, stock => (
-            <TableRow key={stock.id}>
-              <TableCell className={classes.colName}>{stock.label}</TableCell>
-              <TableCell className={classes.colQuantity}>
-                <TextField
-                  className={classes.inputComponent}
-                  disabled={disabled}
-                  fullWidth
-                  inputProps={{
-                    className: classes.input,
-                    min: 0,
-                    type: "number"
+        {!warehouses.length && (
+          <Typography color="textSecondary" className={classes.noWarehouseInfo}>
+            {hasVariants ? (
+              <>
+                <FormattedMessage
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
+                  description="no warehouses info"
+                  id="productVariantWarehouseSectionDescription"
+                  values={{
+                    a: chunks => (
+                      <Link onClick={onWarehouseConfigure}>{chunks}</Link>
+                    )
                   }}
-                  onChange={event => onChange(stock.id, event.target.value)}
-                  value={stock.value}
+                />
+              </>
+            ) : (
+              <>
+                <FormattedMessage
+                  defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
+                  description="no warehouses info"
+                  id="productWarehouseSectionDescription"
+                  values={{
+                    a: chunks => (
+                      <Link onClick={onWarehouseConfigure}>{chunks}</Link>
+                    )
+                  }}
+                />
+              </>
+            )}
+          </Typography>
+        )}
+      </CardContent>
+      {warehouses.length > 0 && (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.colName}>
+                <FormattedMessage
+                  defaultMessage="Warehouse Name"
+                  description="tabel column header"
                 />
               </TableCell>
-              <TableCell className={classes.colAction}>
-                <IconButton
-                  color="primary"
-                  onClick={() => onWarehouseStockDelete(stock.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage
+                  defaultMessage="Quantity Available"
+                  description="tabel column header"
+                />
               </TableCell>
+              <TableCell className={classes.colAction} />
             </TableRow>
-          ))}
-          {warehousesToAssign.length > 0 && (
-            <TableRow>
-              <TableCell colSpan={2}>
-                <Typography variant="body2">
-                  <FormattedMessage
-                    defaultMessage="Assign Warehouse"
-                    description="button"
+          </TableHead>
+          <TableBody>
+            {renderCollection(stocks, stock => (
+              <TableRow key={stock.id}>
+                <TableCell className={classes.colName}>{stock.label}</TableCell>
+                <TableCell className={classes.colQuantity}>
+                  <TextField
+                    className={classes.inputComponent}
+                    disabled={disabled}
+                    fullWidth
+                    inputProps={{
+                      className: classes.input,
+                      min: 0,
+                      type: "number"
+                    }}
+                    onChange={event => onChange(stock.id, event.target.value)}
+                    value={stock.value}
                   />
-                </Typography>
-              </TableCell>
-              <TableCell className={classes.colAction}>
-                <ClickAwayListener onClickAway={() => setExpansionState(false)}>
-                  <div ref={anchor}>
-                    <IconButton
-                      color="primary"
-                      onClick={() => setExpansionState(!isExpanded)}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                    <Popper
-                      className={classes.popper}
-                      open={isExpanded}
-                      anchorEl={anchor.current}
-                      transition
-                      placement="top-end"
-                    >
-                      {({ TransitionProps }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{
-                            transformOrigin: "right top"
-                          }}
-                        >
-                          <Paper className={classes.paper}>
-                            {warehousesToAssign.map(warehouse => (
-                              <MenuItem
-                                className={classes.menuItem}
-                                onClick={() =>
-                                  onWarehouseStockAdd(warehouse.id)
-                                }
-                              >
-                                {warehouse.name}
-                              </MenuItem>
-                            ))}
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </div>
-                </ClickAwayListener>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+                </TableCell>
+                <TableCell className={classes.colAction}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => onWarehouseStockDelete(stock.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+            {warehousesToAssign.length > 0 && (
+              <TableRow>
+                <TableCell colSpan={2}>
+                  <Typography variant="body2">
+                    <FormattedMessage
+                      defaultMessage="Assign Warehouse"
+                      description="button"
+                    />
+                  </Typography>
+                </TableCell>
+                <TableCell className={classes.colAction}>
+                  <ClickAwayListener
+                    onClickAway={() => setExpansionState(false)}
+                  >
+                    <div ref={anchor}>
+                      <IconButton
+                        color="primary"
+                        onClick={() => setExpansionState(!isExpanded)}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                      <Popper
+                        className={classes.popper}
+                        open={isExpanded}
+                        anchorEl={anchor.current}
+                        transition
+                        placement="top-end"
+                      >
+                        {({ TransitionProps }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{
+                              transformOrigin: "right top"
+                            }}
+                          >
+                            <Paper className={classes.paper}>
+                              {warehousesToAssign.map(warehouse => (
+                                <MenuItem
+                                  className={classes.menuItem}
+                                  onClick={() =>
+                                    onWarehouseStockAdd(warehouse.id)
+                                  }
+                                >
+                                  {warehouse.name}
+                                </MenuItem>
+                              ))}
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    </div>
+                  </ClickAwayListener>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </Card>
   );
 };

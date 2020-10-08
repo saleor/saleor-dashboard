@@ -87,6 +87,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
   onSetDefaultVariant();
+  onWarehouseConfigure();
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
@@ -128,6 +129,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
+  onWarehouseConfigure,
   isChecked,
   selected,
   toggle,
@@ -346,6 +348,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       <ProductStocks
                         data={data}
                         disabled={disabled}
+                        hasVariants={false}
                         errors={errors}
                         stocks={stocks}
                         warehouses={warehouses}
@@ -369,6 +372,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           triggerChange();
                           removeStock(id);
                         }}
+                        onWarehouseConfigure={onWarehouseConfigure}
                       />
                     </>
                   )}

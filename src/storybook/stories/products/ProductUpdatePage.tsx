@@ -39,6 +39,7 @@ const props: ProductUpdatePageProps = {
   onVariantReorder: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  onWarehouseConfigure: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",
@@ -89,6 +90,25 @@ storiesOf("Views / Products / Product edit", module)
   .add("no stock and no variants", () => (
     <ProductUpdatePage
       {...props}
+      product={{
+        ...product,
+        productType: {
+          ...product.productType,
+          hasVariants: false
+        },
+        variants: [
+          {
+            ...product.variants[0],
+            stocks: []
+          }
+        ]
+      }}
+    />
+  ))
+  .add("no stock, no variants and no warehouses", () => (
+    <ProductUpdatePage
+      {...props}
+      warehouses={[]}
       product={{
         ...product,
         productType: {

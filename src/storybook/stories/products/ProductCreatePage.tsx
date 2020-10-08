@@ -35,6 +35,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
     />
@@ -58,6 +59,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={undefined}
+      onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
     />
@@ -87,6 +89,7 @@ storiesOf("Views / Products / Create product", module)
       onSubmit={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
     />

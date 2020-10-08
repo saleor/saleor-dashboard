@@ -28,6 +28,7 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -47,6 +48,26 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
+    />
+  ))
+  .add("no warehouses", () => (
+    <ProductVariantPage
+      defaultWeightUnit="kg"
+      header={variant.name || variant.sku}
+      errors={[]}
+      variant={variant}
+      onAdd={() => undefined}
+      onBack={() => undefined}
+      onDelete={undefined}
+      onSetDefaultVariant={() => undefined}
+      onImageSelect={() => undefined}
+      onSubmit={() => undefined}
+      onVariantClick={() => undefined}
+      onVariantReorder={() => undefined}
+      saveButtonBarState="default"
+      warehouses={[]}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -82,5 +103,6 @@ storiesOf("Views / Products / Product variant details", module)
         ...error
       }))}
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ));

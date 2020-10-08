@@ -26,6 +26,7 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("with errors", () => (
@@ -58,6 +59,7 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -74,6 +76,7 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("add first variant", () => (
@@ -93,5 +96,23 @@ storiesOf("Views / Products / Create product variant", module)
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
+    />
+  ))
+  .add("no warehouses", () => (
+    <ProductVariantCreatePage
+      currencySymbol="USD"
+      weightUnit="kg"
+      disabled={false}
+      errors={[]}
+      header="Add variant"
+      product={product}
+      onBack={() => undefined}
+      onSubmit={() => undefined}
+      onVariantClick={undefined}
+      onVariantReorder={() => undefined}
+      saveButtonBarState="default"
+      warehouses={[]}
+      onWarehouseConfigure={() => undefined}
     />
   ));

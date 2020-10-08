@@ -13,6 +13,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -215,6 +216,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
         onSubmit={handleSubmit}
+        onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
