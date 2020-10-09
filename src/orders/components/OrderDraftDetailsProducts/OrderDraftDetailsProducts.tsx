@@ -186,6 +186,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                               value={data.quantity}
                               onChange={debounce}
                               onBlur={submit}
+                              inputProps={{
+                                min: 1
+                              }}
                             />
                           )}
                         </DebounceForm>
