@@ -64,12 +64,14 @@ export interface OrderDetails_order_events {
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderDetails_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
@@ -135,12 +137,14 @@ export interface OrderDetails_order_fulfillments {
 
 export interface OrderDetails_order_lines_variant_product {
   __typename: "Product";
+  id: string;
   isAvailableForPurchase: boolean | null;
   isPublished: boolean;
 }
 
 export interface OrderDetails_order_lines_variant {
   __typename: "ProductVariant";
+  id: string;
   product: OrderDetails_order_lines_variant_product;
   quantityAvailable: number;
 }
