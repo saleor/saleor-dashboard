@@ -15,6 +15,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -165,11 +166,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                     onSubmit={data => onOrderLineChange(line.id, data)}
                   >
                     {({ change, data, hasChanged, submit }) => {
-                      const handleQuantityChange = event => {
-                        if (/^\d*(\.\d+)?$/.test(event.target.value)) {
-                          change(event);
-                        }
-                      };
+                      const handleQuantityChange = createNonNegativeValueChangeHandler(
+                        change
+                      );
 
                       return (
                         <DebounceForm
