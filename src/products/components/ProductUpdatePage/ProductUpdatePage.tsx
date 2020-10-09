@@ -86,7 +86,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onSeoClick?();
   onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
-  onSetDefaultVariant();
+  onSetDefaultVariant(variant: ProductDetails_product_variants);
   onWarehouseConfigure();
 }
 
