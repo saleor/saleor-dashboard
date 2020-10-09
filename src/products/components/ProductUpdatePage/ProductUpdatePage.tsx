@@ -62,7 +62,6 @@ export interface ProductUpdatePageProps extends ListActions {
   allChannelsCount: number;
   currentChannels: ChannelData[];
   channelChoices: SingleAutocompleteChoiceType[];
-  selectedChannel: string;
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -137,7 +136,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantShow,
   isChecked,
   selected,
-  selectedChannel,
   toggle,
   toggleAll,
   toolbar
@@ -296,7 +294,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <ProductVariants
                       disabled={disabled}
                       variants={variants}
-                      selectedChannel={selectedChannel}
                       channelChoices={channelChoices}
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}

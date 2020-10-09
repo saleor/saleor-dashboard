@@ -53,7 +53,6 @@ const props: ProductUpdatePageProps = {
   placeholderImage,
   product,
   saveButtonBarState: "default",
-  selectedChannel: channelChoices[0].value,
   variants: product.variants,
   warehouses: warehouseList
 };

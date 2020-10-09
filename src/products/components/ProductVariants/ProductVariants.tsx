@@ -16,6 +16,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -74,6 +75,9 @@ const useStyles = makeStyles(
       colSku: {
         width: 200
       }
+    },
+    channelSelect: {
+      marginRight: theme.spacing(1)
     },
     colInventory: {
       textAlign: "right"
@@ -170,7 +174,6 @@ function getAvailabilityLabel(
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
-  selectedChannel: string;
   channelChoices: SingleAutocompleteChoiceType[];
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
@@ -189,7 +192,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     onVariantsAdd,
     isChecked,
     selected,
-    selectedChannel,
     toggle,
     toggleAll,
     toolbar
@@ -199,9 +201,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const intl = useIntl();
   const [warehouse, setWarehouse] = React.useState<string>(null);
   const [channelChoice, setChannelChoice] = useStateFromProps(
-    channelChoices.some(choice => choice.value === selectedChannel)
-      ? selectedChannel
-      : channelChoices[0]?.value
+    channelChoices[0]?.value
   );
   const hasVariants = maybe(() => variants.length > 0, true);
 
@@ -245,12 +245,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         <CardContent className={classes.warehouseSelectContainer}>
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
-              defaultMessage="Channel"
-              description="variant channle"
+              defaultMessage="Channel:"
+              description="variant channel"
             />
           </Typography>
           <LinkChoice
-            className={classes.select}
+            className={classNames(classes.select, classes.channelSelect)}
             choices={channelChoices}
             name="channels"
             value={channelChoice}

@@ -15,7 +15,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListActions from "@saleor/hooks/useListActions";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -115,8 +114,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [currentChannels, setCurrentChannels] = useStateFromProps(
     productChannelsChoices
   );
-
-  const [selectedChannel] = useLocalStorage("productsListChannel", "");
 
   const {
     isSelected: isChannelSelected,
@@ -347,7 +344,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         collections={collections}
         currentChannels={currentChannels}
         channelChoices={channelChoices}
-        selectedChannel={selectedChannel}
         disabled={disableFormSave}
         errors={errors}
         channelsErrors={channelsErrors}

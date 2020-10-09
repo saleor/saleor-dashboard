@@ -4212,9 +4212,9 @@
     "context": "product variant inventory",
     "string": "Not stocked"
   },
-  "src_dot_products_dot_components_dot_ProductVariants_dot_4019698341": {
-    "context": "variant channle",
-    "string": "Channel"
+  "src_dot_products_dot_components_dot_ProductVariants_dot_4183335632": {
+    "context": "variant channel",
+    "string": "Channel:"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"
