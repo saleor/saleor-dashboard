@@ -43,12 +43,6 @@ export interface VariantCreate_productVariantCreate_productVariant_attributes {
   values: (VariantCreate_productVariantCreate_productVariant_attributes_values | null)[];
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantCreate_productVariantCreate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -148,7 +142,6 @@ export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
-  costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;

@@ -12,7 +12,6 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { decimal } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
   ProductVariantPageSubmitData
@@ -195,7 +194,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                           id: attribute.id,
                           values: [attribute.value]
                         })),
-                        costPrice: decimal(data.costPrice),
                         id: variantId,
                         removeStocks: data.removeStocks,
                         sku: data.sku,

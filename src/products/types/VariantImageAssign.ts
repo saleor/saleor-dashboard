@@ -43,12 +43,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant_attributes
   values: (VariantImageAssign_variantImageAssign_productVariant_attributes_values | null)[];
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantImageAssign_variantImageAssign_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -148,7 +142,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantImageAssign_variantImageAssign_productVariant_attributes[];
-  costPrice: VariantImageAssign_variantImageAssign_productVariant_costPrice | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
   product: VariantImageAssign_variantImageAssign_productVariant_product;

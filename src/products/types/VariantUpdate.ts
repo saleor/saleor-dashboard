@@ -43,12 +43,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant_attributes {
   values: (VariantUpdate_productVariantUpdate_productVariant_attributes_values | null)[];
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantUpdate_productVariantUpdate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -148,7 +142,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantUpdate_productVariantUpdate_productVariant_attributes[];
-  costPrice: VariantUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
@@ -198,12 +191,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_attribu
   __typename: "SelectedAttribute";
   attribute: VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute;
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values | null)[];
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_images {
@@ -305,7 +292,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantUpdate_productVariantStocksUpdate_productVariant_attributes[];
-  costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
@@ -398,7 +384,6 @@ export interface VariantUpdateVariables {
   removeStocks: string[];
   id: string;
   attributes?: (AttributeValueInput | null)[] | null;
-  costPrice?: any | null;
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];

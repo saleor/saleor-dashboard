@@ -1713,11 +1713,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     }
   ],
-  costPrice: {
-    __typename: "Money",
-    amount: 12,
-    currency: "USD"
-  },
   id: "var1",
   images: [
     {

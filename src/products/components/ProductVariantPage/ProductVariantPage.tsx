@@ -42,7 +42,6 @@ export interface ProductVariantChannelData {
 }
 export interface ProductVariantPageFormData {
   channelListing: ProductVariantChannelData[];
-  costPrice: string;
   sku: string;
   trackInventory: boolean;
 }
@@ -124,7 +123,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   const initialForm: ProductVariantPageFormData = {
     channelListing: channels,
-    costPrice: variant?.costPrice?.amount?.toString() || "",
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory
   };

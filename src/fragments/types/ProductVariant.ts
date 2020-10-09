@@ -35,12 +35,6 @@ export interface ProductVariant_attributes {
   values: (ProductVariant_attributes_values | null)[];
 }
 
-export interface ProductVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -140,7 +134,6 @@ export interface ProductVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: ProductVariant_attributes[];
-  costPrice: ProductVariant_costPrice | null;
   images: (ProductVariant_images | null)[] | null;
   name: string;
   product: ProductVariant_product;

@@ -210,12 +210,6 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_attribu
   values: (SimpleProductUpdate_productVariantUpdate_productVariant_attributes_values | null)[];
 }
 
-export interface SimpleProductUpdate_productVariantUpdate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -315,7 +309,6 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: SimpleProductUpdate_productVariantUpdate_productVariant_attributes[];
-  costPrice: SimpleProductUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
@@ -365,12 +358,6 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_a
   __typename: "SelectedAttribute";
   attribute: SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes_attribute;
   values: (SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes_values | null)[];
-}
-
-export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_images {
@@ -472,7 +459,6 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksCreate_productVariant_attributes[];
-  costPrice: SimpleProductUpdate_productVariantStocksCreate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksCreate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksCreate_productVariant_product;
@@ -521,12 +507,6 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_a
   __typename: "SelectedAttribute";
   attribute: SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes_attribute;
   values: (SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes_values | null)[];
-}
-
-export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_images {
@@ -628,7 +608,6 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksDelete_productVariant_attributes[];
-  costPrice: SimpleProductUpdate_productVariantStocksDelete_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksDelete_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksDelete_productVariant_product;
@@ -678,12 +657,6 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_a
   __typename: "SelectedAttribute";
   attribute: SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes_attribute;
   values: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes_values | null)[];
-}
-
-export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_images {
@@ -785,7 +758,6 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: SimpleProductUpdate_productVariantStocksUpdate_productVariant_attributes[];
-  costPrice: SimpleProductUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product;
