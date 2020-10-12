@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,7 +10,6 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-// import { ProductVariant_channelListing } from "@saleor/fragments/types/ProductVariant";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
@@ -50,7 +50,6 @@ export interface ProductVariantChannelData {
 }
 export interface ProductVariantPageFormData extends MetadataFormData {
   channelListing: ProductVariantChannelData[];
-  costPrice: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -71,6 +70,7 @@ interface ProductVariantPageProps {
     | ProductErrorWithAttributesFragment[]
     | VariantUpdate_productVariantUpdate_errors[];
   header: string;
+  channels: ChannelPriceData[];
   channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   loading?: boolean;
   placeholderImage?: string;
@@ -89,9 +89,10 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  channels,
+  channelErrors,
   defaultVariantId,
   defaultWeightUnit,
-  channelErrors,
   errors,
   header,
   loading,
@@ -148,13 +149,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   );
 
   const initialForm: ProductVariantPageFormData = {
-    channelListing: variant?.channelListing?.map(listing => ({
-      currency: listing.price.currency,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: listing.price.amount
-    })),
-    costPrice: variant?.costPrice?.amount.toString() || "",
+    channelListing: channels,
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",

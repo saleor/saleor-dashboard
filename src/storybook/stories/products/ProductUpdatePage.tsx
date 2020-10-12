@@ -19,10 +19,16 @@ import { taxTypes } from "../taxes/fixtures";
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
 
+const channelChoices = product.channelListing.map(listing => ({
+  label: listing.channel.name,
+  value: listing.channel.id
+}));
+
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
   categories: [product.category],
+  channelChoices,
   channelsErrors: [],
   collections,
   currentChannels: [],
