@@ -43,12 +43,6 @@ export interface VariantCreate_productVariantCreate_productVariant_attributes {
   values: (VariantCreate_productVariantCreate_productVariant_attributes_values | null)[];
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantCreate_productVariantCreate_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -66,6 +60,25 @@ export interface VariantCreate_productVariantCreate_productVariant_product_image
 export interface VariantCreate_productVariantCreate_productVariant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: VariantCreate_productVariantCreate_productVariant_product_channelListing_channel;
+  discountedPrice: VariantCreate_productVariantCreate_productVariant_product_channelListing_discountedPrice | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_variants_images {
@@ -88,6 +101,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   images: (VariantCreate_productVariantCreate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
+  channelListing: VariantCreate_productVariantCreate_productVariant_product_channelListing[] | null;
   variants: (VariantCreate_productVariantCreate_productVariant_product_variants | null)[] | null;
 }
 
@@ -128,7 +142,6 @@ export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
-  costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;

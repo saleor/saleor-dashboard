@@ -346,7 +346,6 @@ export const variantUpdateMutation = gql`
     $removeStocks: [ID!]!
     $id: ID!
     $attributes: [AttributeValueInput]
-    $costPrice: PositiveDecimal
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
@@ -355,7 +354,6 @@ export const variantUpdateMutation = gql`
       id: $id
       input: {
         attributes: $attributes
-        costPrice: $costPrice
         sku: $sku
         trackInventory: $trackInventory
       }

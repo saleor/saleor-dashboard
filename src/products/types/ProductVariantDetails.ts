@@ -35,12 +35,6 @@ export interface ProductVariantDetails_productVariant_attributes {
   values: (ProductVariantDetails_productVariant_attributes_values | null)[];
 }
 
-export interface ProductVariantDetails_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariantDetails_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -58,6 +52,25 @@ export interface ProductVariantDetails_productVariant_product_images {
 export interface ProductVariantDetails_productVariant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface ProductVariantDetails_productVariant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantDetails_productVariant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantDetails_productVariant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductVariantDetails_productVariant_product_channelListing_channel;
+  discountedPrice: ProductVariantDetails_productVariant_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductVariantDetails_productVariant_product_variants_images {
@@ -80,6 +93,7 @@ export interface ProductVariantDetails_productVariant_product {
   images: (ProductVariantDetails_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariantDetails_productVariant_product_thumbnail | null;
+  channelListing: ProductVariantDetails_productVariant_product_channelListing[] | null;
   variants: (ProductVariantDetails_productVariant_product_variants | null)[] | null;
 }
 
@@ -120,7 +134,6 @@ export interface ProductVariantDetails_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: ProductVariantDetails_productVariant_attributes[];
-  costPrice: ProductVariantDetails_productVariant_costPrice | null;
   images: (ProductVariantDetails_productVariant_images | null)[] | null;
   name: string;
   product: ProductVariantDetails_productVariant_product;

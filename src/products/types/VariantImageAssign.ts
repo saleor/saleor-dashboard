@@ -43,12 +43,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant_attributes
   values: (VariantImageAssign_variantImageAssign_productVariant_attributes_values | null)[];
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantImageAssign_variantImageAssign_productVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -66,6 +60,25 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product_im
 export interface VariantImageAssign_variantImageAssign_productVariant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: VariantImageAssign_variantImageAssign_productVariant_product_channelListing_channel;
+  discountedPrice: VariantImageAssign_variantImageAssign_productVariant_product_channelListing_discountedPrice | null;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_product_variants_images {
@@ -88,6 +101,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product {
   images: (VariantImageAssign_variantImageAssign_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantImageAssign_variantImageAssign_productVariant_product_thumbnail | null;
+  channelListing: VariantImageAssign_variantImageAssign_productVariant_product_channelListing[] | null;
   variants: (VariantImageAssign_variantImageAssign_productVariant_product_variants | null)[] | null;
 }
 
@@ -128,7 +142,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   __typename: "ProductVariant";
   id: string;
   attributes: VariantImageAssign_variantImageAssign_productVariant_attributes[];
-  costPrice: VariantImageAssign_variantImageAssign_productVariant_costPrice | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
   product: VariantImageAssign_variantImageAssign_productVariant_product;

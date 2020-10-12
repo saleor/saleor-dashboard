@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -41,7 +42,6 @@ export interface ProductVariantChannelData {
 }
 export interface ProductVariantPageFormData {
   channelListing: ProductVariantChannelData[];
-  costPrice: string;
   sku: string;
   trackInventory: boolean;
 }
@@ -56,6 +56,7 @@ export interface ProductVariantPageSubmitData
 
 interface ProductVariantPageProps {
   variant?: ProductVariant;
+  channels: ChannelPriceData[];
   channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   errors: VariantUpdate_productVariantUpdate_errors[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -72,6 +73,7 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  channels,
   channelErrors,
   errors,
   loading,
@@ -120,13 +122,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   );
 
   const initialForm: ProductVariantPageFormData = {
-    channelListing: variant?.channelListing?.map(listing => ({
-      currency: listing.price.currency,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: listing.price.amount
-    })),
-    costPrice: variant?.costPrice?.amount?.toString() || "",
+    channelListing: channels,
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory
   };

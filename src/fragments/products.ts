@@ -29,17 +29,31 @@ export const fragmentProductImage = gql`
 `;
 
 export const channelListingProductFragment = gql`
+  ${fragmentMoney}
   fragment ChannelListingProductFragment on ProductChannelListing {
     isPublished
     publicationDate
     discountedPrice {
-      amount
-      currency
+      ...Money
     }
     channel {
       id
       name
       currencyCode
+    }
+  }
+`;
+
+export const channelListingProductVariantFragment = gql`
+  ${fragmentMoney}
+  fragment ChannelListingProductVariantFragment on ProductVariantChannelListing {
+    channel {
+      id
+      name
+      currencyCode
+    }
+    price {
+      ...Money
     }
   }
 `;
@@ -104,8 +118,7 @@ export const productVariantAttributesFragment = gql`
         currencyCode
       }
       discountedPrice {
-        amount
-        currency
+        ...Money
       }
     }
   }
@@ -149,14 +162,7 @@ export const productFragmentDetails = gql`
       }
       trackInventory
       channelListing {
-        channel {
-          id
-          name
-          currencyCode
-        }
-        price {
-          ...Money
-        }
+        ...ChannelListingProductVariantFragment
       }
     }
     productType {
@@ -171,6 +177,7 @@ export const fragmentVariant = gql`
   ${fragmentMoney}
   ${fragmentProductImage}
   ${stockFragment}
+  ${channelListingProductVariantFragment}
   fragment ProductVariant on ProductVariant {
     id
     attributes {
@@ -191,9 +198,6 @@ export const fragmentVariant = gql`
         slug
       }
     }
-    costPrice {
-      ...Money
-    }
     images {
       id
       url
@@ -208,6 +212,16 @@ export const fragmentVariant = gql`
       thumbnail {
         url
       }
+      channelListing {
+        channel {
+          id
+          name
+          currencyCode
+        }
+        discountedPrice {
+          ...Money
+        }
+      }
       variants {
         id
         name
@@ -219,14 +233,7 @@ export const fragmentVariant = gql`
       }
     }
     channelListing {
-      channel {
-        id
-        name
-        currencyCode
-      }
-      price {
-        ...Money
-      }
+      ...ChannelListingProductVariantFragment
     }
     sku
     stocks {
