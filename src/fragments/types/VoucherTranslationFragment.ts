@@ -8,6 +8,12 @@ import { LanguageCodeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: VoucherTranslationFragment
 // ====================================================
 
+export interface VoucherTranslationFragment_voucher {
+  __typename: "Voucher";
+  id: string;
+  name: string | null;
+}
+
 export interface VoucherTranslationFragment_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -22,8 +28,7 @@ export interface VoucherTranslationFragment_translation {
 }
 
 export interface VoucherTranslationFragment {
-  __typename: "Voucher";
-  id: string;
-  name: string | null;
+  __typename: "VoucherTranslatableContent";
+  voucher: VoucherTranslationFragment_voucher | null;
   translation: VoucherTranslationFragment_translation | null;
 }

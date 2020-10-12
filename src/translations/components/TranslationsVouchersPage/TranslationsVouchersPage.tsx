@@ -2,19 +2,18 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import { VoucherTranslationFragment } from "@saleor/fragments/types/VoucherTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import { VoucherTranslationDetails_translation } from "@saleor/translations/types/VoucherTranslationDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsVouchersPageProps
   extends TranslationsEntitiesPageProps {
-  voucher: VoucherTranslationFragment;
+  data: VoucherTranslationDetails_translation;
 }
 
 export const fieldNames = {
@@ -26,7 +25,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   disabled,
   languages,
   languageCode,
-  voucher,
+  data,
   saveButtonState,
   onBack,
   onDiscard,
@@ -50,7 +49,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           },
           {
             languageCode,
-            voucherName: maybe(() => voucher.name, "...")
+            voucherName: data?.voucher?.name || "..."
           }
         )}
       >
@@ -71,11 +70,9 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
               defaultMessage: "Voucher Name"
             }),
             name: fieldNames.name,
-            translation: maybe(() =>
-              voucher.translation ? voucher.translation.name : null
-            ),
+            translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: maybe(() => voucher.name)
+            value: data?.voucher?.name
           }
         ]}
         saveButtonState={saveButtonState}

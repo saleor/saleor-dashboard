@@ -3,35 +3,30 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: CategoryTranslationFragment
+// GraphQL fragment: CategoryTranslationUpdateFragment
 // ====================================================
 
-export interface CategoryTranslationFragment_translation_language {
+export interface CategoryTranslationUpdateFragment_translation_language {
   __typename: "LanguageDisplay";
   language: string;
 }
 
-export interface CategoryTranslationFragment_translation {
+export interface CategoryTranslationUpdateFragment_translation {
   __typename: "CategoryTranslation";
   id: string;
   descriptionJson: any;
-  language: CategoryTranslationFragment_translation_language;
+  language: CategoryTranslationUpdateFragment_translation_language;
   name: string;
   seoDescription: string | null;
   seoTitle: string | null;
 }
 
-export interface CategoryTranslationFragment_category {
+export interface CategoryTranslationUpdateFragment {
   __typename: "Category";
   id: string;
   name: string;
   descriptionJson: any;
   seoDescription: string | null;
   seoTitle: string | null;
-}
-
-export interface CategoryTranslationFragment {
-  __typename: "CategoryTranslatableContent";
-  translation: CategoryTranslationFragment_translation | null;
-  category: CategoryTranslationFragment_category | null;
+  translation: CategoryTranslationUpdateFragment_translation | null;
 }
