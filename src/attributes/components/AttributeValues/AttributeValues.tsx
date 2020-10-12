@@ -31,13 +31,13 @@ export interface AttributeValuesProps {
 const useStyles = makeStyles(
   theme => ({
     columnAdmin: {
-      width: "50%"
+      width: 300
     },
     columnDrag: {
       width: 48 + theme.spacing(1.5)
     },
     columnStore: {
-      width: "50%"
+      width: "auto"
     },
     dragIcon: {
       cursor: "grab"
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: theme.spacing()
       },
-      width: 48 + theme.spacing(1.5)
+      width: 80
     },
     link: {
       cursor: "pointer"
@@ -98,7 +98,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 description="attribute values list: name column header"
               />
             </TableCell>
-            <TableCell />
+            <TableCell className={classes.iconCell} />
           </TableRow>
         </TableHead>
         <SortableTableBody onSortEnd={onValueReorder}>
