@@ -92,6 +92,7 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...product,
+
         productType: {
           ...product.productType,
           hasVariants: false

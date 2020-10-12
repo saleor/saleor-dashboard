@@ -15,7 +15,6 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { maybe } from "@saleor/misc";
 import { ProductDetails_product_attributes_attribute_values } from "@saleor/products/types/ProductDetails";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -194,13 +193,11 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
                         <SingleAutocompleteSelectField
                           choices={getSingleChoices(attribute.data.values)}
                           disabled={disabled}
-                          displayValue={maybe(
-                            () =>
-                              attribute.data.values.find(
-                                value => value.slug === attribute.value[0]
-                              ).name,
-                            attribute.value[0]
-                          )}
+                          displayValue={
+                            attribute.data.values.find(
+                              value => value.slug === attribute.value[0]
+                            )?.name || ""
+                          }
                           emptyOption={!attribute.data.isRequired}
                           error={!!error}
                           helperText={getProductErrorMessage(error, intl)}

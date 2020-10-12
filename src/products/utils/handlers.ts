@@ -42,7 +42,7 @@ export function createAttributeChangeHandler(
     ]);
 
     triggerChange();
-    changeAttributeData(attributeId, [value]);
+    changeAttributeData(attributeId, value === "" ? [] : [value]);
   };
 }
 

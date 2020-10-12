@@ -98,7 +98,6 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                     attribute.value,
                     attributes
                   )}
-                  emptyOption
                   error={!!error}
                   helperText={getProductVariantAttributeErrorMessage(
                     error,

@@ -35,7 +35,7 @@ export interface SingleAutocompleteSelectFieldContentProps
   choices: SingleAutocompleteChoiceType[];
   displayCustomValue: boolean;
   emptyOption: boolean;
-  getItemProps: (options: GetItemPropsOptions) => void;
+  getItemProps: (options: GetItemPropsOptions) => any;
   highlightedIndex: number;
   inputValue: string;
   isCustomValueSelected: boolean;
@@ -164,9 +164,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
 
   React.useEffect(() => {
     setSlice(sliceSize);
-    anchor.current.scrollTo({
-      top: 0
-    });
+    if (anchor.current?.scrollTo) {
+      anchor.current.scrollTo({
+        top: 0
+      });
+    }
   }, [choices?.length]);
 
   React.useEffect(() => {
@@ -174,6 +176,10 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
       setCalledForMore(false);
     }
   }, [loading]);
+
+  const emptyOptionProps = getItemProps({
+    item: ""
+  });
 
   return (
     <Paper className={classes.root}>
@@ -184,20 +190,19 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
       >
         {choices.length > 0 || displayCustomValue ? (
           <>
-            {emptyOption && (
+            {
               <MenuItem
                 className={classes.menuItem}
                 component="div"
-                {...getItemProps({
-                  item: ""
-                })}
                 data-test="singleautocomplete-select-option"
+                data-test-type="empty"
+                {...emptyOptionProps}
               >
                 <Typography color="textSecondary">
                   <FormattedMessage defaultMessage="None" />
                 </Typography>
               </MenuItem>
-            )}
+            }
             {add && (
               <MenuItem
                 className={classes.menuItem}
@@ -206,6 +211,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                   item: inputValue
                 })}
                 data-test="singleautocomplete-select-option-add"
+                data-test-type="add"
                 onClick={add.onClick}
               >
                 <Add color="primary" className={classes.add} />
@@ -222,6 +228,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                   item: inputValue
                 })}
                 data-test="singleautocomplete-select-option"
+                data-test-type="custom"
               >
                 <FormattedMessage
                   defaultMessage="Add new value: {value}"
@@ -254,6 +261,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                     item: suggestion.value
                   })}
                   data-test="singleautocomplete-select-option"
+                  data-test-value={suggestion.value}
+                  data-test-type="option"
                 >
                   {suggestion.label}
                 </MenuItem>
