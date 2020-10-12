@@ -49,12 +49,6 @@ export interface ProductVariant_attributes {
   values: (ProductVariant_attributes_values | null)[];
 }
 
-export interface ProductVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariant_images {
   __typename: "ProductImage";
   id: string;
@@ -85,6 +79,25 @@ export interface ProductVariant_product_thumbnail {
   url: string;
 }
 
+export interface ProductVariant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductVariant_product_channelListing_channel;
+  discountedPrice: ProductVariant_product_channelListing_discountedPrice | null;
+}
+
 export interface ProductVariant_product_variants_images {
   __typename: "ProductImage";
   id: string;
@@ -106,6 +119,7 @@ export interface ProductVariant_product {
   images: (ProductVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
+  channelListing: ProductVariant_product_channelListing[] | null;
   variants: (ProductVariant_product_variants | null)[] | null;
 }
 
@@ -154,7 +168,6 @@ export interface ProductVariant {
   metadata: (ProductVariant_metadata | null)[];
   privateMetadata: (ProductVariant_privateMetadata | null)[];
   attributes: ProductVariant_attributes[];
-  costPrice: ProductVariant_costPrice | null;
   images: (ProductVariant_images | null)[] | null;
   name: string;
   product: ProductVariant_product;
