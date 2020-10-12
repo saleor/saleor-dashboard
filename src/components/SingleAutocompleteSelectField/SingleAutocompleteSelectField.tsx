@@ -4,13 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
-import Downshift, {
-  ControllerStateAndHelpers,
-  DownshiftState,
-  StateChangeOptions
-} from "downshift";
+import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
-import { names } from "keycode";
 import React from "react";
 
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
