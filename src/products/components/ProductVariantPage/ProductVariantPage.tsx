@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -38,7 +39,6 @@ export interface ProductVariantChannelData {
 }
 export interface ProductVariantPageFormData extends MetadataFormData {
   channelListing: ProductVariantChannelData[];
-  costPrice: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -59,6 +59,7 @@ interface ProductVariantPageProps {
     | ProductErrorWithAttributesFragment[]
     | VariantUpdate_productVariantUpdate_errors[];
   header: string;
+  channels: ChannelPriceData[];
   channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
   loading?: boolean;
   placeholderImage?: string;
@@ -77,9 +78,10 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  channels,
+  channelErrors,
   defaultVariantId,
   defaultWeightUnit,
-  channelErrors,
   errors,
   header,
   loading,
@@ -123,12 +125,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variant={variant}
           onSubmit={onSubmit}
           warehouses={warehouses}
-          currentChannels={variant?.channelListing?.map(listing => ({
-            currency: listing.price.currency,
-            id: listing.channel.id,
-            name: listing.channel.name,
-            price: listing.price.amount
-          }))}
+          currentChannels={channels}
         >
           {({ change, data, handlers, hasChanged, submit }) => {
             const formDisabled = data.channelListing?.some(channel =>

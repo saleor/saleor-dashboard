@@ -1754,11 +1754,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     }
   ],
-  costPrice: {
-    __typename: "Money",
-    amount: 12,
-    currency: "USD"
-  },
   id: "var1",
   images: [
     {
@@ -1792,6 +1787,36 @@ export const variant = (placeholderImage: string): ProductVariant => ({
   name: "Extended Hard",
   product: {
     __typename: "Product" as "Product",
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "test1",
+          name: "Test channel"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 10,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "test2",
+          name: "Test channel other"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 20,
+          currency: "USD"
+        }
+      }
+    ],
     defaultVariant: {
       __typename: "ProductVariant",
       id: "var1"

@@ -4843,6 +4843,10 @@
     "context": "product variant inventory",
     "string": "Not stocked"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_4183335632": {
+    "context": "variant channel",
+    "string": "Channel:"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"
   },
@@ -4863,9 +4867,6 @@
   },
   "src_dot_products_dot_views_dot_2880386427": {
     "string": "Are you sure you want to delete this image?"
-  },
-  "src_dot_products_dot_views_dot_3576216025": {
-    "string": "Channels updated"
   },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",

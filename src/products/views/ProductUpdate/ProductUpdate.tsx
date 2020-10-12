@@ -250,6 +250,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdate({});
 
+  const channelChoices = product?.channelListing.map(listing => ({
+    label: listing.channel.name,
+    value: listing.channel.id
+  }));
+
   const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
@@ -377,6 +382,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         collections={collections}
         currentChannels={currentChannels}
         defaultWeightUnit={shop?.defaultWeightUnit}
+        channelChoices={channelChoices}
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
         errors={errors}
