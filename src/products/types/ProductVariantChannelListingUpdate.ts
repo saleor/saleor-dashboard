@@ -37,12 +37,6 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_values | null)[];
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images {
   __typename: "ProductImage";
   id: string;
@@ -60,6 +54,25 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_channel;
+  discountedPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_discountedPrice | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants_images {
@@ -82,6 +95,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
+  channelListing: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing[] | null;
   variants: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants | null)[] | null;
 }
 
@@ -122,7 +136,6 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   __typename: "ProductVariant";
   id: string;
   attributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes[];
-  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_costPrice | null;
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images | null)[] | null;
   name: string;
   product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;

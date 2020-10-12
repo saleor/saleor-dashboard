@@ -2,6 +2,7 @@ import { Channels_channels } from "@saleor/channels/types/Channels";
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
+import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListing } from "@saleor/shipping/types/ShippingZone";
 import { uniqBy } from "lodash";
 
@@ -57,6 +58,27 @@ export const createSaleChannels = (data?: Channels_channels[]) =>
     id: channel.id,
     name: channel.name
   }));
+
+export const createVariantChannels = (
+  data?: ProductVariantDetails_productVariant
+): ChannelPriceData[] => {
+  if (data) {
+    const productChannels = data?.product.channelListing.map(listing => ({
+      currency: listing.channel.currencyCode,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: null
+    }));
+    const variantChannels = data?.channelListing.map(listing => ({
+      currency: listing.channel.currencyCode,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: listing.price.amount
+    }));
+    return uniqBy([...variantChannels, ...productChannels], obj => obj.id);
+  }
+  return [];
+};
 
 export const createChannelsDataWithSaleDiscountPrice = (
   saleData?: SaleDetails_sale,
