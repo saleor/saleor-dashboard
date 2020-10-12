@@ -190,7 +190,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
       >
         {choices.length > 0 || displayCustomValue ? (
           <>
-            {
+            {emptyOption && (
               <MenuItem
                 className={classes.menuItem}
                 component="div"
@@ -202,7 +202,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                   <FormattedMessage defaultMessage="None" />
                 </Typography>
               </MenuItem>
-            }
+            )}
             {add && (
               <MenuItem
                 className={classes.menuItem}
