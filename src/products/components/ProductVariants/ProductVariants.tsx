@@ -70,7 +70,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colActions: {
-        width: 30
+        width: 70
       },
       colInventory: {
         width: 200
@@ -89,7 +89,9 @@ const useStyles = makeStyles(
     colInventory: {
       textAlign: "right"
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colPrice: {
       textAlign: "right"
     },
@@ -98,12 +100,6 @@ const useStyles = makeStyles(
     defaultVariant: {
       color: fade(theme.palette.text.secondary, 0.6),
       display: "block"
-    },
-    denseTable: {
-      "& td, & th": {
-        paddingRight: theme.spacing(3)
-      },
-      width: "auto"
     },
     link: {
       cursor: "pointer"
@@ -195,7 +191,7 @@ interface ProductVariantsProps extends ListActions {
   onVariantsAdd?();
 }
 
-const numberOfColumns = 6;
+const numberOfColumns = 7;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
@@ -280,7 +276,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         </CardContent>
       )}
       {hasVariants && (
-        <ResponsiveTable className={classes.denseTable}>
+        <ResponsiveTable>
           <colgroup>
             <col className={classes.colGrab} />
             <col />
@@ -288,6 +284,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             <col className={classes.colSku} />
             <col className={classes.colPrice} />
             <col className={classes.colInventory} />
+            <col className={classes.colActions} />
           </colgroup>
           <TableHead
             colSpan={numberOfColumns}
