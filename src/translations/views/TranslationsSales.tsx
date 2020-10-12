@@ -83,6 +83,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
             }
           });
         };
+        const translation = saleTranslations?.data?.translation;
 
         return (
           <TranslationsSalesPage
@@ -106,7 +107,11 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.sales, id))
             }
-            data={saleTranslations?.data?.translation}
+            data={
+              translation?.__typename === "SaleTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

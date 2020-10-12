@@ -2,9 +2,9 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { VoucherTranslationFragment } from "@saleor/fragments/types/VoucherTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
-import { VoucherTranslationDetails_translation } from "@saleor/translations/types/VoucherTranslationDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,7 +13,7 @@ import TranslationFields from "../TranslationFields";
 
 export interface TranslationsVouchersPageProps
   extends TranslationsEntitiesPageProps {
-  data: VoucherTranslationDetails_translation;
+  data: VoucherTranslationFragment;
 }
 
 export const fieldNames = {

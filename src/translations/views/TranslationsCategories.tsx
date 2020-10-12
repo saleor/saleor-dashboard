@@ -86,6 +86,8 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
             }
           });
         };
+        const translation = categoryTranslations?.data?.translation;
+
         return (
           <TranslationsCategoriesPage
             activeField={params.activeField}
@@ -110,7 +112,11 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
               )
             }
             onSubmit={handleSubmit}
-            data={categoryTranslations.data?.translation}
+            data={
+              translation?.__typename === "CategoryTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

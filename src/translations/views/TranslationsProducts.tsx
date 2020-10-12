@@ -87,6 +87,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
             }
           });
         };
+        const translation = productTranslations?.data?.translation;
 
         return (
           <TranslationsProductsPage
@@ -112,7 +113,11 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
               )
             }
             onSubmit={handleSubmit}
-            data={productTranslations?.data?.translation}
+            data={
+              translation?.__typename === "ProductTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

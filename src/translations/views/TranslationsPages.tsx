@@ -6,7 +6,6 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import {
   LanguageCodeEnum,
   PageTranslationInput
@@ -90,6 +89,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
             }
           });
         };
+        const translation = pageTranslations?.data?.translation;
 
         return (
           <TranslationsPagesPage
@@ -98,7 +98,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
               pageTranslations.loading || updateTranslationsOpts.loading
             }
             languageCode={languageCode}
-            languages={maybe(() => shop.languages, [])}
+            languages={shop?.languages || []}
             saveButtonState={updateTranslationsOpts.status}
             onBack={() =>
               navigate(
@@ -113,7 +113,11 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
               navigate(languageEntityUrl(lang, TranslatableEntities.pages, id))
             }
             onSubmit={handleSubmit}
-            data={pageTranslations?.data?.translation}
+            data={
+              translation?.__typename === "PageTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

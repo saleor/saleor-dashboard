@@ -3,12 +3,9 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { ProductTranslationFragment } from "@saleor/fragments/types/ProductTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
-import {
-  ProductTranslationDetails_translation,
-  ProductTranslationDetails_translation_ProductTranslatableContent
-} from "@saleor/translations/types/ProductTranslationDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,8 +14,7 @@ import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
-  data: ProductTranslationDetails_translation_ProductTranslatableContent &
-    ProductTranslationDetails_translation;
+  data: ProductTranslationFragment;
 }
 
 export const fieldNames = {

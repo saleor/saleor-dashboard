@@ -3,9 +3,9 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { CategoryTranslationFragment } from "@saleor/fragments/types/CategoryTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
-import { CategoryTranslationDetails_translation_CategoryTranslatableContent } from "@saleor/translations/types/CategoryTranslationDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,7 @@ import TranslationFields from "../TranslationFields";
 
 export interface TranslationsCategoriesPageProps
   extends TranslationsEntitiesPageProps {
-  data: CategoryTranslationDetails_translation_CategoryTranslatableContent;
+  data: CategoryTranslationFragment;
 }
 
 export const fieldNames = {

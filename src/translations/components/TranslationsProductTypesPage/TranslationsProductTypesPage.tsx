@@ -2,9 +2,9 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { AttributeTranslationFragment } from "@saleor/fragments/types/AttributeTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
-import { AttributeValueTranslationDetails_translation_AttributeTranslatableContent } from "@saleor/translations/types/AttributeValueTranslationDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,7 +13,7 @@ import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductTypesPageProps
   extends TranslationsEntitiesPageProps {
-  data: AttributeValueTranslationDetails_translation_AttributeTranslatableContent;
+  data: AttributeTranslationFragment;
 }
 
 export const fieldNames = {

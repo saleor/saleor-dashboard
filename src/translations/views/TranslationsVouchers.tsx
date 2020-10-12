@@ -85,6 +85,8 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
           });
         };
 
+        const translation = voucherTranslations?.data?.translation;
+
         return (
           <TranslationsVouchersPage
             activeField={params.activeField}
@@ -109,7 +111,11 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
               )
             }
             onSubmit={handleSubmit}
-            data={voucherTranslations?.data?.translation}
+            data={
+              translation?.__typename === "VoucherTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

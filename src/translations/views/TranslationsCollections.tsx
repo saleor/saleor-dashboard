@@ -64,6 +64,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
   const onDiscard = () => {
     navigate("?", true);
   };
+  const translation = collectionTranslations?.data?.translation;
 
   return (
     <TypedUpdateCollectionTranslations onCompleted={onUpdate}>
@@ -112,7 +113,11 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
               )
             }
             onSubmit={handleSubmit}
-            data={collectionTranslations?.data?.translation}
+            data={
+              translation?.__typename === "CollectionTranslatableContent"
+                ? translation
+                : null
+            }
           />
         );
       }}

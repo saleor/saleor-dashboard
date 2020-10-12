@@ -134,6 +134,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                 []
               )
             );
+            const translation = attributeTranslations?.data?.translation;
 
             return (
               <TranslationsProductTypesPage
@@ -165,7 +166,11 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                   )
                 }
                 onSubmit={handleSubmit}
-                data={attributeTranslations?.data?.translation}
+                data={
+                  translation?.__typename === "AttributeTranslatableContent"
+                    ? translation
+                    : null
+                }
               />
             );
           }}
