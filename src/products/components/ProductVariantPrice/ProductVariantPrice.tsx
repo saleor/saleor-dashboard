@@ -5,6 +5,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,6 +37,8 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
 
   const formErrors = getFormErrors(["price", "cost_price"], errors);
 
+  const handlePriceChange = createNonNegativeValueChangeHandler(onChange);
+
   return (
     <Card>
       <CardTitle
@@ -55,8 +58,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               })}
               value={price}
               currencySymbol={currencySymbol}
-              onChange={onChange}
+              onChange={handlePriceChange}
               disabled={loading}
+              InputProps={{
+                inputProps: {
+                  min: "0"
+                }
+              }}
             />
           </div>
           <div>
@@ -76,8 +84,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               }
               value={costPrice}
               currencySymbol={currencySymbol}
-              onChange={onChange}
+              onChange={handlePriceChange}
               disabled={loading}
+              InputProps={{
+                inputProps: {
+                  min: "0"
+                }
+              }}
             />
           </div>
         </div>
