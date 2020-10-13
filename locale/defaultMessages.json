@@ -5735,15 +5735,6 @@
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1163855804": {
     "string": "Languages"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1866913828": {
-    "string": "Search Sale"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1930485532": {
-    "string": "Search Voucher"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2105464697": {
-    "string": "Search Product"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_222873645": {
     "string": "Collections"
   },
@@ -5751,35 +5742,23 @@
     "context": "header",
     "string": "Translations to {language}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2559018090": {
-    "string": "Search Page"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2968663655": {
     "string": "Products"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3287512325": {
     "string": "Pages"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3420445375": {
-    "string": "Search Product Type"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3583204912": {
     "string": "Categories"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3841025483": {
-    "string": "Search Category"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_4057224233": {
-    "string": "Search Collection"
+  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_4153345096": {
+    "string": "Attributes"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_487083593": {
     "string": "Sales"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_749185240": {
     "string": "Vouchers"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_765385638": {
-    "string": "Product Types"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_1136143456": {
     "context": "translation progress",
@@ -5824,24 +5803,16 @@
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Page Title"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1281101905": {
-    "context": "header",
-    "string": "Translation Product Type \"{productTypeName}\" - {languageCode}"
-  },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1567737068": {
     "context": "attribute values",
     "string": "Value {number}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2510190956": {
-    "context": "header",
-    "string": "Product Attribute ({attributeName})"
-  },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
     "string": "Attribute Name"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3538502409": {
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
     "context": "header",
-    "string": "Variant Attribute ({attributeName})"
+    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"

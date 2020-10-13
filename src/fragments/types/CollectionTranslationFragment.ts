@@ -6,6 +6,15 @@
 // GraphQL fragment: CollectionTranslationFragment
 // ====================================================
 
+export interface CollectionTranslationFragment_collection {
+  __typename: "Collection";
+  id: string;
+  name: string;
+  descriptionJson: any;
+  seoDescription: string | null;
+  seoTitle: string | null;
+}
+
 export interface CollectionTranslationFragment_translation_language {
   __typename: "LanguageDisplay";
   language: string;
@@ -22,11 +31,7 @@ export interface CollectionTranslationFragment_translation {
 }
 
 export interface CollectionTranslationFragment {
-  __typename: "Collection";
-  id: string;
-  name: string;
-  descriptionJson: any;
-  seoDescription: string | null;
-  seoTitle: string | null;
+  __typename: "CollectionTranslatableContent";
+  collection: CollectionTranslationFragment_collection | null;
   translation: CollectionTranslationFragment_translation | null;
 }
