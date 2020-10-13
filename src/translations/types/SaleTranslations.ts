@@ -2,38 +2,49 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { LanguageCodeEnum, SaleFilterInput } from "./../../types/globalTypes";
+import { LanguageCodeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: SaleTranslations
 // ====================================================
 
-export interface SaleTranslations_sales_edges_node_translation_language {
+export interface SaleTranslations_translations_edges_node_ProductTranslatableContent {
+  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "ShippingMethodTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
+}
+
+export interface SaleTranslations_translations_edges_node_SaleTranslatableContent_sale {
+  __typename: "Sale";
+  id: string;
+  name: string;
+}
+
+export interface SaleTranslations_translations_edges_node_SaleTranslatableContent_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
   language: string;
 }
 
-export interface SaleTranslations_sales_edges_node_translation {
+export interface SaleTranslations_translations_edges_node_SaleTranslatableContent_translation {
   __typename: "SaleTranslation";
   id: string;
-  language: SaleTranslations_sales_edges_node_translation_language;
+  language: SaleTranslations_translations_edges_node_SaleTranslatableContent_translation_language;
   name: string | null;
 }
 
-export interface SaleTranslations_sales_edges_node {
-  __typename: "Sale";
-  id: string;
-  name: string;
-  translation: SaleTranslations_sales_edges_node_translation | null;
+export interface SaleTranslations_translations_edges_node_SaleTranslatableContent {
+  __typename: "SaleTranslatableContent";
+  sale: SaleTranslations_translations_edges_node_SaleTranslatableContent_sale | null;
+  translation: SaleTranslations_translations_edges_node_SaleTranslatableContent_translation | null;
 }
 
-export interface SaleTranslations_sales_edges {
-  __typename: "SaleCountableEdge";
-  node: SaleTranslations_sales_edges_node;
+export type SaleTranslations_translations_edges_node = SaleTranslations_translations_edges_node_ProductTranslatableContent | SaleTranslations_translations_edges_node_SaleTranslatableContent;
+
+export interface SaleTranslations_translations_edges {
+  __typename: "TranslatableItemEdge";
+  node: SaleTranslations_translations_edges_node;
 }
 
-export interface SaleTranslations_sales_pageInfo {
+export interface SaleTranslations_translations_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -41,14 +52,14 @@ export interface SaleTranslations_sales_pageInfo {
   startCursor: string | null;
 }
 
-export interface SaleTranslations_sales {
-  __typename: "SaleCountableConnection";
-  edges: SaleTranslations_sales_edges[];
-  pageInfo: SaleTranslations_sales_pageInfo;
+export interface SaleTranslations_translations {
+  __typename: "TranslatableItemConnection";
+  edges: SaleTranslations_translations_edges[];
+  pageInfo: SaleTranslations_translations_pageInfo;
 }
 
 export interface SaleTranslations {
-  sales: SaleTranslations_sales | null;
+  translations: SaleTranslations_translations | null;
 }
 
 export interface SaleTranslationsVariables {
@@ -57,5 +68,4 @@ export interface SaleTranslationsVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
-  filter?: SaleFilterInput | null;
 }

@@ -1,12 +1,7 @@
 import gql from "graphql-tag";
 
 export const categoryTranslationFragment = gql`
-  fragment CategoryTranslationFragment on Category {
-    id
-    name
-    descriptionJson
-    seoDescription
-    seoTitle
+  fragment CategoryTranslationFragment on CategoryTranslatableContent {
     translation(languageCode: $language) {
       id
       descriptionJson
@@ -17,15 +12,24 @@ export const categoryTranslationFragment = gql`
       seoDescription
       seoTitle
     }
+    category {
+      id
+      name
+      descriptionJson
+      seoDescription
+      seoTitle
+    }
   }
 `;
 export const collectionTranslationFragment = gql`
-  fragment CollectionTranslationFragment on Collection {
-    id
-    name
-    descriptionJson
-    seoDescription
-    seoTitle
+  fragment CollectionTranslationFragment on CollectionTranslatableContent {
+    collection {
+      id
+      name
+      descriptionJson
+      seoDescription
+      seoTitle
+    }
     translation(languageCode: $language) {
       id
       descriptionJson
@@ -39,12 +43,14 @@ export const collectionTranslationFragment = gql`
   }
 `;
 export const productTranslationFragment = gql`
-  fragment ProductTranslationFragment on Product {
-    id
-    name
-    descriptionJson
-    seoDescription
-    seoTitle
+  fragment ProductTranslationFragment on ProductTranslatableContent {
+    product {
+      id
+      name
+      descriptionJson
+      seoDescription
+      seoTitle
+    }
     translation(languageCode: $language) {
       id
       descriptionJson
@@ -59,9 +65,11 @@ export const productTranslationFragment = gql`
   }
 `;
 export const saleTranslationFragment = gql`
-  fragment SaleTranslationFragment on Sale {
-    id
-    name
+  fragment SaleTranslationFragment on SaleTranslatableContent {
+    sale {
+      id
+      name
+    }
     translation(languageCode: $language) {
       id
       language {
@@ -73,9 +81,11 @@ export const saleTranslationFragment = gql`
   }
 `;
 export const voucherTranslationFragment = gql`
-  fragment VoucherTranslationFragment on Voucher {
-    id
-    name
+  fragment VoucherTranslationFragment on VoucherTranslatableContent {
+    voucher {
+      id
+      name
+    }
     translation(languageCode: $language) {
       id
       language {
@@ -87,7 +97,7 @@ export const voucherTranslationFragment = gql`
   }
 `;
 export const shippingMethodTranslationFragment = gql`
-  fragment ShippingMethodTranslationFragment on ShippingMethod {
+  fragment ShippingMethodTranslationFragment on ShippingMethodTranslatableContent {
     id
     name
     translation(languageCode: $language) {
@@ -100,14 +110,16 @@ export const shippingMethodTranslationFragment = gql`
     }
   }
 `;
-export const pageTranslationFragment = gql`
-  fragment PageTranslationFragment on Page {
-    id
-    contentJson
-    seoDescription
-    seoTitle
-    title
 
+export const pageTranslationFragment = gql`
+  fragment PageTranslationFragment on PageTranslatableContent {
+    page {
+      id
+      contentJson
+      seoDescription
+      seoTitle
+      title
+    }
     translation(languageCode: $language) {
       id
       contentJson
@@ -142,31 +154,24 @@ export const pageTranslatableFragment = gql`
     }
   }
 `;
-export const productTypeTranslationFragment = gql`
-  fragment AttributeTranslationFragment on Attribute {
-    id
-    name
+
+export const attributeTranslationFragment = gql`
+  fragment AttributeTranslationFragment on AttributeTranslatableContent {
     translation(languageCode: $language) {
       id
       name
     }
-    values {
+    attribute {
       id
       name
-      translation(languageCode: $language) {
+      values {
         id
         name
+        translation(languageCode: $language) {
+          id
+          name
+        }
       }
-    }
-  }
-  fragment ProductTypeTranslationFragment on ProductType {
-    id
-    name
-    productAttributes {
-      ...AttributeTranslationFragment
-    }
-    variantAttributes {
-      ...AttributeTranslationFragment
     }
   }
 `;

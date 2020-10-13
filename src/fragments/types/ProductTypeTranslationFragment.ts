@@ -6,64 +6,46 @@
 // GraphQL fragment: ProductTypeTranslationFragment
 // ====================================================
 
-export interface ProductTypeTranslationFragment_productAttributes_translation {
+export interface ProductTypeTranslationFragment_product_productType_productAttributes_translation {
   __typename: "AttributeTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslationFragment_productAttributes_values_translation {
-  __typename: "AttributeValueTranslation";
-  id: string;
-  name: string;
-}
-
-export interface ProductTypeTranslationFragment_productAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslationFragment_productAttributes_values_translation | null;
-}
-
-export interface ProductTypeTranslationFragment_productAttributes {
+export interface ProductTypeTranslationFragment_product_productType_productAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslationFragment_productAttributes_translation | null;
-  values: (ProductTypeTranslationFragment_productAttributes_values | null)[] | null;
+  translation: ProductTypeTranslationFragment_product_productType_productAttributes_translation | null;
 }
 
-export interface ProductTypeTranslationFragment_variantAttributes_translation {
+export interface ProductTypeTranslationFragment_product_productType_variantAttributes_translation {
   __typename: "AttributeTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslationFragment_variantAttributes_values_translation {
-  __typename: "AttributeValueTranslation";
-  id: string;
-  name: string;
-}
-
-export interface ProductTypeTranslationFragment_variantAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslationFragment_variantAttributes_values_translation | null;
-}
-
-export interface ProductTypeTranslationFragment_variantAttributes {
+export interface ProductTypeTranslationFragment_product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslationFragment_variantAttributes_translation | null;
-  values: (ProductTypeTranslationFragment_variantAttributes_values | null)[] | null;
+  translation: ProductTypeTranslationFragment_product_productType_variantAttributes_translation | null;
 }
 
-export interface ProductTypeTranslationFragment {
+export interface ProductTypeTranslationFragment_product_productType {
   __typename: "ProductType";
   id: string;
   name: string;
-  productAttributes: (ProductTypeTranslationFragment_productAttributes | null)[] | null;
-  variantAttributes: (ProductTypeTranslationFragment_variantAttributes | null)[] | null;
+  productAttributes: (ProductTypeTranslationFragment_product_productType_productAttributes | null)[] | null;
+  variantAttributes: (ProductTypeTranslationFragment_product_productType_variantAttributes | null)[] | null;
+}
+
+export interface ProductTypeTranslationFragment_product {
+  __typename: "Product";
+  productType: ProductTypeTranslationFragment_product_productType;
+}
+
+export interface ProductTypeTranslationFragment {
+  __typename: "ProductTranslatableContent";
+  product: ProductTypeTranslationFragment_product | null;
 }

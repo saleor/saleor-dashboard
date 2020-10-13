@@ -99,9 +99,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
               onClick={entity ? () => onRowClick(entity.id) : undefined}
               key={entity ? entity.id : "skeleton"}
             >
-              <TableCell>
-                {maybe<React.ReactNode>(() => entity.name, <Skeleton />)}
-              </TableCell>
+              <TableCell>{entity?.name || <Skeleton />}</TableCell>
               <TableCell className={classes.textRight}>
                 {maybe<React.ReactNode>(
                   () =>
