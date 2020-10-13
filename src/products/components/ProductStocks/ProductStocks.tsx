@@ -29,6 +29,7 @@ import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -238,33 +239,41 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {renderCollection(stocks, stock => (
-              <TableRow key={stock.id}>
-                <TableCell className={classes.colName}>{stock.label}</TableCell>
-                <TableCell className={classes.colQuantity}>
-                  <TextField
-                    className={classes.inputComponent}
-                    disabled={disabled}
-                    fullWidth
-                    inputProps={{
-                      className: classes.input,
-                      min: 0,
-                      type: "number"
-                    }}
-                    onChange={event => onChange(stock.id, event.target.value)}
-                    value={stock.value}
-                  />
-                </TableCell>
-                <TableCell className={classes.colAction}>
-                  <IconButton
-                    color="primary"
-                    onClick={() => onWarehouseStockDelete(stock.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+            {renderCollection(stocks, stock => {
+              const handleQuantityChange = createNonNegativeValueChangeHandler(
+                event => onChange(stock.id, event.target.value)
+              );
+
+              return (
+                <TableRow key={stock.id}>
+                  <TableCell className={classes.colName}>
+                    {stock.label}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    <TextField
+                      className={classes.inputComponent}
+                      disabled={disabled}
+                      fullWidth
+                      inputProps={{
+                        className: classes.input,
+                        min: 0,
+                        type: "number"
+                      }}
+                      onChange={handleQuantityChange}
+                      value={stock.value}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colAction}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => onWarehouseStockDelete(stock.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
             {warehousesToAssign.length > 0 && (
               <TableRow>
                 <TableCell colSpan={2}>

@@ -62,11 +62,6 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
             value={data.basePrice}
             currencySymbol={currency}
             onChange={handlePriceChange}
-            InputProps={{
-              inputProps: {
-                min: 0
-              }
-            }}
           />
         </div>
       </CardContent>

@@ -96,7 +96,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 
   const initialForm: ProductVariantCreatePageFormData = {
     costPrice: "",
-    images: maybe(() => product.images.map(image => image.id)),
+    images: product?.images.map(image => image.id),
     metadata: [],
     price: "",
     privateMetadata: [],
@@ -148,10 +148,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <ProductVariantPrice
+                  data={data}
                   errors={errors}
-                  price={data.price}
                   currencySymbol={currencySymbol}
-                  costPrice={data.costPrice}
                   loading={disabled}
                   onChange={change}
                 />
