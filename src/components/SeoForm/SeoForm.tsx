@@ -202,7 +202,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               }
               InputProps={{
                 inputProps: {
-                  maxlength: maxSlugLength
+                  maxLength: maxSlugLength
                 }
               }}
               helperText={getSlugHelperMessage()}
@@ -237,7 +237,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               }
               InputProps={{
                 inputProps: {
-                  maxlength: maxTitleLength
+                  maxLength: maxTitleLength
                 }
               }}
               helperText={intl.formatMessage(seoFieldMessage)}
@@ -273,7 +273,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               helperText={intl.formatMessage(seoFieldMessage)}
               InputProps={{
                 inputProps: {
-                  maxlength: maxDescriptionLength
+                  maxLength: maxDescriptionLength
                 }
               }}
               value={description}
