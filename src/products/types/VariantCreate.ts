@@ -12,6 +12,7 @@ export interface VariantCreate_productVariantCreate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_metadata {

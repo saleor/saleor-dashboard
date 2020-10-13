@@ -8,13 +8,13 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
@@ -56,7 +56,7 @@ export interface ProductVariantPageSubmitData
 interface ProductVariantPageProps {
   defaultWeightUnit: string;
   variant?: ProductVariant;
-  errors: VariantUpdate_productVariantUpdate_errors[];
+  errors: ProductErrorWithAttributesFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   loading?: boolean;
   placeholderImage?: string;

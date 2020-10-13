@@ -86,14 +86,17 @@ storiesOf("Views / Products / Product variant details", module)
       saveButtonBarState="default"
       errors={[
         {
+          attributes: [variant.attributes[0].attribute.id],
           code: ProductErrorCode.REQUIRED,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.UNIQUE,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
           field: "sku"
         }

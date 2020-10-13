@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
-import Downshift from "downshift";
+import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
@@ -76,20 +76,27 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
   const [prevDisplayValue] = useStateFromProps(displayValue);
 
-  const handleChange = item =>
+  const handleChange = (
+    item: string,
+    stateAndHelpers: ControllerStateAndHelpers
+  ) => {
     onChange({
       target: {
         name,
         value: item
       }
     } as any);
+    stateAndHelpers.reset({
+      inputValue: item
+    });
+  };
 
   return (
     <DebounceAutocomplete debounceFn={fetchChoices}>
       {debounceFn => (
         <Downshift
           defaultInputValue={displayValue}
-          itemToString={() => displayValue}
+          itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
           selectedItem={value}
@@ -190,6 +197,7 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
   ...rest
 }) => {
   const [query, setQuery] = React.useState("");
+
   if (fetchChoices) {
     return (
       <DebounceAutocomplete debounceFn={fetchChoices}>

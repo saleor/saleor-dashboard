@@ -9,7 +9,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
@@ -58,7 +58,7 @@ import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
-  errors: ProductErrorFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -296,6 +296,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   {attributes.length > 0 && (
                     <ProductAttributes
                       attributes={attributes}
+                      errors={errors}
                       disabled={disabled}
                       onChange={handleAttributeChange}
                       onMultiChange={handleAttributeMultiChange}

@@ -3,6 +3,7 @@ import {
   bulkStockErrorFragment,
   exportErrorFragment,
   productErrorFragment,
+  productErrorWithAttributesFragment,
   stockErrorFragment
 } from "@saleor/fragments/errors";
 import {
@@ -159,12 +160,12 @@ export const useProductVariantSetDefaultMutation = makeMutation<
 >(productVariantSetDefault);
 
 export const productUpdateMutation = gql`
-  ${productErrorFragment}
+  ${productErrorWithAttributesFragment}
   ${productFragmentDetails}
   mutation ProductUpdate($id: ID!, $input: ProductInput!) {
     productUpdate(id: $id, input: $input) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       product {
         ...Product
@@ -179,7 +180,7 @@ export const useProductUpdateMutation = makeMutation<
 
 export const simpleProductUpdateMutation = gql`
   ${bulkStockErrorFragment}
-  ${productErrorFragment}
+  ${productErrorWithAttributesFragment}
   ${productFragmentDetails}
   ${stockErrorFragment}
   ${fragmentVariant}
@@ -194,7 +195,7 @@ export const simpleProductUpdateMutation = gql`
   ) {
     productUpdate(id: $id, input: $input) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       product {
         ...Product
@@ -202,7 +203,7 @@ export const simpleProductUpdateMutation = gql`
     }
     productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       productVariant {
         ...ProductVariant
@@ -249,12 +250,12 @@ export const useSimpleProductUpdateMutation = makeMutation<
 >(simpleProductUpdateMutation);
 
 export const productCreateMutation = gql`
-  ${productErrorFragment}
+  ${productErrorWithAttributesFragment}
   ${productFragmentDetails}
   mutation ProductCreate($input: ProductCreateInput!) {
     productCreate(input: $input) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       product {
         ...Product
@@ -288,7 +289,7 @@ export const useVariantDeleteMutation = makeMutation<
 export const variantUpdateMutation = gql`
   ${bulkStockErrorFragment}
   ${fragmentVariant}
-  ${productErrorFragment}
+  ${productErrorWithAttributesFragment}
   mutation VariantUpdate(
     $addStocks: [StockInput!]!
     $removeStocks: [ID!]!
@@ -313,7 +314,7 @@ export const variantUpdateMutation = gql`
       }
     ) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       productVariant {
         ...ProductVariant
@@ -359,11 +360,11 @@ export const useVariantUpdateMutation = makeMutation<
 
 export const variantCreateMutation = gql`
   ${fragmentVariant}
-  ${productErrorFragment}
+  ${productErrorWithAttributesFragment}
   mutation VariantCreate($input: ProductVariantCreateInput!) {
     productVariantCreate(input: $input) {
       errors: productErrors {
-        ...ProductErrorFragment
+        ...ProductErrorWithAttributesFragment
       }
       productVariant {
         ...ProductVariant

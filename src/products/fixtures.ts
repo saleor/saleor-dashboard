@@ -24,7 +24,7 @@ export const product: (
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Borders",
         slug: "Borders",
-        valueRequired: true,
+        valueRequired: false,
         values: [
           {
             __typename: "AttributeValue",

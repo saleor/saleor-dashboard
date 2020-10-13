@@ -36,14 +36,17 @@ storiesOf("Views / Products / Create product variant", module)
       disabled={false}
       errors={[
         {
+          attributes: [product.productType.variantAttributes[0].id],
           code: ProductErrorCode.REQUIRED,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.UNIQUE,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
           field: "sku"
         }

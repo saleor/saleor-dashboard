@@ -92,6 +92,7 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...product,
+
         productType: {
           ...product.productType,
           hasVariants: false
@@ -137,6 +138,7 @@ storiesOf("Views / Products / Product edit", module)
     <ProductUpdatePage
       {...props}
       errors={([
+        "attributes",
         "basePrice",
         "category",
         "chargeTaxes",
@@ -148,10 +150,16 @@ storiesOf("Views / Products / Product edit", module)
         "seoTitle",
         "sku",
         "stockQuantity"
-      ] as Array<keyof ProductUpdatePageFormData>).map(field => ({
-        __typename: "ProductError",
-        code: ProductErrorCode.INVALID,
-        field
-      }))}
+      ] as Array<keyof ProductUpdatePageFormData | "attributes">).map(
+        field => ({
+          __typename: "ProductError",
+          attributes:
+            field === "attributes"
+              ? [product.attributes[0].attribute.id]
+              : null,
+          code: ProductErrorCode.INVALID,
+          field
+        })
+      )}
     />
   ));

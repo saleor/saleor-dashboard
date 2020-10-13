@@ -28,6 +28,9 @@ const useStyles = makeStyles(
     colName: {
       paddingLeft: 0
     },
+    firstVariant: {
+      width: 88
+    },
     link: {
       cursor: "pointer"
     },
@@ -126,7 +129,10 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 className={classNames(
                   classes.colAvatar,
                   classes.tabActive,
-                  classes.noHandle
+                  classes.noHandle,
+                  {
+                    [classes.firstVariant]: variants?.length === 0
+                  }
                 )}
                 thumbnail={null}
                 colSpan={2}

@@ -10,13 +10,14 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import {
+  getAttributeInputFromProductType,
   getChoices,
   ProductAttributeValueChoices,
   ProductType
@@ -79,7 +80,7 @@ export interface ProductCreatePageSubmitData extends FormData {
 }
 
 interface ProductCreatePageProps {
-  errors: ProductErrorFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -87,6 +88,7 @@ interface ProductCreatePageProps {
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
+  initial?: Partial<FormData>;
   productTypes?: Array<{
     id: string;
     name: string;
@@ -118,6 +120,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCollections,
   fetchMoreProductTypes,
   header,
+  initial,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
   warehouses,
@@ -130,12 +133,21 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
+
+  const initialProductType = productTypeChoiceList?.find(
+    productType => initial?.productType === productType.id
+  );
+
   // Form values
   const {
     change: changeAttributeData,
     data: attributes,
     set: setAttributeData
-  } = useFormset<ProductAttributeInputData>([]);
+  } = useFormset<ProductAttributeInputData>(
+    initial?.productType
+      ? getAttributeInputFromProductType(initialProductType)
+      : []
+  );
   const {
     add: addStock,
     change: changeStockData,
@@ -154,6 +166,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   } = useMetadataChangeTrigger();
 
   const initialData: FormData = {
+    ...(initial || {}),
     availableForPurchase: "",
     basePrice: 0,
     category: "",
@@ -185,14 +198,20 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     ProductAttributeValueChoices[]
   >([]);
 
-  const [selectedCategory, setSelectedCategory] = useStateFromProps("");
+  const [selectedCategory, setSelectedCategory] = useStateFromProps(
+    initial?.category || ""
+  );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps<
     MultiAutocompleteChoiceType[]
   >([]);
 
-  const [productType, setProductType] = React.useState<ProductType>(null);
-  const [selectedTaxType, setSelectedTaxType] = useStateFromProps(null);
+  const [productType, setProductType] = useStateFromProps<ProductType>(
+    initialProductType || null
+  );
+  const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
+    initial?.taxCode || null
+  );
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -274,6 +293,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   <ProductAttributes
                     attributes={attributes}
                     disabled={disabled}
+                    errors={errors}
                     onChange={handleAttributeChange}
                     onMultiChange={handleAttributeMultiChange}
                   />
