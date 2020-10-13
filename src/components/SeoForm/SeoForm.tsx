@@ -23,6 +23,9 @@ enum SeoField {
 }
 
 const SLUG_REGEX = /^[a-zA-Z0-9\-\_]+$/;
+const maxSlugLength = 255;
+const maxTitleLength = 70;
+const maxDescriptionLength = 300;
 
 const useStyles = makeStyles(
   theme => ({
@@ -176,7 +179,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
         {expanded && (
           <div className={classes.container}>
             <TextField
-              error={!!getError(SeoField.slug)}
+              error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
               name={SeoField.slug}
               label={
                 <div className={classes.labelContainer}>
@@ -189,7 +192,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                         defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
                         description="character limit"
                         values={{
-                          maxCharacters: 70,
+                          maxCharacters: maxSlugLength,
                           numberOfCharacters: slug?.length
                         }}
                       />
@@ -197,8 +200,13 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                   )}
                 </div>
               }
+              InputProps={{
+                inputProps: {
+                  maxlength: maxSlugLength
+                }
+              }}
               helperText={getSlugHelperMessage()}
-              value={slug?.slice(0, 69)}
+              value={slug}
               disabled={loading || disabled}
               placeholder={slug || slugify(slugPlaceholder, { lower: true })}
               onChange={handleSlugChange}
@@ -206,6 +214,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
             />
             <FormSpacer />
             <TextField
+              error={title.length > maxTitleLength}
               name={SeoField.title}
               label={
                 <div className={classes.labelContainer}>
@@ -218,7 +227,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                         defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
                         description="character limit"
                         values={{
-                          maxCharacters: 70,
+                          maxCharacters: maxTitleLength,
                           numberOfCharacters: title.length
                         }}
                       />
@@ -226,8 +235,13 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                   )}
                 </div>
               }
+              InputProps={{
+                inputProps: {
+                  maxlength: maxTitleLength
+                }
+              }}
               helperText={intl.formatMessage(seoFieldMessage)}
-              value={title?.slice(0, 69)}
+              value={title}
               disabled={loading || disabled}
               placeholder={titlePlaceholder}
               onChange={onChange}
@@ -235,6 +249,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
             />
             <FormSpacer />
             <TextField
+              error={description.length > maxDescriptionLength}
               name={SeoField.description}
               label={
                 <div className={classes.labelContainer}>
@@ -247,7 +262,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                         defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
                         description="character limit"
                         values={{
-                          maxCharacters: 300,
+                          maxCharacters: maxDescriptionLength,
                           numberOfCharacters: description.length
                         }}
                       />
@@ -256,7 +271,12 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                 </div>
               }
               helperText={intl.formatMessage(seoFieldMessage)}
-              value={description?.slice(0, 299)}
+              InputProps={{
+                inputProps: {
+                  maxlength: maxDescriptionLength
+                }
+              }}
+              value={description}
               onChange={onChange}
               disabled={loading || disabled}
               fullWidth
