@@ -27,7 +27,7 @@ const NODE_MARGIN = 40;
 export interface MenuItemsProps {
   canUndo: boolean;
   items: MenuDetails_menu_items[];
-  onChange: (operation: TreeOperation) => void;
+  onChange: (operation: TreeOperation[]) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;

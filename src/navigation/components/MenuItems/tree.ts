@@ -64,30 +64,47 @@ export function getItemId(item: MenuDetails_menu_items): string {
 export function getDiff(
   originalTree: TreeItem[],
   newTree: TreeItem[]
-): TreeOperation {
+): TreeOperation[] {
   const originalMap = treeToMap(originalTree, "root");
   const newMap = treeToMap(newTree, "root");
 
-  const diff: TreeOperation[] = Object.keys(newMap).map(key => {
+  const diff: TreeOperation[] = Object.keys(newMap).flatMap(key => {
     const originalNode = originalMap[key];
     const newNode = newMap[key];
 
-    const patch = getPatch(originalNode, newNode);
+    const patch = getPatch(originalNode, newNode); // the diff items are always of length 1, since we diff the node itself
+    function getArrayAndParent(id) {
+      const [parentId, array] = Object.entries(newMap).find(([_, children]) =>
+        children.includes(id)
+      );
+
+      return {
+        array,
+        parentId
+      };
+    }
 
     if (patch.length > 0) {
       const addedNode = patch.find(operation => operation.type === "add");
       if (!!addedNode) {
-        return {
-          id: addedNode.items[0],
-          parentId: key === "root" ? undefined : key,
-          sortOrder: addedNode.newPos,
-          type: "move" as TreeOperationType
-        };
+        const itemId = addedNode.items[0];
+        const { array } = getArrayAndParent(itemId);
+
+        return array.map((id, index) => {
+          const { parentId: newParentId } = getArrayAndParent(id);
+
+          return {
+            id,
+            parentId: newParentId === "root" ? undefined : newParentId,
+            sortOrder: index,
+            type: "move" as TreeOperationType
+          };
+        });
       }
     }
   });
 
-  return diff.find(d => !!d);
+  return diff.filter(d => !!d);
 }
 
 export function getNodeData(

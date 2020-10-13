@@ -72,9 +72,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     }
   };
 
-  const handleChange = (operation: TreeOperation) => {
+  const handleChange = (operation: TreeOperation[]) => {
     if (!!operation) {
-      setTreeOperations([...treeOperations, operation]);
+      setTreeOperations([...treeOperations, ...operation]);
     }
   };
 
