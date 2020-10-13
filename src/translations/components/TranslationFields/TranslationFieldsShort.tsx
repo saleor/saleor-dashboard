@@ -40,7 +40,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
               defaultMessage: "Translation"
             })}
             name="translation"
-            value={data.translation}
+            value={data.translation || ""}
             onChange={change}
           />
           <TranslationFieldsSave
