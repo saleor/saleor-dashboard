@@ -112,7 +112,6 @@ export interface ProductVariant_product {
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
   variants: (ProductVariant_product_variants | null)[] | null;
-  defaultVariant: ProductVariant_product_defaultVariant | null;
 }
 
 export interface ProductVariant_stocks_warehouse {

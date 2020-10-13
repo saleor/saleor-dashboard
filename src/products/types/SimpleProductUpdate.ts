@@ -354,7 +354,6 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
   images: (SimpleProductUpdate_productVariantUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
@@ -511,7 +510,6 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant | null;
   images: (SimpleProductUpdate_productVariantStocksCreate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_thumbnail | null;
@@ -667,7 +665,6 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant | null;
   images: (SimpleProductUpdate_productVariantStocksDelete_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_thumbnail | null;
@@ -824,7 +821,6 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
   images: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;

@@ -114,7 +114,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_defau
 export interface VariantUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
@@ -271,7 +270,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;

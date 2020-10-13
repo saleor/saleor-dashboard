@@ -107,7 +107,6 @@ export interface ProductVariantDetails_productVariant_product_defaultVariant {
 export interface ProductVariantDetails_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: ProductVariantDetails_productVariant_product_defaultVariant | null;
   images: (ProductVariantDetails_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariantDetails_productVariant_product_thumbnail | null;

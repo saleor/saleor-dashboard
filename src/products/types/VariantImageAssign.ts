@@ -113,7 +113,6 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product_de
 export interface VariantImageAssign_variantImageAssign_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: VariantImageAssign_variantImageAssign_productVariant_product_defaultVariant | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantImageAssign_variantImageAssign_productVariant_product_thumbnail | null;
