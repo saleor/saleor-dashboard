@@ -15,7 +15,7 @@ import TranslationsVouchersPage, {
   fieldNames
 } from "../components/TranslationsVouchersPage";
 import { TypedUpdateVoucherTranslations } from "../mutations";
-import { TypedVoucherTranslationDetails } from "../queries";
+import { useVoucherTranslationDetails } from "../queries";
 import { UpdateVoucherTranslations } from "../types/UpdateVoucherTranslations";
 import {
   languageEntitiesUrl,
@@ -42,6 +42,10 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
+  const voucherTranslations = useVoucherTranslationDetails({
+    variables: { id, language: languageCode }
+  });
+
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -52,6 +56,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
     );
   const onUpdate = (data: UpdateVoucherTranslations) => {
     if (data.voucherTranslate.errors.length === 0) {
+      voucherTranslations.refetch();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -64,55 +69,57 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   };
 
   return (
-    <TypedVoucherTranslationDetails variables={{ id, language: languageCode }}>
-      {voucherTranslations => (
-        <TypedUpdateVoucherTranslations onCompleted={onUpdate}>
-          {(updateTranslations, updateTranslationsOpts) => {
-            const handleSubmit = (field: string, data: string) => {
-              const input: NameTranslationInput = {};
-              if (field === fieldNames.name) {
-                input.name = data;
-              }
-              updateTranslations({
-                variables: {
-                  id,
-                  input,
-                  language: languageCode
-                }
-              });
-            };
+    <TypedUpdateVoucherTranslations onCompleted={onUpdate}>
+      {(updateTranslations, updateTranslationsOpts) => {
+        const handleSubmit = (field: string, data: string) => {
+          const input: NameTranslationInput = {};
+          if (field === fieldNames.name) {
+            input.name = data;
+          }
+          updateTranslations({
+            variables: {
+              id,
+              input,
+              language: languageCode
+            }
+          });
+        };
 
-            return (
-              <TranslationsVouchersPage
-                activeField={params.activeField}
-                disabled={
-                  voucherTranslations.loading || updateTranslationsOpts.loading
-                }
-                languages={maybe(() => shop.languages, [])}
-                languageCode={languageCode}
-                saveButtonState={updateTranslationsOpts.status}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.vouchers
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.vouchers, id)
-                  )
-                }
-                onSubmit={handleSubmit}
-                voucher={maybe(() => voucherTranslations.data.voucher)}
-              />
-            );
-          }}
-        </TypedUpdateVoucherTranslations>
-      )}
-    </TypedVoucherTranslationDetails>
+        const translation = voucherTranslations?.data?.translation;
+
+        return (
+          <TranslationsVouchersPage
+            activeField={params.activeField}
+            disabled={
+              voucherTranslations.loading || updateTranslationsOpts.loading
+            }
+            languages={maybe(() => shop.languages, [])}
+            languageCode={languageCode}
+            saveButtonState={updateTranslationsOpts.status}
+            onBack={() =>
+              navigate(
+                languageEntitiesUrl(languageCode, {
+                  tab: TranslatableEntities.vouchers
+                })
+              )
+            }
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onLanguageChange={lang =>
+              navigate(
+                languageEntityUrl(lang, TranslatableEntities.vouchers, id)
+              )
+            }
+            onSubmit={handleSubmit}
+            data={
+              translation?.__typename === "VoucherTranslatableContent"
+                ? translation
+                : null
+            }
+          />
+        );
+      }}
+    </TypedUpdateVoucherTranslations>
   );
 };
 TranslationsVouchers.displayName = "TranslationsVouchers";

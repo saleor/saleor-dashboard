@@ -21,12 +21,17 @@ export interface CategoryTranslationFragment_translation {
   seoTitle: string | null;
 }
 
-export interface CategoryTranslationFragment {
+export interface CategoryTranslationFragment_category {
   __typename: "Category";
   id: string;
   name: string;
   descriptionJson: any;
   seoDescription: string | null;
   seoTitle: string | null;
+}
+
+export interface CategoryTranslationFragment {
+  __typename: "CategoryTranslatableContent";
   translation: CategoryTranslationFragment_translation | null;
+  category: CategoryTranslationFragment_category | null;
 }

@@ -9,13 +9,12 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
-  page: PageTranslationFragment;
+  data: PageTranslationFragment;
 }
 
 export const fieldNames = {
@@ -30,7 +29,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   disabled,
   languageCode,
   languages,
-  page,
+  data,
   saveButtonState,
   onBack,
   onDiscard,
@@ -53,7 +52,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             languageCode,
-            pageName: maybe(() => page.title, "...")
+            pageName: data?.page?.title || "..."
           }
         )}
       >
@@ -74,11 +73,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               defaultMessage: "Page Title"
             }),
             name: fieldNames.title,
-            translation: maybe(() =>
-              page.translation ? page.translation.title : null
-            ),
+            translation: data?.translation?.title || null,
             type: "short" as "short",
-            value: maybe(() => page.title)
+            value: data?.page?.title
           },
           {
             displayName: intl.formatMessage({
@@ -86,11 +83,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               description: "page content"
             }),
             name: fieldNames.contentJson,
-            translation: maybe(() =>
-              page.translation ? page.translation.contentJson : null
-            ),
+            translation: data?.translation?.contentJson || null,
             type: "rich" as "rich",
-            value: maybe(() => page.contentJson)
+            value: data?.page?.contentJson
           }
         ]}
         saveButtonState={saveButtonState}
@@ -112,22 +107,18 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               defaultMessage: "Search Engine Title"
             }),
             name: fieldNames.seoTitle,
-            translation: maybe(() =>
-              page.translation ? page.translation.seoTitle : null
-            ),
+            translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
-            value: maybe(() => page.seoTitle)
+            value: data?.page?.seoTitle
           },
           {
             displayName: intl.formatMessage({
               defaultMessage: "Search Engine Description"
             }),
             name: fieldNames.seoDescription,
-            translation: maybe(() =>
-              page.translation ? page.translation.seoDescription : null
-            ),
+            translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
-            value: maybe(() => page.seoDescription)
+            value: data?.page?.seoDescription
           }
         ]}
         saveButtonState={saveButtonState}

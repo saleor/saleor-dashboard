@@ -1,4 +1,3 @@
-import { AttributeTranslationFragment } from "@saleor/fragments/types/AttributeTranslationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
@@ -12,16 +11,15 @@ import { maybe } from "../../misc";
 import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
 import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
 import {
+  TypedAttributeTranslations,
   TypedCategoryTranslations,
   TypedCollectionTranslations,
   TypedPageTranslations,
   TypedProductTranslations,
-  TypedProductTypeTranslations,
   TypedSaleTranslations,
   TypedVoucherTranslations
 } from "../queries";
 import {
-  languageEntitiesUrl,
   LanguageEntitiesUrlQueryParams,
   languageEntityUrl,
   languageListUrl,
@@ -31,23 +29,6 @@ import {
 interface TranslationsEntitiesProps {
   language: string;
   params: LanguageEntitiesUrlQueryParams;
-}
-
-function sumTranslations(
-  acc: number,
-  attr: AttributeTranslationFragment
-): number {
-  const accAfterNameTranslation =
-    acc + (attr.translation && attr.translation.name !== null ? 1 : 0);
-  const count =
-    accAfterNameTranslation +
-    attr.values.reduce(
-      (acc2, attrValue) =>
-        acc2 +
-        (attrValue.translation && attrValue.translation.name !== null ? 1 : 0),
-      0
-    );
-  return count;
 }
 
 const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
@@ -126,26 +107,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: {
-        search: params.query
-      },
       language: language as any
     }),
     [params]
   );
-
   return (
     <TranslationsEntitiesListPage
-      initialSearch={params.query || ""}
-      onSearchChange={query =>
-        navigate(
-          languageEntitiesUrl(language, {
-            ...params,
-            query
-          }),
-          true
-        )
-      }
       filters={{
         current: params.tab,
         ...filterCallbacks
@@ -157,36 +124,36 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         <TypedCategoryTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.categories.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
-
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.categories.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
-                          : 0,
-                        max: 4
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "CategoryTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? [
+                                node.translation.descriptionJson,
+                                node.translation.name,
+                                node.translation.seoDescription,
+                                node.translation.seoTitle
+                              ].reduce(
+                                (acc, field) => acc + (field !== null ? 1 : 0),
+                                0
+                              )
+                            : 0,
+                          max: 4
+                        },
+                        id: node?.category?.id,
+                        name: node?.category?.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -207,36 +174,36 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         <TypedProductTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.products.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
-
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.products.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
-                          : 0,
-                        max: 4
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "ProductTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? [
+                                node.translation.descriptionJson,
+                                node.translation.name,
+                                node.translation.seoDescription,
+                                node.translation.seoTitle
+                              ].reduce(
+                                (acc, field) => acc + (field !== null ? 1 : 0),
+                                0
+                              )
+                            : 0,
+                          max: 4
+                        },
+                        id: node?.product?.id,
+                        name: node?.product?.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -257,7 +224,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         <TypedCollectionTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.collections.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
@@ -265,28 +232,29 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.collections.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
-                          : 0,
-                        max: 4
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "CollectionTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? [
+                                node.translation.descriptionJson,
+                                node.translation.name,
+                                node.translation.seoDescription,
+                                node.translation.seoTitle
+                              ].reduce(
+                                (acc, field) => acc + (field !== null ? 1 : 0),
+                                0
+                              )
+                            : 0,
+                          max: 4
+                        },
+                        id: node.collection.id,
+                        name: node.collection.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -307,7 +275,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         <TypedSaleTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.sales.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
@@ -315,20 +283,21 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.sales.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? +!!node.translation.name
-                          : 0,
-                        max: 1
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "SaleTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? +!!node.translation.name
+                            : 0,
+                          max: 1
+                        },
+                        id: node.sale?.id,
+                        name: node.sale?.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(language, TranslatableEntities.sales, id)
@@ -342,31 +311,36 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedSaleTranslations>
       ) : params.tab === "vouchers" ? (
-        <TypedVoucherTranslations variables={queryVariables}>
+        <TypedVoucherTranslations
+          variables={{
+            ...paginationState,
+            language: language as any
+          }}
+        >
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.vouchers.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
-
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.vouchers.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? +!!node.translation.name
-                          : 0,
-                        max: 1
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "VoucherTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? +!!node.translation.name
+                            : 0,
+                          max: 1
+                        },
+                        id: node.voucher?.id,
+                        name: node.voucher?.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -387,7 +361,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         <TypedPageTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.pages.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
@@ -395,28 +369,29 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.pages.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current: node.translation
-                          ? [
-                              node.translation.contentJson,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle,
-                              node.translation.title
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
-                          : 0,
-                        max: 4
-                      },
-                      id: node.id,
-                      name: node.title
-                    }))
-                )}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "PageTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? [
+                                node.translation.contentJson,
+                                node.translation.seoDescription,
+                                node.translation.seoTitle,
+                                node.translation.title
+                              ].reduce(
+                                (acc, field) => acc + (field !== null ? 1 : 0),
+                                0
+                              )
+                            : 0,
+                          max: 4
+                        },
+                        id: node?.page.id,
+                        name: node?.page.title
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(language, TranslatableEntities.pages, id)
@@ -430,49 +405,38 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedPageTranslations>
       ) : params.tab === "productTypes" ? (
-        <TypedProductTypeTranslations variables={queryVariables}>
+        <TypedAttributeTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.productTypes.pageInfo),
+              data?.translations?.pageInfo,
               paginationState,
               params
             );
-
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={maybe(() =>
-                  data.productTypes.edges
-                    .map(edge => edge.node)
-                    .map(node => ({
-                      completion: {
-                        current:
-                          node.productAttributes && node.variantAttributes
-                            ? maybe(() => node.productAttributes, []).reduce(
-                                sumTranslations,
-                                0
-                              ) +
-                              maybe(() => node.variantAttributes, []).reduce(
-                                sumTranslations,
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "AttributeTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? +!!node.translation.name +
+                              node.attribute.values.reduce(
+                                (acc, attr) =>
+                                  acc + (!!attr.translation?.name ? 1 : 0),
                                 0
                               )
                             : 0,
-                        max:
-                          node.productAttributes && node.variantAttributes
-                            ? node.productAttributes.reduce(
-                                (acc, attr) => acc + attr.values.length,
-                                node.productAttributes.length
-                              ) +
-                              node.variantAttributes.reduce(
-                                (acc, attr) => acc + attr.values.length,
-                                node.variantAttributes.length
-                              )
+                          max: node.attribute
+                            ? node.attribute.values.length + 1
                             : 0
-                      },
-                      id: node.id,
-                      name: node.name
-                    }))
-                )}
+                        },
+                        id: node?.attribute.id,
+                        name: node?.attribute.name
+                      }
+                  )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -488,7 +452,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
               />
             );
           }}
-        </TypedProductTypeTranslations>
+        </TypedAttributeTranslations>
       ) : null}
     </TranslationsEntitiesListPage>
   );
