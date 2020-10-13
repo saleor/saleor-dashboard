@@ -22,7 +22,7 @@ export interface ShippingMethodTranslationFragment_translation {
 }
 
 export interface ShippingMethodTranslationFragment {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodTranslatableContent";
   id: string;
   name: string;
   translation: ShippingMethodTranslationFragment_translation | null;

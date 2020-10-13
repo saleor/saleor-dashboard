@@ -1202,10 +1202,6 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
-export interface PageFilterInput {
-  search?: string | null;
-}
-
 export interface PageInput {
   slug?: string | null;
   title?: string | null;

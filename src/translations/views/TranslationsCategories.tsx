@@ -6,13 +6,12 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import { LanguageCodeEnum, TranslationInput } from "../../types/globalTypes";
 import TranslationsCategoriesPage, {
   fieldNames
 } from "../components/TranslationsCategoriesPage";
 import { TypedUpdateCategoryTranslations } from "../mutations";
-import { TypedCategoryTranslationDetails } from "../queries";
+import { useCategoryTranslationDetails } from "../queries";
 import { UpdateCategoryTranslations } from "../types/UpdateCategoryTranslations";
 import {
   languageEntitiesUrl,
@@ -39,6 +38,10 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
+  const categoryTranslations = useCategoryTranslationDetails({
+    variables: { id, language: languageCode }
+  });
+
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -49,6 +52,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     );
   const onUpdate = (data: UpdateCategoryTranslations) => {
     if (data.categoryTranslate.errors.length === 0) {
+      categoryTranslations.refetch();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -61,61 +65,62 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   };
 
   return (
-    <TypedCategoryTranslationDetails variables={{ id, language: languageCode }}>
-      {categoryTranslations => (
-        <TypedUpdateCategoryTranslations onCompleted={onUpdate}>
-          {(updateTranslations, updateTranslationsOpts) => {
-            const handleSubmit = (field: string, data: string) => {
-              const input: TranslationInput = {};
-              if (field === fieldNames.descriptionJson) {
-                input.descriptionJson = JSON.stringify(data);
-              } else if (field === fieldNames.name) {
-                input.name = data;
-              } else if (field === fieldNames.seoDescription) {
-                input.seoDescription = data;
-              } else if (field === fieldNames.seoTitle) {
-                input.seoTitle = data;
-              }
-              updateTranslations({
-                variables: {
-                  id,
-                  input,
-                  language: languageCode
-                }
-              });
-            };
+    <TypedUpdateCategoryTranslations onCompleted={onUpdate}>
+      {(updateTranslations, updateTranslationsOpts) => {
+        const handleSubmit = (field: string, data: string) => {
+          const input: TranslationInput = {};
+          if (field === fieldNames.descriptionJson) {
+            input.descriptionJson = JSON.stringify(data);
+          } else if (field === fieldNames.name) {
+            input.name = data;
+          } else if (field === fieldNames.seoDescription) {
+            input.seoDescription = data;
+          } else if (field === fieldNames.seoTitle) {
+            input.seoTitle = data;
+          }
+          updateTranslations({
+            variables: {
+              id,
+              input,
+              language: languageCode
+            }
+          });
+        };
+        const translation = categoryTranslations?.data?.translation;
 
-            return (
-              <TranslationsCategoriesPage
-                activeField={params.activeField}
-                disabled={
-                  categoryTranslations.loading || updateTranslationsOpts.loading
-                }
-                languageCode={languageCode}
-                languages={maybe(() => shop.languages, [])}
-                saveButtonState={updateTranslationsOpts.status}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.categories
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.categories, id)
-                  )
-                }
-                onSubmit={handleSubmit}
-                category={maybe(() => categoryTranslations.data.category)}
-              />
-            );
-          }}
-        </TypedUpdateCategoryTranslations>
-      )}
-    </TypedCategoryTranslationDetails>
+        return (
+          <TranslationsCategoriesPage
+            activeField={params.activeField}
+            disabled={
+              categoryTranslations.loading || updateTranslationsOpts.loading
+            }
+            languageCode={languageCode}
+            languages={shop?.languages || []}
+            saveButtonState={updateTranslationsOpts.status}
+            onBack={() =>
+              navigate(
+                languageEntitiesUrl(languageCode, {
+                  tab: TranslatableEntities.categories
+                })
+              )
+            }
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onLanguageChange={lang =>
+              navigate(
+                languageEntityUrl(lang, TranslatableEntities.categories, id)
+              )
+            }
+            onSubmit={handleSubmit}
+            data={
+              translation?.__typename === "CategoryTranslatableContent"
+                ? translation
+                : null
+            }
+          />
+        );
+      }}
+    </TypedUpdateCategoryTranslations>
   );
 };
 TranslationsCategories.displayName = "TranslationsCategories";

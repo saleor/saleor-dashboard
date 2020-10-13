@@ -2,38 +2,49 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { LanguageCodeEnum, VoucherFilterInput } from "./../../types/globalTypes";
+import { LanguageCodeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: VoucherTranslations
 // ====================================================
 
-export interface VoucherTranslations_vouchers_edges_node_translation_language {
+export interface VoucherTranslations_translations_edges_node_ProductTranslatableContent {
+  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "ShippingMethodTranslatableContent" | "SaleTranslatableContent" | "MenuItemTranslatableContent";
+}
+
+export interface VoucherTranslations_translations_edges_node_VoucherTranslatableContent_voucher {
+  __typename: "Voucher";
+  id: string;
+  name: string | null;
+}
+
+export interface VoucherTranslations_translations_edges_node_VoucherTranslatableContent_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
   language: string;
 }
 
-export interface VoucherTranslations_vouchers_edges_node_translation {
+export interface VoucherTranslations_translations_edges_node_VoucherTranslatableContent_translation {
   __typename: "VoucherTranslation";
   id: string;
-  language: VoucherTranslations_vouchers_edges_node_translation_language;
+  language: VoucherTranslations_translations_edges_node_VoucherTranslatableContent_translation_language;
   name: string | null;
 }
 
-export interface VoucherTranslations_vouchers_edges_node {
-  __typename: "Voucher";
-  id: string;
-  name: string | null;
-  translation: VoucherTranslations_vouchers_edges_node_translation | null;
+export interface VoucherTranslations_translations_edges_node_VoucherTranslatableContent {
+  __typename: "VoucherTranslatableContent";
+  voucher: VoucherTranslations_translations_edges_node_VoucherTranslatableContent_voucher | null;
+  translation: VoucherTranslations_translations_edges_node_VoucherTranslatableContent_translation | null;
 }
 
-export interface VoucherTranslations_vouchers_edges {
-  __typename: "VoucherCountableEdge";
-  node: VoucherTranslations_vouchers_edges_node;
+export type VoucherTranslations_translations_edges_node = VoucherTranslations_translations_edges_node_ProductTranslatableContent | VoucherTranslations_translations_edges_node_VoucherTranslatableContent;
+
+export interface VoucherTranslations_translations_edges {
+  __typename: "TranslatableItemEdge";
+  node: VoucherTranslations_translations_edges_node;
 }
 
-export interface VoucherTranslations_vouchers_pageInfo {
+export interface VoucherTranslations_translations_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -41,14 +52,14 @@ export interface VoucherTranslations_vouchers_pageInfo {
   startCursor: string | null;
 }
 
-export interface VoucherTranslations_vouchers {
-  __typename: "VoucherCountableConnection";
-  edges: VoucherTranslations_vouchers_edges[];
-  pageInfo: VoucherTranslations_vouchers_pageInfo;
+export interface VoucherTranslations_translations {
+  __typename: "TranslatableItemConnection";
+  edges: VoucherTranslations_translations_edges[];
+  pageInfo: VoucherTranslations_translations_pageInfo;
 }
 
 export interface VoucherTranslations {
-  vouchers: VoucherTranslations_vouchers | null;
+  translations: VoucherTranslations_translations | null;
 }
 
 export interface VoucherTranslationsVariables {
@@ -57,5 +68,4 @@ export interface VoucherTranslationsVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
-  filter?: VoucherFilterInput | null;
 }
