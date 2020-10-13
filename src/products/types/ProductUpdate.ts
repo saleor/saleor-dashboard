@@ -85,6 +85,9 @@ export interface ProductUpdate_productUpdate_product_channelListing {
   discountedPrice: ProductUpdate_productUpdate_product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductUpdate_productUpdate_product_category {

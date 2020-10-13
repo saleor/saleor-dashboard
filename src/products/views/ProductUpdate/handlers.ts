@@ -68,14 +68,25 @@ const getChannelsVariables = (
     data.channelListing,
     (a, b) => a.id === b.id
   );
+
   return {
     id: product.id,
     input: {
-      addChannels: data.channelListing.map(channel => ({
-        channelId: channel.id,
-        isPublished: channel.isPublished,
-        publicationDate: channel.publicationDate
-      })),
+      addChannels: data.channelListing.map(channel => {
+        const { isAvailableForPurchase, availableForPurchase } = channel;
+        const isAvailable =
+          availableForPurchase && !isAvailableForPurchase
+            ? true
+            : isAvailableForPurchase;
+        return {
+          availableForPurchaseDate: availableForPurchase,
+          channelId: channel.id,
+          isAvailableForPurchase: isAvailable,
+          isPublished: channel.isPublished,
+          publicationDate: channel.publicationDate,
+          visibleInListings: channel.visibleInListings
+        };
+      }),
       removeChannels: diffChannels.removed?.map(
         removedChannel => removedChannel.id
       )

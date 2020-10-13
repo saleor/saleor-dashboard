@@ -77,10 +77,7 @@ export function createChannelsChangeHandler(
 ) {
   return (
     id: string,
-    {
-      isPublished,
-      publicationDate
-    }: { isPublished: boolean; publicationDate: string | null }
+    data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
@@ -89,12 +86,7 @@ export function createChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        isPublished:
-          typeof isPublished === "boolean" ? isPublished : channel.isPublished,
-        publicationDate:
-          typeof publicationDate !== "undefined"
-            ? publicationDate
-            : channel.publicationDate
+        ...data
       },
       ...channelListing.slice(channelIndex + 1)
     ];

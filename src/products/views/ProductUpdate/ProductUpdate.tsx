@@ -100,7 +100,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const { data: channelsData } = useChannelsList({});
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
-    variables: { channel: "default-channel", id }
+    variables: { id }
   });
   const product = data?.product;
 

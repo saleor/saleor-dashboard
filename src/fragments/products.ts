@@ -36,6 +36,9 @@ export const channelListingProductFragment = gql`
     discountedPrice {
       ...Money
     }
+    isAvailableForPurchase
+    availableForPurchase
+    visibleInListings
     channel {
       id
       name
@@ -130,6 +133,7 @@ export const productFragmentDetails = gql`
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${channelListingProductFragment}
+  ${channelListingProductVariantFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     name
@@ -144,7 +148,7 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    isAvailable
+    # isAvailable
     chargeTaxes
     channelListing {
       ...ChannelListingProductFragment

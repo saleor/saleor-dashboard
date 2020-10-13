@@ -38,6 +38,9 @@ export interface ProductList_products_edges_node_channelListing {
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: ProductList_products_edges_node_channelListing_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: ProductList_products_edges_node_channelListing_channel;
 }
 

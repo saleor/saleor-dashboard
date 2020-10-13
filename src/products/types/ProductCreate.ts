@@ -85,6 +85,9 @@ export interface ProductCreate_productCreate_product_channelListing {
   discountedPrice: ProductCreate_productCreate_product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductCreate_productCreate_product_category {

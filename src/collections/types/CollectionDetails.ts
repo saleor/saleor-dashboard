@@ -41,6 +41,9 @@ export interface CollectionDetails_collection_products_edges_node_channelListing
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: CollectionDetails_collection_products_edges_node_channelListing_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: CollectionDetails_collection_products_edges_node_channelListing_channel;
 }
 
