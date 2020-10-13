@@ -99,7 +99,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
-            quantity: parseInt(stock.value, 0),
+            quantity: parseInt(stock.value, 0) || 0,
             warehouse: stock.id
           })),
           trackInventory: true,
