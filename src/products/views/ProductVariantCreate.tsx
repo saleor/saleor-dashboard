@@ -8,7 +8,6 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";

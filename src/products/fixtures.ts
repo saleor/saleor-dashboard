@@ -1180,6 +1180,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1191,11 +1192,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1207,8 +1211,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMDc=",
