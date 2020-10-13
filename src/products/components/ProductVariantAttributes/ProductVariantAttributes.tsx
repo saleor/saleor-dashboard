@@ -44,7 +44,7 @@ function getAttributeDisplayValue(
     return attributeValue.name;
   }
 
-  return slug;
+  return slug || "";
 }
 
 function getAttributeValue(
