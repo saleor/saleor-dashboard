@@ -23,7 +23,7 @@ enum SeoField {
 }
 
 const SLUG_REGEX = /^[a-zA-Z0-9\-\_]+$/;
-const maxSlugLength = 15;
+const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
 
