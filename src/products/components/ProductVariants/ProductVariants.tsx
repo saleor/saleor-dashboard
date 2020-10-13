@@ -402,9 +402,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     data-test="actions"
                     onClick={e => e.stopPropagation()}
                   >
-                    <ProductVariantSetDefault
-                      onSetDefaultVariant={() => onSetDefaultVariant(variant)}
-                    />
+                    {variant?.id !== product?.defaultVariant.id && (
+                      <ProductVariantSetDefault
+                        onSetDefaultVariant={() => onSetDefaultVariant(variant)}
+                      />
+                    )}
                   </TableCell>
                 </SortableTableRow>
               );

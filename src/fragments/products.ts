@@ -234,6 +234,9 @@ export const fragmentVariant = gql`
     }
     product {
       id
+      defaultVariant {
+        id
+      }
       images {
         ...ProductImageFragment
       }

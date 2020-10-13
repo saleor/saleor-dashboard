@@ -67,6 +67,11 @@ export interface ProductVariant_price {
   currency: string;
 }
 
+export interface ProductVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductVariant_product_images {
   __typename: "ProductImage";
   id: string;
@@ -97,6 +102,7 @@ export interface ProductVariant_product_variants {
 export interface ProductVariant_product {
   __typename: "Product";
   id: string;
+  defaultVariant: ProductVariant_product_defaultVariant | null;
   images: (ProductVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;

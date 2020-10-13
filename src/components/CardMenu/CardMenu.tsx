@@ -12,6 +12,7 @@ import React from "react";
 const ITEM_HEIGHT = 48;
 
 export interface CardMenuItem {
+  disabled?: boolean;
   label: string;
   testId?: string;
   onSelect: () => void;
@@ -118,6 +119,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                 >
                   {menuItems.map((menuItem, menuItemIndex) => (
                     <MenuItem
+                      disabled={menuItem.disabled}
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}
                       data-test={menuItem.testId}

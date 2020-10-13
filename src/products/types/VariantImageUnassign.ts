@@ -73,6 +73,11 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_price 
   currency: string;
 }
 
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface VariantImageUnassign_variantImageUnassign_productVariant_product_images {
   __typename: "ProductImage";
   id: string;
@@ -103,6 +108,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_produc
 export interface VariantImageUnassign_variantImageUnassign_productVariant_product {
   __typename: "Product";
   id: string;
+  defaultVariant: VariantImageUnassign_variantImageUnassign_productVariant_product_defaultVariant | null;
   images: (VariantImageUnassign_variantImageUnassign_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantImageUnassign_variantImageUnassign_productVariant_product_thumbnail | null;

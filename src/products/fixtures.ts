@@ -1557,6 +1557,10 @@ export const variant = (placeholderImage: string): ProductVariant => ({
   privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
+    defaultVariant: {
+      __typename: "ProductVariant",
+      id: "var1"
+    },
     id: "prod1",
     images: [
       {
