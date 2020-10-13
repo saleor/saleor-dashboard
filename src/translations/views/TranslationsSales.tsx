@@ -6,7 +6,6 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import {
   LanguageCodeEnum,
   NameTranslationInput
@@ -15,7 +14,7 @@ import TranslationsSalesPage, {
   fieldNames
 } from "../components/TranslationsSalesPage";
 import { TypedUpdateSaleTranslations } from "../mutations";
-import { TypedSaleTranslationDetails } from "../queries";
+import { useSaleTranslationDetails } from "../queries";
 import { UpdateSaleTranslations } from "../types/UpdateSaleTranslations";
 import {
   languageEntitiesUrl,
@@ -42,6 +41,10 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
+  const saleTranslations = useSaleTranslationDetails({
+    variables: { id, language: languageCode }
+  });
+
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -52,6 +55,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
     );
   const onUpdate = (data: UpdateSaleTranslations) => {
     if (data.saleTranslate.errors.length === 0) {
+      saleTranslations.refetch();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -64,55 +68,54 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
   };
 
   return (
-    <TypedSaleTranslationDetails variables={{ id, language: languageCode }}>
-      {saleTranslations => (
-        <TypedUpdateSaleTranslations onCompleted={onUpdate}>
-          {(updateTranslations, updateTranslationsOpts) => {
-            const handleSubmit = (field: string, data: string) => {
-              const input: NameTranslationInput = {};
-              if (field === fieldNames.name) {
-                input.name = data;
-              }
-              updateTranslations({
-                variables: {
-                  id,
-                  input,
-                  language: languageCode
-                }
-              });
-            };
+    <TypedUpdateSaleTranslations onCompleted={onUpdate}>
+      {(updateTranslations, updateTranslationsOpts) => {
+        const handleSubmit = (field: string, data: string) => {
+          const input: NameTranslationInput = {};
+          if (field === fieldNames.name) {
+            input.name = data;
+          }
+          updateTranslations({
+            variables: {
+              id,
+              input,
+              language: languageCode
+            }
+          });
+        };
+        const translation = saleTranslations?.data?.translation;
 
-            return (
-              <TranslationsSalesPage
-                activeField={params.activeField}
-                disabled={
-                  saleTranslations.loading || updateTranslationsOpts.loading
-                }
-                languages={maybe(() => shop.languages, [])}
-                languageCode={languageCode}
-                saveButtonState={updateTranslationsOpts.status}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.sales
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onSubmit={handleSubmit}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.sales, id)
-                  )
-                }
-                sale={maybe(() => saleTranslations.data.sale)}
-              />
-            );
-          }}
-        </TypedUpdateSaleTranslations>
-      )}
-    </TypedSaleTranslationDetails>
+        return (
+          <TranslationsSalesPage
+            activeField={params.activeField}
+            disabled={
+              saleTranslations.loading || updateTranslationsOpts.loading
+            }
+            languages={shop?.languages || []}
+            languageCode={languageCode}
+            saveButtonState={updateTranslationsOpts.status}
+            onBack={() =>
+              navigate(
+                languageEntitiesUrl(languageCode, {
+                  tab: TranslatableEntities.sales
+                })
+              )
+            }
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={handleSubmit}
+            onLanguageChange={lang =>
+              navigate(languageEntityUrl(lang, TranslatableEntities.sales, id))
+            }
+            data={
+              translation?.__typename === "SaleTranslatableContent"
+                ? translation
+                : null
+            }
+          />
+        );
+      }}
+    </TypedUpdateSaleTranslations>
   );
 };
 TranslationsSales.displayName = "TranslationsSales";

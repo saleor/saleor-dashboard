@@ -41,7 +41,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
               defaultMessage: "Translation"
             })}
             name="translation"
-            value={data.translation}
+            value={data.translation || ""}
             onChange={change}
           />
           <TranslationFieldsSave

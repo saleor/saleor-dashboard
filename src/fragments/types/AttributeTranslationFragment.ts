@@ -12,23 +12,28 @@ export interface AttributeTranslationFragment_translation {
   name: string;
 }
 
-export interface AttributeTranslationFragment_values_translation {
+export interface AttributeTranslationFragment_attribute_values_translation {
   __typename: "AttributeValueTranslation";
   id: string;
   name: string;
 }
 
-export interface AttributeTranslationFragment_values {
+export interface AttributeTranslationFragment_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
-  translation: AttributeTranslationFragment_values_translation | null;
+  translation: AttributeTranslationFragment_attribute_values_translation | null;
 }
 
-export interface AttributeTranslationFragment {
+export interface AttributeTranslationFragment_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
+  values: (AttributeTranslationFragment_attribute_values | null)[] | null;
+}
+
+export interface AttributeTranslationFragment {
+  __typename: "AttributeTranslatableContent";
   translation: AttributeTranslationFragment_translation | null;
-  values: (AttributeTranslationFragment_values | null)[] | null;
+  attribute: AttributeTranslationFragment_attribute | null;
 }

@@ -1,11 +1,4 @@
-import {
-  categoryTranslationFragment,
-  collectionTranslationFragment,
-  pageTranslatableFragment,
-  productTranslationFragment,
-  saleTranslationFragment,
-  voucherTranslationFragment
-} from "@saleor/fragments/translations";
+import { pageTranslationFragment } from "@saleor/fragments/translations";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -43,7 +36,6 @@ import {
 } from "./types/UpdateVoucherTranslations";
 
 const updateProductTranslations = gql`
-  ${productTranslationFragment}
   mutation UpdateProductTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -55,7 +47,22 @@ const updateProductTranslations = gql`
         message
       }
       product {
-        ...ProductTranslationFragment
+        id
+        name
+        descriptionJson
+        seoDescription
+        seoTitle
+        translation(languageCode: $language) {
+          id
+          descriptionJson
+          language {
+            code
+            language
+          }
+          name
+          seoDescription
+          seoTitle
+        }
       }
     }
   }
@@ -66,7 +73,6 @@ export const TypedUpdateProductTranslations = TypedMutation<
 >(updateProductTranslations);
 
 const updateCategoryTranslations = gql`
-  ${categoryTranslationFragment}
   mutation UpdateCategoryTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -78,7 +84,21 @@ const updateCategoryTranslations = gql`
         message
       }
       category {
-        ...CategoryTranslationFragment
+        id
+        name
+        descriptionJson
+        seoDescription
+        seoTitle
+        translation(languageCode: $language) {
+          id
+          descriptionJson
+          language {
+            language
+          }
+          name
+          seoDescription
+          seoTitle
+        }
       }
     }
   }
@@ -89,7 +109,6 @@ export const TypedUpdateCategoryTranslations = TypedMutation<
 >(updateCategoryTranslations);
 
 const updateCollectionTranslations = gql`
-  ${collectionTranslationFragment}
   mutation UpdateCollectionTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -101,7 +120,21 @@ const updateCollectionTranslations = gql`
         message
       }
       collection {
-        ...CollectionTranslationFragment
+        id
+        name
+        descriptionJson
+        seoDescription
+        seoTitle
+        translation(languageCode: $language) {
+          id
+          descriptionJson
+          language {
+            language
+          }
+          name
+          seoDescription
+          seoTitle
+        }
       }
     }
   }
@@ -112,7 +145,7 @@ export const TypedUpdateCollectionTranslations = TypedMutation<
 >(updateCollectionTranslations);
 
 const updatePageTranslations = gql`
-  ${pageTranslatableFragment}
+  ${pageTranslationFragment}
   mutation UpdatePageTranslations(
     $id: ID!
     $input: PageTranslationInput!
@@ -124,7 +157,7 @@ const updatePageTranslations = gql`
         message
       }
       page {
-        ...PageTranslatableFragment
+        ...PageTranslationFragment
       }
     }
   }
@@ -135,7 +168,6 @@ export const TypedUpdatePageTranslations = TypedMutation<
 >(updatePageTranslations);
 
 const updateVoucherTranslations = gql`
-  ${voucherTranslationFragment}
   mutation UpdateVoucherTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -147,7 +179,16 @@ const updateVoucherTranslations = gql`
         message
       }
       voucher {
-        ...VoucherTranslationFragment
+        id
+        name
+        translation(languageCode: $language) {
+          id
+          language {
+            code
+            language
+          }
+          name
+        }
       }
     }
   }
@@ -158,7 +199,6 @@ export const TypedUpdateVoucherTranslations = TypedMutation<
 >(updateVoucherTranslations);
 
 const updateSaleTranslations = gql`
-  ${saleTranslationFragment}
   mutation UpdateSaleTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -170,7 +210,16 @@ const updateSaleTranslations = gql`
         message
       }
       sale {
-        ...SaleTranslationFragment
+        id
+        name
+        translation(languageCode: $language) {
+          id
+          language {
+            code
+            language
+          }
+          name
+        }
       }
     }
   }
