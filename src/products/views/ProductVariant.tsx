@@ -201,7 +201,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       <WindowTitle title={data?.productVariant?.name} />
       <ProductVariantPage
         defaultWeightUnit={shop?.defaultWeightUnit}
-        defaultVariantId={data?.productVariant.product.defaultVariant.id}
+        defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}

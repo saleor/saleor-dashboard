@@ -176,7 +176,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {maybe(() => variant.product.name)}
         </AppHeader>
         <PageHeader title={header}>
-          {variant?.product?.defaultVariant.id !== variant?.id && (
+          {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
               onSetDefaultVariant={onSetDefaultVariant}
             />
