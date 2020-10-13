@@ -2,80 +2,56 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { LanguageCodeEnum, ProductTypeFilterInput } from "./../../types/globalTypes";
+import { LanguageCodeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductTypeTranslations
 // ====================================================
 
-export interface ProductTypeTranslations_productTypes_edges_node_productAttributes_translation {
+export interface ProductTypeTranslations_translations_edges_node_ProductTranslatableContent {
+  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "ShippingMethodTranslatableContent" | "SaleTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
+}
+
+export interface ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_translation {
   __typename: "AttributeTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_productAttributes_values_translation {
+export interface ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute_values_translation {
   __typename: "AttributeValueTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_productAttributes_values {
+export interface ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslations_productTypes_edges_node_productAttributes_values_translation | null;
+  translation: ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute_values_translation | null;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_productAttributes {
+export interface ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslations_productTypes_edges_node_productAttributes_translation | null;
-  values: (ProductTypeTranslations_productTypes_edges_node_productAttributes_values | null)[] | null;
+  values: (ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute_values | null)[] | null;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_variantAttributes_translation {
-  __typename: "AttributeTranslation";
-  id: string;
-  name: string;
+export interface ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent {
+  __typename: "AttributeTranslatableContent";
+  translation: ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_translation | null;
+  attribute: ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent_attribute | null;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_variantAttributes_values_translation {
-  __typename: "AttributeValueTranslation";
-  id: string;
-  name: string;
+export type ProductTypeTranslations_translations_edges_node = ProductTypeTranslations_translations_edges_node_ProductTranslatableContent | ProductTypeTranslations_translations_edges_node_AttributeTranslatableContent;
+
+export interface ProductTypeTranslations_translations_edges {
+  __typename: "TranslatableItemEdge";
+  node: ProductTypeTranslations_translations_edges_node;
 }
 
-export interface ProductTypeTranslations_productTypes_edges_node_variantAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslations_productTypes_edges_node_variantAttributes_values_translation | null;
-}
-
-export interface ProductTypeTranslations_productTypes_edges_node_variantAttributes {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslations_productTypes_edges_node_variantAttributes_translation | null;
-  values: (ProductTypeTranslations_productTypes_edges_node_variantAttributes_values | null)[] | null;
-}
-
-export interface ProductTypeTranslations_productTypes_edges_node {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-  productAttributes: (ProductTypeTranslations_productTypes_edges_node_productAttributes | null)[] | null;
-  variantAttributes: (ProductTypeTranslations_productTypes_edges_node_variantAttributes | null)[] | null;
-}
-
-export interface ProductTypeTranslations_productTypes_edges {
-  __typename: "ProductTypeCountableEdge";
-  node: ProductTypeTranslations_productTypes_edges_node;
-}
-
-export interface ProductTypeTranslations_productTypes_pageInfo {
+export interface ProductTypeTranslations_translations_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -83,14 +59,14 @@ export interface ProductTypeTranslations_productTypes_pageInfo {
   startCursor: string | null;
 }
 
-export interface ProductTypeTranslations_productTypes {
-  __typename: "ProductTypeCountableConnection";
-  edges: ProductTypeTranslations_productTypes_edges[];
-  pageInfo: ProductTypeTranslations_productTypes_pageInfo;
+export interface ProductTypeTranslations_translations {
+  __typename: "TranslatableItemConnection";
+  edges: ProductTypeTranslations_translations_edges[];
+  pageInfo: ProductTypeTranslations_translations_pageInfo;
 }
 
 export interface ProductTypeTranslations {
-  productTypes: ProductTypeTranslations_productTypes | null;
+  translations: ProductTypeTranslations_translations | null;
 }
 
 export interface ProductTypeTranslationsVariables {
@@ -99,5 +75,4 @@ export interface ProductTypeTranslationsVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
-  filter?: ProductTypeFilterInput | null;
 }

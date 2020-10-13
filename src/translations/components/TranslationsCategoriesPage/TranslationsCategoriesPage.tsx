@@ -9,13 +9,12 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsCategoriesPageProps
   extends TranslationsEntitiesPageProps {
-  category: CategoryTranslationFragment;
+  data: CategoryTranslationFragment;
 }
 
 export const fieldNames = {
@@ -30,7 +29,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
   disabled,
   languageCode,
   languages,
-  category,
+  data,
   saveButtonState,
   onBack,
   onDiscard,
@@ -52,7 +51,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               'Translation Category "{categoryName}" - {languageCode}'
           },
           {
-            categoryName: maybe(() => category.name, "..."),
+            categoryName: data?.category?.name || "...",
             languageCode
           }
         )}
@@ -74,20 +73,16 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               defaultMessage: "Category Name"
             }),
             name: fieldNames.name,
-            translation: maybe(() =>
-              category.translation ? category.translation.name : null
-            ),
+            translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: maybe(() => category.name)
+            value: data?.category?.name
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
             name: fieldNames.descriptionJson,
-            translation: maybe(() =>
-              category.translation ? category.translation.descriptionJson : null
-            ),
+            translation: data?.translation?.descriptionJson || null,
             type: "rich" as "rich",
-            value: maybe(() => category.descriptionJson)
+            value: data?.category?.descriptionJson
           }
         ]}
         saveButtonState={saveButtonState}
@@ -109,22 +104,18 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               defaultMessage: "Search Engine Title"
             }),
             name: fieldNames.seoTitle,
-            translation: maybe(() =>
-              category.translation ? category.translation.seoTitle : null
-            ),
+            translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
-            value: maybe(() => category.seoTitle)
+            value: data?.category?.seoTitle
           },
           {
             displayName: intl.formatMessage({
               defaultMessage: "Search Engine Description"
             }),
             name: fieldNames.seoDescription,
-            translation: maybe(() =>
-              category.translation ? category.translation.seoDescription : null
-            ),
+            translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
-            value: maybe(() => category.seoDescription)
+            value: data?.category?.seoDescription
           }
         ]}
         saveButtonState={saveButtonState}
