@@ -99,6 +99,11 @@ export interface ProductVariant_product_variants {
   images: (ProductVariant_product_variants_images | null)[] | null;
 }
 
+export interface ProductVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface ProductVariant_product {
   __typename: "Product";
   id: string;

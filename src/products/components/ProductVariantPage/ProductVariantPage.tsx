@@ -15,6 +15,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
@@ -54,13 +55,16 @@ export interface ProductVariantPageSubmitData
 }
 
 interface ProductVariantPageProps {
+  defaultVariantId?: string;
   defaultWeightUnit: string;
-  variant?: ProductVariant;
-  errors: ProductErrorWithAttributesFragment[];
-  saveButtonBarState: ConfirmButtonTransitionState;
+  errors:
+    | ProductErrorWithAttributesFragment[]
+    | VariantUpdate_productVariantUpdate_errors[];
+  header: string;
   loading?: boolean;
   placeholderImage?: string;
-  header: string;
+  saveButtonBarState: ConfirmButtonTransitionState;
+  variant?: ProductVariant;
   warehouses: WarehouseFragment[];
   onVariantReorder: ReorderAction;
   onAdd();
@@ -74,10 +78,11 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  defaultVariantId,
   defaultWeightUnit,
   errors,
-  loading,
   header,
+  loading,
   placeholderImage,
   saveButtonBarState,
   variant,
@@ -171,7 +176,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {maybe(() => variant.product.name)}
         </AppHeader>
         <PageHeader title={header}>
-          {variant?.product?.defaultVariant.id !== variant?.id && (
+          {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
               onSetDefaultVariant={onSetDefaultVariant}
             />
@@ -192,6 +197,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   <div>
                     <ProductVariantNavigation
                       current={variant ? variant.id : undefined}
+                      defaultVariantId={defaultVariantId}
                       fallbackThumbnail={maybe(
                         () => variant.product.thumbnail.url
                       )}

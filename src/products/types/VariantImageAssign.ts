@@ -105,14 +105,19 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product_va
   images: (VariantImageAssign_variantImageAssign_productVariant_product_variants_images | null)[] | null;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant_product {
   __typename: "Product";
   id: string;
-  defaultVariant: VariantImageAssign_variantImageAssign_productVariant_product_defaultVariant | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantImageAssign_variantImageAssign_productVariant_product_thumbnail | null;
   variants: (VariantImageAssign_variantImageAssign_productVariant_product_variants | null)[] | null;
+  defaultVariant: VariantImageAssign_variantImageAssign_productVariant_product_defaultVariant | null;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse {
