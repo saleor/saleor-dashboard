@@ -6,7 +6,7 @@ A GraphQL-powered, single-page dashboard application for [Saleor](https://github
 
 ## Demo
 
-See the [public demo](https://pwa.saleor.io/dashboard/) of Saleor Dashboard!
+See the [public demo](https://demo.saleor.io/dashboard/) of Saleor Dashboard!
 
 Or launch the demo on a free Heroku instance.
 
