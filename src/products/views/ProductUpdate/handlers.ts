@@ -29,6 +29,7 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
@@ -72,24 +73,7 @@ const getChannelsVariables = (
   return {
     id: product.id,
     input: {
-      addChannels: data.channelListing.map(channel => {
-        const { isAvailableForPurchase, availableForPurchase } = channel;
-        const isAvailable =
-          availableForPurchase && !isAvailableForPurchase
-            ? true
-            : isAvailableForPurchase;
-        return {
-          availableForPurchaseDate:
-            isAvailableForPurchase || availableForPurchase === ""
-              ? null
-              : availableForPurchase,
-          channelId: channel.id,
-          isAvailableForPurchase: isAvailable,
-          isPublished: channel.isPublished,
-          publicationDate: channel.publicationDate,
-          visibleInListings: channel.visibleInListings
-        };
-      }),
+      addChannels: getAvailabilityVariables(data.channelListing),
       removeChannels: diffChannels.removed?.map(
         removedChannel => removedChannel.id
       )

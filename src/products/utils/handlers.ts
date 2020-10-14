@@ -188,3 +188,24 @@ export function createProductTypeSelectHandler(
     );
   };
 }
+
+export const getAvailabilityVariables = (channels: ChannelData[]) =>
+  channels.map(channel => {
+    const { isAvailableForPurchase, availableForPurchase } = channel;
+    const isAvailable =
+      availableForPurchase && !isAvailableForPurchase
+        ? true
+        : isAvailableForPurchase;
+
+    return {
+      availableForPurchaseDate:
+        isAvailableForPurchase || availableForPurchase === ""
+          ? null
+          : availableForPurchase,
+      channelId: channel.id,
+      isAvailableForPurchase: isAvailable,
+      isPublished: channel.isPublished,
+      publicationDate: channel.publicationDate,
+      visibleInListings: channel.visibleInListings
+    };
+  });

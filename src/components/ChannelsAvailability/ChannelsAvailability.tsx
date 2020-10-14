@@ -410,9 +410,9 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
           )}
           {channels
             ? channels.map(data => {
-                const channelErrors = errors?.filter(error =>
-                  error.channels.includes(data.id)
-                );
+                const channelErrors =
+                  errors?.filter(error => error.channels.includes(data.id)) ||
+                  [];
                 return (
                   <Channel
                     key={data.id}
