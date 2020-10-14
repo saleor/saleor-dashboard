@@ -40,14 +40,6 @@ export const useStyles = makeStyles(
       alignItems: "flex-start",
       marginTop: 10
     },
-    children: {
-      "& button": {
-        margin: "0 9px"
-      },
-      "& label": {
-        marginTop: theme.spacing(2.5)
-      }
-    },
     date: {
       "& svg": {
         fill: theme.palette.primary.main
