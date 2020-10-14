@@ -148,7 +148,6 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    # isAvailable
     chargeTaxes
     channelListing {
       ...ChannelListingProductFragment

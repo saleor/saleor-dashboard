@@ -8,10 +8,11 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { RequireOnlyOne } from "@saleor/misc";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -41,7 +42,7 @@ interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
   channelsMessages?: { [id: string]: Message };
-  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  errors: ProductChannelListingErrorFragment[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -56,6 +57,7 @@ export type ChannelsAvailabilityProps = RequireOnlyOne<
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
+  errors: ProductChannelListingErrorFragment[];
   messages: Message;
   onChange: (id: string, data: Value) => void;
 }
@@ -63,6 +65,7 @@ interface ChannelProps {
 const Channel: React.FC<ChannelProps> = ({
   data,
   disabled,
+  errors,
   messages,
   onChange
 }) => {
@@ -109,6 +112,11 @@ const Channel: React.FC<ChannelProps> = ({
         date: localizeDate(date, "L")
       }
     );
+
+  const formErrors = getFormErrors(
+    ["availableForPurchaseDate", "publicationDate"],
+    errors
+  );
 
   return (
     <>
@@ -185,7 +193,7 @@ const Channel: React.FC<ChannelProps> = ({
                 </Typography>
                 {isPublicationDate && (
                   <TextField
-                    // error={!!getFieldError(errors, "publicationDate")}
+                    error={!!formErrors.publicationDate}
                     disabled={disabled}
                     label={intl.formatMessage({
                       defaultMessage: "Publish on",
@@ -194,9 +202,14 @@ const Channel: React.FC<ChannelProps> = ({
                     name={`channel:publicationDate:${id}`}
                     type="date"
                     fullWidth={true}
-                    // helperText={
-                    //   getFieldError(errors, "publicationDate")?.message
-                    // }
+                    helperText={
+                      formErrors.publicationDate
+                        ? getProductErrorMessage(
+                            formErrors.publicationDate,
+                            intl
+                          )
+                        : ""
+                    }
                     value={publicationDate ? publicationDate : ""}
                     onChange={e =>
                       onChange(id, {
@@ -217,7 +230,6 @@ const Channel: React.FC<ChannelProps> = ({
                 <Hr />
                 <RadioSwitchField
                   disabled={disabled}
-                  // error={!!getFieldError(errors, "isAvailableForPurchase")}
                   firstOptionLabel={
                     <>
                       <p className={classes.label}>{messages.availableLabel}</p>
@@ -259,13 +271,13 @@ const Channel: React.FC<ChannelProps> = ({
                   <>
                     <Typography
                       className={classes.setPublicationDate}
-                      onClick={() => setAvailableDate(!isAvailable)}
+                      onClick={() => setAvailableDate(!isAvailableDate)}
                     >
                       {messages.setAvailabilityDateLabel}
                     </Typography>
                     {isAvailableDate && (
                       <TextField
-                        // error={!!getFieldError(errors, "startDate")}
+                        error={!!formErrors.availableForPurchaseDate}
                         disabled={disabled}
                         label={intl.formatMessage({
                           defaultMessage: "Set available on",
@@ -274,7 +286,14 @@ const Channel: React.FC<ChannelProps> = ({
                         name={`channel:availableForPurchase:${id}`}
                         type="date"
                         fullWidth={true}
-                        // helperText={getFieldError(errors, "startDate")?.message}
+                        helperText={
+                          formErrors.availableForPurchaseDate
+                            ? getProductErrorMessage(
+                                formErrors.availableForPurchaseDate,
+                                intl
+                              )
+                            : ""
+                        }
                         value={availableForPurchase ? availableForPurchase : ""}
                         onChange={e =>
                           onChange(id, {
@@ -341,6 +360,7 @@ const Channel: React.FC<ChannelProps> = ({
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
   const {
     channelsList,
+    errors,
     selectedChannelsCount,
     allChannelsCount,
     channels,
@@ -389,14 +409,20 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             </>
           )}
           {channels
-            ? channels.map(data => (
-                <Channel
-                  key={data.id}
-                  data={data}
-                  onChange={onChange}
-                  messages={channelsMessages[data.id]}
-                />
-              ))
+            ? channels.map(data => {
+                const channelErrors = errors?.filter(error =>
+                  error.channels.includes(data.id)
+                );
+                return (
+                  <Channel
+                    key={data.id}
+                    data={data}
+                    errors={channelErrors}
+                    onChange={onChange}
+                    messages={channelsMessages[data.id]}
+                  />
+                );
+              })
             : channelsList
             ? channelsList.map(data => (
                 <React.Fragment key={data.id}>

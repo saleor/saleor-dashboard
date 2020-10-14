@@ -7,6 +7,15 @@ export const productErrorFragment = gql`
   }
 `;
 
+export const productChannelListingErrorFragment = gql`
+  fragment ProductChannelListingErrorFragment on ProductChannelListingError {
+    code
+    field
+    message
+    channels
+  }
+`;
+
 export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code

@@ -160,7 +160,6 @@ export interface Product {
   seoDescription: string | null;
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;
-  isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;

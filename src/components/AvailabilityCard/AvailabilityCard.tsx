@@ -44,6 +44,11 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps &
                       date: localizeDate(currVal.publicationDate, "L")
                     }
                   )
+                : currVal.isPublished
+                ? intl.formatMessage({
+                    defaultMessage: "Visible",
+                    description: "channel publication status"
+                  })
                 : intl.formatMessage({
                     defaultMessage: "Hidden",
                     description: "channel publication status"

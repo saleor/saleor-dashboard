@@ -79,7 +79,10 @@ const getChannelsVariables = (
             ? true
             : isAvailableForPurchase;
         return {
-          availableForPurchaseDate: availableForPurchase,
+          availableForPurchaseDate:
+            isAvailableForPurchase || availableForPurchase === ""
+              ? null
+              : availableForPurchase,
           channelId: channel.id,
           isAvailableForPurchase: isAvailable,
           isPublished: channel.isPublished,

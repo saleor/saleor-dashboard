@@ -1145,6 +1145,10 @@
     "context": "product availability date label",
     "string": "Set availability date"
   },
+  "src_dot_components_dot_AvailabilityCard_dot_643174786": {
+    "context": "channel publication status",
+    "string": "Visible"
+  },
   "src_dot_components_dot_AvailabilityCard_dot_77815154": {
     "context": "channel publication status",
     "string": "Hidden"
@@ -3843,8 +3847,16 @@
     "context": "product organization, header",
     "string": "Organization"
   },
+  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2341910657": {
+    "context": "product label",
+    "string": "Not published"
+  },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
+  },
+  "src_dot_products_dot_components_dot_ProductCreatePage_dot_3640454975": {
+    "context": "product label",
+    "string": "Published"
   },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
