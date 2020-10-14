@@ -9,7 +9,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
-import AppActionContext, { useAppAction } from "../AppLayout/AppActionContext";
+import { useAppAction } from "../AppLayout/AppActionContext";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
