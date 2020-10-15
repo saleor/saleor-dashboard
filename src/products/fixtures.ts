@@ -298,6 +298,11 @@ export const product: (
             id: "123",
             name: "Channel1"
           },
+          costPrice: {
+            __typename: "Money",
+            amount: 10,
+            currency: "USD"
+          },
           price: {
             __typename: "Money",
             amount: 1,
@@ -311,6 +316,11 @@ export const product: (
             currencyCode: "USD",
             id: "124",
             name: "Channel2"
+          },
+          costPrice: {
+            __typename: "Money",
+            amount: 10,
+            currency: "USD"
           },
           price: {
             __typename: "Money",
@@ -1818,6 +1828,11 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "test1",
         name: "Test channel"
       },
+      costPrice: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
+      },
       price: {
         __typename: "Money",
         amount: 10,
@@ -1831,6 +1846,11 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         currencyCode: "USD",
         id: "test2",
         name: "Test channel other"
+      },
+      costPrice: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
       },
       price: {
         __typename: "Money",

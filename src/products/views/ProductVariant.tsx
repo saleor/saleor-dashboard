@@ -90,6 +90,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           id: variant.id,
           input: data.channelListing.map(listing => ({
             channelId: listing.id,
+            costPrice: listing.costPrice,
             price: listing.price
           }))
         }

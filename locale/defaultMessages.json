@@ -4203,6 +4203,10 @@
     "context": "tabel column header",
     "string": "Selling Price"
   },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2051669917": {
+    "context": "tabel column header",
+    "string": "Cost Price"
+  },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
     "context": "info text",
     "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"

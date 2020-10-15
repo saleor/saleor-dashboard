@@ -18,7 +18,10 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
-import { validatePrice } from "@saleor/products/utils/validation";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions } from "@saleor/types";
@@ -242,7 +245,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         const formDisabled =
           !product?.productType.hasVariants &&
           (!data.sku ||
-            data.channelListing?.some(channel => validatePrice(channel.price)));
+            data.channelListing?.some(
+              channel =>
+                validatePrice(channel.price) ||
+                validateCostPrice(channel.costPrice)
+            ));
 
         return (
           <>
