@@ -19,6 +19,7 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
+import { pageTypeListUrl } from "@saleor/pageTypes/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
@@ -148,6 +149,23 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_CHANNELS,
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl()
+        }
+      ]
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Page Types"
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Define types of pages on your store",
+            id: "configurationMenuPageTypes"
+          }),
+          icon: null,
+          permission: PermissionEnum.MANAGE_PRODUCTS,
+          title: intl.formatMessage(sectionNames.pageTypes),
+          url: pageTypeListUrl()
         }
       ]
     },

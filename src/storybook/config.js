@@ -100,6 +100,9 @@ function loadStories() {
   require("./stories/pages/PageDetailsPage");
   require("./stories/pages/PageListPage");
 
+  // Page types
+  require("./stories/pageTypes/PageTypeListPage");
+
   // Plugins
   require("./stories/plugins/PluginDetailsPage");
   require("./stories/plugins/PluginsListPage");
