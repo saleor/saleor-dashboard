@@ -13,8 +13,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { renderCollection } from "@saleor/misc";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { getFormErrors } from "@saleor/utils/errors";
 import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(
 
 interface ProductVariantPriceProps {
   ProductVariantChannelListings: ChannelPriceData[];
-  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  errors: ProductChannelListingErrorFragment[];
   loading?: boolean;
   onChange: (id: string, data: ChannelPriceArgs) => void;
 }

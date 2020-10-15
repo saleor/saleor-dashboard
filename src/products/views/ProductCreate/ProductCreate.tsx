@@ -190,7 +190,7 @@ export const ProductCreateView: React.FC = () => {
         }
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
-            ?.productChannelListingErrors
+            ?.errors
         }
         errors={[
           ...(productCreateOpts.data?.productCreate.errors || []),

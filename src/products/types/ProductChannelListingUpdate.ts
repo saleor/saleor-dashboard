@@ -172,7 +172,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   variants: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants | null)[] | null;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors {
+export interface ProductChannelListingUpdate_productChannelListingUpdate_errors {
   __typename: "ProductChannelListingError";
   code: ProductErrorCode;
   field: string | null;
@@ -183,7 +183,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
 export interface ProductChannelListingUpdate_productChannelListingUpdate {
   __typename: "ProductChannelListingUpdate";
   product: ProductChannelListingUpdate_productChannelListingUpdate_product | null;
-  productChannelListingErrors: ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors[];
+  errors: ProductChannelListingUpdate_productChannelListingUpdate_errors[];
 }
 
 export interface ProductChannelListingUpdate {
