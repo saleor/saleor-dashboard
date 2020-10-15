@@ -512,6 +512,7 @@ export enum MetadataErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
 }
 
 export enum OrderAction {
@@ -658,6 +659,7 @@ export enum PermissionEnum {
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
+  MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
   MANAGE_SERVICE_ACCOUNTS = "MANAGE_SERVICE_ACCOUNTS",
   MANAGE_SETTINGS = "MANAGE_SETTINGS",
   MANAGE_SHIPPING = "MANAGE_SHIPPING",
@@ -1244,8 +1246,8 @@ export interface OrderFulfillLineInput {
 }
 
 export interface OrderFulfillStockInput {
-  quantity?: number | null;
-  warehouse?: string | null;
+  quantity: number;
+  warehouse: string;
 }
 
 export interface OrderLineCreateInput {

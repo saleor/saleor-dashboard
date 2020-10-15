@@ -412,7 +412,7 @@ type Attribute implements Node & ObjectWithMetadata {
 type AttributeAssign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productType: ProductType
-  productErrors: [ProductAttributeError!]!
+  productErrors: [ProductError!]!
 }
 
 input AttributeAssignInput {
@@ -2534,6 +2534,7 @@ enum MetadataErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  REQUIRED
 }
 
 input MetadataInput {
@@ -3116,8 +3117,8 @@ input OrderFulfillLineInput {
 }
 
 input OrderFulfillStockInput {
-  quantity: Int
-  warehouse: ID
+  quantity: Int!
+  warehouse: ID!
 }
 
 type OrderLine implements Node {
@@ -3490,6 +3491,7 @@ enum PermissionEnum {
   MANAGE_ORDERS
   MANAGE_PAGES
   MANAGE_PRODUCTS
+  MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
@@ -3664,13 +3666,6 @@ type Product implements Node & ObjectWithMetadata {
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   isAvailableForPurchase: Boolean
-}
-
-type ProductAttributeError {
-  field: String
-  message: String
-  code: ProductErrorCode!
-  attributes: [ID!]
 }
 
 type ProductBulkDelete {
@@ -4173,6 +4168,11 @@ type ProductVariantDelete {
   productVariant: ProductVariant
 }
 
+input ProductVariantFilterInput {
+  search: String
+  sku: [String]
+}
+
 input ProductVariantInput {
   attributes: [AttributeValueInput]
   costPrice: PositiveDecimal
@@ -4275,8 +4275,8 @@ type Query {
   products(filter: ProductFilterInput, sortBy: ProductOrder, stockAvailability: StockAvailability, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   productType(id: ID!): ProductType
   productTypes(filter: ProductTypeFilterInput, sortBy: ProductTypeSortingInput, before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection
-  productVariant(id: ID!): ProductVariant
-  productVariants(ids: [ID], before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
+  productVariant(id: ID, sku: String): ProductVariant
+  productVariants(ids: [ID], filter: ProductVariantFilterInput, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   reportProductSales(period: ReportingPeriod!, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   payment(id: ID!): Payment
   payments(before: String, after: String, first: Int, last: Int): PaymentCountableConnection
