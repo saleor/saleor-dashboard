@@ -44,7 +44,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "configurationMenuAttributes"
           }),
           icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_PRODUCTS,
+          permission: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
           title: intl.formatMessage(sectionNames.attributes),
           url: attributeListUrl()
         },
@@ -54,7 +54,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "configurationMenuProductTypes"
           }),
           icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_PRODUCTS,
+          permission: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl()
         }
