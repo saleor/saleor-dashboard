@@ -37,9 +37,7 @@ import {
   getAttributeInputFromProduct,
   getChoices,
   getProductUpdatePageFormData,
-  getSelectedAttributesFromProduct,
   getStockInputFromProduct,
-  ProductAttributeValueChoices,
   ProductUpdatePageFormData
 } from "../../utils/data";
 import {
@@ -155,10 +153,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     remove: removeStock
   } = useFormset(stockInput);
 
-  const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
-    ProductAttributeValueChoices[]
-  >(getSelectedAttributesFromProduct(product));
-
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     maybe(() => product.category.name, "")
   );
@@ -248,15 +242,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         );
         const handleAttributeChange = createAttributeChangeHandler(
           changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
-          attributes,
           triggerChange
         );
         const handleAttributeMultiChange = createAttributeMultiChangeHandler(
           changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
           attributes,
           triggerChange
         );

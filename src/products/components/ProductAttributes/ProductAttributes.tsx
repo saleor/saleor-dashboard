@@ -196,7 +196,9 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
                           displayValue={
                             attribute.data.values.find(
                               value => value.slug === attribute.value[0]
-                            )?.name || ""
+                            )?.name ||
+                            attribute.value[0] ||
+                            ""
                           }
                           emptyOption={!attribute.data.isRequired}
                           error={!!error}

@@ -19,7 +19,6 @@ import { sectionNames } from "@saleor/intl";
 import {
   getAttributeInputFromProductType,
   getChoices,
-  ProductAttributeValueChoices,
   ProductType
 } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
@@ -194,10 +193,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   };
 
   // Display values
-  const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
-    ProductAttributeValueChoices[]
-  >([]);
-
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || ""
   );
@@ -245,15 +240,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
         const handleAttributeChange = createAttributeChangeHandler(
           changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
-          attributes,
           triggerChange
         );
         const handleAttributeMultiChange = createAttributeMultiChangeHandler(
           changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
           attributes,
           triggerChange
         );
@@ -261,7 +251,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         const handleProductTypeSelect = createProductTypeSelectHandler(
           change,
           setAttributeData,
-          setSelectedAttributes,
           setProductType,
           productTypeChoiceList
         );
