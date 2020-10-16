@@ -79,6 +79,9 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   discountedPrice: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_category {
@@ -157,7 +160,6 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   seoDescription: string | null;
   category: ProductChannelListingUpdate_productChannelListingUpdate_product_category | null;
   collections: (ProductChannelListingUpdate_productChannelListingUpdate_product_collections | null)[] | null;
-  isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (ProductChannelListingUpdate_productChannelListingUpdate_product_images | null)[] | null;
   variants: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants | null)[] | null;
@@ -165,9 +167,9 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors {
   __typename: "ProductChannelListingError";
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
-  code: ProductErrorCode;
   channels: string[] | null;
 }
 

@@ -24,5 +24,8 @@ export interface ChannelListingProductFragment {
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: ChannelListingProductFragment_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: ChannelListingProductFragment_channel;
 }

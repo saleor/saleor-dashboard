@@ -14,7 +14,7 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, weight } from "../../misc";
+import { weight } from "../../misc";
 import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
@@ -96,7 +96,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
               id: attribute.id,
               values: [attribute.value]
             })),
-          costPrice: decimal(formData.costPrice),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({

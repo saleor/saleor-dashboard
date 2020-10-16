@@ -1021,6 +1021,7 @@ export interface AttributeFilterInput {
   ids?: (string | null)[] | null;
   inCollection?: string | null;
   inCategory?: string | null;
+  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1417,8 +1418,11 @@ export interface ProductCreateInput {
 }
 export interface ProductChannelListingAddInput {
   channelId: string;
-  isPublished: boolean;
+  isPublished?: boolean | null;
   publicationDate?: any | null;
+  visibleInListings?: boolean | null;
+  isAvailableForPurchase?: boolean | null;
+  availableForPurchaseDate?: any | null;
 }
 
 export interface ProductChannelListingUpdateInput {
@@ -1440,6 +1444,7 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1464,6 +1469,7 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
+  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1499,7 +1505,6 @@ export interface ProductTypeSortingInput {
 
 export interface ProductVariantBulkCreateInput {
   attributes: (AttributeValueInput | null)[];
-  costPrice?: any | null;
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1510,11 +1515,11 @@ export interface ProductVariantBulkCreateInput {
 export interface ProductVariantChannelListingAddInput {
   channelId: string;
   price: any;
+  costPrice?: any | null;
 }
 
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
-  costPrice?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1524,7 +1529,6 @@ export interface ProductVariantCreateInput {
 
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  costPrice?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1565,6 +1569,7 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1726,6 +1731,7 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: VoucherSortField;
 }
 

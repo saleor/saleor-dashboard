@@ -85,6 +85,7 @@ export const channel: Channel_channel = {
 export const productChannels: ProductDetails_product_channelListing[] = [
   {
     __typename: "ProductChannelListing",
+    availableForPurchase: null,
     channel: {
       __typename: "Channel",
       currencyCode: "USD",
@@ -96,11 +97,14 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       amount: 5,
       currency: "USD"
     },
+    isAvailableForPurchase: false,
     isPublished: true,
-    publicationDate: "2020-07-14"
+    publicationDate: "2020-07-14",
+    visibleInListings: true
   },
   {
     __typename: "ProductChannelListing",
+    availableForPurchase: null,
     channel: {
       __typename: "Channel",
       currencyCode: "USD",
@@ -112,11 +116,14 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       amount: 0,
       currency: "USD"
     },
+    isAvailableForPurchase: false,
     isPublished: false,
-    publicationDate: "2020-07-30"
+    publicationDate: "2020-07-30",
+    visibleInListings: true
   },
   {
     __typename: "ProductChannelListing",
+    availableForPurchase: null,
     channel: {
       __typename: "Channel",
       currencyCode: "USD",
@@ -128,8 +135,10 @@ export const productChannels: ProductDetails_product_channelListing[] = [
       amount: 8,
       currency: "USD"
     },
+    isAvailableForPurchase: false,
     isPublished: false,
-    publicationDate: null
+    publicationDate: null,
+    visibleInListings: true
   }
 ];
 

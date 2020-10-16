@@ -1,8 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -312,7 +312,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handlers.selectCollection}
                   />
                   <CardSpacer />
-                  <ChannelsAvailability
+                  <AvailabilityCard
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label"
+                      }),
+
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label"
+                      })
+                    }}
+                    errors={channelsErrors}
                     selectedChannelsCount={data.channelListing.length}
                     allChannelsCount={allChannelsCount}
                     channels={data.channelListing}
