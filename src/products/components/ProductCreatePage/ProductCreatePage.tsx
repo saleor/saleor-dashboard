@@ -10,12 +10,12 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
   getChoices,
   ProductAttributeValueChoices,
@@ -72,7 +72,7 @@ export interface ProductCreatePageSubmitData extends FormData {
 }
 
 interface ProductCreatePageProps {
-  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  channelsErrors: ProductChannelListingErrorFragment[];
   errors: ProductErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];

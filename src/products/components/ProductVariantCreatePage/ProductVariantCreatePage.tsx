@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -6,12 +7,18 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -23,8 +30,10 @@ import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import ProductVariantPrice from "../ProductVariantPrice";
 
 interface ProductVariantCreatePageFormData {
+  channelListing: ChannelPriceData[];
   images: string[];
   quantity: string;
   sku: string;
@@ -38,7 +47,8 @@ export interface ProductVariantCreatePageSubmitData
 }
 
 interface ProductVariantCreatePageProps {
-  currencySymbol: string;
+  channels: ChannelPriceData[];
+  channelErrors: ProductChannelListingErrorFragment[];
   disabled: boolean;
   errors: ProductErrorFragment[];
   header: string;
@@ -51,6 +61,8 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
+  channels,
+  channelErrors,
   disabled,
   errors,
   header,
@@ -77,6 +89,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   } = useFormset<null, string>([]);
 
   const initialForm: ProductVariantCreatePageFormData = {
+    channelListing: channels,
     images: product?.images?.map(image => image.id),
     quantity: "0",
     sku: "",
@@ -92,11 +105,20 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, set, submit, triggerChange }) => {
         const handleAttributeChange: FormsetChange = (id, value) => {
           changeAttributeData(id, value);
           triggerChange();
         };
+        const handleChannelChange = createVariantChannelsChangeHandler(
+          data,
+          set,
+          triggerChange
+        );
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+        );
 
         return (
           <Container>
@@ -120,6 +142,13 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   disabled={disabled}
                   errors={errors}
                   onChange={handleAttributeChange}
+                />
+                <CardSpacer />
+                <ProductVariantPrice
+                  ProductVariantChannelListings={data.channelListing}
+                  errors={channelErrors}
+                  loading={disabled}
+                  onChange={handleChannelChange}
                 />
                 <CardSpacer />
                 <ProductStocks
@@ -151,7 +180,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={disabled || formDisabled || !onSubmit || !hasChanged}
               labels={{
                 delete: intl.formatMessage({
                   defaultMessage: "Delete Variant",

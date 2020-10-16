@@ -135,10 +135,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (
-        data.productChannelListingUpdate.productChannelListingErrors.length ===
-        0
-      ) {
+      if (data.productChannelListingUpdate.errors.length === 0) {
         const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
           data.productChannelListingUpdate.product
         );
@@ -299,10 +296,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(productVariantCreateOpts?.data?.productVariantCreate.errors || [])
   ];
   const channelsErrors = [
-    ...(updateChannelsOpts?.data?.productChannelListingUpdate
-      ?.productChannelListingErrors || []),
+    ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors || []),
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
-      ?.productChannelListingErrors || [])
+      ?.errors || [])
   ];
   return product === null ? (
     <NotFoundPage onBack={handleBack} />

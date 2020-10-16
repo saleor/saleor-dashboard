@@ -152,7 +152,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   trackInventory: boolean;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_errors {
   __typename: "ProductChannelListingError";
   code: ProductErrorCode;
   field: string | null;
@@ -163,7 +163,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate {
   __typename: "ProductVariantChannelListingUpdate";
   variant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant | null;
-  productChannelListingErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_errors[];
 }
 
 export interface ProductVariantChannelListingUpdate {

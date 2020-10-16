@@ -7,13 +7,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
@@ -54,7 +54,7 @@ export interface ProductVariantPageSubmitData
 interface ProductVariantPageProps {
   variant?: ProductVariant;
   channels: ChannelPriceData[];
-  channelErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  channelErrors: ProductChannelListingErrorFragment[];
   errors: VariantUpdate_productVariantUpdate_errors[];
   saveButtonBarState: ConfirmButtonTransitionState;
   loading?: boolean;

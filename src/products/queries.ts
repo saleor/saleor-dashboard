@@ -176,6 +176,13 @@ const productVariantCreateQuery = gql`
         sortOrder
         url
       }
+      channelListing {
+        channel {
+          id
+          name
+          currencyCode
+        }
+      }
       name
       productType {
         id

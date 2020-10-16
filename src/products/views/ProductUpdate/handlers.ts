@@ -1,11 +1,11 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
   ProductChannelListingUpdate,
-  ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors,
   ProductChannelListingUpdateVariables
 } from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
@@ -17,7 +17,6 @@ import {
 } from "@saleor/products/types/ProductUpdate";
 import {
   ProductVariantChannelListingUpdate,
-  ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors,
   ProductVariantChannelListingUpdateVariables
 } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
@@ -127,8 +126,7 @@ export function createUpdateHandler(
       | ProductErrorFragment
       | StockErrorFragment
       | BulkStockErrorFragment
-      | ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors
-      | ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors
+      | ProductChannelListingErrorFragment
     >;
 
     if (product.productType.hasVariants) {

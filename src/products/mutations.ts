@@ -591,7 +591,7 @@ export const ProductChannelListingUpdateMutation = gql`
       product {
         ...Product
       }
-      productChannelListingErrors {
+      errors: productChannelListingErrors {
         ...ProductChannelListingErrorFragment
       }
     }
@@ -614,7 +614,7 @@ export const ProductVariantChannelListingUpdateMutation = gql`
       variant {
         ...ProductVariant
       }
-      productChannelListingErrors {
+      errors: productChannelListingErrors {
         ...ProductChannelListingErrorFragment
       }
     }
