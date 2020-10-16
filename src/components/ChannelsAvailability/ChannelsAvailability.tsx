@@ -5,11 +5,14 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { RequireOnlyOne } from "@saleor/misc";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -17,13 +20,29 @@ import { useIntl } from "react-intl";
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
 
+export interface Message {
+  visibleLabel: string;
+  hiddenLabel: string;
+  visibleSecondLabel?: string;
+  hiddenSecondLabel?: string;
+  availableDateText?: string;
+  availableLabel?: string;
+  unavailableLabel?: string;
+  availableSecondLabel?: string;
+  setAvailabilityDateLabel?: string;
+}
 interface Value {
+  availableForPurchase?: string;
+  isAvailableForPurchase?: boolean;
   isPublished: boolean;
   publicationDate: string | null;
+  visibleInListings?: boolean;
 }
 interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
+  channelsMessages?: { [id: string]: Message };
+  errors: ProductChannelListingErrorFragment[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -38,44 +57,66 @@ export type ChannelsAvailabilityProps = RequireOnlyOne<
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
+  errors: ProductChannelListingErrorFragment[];
+  messages: Message;
   onChange: (id: string, data: Value) => void;
 }
 
-const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
-  const { isPublished, publicationDate, id, name } = data;
+const Channel: React.FC<ChannelProps> = ({
+  data,
+  disabled,
+  errors,
+  messages,
+  onChange
+}) => {
+  const {
+    availableForPurchase,
+    isAvailableForPurchase: isAvailable,
+    isPublished,
+    publicationDate,
+    visibleInListings,
+    id,
+    name
+  } = data;
+  const formData = {
+    availableForPurchase,
+    isAvailableForPurchase: isAvailable,
+    isPublished,
+    publicationDate,
+    visibleInListings
+  };
   const dateNow = React.useContext(DateContext);
   const localizeDate = useDateLocalize();
+  const hasAvailableProps =
+    isAvailable !== undefined && availableForPurchase !== undefined;
 
+  const [isPublicationDate, setPublicationDate] = useState(
+    publicationDate === null ? true : false
+  );
+  const [isAvailableDate, setAvailableDate] = useState(
+    availableForPurchase === null ? true : false
+  );
   const [isOpen, setOpen] = useState(false);
   const intl = useIntl();
   const classes = useStyles({});
 
   const todayDate = localizeDate(new Date(dateNow).toString(), "YYYY-MM-DD");
-  const availableDateText =
-    publicationDate && !isPublished
-      ? intl.formatMessage(
-          {
-            defaultMessage: "Will become available on {date}",
-            description: "channel publication date"
-          },
-          {
-            date: localizeDate(publicationDate, "L")
-          }
-        )
-      : publicationDate
-      ? intl.formatMessage(
-          {
-            defaultMessage: "Visible since {date}",
-            description: "channel publication date"
-          },
-          {
-            date: localizeDate(publicationDate, "L")
-          }
-        )
-      : intl.formatMessage({
-          defaultMessage: "Hidden",
-          description: "channel publication status"
-        });
+
+  const visibleMessage = (date: string) =>
+    intl.formatMessage(
+      {
+        defaultMessage: "since {date}",
+        description: "date"
+      },
+      {
+        date: localizeDate(date, "L")
+      }
+    );
+
+  const formErrors = getFormErrors(
+    ["availableForPurchaseDate", "publicationDate"],
+    errors
+  );
 
   return (
     <>
@@ -94,32 +135,44 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
               color="primary"
             />
           </div>
-          <Typography variant="caption">{availableDateText}</Typography>
+          <Typography variant="caption">
+            {messages.availableDateText}
+          </Typography>
         </div>
         {isOpen && (
           <>
             <RadioSwitchField
               disabled={disabled}
               firstOptionLabel={
-                <p className={classes.label}>
-                  {intl.formatMessage({
-                    defaultMessage: "Visible",
-                    description: "channel publication status"
-                  })}
-                </p>
+                <>
+                  <p className={classes.label}>{messages.visibleLabel}</p>
+                  {isPublished &&
+                    publicationDate &&
+                    Date.parse(publicationDate) < dateNow && (
+                      <span className={classes.secondLabel}>
+                        {messages.visibleSecondLabel ||
+                          visibleMessage(publicationDate)}
+                      </span>
+                    )}
+                </>
               }
               name={`channel:${id}`}
               secondOptionLabel={
-                <p className={classes.label}>
-                  {intl.formatMessage({
-                    defaultMessage: "Hidden",
-                    description: "channel publication status"
-                  })}
-                </p>
+                <>
+                  <p className={classes.label}>{messages.hiddenLabel}</p>
+                  {publicationDate &&
+                    !isPublished &&
+                    Date.parse(publicationDate) >= dateNow && (
+                      <span className={classes.secondLabel}>
+                        {messages.hiddenSecondLabel}
+                      </span>
+                    )}
+                </>
               }
               value={isPublished}
               onChange={() => {
                 onChange(id, {
+                  ...formData,
                   isPublished: !isPublished,
                   publicationDate:
                     !isPublished && !publicationDate
@@ -128,29 +181,173 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
                 });
               }}
             />
-
             {!isPublished && (
-              <TextField
-                disabled={disabled}
-                label={intl.formatMessage({
-                  defaultMessage: "Publish on",
-                  description: "publish on date"
-                })}
-                name={`channel:publicationDate:${id}`}
-                type="date"
-                fullWidth={true}
-                value={publicationDate || ""}
-                className={classes.date}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={e =>
-                  onChange(id, {
-                    isPublished,
-                    publicationDate: e.target.value
-                  })
-                }
-              />
+              <>
+                <Typography
+                  className={classes.setPublicationDate}
+                  onClick={() => setPublicationDate(!isPublicationDate)}
+                >
+                  {intl.formatMessage({
+                    defaultMessage: "Set publication date"
+                  })}
+                </Typography>
+                {isPublicationDate && (
+                  <TextField
+                    error={!!formErrors.publicationDate}
+                    disabled={disabled}
+                    label={intl.formatMessage({
+                      defaultMessage: "Publish on",
+                      description: "publish on date"
+                    })}
+                    name={`channel:publicationDate:${id}`}
+                    type="date"
+                    fullWidth={true}
+                    helperText={
+                      formErrors.publicationDate
+                        ? getProductErrorMessage(
+                            formErrors.publicationDate,
+                            intl
+                          )
+                        : ""
+                    }
+                    value={publicationDate ? publicationDate : ""}
+                    onChange={e =>
+                      onChange(id, {
+                        ...formData,
+                        publicationDate: e.target.value
+                      })
+                    }
+                    className={classes.date}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                )}
+              </>
+            )}
+            {hasAvailableProps && (
+              <>
+                <Hr />
+                <RadioSwitchField
+                  disabled={disabled}
+                  firstOptionLabel={
+                    <>
+                      <p className={classes.label}>{messages.availableLabel}</p>
+                      {isAvailable &&
+                        availableForPurchase &&
+                        Date.parse(availableForPurchase) < dateNow && (
+                          <span className={classes.secondLabel}>
+                            {visibleMessage(availableForPurchase)}
+                          </span>
+                        )}
+                    </>
+                  }
+                  name={`channel:isAvailableForPurchase:${id}`}
+                  secondOptionLabel={
+                    <>
+                      <p className={classes.label}>
+                        {messages.unavailableLabel}
+                      </p>
+                      {availableForPurchase && !isAvailable && (
+                        <span className={classes.secondLabel}>
+                          {messages.availableSecondLabel}
+                        </span>
+                      )}
+                    </>
+                  }
+                  value={isAvailable}
+                  onChange={e => {
+                    const { value } = e.target;
+                    return onChange(id, {
+                      ...formData,
+                      availableForPurchase: !value
+                        ? null
+                        : availableForPurchase,
+                      isAvailableForPurchase: value
+                    });
+                  }}
+                />
+                {!isAvailable && (
+                  <>
+                    <Typography
+                      className={classes.setPublicationDate}
+                      onClick={() => setAvailableDate(!isAvailableDate)}
+                    >
+                      {messages.setAvailabilityDateLabel}
+                    </Typography>
+                    {isAvailableDate && (
+                      <TextField
+                        error={!!formErrors.availableForPurchaseDate}
+                        disabled={disabled}
+                        label={intl.formatMessage({
+                          defaultMessage: "Set available on",
+                          description: "available on date"
+                        })}
+                        name={`channel:availableForPurchase:${id}`}
+                        type="date"
+                        fullWidth={true}
+                        helperText={
+                          formErrors.availableForPurchaseDate
+                            ? getProductErrorMessage(
+                                formErrors.availableForPurchaseDate,
+                                intl
+                              )
+                            : ""
+                        }
+                        value={availableForPurchase ? availableForPurchase : ""}
+                        onChange={e =>
+                          onChange(id, {
+                            ...formData,
+                            availableForPurchase: e.target.value
+                          })
+                        }
+                        className={classes.date}
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+              </>
+            )}
+            {visibleInListings !== undefined && (
+              <>
+                <Hr />
+                <ControlledCheckbox
+                  className={classes.checkbox}
+                  name={`channel:visibleInListings:${id}`}
+                  checked={visibleInListings}
+                  disabled={disabled}
+                  label={
+                    <>
+                      <p
+                        className={classNames(
+                          classes.label,
+                          classes.listingLabel
+                        )}
+                      >
+                        {intl.formatMessage({
+                          defaultMessage: "Show in product listings"
+                        })}
+                      </p>
+
+                      <span className={classes.secondLabel}>
+                        {intl.formatMessage({
+                          defaultMessage:
+                            "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+                        })}
+                      </span>
+                    </>
+                  }
+                  onChange={e =>
+                    onChange(id, {
+                      ...formData,
+                      visibleInListings: e.target.value
+                    })
+                  }
+                />
+              </>
             )}
           </>
         )}
@@ -163,9 +360,11 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
   const {
     channelsList,
+    errors,
     selectedChannelsCount,
     allChannelsCount,
     channels,
+    channelsMessages,
     openModal,
     onChange
   } = props;
@@ -210,9 +409,20 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             </>
           )}
           {channels
-            ? channels.map(data => (
-                <Channel key={data.id} data={data} onChange={onChange} />
-              ))
+            ? channels.map(data => {
+                const channelErrors =
+                  errors?.filter(error => error.channels.includes(data.id)) ||
+                  [];
+                return (
+                  <Channel
+                    key={data.id}
+                    data={data}
+                    errors={channelErrors}
+                    onChange={onChange}
+                    messages={channelsMessages[data.id]}
+                  />
+                );
+              })
             : channelsList
             ? channelsList.map(data => (
                 <React.Fragment key={data.id}>

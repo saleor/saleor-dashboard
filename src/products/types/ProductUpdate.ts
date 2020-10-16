@@ -85,6 +85,9 @@ export interface ProductUpdate_productUpdate_product_channelListing {
   discountedPrice: ProductUpdate_productUpdate_product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductUpdate_productUpdate_product_category {
@@ -163,7 +166,6 @@ export interface ProductUpdate_productUpdate_product {
   seoDescription: string | null;
   category: ProductUpdate_productUpdate_product_category | null;
   collections: (ProductUpdate_productUpdate_product_collections | null)[] | null;
-  isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (ProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;

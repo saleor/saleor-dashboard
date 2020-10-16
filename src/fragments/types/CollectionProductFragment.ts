@@ -35,6 +35,9 @@ export interface CollectionProductFragment_channelListing {
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: CollectionProductFragment_channelListing_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: CollectionProductFragment_channelListing_channel;
 }
 

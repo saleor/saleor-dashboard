@@ -33,7 +33,6 @@ import {
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import getProductErrorMessage from "@saleor/utils/errors/product";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect } from "react";
@@ -100,7 +99,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const { data: channelsData } = useChannelsList({});
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
-    variables: { channel: "default-channel", id }
+    variables: { id }
   });
   const product = data?.product;
 
@@ -144,14 +143,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           data.productChannelListingUpdate.product
         );
         setCurrentChannels(updatedProductChannelsChoices);
-      } else {
-        data.productChannelListingUpdate.productChannelListingErrors.map(
-          error =>
-            notify({
-              status: "error",
-              text: getProductErrorMessage(error, intl)
-            })
-        );
       }
     }
   });

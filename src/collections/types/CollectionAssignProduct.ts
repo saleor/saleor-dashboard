@@ -37,6 +37,9 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   isPublished: boolean;
   publicationDate: any | null;
   discountedPrice: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_channel;
 }
 
