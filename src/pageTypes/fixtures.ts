@@ -1,4 +1,5 @@
 /* eslint-disable sort-keys */
+import { PageTypeDetails_pageType } from "./types/PageTypeDetails";
 import { PageTypeList_pageTypes_edges_node } from "./types/PageTypeList";
 
 export const pageTypes: PageTypeList_pageTypes_edges_node[] = [
@@ -19,8 +20,39 @@ export const pageTypes: PageTypeList_pageTypes_edges_node[] = [
   }
 ];
 
-export const pageType: PageTypeList_pageTypes_edges_node = {
+export const pageType: PageTypeDetails_pageType = {
   id: "UGFnZVR5cGU6MQ==",
+  __typename: "PageType",
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Blog",
-  __typename: "PageType"
+  attributes: [
+    {
+      __typename: "Attribute" as "Attribute",
+      id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
+      name: "Author",
+      slug: "author",
+      visibleInStorefront: true
+    },
+    {
+      __typename: "Attribute" as "Attribute",
+      id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
+      name: "Language",
+      slug: "language",
+      visibleInStorefront: true
+    },
+    {
+      __typename: "Attribute" as "Attribute",
+      id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
+      name: "Publisher",
+      slug: "publisher",
+      visibleInStorefront: true
+    }
+  ],
+  privateMetadata: []
 };
