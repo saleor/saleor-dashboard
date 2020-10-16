@@ -16,6 +16,7 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { MutationFetchResult } from "react-apollo";
 
@@ -23,11 +24,7 @@ const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
     id: productId,
     input: {
-      addChannels: channels.map(channel => ({
-        channelId: channel.id,
-        isPublished: channel.isPublished,
-        publicationDate: channel.publicationDate
-      }))
+      addChannels: getAvailabilityVariables(channels)
     }
   }
 });

@@ -136,6 +136,9 @@ export interface Product_channelListing {
   discountedPrice: Product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface Product_category {
@@ -231,7 +234,6 @@ export interface Product {
   defaultVariant: Product_defaultVariant | null;
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;
-  isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
