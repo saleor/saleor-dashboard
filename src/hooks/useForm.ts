@@ -51,7 +51,7 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initial: T,
-  onSubmit: (data: T) => void
+  onSubmit?: (data: T) => void
 ): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
   const [data, setData] = useStateFromProps(initial, {
@@ -107,7 +107,9 @@ function useForm<T extends FormData>(
   }
 
   function submit() {
-    return onSubmit(data);
+    if (typeof onSubmit === "function") {
+      onSubmit(data);
+    }
   }
 
   function triggerChange() {

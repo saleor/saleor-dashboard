@@ -37,19 +37,18 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  change: FormChange,
   setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
-  productTypeChoiceList: ProductType[]
+  productTypeChoiceList: ProductType[],
+  triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
     const selectedProductType = productTypeChoiceList.find(
       productType => productType.id === id
     );
+    triggerChange();
     setProductType(selectedProductType);
-    change(event);
-
     setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }
