@@ -136,12 +136,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   );
 
   const initialForm: ProductVariantPageFormData = {
-    costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
+    costPrice: variant?.costPrice?.amount.toString() || "",
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
-    price: maybe(() => variant.price.amount.toString(), ""),
+    price: variant?.price?.amount.toString() || "",
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
-    sku: maybe(() => variant.sku, ""),
-    trackInventory: variant?.trackInventory,
+    sku: variant?.sku || "",
+    trackInventory: !!variant?.trackInventory,
     weight: variant?.weight?.value.toString() || ""
   };
 
@@ -228,7 +228,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <ProductVariantPrice
                       errors={errors}
-                      price={data.price}
+                      data={data}
                       currencySymbol={
                         variant && variant.price
                           ? variant.price.currency
@@ -236,7 +236,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           ? variant.costPrice.currency
                           : ""
                       }
-                      costPrice={data.costPrice}
                       loading={loading}
                       onChange={change}
                     />

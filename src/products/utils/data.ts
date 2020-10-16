@@ -238,7 +238,7 @@ export function mapFormsetStockToStockInput(
   stock: FormsetAtomicData<null, string>
 ): StockInput {
   return {
-    quantity: parseInt(stock.value, 10),
+    quantity: parseInt(stock.value, 10) || 0,
     warehouse: stock.id
   };
 }

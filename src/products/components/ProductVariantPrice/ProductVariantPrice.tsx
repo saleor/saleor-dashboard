@@ -22,20 +22,19 @@ const useStyles = makeStyles(
 
 interface ProductVariantPriceProps {
   currencySymbol?: string;
-  price?: string;
-  costPrice?: string;
+  data: Record<"price" | "costPrice", string>;
   errors: ProductErrorFragment[];
   loading?: boolean;
   onChange(event: any);
 }
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const { currencySymbol, costPrice, errors, price, loading, onChange } = props;
+  const { currencySymbol, data, errors, loading, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["price", "cost_price"], errors);
+  const formErrors = getFormErrors(["price", "costPrice"], errors);
 
   const handlePriceChange = createNonNegativeValueChangeHandler(onChange);
 
@@ -52,11 +51,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           <div>
             <PriceField
               error={!!formErrors.price}
+              hint={getProductErrorMessage(formErrors.price, intl)}
               name="price"
               label={intl.formatMessage({
                 defaultMessage: "Price"
               })}
-              value={price}
+              value={data.price}
               currencySymbol={currencySymbol}
               onChange={handlePriceChange}
               disabled={loading}
@@ -69,20 +69,20 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           </div>
           <div>
             <PriceField
-              error={!!formErrors.cost_price}
+              error={!!formErrors.costPrice}
               name="costPrice"
               label={intl.formatMessage({
                 defaultMessage: "Cost price"
               })}
               hint={
-                getProductErrorMessage(formErrors.cost_price, intl) ||
+                getProductErrorMessage(formErrors.costPrice, intl) ||
                 intl.formatMessage({
                   defaultMessage: "Optional",
                   description: "optional field",
                   id: "productVariantPriceOptionalCostPriceField"
                 })
               }
-              value={costPrice}
+              value={data.costPrice}
               currencySymbol={currencySymbol}
               onChange={handlePriceChange}
               disabled={loading}
