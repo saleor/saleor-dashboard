@@ -268,6 +268,27 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              availableForPurchase: null,
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isAvailableForPurchase: false,
+              isPublished: true,
+              publicationDate: "2020-07-14",
+              visibleInListings: true
+            }
+          ],
           id: "UHJvZHVjdDo3MQ==",
           name: "Orange Juice",
           productType: {
@@ -285,6 +306,27 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              availableForPurchase: null,
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isAvailableForPurchase: false,
+              isPublished: true,
+              publicationDate: "2020-07-14",
+              visibleInListings: true
+            }
+          ],
           id: "UHJvZHVjdDo3Mw==",
           name: "Carrot Juice",
           productType: {
@@ -302,6 +344,27 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              availableForPurchase: null,
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isAvailableForPurchase: false,
+              isPublished: true,
+              publicationDate: "2020-07-14",
+              visibleInListings: true
+            }
+          ],
           id: "UHJvZHVjdDo3OQ==",
           name: "Bean Juice",
           productType: {
@@ -319,6 +382,27 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
+          channelListing: [
+            {
+              __typename: "ProductChannelListing",
+              availableForPurchase: null,
+              channel: {
+                __typename: "Channel",
+                currencyCode: "USD",
+                id: "123",
+                name: "Channel1"
+              },
+              discountedPrice: {
+                __typename: "Money",
+                amount: 1,
+                currency: "USD"
+              },
+              isAvailableForPurchase: false,
+              isPublished: true,
+              publicationDate: "2020-07-14",
+              visibleInListings: true
+            }
+          ],
           id: "UHJvZHVjdDoxMTU=",
           name: "Black Hoodie",
           productType: {

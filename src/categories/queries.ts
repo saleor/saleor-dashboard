@@ -3,7 +3,6 @@ import {
   categoryFragment
 } from "@saleor/fragments/categories";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -49,7 +48,6 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
-  ${fragmentMoney}
   ${categoryFragment}
   ${categoryDetailsFragment}
   ${pageInfoFragment}
