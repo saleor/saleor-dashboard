@@ -47,10 +47,7 @@ export function createChannelsChangeHandler(
 ) {
   return (
     id: string,
-    {
-      isPublished,
-      publicationDate
-    }: { isPublished: boolean; publicationDate: string | null }
+    data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
@@ -59,12 +56,7 @@ export function createChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        isPublished:
-          typeof isPublished === "boolean" ? isPublished : channel.isPublished,
-        publicationDate:
-          typeof publicationDate !== "undefined"
-            ? publicationDate
-            : channel.publicationDate
+        ...data
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -177,3 +169,24 @@ export function getProductAvailabilityVariables({
       : null
   };
 }
+
+export const getAvailabilityVariables = (channels: ChannelData[]) =>
+  channels.map(channel => {
+    const { isAvailableForPurchase, availableForPurchase } = channel;
+    const isAvailable =
+      availableForPurchase && !isAvailableForPurchase
+        ? true
+        : isAvailableForPurchase;
+
+    return {
+      availableForPurchaseDate:
+        isAvailableForPurchase || availableForPurchase === ""
+          ? null
+          : availableForPurchase,
+      channelId: channel.id,
+      isAvailableForPurchase: isAvailable,
+      isPublished: channel.isPublished,
+      publicationDate: channel.publicationDate,
+      visibleInListings: channel.visibleInListings
+    };
+  });

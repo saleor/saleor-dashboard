@@ -2,6 +2,7 @@ import {
   bulkProductErrorFragment,
   bulkStockErrorFragment,
   exportErrorFragment,
+  productChannelListingErrorFragment,
   productErrorFragment,
   productErrorWithAttributesFragment,
   stockErrorFragment
@@ -520,6 +521,7 @@ export const useProductExport = makeMutation<
 
 export const ProductChannelListingUpdateMutation = gql`
   ${productFragmentDetails}
+  ${productChannelListingErrorFragment}
   mutation ProductChannelListingUpdate(
     $id: ID!
     $input: ProductChannelListingUpdateInput!
@@ -529,10 +531,7 @@ export const ProductChannelListingUpdateMutation = gql`
         ...Product
       }
       productChannelListingErrors {
-        field
-        message
-        code
-        channels
+        ...ProductChannelListingErrorFragment
       }
     }
   }
@@ -563,6 +562,7 @@ export const useProductChannelListingUpdate = makeMutation<
 
 export const ProductVariantChannelListingUpdateMutation = gql`
   ${fragmentVariant}
+  ${productChannelListingErrorFragment}
   mutation ProductVariantChannelListingUpdate(
     $id: ID!
     $input: [ProductVariantChannelListingAddInput!]!
@@ -572,10 +572,7 @@ export const ProductVariantChannelListingUpdateMutation = gql`
         ...ProductVariant
       }
       productChannelListingErrors {
-        field
-        message
-        code
-        channels
+        ...ProductChannelListingErrorFragment
       }
     }
   }

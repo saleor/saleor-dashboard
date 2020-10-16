@@ -110,6 +110,7 @@ export const product: (
   channelListing: [
     {
       __typename: "ProductChannelListing",
+      availableForPurchase: null,
       channel: {
         __typename: "Channel",
         currencyCode: "USD",
@@ -121,11 +122,14 @@ export const product: (
         amount: 1,
         currency: "USD"
       },
+      isAvailableForPurchase: false,
       isPublished: true,
-      publicationDate: "2020-07-14"
+      publicationDate: "2020-07-14",
+      visibleInListings: true
     },
     {
       __typename: "ProductChannelListing",
+      availableForPurchase: null,
       channel: {
         __typename: "Channel",
         currencyCode: "USD",
@@ -137,8 +141,10 @@ export const product: (
         amount: 1,
         currency: "USD"
       },
+      isAvailableForPurchase: false,
       isPublished: false,
-      publicationDate: "2020-07-30"
+      publicationDate: "2020-07-30",
+      visibleInListings: true
     }
   ],
   chargeTaxes: true,
@@ -390,6 +396,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -401,11 +408,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -417,8 +427,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDo2MQ==",
@@ -440,6 +452,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -451,11 +464,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -467,8 +483,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo2NA==",
@@ -490,6 +508,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -501,11 +520,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -517,8 +539,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo2NQ==",
@@ -555,6 +579,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -566,11 +591,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -582,8 +610,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3NQ==",
@@ -620,6 +650,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -631,11 +662,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -647,8 +681,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3Ng==",
@@ -685,6 +721,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -696,12 +733,15 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
 
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -713,8 +753,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3Mg==",
@@ -751,6 +793,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -762,11 +805,14 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -778,8 +824,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3MQ==",
@@ -816,6 +864,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -827,11 +876,14 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -843,8 +895,10 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3NA==",
@@ -881,6 +935,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -892,11 +947,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -908,8 +966,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDo3OQ==",
@@ -946,6 +1006,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -957,11 +1018,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -973,8 +1037,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDo3Mw==",
@@ -1011,6 +1077,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1022,11 +1089,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1038,8 +1108,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDo3OA==",
@@ -1076,6 +1148,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1087,11 +1160,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1103,8 +1179,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDo4OQ==",
@@ -1141,6 +1219,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1152,11 +1231,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1168,8 +1250,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMDc=",
@@ -1206,6 +1290,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1217,11 +1302,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1233,8 +1321,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMDg=",
@@ -1271,6 +1361,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1282,11 +1373,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1298,8 +1392,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMDk=",
@@ -1336,6 +1432,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1347,11 +1444,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1363,8 +1463,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMTA=",
@@ -1401,6 +1503,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1412,11 +1515,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: false
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1428,8 +1534,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMTU=",
@@ -1466,6 +1574,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1477,11 +1586,14 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1493,8 +1605,10 @@ export const products = (
           amount: 3.99,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMTY=",
@@ -1531,6 +1645,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1542,11 +1657,14 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1558,8 +1676,10 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMTc=",
@@ -1596,6 +1716,7 @@ export const products = (
     channelListing: [
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1607,11 +1728,14 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-07-14"
+        publicationDate: "2020-07-14",
+        visibleInListings: true
       },
       {
         __typename: "ProductChannelListing",
+        availableForPurchase: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1623,8 +1747,10 @@ export const products = (
           amount: 1,
           currency: "USD"
         },
+        isAvailableForPurchase: false,
         isPublished: false,
-        publicationDate: "2020-07-30"
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDo4NQ==",
