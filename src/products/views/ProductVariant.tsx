@@ -80,11 +80,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variant: ProductVariantDetails_productVariant
   ) => {
     if (
-      data.channelListing.some((channel, index) => {
-        const variantChannel = variant.channelListing[index];
+      data.channelListing.some(channel => {
+        const variantChannel = variant.channelListing.find(
+          variantChannel => variantChannel.channel.id === channel.id
+        );
         return (
-          channel.price !== variantChannel?.price.amount ||
-          channel.price !== variantChannel?.costPrice.amount
+          channel.price !== variantChannel?.price?.amount ||
+          channel.costPrice !== variantChannel?.costPrice?.amount
         );
       })
     ) {

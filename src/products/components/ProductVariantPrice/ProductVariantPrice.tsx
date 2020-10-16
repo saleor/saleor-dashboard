@@ -178,7 +178,6 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                             })
                           }
                           disabled={loading}
-                          required
                           hint={
                             costPriceError
                               ? getProductErrorMessage(
