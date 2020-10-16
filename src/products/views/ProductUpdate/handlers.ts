@@ -45,7 +45,6 @@ const getSimpleProductVariables = (
   deleteStocks: data.removeStocks,
   productVariantId: productId,
   productVariantInput: {
-    costPrice: data.basePrice,
     sku: data.sku,
     trackInventory: data.trackInventory
   },
@@ -80,6 +79,13 @@ const getChannelsVariables = (
     }
   };
 };
+
+const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
+  data.channelListing.map(listing => ({
+    channelId: listing.id,
+    costPrice: listing.costPrice,
+    price: listing.price
+  }));
 
 export function createUpdateHandler(
   product: ProductDetails_product,
@@ -156,10 +162,7 @@ export function createUpdateHandler(
           updateVariantChannels({
             variables: {
               id: variantId,
-              input: data.channelListing.map(listing => ({
-                channelId: listing.id,
-                price: listing.price
-              }))
+              input: getVariantChannelsInput(data)
             }
           });
           updateChannels({
@@ -186,10 +189,7 @@ export function createUpdateHandler(
         updateVariantChannels({
           variables: {
             id: product.variants[0].id,
-            input: data.channelListing.map(listing => ({
-              channelId: listing.id,
-              price: listing.price
-            }))
+            input: getVariantChannelsInput(data)
           }
         });
       }

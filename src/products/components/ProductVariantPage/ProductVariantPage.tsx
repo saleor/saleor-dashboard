@@ -20,7 +20,10 @@ import {
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
-import { validatePrice } from "@saleor/products/utils/validation";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -34,14 +37,8 @@ import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog"
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 
-export interface ProductVariantChannelData {
-  id: string;
-  currency: string;
-  name: string;
-  price: number;
-}
 export interface ProductVariantPageFormData {
-  channelListing: ProductVariantChannelData[];
+  channelListing: ChannelPriceData[];
   sku: string;
   trackInventory: boolean;
 }
@@ -161,8 +158,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               set,
               triggerChange
             );
-            const formDisabled = data.channelListing?.some(channel =>
-              validatePrice(channel.price)
+            const formDisabled = data.channelListing?.some(
+              channel =>
+                validatePrice(channel.price) ||
+                validateCostPrice(channel.costPrice)
             );
             return (
               <>

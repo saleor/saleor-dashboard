@@ -1,4 +1,4 @@
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -11,6 +11,13 @@ import {
   ProductAttributeValueChoices,
   ProductType
 } from "./data";
+
+const setPrice = (price: string, initialPrice: number) =>
+  typeof price === "string"
+    ? price
+      ? parseInt(price, 10)
+      : null
+    : initialPrice;
 
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
@@ -53,7 +60,8 @@ export function createChannelsPriceChangeHandler(
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -61,7 +69,8 @@ export function createChannelsPriceChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        price
+        costPrice: setPrice(costPrice, channel.costPrice),
+        price: setPrice(price, channel.price)
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -100,7 +109,8 @@ export function createVariantChannelsChangeHandler(
   setData: (data: ProductVariantPageFormData) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const { channelListing } = data;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
@@ -109,7 +119,8 @@ export function createVariantChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        price
+        costPrice: setPrice(costPrice, channel.costPrice),
+        price: setPrice(price, channel.price)
       },
       ...channelListing.slice(channelIndex + 1)
     ];

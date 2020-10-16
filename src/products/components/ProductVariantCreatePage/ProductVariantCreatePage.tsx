@@ -23,12 +23,9 @@ import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-// import ProductVariantPrice from "../ProductVariantPrice";
 
 interface ProductVariantCreatePageFormData {
-  costPrice: string;
   images: string[];
-  price: string;
   quantity: string;
   sku: string;
   trackInventory: boolean;
@@ -54,7 +51,6 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
-  // currencySymbol,
   disabled,
   errors,
   header,
@@ -81,9 +77,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   } = useFormset<null, string>([]);
 
   const initialForm: ProductVariantCreatePageFormData = {
-    costPrice: "",
-    images: maybe(() => product.images.map(image => image.id)),
-    price: "",
+    images: product?.images?.map(image => image.id),
     quantity: "0",
     sku: "",
     trackInventory: true
@@ -127,15 +121,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   errors={errors}
                   onChange={handleAttributeChange}
                 />
-                <CardSpacer />
-                {/* <ProductVariantPrice
-                  errors={errors}
-                  price={data.price}
-                  currencySymbol={currencySymbol}
-                  costPrice={data.costPrice}
-                  loading={disabled}
-                  onChange={change}
-                /> */}
                 <CardSpacer />
                 <ProductStocks
                   data={data}
