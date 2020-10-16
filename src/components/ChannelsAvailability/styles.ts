@@ -36,6 +36,10 @@ export const useStyles = makeStyles(
       justifyContent: "space-between",
       marginBottom: theme.spacing(0.5)
     },
+    checkbox: {
+      alignItems: "flex-start",
+      marginTop: 10
+    },
     date: {
       "& svg": {
         fill: theme.palette.primary.main
@@ -48,14 +52,26 @@ export const useStyles = makeStyles(
       width: `calc(100% + ${theme.spacing(6)}px)`
     },
     label: {
-      lineHeight: 1,
-      margin: 0
+      lineHeight: 1.2,
+      marginBottom: 5,
+      marginTop: 0
+    },
+    listingLabel: {
+      marginTop: 9
     },
     rotate: {
       transform: "rotate(180deg)"
     },
     secondLabel: {
+      color: theme.palette.text.hint,
       fontSize: 12
+    },
+    setPublicationDate: {
+      color: theme.palette.primary.main,
+      cursor: "pointer",
+      fontSize: 14,
+      paddingBottom: 10,
+      paddingTop: 0
     }
   }),
   { name: "ChannelsAvailabilityCard" }

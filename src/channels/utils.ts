@@ -18,6 +18,9 @@ export interface ChannelData {
   publicationDate: string | null;
   currency: string;
   price: number;
+  availableForPurchase: string;
+  isAvailableForPurchase: boolean;
+  visibleInListings: boolean;
 }
 
 export interface ChannelPriceData {
@@ -108,12 +111,15 @@ export const createChannelsDataWithDiscountPrice = (
 
 export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
+    availableForPurchase: null,
     currency: channel.currencyCode,
     id: channel.id,
+    isAvailableForPurchase: false,
     isPublished: false,
     name: channel.name,
     price: null,
-    publicationDate: null
+    publicationDate: null,
+    visibleInListings: false
   })) || [];
 
 export const createChannelsDataWithPrice = (
@@ -121,14 +127,7 @@ export const createChannelsDataWithPrice = (
   data?: Channels_channels[]
 ): ChannelData[] => {
   if (data && productData?.channelListing) {
-    const dataArr = data.map(channel => ({
-      currency: channel.currencyCode,
-      id: channel.id,
-      isPublished: false,
-      name: channel.name,
-      price: null,
-      publicationDate: null
-    }));
+    const dataArr = createChannelsData(data);
 
     const productDataArr = createChannelsDataFromProduct(productData);
     return uniqBy([...productDataArr, ...dataArr], obj => obj.id);
@@ -196,12 +195,15 @@ export const createChannelsDataFromProduct = (
       listing => listing.channel.id === option.channel.id
     )?.price;
     return {
+      availableForPurchase: option?.availableForPurchase,
       currency: price ? price.currency : "",
       id: option.channel.id,
+      isAvailableForPurchase: !!option?.isAvailableForPurchase,
       isPublished: option.isPublished,
       name: option.channel.name,
       price: price ? price.amount : null,
-      publicationDate: option.publicationDate
+      publicationDate: option.publicationDate,
+      visibleInListings: !!option.visibleInListings
     };
   }) || [];
 

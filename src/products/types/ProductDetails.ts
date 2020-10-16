@@ -102,6 +102,9 @@ export interface ProductDetails_product_channelListing {
   discountedPrice: ProductDetails_product_channelListing_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductDetails_product_category {
@@ -196,7 +199,6 @@ export interface ProductDetails_product {
   defaultVariant: ProductDetails_product_defaultVariant | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
-  isAvailable: boolean | null;
   chargeTaxes: boolean;
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
