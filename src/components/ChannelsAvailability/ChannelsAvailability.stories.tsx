@@ -16,6 +16,7 @@ const props: ChannelsAvailabilityProps = {
     id: channel.id,
     name: channel.name
   })),
+  errors: [],
   onChange: () => undefined,
   openModal: () => undefined,
   selectedChannelsCount: 3
@@ -29,5 +30,16 @@ storiesOf("Generics / ChannelsAvailability", module)
       {...props}
       channelsList={undefined}
       channels={productChannels}
+      channelsMessages={productChannels.reduce(
+        (prevVal, currVal) => ({
+          ...prevVal,
+          [currVal.id]: {
+            availableLabel: "Available",
+            availableSecondLabel: "Will become available",
+            hiddenSecondLabel: "Will become published"
+          }
+        }),
+        {}
+      )}
     />
   ));

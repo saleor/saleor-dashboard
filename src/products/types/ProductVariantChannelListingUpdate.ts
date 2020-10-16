@@ -147,9 +147,9 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors {
   __typename: "ProductChannelListingError";
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
-  code: ProductErrorCode;
   channels: string[] | null;
 }
 
