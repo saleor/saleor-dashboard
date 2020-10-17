@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 
 export interface OrderWeightProps {
   disabled: boolean;
-  errors: ShippingErrorFragment[];
+  errors: Array<Omit<ShippingErrorFragment, "channels">>;
   noLimits: boolean;
   maxValue: string;
   minValue: string;

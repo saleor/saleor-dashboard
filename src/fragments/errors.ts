@@ -88,6 +88,14 @@ export const shippingErrorFragment = gql`
   }
 `;
 
+export const shippingChannelsErrorFragment = gql`
+  fragment ShippingChannelsErrorFragment on ShippingError {
+    code
+    field
+    channels
+  }
+`;
+
 export const shopErrorFragment = gql`
   fragment ShopErrorFragment on ShopError {
     code

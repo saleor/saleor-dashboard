@@ -58,19 +58,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
-  ] = useShippingMethodChannelListingUpdate({
-    onCompleted: data => {
-      const errors = data.shippingMethodChannelListingUpdate.errors;
-      if (errors.length) {
-        errors.map(err =>
-          notify({
-            status: "error",
-            text: getShippingErrorMessage(err, intl)
-          })
-        );
-      }
-    }
-  });
+  ] = useShippingMethodChannelListingUpdate({});
 
   const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
   const allChannels = createSortedShippingChannels(channelsData?.channels);
@@ -120,6 +108,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
+          formData.noLimits,
           formData.channelListing,
           shippingChannels
         )

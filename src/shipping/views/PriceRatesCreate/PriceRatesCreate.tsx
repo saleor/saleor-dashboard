@@ -49,10 +49,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
             data.shippingMethodChannelListingUpdate.shippingMethod.id
           )
         );
-      } else {
-        errors.map(err =>
-          notify({ status: "error", text: getShippingErrorMessage(err, intl) })
-        );
       }
     }
   });
@@ -85,6 +81,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           response.data.shippingPriceCreate.shippingMethod.id,
+          data.noLimits,
           data.channelListing
         )
       });
