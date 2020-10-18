@@ -162,10 +162,17 @@ export interface SimpleProductUpdate_productUpdate_product_variants_channelListi
   currency: string;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_variants_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_variants_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: SimpleProductUpdate_productUpdate_product_variants_channelListing_channel;
   price: SimpleProductUpdate_productUpdate_product_variants_channelListing_price | null;
+  costPrice: SimpleProductUpdate_productUpdate_product_variants_channelListing_costPrice | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_variants {
@@ -349,10 +356,17 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_channel
   currency: string;
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: SimpleProductUpdate_productVariantUpdate_productVariant_channelListing_channel;
   price: SimpleProductUpdate_productVariantUpdate_productVariant_channelListing_price | null;
+  costPrice: SimpleProductUpdate_productVariantUpdate_productVariant_channelListing_costPrice | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks_warehouse {
@@ -526,10 +540,17 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_c
   currency: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListing_channel;
   price: SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListing_price | null;
+  costPrice: SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListing_costPrice | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_stocks_warehouse {
@@ -702,10 +723,17 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_c
   currency: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListing_channel;
   price: SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListing_price | null;
+  costPrice: SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListing_costPrice | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_stocks_warehouse {
@@ -879,10 +907,17 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_c
   currency: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListing_channel;
   price: SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListing_price | null;
+  costPrice: SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListing_costPrice | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse {
