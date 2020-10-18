@@ -130,10 +130,17 @@ export interface ProductVariantDetails_productVariant_channelListing_price {
   currency: string;
 }
 
+export interface ProductVariantDetails_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductVariantDetails_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductVariantDetails_productVariant_channelListing_channel;
   price: ProductVariantDetails_productVariant_channelListing_price | null;
+  costPrice: ProductVariantDetails_productVariant_channelListing_costPrice | null;
 }
 
 export interface ProductVariantDetails_productVariant_stocks_warehouse {

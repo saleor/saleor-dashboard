@@ -19,8 +19,15 @@ export interface ChannelListingProductVariantFragment_price {
   currency: string;
 }
 
+export interface ChannelListingProductVariantFragment_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ChannelListingProductVariantFragment {
   __typename: "ProductVariantChannelListing";
   channel: ChannelListingProductVariantFragment_channel;
   price: ChannelListingProductVariantFragment_price | null;
+  costPrice: ChannelListingProductVariantFragment_costPrice | null;
 }

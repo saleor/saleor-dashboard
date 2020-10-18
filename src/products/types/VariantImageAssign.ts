@@ -136,10 +136,17 @@ export interface VariantImageAssign_variantImageAssign_productVariant_channelLis
   currency: string;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: VariantImageAssign_variantImageAssign_productVariant_channelListing_channel;
   price: VariantImageAssign_variantImageAssign_productVariant_channelListing_price | null;
+  costPrice: VariantImageAssign_variantImageAssign_productVariant_channelListing_costPrice | null;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse {

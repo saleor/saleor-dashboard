@@ -23,7 +23,10 @@ import {
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { createVariantChannelsChangeHandler } from "@saleor/products/utils/handlers";
-import { validatePrice } from "@saleor/products/utils/validation";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { ReorderAction } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -42,14 +45,8 @@ import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
-export interface ProductVariantChannelData {
-  id: string;
-  currency: string;
-  name: string;
-  price: number;
-}
 export interface ProductVariantPageFormData extends MetadataFormData {
-  channelListing: ProductVariantChannelData[];
+  channelListing: ChannelPriceData[];
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -206,8 +203,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               set,
               triggerChange
             );
-            const formDisabled = data.channelListing?.some(channel =>
-              validatePrice(channel.price)
+            const formDisabled = data.channelListing?.some(
+              channel =>
+                validatePrice(channel.price) ||
+                validateCostPrice(channel.costPrice)
             );
             return (
               <>
