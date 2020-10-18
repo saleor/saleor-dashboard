@@ -1,4 +1,4 @@
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
@@ -7,6 +7,13 @@ import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { getAttributeInputFromProductType, ProductType } from "./data";
+
+const setPrice = (price: string, initialPrice: number) =>
+  typeof price === "string"
+    ? price
+      ? parseInt(price, 10)
+      : null
+    : initialPrice;
 
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
@@ -23,7 +30,8 @@ export function createChannelsPriceChangeHandler(
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -31,7 +39,8 @@ export function createChannelsPriceChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        price
+        costPrice: setPrice(costPrice, channel.costPrice),
+        price: setPrice(price, channel.price)
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -70,7 +79,8 @@ export function createVariantChannelsChangeHandler(
   setData: (data: ProductVariantPageFormData) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const { channelListing } = data;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
@@ -79,7 +89,8 @@ export function createVariantChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        price
+        costPrice: setPrice(costPrice, channel.costPrice),
+        price: setPrice(price, channel.price)
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -140,33 +151,6 @@ export function createProductTypeSelectHandler(
     change(event);
 
     setAttributes(getAttributeInputFromProductType(selectedProductType));
-  };
-}
-
-interface ProductAvailabilityArgs {
-  availableForPurchase: string | null;
-  isAvailableForPurchase: boolean;
-  productId: string;
-}
-
-export function getProductAvailabilityVariables({
-  isAvailableForPurchase,
-  availableForPurchase,
-  productId
-}: ProductAvailabilityArgs) {
-  const isAvailable =
-    availableForPurchase && !isAvailableForPurchase
-      ? true
-      : isAvailableForPurchase;
-
-  return {
-    isAvailable,
-    productId,
-    startDate: isAvailableForPurchase
-      ? null
-      : availableForPurchase !== ""
-      ? availableForPurchase
-      : null
   };
 }
 

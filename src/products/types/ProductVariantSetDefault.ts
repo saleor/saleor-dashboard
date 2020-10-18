@@ -161,10 +161,17 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   currency: string;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListing_channel;
   price: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListing_price | null;
+  costPrice: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListing_costPrice | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants {

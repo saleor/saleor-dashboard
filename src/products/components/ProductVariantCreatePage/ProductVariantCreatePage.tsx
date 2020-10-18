@@ -27,12 +27,9 @@ import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-// import ProductVariantPrice from "../ProductVariantPrice";
 
 interface ProductVariantCreatePageFormData extends MetadataFormData {
-  costPrice: string;
   images: string[];
-  price: string;
   quantity: string;
   sku: string;
   trackInventory: boolean;
@@ -46,7 +43,6 @@ export interface ProductVariantCreatePageSubmitData
 }
 
 interface ProductVariantCreatePageProps {
-  currencySymbol: string;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -62,7 +58,6 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
-  // currencySymbol,
   disabled,
   errors,
   header,
@@ -95,10 +90,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   } = useMetadataChangeTrigger();
 
   const initialForm: ProductVariantCreatePageFormData = {
-    costPrice: "",
     images: product?.images.map(image => image.id),
     metadata: [],
-    price: "",
     privateMetadata: [],
     quantity: "0",
     sku: "",
@@ -146,13 +139,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   errors={errors}
                   onChange={handleAttributeChange}
                 />
-                <CardSpacer />
-                {/* <ProductVariantPrice
-                  errors={errors}
-                  currencySymbol={currencySymbol}
-                  loading={disabled}
-                  onChange={change}
-                /> */}
                 <CardSpacer />
                 <ProductShipping
                   data={data}

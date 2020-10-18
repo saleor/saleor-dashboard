@@ -155,10 +155,17 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   currency: string;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_channel;
   price: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_price | null;
+  costPrice: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing_costPrice | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants {
