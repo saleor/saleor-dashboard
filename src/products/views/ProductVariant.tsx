@@ -129,17 +129,22 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     data: ProductVariantPageSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
-    if (
-      data.channelListing.some(
-        (channel, index) =>
-          channel.price !== variant.channelListing[index]?.price.amount
-      )
-    ) {
+    const isChannelPriceChange = data.channelListing.some(channel => {
+      const variantChannel = variant.channelListing.find(
+        variantChannel => variantChannel.channel.id === channel.id
+      );
+      return (
+        channel.price !== variantChannel?.price?.amount.toString() ||
+        channel.costPrice !== variantChannel?.costPrice?.amount.toString()
+      );
+    });
+    if (isChannelPriceChange) {
       updateChannels({
         variables: {
           id: variant.id,
           input: data.channelListing.map(listing => ({
             channelId: listing.id,
+            costPrice: listing.costPrice || null,
             price: listing.price
           }))
         }
@@ -236,7 +241,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         channels={channels}
         channelErrors={
           updateChannelsOpts?.data?.productVariantChannelListingUpdate
-            ?.productChannelListingErrors || []
+            ?.errors || []
         }
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}

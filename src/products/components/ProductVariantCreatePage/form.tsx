@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -6,6 +7,7 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+import { getChannelsInput } from "@saleor/products/utils/handlers";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -14,8 +16,7 @@ import { ProductStockInput } from "../ProductStocks";
 import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
-  costPrice: string;
-  price: string;
+  channelListing: ChannelPriceData[];
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -27,13 +28,17 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 
 export interface UseProductVariantCreateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelPriceData[];
 }
 
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
   // TODO: type FormsetChange
-  handlers: Record<"changeStock" | "selectAttribute", FormsetChange> &
+  handlers: Record<
+    "changeStock" | "selectAttribute" | "changeChannels",
+    FormsetChange
+  > &
     Record<"addStock" | "deleteStock", (id: string) => void> & {
       changeMetadata: FormChange;
     };
@@ -49,9 +54,8 @@ export interface ProductVariantCreateFormProps
 }
 
 const initial: ProductVariantCreateFormData = {
-  costPrice: "",
+  channelListing: [],
   metadata: [],
-  price: "",
   privateMetadata: [],
   sku: "",
   trackInventory: true,
@@ -67,10 +71,12 @@ function useProductVariantCreateForm(
   const triggerChange = () => setChanged(true);
 
   const attributeInput = getVariantAttributeInputFromProduct(product);
+  const channelsInput = getChannelsInput(opts.currentChannels);
 
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
   const stocks = useFormset<null, string>([]);
+  const channels = useFormset(channelsInput);
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -101,6 +107,10 @@ function useProductVariantCreateForm(
     triggerChange();
     stocks.remove(id);
   };
+  const handleChannelChange: FormsetChange = (id, value) => {
+    channels.change(id, value);
+    triggerChange();
+  };
 
   const data: ProductVariantCreateData = {
     ...form.data,
@@ -115,6 +125,7 @@ function useProductVariantCreateForm(
     data,
     handlers: {
       addStock: handleStockAdd,
+      changeChannels: handleChannelChange,
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,

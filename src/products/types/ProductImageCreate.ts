@@ -73,22 +73,6 @@ export interface ProductImageCreate_productImageCreate_product_productType {
   taxType: ProductImageCreate_productImageCreate_product_productType_taxType | null;
 }
 
-export interface ProductImageCreate_productImageCreate_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface ProductImageCreate_productImageCreate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -111,6 +95,23 @@ export interface ProductImageCreate_productImageCreate_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductImageCreate_productImageCreate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductImageCreate_productImageCreate_product_category {
@@ -160,10 +161,17 @@ export interface ProductImageCreate_productImageCreate_product_variants_channelL
   currency: string;
 }
 
+export interface ProductImageCreate_productImageCreate_product_variants_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductImageCreate_productImageCreate_product_variants_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductImageCreate_productImageCreate_product_variants_channelListing_channel;
   price: ProductImageCreate_productImageCreate_product_variants_channelListing_price | null;
+  costPrice: ProductImageCreate_productImageCreate_product_variants_channelListing_costPrice | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_variants {
@@ -194,9 +202,9 @@ export interface ProductImageCreate_productImageCreate_product {
   id: string;
   attributes: ProductImageCreate_productImageCreate_product_attributes[];
   productType: ProductImageCreate_productImageCreate_product_productType;
+  channelListing: ProductImageCreate_productImageCreate_product_channelListing[] | null;
   metadata: (ProductImageCreate_productImageCreate_product_metadata | null)[];
   privateMetadata: (ProductImageCreate_productImageCreate_product_privateMetadata | null)[];
-  channelListing: ProductImageCreate_productImageCreate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -210,8 +218,6 @@ export interface ProductImageCreate_productImageCreate_product {
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
   weight: ProductImageCreate_productImageCreate_product_weight | null;
   taxType: ProductImageCreate_productImageCreate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductImageCreate_productImageCreate {

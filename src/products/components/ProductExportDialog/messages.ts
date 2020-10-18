@@ -20,11 +20,6 @@ function useProductExportFieldMessages() {
       description: "product field",
       id: "productExportFieldCollections"
     }),
-    [ProductFieldEnum.COST_PRICE]: intl.formatMessage({
-      defaultMessage: "Cost Price",
-      description: "product field",
-      id: "productExportFieldPrice"
-    }),
     [ProductFieldEnum.DESCRIPTION]: intl.formatMessage({
       defaultMessage: "Description",
       description: "product field",
@@ -55,11 +50,6 @@ function useProductExportFieldMessages() {
       description: "product field",
       id: "productExportFieldVariantImages"
     }),
-    [ProductFieldEnum.VARIANT_PRICE]: intl.formatMessage({
-      defaultMessage: "Variant Price",
-      description: "product field",
-      id: "productExportFieldVariantPrice"
-    }),
     [ProductFieldEnum.VARIANT_SKU]: intl.formatMessage({
       defaultMessage: "Export Variant SKU",
       description: "product field",
@@ -74,11 +64,6 @@ function useProductExportFieldMessages() {
       defaultMessage: "Visibility",
       description: "product field",
       id: "productExportFieldVisibility"
-    }),
-    [ProductFieldEnum.AVAILABLE_FOR_PURCHASE]: intl.formatMessage({
-      defaultMessage: "Available for purchase",
-      description: "product field",
-      id: "productExportFieldAvailability"
     })
   };
 

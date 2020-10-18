@@ -74,22 +74,6 @@ export interface ProductUpdate_productUpdate_product_productType {
   taxType: ProductUpdate_productUpdate_product_productType_taxType | null;
 }
 
-export interface ProductUpdate_productUpdate_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductUpdate_productUpdate_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductUpdate_productUpdate_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface ProductUpdate_productUpdate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -112,6 +96,23 @@ export interface ProductUpdate_productUpdate_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductUpdate_productUpdate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductUpdate_productUpdate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductUpdate_productUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductUpdate_productUpdate_product_category {
@@ -161,10 +162,17 @@ export interface ProductUpdate_productUpdate_product_variants_channelListing_pri
   currency: string;
 }
 
+export interface ProductUpdate_productUpdate_product_variants_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductUpdate_productUpdate_product_variants_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductUpdate_productUpdate_product_variants_channelListing_channel;
   price: ProductUpdate_productUpdate_product_variants_channelListing_price | null;
+  costPrice: ProductUpdate_productUpdate_product_variants_channelListing_costPrice | null;
 }
 
 export interface ProductUpdate_productUpdate_product_variants {
@@ -195,9 +203,9 @@ export interface ProductUpdate_productUpdate_product {
   id: string;
   attributes: ProductUpdate_productUpdate_product_attributes[];
   productType: ProductUpdate_productUpdate_product_productType;
+  channelListing: ProductUpdate_productUpdate_product_channelListing[] | null;
   metadata: (ProductUpdate_productUpdate_product_metadata | null)[];
   privateMetadata: (ProductUpdate_productUpdate_product_privateMetadata | null)[];
-  channelListing: ProductUpdate_productUpdate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -211,8 +219,6 @@ export interface ProductUpdate_productUpdate_product {
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: ProductUpdate_productUpdate_product_weight | null;
   taxType: ProductUpdate_productUpdate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductUpdate_productUpdate {

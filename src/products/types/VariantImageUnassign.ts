@@ -61,12 +61,6 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_images
   url: string;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantImageUnassign_variantImageUnassign_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
@@ -142,10 +136,17 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_channe
   currency: string;
 }
 
+export interface VariantImageUnassign_variantImageUnassign_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface VariantImageUnassign_variantImageUnassign_productVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: VariantImageUnassign_variantImageUnassign_productVariant_channelListing_channel;
   price: VariantImageUnassign_variantImageUnassign_productVariant_channelListing_price | null;
+  costPrice: VariantImageUnassign_variantImageUnassign_productVariant_channelListing_costPrice | null;
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_stocks_warehouse {

@@ -10,9 +10,9 @@ import {
 } from "./form";
 
 export const channels: ChannelPriceData[] = [
-  { currency: "USD", id: "channel-1", name: "Channel1", price: 1 },
-  { currency: "USD", id: "channel-2", name: "Channel2", price: 2 },
-  { currency: "USD", id: "channel-3", name: "Channel3", price: 3 }
+  { currency: "USD", id: "channel-1", name: "Channel1", price: "1" },
+  { currency: "USD", id: "channel-2", name: "Channel2", price: "2" },
+  { currency: "USD", id: "channel-3", name: "Channel3", price: "3" }
 ];
 
 export const attributes = [

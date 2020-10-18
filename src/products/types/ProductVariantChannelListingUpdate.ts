@@ -2,11 +2,23 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantChannelListingAddInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantChannelListingAddInput, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantChannelListingUpdate
 // ====================================================
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute_values {
   __typename: "AttributeValue";
@@ -41,6 +53,11 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   __typename: "ProductImage";
   id: string;
   url: string;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_images {
@@ -92,6 +109,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product {
   __typename: "Product";
   id: string;
+  defaultVariant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant | null;
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
@@ -112,10 +130,17 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   currency: string;
 }
 
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_channel;
   price: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_price | null;
+  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_costPrice | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks_warehouse {
@@ -132,9 +157,17 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   warehouse: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks_warehouse;
 }
 
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_metadata | null)[];
+  privateMetadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_privateMetadata | null)[];
   attributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes[];
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images | null)[] | null;
   name: string;
@@ -143,9 +176,10 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   sku: string;
   stocks: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_weight | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_errors {
   __typename: "ProductChannelListingError";
   code: ProductErrorCode;
   field: string | null;
@@ -156,7 +190,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate {
   __typename: "ProductVariantChannelListingUpdate";
   variant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant | null;
-  productChannelListingErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_errors[];
 }
 
 export interface ProductVariantChannelListingUpdate {

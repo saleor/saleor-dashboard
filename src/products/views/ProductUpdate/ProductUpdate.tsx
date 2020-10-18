@@ -223,10 +223,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (
-        data.productChannelListingUpdate.productChannelListingErrors.length ===
-        0
-      ) {
+      if (data.productChannelListingUpdate.errors.length === 0) {
         const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
           data.productChannelListingUpdate.product
         );
@@ -315,9 +312,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const formTransitionState = getMutationState(
     updateProductOpts.called || updateSimpleProductOpts.called,
     updateProductOpts.loading || updateSimpleProductOpts.loading,
-    updateProductOpts.data.productUpdate.errors,
-    updateSimpleProductOpts.data.productUpdate.errors,
-    updateSimpleProductOpts.data.productVariantUpdate.errors
+    updateProductOpts.data?.productUpdate.errors,
+    updateSimpleProductOpts.data?.productUpdate.errors,
+    updateSimpleProductOpts.data?.productVariantUpdate.errors
   );
 
   const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
@@ -327,19 +324,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     edge => edge.node
   );
   const errors = [
-    ...(updateProductOpts.data.productUpdate.errors || []),
-    ...(updateSimpleProductOpts.data.productUpdate.errors || []),
-    ...(productVariantCreateOpts?.data?.productVariantCreate.errors || [])
+    ...(updateProductOpts.data?.productUpdate.errors || []),
+    ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
+    ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
     null
   );
   const channelsErrors = [
-    ...(updateChannelsOpts?.data?.productChannelListingUpdate
-      ?.productChannelListingErrors || []),
+    ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors || []),
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
-      ?.productChannelListingErrors || [])
+      ?.errors || [])
   ];
 
   return (

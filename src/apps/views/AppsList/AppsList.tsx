@@ -62,7 +62,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
   const paginate = usePaginator();
-  const paginationState = createPaginationState(settings.rowNumber, params);
+  const paginationState = createPaginationState(settings?.rowNumber, params);
   const queryVariables = {
     sort: {
       direction: OrderDirection.DESC,

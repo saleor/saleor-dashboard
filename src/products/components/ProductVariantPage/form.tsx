@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
@@ -5,7 +6,6 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
@@ -23,8 +23,7 @@ import { ProductStockInput } from "../ProductStocks";
 import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
-  channelListing: ProductVariantChannelData[];
-  costPrice: string;
+  channelListing: ChannelPriceData[];
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -43,7 +42,7 @@ export interface ProductVariantUpdateSubmitData
 
 export interface UseProductVariantUpdateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
-  currentChannels: ProductVariantChannelData[];
+  currentChannels: ChannelPriceData[];
 }
 
 export interface UseProductVariantUpdateFormResult {
@@ -81,7 +80,6 @@ function useProductVariantUpdateForm(
 
   const initial: ProductVariantUpdateFormData = {
     channelListing: opts.currentChannels,
-    costPrice: variant?.costPrice?.amount.toString() || "",
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",

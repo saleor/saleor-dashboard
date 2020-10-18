@@ -1,5 +1,6 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { weight } from "@saleor/misc";
@@ -51,7 +52,6 @@ const getSimpleProductVariables = (
   },
   productVariantId: productId,
   productVariantInput: {
-    costPrice: data.basePrice,
     sku: data.sku,
     trackInventory: data.trackInventory
   },
@@ -86,6 +86,13 @@ const getChannelsVariables = (
     }
   };
 };
+
+const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
+  data.channelListing.map(listing => ({
+    channelId: listing.id,
+    costPrice: listing.costPrice || null,
+    price: listing.price
+  }));
 
 export function createUpdateHandler(
   product: ProductDetails_product,
@@ -128,7 +135,10 @@ export function createUpdateHandler(
     };
 
     let errors: Array<
-      ProductErrorFragment | StockErrorFragment | BulkStockErrorFragment
+      | ProductErrorFragment
+      | StockErrorFragment
+      | BulkStockErrorFragment
+      | ProductChannelListingErrorFragment
     >;
 
     if (product.productType.hasVariants) {
@@ -162,10 +172,7 @@ export function createUpdateHandler(
           updateVariantChannels({
             variables: {
               id: variantId,
-              input: data.channelListing.map(listing => ({
-                channelId: listing.id,
-                price: listing.price
-              }))
+              input: getVariantChannelsInput(data)
             }
           });
           updateChannels({
@@ -192,10 +199,7 @@ export function createUpdateHandler(
         updateVariantChannels({
           variables: {
             id: product.variants[0].id,
-            input: data.channelListing.map(listing => ({
-              channelId: listing.id,
-              price: listing.price
-            }))
+            input: getVariantChannelsInput(data)
           }
         });
       }

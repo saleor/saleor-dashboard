@@ -1,7 +1,10 @@
-import { ChannelData, ChannelPriceData } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelPriceArgs,
+  ChannelPriceData
+} from "@saleor/channels/utils";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
@@ -22,7 +25,8 @@ export function createChannelsPriceChangeHandler(
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -30,6 +34,7 @@ export function createChannelsPriceChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
+        costPrice,
         price
       },
       ...channelListing.slice(channelIndex + 1)
@@ -65,11 +70,12 @@ export function createChannelsChangeHandler(
 }
 
 export function createVariantChannelsChangeHandler(
-  channelListing: ProductVariantChannelData[],
-  setData: (data: ProductVariantChannelData[]) => void,
+  channelListing: ChannelPriceData[],
+  setData: (data: ChannelPriceData[]) => void,
   triggerChange: () => void
 ) {
-  return (id: string, price: number) => {
+  return (id: string, priceData: ChannelPriceArgs) => {
+    const { costPrice, price } = priceData;
     const channelIndex = channelListing.findIndex(channel => channel.id === id);
     const channel = channelListing[channelIndex];
 
@@ -77,6 +83,7 @@ export function createVariantChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
+        costPrice,
         price
       },
       ...channelListing.slice(channelIndex + 1)
