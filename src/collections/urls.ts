@@ -19,12 +19,7 @@ export enum CollectionListUrlFiltersEnum {
   query = "query"
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
-export type CollectionListUrlDialog =
-  | "publish"
-  | "unpublish"
-  | "remove"
-  | "settings"
-  | TabActionDialog;
+export type CollectionListUrlDialog = "remove" | "settings" | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",
   available = "available",

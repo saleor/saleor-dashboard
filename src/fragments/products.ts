@@ -194,8 +194,6 @@ export const productFragmentDetails = gql`
     taxType {
       ...TaxTypeFragment
     }
-    availableForPurchase
-    visibleInListings
   }
 `;
 

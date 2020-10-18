@@ -55,12 +55,6 @@ export interface ProductVariant_images {
   url: string;
 }
 
-export interface ProductVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;

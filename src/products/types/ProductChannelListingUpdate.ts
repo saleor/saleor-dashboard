@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductChannelListingUpdateInput, AttributeInputTypeEnum, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductChannelListingUpdateInput, AttributeInputTypeEnum, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductChannelListingUpdate
@@ -52,12 +52,19 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   values: (ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductChannelListingUpdate_productChannelListingUpdate_product_productType_taxType | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListing_channel {
@@ -82,6 +89,23 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_category {
@@ -148,21 +172,39 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   channelListing: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListing[] | null;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product {
   __typename: "Product";
   id: string;
   attributes: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes[];
   productType: ProductChannelListingUpdate_productChannelListingUpdate_product_productType;
   channelListing: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListing[] | null;
+  metadata: (ProductChannelListingUpdate_productChannelListingUpdate_product_metadata | null)[];
+  privateMetadata: (ProductChannelListingUpdate_productChannelListingUpdate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductChannelListingUpdate_productChannelListingUpdate_product_defaultVariant | null;
   category: ProductChannelListingUpdate_productChannelListingUpdate_product_category | null;
   collections: (ProductChannelListingUpdate_productChannelListingUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductChannelListingUpdate_productChannelListingUpdate_product_images | null)[] | null;
   variants: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants | null)[] | null;
+  weight: ProductChannelListingUpdate_productChannelListingUpdate_product_weight | null;
+  taxType: ProductChannelListingUpdate_productChannelListingUpdate_product_taxType | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_productChannelListingErrors {

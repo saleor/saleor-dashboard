@@ -68,17 +68,9 @@ export interface OrderLineDelete_draftOrderLineDelete_order_events {
   user: OrderLineDelete_draftOrderLineDelete_order_events_user | null;
 }
 
-export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments {
   warehouse: OrderLineDelete_draftOrderLineDelete_order_fulfillments_warehouse | null;
 }
 
-export interface OrderLineDelete_draftOrderLineDelete_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderLineDelete_draftOrderLineDelete_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderLineDelete_draftOrderLineDelete_order_lines_variant_product;
   quantityAvailable: number;
 }
 

@@ -8,7 +8,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -35,7 +34,7 @@ export interface ShippingZoneRatesPageProps {
   defaultCurrency: string;
   disabled: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
-  channelErrors: ShippingChannelsErrorFragment[];
+  channelErrors: ShippingErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

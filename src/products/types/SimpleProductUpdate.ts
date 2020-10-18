@@ -74,22 +74,6 @@ export interface SimpleProductUpdate_productUpdate_product_productType {
   taxType: SimpleProductUpdate_productUpdate_product_productType_taxType | null;
 }
 
-export interface SimpleProductUpdate_productUpdate_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface SimpleProductUpdate_productUpdate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -112,6 +96,23 @@ export interface SimpleProductUpdate_productUpdate_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_category {
@@ -195,9 +196,9 @@ export interface SimpleProductUpdate_productUpdate_product {
   id: string;
   attributes: SimpleProductUpdate_productUpdate_product_attributes[];
   productType: SimpleProductUpdate_productUpdate_product_productType;
+  channelListing: SimpleProductUpdate_productUpdate_product_channelListing[] | null;
   metadata: (SimpleProductUpdate_productUpdate_product_metadata | null)[];
   privateMetadata: (SimpleProductUpdate_productUpdate_product_privateMetadata | null)[];
-  channelListing: SimpleProductUpdate_productUpdate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -211,8 +212,6 @@ export interface SimpleProductUpdate_productUpdate_product {
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: SimpleProductUpdate_productUpdate_product_weight | null;
   taxType: SimpleProductUpdate_productUpdate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface SimpleProductUpdate_productUpdate {
@@ -273,12 +272,6 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_images 
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface SimpleProductUpdate_productVariantUpdate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant {
@@ -458,12 +451,6 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_i
   url: string;
 }
 
-export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
@@ -638,12 +625,6 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_i
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant {
@@ -821,12 +802,6 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_i
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {

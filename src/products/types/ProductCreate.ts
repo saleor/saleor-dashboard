@@ -74,22 +74,6 @@ export interface ProductCreate_productCreate_product_productType {
   taxType: ProductCreate_productCreate_product_productType_taxType | null;
 }
 
-export interface ProductCreate_productCreate_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductCreate_productCreate_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductCreate_productCreate_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface ProductCreate_productCreate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -112,6 +96,23 @@ export interface ProductCreate_productCreate_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductCreate_productCreate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductCreate_productCreate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductCreate_productCreate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductCreate_productCreate_product_category {
@@ -195,9 +196,9 @@ export interface ProductCreate_productCreate_product {
   id: string;
   attributes: ProductCreate_productCreate_product_attributes[];
   productType: ProductCreate_productCreate_product_productType;
+  channelListing: ProductCreate_productCreate_product_channelListing[] | null;
   metadata: (ProductCreate_productCreate_product_metadata | null)[];
   privateMetadata: (ProductCreate_productCreate_product_privateMetadata | null)[];
-  channelListing: ProductCreate_productCreate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -211,8 +212,6 @@ export interface ProductCreate_productCreate_product {
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
   weight: ProductCreate_productCreate_product_weight | null;
   taxType: ProductCreate_productCreate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductCreate_productCreate {
