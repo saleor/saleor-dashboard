@@ -67,56 +67,6 @@ export interface Product_productType {
   taxType: Product_productType_taxType | null;
 }
 
-export interface Product_pricing_priceRangeUndiscounted_start_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: Product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface Product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: Product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface Product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: Product_pricing_priceRangeUndiscounted_start | null;
-  stop: Product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface Product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: Product_pricing_priceRangeUndiscounted | null;
-}
-
-export interface Product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface Product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface Product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
-
 export interface Product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -139,6 +89,23 @@ export interface Product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface Product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface Product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface Product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface Product_category {
@@ -222,10 +189,9 @@ export interface Product {
   id: string;
   attributes: Product_attributes[];
   productType: Product_productType;
-  pricing: Product_pricing | null;
+  channelListing: Product_channelListing[] | null;
   metadata: (Product_metadata | null)[];
   privateMetadata: (Product_privateMetadata | null)[];
-  channelListing: Product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -239,6 +205,4 @@ export interface Product {
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
   taxType: Product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }

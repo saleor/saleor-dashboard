@@ -62,12 +62,6 @@ export interface VariantUpdate_productVariantUpdate_productVariant_images {
   url: string;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
@@ -243,12 +237,6 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_images 
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {

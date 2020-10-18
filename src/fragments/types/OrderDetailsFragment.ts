@@ -62,17 +62,9 @@ export interface OrderDetailsFragment_events {
   user: OrderDetailsFragment_events_user | null;
 }
 
-export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderDetailsFragment_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -135,17 +127,9 @@ export interface OrderDetailsFragment_fulfillments {
   warehouse: OrderDetailsFragment_fulfillments_warehouse | null;
 }
 
-export interface OrderDetailsFragment_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderDetailsFragment_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderDetailsFragment_lines_variant_product;
   quantityAvailable: number;
 }
 

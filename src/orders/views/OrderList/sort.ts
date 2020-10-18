@@ -10,8 +10,6 @@ export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {
       return OrderSortField.CREATION_DATE;
     case OrderListUrlSortField.customer:
       return OrderSortField.CUSTOMER;
-    case OrderListUrlSortField.total:
-      return OrderSortField.TOTAL;
     case OrderListUrlSortField.fulfillment:
       return OrderSortField.FULFILLMENT_STATUS;
     case OrderListUrlSortField.payment:

@@ -193,9 +193,7 @@ const Routes: React.FC = () => {
                 component={ProductSection}
               />
               <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
-                ]}
+                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path="/product-types"
                 component={ProductTypesSection}
               />
@@ -235,9 +233,7 @@ const Routes: React.FC = () => {
                 component={NavigationSection}
               />
               <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
-                ]}
+                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path={attributeSection}
                 component={AttributeSection}
               />
