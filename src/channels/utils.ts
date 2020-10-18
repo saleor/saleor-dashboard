@@ -1,6 +1,7 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
+import { RequireOnlyOne } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListing } from "@saleor/shipping/types/ShippingZone";
@@ -18,6 +19,7 @@ export interface ChannelData {
   publicationDate: string | null;
   currency: string;
   price: number;
+  costPrice: number;
   availableForPurchase: string;
   isAvailableForPurchase: boolean;
   visibleInListings: boolean;
@@ -28,7 +30,17 @@ export interface ChannelPriceData {
   name: string;
   currency: string;
   price: number | null;
+  costPrice?: number | null;
 }
+
+interface IChannelPriceArgs {
+  price: string;
+  costPrice: string;
+}
+export type ChannelPriceArgs = RequireOnlyOne<
+  IChannelPriceArgs,
+  "price" | "costPrice"
+>;
 
 export interface ChannelVoucherData {
   id: string;
@@ -67,12 +79,14 @@ export const createVariantChannels = (
 ): ChannelPriceData[] => {
   if (data) {
     const productChannels = data?.product.channelListing.map(listing => ({
+      costPrice: null,
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
       price: null
     }));
     const variantChannels = data?.channelListing.map(listing => ({
+      costPrice: listing.costPrice?.amount || null,
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
@@ -112,6 +126,7 @@ export const createChannelsDataWithDiscountPrice = (
 export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchase: null,
+    costPrice: null,
     currency: channel.currencyCode,
     id: channel.id,
     isAvailableForPurchase: false,
@@ -191,11 +206,14 @@ export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product
 ) =>
   productData?.channelListing?.map(option => {
-    const price = productData.variants[0]?.channelListing.find(
+    const variantChannel = productData.variants[0]?.channelListing.find(
       listing => listing.channel.id === option.channel.id
-    )?.price;
+    );
+    const price = variantChannel?.price;
+    const costPrice = variantChannel?.costPrice;
     return {
       availableForPurchase: option?.availableForPurchase,
+      costPrice: costPrice ? costPrice.amount : null,
       currency: price ? price.currency : "",
       id: option.channel.id,
       isAvailableForPurchase: !!option?.isAvailableForPurchase,
