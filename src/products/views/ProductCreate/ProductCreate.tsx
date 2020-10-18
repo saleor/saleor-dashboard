@@ -8,6 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
   useProductVariantChannelListingUpdate,
@@ -19,18 +20,17 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import { getProductErrorMessage } from "@saleor/utils/errors";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import { createHandler } from "./handlers";
 
 export const ProductCreateView: React.FC = () => {
@@ -206,7 +206,7 @@ export const ProductCreateView: React.FC = () => {
         }
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
-            ?.productChannelListingErrors
+            ?.errors
         }
         errors={[
           ...(productCreateOpts.data?.productCreate.errors || []),

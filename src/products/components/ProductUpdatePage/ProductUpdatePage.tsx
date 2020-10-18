@@ -11,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
@@ -19,7 +20,6 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import {
   validateCostPrice,
   validatePrice
@@ -65,7 +65,7 @@ import ProductVariants from "../ProductVariants";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
-  channelsErrors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  channelsErrors: ProductChannelListingErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   channelChoices: SingleAutocompleteChoiceType[];
