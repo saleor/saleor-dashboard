@@ -1235,15 +1235,6 @@ type CollectionBulkDelete {
   productErrors: [ProductError!]!
 }
 
-type CollectionBulkPublish {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-  count: Int!
-  productErrors: [ProductError!]!
-}
-
 type CollectionCountableConnection {
   pageInfo: PageInfo!
   edges: [CollectionCountableEdge!]!
@@ -2926,10 +2917,6 @@ type Mutation {
     moves: [MoveProductInput]!
   ): CollectionReorderProducts
   collectionBulkDelete(ids: [ID]!): CollectionBulkDelete
-  collectionBulkPublish(
-    ids: [ID]!
-    isPublished: Boolean!
-  ): CollectionBulkPublish
   collectionRemoveProducts(
     collectionId: ID!
     products: [ID]!
@@ -2943,7 +2930,6 @@ type Mutation {
   productCreate(input: ProductCreateInput!): ProductCreate
   productDelete(id: ID!): ProductDelete
   productBulkDelete(ids: [ID]!): ProductBulkDelete
-  productBulkPublish(ids: [ID]!, isPublished: Boolean!): ProductBulkPublish
   productUpdate(id: ID!, input: ProductInput!): ProductUpdate
   productTranslate(
     id: ID!
@@ -3599,7 +3585,6 @@ enum OrderSortField {
   CUSTOMER
   PAYMENT
   FULFILLMENT_STATUS
-  TOTAL
 }
 
 input OrderSortingInput {
@@ -3955,7 +3940,6 @@ enum PermissionEnum {
   MANAGE_ORDERS
   MANAGE_PAGES
   MANAGE_PRODUCTS
-  MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
@@ -4147,15 +4131,6 @@ type ProductBulkDelete {
   productErrors: [ProductError!]!
 }
 
-type ProductBulkPublish {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-  count: Int!
-  productErrors: [ProductError!]!
-}
-
 type ProductCountableConnection {
   pageInfo: PageInfo!
   edges: [ProductCountableEdge!]!
@@ -4237,25 +4212,6 @@ enum ProductFieldEnum {
   CHARGE_TAXES
   PRODUCT_IMAGES
   VARIANT_SKU
-  VARIANT_WEIGHT
-  VARIANT_IMAGES
-}
-
-enum ProductFieldEnum {
-  NAME
-  DESCRIPTION
-  PRODUCT_TYPE
-  CATEGORY
-  VISIBLE
-  AVAILABLE_FOR_PURCHASE
-  SEARCHABLE
-  PRODUCT_WEIGHT
-  COLLECTIONS
-  CHARGE_TAXES
-  PRODUCT_IMAGES
-  VARIANT_SKU
-  VARIANT_PRICE
-  COST_PRICE
   VARIANT_WEIGHT
   VARIANT_IMAGES
 }

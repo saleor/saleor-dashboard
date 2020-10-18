@@ -620,7 +620,6 @@ export enum OrderSortField {
   FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
   NUMBER = "NUMBER",
   PAYMENT = "PAYMENT",
-  TOTAL = "TOTAL",
 }
 
 export enum OrderStatus {
@@ -735,19 +734,15 @@ export enum ProductErrorCode {
 }
 
 export enum ProductFieldEnum {
-  AVAILABLE_FOR_PURCHASE = "AVAILABLE_FOR_PURCHASE",
   CATEGORY = "CATEGORY",
   CHARGE_TAXES = "CHARGE_TAXES",
   COLLECTIONS = "COLLECTIONS",
-  COST_PRICE = "COST_PRICE",
   DESCRIPTION = "DESCRIPTION",
   NAME = "NAME",
   PRODUCT_IMAGES = "PRODUCT_IMAGES",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
-  SEARCHABLE = "SEARCHABLE",
   VARIANT_IMAGES = "VARIANT_IMAGES",
-  VARIANT_PRICE = "VARIANT_PRICE",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
@@ -1196,6 +1191,7 @@ export interface DraftOrderInput {
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
+  channels?: string[] | null;
   fields?: ProductFieldEnum[] | null;
 }
 
@@ -1388,27 +1384,6 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
-export interface ProductCreateInput {
-  attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
-  category?: string | null;
-  chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
-  isPublished?: boolean | null;
-  name?: string | null;
-  slug?: string | null;
-  taxCode?: string | null;
-  seo?: SeoInput | null;
-  weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
-  productType: string;
-  stocks?: StockInput[] | null;
-}
 export interface ProductChannelListingAddInput {
   channelId: string;
   isPublished?: boolean | null;
@@ -1421,6 +1396,21 @@ export interface ProductChannelListingAddInput {
 export interface ProductChannelListingUpdateInput {
   addChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
+}
+
+export interface ProductCreateInput {
+  attributes?: (AttributeValueInput | null)[] | null;
+  category?: string | null;
+  chargeTaxes?: boolean | null;
+  collections?: (string | null)[] | null;
+  description?: string | null;
+  descriptionJson?: any | null;
+  name?: string | null;
+  slug?: string | null;
+  taxCode?: string | null;
+  seo?: SeoInput | null;
+  weight?: any | null;
+  productType: string;
 }
 
 export interface ProductFilterInput {
@@ -1442,22 +1432,16 @@ export interface ProductFilterInput {
 
 export interface ProductInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
   description?: string | null;
   descriptionJson?: any | null;
-  isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
 }
 
 export interface ProductOrder {
@@ -1569,11 +1553,6 @@ export interface SaleSortingInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
-}
-
-export interface ServiceAccountTokenInput {
-  name?: string | null;
-  serviceAccount: string;
 }
 
 export interface ShippingMethodChannelListingAddInput {

@@ -36,7 +36,6 @@ const getSimpleProductVariables = (
 ) => ({
   input: {
     attributes: [],
-    costPrice: formData.basePrice,
     product: productId,
     sku: formData.sku,
     stocks: formData.stocks?.map(stock => ({
@@ -108,23 +107,16 @@ export function createHandler(
       const variantErrors = result[1].data.productVariantCreate.errors;
       const variantId = result[1].data.productVariantCreate.productVariant.id;
       if (variantErrors.length === 0 && variantId) {
-        const variantPrices = formData.channelListing
-          .map(
-            listing =>
-              listing.price !== null && {
-                channelId: listing.id,
-                price: listing.price
-              }
-          )
-          .filter(Boolean);
-        if (variantPrices.length) {
-          updateVariantChannels({
-            variables: {
-              id: variantId,
-              input: variantPrices
-            }
-          });
-        }
+        updateVariantChannels({
+          variables: {
+            id: variantId,
+            input: formData.channelListing.map(listing => ({
+              channelId: listing.id,
+              costPrice: listing.costPrice || null,
+              price: listing.price
+            }))
+          }
+        });
       }
     } else {
       updateChannels(getChannelsVariables(productId, formData.channelListing));

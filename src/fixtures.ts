@@ -346,7 +346,7 @@ export const permissions: ShopInfo_shop_permissions[] = [
     name: "Manage products."
   },
   {
-    code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    code: PermissionEnum.MANAGE_PRODUCTS,
     name: "Manage product types and attributes."
   },
   {
@@ -445,7 +445,7 @@ export const adminUserPermissions: User_userPermissions[] = [
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    code: PermissionEnum.MANAGE_PRODUCTS,
     name: "Manage product types and attributes."
   },
   {

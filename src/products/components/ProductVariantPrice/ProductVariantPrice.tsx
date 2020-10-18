@@ -8,13 +8,13 @@ import {
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
+import { ChannelPriceArgs, ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { renderCollection } from "@saleor/misc";
-import { ProductVariantChannelData } from "@saleor/products/components/ProductVariantPage";
-import { ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import { getFormErrors } from "@saleor/utils/errors";
 import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
@@ -33,6 +33,7 @@ const useStyles = makeStyles(
     },
     colPrice: {
       textAlign: "right",
+      verticalAlign: "top",
       width: 200
     },
     colType: {
@@ -58,10 +59,10 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantPriceProps {
-  ProductVariantChannelListings: ProductVariantChannelData[];
-  errors: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_productChannelListingErrors[];
+  ProductVariantChannelListings: ChannelPriceData[];
+  errors: ProductChannelListingErrorFragment[];
   loading?: boolean;
-  onChange: (id: string, price: number) => void;
+  onChange: (id: string, data: ChannelPriceArgs) => void;
 }
 
 const numberOfColumns = 2;
@@ -75,7 +76,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const formErrors = getFormErrors(["price"], errors);
+  const formErrors = getFormErrors(["price", "costPrice"], errors);
 
   return (
     <Card>
@@ -108,21 +109,25 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                   description="tabel column header"
                 />
               </TableCell>
-              {/* <TableCell className={classes.colType}>
+              <TableCell className={classes.colType}>
                 <FormattedMessage
                   defaultMessage="Cost Price"
                   description="tabel column header"
                 />
-              </TableCell> */}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {renderCollection(
               ProductVariantChannelListings,
               (listing, index) => {
-                const error = formErrors.price?.channels?.find(
+                const priceError = formErrors.price?.channels?.find(
                   id => id === listing.id
                 );
+                const costPriceError = formErrors.costPrice?.channels?.find(
+                  id => id === listing.id
+                );
+
                 return (
                   <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
@@ -130,18 +135,23 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!error?.length}
+                          error={!!priceError?.length}
                           label={intl.formatMessage({
                             defaultMessage: "Price"
                           })}
                           name={`${listing.id}-channel-price`}
                           value={listing.price || ""}
                           currencySymbol={listing.currency}
-                          onChange={e => onChange(listing.id, e.target.value)}
+                          onChange={e =>
+                            onChange(listing.id, {
+                              costPrice: listing.costPrice,
+                              price: e.target.value
+                            })
+                          }
                           disabled={loading}
                           required
                           hint={
-                            error
+                            priceError
                               ? getProductErrorMessage(formErrors.price, intl)
                               : ""
                           }
@@ -150,24 +160,38 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                         <Skeleton />
                       )}
                     </TableCell>
-                    {/* FIXME: Waiting for costPrice */}
-                    {/* <TableCell className={classes.colPrice}>
-                    {listing?.channel ? (
-                      <PriceField
-                        className={classes.input}
-                        error={false}
-                        name={`${listing.id}-channel-price`}
-                        value={listing.price}
-                        currencySymbol={listing.currency}
-                        onChange={e =>
-                          onChange(listing.id, e.target.value)
-                        }
-                        disabled={loading}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell> */}
+                    <TableCell className={classes.colPrice}>
+                      {listing ? (
+                        <PriceField
+                          className={classes.input}
+                          error={!!costPriceError?.length}
+                          label={intl.formatMessage({
+                            defaultMessage: "Cost Price",
+                            description: "tabel column header"
+                          })}
+                          name={`${listing.id}-channel-costPrice`}
+                          value={listing.costPrice || ""}
+                          currencySymbol={listing.currency}
+                          onChange={e =>
+                            onChange(listing.id, {
+                              costPrice: e.target.value,
+                              price: listing.price
+                            })
+                          }
+                          disabled={loading}
+                          hint={
+                            costPriceError
+                              ? getProductErrorMessage(
+                                  formErrors.costPrice,
+                                  intl
+                                )
+                              : ""
+                          }
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
                   </TableRow>
                 );
               },

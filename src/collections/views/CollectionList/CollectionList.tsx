@@ -1,4 +1,3 @@
-import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -28,10 +27,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
-import {
-  useCollectionBulkDelete,
-  useCollectionBulkPublish
-} from "../../mutations";
+import { useCollectionBulkDelete } from "../../mutations";
 import { useCollectionListQuery } from "../../queries";
 import {
   collectionAddUrl,
@@ -99,24 +95,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       }
     }
   });
-
-  const [
-    collectionBulkPublish,
-    collectionBulkPublishOpts
-  ] = useCollectionBulkPublish({
-    onCompleted: data => {
-      if (data.collectionBulkPublish.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        refetch();
-        reset();
-        closeModal();
-      }
-    }
-  });
-
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -215,44 +193,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         sort={getSortParams(params)}
         onRowClick={id => () => navigate(collectionUrl(id))}
         toolbar={
-          <>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("unpublish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Unpublish"
-                description="unpublish collections"
-              />
-            </Button>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("publish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Publish"
-                description="publish collections"
-              />
-            </Button>
-            <IconButton
-              color="primary"
-              onClick={() =>
-                openModal("remove", {
-                  ids: listElements
-                })
-              }
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("remove", {
+                ids: listElements
+              })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
         }
         isChecked={isSelected}
         selected={listElements.length}
@@ -263,64 +213,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
           !!channelChoices?.length ? () => openModal("settings") : undefined
         }
       />
-      <ActionDialog
-        open={params.action === "publish" && maybe(() => params.ids.length > 0)}
-        onClose={closeModal}
-        confirmButtonState={collectionBulkPublishOpts.status}
-        onConfirm={() =>
-          collectionBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: true
-            }
-          })
-        }
-        variant="default"
-        title={intl.formatMessage({
-          defaultMessage: "Publish collections",
-          description: "dialog title"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to publish this collection?} other{Are you sure you want to publish {displayQuantity} collections?}}"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={
-          params.action === "unpublish" && maybe(() => params.ids.length > 0)
-        }
-        onClose={closeModal}
-        confirmButtonState={collectionBulkPublishOpts.status}
-        onConfirm={() =>
-          collectionBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: false
-            }
-          })
-        }
-        variant="default"
-        title={intl.formatMessage({
-          defaultMessage: "Unpublish collections",
-          description: "dialog title"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to unpublish this collection?} other{Are you sure you want to unpublish {displayQuantity} collections?}}"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
       <ActionDialog
         open={params.action === "remove" && maybe(() => params.ids.length > 0)}
         onClose={closeModal}

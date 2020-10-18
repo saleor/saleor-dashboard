@@ -62,6 +62,8 @@ storiesOf("Views / Products / Product variant details", module)
       defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       errors={[]}
+      channels={channels}
+      channelErrors={[]}
       variant={variant}
       onAdd={() => undefined}
       onBack={() => undefined}

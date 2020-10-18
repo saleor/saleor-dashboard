@@ -27,11 +27,6 @@ export const fragmentOrderLine = gql`
     isShippingRequired
     variant {
       id
-      product {
-        id
-        isAvailableForPurchase
-        isPublished
-      }
       quantityAvailable
     }
     productName

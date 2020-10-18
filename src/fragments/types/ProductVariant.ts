@@ -55,12 +55,6 @@ export interface ProductVariant_images {
   url: string;
 }
 
-export interface ProductVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
@@ -136,10 +130,17 @@ export interface ProductVariant_channelListing_price {
   currency: string;
 }
 
+export interface ProductVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface ProductVariant_channelListing {
   __typename: "ProductVariantChannelListing";
   channel: ProductVariant_channelListing_channel;
   price: ProductVariant_channelListing_price | null;
+  costPrice: ProductVariant_channelListing_costPrice | null;
 }
 
 export interface ProductVariant_stocks_warehouse {

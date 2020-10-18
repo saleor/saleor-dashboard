@@ -130,11 +130,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             label={intl.formatMessage({
                               defaultMessage: "Discount Value"
                             })}
-                            value={
-                              listing.discountValue !== null
-                                ? listing.discountValue
-                                : ""
-                            }
+                            value={listing.discountValue || ""}
                             type="number"
                             fullWidth
                             inputProps={{

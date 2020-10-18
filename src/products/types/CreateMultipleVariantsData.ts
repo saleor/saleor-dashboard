@@ -108,5 +108,4 @@ export interface CreateMultipleVariantsData {
 
 export interface CreateMultipleVariantsDataVariables {
   id: string;
-  channel?: string | null;
 }

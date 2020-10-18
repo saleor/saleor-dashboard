@@ -62,6 +62,9 @@ export const channelListingProductVariantFragment = gql`
     price {
       ...Money
     }
+    costPrice {
+      ...Money
+    }
   }
 `;
 
@@ -85,6 +88,7 @@ export const productFragment = gql`
 `;
 
 export const productVariantAttributesFragment = gql`
+  ${fragmentMoney}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -133,7 +137,6 @@ export const productVariantAttributesFragment = gql`
 
 export const productFragmentDetails = gql`
   ${fragmentProductImage}
-  ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${weightFragment}
@@ -194,8 +197,6 @@ export const productFragmentDetails = gql`
     taxType {
       ...TaxTypeFragment
     }
-    availableForPurchase
-    visibleInListings
   }
 `;
 
