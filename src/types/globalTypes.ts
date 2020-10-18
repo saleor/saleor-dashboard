@@ -130,6 +130,7 @@ export enum CollectionSortField {
   AVAILABILITY = "AVAILABILITY",
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
 }
 
 export enum ConfigurationTypeFieldEnum {
@@ -618,7 +619,6 @@ export enum OrderSortField {
   FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
   NUMBER = "NUMBER",
   PAYMENT = "PAYMENT",
-  TOTAL = "TOTAL",
 }
 
 export enum OrderStatus {
@@ -676,7 +676,6 @@ export enum PermissionEnum {
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
-  MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
   MANAGE_SERVICE_ACCOUNTS = "MANAGE_SERVICE_ACCOUNTS",
   MANAGE_SETTINGS = "MANAGE_SETTINGS",
   MANAGE_SHIPPING = "MANAGE_SHIPPING",
@@ -734,19 +733,15 @@ export enum ProductErrorCode {
 }
 
 export enum ProductFieldEnum {
-  AVAILABLE_FOR_PURCHASE = "AVAILABLE_FOR_PURCHASE",
   CATEGORY = "CATEGORY",
   CHARGE_TAXES = "CHARGE_TAXES",
   COLLECTIONS = "COLLECTIONS",
-  COST_PRICE = "COST_PRICE",
   DESCRIPTION = "DESCRIPTION",
   NAME = "NAME",
   PRODUCT_IMAGES = "PRODUCT_IMAGES",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
-  SEARCHABLE = "SEARCHABLE",
   VARIANT_IMAGES = "VARIANT_IMAGES",
-  VARIANT_PRICE = "VARIANT_PRICE",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
@@ -757,6 +752,7 @@ export enum ProductOrderField {
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
   TYPE = "TYPE",
 }
@@ -1201,6 +1197,7 @@ export interface DraftOrderInput {
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
+  channels?: string[] | null;
   fields?: ProductFieldEnum[] | null;
 }
 
@@ -1392,27 +1389,6 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
-export interface ProductCreateInput {
-  attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
-  category?: string | null;
-  chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
-  isPublished?: boolean | null;
-  name?: string | null;
-  slug?: string | null;
-  taxCode?: string | null;
-  seo?: SeoInput | null;
-  weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
-  productType: string;
-  stocks?: StockInput[] | null;
-}
 export interface ProductChannelListingAddInput {
   channelId: string;
   isPublished?: boolean | null;
@@ -1425,6 +1401,21 @@ export interface ProductChannelListingAddInput {
 export interface ProductChannelListingUpdateInput {
   addChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
+}
+
+export interface ProductCreateInput {
+  attributes?: (AttributeValueInput | null)[] | null;
+  category?: string | null;
+  chargeTaxes?: boolean | null;
+  collections?: (string | null)[] | null;
+  description?: string | null;
+  descriptionJson?: any | null;
+  name?: string | null;
+  slug?: string | null;
+  taxCode?: string | null;
+  seo?: SeoInput | null;
+  weight?: any | null;
+  productType: string;
 }
 
 export interface ProductFilterInput {
@@ -1440,27 +1431,22 @@ export interface ProductFilterInput {
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
   channel?: string | null;
 }
 
 export interface ProductInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
   description?: string | null;
   descriptionJson?: any | null;
-  isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
 }
 
 export interface ProductOrder {
@@ -1572,11 +1558,6 @@ export interface SaleSortingInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
-}
-
-export interface ServiceAccountTokenInput {
-  name?: string | null;
-  serviceAccount: string;
 }
 
 export interface ShippingMethodChannelListingAddInput {

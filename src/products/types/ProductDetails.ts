@@ -67,22 +67,6 @@ export interface ProductDetails_product_productType {
   taxType: ProductDetails_product_productType_taxType | null;
 }
 
-export interface ProductDetails_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductDetails_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductDetails_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface ProductDetails_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -105,6 +89,23 @@ export interface ProductDetails_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductDetails_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductDetails_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductDetails_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductDetails_product_category {
@@ -188,9 +189,9 @@ export interface ProductDetails_product {
   id: string;
   attributes: ProductDetails_product_attributes[];
   productType: ProductDetails_product_productType;
+  channelListing: ProductDetails_product_channelListing[] | null;
   metadata: (ProductDetails_product_metadata | null)[];
   privateMetadata: (ProductDetails_product_privateMetadata | null)[];
-  channelListing: ProductDetails_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -204,8 +205,6 @@ export interface ProductDetails_product {
   variants: (ProductDetails_product_variants | null)[] | null;
   weight: ProductDetails_product_weight | null;
   taxType: ProductDetails_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductDetails_taxTypes {

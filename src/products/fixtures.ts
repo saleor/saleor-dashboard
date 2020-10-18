@@ -1909,6 +1909,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
+  privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
     channelListing: [

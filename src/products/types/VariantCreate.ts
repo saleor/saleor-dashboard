@@ -62,12 +62,6 @@ export interface VariantCreate_productVariantCreate_productVariant_images {
   url: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantCreate_productVariantCreate_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;

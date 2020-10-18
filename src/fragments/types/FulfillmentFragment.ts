@@ -8,17 +8,9 @@ import { FulfillmentStatus } from "./../../types/globalTypes";
 // GraphQL fragment: FulfillmentFragment
 // ====================================================
 
-export interface FulfillmentFragment_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface FulfillmentFragment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: FulfillmentFragment_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
