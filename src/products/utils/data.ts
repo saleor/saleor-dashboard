@@ -179,7 +179,6 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
-  isAvailable: boolean;
   name: string;
   slug: string;
   seoDescription: string;
@@ -206,7 +205,6 @@ export function getProductUpdatePageFormData(
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
-    isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
     privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),

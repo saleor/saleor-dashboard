@@ -73,22 +73,6 @@ export interface ProductImageUpdate_productImageUpdate_product_productType {
   taxType: ProductImageUpdate_productImageUpdate_product_productType_taxType | null;
 }
 
-export interface ProductImageUpdate_productImageUpdate_product_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductImageUpdate_productImageUpdate_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
 export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
   __typename: "Channel";
   id: string;
@@ -111,6 +95,23 @@ export interface ProductImageUpdate_productImageUpdate_product_channelListing {
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_category {
@@ -194,9 +195,9 @@ export interface ProductImageUpdate_productImageUpdate_product {
   id: string;
   attributes: ProductImageUpdate_productImageUpdate_product_attributes[];
   productType: ProductImageUpdate_productImageUpdate_product_productType;
+  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   metadata: (ProductImageUpdate_productImageUpdate_product_metadata | null)[];
   privateMetadata: (ProductImageUpdate_productImageUpdate_product_privateMetadata | null)[];
-  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   name: string;
   slug: string;
   descriptionJson: any;
@@ -210,8 +211,6 @@ export interface ProductImageUpdate_productImageUpdate_product {
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
   weight: ProductImageUpdate_productImageUpdate_product_weight | null;
   taxType: ProductImageUpdate_productImageUpdate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductImageUpdate_productImageUpdate {

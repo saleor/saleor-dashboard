@@ -122,7 +122,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     pageInfo,
     products,
     selected,
-    loading,
     sort,
     toggle,
     toggleAll,
