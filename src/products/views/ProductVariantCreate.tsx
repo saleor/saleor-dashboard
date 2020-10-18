@@ -1,9 +1,12 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -23,7 +26,6 @@ import {
   useVariantCreateMutation
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
-import { VariantCreate } from "../types/VariantCreate";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
@@ -44,8 +46,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
-  const handleCreateSuccess = (data: VariantCreate) => {
-    if (data.productVariantCreate.errors.length === 0) {
+  const handleCreateSuccess = (data: ProductVariantChannelListingUpdate) => {
+    if (data.productVariantChannelListingUpdate.errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -53,7 +55,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       navigate(
         productVariantEditUrl(
           productId,
-          data.productVariantCreate.productVariant.id
+          data.productVariantChannelListingUpdate.variant.id
         )
       );
     }
@@ -64,14 +66,42 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     variables: { id: productId }
   });
 
-  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductVariantChannelListingUpdate({
     onCompleted: handleCreateSuccess
   });
 
+  const product = data?.product;
+
+  const channels: ChannelPriceData[] = product?.channelListing.map(listing => ({
+    costPrice: null,
+    currency: listing.channel.currencyCode,
+    id: listing.channel.id,
+    name: listing.channel.name,
+    price: null
+  }));
+
+  const handleSubmitChannels = (
+    data: ProductVariantCreatePageSubmitData,
+    variantId: string
+  ) =>
+    updateChannels({
+      variables: {
+        id: variantId,
+        input: data.channelListing.map(listing => ({
+          channelId: listing.id,
+          costPrice: listing.costPrice,
+          price: listing.price
+        }))
+      }
+    });
+
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
+
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
-
-  const product = data?.product;
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
@@ -108,8 +138,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         }
       }
     });
+    const id = result.data?.productVariantCreate?.productVariant?.id;
+    if (id) {
+      handleSubmitChannels(formData, id);
+    }
 
-    return result.data.productVariantCreate?.productVariant?.id || null;
+    return id || null;
   };
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
@@ -133,7 +167,11 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
       />
       <ProductVariantCreatePage
-        currencySymbol={shop?.defaultCurrency}
+        channels={channels}
+        channelErrors={
+          updateChannelsOpts?.data?.productVariantChannelListingUpdate
+            ?.errors || []
+        }
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

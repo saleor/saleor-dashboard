@@ -1,5 +1,6 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { weight } from "@saleor/misc";
@@ -134,7 +135,10 @@ export function createUpdateHandler(
     };
 
     let errors: Array<
-      ProductErrorFragment | StockErrorFragment | BulkStockErrorFragment
+      | ProductErrorFragment
+      | StockErrorFragment
+      | BulkStockErrorFragment
+      | ProductChannelListingErrorFragment
     >;
 
     if (product.productType.hasVariants) {
