@@ -77,23 +77,12 @@ interface ProductAvailabilityArgs {
   productId: string;
 }
 
-export function getProductAvailabilityVariables({
+export const getProductAvailabilityVariables = ({
   isAvailableForPurchase,
   availableForPurchase,
   productId
-}: ProductAvailabilityArgs) {
-  const isAvailable =
-    availableForPurchase && !isAvailableForPurchase
-      ? true
-      : isAvailableForPurchase;
-
-  return {
-    isAvailable,
-    productId,
-    startDate: isAvailableForPurchase
-      ? null
-      : availableForPurchase !== ""
-      ? availableForPurchase
-      : null
-  };
-}
+}: ProductAvailabilityArgs) => ({
+  isAvailable: isAvailableForPurchase,
+  productId,
+  startDate: availableForPurchase
+});

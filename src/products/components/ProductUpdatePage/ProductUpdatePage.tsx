@@ -189,12 +189,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const getAvailabilityData = ({
     availableForPurchase,
+    isAvailableForPurchase,
     isPublished,
     publicationDate
   }: ProductUpdatePageFormData) => ({
-    isAvailableForPurchase: !!availableForPurchase,
-    isPublished: isPublished || !!publicationDate,
-    startDate: availableForPurchase || null
+    isAvailableForPurchase: isAvailableForPurchase || !!availableForPurchase,
+    isPublished: isPublished || !!publicationDate
   });
 
   const getStocksData = () => {
