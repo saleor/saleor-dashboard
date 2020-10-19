@@ -399,6 +399,7 @@ type Attribute implements Node & ObjectWithMetadata {
   inputType: AttributeInputTypeEnum
   name: String
   slug: String
+  type: AttributeTypeEnum
   values: [AttributeValue]
   valueRequired: Boolean!
   visibleInStorefront: Boolean!
@@ -417,7 +418,7 @@ type AttributeAssign {
 
 input AttributeAssignInput {
   id: ID!
-  type: AttributeTypeEnum!
+  type: ProductAttributeType!
 }
 
 type AttributeBulkDelete {
@@ -459,6 +460,7 @@ input AttributeCreateInput {
   inputType: AttributeInputTypeEnum
   name: String!
   slug: String
+  type: AttributeTypeEnum
   values: [AttributeValueCreateInput]
   valueRequired: Boolean
   isVariantOnly: Boolean
@@ -484,6 +486,7 @@ input AttributeFilterInput {
   availableInGrid: Boolean
   search: String
   ids: [ID]
+  type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
 }
@@ -542,8 +545,8 @@ type AttributeTranslation implements Node {
 }
 
 enum AttributeTypeEnum {
-  PRODUCT
-  VARIANT
+  PRODUCT_TYPE
+  PAGE_TYPE
 }
 
 type AttributeUnassign {
@@ -1184,6 +1187,7 @@ enum CollectionSortField {
   NAME
   AVAILABILITY
   PRODUCT_COUNT
+  PUBLICATION_DATE
 }
 
 input CollectionSortingInput {
@@ -2652,7 +2656,7 @@ type Mutation {
   productTypeDelete(id: ID!): ProductTypeDelete
   productTypeBulkDelete(ids: [ID]!): ProductTypeBulkDelete
   productTypeUpdate(id: ID!, input: ProductTypeInput!): ProductTypeUpdate
-  productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: AttributeTypeEnum!): ProductTypeReorderAttributes
+  productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: ProductAttributeType!): ProductTypeReorderAttributes
   productTypeUpdateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productTypeClearMetadata(id: ID!, input: MetaPath!): ProductTypeClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productTypeUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
@@ -3361,6 +3365,18 @@ input PageTranslationInput {
   contentJson: JSONString
 }
 
+type PageType implements Node & ObjectWithMetadata {
+  id: ID!
+  name: String!
+  slug: String!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
+  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
+  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+  attributes: [Attribute]
+  availableAttributes(filter: AttributeFilterInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
+}
+
 type PageUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
@@ -3490,6 +3506,7 @@ enum PermissionEnum {
   MANAGE_MENUS
   MANAGE_ORDERS
   MANAGE_PAGES
+  MANAGE_PAGE_TYPES_AND_ATTRIBUTES
   MANAGE_PRODUCTS
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
   MANAGE_SHIPPING
@@ -3668,6 +3685,11 @@ type Product implements Node & ObjectWithMetadata {
   isAvailableForPurchase: Boolean
 }
 
+enum ProductAttributeType {
+  PRODUCT
+  VARIANT
+}
+
 type ProductBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
@@ -3792,6 +3814,7 @@ input ProductFilterInput {
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
+  ids: [ID]
 }
 
 type ProductImage implements Node {
@@ -3878,6 +3901,7 @@ enum ProductOrderField {
   DATE
   TYPE
   PUBLISHED
+  PUBLICATION_DATE
 }
 
 type ProductPricingInfo {
@@ -4282,6 +4306,7 @@ type Query {
   payments(before: String, after: String, first: Int, last: Int): PaymentCountableConnection
   page(id: ID, slug: String): Page
   pages(sortBy: PageSortingInput, filter: PageFilterInput, before: String, after: String, first: Int, last: Int): PageCountableConnection
+  pageType(id: ID): PageType
   homepageEvents(before: String, after: String, first: Int, last: Int): OrderEventCountableConnection
   order(id: ID!): Order
   orders(sortBy: OrderSortingInput, filter: OrderFilterInput, created: ReportingPeriod, status: OrderStatusFilter, before: String, after: String, first: Int, last: Int): OrderCountableConnection
@@ -4755,7 +4780,7 @@ type Shop {
   defaultMailSenderAddress: String
   description: String
   domain: Domain!
-  homepageCollection: Collection
+  homepageCollection: Collection @deprecated(reason: "Use the `collection` query with the `slug` parameter. This field will be removed in Saleor 3.0")
   languages: [LanguageDisplay]!
   name: String!
   navigation: Navigation
@@ -5694,7 +5719,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | ServiceAccount | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage
+union _Entity = Address | User | Group | ServiceAccount | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage | PageType
 
 type _Service {
   sdl: String
