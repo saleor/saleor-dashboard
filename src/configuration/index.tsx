@@ -5,6 +5,7 @@ import useUser from "@saleor/hooks/useUser";
 import Attributes from "@saleor/icons/Attributes";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
+import PageTypes from "@saleor/icons/PageTypes";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Plugins from "@saleor/icons/Plugins";
 import ProductTypes from "@saleor/icons/ProductTypes";
@@ -135,18 +136,28 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "Page Types"
+        defaultMessage: "Content Management"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Define types of pages on your store",
+            defaultMessage: "Define types of content pages used in your store",
             id: "configurationMenuPageTypes"
           }),
-          icon: null,
-          permission: PermissionEnum.MANAGE_PRODUCTS,
+          icon: <PageTypes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PAGES,
           title: intl.formatMessage(sectionNames.pageTypes),
           url: pageTypeListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Manage and add additional pages",
+            id: "configurationMenuPages"
+          }),
+          icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PAGES,
+          title: intl.formatMessage(sectionNames.pages),
+          url: pageListUrl()
         }
       ]
     },
@@ -174,16 +185,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_SETTINGS,
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl()
-        },
-        {
-          description: intl.formatMessage({
-            defaultMessage: "Manage and add additional pages",
-            id: "configurationMenuPages"
-          }),
-          icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_PAGES,
-          title: intl.formatMessage(sectionNames.pages),
-          url: pageListUrl()
         },
         {
           description: intl.formatMessage({
