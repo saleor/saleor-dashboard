@@ -2,6 +2,7 @@ import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetai
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
+  AttributeTypeEnum,
   AttributeValueType
 } from "@saleor/types/globalTypes";
 
@@ -25,6 +26,7 @@ export const attribute: AttributeDetailsFragment = {
   privateMetadata: [],
   slug: "author",
   storefrontSearchPosition: 2,
+  type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   values: [
     {
@@ -55,6 +57,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -86,6 +89,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
       name: "Box Size",
       slug: "box-size",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -135,6 +139,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToz",
       name: "Brand",
       slug: "brand",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -157,6 +162,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
       name: "Candy Box Size",
       slug: "candy-box-size",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -197,6 +203,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
       name: "Coffee Genre",
       slug: "coffee-genre",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -228,6 +235,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToy",
       name: "Collar",
       slug: "collar",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -268,6 +276,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       name: "Color",
       slug: "color",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -299,6 +308,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       name: "Cover",
       slug: "cover",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -366,6 +376,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       name: "Flavor",
       slug: "flavor",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -397,6 +408,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -428,6 +440,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -459,6 +472,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       name: "Size",
       slug: "size",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",

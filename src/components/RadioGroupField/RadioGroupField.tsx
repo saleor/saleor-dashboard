@@ -50,7 +50,8 @@ interface RadioGroupFieldProps {
   disabled?: boolean;
   error?: boolean;
   hint?: string;
-  label?: string;
+  label?: React.ReactNode;
+  description?: string;
   name?: string;
   value: string | number;
   onChange: (event: React.ChangeEvent<any>) => void;
