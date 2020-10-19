@@ -170,13 +170,15 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               />
               {isOpen && (!!inputValue || !!choices.length) && (
                 <MultiAutocompleteSelectFieldContent
-                  add={{
-                    ...add,
-                    onClick: () => {
-                      add.onClick();
-                      closeMenu();
+                  add={
+                    add && {
+                      ...add,
+                      onClick: () => {
+                        add.onClick();
+                        closeMenu();
+                      }
                     }
-                  }}
+                  }
                   choices={choices.filter(
                     choice => !value.includes(choice.value)
                   )}

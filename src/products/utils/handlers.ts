@@ -1,4 +1,3 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { toggle } from "@saleor/utils/lists";
@@ -18,38 +17,22 @@ export function createAttributeChangeHandler(
 
 export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributes: FormsetData<ProductAttributeInputData>,
+  attributes: FormsetData<ProductAttributeInputData, string[]>,
   triggerChange: () => void
 ): FormsetChange {
   return (attributeId: string, value: string) => {
-    const attributeValue = attributes
-      .find(attribute => attribute.id === attributeId)
-      .data.values.find(attributeValue => attributeValue.slug === value);
-
-    const valueChoice = {
-      label: attributeValue ? attributeValue.name : value,
-      value
-    };
-
-    const itemIndex = attributes.findIndex(item => item.id === attributeId);
-    const attributeValues: MultiAutocompleteChoiceType[] = attributes[
-      itemIndex
-    ].data.values.map(value => ({
-      label: value.name,
-      value: value.id
-    }));
+    const attribute = attributes.find(
+      attribute => attribute.id === attributeId
+    );
 
     const newAttributeValues = toggle(
-      valueChoice,
-      attributeValues,
-      (a, b) => a.value === b.value
+      value,
+      attribute.value,
+      (a, b) => a === b
     );
 
     triggerChange();
-    changeAttributeData(
-      attributeId,
-      newAttributeValues.map(({ value }) => value)
-    );
+    changeAttributeData(attributeId, newAttributeValues);
   };
 }
 
