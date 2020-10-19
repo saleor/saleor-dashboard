@@ -53,6 +53,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix style of product type attributes empty table - #744 by @orzechdev
 - Fix order draft back button redirect - #753 by @orzechdev
 - Add manage product types and attributes permission - #768 by @orzechdev
+- Fix isPublished and isAvailable behaviour for products, collections and pages - #780 by @mmarkusik
 
 ## 2.10.1
 
