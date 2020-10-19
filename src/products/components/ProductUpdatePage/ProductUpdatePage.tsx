@@ -187,9 +187,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const getAvailabilityData = (data: ProductUpdatePageFormData) => ({
-    isAvailableForPurchase: !!data.availableForPurchase,
-    isPublished: !!data.publicationDate
+  const getAvailabilityData = ({
+    availableForPurchase,
+    isPublished,
+    publicationDate
+  }: ProductUpdatePageFormData) => ({
+    isAvailableForPurchase: !!availableForPurchase,
+    isPublished: isPublished || !!publicationDate,
+    startDate: availableForPurchase || null
   });
 
   const getStocksData = () => {
@@ -211,22 +216,21 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     };
   };
 
-  const getParsedData = (data: ProductUpdatePageFormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
+  const getMetadata = (data: ProductUpdatePageFormData) => ({
+    metadata: isMetadataModified ? data.metadata : undefined,
+    privateMetadata: isPrivateMetadataModified
       ? data.privateMetadata
-      : undefined;
+      : undefined
+  });
 
-    return {
-      ...data,
-      ...getAvailabilityData(data),
-      ...getStocksData(),
-      addStocks: [],
-      attributes,
-      metadata,
-      privateMetadata
-    };
-  };
+  const getParsedData = (data: ProductUpdatePageFormData) => ({
+    ...data,
+    ...getAvailabilityData(data),
+    ...getStocksData(),
+    ...getMetadata(data),
+    addStocks: [],
+    attributes
+  });
 
   const handleSubmit = (data: ProductUpdatePageFormData) =>
     onSubmit(getParsedData(data));

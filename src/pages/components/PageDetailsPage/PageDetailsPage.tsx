@@ -70,8 +70,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     slug: maybe(() => page.slug, ""),
     title: maybe(() => page.title, "")
   };
+
+  const handleSubmit = (data: FormData) => onSubmit(getParsedData(data));
+
+  const getParsedData = (data: FormData) => ({
+    ...data,
+    isPublished: data.isPublished || !!data.publicationDate
+  });
+
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
