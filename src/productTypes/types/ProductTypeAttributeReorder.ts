@@ -37,6 +37,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -47,6 +48,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

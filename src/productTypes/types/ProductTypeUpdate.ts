@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeInput, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeInput, AttributeTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeUpdate
@@ -37,6 +37,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_productAttribut
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -47,6 +48,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttribut
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

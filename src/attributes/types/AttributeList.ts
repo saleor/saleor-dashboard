@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeFilterInput, AttributeSortingInput } from "./../../types/globalTypes";
+import { AttributeFilterInput, AttributeSortingInput, AttributeTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AttributeList
@@ -20,6 +20,7 @@ export interface AttributeList_attributes_edges_node {
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
