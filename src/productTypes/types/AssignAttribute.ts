@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeAssignInput, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeAssignInput, AttributeTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AssignAttribute
@@ -37,6 +37,7 @@ export interface AssignAttribute_attributeAssign_productType_productAttributes {
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -47,6 +48,7 @@ export interface AssignAttribute_attributeAssign_productType_variantAttributes {
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

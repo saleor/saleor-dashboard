@@ -87,8 +87,8 @@ export enum AttributeSortField {
 }
 
 export enum AttributeTypeEnum {
-  PRODUCT = "PRODUCT",
-  VARIANT = "VARIANT",
+  PAGE_TYPE = "PAGE_TYPE",
+  PRODUCT_TYPE = "PRODUCT_TYPE",
 }
 
 export enum AttributeValueType {
@@ -684,6 +684,7 @@ export enum PermissionEnum {
   MANAGE_MENUS = "MANAGE_MENUS",
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
+  MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
@@ -721,6 +722,11 @@ export enum PluginErrorCode {
 export enum PluginSortField {
   IS_ACTIVE = "IS_ACTIVE",
   NAME = "NAME",
+}
+
+export enum ProductAttributeType {
+  PRODUCT = "PRODUCT",
+  VARIANT = "VARIANT",
 }
 
 export enum ProductErrorCode {
@@ -992,13 +998,14 @@ export interface AppTokenInput {
 
 export interface AttributeAssignInput {
   id: string;
-  type: AttributeTypeEnum;
+  type: ProductAttributeType;
 }
 
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
   name: string;
   slug?: string | null;
+  type?: AttributeTypeEnum | null;
   values?: (AttributeValueCreateInput | null)[] | null;
   valueRequired?: boolean | null;
   isVariantOnly?: boolean | null;
@@ -1018,6 +1025,7 @@ export interface AttributeFilterInput {
   availableInGrid?: boolean | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
   channel?: string | null;

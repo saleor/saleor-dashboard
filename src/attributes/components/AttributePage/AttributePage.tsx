@@ -16,7 +16,10 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum
+} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -24,6 +27,7 @@ import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributeDetails from "../AttributeDetails";
+import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import AttributeValues from "../AttributeValues";
 
@@ -43,6 +47,7 @@ export interface AttributePageProps {
 }
 
 export interface AttributePageFormData extends MetadataFormData {
+  type: AttributeTypeEnum;
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
@@ -87,6 +92,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           privateMetadata: [],
           slug: "",
           storefrontSearchPosition: "",
+          type: AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: true,
           visibleInStorefront: true
         }
@@ -114,6 +120,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
             () => attribute.storefrontSearchPosition.toString(),
             ""
           ),
+          type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: maybe(() => attribute.valueRequired, true),
           visibleInStorefront: maybe(() => attribute.visibleInStorefront, true)
         };
@@ -125,12 +132,14 @@ const AttributePage: React.FC<AttributePageProps> = ({
       !attribute || isPrivateMetadataModified
         ? data.privateMetadata
         : undefined;
+    const type = attribute === null ? data.type : undefined;
 
     return onSubmit({
       ...data,
       metadata,
       privateMetadata,
-      slug: data.slug || slugify(data.name).toLowerCase()
+      slug: data.slug || slugify(data.name).toLowerCase(),
+      type
     });
   };
 
@@ -176,6 +185,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
+                <AttributeOrganization
+                  data={data}
+                  disabled={attribute !== null}
+                  onChange={change}
+                />
+                <CardSpacer />
                 <AttributeProperties
                   data={data}
                   errors={errors}
