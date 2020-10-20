@@ -2,7 +2,7 @@ import {
   ProductTypeDetailsFragment,
   ProductTypeDetailsFragment_productAttributes
 } from "@saleor/fragments/types/ProductTypeDetailsFragment";
-import { AttributeTypeEnum, ReorderInput } from "@saleor/types/globalTypes";
+import { ProductAttributeType, ReorderInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { MutationFunction } from "react-apollo";
 
@@ -107,14 +107,14 @@ const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
                         productType: {
                           ...productType,
                           productAttributes:
-                            opts.variables.type === AttributeTypeEnum.PRODUCT
+                            opts.variables.type === ProductAttributeType.PRODUCT
                               ? moveAttribute(
                                   productType.productAttributes,
                                   opts.variables.move
                                 )
                               : productType.productAttributes,
                           variantAttributes:
-                            opts.variables.type === AttributeTypeEnum.VARIANT
+                            opts.variables.type === ProductAttributeType.VARIANT
                               ? moveAttribute(
                                   productType.variantAttributes,
                                   opts.variables.move

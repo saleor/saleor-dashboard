@@ -16,7 +16,7 @@ import {
 import TableHead from "@saleor/components/TableHead";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
-import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+import { ProductAttributeType } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -56,7 +56,7 @@ interface ProductTypeAttributesProps extends ListActions {
     | ProductTypeDetails_productType_variantAttributes[];
   disabled: boolean;
   type: string;
-  onAttributeAssign: (type: AttributeTypeEnum) => void;
+  onAttributeAssign: (type: ProductAttributeType) => void;
   onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
@@ -87,14 +87,14 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
   return (
     <Card
       data-test={
-        type === AttributeTypeEnum.PRODUCT
+        type === ProductAttributeType.PRODUCT
           ? "product-attributes"
           : "variant-attributes"
       }
     >
       <CardTitle
         title={
-          type === AttributeTypeEnum.PRODUCT
+          type === ProductAttributeType.PRODUCT
             ? intl.formatMessage({
                 defaultMessage: "Product Attributes",
                 description: "section header"
@@ -108,7 +108,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           <Button
             color="primary"
             variant="text"
-            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
               defaultMessage="Assign attribute"
