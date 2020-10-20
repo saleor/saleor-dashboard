@@ -10,5 +10,6 @@ export const PRODUCTS_SELECTORS = {
   firstCategoryItem: "#downshift-0-item-0",
   visibleRadioBtn: "[name='isPublished']",
   saveBtn: "[data-test='button-bar-confirm']",
-  confirmationMsg: "[data-test='notification']"
+  confirmationMsg: "[data-test='notification']",
+  channelAvailabilityItem: "[data-test='channel-availability-item']"
 };
