@@ -69,7 +69,7 @@ const DateVisibilitySelector = ({
         <div className={classes.icon} onClick={handleCloseIconClick}>
           <img
             src={closeIcon}
-            alt=""
+            alt="close icon"
             width={CLOSE_ICON_SIZE}
             height={CLOSE_ICON_SIZE}
           />
