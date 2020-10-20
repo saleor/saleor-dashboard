@@ -146,7 +146,7 @@ const productTypeAttributeReorder = gql`
   mutation ProductTypeAttributeReorder(
     $move: ReorderInput!
     $productTypeId: ID!
-    $type: AttributeTypeEnum!
+    $type: ProductAttributeType!
   ) {
     productTypeReorderAttributes(
       moves: [$move]
