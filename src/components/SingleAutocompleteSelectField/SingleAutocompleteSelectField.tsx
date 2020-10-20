@@ -88,6 +88,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     item: string,
     stateAndHelpers: ControllerStateAndHelpers
   ) => {
+    setInvalidValueError(false);
+
     onChange({
       target: {
         name,
@@ -127,23 +129,23 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 ? choices.filter(c => c.value === selectedItem).length === 0
                 : false;
 
-            const isInvalidInputValue = !!choices.find(
+            const isValueInValues = !!choices.find(
               ({ value: choiceId }) => choiceId === inputValue
             );
 
-            if (isInvalidInputValue) {
-              reset({ inputValue: displayValue });
-            }
-
-            const isValueInChoices = !!choices.find(
+            const isValueInLabels = !!choices.find(
               choice => choice.label.toLowerCase() === inputValue.toLowerCase()
             );
+
+            if (!isValueInLabels && isValueInValues) {
+              reset({ inputValue: displayValue });
+            }
 
             const displayCustomValue = !!(
               inputValue &&
               inputValue.length > 0 &&
               allowCustomValues &&
-              !isValueInChoices
+              !isValueInLabels
             );
 
             const handleSetInvalidValueError = () => {
@@ -151,7 +153,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 return;
               }
 
-              setInvalidValueError(!isValueInChoices);
+              setInvalidValueError(!isValueInLabels);
             };
 
             const handleBlur = () => {
