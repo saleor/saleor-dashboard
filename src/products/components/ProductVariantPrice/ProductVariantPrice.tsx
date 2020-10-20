@@ -15,7 +15,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { renderCollection } from "@saleor/misc";
-import { getFormErrors } from "@saleor/utils/errors";
+import { getFormChannelErrors } from "@saleor/utils/errors";
 import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -76,7 +76,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const formErrors = getFormErrors(["price", "costPrice"], errors);
+  const formErrors = getFormChannelErrors(["price", "costPrice"], errors);
 
   return (
     <Card>
@@ -121,11 +121,11 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {renderCollection(
               ProductVariantChannelListings,
               (listing, index) => {
-                const priceError = formErrors.price?.channels?.find(
-                  id => id === listing.id
+                const priceError = formErrors.price?.find(error =>
+                  error.channels?.find(id => id === listing.id)
                 );
-                const costPriceError = formErrors.costPrice?.channels?.find(
-                  id => id === listing.id
+                const costPriceError = formErrors.costPrice?.find(error =>
+                  error.channels?.find(id => id === listing.id)
                 );
 
                 return (
@@ -135,7 +135,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!priceError?.length}
+                          error={!!priceError}
                           label={intl.formatMessage({
                             defaultMessage: "Price"
                           })}
@@ -152,7 +152,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           required
                           hint={
                             priceError
-                              ? getProductErrorMessage(formErrors.price, intl)
+                              ? getProductErrorMessage(priceError, intl)
                               : ""
                           }
                         />
@@ -164,7 +164,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!costPriceError?.length}
+                          error={!!costPriceError}
                           label={intl.formatMessage({
                             defaultMessage: "Cost Price",
                             description: "tabel column header"
@@ -181,10 +181,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           disabled={loading}
                           hint={
                             costPriceError
-                              ? getProductErrorMessage(
-                                  formErrors.costPrice,
-                                  intl
-                                )
+                              ? getProductErrorMessage(costPriceError, intl)
                               : ""
                           }
                         />

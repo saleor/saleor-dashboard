@@ -92,7 +92,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                   <TableCell>
                     <PriceField
                       disabled={disabled}
-                      error={!!error?.length}
+                      error={!!error}
                       label={intl.formatMessage({
                         defaultMessage: "Price",
                         description: "column title"
@@ -107,11 +107,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                       }
                       currencySymbol={defaultCurrency}
                       required
-                      hint={
-                        error
-                          ? getShippingErrorMessage(formErrors.price, intl)
-                          : ""
-                      }
+                      hint={error ? getShippingErrorMessage(error, intl) : ""}
                     />
                   </TableCell>
                 </TableRow>
