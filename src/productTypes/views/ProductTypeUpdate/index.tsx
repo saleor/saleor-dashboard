@@ -11,7 +11,7 @@ import { maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
-import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+import { ProductAttributeType } from "@saleor/types/globalTypes";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -206,7 +206,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                   id,
                   operations: params.ids.map(id => ({
                     id,
-                    type: AttributeTypeEnum[params.type]
+                    type: ProductAttributeType[params.type]
                   }))
                 });
 
@@ -226,10 +226,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
               const handleAttributeReorder = (
                 event: ReorderEvent,
-                type: AttributeTypeEnum
+                type: ProductAttributeType
               ) => {
                 const attributes =
-                  type === AttributeTypeEnum.PRODUCT
+                  type === ProductAttributeType.PRODUCT
                     ? data.productType.productAttributes
                     : data.productType.variantAttributes;
 
@@ -334,7 +334,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     }}
                   />
                   {!dataLoading &&
-                    Object.keys(AttributeTypeEnum).map(key => (
+                    Object.keys(ProductAttributeType).map(key => (
                       <AssignAttributeDialog
                         attributes={maybe(() =>
                           result.data.productType.availableAttributes.edges.map(
@@ -363,7 +363,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                         )}
                         open={
                           params.action === "assign-attribute" &&
-                          params.type === AttributeTypeEnum[key]
+                          params.type === ProductAttributeType[key]
                         }
                         selected={maybe(() => params.ids, [])}
                         onToggle={attributeId => {

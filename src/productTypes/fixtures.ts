@@ -3,7 +3,11 @@ import {
   SearchProductTypes_search_edges_node_productAttributes
 } from "@saleor/searches/types/SearchProductTypes";
 
-import { AttributeInputTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
+  WeightUnitsEnum
+} from "../types/globalTypes";
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
@@ -567,6 +571,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true
     },
     {
@@ -576,6 +581,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true
     },
     {
@@ -585,6 +591,7 @@ export const productType: ProductTypeDetails_productType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true
     }
   ],
@@ -598,12 +605,14 @@ export const productType: ProductTypeDetails_productType = {
       ...attributes[1],
       filterableInDashboard: true,
       filterableInStorefront: false,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true
     },
     {
       ...attributes[6],
       filterableInDashboard: true,
       filterableInStorefront: false,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true
     }
   ],
