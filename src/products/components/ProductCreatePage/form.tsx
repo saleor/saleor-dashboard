@@ -155,6 +155,11 @@ function useProductCreateForm(
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
+
+  const handleChange: FormChange = (event, cb) => {
+    form.change(event, cb);
+    triggerChange();
+  };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     form.toggleValue,
     opts.setSelectedCollections,
@@ -162,7 +167,7 @@ function useProductCreateForm(
     opts.collections
   );
   const handleCategorySelect = createSingleAutocompleteSelectHandler(
-    form.change,
+    handleChange,
     opts.setSelectedCategory,
     opts.categories
   );
@@ -199,11 +204,11 @@ function useProductCreateForm(
     stocks.remove(id);
   };
   const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
-    form.change,
+    handleChange,
     opts.setSelectedTaxType,
     opts.taxTypes
   );
-  const changeMetadata = makeMetadataChangeHandler(form.change);
+  const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const data: ProductCreateData = {
     ...form.data,
@@ -214,7 +219,7 @@ function useProductCreateForm(
   const submit = () => onSubmit(data);
 
   return {
-    change: form.change,
+    change: handleChange,
     data,
     handlers: {
       addStock: handleStockAdd,
