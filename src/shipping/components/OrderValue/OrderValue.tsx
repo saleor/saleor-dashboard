@@ -10,8 +10,10 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { getFormChannelErrors } from "@saleor/utils/errors";
+import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +25,7 @@ interface Value {
 }
 export interface OrderValueProps {
   channels: ChannelShippingData[];
-  errors: ShippingErrorFragment[];
+  errors: ShippingChannelsErrorFragment[];
   defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;
@@ -36,6 +38,7 @@ const numberOfColumns = 3;
 export const OrderValue: React.FC<OrderValueProps> = ({
   channels,
   defaultCurrency,
+  errors,
   noLimits,
   disabled,
   onChannelsChange,
@@ -43,6 +46,10 @@ export const OrderValue: React.FC<OrderValueProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const formErrors = getFormChannelErrors(
+    ["maximumOrderPrice", "minimumOrderPrice"],
+    errors
+  );
 
   return (
     <Card>
@@ -111,47 +118,68 @@ export const OrderValue: React.FC<OrderValueProps> = ({
               </TableCell>
             </TableHead>
             <TableBody>
-              {channels?.map(channel => (
-                <TableRow key={channel.id}>
-                  <TableCell>
-                    <Typography>{channel.name}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <PriceField
-                      disabled={disabled}
-                      label={intl.formatMessage({
-                        defaultMessage: "Min Value"
-                      })}
-                      name={`minValue:${channel.name}`}
-                      value={channel.minValue}
-                      onChange={e =>
-                        onChannelsChange(channel.id, {
-                          ...channel,
-                          minValue: e.target.value
-                        })
-                      }
-                      currencySymbol={defaultCurrency}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <PriceField
-                      disabled={disabled}
-                      label={intl.formatMessage({
-                        defaultMessage: "Max Value"
-                      })}
-                      name={`maxValue:${channel.name}`}
-                      value={channel.maxValue}
-                      onChange={e =>
-                        onChannelsChange(channel.id, {
-                          ...channel,
-                          maxValue: e.target.value
-                        })
-                      }
-                      currencySymbol={defaultCurrency}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+              {channels?.map(channel => {
+                const minError = formErrors.minimumOrderPrice?.find(error =>
+                  error.channels?.find(id => id === channel.id)
+                );
+                const maxError = formErrors.maximumOrderPrice?.find(error =>
+                  error.channels?.find(id => id === channel.id)
+                );
+
+                return (
+                  <TableRow key={channel.id}>
+                    <TableCell>
+                      <Typography>{channel.name}</Typography>
+                    </TableCell>
+                    <TableCell className={classes.price}>
+                      <PriceField
+                        disabled={disabled}
+                        error={!!minError}
+                        label={intl.formatMessage({
+                          defaultMessage: "Min Value"
+                        })}
+                        name={`minValue:${channel.name}`}
+                        value={channel.minValue}
+                        onChange={e =>
+                          onChannelsChange(channel.id, {
+                            ...channel,
+                            minValue: e.target.value
+                          })
+                        }
+                        currencySymbol={defaultCurrency}
+                        hint={
+                          minError
+                            ? getShippingErrorMessage(minError, intl)
+                            : ""
+                        }
+                      />
+                    </TableCell>
+                    <TableCell className={classes.price}>
+                      <PriceField
+                        disabled={disabled}
+                        error={!!maxError}
+                        label={intl.formatMessage({
+                          defaultMessage: "Max Value"
+                        })}
+                        name={`maxValue:${channel.name}`}
+                        value={channel.maxValue}
+                        onChange={e =>
+                          onChannelsChange(channel.id, {
+                            ...channel,
+                            maxValue: e.target.value
+                          })
+                        }
+                        currencySymbol={defaultCurrency}
+                        hint={
+                          maxError
+                            ? getShippingErrorMessage(maxError, intl)
+                            : ""
+                        }
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </ResponsiveTable>
         )}

@@ -23,4 +23,30 @@ export function getFormErrors<TField extends string, TError extends UserError>(
   }, ({} as unknown) as Record<TField, TError>);
 }
 
+export interface ChannelError {
+  field: string | null;
+  code: string;
+  channels: string[] | [];
+}
+
+export function getFieldChannelError<T extends ChannelError>(
+  errors: T[],
+  field: string
+): T[] {
+  return errors.filter(err => err.field === field);
+}
+
+export function getFormChannelErrors<
+  TField extends string,
+  TError extends ChannelError
+>(fields: TField[], errors: TError[]) {
+  return fields.reduce((errs, field) => {
+    errs[field] = [
+      ...(errs[field] ? errs[field] : []),
+      ...getFieldChannelError(errors, field)
+    ];
+    return errs;
+  }, {} as Record<TField, TError[]>);
+}
+
 export { default as getProductErrorMessage } from "./product";

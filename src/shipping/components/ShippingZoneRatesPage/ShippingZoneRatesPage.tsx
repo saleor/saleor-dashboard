@@ -8,7 +8,9 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
@@ -33,8 +35,9 @@ export interface ShippingZoneRatesPageProps {
   shippingChannels: ChannelShippingData[];
   defaultCurrency: string;
   disabled: boolean;
+  hasChannelChanged?: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
-  channelErrors: ShippingErrorFragment[];
+  channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -52,6 +55,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   channelErrors,
   disabled,
   errors,
+  hasChannelChanged,
   onBack,
   onDelete,
   onSubmit,
@@ -78,6 +82,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           shippingChannels,
           onChannelsChange,
           triggerChange
+        );
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.minValue) ||
+            validatePrice(channel.maxValue) ||
+            validatePrice(channel.price)
         );
 
         return (
@@ -151,7 +161,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled || !hasChanged}
+              disabled={
+                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+              }
               onCancel={onBack}
               onDelete={onDelete}
               onSave={submit}

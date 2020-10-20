@@ -51,6 +51,7 @@ storiesOf("Views / Shipping / Create shipping zone", module)
       {...props}
       errors={["name"].map(field => ({
         __typename: "ShippingError",
+        channels: [],
         code: ShippingErrorCode.INVALID,
         field
       }))}

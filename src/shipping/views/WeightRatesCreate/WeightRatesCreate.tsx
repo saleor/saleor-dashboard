@@ -52,13 +52,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
             data.shippingMethodChannelListingUpdate.shippingMethod.id
           )
         );
-      } else {
-        errors.map(err =>
-          notify({
-            status: "error",
-            text: getShippingErrorMessage(err, intl)
-          })
-        );
       }
     }
   });
@@ -92,6 +85,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           response.data.shippingPriceCreate.shippingMethod.id,
+          data.noLimits,
           data.channelListing
         )
       });
