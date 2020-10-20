@@ -39,9 +39,6 @@ import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
 import OrderDraftCancelDialog from "../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
-import OrderDraftFinalizeDialog, {
-  OrderDraftFinalizeWarning
-} from "../../components/OrderDraftFinalizeDialog";
 import OrderDraftPage from "../../components/OrderDraftPage";
 import OrderFulfillmentCancelDialog from "../../components/OrderFulfillmentCancelDialog";
 import OrderFulfillmentTrackingDialog from "../../components/OrderFulfillmentTrackingDialog";
@@ -52,7 +49,6 @@ import OrderProductAddDialog from "../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../components/OrderShippingMethodEditDialog";
 import OrderOperations from "../../containers/OrderOperations";
 import { TypedOrderDetailsQuery, useOrderVariantSearch } from "../../queries";
-import { OrderDetails_order } from "../../types/OrderDetails";
 import {
   orderDraftListUrl,
   orderFulfillUrl,
@@ -62,36 +58,6 @@ import {
   OrderUrlQueryParams
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
-
-const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
-  const warnings = [] as OrderDraftFinalizeWarning[];
-  if (!(order && order.shippingAddress)) {
-    warnings.push(OrderDraftFinalizeWarning.NO_SHIPPING);
-  }
-  if (!(order && order.billingAddress)) {
-    warnings.push(OrderDraftFinalizeWarning.NO_BILLING);
-  }
-  if (!(order && (order.user || order.userEmail))) {
-    warnings.push(OrderDraftFinalizeWarning.NO_USER);
-  }
-  if (
-    order &&
-    order.lines &&
-    order.lines.filter(line => line.isShippingRequired).length > 0 &&
-    order.shippingMethod === null
-  ) {
-    warnings.push(OrderDraftFinalizeWarning.NO_SHIPPING_METHOD);
-  }
-  if (
-    order &&
-    order.lines &&
-    order.lines.filter(line => line.isShippingRequired).length === 0 &&
-    order.shippingMethod !== null
-  ) {
-    warnings.push(OrderDraftFinalizeWarning.UNNECESSARY_SHIPPING_METHOD);
-  }
-  return warnings;
-};
 
 interface OrderDetailsProps {
   id: string;
@@ -513,7 +479,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                               input: data
                             })
                           }
-                          onDraftFinalize={() => openModal("finalize")}
+                          onDraftFinalize={() =>
+                            orderDraftFinalize.mutate({ id })
+                          }
                           onDraftRemove={() => openModal("cancel")}
                           onOrderLineAdd={() => openModal("add-order-line")}
                           onBack={() => navigate(orderDraftListUrl())}
@@ -560,18 +528,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onConfirm={() => orderDraftCancel.mutate({ id })}
                           open={params.action === "cancel"}
                           orderNumber={getStringOrPlaceholder(order?.number)}
-                        />
-                        <OrderDraftFinalizeDialog
-                          confirmButtonState={orderDraftFinalize.opts.status}
-                          errors={
-                            orderDraftFinalize.opts.data?.draftOrderComplete
-                              .errors || []
-                          }
-                          onClose={closeModal}
-                          onConfirm={() => orderDraftFinalize.mutate({ id })}
-                          open={params.action === "finalize"}
-                          orderNumber={getStringOrPlaceholder(order?.number)}
-                          warnings={orderDraftFinalizeWarnings(order)}
                         />
                         <OrderShippingMethodEditDialog
                           confirmButtonState={
