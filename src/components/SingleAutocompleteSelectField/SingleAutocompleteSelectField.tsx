@@ -1,12 +1,13 @@
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { commonMessages } from "@saleor/intl";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
-import React from "react";
+import React, { useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
@@ -14,6 +15,12 @@ import SingleAutocompleteSelectFieldContent, {
   SingleAutocompleteActionType,
   SingleAutocompleteChoiceType
 } from "./SingleAutocompleteSelectFieldContent";
+
+const messages = defineMessages({
+  invalidValue: {
+    defaultMessage: "Value is invalid"
+  }
+});
 
 const useStyles = makeStyles(
   {
@@ -73,8 +80,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     ...rest
   } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
 
-  const [prevDisplayValue] = useStateFromProps(displayValue);
+  const [invalidValueError, setInvalidValueError] = useState<boolean>(false);
 
   const handleChange = (
     item: string,
@@ -112,24 +120,60 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
             highlightedIndex,
             reset
           }) => {
+            const isError = error || invalidValueError;
+
             const isCustomValueSelected =
               choices && selectedItem
                 ? choices.filter(c => c.value === selectedItem).length === 0
                 : false;
-            const hasInputValueChanged = prevDisplayValue !== displayValue;
 
-            if (hasInputValueChanged) {
+            const isInvalidInputValue = !!choices.find(
+              ({ value: choiceId }) => choiceId === inputValue
+            );
+
+            if (isInvalidInputValue) {
               reset({ inputValue: displayValue });
             }
 
-            const displayCustomValue =
+            const isValueInChoices = !!choices.find(
+              choice => choice.label.toLowerCase() === inputValue.toLowerCase()
+            );
+
+            const displayCustomValue = !!(
               inputValue &&
               inputValue.length > 0 &&
               allowCustomValues &&
-              !choices.find(
-                choice =>
-                  choice.label.toLowerCase() === inputValue.toLowerCase()
-              );
+              !isValueInChoices
+            );
+
+            const handleSetInvalidValueError = () => {
+              if (allowCustomValues) {
+                return;
+              }
+
+              setInvalidValueError(!isValueInChoices);
+            };
+
+            const handleBlur = () => {
+              closeMenu();
+              handleSetInvalidValueError();
+            };
+
+            const getHelperText = () => {
+              if (error) {
+                return helperText;
+              }
+
+              if (invalidValueError) {
+                return intl.formatMessage(
+                  !!inputValue
+                    ? messages.invalidValue
+                    : commonMessages.requiredField
+                );
+              }
+
+              return "";
+            };
 
             return (
               <div
@@ -147,14 +191,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                         <ArrowDropdownIcon />
                       </div>
                     ),
-                    error,
+                    error: isError,
                     id: undefined,
-                    onBlur: closeMenu,
+                    onBlur: handleBlur,
                     onClick: toggleMenu
                   }}
-                  error={error}
+                  error={isError}
                   disabled={disabled}
-                  helperText={helperText}
+                  helperText={getHelperText()}
                   label={label}
                   fullWidth={true}
                 />

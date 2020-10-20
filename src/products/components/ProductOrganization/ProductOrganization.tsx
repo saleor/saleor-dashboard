@@ -112,6 +112,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
       <CardContent>
         {canChangeType ? (
           <SingleAutocompleteSelectField
+            allowCustomValues={false}
             displayValue={productTypeInputDisplayValue}
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}

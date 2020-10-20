@@ -208,6 +208,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     initial?.taxCode || null
   );
 
+  const [productTypeInputValue, setProductTypeInputValue] = useStateFromProps<
+    string
+  >(initial?.productType || "");
+
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const productTypes = getChoices(productTypeChoiceList);
@@ -217,10 +221,26 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
+  const handleFetchProductTypes = (value: string) => {
+    setProductTypeInputValue(value);
+    fetchProductTypes(value);
+  };
+
+  const getProductType = () => {
+    const selectedProductType = productTypes.find(
+      ({ label }) => label.toLowerCase() === productTypeInputValue.toLowerCase()
+    );
+
+    return !!selectedProductType
+      ? selectedProductType.value
+      : productTypeInputValue;
+  };
+
   const handleSubmit = (data: FormData) =>
     onSubmit({
       ...data,
       attributes,
+      productType: getProductType(),
       stocks
     });
 
@@ -252,7 +272,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           change,
           setAttributeData,
           setProductType,
-          productTypeChoiceList
+          productTypeChoiceList,
+          setProductTypeInputValue
         );
         const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
           change,
@@ -369,7 +390,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   fetchMoreCategories={fetchMoreCategories}
                   fetchMoreCollections={fetchMoreCollections}
                   fetchMoreProductTypes={fetchMoreProductTypes}
-                  fetchProductTypes={fetchProductTypes}
+                  fetchProductTypes={handleFetchProductTypes}
                   productType={productType}
                   productTypeInputDisplayValue={productType?.name || ""}
                   productTypes={productTypes}
