@@ -315,9 +315,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const formTransitionState = getMutationState(
     updateProductOpts.called || updateSimpleProductOpts.called,
     updateProductOpts.loading || updateSimpleProductOpts.loading,
-    updateProductOpts.data.productUpdate.errors,
-    updateSimpleProductOpts.data.productUpdate.errors,
-    updateSimpleProductOpts.data.productVariantUpdate.errors
+    updateProductOpts.data?.productUpdate.errors,
+    updateSimpleProductOpts.data?.productUpdate.errors,
+    updateSimpleProductOpts.data?.productVariantUpdate.errors
   );
 
   const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
@@ -327,9 +327,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     edge => edge.node
   );
   const errors = [
-    ...(updateProductOpts.data.productUpdate.errors || []),
-    ...(updateSimpleProductOpts.data.productUpdate.errors || []),
-    ...(productVariantCreateOpts?.data?.productVariantCreate.errors || [])
+    ...(updateProductOpts.data?.productUpdate.errors || []),
+    ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
+    ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
