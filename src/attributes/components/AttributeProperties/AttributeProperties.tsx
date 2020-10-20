@@ -5,10 +5,12 @@ import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
+import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -74,42 +76,54 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           />
         </Typography>
         <Hr />
-        <ControlledCheckbox
-          name={"filterableInStorefront" as keyof FormData}
-          label={intl.formatMessage({
-            defaultMessage: "Use in Faceted Navigation",
-            description: "attribute is filterable in storefront"
-          })}
-          checked={data.filterableInStorefront}
-          onChange={onChange}
-          disabled={disabled}
-        />
-        <FormSpacer />
-        {data.filterableInStorefront && (
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.storefrontSearchPosition}
-            fullWidth
-            helperText={getProductErrorMessage(
-              formErrors.storefrontSearchPosition,
-              intl
-            )}
-            name={"storefrontSearchPosition" as keyof AttributePageFormData}
-            label={intl.formatMessage({
-              defaultMessage: "Position in faceted navigation",
-              description: "attribute position in storefront filters"
-            })}
-            value={data.storefrontSearchPosition}
-            onChange={onChange}
-          />
+        {data.type === AttributeTypeEnum.PRODUCT_TYPE && (
+          <>
+            <ControlledCheckbox
+              name={"filterableInStorefront" as keyof FormData}
+              label={intl.formatMessage({
+                defaultMessage: "Use in Faceted Navigation",
+                description: "attribute is filterable in storefront"
+              })}
+              checked={data.filterableInStorefront}
+              onChange={onChange}
+              disabled={disabled}
+            />
+            <FormSpacer />
+          </>
         )}
+        {data.filterableInStorefront &&
+          data.type === AttributeTypeEnum.PRODUCT_TYPE && (
+            <TextField
+              disabled={disabled}
+              error={!!formErrors.storefrontSearchPosition}
+              fullWidth
+              helperText={getProductErrorMessage(
+                formErrors.storefrontSearchPosition,
+                intl
+              )}
+              name={"storefrontSearchPosition" as keyof AttributePageFormData}
+              label={intl.formatMessage({
+                defaultMessage: "Position in faceted navigation",
+                description: "attribute position in storefront filters"
+              })}
+              value={data.storefrontSearchPosition}
+              onChange={onChange}
+            />
+          )}
         <FormSpacer />
-        <ControlledCheckbox
+        <ControlledSwitch
           name={"visibleInStorefront" as keyof FormData}
-          label={intl.formatMessage({
-            defaultMessage: "Visible on Product Page in Storefront",
-            description: "attribute"
-          })}
+          label={
+            <>
+              <FormattedMessage
+                defaultMessage="Public"
+                description="attribute visibility in storefront"
+              />
+              <Typography variant="caption">
+                <FormattedMessage defaultMessage="If enabled, attribute will be accessible to customers." />
+              </Typography>
+            </>
+          }
           checked={data.visibleInStorefront}
           onChange={onChange}
           disabled={disabled}
