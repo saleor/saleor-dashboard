@@ -122,6 +122,7 @@ const Channel: React.FC<ChannelProps> = ({
     <>
       <div className={classes.channelItem}>
         <div
+          data-test="channel-availability-item"
           role="button"
           className={classes.channelBtn}
           onClick={() => setOpen(open => !open)}
@@ -156,7 +157,7 @@ const Channel: React.FC<ChannelProps> = ({
                     )}
                 </>
               }
-              name={`channel:${id}`}
+              name="isPublished"
               secondOptionLabel={
                 <>
                   <p className={classes.label}>{messages.hiddenLabel}</p>
