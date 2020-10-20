@@ -1,4 +1,5 @@
 import { MetadataFormData } from "@saleor/components/Metadata/types";
+import { MetadataErrorFragment } from "@saleor/fragments/types/MetadataErrorFragment";
 import { MetadataInput } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
@@ -28,7 +29,9 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
     variables: UpdatePrivateMetadataVariables
   ) => Promise<MutationFetchResult<UpdatePrivateMetadata>>
 ) {
-  return async (data: TData) => {
+  return async (
+    data: TData
+  ): Promise<Array<MetadataErrorFragment | TError>> => {
     const errors = await update(data);
 
     if (errors.length > 0) {

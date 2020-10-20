@@ -111,14 +111,13 @@ const getStocksData = (
   product: ProductDetails_product,
   stocks: FormsetData<null, string>
 ) => {
-  if (product.productType.hasVariants) {
+  if (product?.productType?.hasVariants) {
     return { addStocks: [], removeStocks: [], updateStocks: [] };
   }
 
   const dataStocks = stocks.map(stock => stock.id);
-  const variantStocks = product.variants[0]?.stocks.map(
-    stock => stock.warehouse.id
-  );
+  const variantStocks =
+    product?.variants[0]?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = diff(variantStocks, dataStocks);
 
   return {
@@ -214,16 +213,16 @@ function useProductUpdateForm(
     attributes: attributes.data,
     stocks: stocks.data
   };
+  const submitData: ProductUpdateSubmitData = {
+    ...data,
+    ...getAvailabilityData(data),
+    ...getStocksData(product, stocks.data),
+    ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
+    addStocks: [],
+    attributes: attributes.data
+  };
 
-  const submit = () =>
-    onSubmit({
-      ...data,
-      ...getAvailabilityData(data),
-      ...getStocksData(product, stocks.data),
-      ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-      addStocks: [],
-      attributes: attributes.data
-    });
+  const submit = () => handleFormSubmit(submitData, onSubmit, setChanged);
 
   return {
     change: handleChange,
