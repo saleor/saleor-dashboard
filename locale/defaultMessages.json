@@ -828,6 +828,24 @@
     "context": "attribute's label'",
     "string": "Default Label"
   },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_205334083": {
+    "string": "Define where this attribute should be used in Saleor system"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3829816432": {
+    "context": "section header",
+    "string": "Organization"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3835822980": {
+    "string": "Attribute Class"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_contentAttribute": {
+    "context": "attribute type",
+    "string": "Content Attribute"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_productAttribute": {
+    "context": "attribute type",
+    "string": "Product Attribute"
+  },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
     "string": "Create New Attribute"
@@ -844,13 +862,16 @@
     "context": "attribute properties regarding dashboard",
     "string": "Dashboard Properties"
   },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3135366329": {
+    "context": "attribute visibility in storefront",
+    "string": "Public"
+  },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3876764312": {
-    "context": "attribute",
-    "string": "Visible on Product Page in Storefront"
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3758203740": {
+    "string": "If enabled, attribute will be accessible to customers."
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
     "string": "If enabled this attribute can be used as a column in product table."
