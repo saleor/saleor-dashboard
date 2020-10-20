@@ -263,7 +263,11 @@ const availableInGridAttributes = gql`
     availableInGrid: attributes(
       first: $first
       after: $after
-      filter: { availableInGrid: true, isVariantOnly: false }
+      filter: {
+        availableInGrid: true
+        isVariantOnly: false
+        type: PRODUCT_TYPE
+      }
     ) {
       edges {
         node {
