@@ -2462,9 +2462,9 @@
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
     "string": "Product Name"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3640454975": {
-    "context": "product is published",
-    "string": "Published"
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3326160357": {
+    "context": "product availability",
+    "string": "Availability"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_4257289053": {
     "string": "Product Type"
@@ -5963,6 +5963,10 @@
   },
   "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
     "string": "Url has invalid format"
+  },
+  "src_dot_utils_dot_errors_dot_lessThanMin": {
+    "context": "error message",
+    "string": "Max value cannot be less than min value"
   },
   "src_dot_utils_dot_errors_dot_misconfigured": {
     "string": "Plugin is misconfigured and cannot be activated"
