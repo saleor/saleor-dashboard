@@ -186,8 +186,9 @@ const AttributePage: React.FC<AttributePageProps> = ({
               </div>
               <div>
                 <AttributeOrganization
+                  canChangeType={attribute === null}
                   data={data}
-                  disabled={attribute !== null}
+                  disabled={disabled}
                   onChange={change}
                 />
                 <CardSpacer />
