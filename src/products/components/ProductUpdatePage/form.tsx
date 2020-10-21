@@ -95,7 +95,7 @@ export interface UseProductUpdateFormOpts
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormResult) => React.ReactNode;
   product: ProductDetails_product;
-  onSubmit: (data: ProductUpdateSubmitData) => Promise<boolean>;
+  onSubmit: (data: ProductUpdateSubmitData) => Promise<any[]>;
 }
 
 const getAvailabilityData = ({
@@ -143,7 +143,7 @@ const getMetadata = (
 
 function useProductUpdateForm(
   product: ProductDetails_product,
-  onSubmit: (data: ProductUpdateSubmitData) => Promise<boolean>,
+  onSubmit: (data: ProductUpdateSubmitData) => Promise<any[]>,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
