@@ -13,6 +13,7 @@ import TableCellAvatar, {
 } from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { ChannelListingProductFragment } from "@saleor/fragments/types/ChannelListingProductFragment";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
