@@ -69,13 +69,17 @@ interface Message {
   availableSecondLabel?: string;
   setAvailabilityDateLabel?: string;
 }
+
+export interface DateFields {
+  publicationDate: string;
+  availableForPurchase?: string;
+}
+
 export interface VisibilityCardProps {
   children?: React.ReactNode | React.ReactNodeArray;
-  data: {
-    availableForPurchase?: string;
+  data: DateFields & {
     isAvailableForPurchase?: boolean;
     isPublished: boolean;
-    publicationDate: string;
     visibleInListings?: boolean;
   };
   errors: UserError[];
@@ -117,6 +121,21 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       }
     );
 
+  const handleRadioFieldChange = (type: keyof DateFields) => (
+    e: ChangeEvent
+  ) => {
+    const { value } = e.target;
+    if (!value) {
+      onChange({
+        target: {
+          name: type,
+          value: null
+        }
+      });
+    }
+    return onChange(e);
+  };
+
   return (
     <Card>
       <CardTitle
@@ -156,7 +175,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             </>
           }
           value={isPublished}
-          onChange={onChange}
+          onChange={handleRadioFieldChange("publicationDate")}
         />
         {!isPublished && (
           <DateVisibilitySelector
@@ -226,18 +245,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                 </>
               }
               value={isAvailable}
-              onChange={e => {
-                const { value } = e.target;
-                if (!value) {
-                  onChange({
-                    target: {
-                      name: "availableForPurchase",
-                      value: null
-                    }
-                  });
-                }
-                return onChange(e);
-              }}
+              onChange={handleRadioFieldChange("availableForPurchase")}
             />
             {!isAvailable && (
               <DateVisibilitySelector
