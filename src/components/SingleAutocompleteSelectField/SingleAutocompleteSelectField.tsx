@@ -131,6 +131,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   choice.label.toLowerCase() === inputValue.toLowerCase()
               );
 
+            const handleBlur = () => {
+              if(inputValue)
+            }
+
             return (
               <div
                 className={classNames(classes.container, className)}
@@ -149,7 +153,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                     ),
                     error,
                     id: undefined,
-                    onBlur: closeMenu,
+                    onBlur: handleBlur,
                     onClick: toggleMenu
                   }}
                   error={error}
