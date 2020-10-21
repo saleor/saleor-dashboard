@@ -32,7 +32,8 @@ export interface UseProductVariantCreateFormOpts {
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
-  handlers: Record<"changeStock" | "selectAttribute", FormsetChange<string>> &
+  // TODO: type FormsetChange
+  handlers: Record<"changeStock" | "selectAttribute", FormsetChange> &
     Record<"addStock" | "deleteStock", (id: string) => void> & {
       changeMetadata: FormChange;
     };
