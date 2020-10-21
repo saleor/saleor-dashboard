@@ -624,6 +624,7 @@ export enum OrderStatusFilter {
 }
 
 export enum PageErrorCode {
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -637,6 +638,11 @@ export enum PageSortField {
   SLUG = "SLUG",
   TITLE = "TITLE",
   VISIBILITY = "VISIBILITY",
+}
+
+export enum PageTypeSortField {
+  NAME = "NAME",
+  SLUG = "SLUG",
 }
 
 export enum PaymentChargeStatusEnum {
@@ -986,7 +992,7 @@ export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
   name: string;
   slug?: string | null;
-  type?: AttributeTypeEnum | null;
+  type: AttributeTypeEnum;
   values?: (AttributeValueCreateInput | null)[] | null;
   valueRequired?: boolean | null;
   isVariantOnly?: boolean | null;
@@ -1310,6 +1316,15 @@ export interface PageTranslationInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PageTypeFilterInput {
+  search?: string | null;
+}
+
+export interface PageTypeSortingInput {
+  direction: OrderDirection;
+  field: PageTypeSortField;
 }
 
 export interface PermissionGroupCreateInput {
