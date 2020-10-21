@@ -16,13 +16,12 @@ import { VariantAttributeInputData } from "../ProductVariantAttributes";
 export interface ProductVariantCreateFormData extends MetadataFormData {
   costPrice: string;
   price: string;
-  quantity: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
-  attributes: FormsetData<VariantAttributeInputData>;
+  attributes: FormsetData<VariantAttributeInputData, string>;
   stocks: ProductStockInput[];
 }
 
@@ -33,7 +32,7 @@ export interface UseProductVariantCreateFormOpts {
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
-  handlers: Record<"changeStock" | "selectAttribute", FormsetChange> &
+  handlers: Record<"changeStock" | "selectAttribute", FormsetChange<string>> &
     Record<"addStock" | "deleteStock", (id: string) => void> & {
       changeMetadata: FormChange;
     };
@@ -53,7 +52,6 @@ const initial: ProductVariantCreateFormData = {
   metadata: [],
   price: "",
   privateMetadata: [],
-  quantity: "0",
   sku: "",
   trackInventory: true,
   weight: ""
