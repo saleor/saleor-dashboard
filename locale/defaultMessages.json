@@ -1060,6 +1060,10 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
+  "src_dot_categories_dot_components_dot_CategoryProducts_dot_4183335632": {
+    "context": "categpry product channel",
+    "string": "Channel:"
+  },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2159874182": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
