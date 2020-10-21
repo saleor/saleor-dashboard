@@ -1,4 +1,5 @@
 import { stringify as stringifyQs } from "qs";
+import urlJoin from "url-join";
 
 import {
   ActiveTab,
@@ -6,6 +7,7 @@ import {
   Dialog,
   Filters,
   Pagination,
+  SingleAction,
   Sort,
   TabActionDialog
 } from "../types";
@@ -14,6 +16,7 @@ const pageTypeSection = "/page-types/";
 
 export const pageTypeListPath = pageTypeSection;
 export enum PageTypeListUrlFiltersEnum {
+  type = "type",
   query = "query"
 }
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
@@ -30,3 +33,20 @@ export type PageTypeListUrlQueryParams = ActiveTab &
   PageTypeListUrlSort;
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
   pageTypeListPath + "?" + stringifyQs(params);
+
+export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
+export const pageTypeAddUrl = pageTypeAddPath;
+
+export const pageTypePath = (id: string) => urlJoin(pageTypeSection, id);
+export type PageTypeUrlDialog =
+  | "assign-attribute"
+  | "unassign-attribute"
+  | "unassign-attributes"
+  | "remove";
+export type PageTypeUrlQueryParams = BulkAction &
+  Dialog<PageTypeUrlDialog> &
+  SingleAction & {
+    type?: string;
+  };
+export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
+  pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
