@@ -34,7 +34,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(1)
     },
     select: {
-      display: "inline"
+      display: "inline-block"
     }
   }),
   { name: "CategoryProducts" }
