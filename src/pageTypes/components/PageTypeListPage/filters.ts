@@ -1,7 +1,6 @@
 import { IFilter } from "@saleor/components/Filter";
 
 export enum PageTypeFilterKeys {
-  configurable = "configurable",
   type = "type"
 }
 
