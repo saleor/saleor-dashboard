@@ -1866,6 +1866,9 @@
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_4205644805": {
     "string": "No results found"
   },
+  "src_dot_components_dot_SingleAutocompleteSelectField_dot_invalidValue": {
+    "string": "Value is invalid"
+  },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
     "string": "No results found"
   },
