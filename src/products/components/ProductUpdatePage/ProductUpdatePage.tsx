@@ -187,44 +187,53 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const handleSubmit = (data: ProductUpdatePageFormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
+  const getAvailabilityData = ({
+    availableForPurchase,
+    isAvailableForPurchase,
+    isPublished,
+    publicationDate
+  }: ProductUpdatePageFormData) => ({
+    isAvailableForPurchase: isAvailableForPurchase || !!availableForPurchase,
+    isPublished: isPublished || !!publicationDate
+  });
 
+  const getStocksData = () => {
     if (product.productType.hasVariants) {
-      onSubmit({
-        ...data,
-        addStocks: [],
-        attributes,
-        metadata,
-        privateMetadata,
-        removeStocks: [],
-        updateStocks: []
-      });
-    } else {
-      const dataStocks = stocks.map(stock => stock.id);
-      const variantStocks = product.variants[0]?.stocks.map(
-        stock => stock.warehouse.id
-      );
-      const stockDiff = diff(variantStocks, dataStocks);
-
-      onSubmit({
-        ...data,
-        addStocks: stocks.filter(stock =>
-          stockDiff.added.some(addedStock => addedStock === stock.id)
-        ),
-        attributes,
-        metadata,
-        privateMetadata,
-        removeStocks: stockDiff.removed,
-        updateStocks: stocks.filter(
-          stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-        )
-      });
+      return { removeStocks: [], updateStocks: [] };
     }
+
+    const dataStocks = stocks.map(stock => stock.id);
+    const variantStocks = product.variants[0]?.stocks.map(
+      stock => stock.warehouse.id
+    );
+    const stockDiff = diff(variantStocks, dataStocks);
+
+    return {
+      removeStocks: stockDiff.removed,
+      updateStocks: stocks.filter(
+        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+      )
+    };
   };
+
+  const getMetadata = (data: ProductUpdatePageFormData) => ({
+    metadata: isMetadataModified ? data.metadata : undefined,
+    privateMetadata: isPrivateMetadataModified
+      ? data.privateMetadata
+      : undefined
+  });
+
+  const getParsedData = (data: ProductUpdatePageFormData) => ({
+    ...data,
+    ...getAvailabilityData(data),
+    ...getStocksData(),
+    ...getMetadata(data),
+    addStocks: [],
+    attributes
+  });
+
+  const handleSubmit = (data: ProductUpdatePageFormData) =>
+    onSubmit(getParsedData(data));
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>

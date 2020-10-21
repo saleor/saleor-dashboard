@@ -83,6 +83,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
 
     onSubmit({
       ...data,
+      isPublished: data.isPublished || !!data.publicationDate,
       metadata,
       privateMetadata
     });
