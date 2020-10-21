@@ -256,10 +256,6 @@
     "context": "product field",
     "string": "Visibility"
   },
-  "productStatusLabel": {
-    "context": "product",
-    "string": "Published"
-  },
   "productStockHeader": {
     "context": "product stock, section header",
     "string": "Inventory"
@@ -1048,13 +1044,9 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
-    "context": "product",
-    "string": "Not published"
-  },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3640454975": {
-    "context": "product status",
-    "string": "Published"
+  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3326160357": {
+    "context": "availability status",
+    "string": "Availability"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_636461959": {
     "context": "product",
@@ -1067,6 +1059,10 @@
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_4164156574": {
     "context": "header",
     "string": "Products in {categoryName}"
+  },
+  "src_dot_categories_dot_components_dot_CategoryProducts_dot_4183335632": {
+    "context": "categpry product channel",
+    "string": "Channel:"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2159874182": {
     "context": "number of subcategories in category",

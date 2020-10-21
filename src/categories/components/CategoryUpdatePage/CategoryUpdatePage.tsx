@@ -11,6 +11,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { sectionNames } from "@saleor/intl";
@@ -60,6 +61,8 @@ export interface CategoryUpdatePageProps
     hasPreviousPage: boolean;
   };
   saveButtonBarState: ConfirmButtonTransitionState;
+  channelChoices: SingleAutocompleteChoiceType[];
+  channelsCount: number;
   onImageDelete: () => void;
   onSubmit: (data: FormData) => void;
   onImageUpload(file: File);
@@ -78,6 +81,8 @@ const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   changeTab,
+  channelChoices,
+  channelsCount,
   currentTab,
   category,
   disabled,
@@ -253,7 +258,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             )}
             {currentTab === CategoryPageTab.products && (
               <CategoryProducts
-                categoryName={maybe(() => category.name)}
+                channelsCount={channelsCount}
+                channelChoices={channelChoices}
+                categoryName={category?.name}
                 products={products}
                 disabled={disabled}
                 pageInfo={pageInfo}
