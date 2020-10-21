@@ -61,13 +61,13 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
+  onSubmit: (data: ProductUpdatePageSubmitData) => Promise<boolean>;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onSeoClick?();
-  onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetails_product_variants);
   onWarehouseConfigure();
