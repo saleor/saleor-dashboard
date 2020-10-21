@@ -17,6 +17,17 @@ export interface AttributeOrganizationProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
+const messages = defineMessages({
+  contentAttribute: {
+    defaultMessage: "Content Attribute",
+    description: "attribute type"
+  },
+  productAttribute: {
+    defaultMessage: "Product Attribute",
+    description: "attribute type"
+  }
+});
+
 const useStyles = makeStyles(
   theme => ({
     card: {
@@ -30,7 +41,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(0.5)
     }
   }),
-  { name: "ProductOrganization" }
+  { name: "AttributeOrganization" }
 );
 
 const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
@@ -38,17 +49,6 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const messages = defineMessages({
-    contentAttribute: {
-      defaultMessage: "Content Attribute",
-      description: "attribute type"
-    },
-    productAttribute: {
-      defaultMessage: "Product Attribute",
-      description: "attribute type"
-    }
-  });
 
   return (
     <Card>
