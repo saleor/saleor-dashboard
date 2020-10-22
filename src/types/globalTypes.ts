@@ -1318,6 +1318,12 @@ export interface PageTranslationInput {
   contentJson?: any | null;
 }
 
+export interface PageTypeCreateInput {
+  name?: string | null;
+  slug?: string | null;
+  addAttributes?: string[] | null;
+}
+
 export interface PageTypeFilterInput {
   search?: string | null;
 }
@@ -1325,6 +1331,13 @@ export interface PageTypeFilterInput {
 export interface PageTypeSortingInput {
   direction: OrderDirection;
   field: PageTypeSortField;
+}
+
+export interface PageTypeUpdateInput {
+  name?: string | null;
+  slug?: string | null;
+  addAttributes?: string[] | null;
+  removeAttributes?: string[] | null;
 }
 
 export interface PermissionGroupCreateInput {
