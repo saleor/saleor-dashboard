@@ -150,11 +150,11 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               <PageTypeAttributes
                 attributes={pageType?.pageAttributes}
                 disabled={disabled}
-                type={AttributeTypeEnum.PAGE}
+                type={AttributeTypeEnum.PAGE_TYPE}
                 onAttributeAssign={onAttributeAdd}
                 onAttributeClick={onAttributeClick}
                 onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, AttributeTypeEnum.PAGE)
+                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
                 }
                 onAttributeUnassign={onAttributeUnassign}
                 {...pageAttributeList}
