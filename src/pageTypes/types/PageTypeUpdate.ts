@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PageTypeUpdateInput } from "./../../types/globalTypes";
+import { PageTypeUpdateInput, AttributeTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PageTypeUpdate
@@ -26,12 +26,24 @@ export interface PageTypeUpdate_pageTypeUpdate_pageType_privateMetadata {
   value: string;
 }
 
+export interface PageTypeUpdate_pageTypeUpdate_pageType_attributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+}
+
 export interface PageTypeUpdate_pageTypeUpdate_pageType {
   __typename: "PageType";
   id: string;
   name: string;
   metadata: (PageTypeUpdate_pageTypeUpdate_pageType_metadata | null)[];
   privateMetadata: (PageTypeUpdate_pageTypeUpdate_pageType_privateMetadata | null)[];
+  attributes: (PageTypeUpdate_pageTypeUpdate_pageType_attributes | null)[] | null;
 }
 
 export interface PageTypeUpdate_pageTypeUpdate {
