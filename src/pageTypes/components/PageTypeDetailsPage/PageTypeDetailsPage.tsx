@@ -30,7 +30,7 @@ interface ChoiceType {
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
-  pageAttributes: ChoiceType[];
+  attributes: ChoiceType[];
 }
 
 export interface PageTypeDetailsPageProps {
@@ -38,7 +38,7 @@ export interface PageTypeDetailsPageProps {
   pageType: any; // TODO FIX!!!
   disabled: boolean;
   pageTitle: string;
-  pageAttributeList: ListActions;
+  attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
   onAttributeClick: (id: string) => void;
@@ -67,7 +67,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     errors,
     pageTitle,
     pageType,
-    pageAttributeList,
+    attributeList,
     saveButtonBarState,
     onAttributeAdd,
     onAttributeUnassign,
@@ -86,13 +86,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   } = useMetadataChangeTrigger();
 
   const formInitialData: PageTypeForm = {
-    metadata: pageType?.metadata?.map(mapMetadataItemToInput),
-    name: maybe(() => pageType.name) !== undefined ? pageType.name : "",
-    pageAttributes:
-      pageType?.pageAttributes?.map(attribute => ({
+    attributes:
+      pageType?.attributes?.map(attribute => ({
         label: attribute.name,
         value: attribute.id
       })) || [],
+    metadata: pageType?.metadata?.map(mapMetadataItemToInput),
+    name: maybe(() => pageType.name) !== undefined ? pageType.name : "",
     privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput)
   };
 
@@ -148,7 +148,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 </Typography>
               </div>
               <PageTypeAttributes
-                attributes={pageType?.pageAttributes}
+                attributes={pageType?.attributes}
                 disabled={disabled}
                 type={AttributeTypeEnum.PAGE_TYPE}
                 onAttributeAssign={onAttributeAdd}
@@ -157,7 +157,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                   onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
                 }
                 onAttributeUnassign={onAttributeUnassign}
-                {...pageAttributeList}
+                {...attributeList}
               />
               <Hr className={classes.hr} />
               <div>
