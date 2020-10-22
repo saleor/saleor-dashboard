@@ -340,9 +340,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
-                            const availableQuantity =
-                              warehouseStock.quantity -
-                              warehouseStock.quantityAllocated;
+                            const availableQuantity = warehouseStock.quantity;
 
                             return (
                               <TableCell
