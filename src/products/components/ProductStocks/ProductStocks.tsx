@@ -127,9 +127,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const anchor = React.useRef<HTMLDivElement>();
   const [isExpanded, setExpansionState] = React.useState(false);
 
-  const warehousesToAssign = warehouses.filter(
-    warehouse => !stocks.some(stock => stock.id === warehouse.id)
-  );
+  const warehousesToAssign =
+    warehouses?.filter(
+      warehouse => !stocks.some(stock => stock.id === warehouse.id)
+    ) || [];
   const formErrors = getFormErrors(["sku"], errors);
 
   return (
@@ -187,7 +188,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             </span>
           </div>
         </Typography>
-        {!warehouses.length && (
+        {!warehouses?.length && (
           <Typography color="textSecondary" className={classes.noWarehouseInfo}>
             {hasVariants ? (
               <>
@@ -219,7 +220,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </Typography>
         )}
       </CardContent>
-      {warehouses.length > 0 && (
+      {warehouses?.length > 0 && (
         <Table>
           <TableHead>
             <TableRow>
