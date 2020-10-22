@@ -1,7 +1,6 @@
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
@@ -74,8 +73,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   } = props;
   const classes = useStyles(props);
 
-  const [prevDisplayValue] = useStateFromProps(displayValue);
-
   const handleChange = (
     item: string,
     stateAndHelpers: ControllerStateAndHelpers
@@ -116,23 +113,45 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               choices && selectedItem
                 ? choices.filter(c => c.value === selectedItem).length === 0
                 : false;
-            const hasInputValueChanged = prevDisplayValue !== displayValue;
 
-            if (hasInputValueChanged) {
+            const choiceFromInputValue = choices.find(
+              ({ value: choiceId }) => choiceId === inputValue
+            );
+
+            const isValueInValues = !!choiceFromInputValue;
+
+            const isValueInLabels = !!choices.find(
+              choice => choice.label === inputValue
+            );
+
+            const ensureProperValues = (alwaysCheck: boolean = false) => {
+              if (allowCustomValues && !alwaysCheck) {
+                return;
+              }
+
+              if (isValueInValues && !isValueInLabels) {
+                reset({ inputValue: choiceFromInputValue.label });
+                return;
+              }
+
               reset({ inputValue: displayValue });
-            }
+            };
 
-            const displayCustomValue =
+            const displayCustomValue = !!(
               inputValue &&
               inputValue.length > 0 &&
               allowCustomValues &&
-              !choices.find(
-                choice =>
-                  choice.label.toLowerCase() === inputValue.toLowerCase()
-              );
+              !isValueInLabels
+            );
 
             const handleBlur = () => {
-              if(inputValue)
+              ensureProperValues(true);
+              closeMenu();
+            };
+
+            // fix for bug where input value is returned from debounce as id instead of label
+            if (value === inputValue && inputValue !== "") {
+              ensureProperValues();
             }
 
             return (
