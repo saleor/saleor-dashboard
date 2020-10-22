@@ -74,7 +74,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
-  onSubmit(data: MetadataFormData);
+  onSubmit(data: MetadataFormData): Promise<any[]>;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -123,7 +123,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       metadata,
       privateMetadata
     });

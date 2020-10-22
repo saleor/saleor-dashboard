@@ -14,10 +14,10 @@ import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../PluginsDetailsPage";
+import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
 
 interface PluginSettingsProps {
-  data: FormData;
+  data: PluginDetailsPageFormData;
   errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;

@@ -50,7 +50,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onChangePassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
-  onSubmit: (data: StaffDetailsFormData) => void;
+  onSubmit: (data: StaffDetailsFormData) => Promise<any[]>;
   onImageUpload(file: File);
 }
 

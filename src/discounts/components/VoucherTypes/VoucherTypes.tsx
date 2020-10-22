@@ -10,10 +10,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherTypesProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -68,7 +68,7 @@ const VoucherTypes = ({
             disabled={disabled}
             error={!!formErrors.discountType}
             hint={getDiscountErrorMessage(formErrors.discountType, intl)}
-            name={"discountType" as keyof FormData}
+            name={"discountType" as keyof VoucherDetailsPageFormData}
             value={data.discountType}
             onChange={onChange}
           />

@@ -61,7 +61,7 @@ export interface CategoryUpdatePageProps
   };
   saveButtonBarState: ConfirmButtonTransitionState;
   onImageDelete: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => Promise<any[]>;
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
@@ -139,7 +139,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       metadata,
       privateMetadata

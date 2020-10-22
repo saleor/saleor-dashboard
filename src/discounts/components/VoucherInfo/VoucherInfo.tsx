@@ -11,10 +11,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { generateCode } from "../../../misc";
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherInfoProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
   variant: "create" | "update";
@@ -61,7 +61,7 @@ const VoucherInfo = ({
           error={!!formErrors.code}
           fullWidth
           helperText={getDiscountErrorMessage(formErrors.code, intl)}
-          name={"code" as keyof FormData}
+          name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
             defaultMessage: "Discount Code"
           })}

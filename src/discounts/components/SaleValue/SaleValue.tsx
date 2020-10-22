@@ -10,11 +10,11 @@ import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../SaleDetailsPage";
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
 export interface SaleValueProps {
   currencySymbol: string;
-  data: FormData;
+  data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: FormChange;
