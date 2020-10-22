@@ -10,10 +10,10 @@ import { SaleType as SaleTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import { FormData } from "../SaleDetailsPage";
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
 export interface SaleTypeProps {
-  data: FormData;
+  data: SaleDetailsPageFormData;
   disabled: boolean;
   onChange: FormChange;
 }
@@ -70,7 +70,7 @@ const SaleType: React.FC<SaleTypeProps> = props => {
         <RadioGroupField
           choices={choices}
           disabled={disabled}
-          name={"type" as keyof FormData}
+          name={"type" as keyof SaleDetailsPageFormData}
           value={data.type}
           onChange={onChange}
         />

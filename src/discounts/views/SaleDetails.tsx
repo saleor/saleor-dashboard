@@ -27,6 +27,7 @@ import { decimal, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { DiscountValueTypeEnum, SaleType } from "../../types/globalTypes";
 import SaleDetailsPage, {
+  SaleDetailsPageFormData,
   SaleDetailsPageTab
 } from "../components/SaleDetailsPage";
 import {
@@ -192,6 +193,30 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                           });
 
+                        const handleSubmit = async (
+                          data: SaleDetailsPageFormData
+                        ) => {
+                          const result = await saleUpdate({
+                            variables: {
+                              id,
+                              input: {
+                                endDate: data.hasEndDate
+                                  ? joinDateTime(data.endDate, data.endTime)
+                                  : null,
+                                name: data.name,
+                                startDate: joinDateTime(
+                                  data.startDate,
+                                  data.startTime
+                                ),
+                                type: discountValueTypeEnum(data.type),
+                                value: decimal(data.value)
+                              }
+                            }
+                          });
+
+                          return result.data.saleUpdate.errors;
+                        };
+
                         const {
                           loadNextPage,
                           loadPreviousPage,
@@ -244,30 +269,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               activeTab={params.activeTab}
                               onBack={() => navigate(saleListUrl())}
                               onTabClick={changeTab}
-                              onSubmit={formData =>
-                                saleUpdate({
-                                  variables: {
-                                    id,
-                                    input: {
-                                      endDate: formData.hasEndDate
-                                        ? joinDateTime(
-                                            formData.endDate,
-                                            formData.endTime
-                                          )
-                                        : null,
-                                      name: formData.name,
-                                      startDate: joinDateTime(
-                                        formData.startDate,
-                                        formData.startTime
-                                      ),
-                                      type: discountValueTypeEnum(
-                                        formData.type
-                                      ),
-                                      value: decimal(formData.value)
-                                    }
-                                  }
-                                })
-                              }
+                              onSubmit={handleSubmit}
                               onRemove={() => openModal("remove")}
                               saveButtonBarState={saleUpdateOpts.status}
                               categoryListToolbar={

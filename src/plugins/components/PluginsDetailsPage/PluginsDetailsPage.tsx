@@ -23,7 +23,7 @@ import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
-export interface FormData {
+export interface PluginDetailsPageFormData {
   active: boolean;
   configuration: ConfigurationItemInput[];
 }
@@ -36,7 +36,7 @@ export interface PluginsDetailsPageProps {
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: PluginDetailsPageFormData) => void;
 }
 
 const useStyles = makeStyles(
@@ -64,7 +64,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const initialForm: FormData = {
+  const initialForm: PluginDetailsPageFormData = {
     active: plugin?.active || false,
     configuration: plugin?.configuration
       ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))

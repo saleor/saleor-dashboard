@@ -54,7 +54,7 @@ export interface SiteSettingsPageProps {
   onBack: () => void;
   onKeyAdd: () => void;
   onKeyRemove: (keyType: AuthorizationKeyType) => void;
-  onSubmit: (data: SiteSettingsPageFormData) => void;
+  onSubmit: (data: SiteSettingsPageFormData) => Promise<any[]>;
 }
 
 export function areAddressInputFieldsModified(
@@ -105,7 +105,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const {
     errors: validationErrors,
     submit: handleSubmitWithAddress
-  } = useAddressValidation<SiteSettingsPageFormData>(onSubmit);
+  } = useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: maybe(() => shop.companyAddress.city, ""),
@@ -134,7 +134,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const submitFunc = areAddressInputFieldsModified(data)
           ? handleSubmitWithAddress
           : onSubmit;
-        submitFunc(data);
+        return submitFunc(data);
       }}
       confirmLeave
     >

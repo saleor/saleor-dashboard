@@ -46,7 +46,7 @@ export interface ShippingZoneDetailsPageProps
   onPriceRateAdd: () => void;
   onPriceRateEdit: (id: string) => void;
   onRateRemove: (rateId: string) => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => Promise<any[]>;
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;

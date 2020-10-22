@@ -9,10 +9,10 @@ import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherLimitsProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
@@ -44,7 +44,7 @@ const VoucherLimits = ({
             defaultMessage:
               "Limit number of times this discount can be used in total"
           })}
-          name={"hasUsageLimit" as keyof FormData}
+          name={"hasUsageLimit" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
         {data.hasUsageLimit && (
@@ -56,7 +56,7 @@ const VoucherLimits = ({
               defaultMessage: "Limit of Uses",
               description: "voucher"
             })}
-            name={"usageLimit" as keyof FormData}
+            name={"usageLimit" as keyof VoucherDetailsPageFormData}
             value={data.usageLimit}
             onChange={onChange}
             type="number"
@@ -72,7 +72,7 @@ const VoucherLimits = ({
             defaultMessage: "Limit to one use per customer",
             description: "limit voucher"
           })}
-          name={"applyOncePerCustomer" as keyof FormData}
+          name={"applyOncePerCustomer" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
       </CardContent>

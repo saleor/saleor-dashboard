@@ -56,7 +56,7 @@ export interface PermissionGroupDetailsPageProps
   onAssign: () => void;
   onBack: () => void;
   onUnassign: (ids: string[]) => void;
-  onSubmit(data: PermissionGroupDetailsPageFormData);
+  onSubmit: (data: PermissionGroupDetailsPageFormData) => Promise<any[]>;
 }
 
 const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({

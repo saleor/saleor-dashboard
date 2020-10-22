@@ -25,7 +25,7 @@ import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
-export interface FormData {
+export interface SaleDetailsPageFormData {
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -70,7 +70,7 @@ export interface SaleDetailsPageProps
   onProductUnassign: (id: string) => void;
   onProductClick: (id: string) => () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: SaleDetailsPageFormData) => void;
   onTabClick: (index: SaleDetailsPageTab) => void;
 }
 
@@ -111,7 +111,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const initialForm: FormData = {
+  const initialForm: SaleDetailsPageFormData = {
     endDate: splitDateTime(maybe(() => sale.endDate, "")).date,
     endTime: splitDateTime(maybe(() => sale.endDate, "")).time,
     hasEndDate: maybe(() => !!sale.endDate),

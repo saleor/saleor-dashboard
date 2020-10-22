@@ -31,6 +31,7 @@ import {
 } from "../../types/globalTypes";
 import DiscountCountrySelectDialog from "../components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
+  VoucherDetailsPageFormData,
   VoucherDetailsPageTab
 } from "../components/VoucherDetailsPage";
 import {
@@ -195,6 +196,54 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                           });
 
+                        const handleSubmit = async (
+                          data: VoucherDetailsPageFormData
+                        ) => {
+                          const result = await voucherUpdate({
+                            variables: {
+                              id,
+                              input: {
+                                applyOncePerCustomer: data.applyOncePerCustomer,
+                                applyOncePerOrder: data.applyOncePerOrder,
+                                discountValue:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? 100
+                                    : decimal(data.value),
+                                discountValueType:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? DiscountValueTypeEnum.PERCENTAGE
+                                    : data.discountType,
+                                endDate: data.hasEndDate
+                                  ? joinDateTime(data.endDate, data.endTime)
+                                  : null,
+                                minAmountSpent:
+                                  data.requirementsPicker !==
+                                  RequirementsPicker.ORDER
+                                    ? 0
+                                    : parseFloat(data.minSpent),
+                                minCheckoutItemsQuantity:
+                                  data.requirementsPicker !==
+                                  RequirementsPicker.ITEM
+                                    ? 0
+                                    : parseFloat(data.minCheckoutItemsQuantity),
+                                startDate: joinDateTime(
+                                  data.startDate,
+                                  data.startTime
+                                ),
+                                type:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? VoucherTypeEnum.SHIPPING
+                                    : data.type,
+                                usageLimit: data.hasUsageLimit
+                                  ? parseInt(data.usageLimit, 10)
+                                  : null
+                              }
+                            }
+                          });
+
+                          return result.data.voucherUpdate.errors;
+                        };
+
                         const {
                           loadNextPage,
                           loadPreviousPage,
@@ -291,59 +340,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               activeTab={params.activeTab}
                               onBack={() => navigate(voucherListUrl())}
                               onTabClick={changeTab}
-                              onSubmit={formData =>
-                                voucherUpdate({
-                                  variables: {
-                                    id,
-                                    input: {
-                                      applyOncePerCustomer:
-                                        formData.applyOncePerCustomer,
-                                      applyOncePerOrder:
-                                        formData.applyOncePerOrder,
-                                      discountValue:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? 100
-                                          : decimal(formData.value),
-                                      discountValueType:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? DiscountValueTypeEnum.PERCENTAGE
-                                          : formData.discountType,
-                                      endDate: formData.hasEndDate
-                                        ? joinDateTime(
-                                            formData.endDate,
-                                            formData.endTime
-                                          )
-                                        : null,
-                                      minAmountSpent:
-                                        formData.requirementsPicker !==
-                                        RequirementsPicker.ORDER
-                                          ? 0
-                                          : parseFloat(formData.minSpent),
-                                      minCheckoutItemsQuantity:
-                                        formData.requirementsPicker !==
-                                        RequirementsPicker.ITEM
-                                          ? 0
-                                          : parseFloat(
-                                              formData.minCheckoutItemsQuantity
-                                            ),
-                                      startDate: joinDateTime(
-                                        formData.startDate,
-                                        formData.startTime
-                                      ),
-                                      type:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? VoucherTypeEnum.SHIPPING
-                                          : formData.type,
-                                      usageLimit: formData.hasUsageLimit
-                                        ? parseInt(formData.usageLimit, 10)
-                                        : null
-                                    }
-                                  }
-                                })
-                              }
+                              onSubmit={handleSubmit}
                               onRemove={() => openModal("remove")}
                               saveButtonBarState={voucherUpdateOpts.status}
                               categoryListToolbar={

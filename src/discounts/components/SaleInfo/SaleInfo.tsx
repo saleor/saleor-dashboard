@@ -9,10 +9,10 @@ import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../SaleDetailsPage";
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
 export interface SaleInfoProps {
-  data: FormData;
+  data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -38,7 +38,7 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
           disabled={disabled}
           error={!!formErrors.name}
           helperText={getDiscountErrorMessage(formErrors.name, intl)}
-          name={"name" as keyof FormData}
+          name={"name" as keyof SaleDetailsPageFormData}
           onChange={onChange}
           label={intl.formatMessage({
             defaultMessage: "Name",
