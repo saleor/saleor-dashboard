@@ -5,6 +5,7 @@ import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,7 +17,6 @@ import {
   SortPage,
   TabPageProps
 } from "../../../types";
-// import { PageTypeList_pageTypes_edges_node } from "../../types/PageTypeList";
 import PageTypeList from "../PageTypeList";
 import {
   createFilterStructure,
@@ -30,7 +30,7 @@ export interface PageTypeListPageProps
     FilterPageProps<PageTypeFilterKeys, PageTypeListFilterOpts>,
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
-  pageTypes: any[]; // TODO FIX!!!
+  pageTypes: PageTypeList_pageTypes_edges_node[];
   onBack: () => void;
 }
 
