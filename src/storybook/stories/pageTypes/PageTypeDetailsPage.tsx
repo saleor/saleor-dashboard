@@ -12,6 +12,7 @@ import { pageType } from "../../../pageTypes/fixtures";
 import Decorator from "../../Decorator";
 
 const props: Omit<PageTypeDetailsPageProps, "classes"> = {
+  attributeList: listActionsProps,
   disabled: false,
   errors: [],
   onAttributeAdd: () => undefined,
@@ -22,7 +23,6 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   onDelete: () => undefined,
   onSubmit: () => undefined,
   pageTitle: pageType.name,
-  pageAttributeList: listActionsProps,
   pageType,
   saveButtonBarState: "default"
 };
