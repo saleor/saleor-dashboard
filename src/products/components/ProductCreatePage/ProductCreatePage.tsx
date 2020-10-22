@@ -128,151 +128,156 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
     >
-      {({ change, data, handlers, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.products)}
-          </AppHeader>
-          <PageHeader title={header} />
-          <Grid>
-            <div>
-              <ProductDetailsForm
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                initialDescription={initialDescription.current}
-                onChange={change}
-              />
-              <CardSpacer />
-              {data.attributes.length > 0 && (
-                <ProductAttributes
-                  attributes={data.attributes}
+      {({ change, data, handlers, hasChanged, submit }) => {
+        // Comparing explicitly to false because `hasVariants` can be undefined
+        const isSimpleProduct = data.productType?.hasVariants === false;
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.products)}
+            </AppHeader>
+            <PageHeader title={header} />
+            <Grid>
+              <div>
+                <ProductDetailsForm
+                  data={data}
                   disabled={disabled}
                   errors={errors}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMultiple}
+                  initialDescription={initialDescription.current}
+                  onChange={change}
                 />
-              )}
-              <CardSpacer />
-              {!data.productType?.hasVariants && (
-                <>
-                  <ProductShipping
-                    data={data}
+                <CardSpacer />
+                {data.attributes.length > 0 && (
+                  <ProductAttributes
+                    attributes={data.attributes}
                     disabled={disabled}
                     errors={errors}
-                    weightUnit={weightUnit}
-                    onChange={change}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMultiple}
                   />
-                  <ProductPricing
-                    currency={currency}
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <ProductStocks
-                    data={data}
-                    disabled={disabled}
-                    hasVariants={false}
-                    onFormDataChange={change}
-                    errors={errors}
-                    stocks={data.stocks}
-                    warehouses={warehouses}
-                    onChange={handlers.changeStock}
-                    onWarehouseStockAdd={handlers.addStock}
-                    onWarehouseStockDelete={handlers.deleteStock}
-                    onWarehouseConfigure={onWarehouseConfigure}
-                  />
-                  <CardSpacer />
-                </>
-              )}
-              <SeoForm
-                allowEmptySlug={true}
-                helperText={intl.formatMessage({
-                  defaultMessage:
-                    "Add search engine title and description to make this product easier to find"
-                })}
-                title={data.seoTitle}
-                slug={data.slug}
-                slugPlaceholder={data.name}
-                titlePlaceholder={data.name}
-                description={data.seoDescription}
-                descriptionPlaceholder={data.seoTitle}
-                loading={disabled}
-                onChange={change}
-              />
-              <CardSpacer />
-              <Metadata data={data} onChange={handlers.changeMetadata} />
-            </div>
-            <div>
-              <ProductOrganization
-                canChangeType={true}
-                categories={categories}
-                categoryInputDisplayValue={selectedCategory}
-                collections={collections}
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                fetchCategories={fetchCategories}
-                fetchCollections={fetchCollections}
-                fetchMoreCategories={fetchMoreCategories}
-                fetchMoreCollections={fetchMoreCollections}
-                fetchMoreProductTypes={fetchMoreProductTypes}
-                fetchProductTypes={fetchProductTypes}
-                productType={data.productType}
-                productTypeInputDisplayValue={data.productType?.name || ""}
-                productTypes={productTypes}
-                onCategoryChange={handlers.selectCategory}
-                onCollectionChange={handlers.selectCollection}
-                onProductTypeChange={handlers.selectProductType}
-                collectionsInputDisplayValue={selectedCollections}
-              />
-              <CardSpacer />
-              <AvailabilityCard
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                messages={{
-                  hiddenLabel: intl.formatMessage({
-                    defaultMessage: "Not published",
-                    description: "product label"
-                  }),
-                  hiddenSecondLabel: intl.formatMessage(
-                    {
-                      defaultMessage: "will become published on {date}",
-                      description: "product publication date label"
-                    },
-                    {
-                      date: localizeDate(data.publicationDate, "L")
-                    }
-                  ),
-                  visibleLabel: intl.formatMessage({
-                    defaultMessage: "Published",
-                    description: "product label"
-                  })
-                }}
-                onChange={change}
-              />
-              <CardSpacer />
-              <ProductTaxes
-                data={data}
-                disabled={disabled}
-                onChange={change}
-                onTaxTypeChange={handlers.selectTaxRate}
-                selectedTaxTypeDisplayName={selectedTaxType}
-                taxTypes={taxTypes}
-              />
-            </div>
-          </Grid>
-          <SaveButtonBar
-            onCancel={onBack}
-            onSave={submit}
-            state={saveButtonBarState}
-            disabled={disabled || !onSubmit || !hasChanged}
-          />
-        </Container>
-      )}
+                )}
+                <CardSpacer />
+                {isSimpleProduct && (
+                  <>
+                    <ProductShipping
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      weightUnit={weightUnit}
+                      onChange={change}
+                    />
+                    <ProductPricing
+                      currency={currency}
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={change}
+                    />
+                    <CardSpacer />
+                    <ProductStocks
+                      data={data}
+                      disabled={disabled}
+                      hasVariants={false}
+                      onFormDataChange={change}
+                      errors={errors}
+                      stocks={data.stocks}
+                      warehouses={warehouses}
+                      onChange={handlers.changeStock}
+                      onWarehouseStockAdd={handlers.addStock}
+                      onWarehouseStockDelete={handlers.deleteStock}
+                      onWarehouseConfigure={onWarehouseConfigure}
+                    />
+                    <CardSpacer />
+                  </>
+                )}
+                <SeoForm
+                  allowEmptySlug={true}
+                  helperText={intl.formatMessage({
+                    defaultMessage:
+                      "Add search engine title and description to make this product easier to find"
+                  })}
+                  title={data.seoTitle}
+                  slug={data.slug}
+                  slugPlaceholder={data.name}
+                  titlePlaceholder={data.name}
+                  description={data.seoDescription}
+                  descriptionPlaceholder={data.seoTitle}
+                  loading={disabled}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={handlers.changeMetadata} />
+              </div>
+              <div>
+                <ProductOrganization
+                  canChangeType={true}
+                  categories={categories}
+                  categoryInputDisplayValue={selectedCategory}
+                  collections={collections}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  fetchCategories={fetchCategories}
+                  fetchCollections={fetchCollections}
+                  fetchMoreCategories={fetchMoreCategories}
+                  fetchMoreCollections={fetchMoreCollections}
+                  fetchMoreProductTypes={fetchMoreProductTypes}
+                  fetchProductTypes={fetchProductTypes}
+                  productType={data.productType}
+                  productTypeInputDisplayValue={data.productType?.name || ""}
+                  productTypes={productTypes}
+                  onCategoryChange={handlers.selectCategory}
+                  onCollectionChange={handlers.selectCollection}
+                  onProductTypeChange={handlers.selectProductType}
+                  collectionsInputDisplayValue={selectedCollections}
+                />
+                <CardSpacer />
+                <AvailabilityCard
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  messages={{
+                    hiddenLabel: intl.formatMessage({
+                      defaultMessage: "Not published",
+                      description: "product label"
+                    }),
+                    hiddenSecondLabel: intl.formatMessage(
+                      {
+                        defaultMessage: "will become published on {date}",
+                        description: "product publication date label"
+                      },
+                      {
+                        date: localizeDate(data.publicationDate, "L")
+                      }
+                    ),
+                    visibleLabel: intl.formatMessage({
+                      defaultMessage: "Published",
+                      description: "product label"
+                    })
+                  }}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <ProductTaxes
+                  data={data}
+                  disabled={disabled}
+                  onChange={change}
+                  onTaxTypeChange={handlers.selectTaxRate}
+                  selectedTaxTypeDisplayName={selectedTaxType}
+                  taxTypes={taxTypes}
+                />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              onCancel={onBack}
+              onSave={submit}
+              state={saveButtonBarState}
+              disabled={disabled || !onSubmit || !hasChanged}
+            />
+          </Container>
+        );
+      }}
     </ProductCreateForm>
   );
 };
