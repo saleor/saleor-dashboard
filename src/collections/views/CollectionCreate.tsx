@@ -47,6 +47,14 @@ export const CollectionCreate: React.FC = () => {
     }
   });
 
+  const getPublicationData = ({
+    publicationDate,
+    isPublished
+  }: CollectionCreatePageFormData) => ({
+    isPublished: !!publicationDate || isPublished,
+    publicationDate: publicationDate || null
+  });
+
   const handleCreate = async (formData: CollectionCreatePageFormData) => {
     const result = await createCollection({
       variables: {
@@ -54,18 +62,19 @@ export const CollectionCreate: React.FC = () => {
           backgroundImage: formData.backgroundImage.value,
           backgroundImageAlt: formData.backgroundImageAlt,
           descriptionJson: JSON.stringify(formData.description),
-          isPublished: formData.isPublished,
           name: formData.name,
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
-          }
+          },
+          ...getPublicationData(formData)
         }
       }
     });
 
     return result.data?.collectionCreate.collection?.id || null;
   };
+
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
