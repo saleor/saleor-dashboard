@@ -125,7 +125,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
             );
 
             const ensureProperValues = (alwaysCheck: boolean = false) => {
-              if (allowCustomValues && !alwaysCheck) {
+              if ((allowCustomValues || isValueInLabels) && !alwaysCheck) {
                 return;
               }
 
