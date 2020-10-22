@@ -1,5 +1,4 @@
 import { IFilterElement } from "@saleor/components/Filter";
-import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   PageTypeFilterKeys,
   PageTypeListFilterOpts
@@ -20,7 +19,7 @@ import {
 export const PAGE_TYPE_FILTERS_KEY = "pageTypeFilters";
 
 export function getFilterOpts(
-  params: PageTypeListUrlFilters
+  _params: PageTypeListUrlFilters
 ): PageTypeListFilterOpts {
   return {};
 }

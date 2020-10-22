@@ -7,12 +7,10 @@ import SaveFilterTabDialog, {
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -20,7 +18,6 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
@@ -50,14 +47,12 @@ interface PageTypeListProps {
 
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
   const paginate = usePaginator();
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
   const { settings } = useListSettings(ListViews.PAGES_LIST);
-  const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -68,7 +63,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     }),
     [params]
   );
-  const { data, loading, refetch } = usePageTypeListQuery({
+  const { data, loading } = usePageTypeListQuery({
     displayLoader: true,
     variables: queryVariables
   });
