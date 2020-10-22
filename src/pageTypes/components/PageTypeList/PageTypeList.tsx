@@ -3,13 +3,13 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -45,7 +45,7 @@ interface PageTypeListProps
   extends ListProps,
     ListActions,
     SortPage<PageTypeListUrlSortField> {
-  pageTypes: any[]; // TODO FIX!!!
+  pageTypes: PageTypeList_pageTypes_edges_node[]; // TODO FIX!!!
 }
 
 const numberOfColumns = 4;
@@ -134,9 +134,6 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                   {pageType ? (
                     <>
                       <span data-test="name">{pageType.name}</span>
-                      <Typography variant="caption">
-                        {"Page type name TODO FIX!!!" /* TDOD FIX!!!*/}
-                      </Typography>
                     </>
                   ) : (
                     <Skeleton />
