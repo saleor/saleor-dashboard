@@ -208,6 +208,14 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
+  "pageTypeCreateHeader": {
+    "context": "window title",
+    "string": "Create Page Type"
+  },
+  "pageTypeCreatePageHeader": {
+    "context": "header",
+    "string": "Create Page Type"
+  },
   "productExportFieldAvailability": {
     "context": "product field",
     "string": "Available for purchase"
@@ -3555,6 +3563,48 @@
     "context": "page types section name",
     "string": "Page Types"
   },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1192828581": {
+    "string": "No attributes found"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1228425832": {
+    "string": "Attribute name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1656462109": {
+    "context": "button",
+    "string": "Assign attribute"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_3478065224": {
+    "context": "attribute internal name",
+    "string": "Slug"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_3466659718": {
+    "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetails_dot_1631499902": {
+    "string": "Content Type Name"
+  },
   "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
     "context": "button",
     "string": "create page type"
@@ -3572,6 +3622,13 @@
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
     "string": "No page types found"
+  },
+  "src_dot_pageTypes_dot_views_dot_870815507": {
+    "context": "unassign attribute from page type, button",
+    "string": "Unassign"
+  },
+  "src_dot_pageTypes_dot_views_dot_98187848": {
+    "string": "Successfully created page type"
   },
   "src_dot_pages": {
     "context": "pages section name",

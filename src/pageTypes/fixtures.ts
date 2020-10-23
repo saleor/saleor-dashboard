@@ -1,4 +1,6 @@
 /* eslint-disable sort-keys */
+import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+
 import { PageTypeDetails_pageType } from "./types/PageTypeDetails";
 import { PageTypeList_pageTypes_edges_node } from "./types/PageTypeList";
 
@@ -37,21 +39,30 @@ export const pageType: PageTypeDetails_pageType = {
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      filterableInDashboard: true,
+      filterableInStorefront: true,
+      type: AttributeTypeEnum.PAGE_TYPE
     },
     {
       __typename: "Attribute" as "Attribute",
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      filterableInDashboard: true,
+      filterableInStorefront: true,
+      type: AttributeTypeEnum.PAGE_TYPE
     },
     {
       __typename: "Attribute" as "Attribute",
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      filterableInDashboard: true,
+      filterableInStorefront: true,
+      type: AttributeTypeEnum.PAGE_TYPE
     }
   ],
   privateMetadata: []
