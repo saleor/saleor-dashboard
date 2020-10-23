@@ -18,7 +18,7 @@ import { PageUpdate, PageUpdateVariables } from "./types/PageUpdate";
 const pageCreate = gql`
   ${pageDetailsFragment}
   ${pageErrorFragment}
-  mutation PageCreate($input: PageInput!) {
+  mutation PageCreate($input: PageCreateInput!) {
     pageCreate(input: $input) {
       errors: pageErrors {
         ...PageErrorFragment

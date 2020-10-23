@@ -624,6 +624,7 @@ export enum OrderStatusFilter {
 }
 
 export enum PageErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -983,11 +984,6 @@ export interface AppTokenInput {
   app: string;
 }
 
-export interface AttributeAssignInput {
-  id: string;
-  type: ProductAttributeType;
-}
-
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
   name: string;
@@ -1291,6 +1287,17 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
+export interface PageCreateInput {
+  slug?: string | null;
+  title?: string | null;
+  content?: string | null;
+  contentJson?: any | null;
+  isPublished?: boolean | null;
+  publicationDate?: string | null;
+  seo?: SeoInput | null;
+  pageType: string;
+}
+
 export interface PageFilterInput {
   search?: string | null;
 }
@@ -1381,6 +1388,11 @@ export interface PluginUpdateInput {
 export interface PriceRangeInput {
   gte?: number | null;
   lte?: number | null;
+}
+
+export interface ProductAttributeAssignInput {
+  id: string;
+  type: ProductAttributeType;
 }
 
 export interface ProductCreateInput {

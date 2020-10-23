@@ -4,9 +4,9 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {
-  AssignAttribute,
-  AssignAttributeVariables
-} from "./types/AssignAttribute";
+  AssignProductAttribute,
+  AssignProductAttributeVariables
+} from "./types/AssignProductAttribute";
 import {
   ProductTypeAttributeReorder,
   ProductTypeAttributeReorderVariables
@@ -28,9 +28,9 @@ import {
   ProductTypeUpdateVariables
 } from "./types/ProductTypeUpdate";
 import {
-  UnassignAttribute,
-  UnassignAttributeVariables
-} from "./types/UnassignAttribute";
+  UnassignProductAttribute,
+  UnassignProductAttributeVariables
+} from "./types/UnassignProductAttribute";
 
 export const productTypeDeleteMutation = gql`
   mutation ProductTypeDelete($id: ID!) {
@@ -84,11 +84,14 @@ export const useProductTypeUpdateMutation = makeMutation<
   ProductTypeUpdateVariables
 >(productTypeUpdateMutation);
 
-export const assignAttributeMutation = gql`
+export const assignProductAttributeMutation = gql`
   ${productTypeDetailsFragment}
-  mutation AssignAttribute($id: ID!, $operations: [AttributeAssignInput!]!) {
-    attributeAssign(productTypeId: $id, operations: $operations) {
-      errors {
+  mutation AssignProductAttribute(
+    $id: ID!
+    $operations: [ProductAttributeAssignInput!]!
+  ) {
+    productAttributeAssign(productTypeId: $id, operations: $operations) {
+      errors: productErrors {
         field
         message
       }
@@ -98,16 +101,16 @@ export const assignAttributeMutation = gql`
     }
   }
 `;
-export const TypedAssignAttributeMutation = TypedMutation<
-  AssignAttribute,
-  AssignAttributeVariables
->(assignAttributeMutation);
+export const TypedAssignProductAttributeMutation = TypedMutation<
+  AssignProductAttribute,
+  AssignProductAttributeVariables
+>(assignProductAttributeMutation);
 
-export const unassignAttributeMutation = gql`
+export const unassignProductAttributeMutation = gql`
   ${productTypeDetailsFragment}
-  mutation UnassignAttribute($id: ID!, $ids: [ID]!) {
-    attributeUnassign(productTypeId: $id, attributeIds: $ids) {
-      errors {
+  mutation UnassignProductAttribute($id: ID!, $ids: [ID]!) {
+    productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
+      errors: productErrors {
         field
         message
       }
@@ -117,10 +120,10 @@ export const unassignAttributeMutation = gql`
     }
   }
 `;
-export const TypedUnassignAttributeMutation = TypedMutation<
-  UnassignAttribute,
-  UnassignAttributeVariables
->(unassignAttributeMutation);
+export const TypedUnassignProductAttributeMutation = TypedMutation<
+  UnassignProductAttribute,
+  UnassignProductAttributeVariables
+>(unassignProductAttributeMutation);
 
 export const productTypeCreateMutation = gql`
   ${productTypeDetailsFragment}

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PageInput, PageErrorCode } from "./../../types/globalTypes";
+import { PageCreateInput, PageErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PageCreate
@@ -37,5 +37,5 @@ export interface PageCreate {
 }
 
 export interface PageCreateVariables {
-  input: PageInput;
+  input: PageCreateInput;
 }
