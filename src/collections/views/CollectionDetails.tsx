@@ -206,7 +206,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             },
             slug: formData.slug
           };
-
           const result = await updateCollection({
             variables: {
               id,

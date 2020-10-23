@@ -76,7 +76,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
