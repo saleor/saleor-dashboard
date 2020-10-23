@@ -56,14 +56,50 @@ export const pageType: PageTypeDetails_pageType = {
     },
     {
       __typename: "Attribute" as "Attribute",
-      id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
-      name: "Publisher",
-      slug: "publisher",
+      id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
+      name: "Author",
+      slug: "author",
       visibleInStorefront: true,
       filterableInDashboard: true,
       filterableInStorefront: true,
       type: AttributeTypeEnum.PAGE_TYPE
     }
   ],
-  privateMetadata: []
+  privateMetadata: [],
+  availableAttributes: {
+    edges: [
+      {
+        node: {
+          __typename: "Attribute" as "Attribute",
+          id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
+          name: "Author",
+          slug: "author",
+          visibleInStorefront: true,
+          filterableInDashboard: true,
+          filterableInStorefront: true,
+          type: AttributeTypeEnum.PAGE_TYPE
+        },
+        __typename: "AttributeCountableEdge"
+      },
+      {
+        node: {
+          __typename: "Attribute" as "Attribute",
+          id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
+          name: "Author",
+          slug: "author",
+          visibleInStorefront: true,
+          filterableInDashboard: true,
+          filterableInStorefront: true,
+          type: AttributeTypeEnum.PAGE_TYPE
+        },
+        __typename: "AttributeCountableEdge"
+      }
+    ],
+    pageInfo: {
+      endCursor: "WyIwIiwgInRhZyJd",
+      hasNextPage: false,
+      __typename: "PageInfo"
+    },
+    __typename: "AttributeCountableConnection"
+  }
 };

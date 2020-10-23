@@ -2,11 +2,17 @@ import Button from "@material-ui/core/Button";
 import { attributeUrl } from "@saleor/attributes/urls";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { usePageTypeUpdateMutation } from "@saleor/pageTypes/mutations";
+import {
+  useAssignPageAttributeMutation,
+  usePageTypeUpdateMutation,
+  useUnassignPageAttributeMutation
+} from "@saleor/pageTypes/mutations";
+import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -18,6 +24,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
+import useAvailableAttributeSearch from "../hooks/useAvailableAttributeSearch";
 import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
@@ -26,7 +33,10 @@ interface PageTypeDetailsProps {
   params: PageTypeUrlQueryParams;
 }
 
-export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
+export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
+  id,
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const attributeListActions = useBulkActions();
@@ -56,6 +66,14 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
       }
     }
   });
+  const [
+    assignAttribute,
+    assignAttributeOpts
+  ] = useAssignPageAttributeMutation({ onCompleted: data => undefined });
+  const [
+    unassignAttribute,
+    unassignAttributeOpts
+  ] = useUnassignPageAttributeMutation({ onCompleted: data => undefined });
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
@@ -74,9 +92,30 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
 
     return result.data.pageTypeUpdate.errors;
   };
+  const handleAssignAttribute = () =>
+    assignAttribute({
+      variables: {
+        id,
+        ids: params.ids
+      }
+    });
+  const handleAttributeUnassign = () =>
+    unassignAttribute({
+      variables: {
+        id,
+        ids: [params.id]
+      }
+    });
 
   const { data, loading: dataLoading } = usePageTypeDetailsQuery({
     variables: { id }
+  });
+
+  const { loadMore, search, result } = useAvailableAttributeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      id
+    }
   });
 
   const pageType = data?.pageType;
@@ -84,6 +123,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
   if (pageType === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
+
+  const closeModal = () => navigate(pageTypeUrl(id), true);
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.pageType,
@@ -155,6 +196,42 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
           )
         }}
       />
+      {!dataLoading && (
+        <AssignAttributeDialog
+          attributes={assignAttributeOpts.data?.pageAttributeAssign.pageType.availableAttributes.edges.map(
+            edge => edge.node
+          )}
+          confirmButtonState={assignAttributeOpts.status}
+          errors={
+            assignAttributeOpts.error?.message
+              ? [assignAttributeOpts.error.message]
+              : []
+          }
+          loading={assignAttributeOpts.loading}
+          onClose={closeModal}
+          onSubmit={handleAssignAttribute}
+          onFetch={search}
+          onFetchMore={loadMore}
+          onOpen={result.refetch}
+          hasMore={
+            !!assignAttributeOpts.data?.pageAttributeAssign.pageType
+              .availableAttributes.pageInfo.hasNextPage
+          }
+          open={params.action === "assign-attribute"}
+          selected={params.ids || []}
+          onToggle={attributeId => {
+            const ids = params.ids || [];
+            navigate(
+              pageTypeUrl(id, {
+                ...params,
+                ids: ids.includes(attributeId)
+                  ? params.ids.filter(selectedId => selectedId !== attributeId)
+                  : [...ids, attributeId]
+              })
+            );
+          }}
+        />
+      )}
     </>
   );
 };
