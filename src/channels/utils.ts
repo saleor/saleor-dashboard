@@ -18,8 +18,8 @@ export interface ChannelData {
   name: string;
   publicationDate: string | null;
   currency: string;
-  price: number;
-  costPrice: number;
+  price: string;
+  costPrice: string;
   availableForPurchase: string;
   isAvailableForPurchase: boolean;
   visibleInListings: boolean;
@@ -29,8 +29,8 @@ export interface ChannelPriceData {
   id: string;
   name: string;
   currency: string;
-  price: number | null;
-  costPrice?: number | null;
+  price: string;
+  costPrice?: string;
 }
 
 interface IChannelPriceArgs {
@@ -45,31 +45,31 @@ export type ChannelPriceArgs = RequireOnlyOne<
 export interface ChannelVoucherData {
   id: string;
   name: string;
-  discountValue: number | null;
+  discountValue: string;
   currency: string;
-  minSpent: number | null;
+  minSpent: string;
 }
 
 export interface ChannelSaleData {
   id: string;
   name: string;
-  discountValue: number | null;
+  discountValue: string;
   currency: string;
 }
 
 export const createVoucherChannels = (data?: Channels_channels[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
-    discountValue: null,
+    discountValue: "",
     id: channel.id,
-    minSpent: null,
+    minSpent: "",
     name: channel.name
   }));
 
 export const createSaleChannels = (data?: Channels_channels[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
-    discountValue: null,
+    discountValue: "",
     id: channel.id,
     name: channel.name
   }));
@@ -79,18 +79,18 @@ export const createVariantChannels = (
 ): ChannelPriceData[] => {
   if (data) {
     const productChannels = data?.product.channelListing.map(listing => ({
-      costPrice: null,
+      costPrice: "",
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
-      price: null
+      price: ""
     }));
     const variantChannels = data?.channelListing.map(listing => ({
-      costPrice: listing.costPrice?.amount || null,
+      costPrice: listing.costPrice?.amount.toString() || "",
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
-      price: listing.price.amount
+      price: listing.price.amount.toString()
     }));
     return uniqBy([...variantChannels, ...productChannels], obj => obj.id);
   }
@@ -188,16 +188,16 @@ export const createChannelsDataFromVoucher = (
 ) =>
   voucherData?.channelListing?.map(option => ({
     currency: option.channel.currencyCode || option?.minSpent?.currency || "",
-    discountValue: option.discountValue,
+    discountValue: option.discountValue.toString() || "",
     id: option.channel.id,
-    minSpent: option?.minSpent?.amount || null,
+    minSpent: option?.minSpent?.amount.toString() || "",
     name: option.channel.name
   })) || [];
 
 export const createChannelsDataFromSale = (saleData?: SaleDetails_sale) =>
   saleData?.channelListing?.map(option => ({
     currency: option.channel.currencyCode || "",
-    discountValue: option.discountValue,
+    discountValue: option.discountValue.toString() || "",
     id: option.channel.id,
     name: option.channel.name
   })) || [];
@@ -213,13 +213,13 @@ export const createChannelsDataFromProduct = (
     const costPrice = variantChannel?.costPrice;
     return {
       availableForPurchase: option?.availableForPurchase,
-      costPrice: costPrice ? costPrice.amount : null,
+      costPrice: costPrice ? costPrice.amount.toString() : "",
       currency: price ? price.currency : "",
       id: option.channel.id,
       isAvailableForPurchase: !!option?.isAvailableForPurchase,
       isPublished: option.isPublished,
       name: option.channel.name,
-      price: price ? price.amount : null,
+      price: price ? price.amount.toString() : "",
       publicationDate: option.publicationDate,
       visibleInListings: !!option.visibleInListings
     };
