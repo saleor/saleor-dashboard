@@ -6,7 +6,6 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { usePageTypeUpdateMutation } from "@saleor/pageTypes/mutations";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -99,12 +98,12 @@ export const PageTypeUpdate: React.FC<PageTypeUpdateProps> = ({ id }) => {
 
   return (
     <>
-      <WindowTitle title={maybe(() => data.pageType.name)} />
+      <WindowTitle title={data?.pageType.name} />
       <PageTypeDetailsPage
         disabled={loading}
         errors={errors.formErrors}
-        pageTitle={maybe(() => data.pageType.name)}
-        pageType={maybe(() => data.pageType)}
+        pageTitle={data?.pageType.name}
+        pageType={data?.pageType}
         saveButtonBarState={updatePageTypeOpts.status}
         onAttributeAdd={type =>
           navigate(
