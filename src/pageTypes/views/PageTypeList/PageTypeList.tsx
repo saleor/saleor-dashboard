@@ -10,11 +10,9 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
@@ -26,6 +24,7 @@ import {
   pageTypeAddUrl,
   pageTypeListUrl,
   PageTypeListUrlDialog,
+  PageTypeListUrlFilters,
   PageTypeListUrlQueryParams,
   pageTypeUrl
 } from "../../urls";
@@ -33,8 +32,6 @@ import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
-  getFilterOpts,
-  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -48,7 +45,6 @@ interface PageTypeListProps {
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -77,17 +73,16 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: pageTypeListUrl,
-    getFilterQueryParam,
-    navigate,
-    params
-  });
+  const changeFilterField = (filter: PageTypeListUrlFilters) => {
+    reset();
+    navigate(
+      pageTypeListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
 
   const [openModal, closeModal] = createDialogActionHandlers<
     PageTypeListUrlDialog,
@@ -122,18 +117,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
-  const currencySymbol = shop?.defaultCurrency || "USD";
 
   return (
     <>
       <PageTypeListPage
-        currencySymbol={currencySymbol}
         currentTab={currentTab}
-        filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
-        onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
-        onAll={resetFilters}
+        onSearchChange={query => changeFilterField({ query })}
+        onAll={() => navigate(pageTypeListUrl())}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}

@@ -45,10 +45,10 @@ interface PageTypeListProps
   extends ListProps,
     ListActions,
     SortPage<PageTypeListUrlSortField> {
-  pageTypes: PageTypeList_pageTypes_edges_node[]; // TODO FIX!!!
+  pageTypes: PageTypeList_pageTypes_edges_node[];
 }
 
-const numberOfColumns = 4;
+const numberOfColumns = 2;
 
 const PageTypeList: React.FC<PageTypeListProps> = props => {
   const {
@@ -132,9 +132,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colName}>
                   {pageType ? (
-                    <>
-                      <span data-test="name">{pageType.name}</span>
-                    </>
+                    <span data-test="name">{pageType.name}</span>
                   ) : (
                     <Skeleton />
                   )}
