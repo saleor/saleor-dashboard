@@ -56,22 +56,23 @@ export interface ProductCreateData extends ProductCreateFormData {
   stocks: ProductStockInput[];
 }
 
+type ProductCreateHandlers = Record<
+  | "changeMetadata"
+  | "selectCategory"
+  | "selectCollection"
+  | "selectProductType"
+  | "selectTaxRate",
+  FormChange
+> &
+  Record<
+    "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+    FormsetChange<string>
+  > &
+  Record<"addStock" | "deleteStock", (id: string) => void>;
 export interface UseProductCreateFormResult {
   change: FormChange;
   data: ProductCreateData;
-  handlers: Record<
-    | "changeMetadata"
-    | "selectCategory"
-    | "selectCollection"
-    | "selectProductType"
-    | "selectTaxRate",
-    FormChange
-  > &
-    Record<
-      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
-      FormsetChange
-    > &
-    Record<"addStock" | "deleteStock", (id: string) => void>;
+  handlers: ProductCreateHandlers;
   hasChanged: boolean;
   submit: () => Promise<boolean>;
 }
@@ -186,7 +187,7 @@ function useProductCreateForm(
     opts.productTypes,
     triggerChange
   );
-  const handleStockChange: FormsetChange = (id, value) => {
+  const handleStockChange: FormsetChange<string> = (id, value) => {
     triggerChange();
     stocks.change(id, value);
   };

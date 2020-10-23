@@ -8,7 +8,7 @@ import { getAttributeInputFromProductType, ProductType } from "./data";
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   triggerChange: () => void
-): FormsetChange {
+): FormsetChange<string> {
   return (attributeId: string, value: string) => {
     triggerChange();
     changeAttributeData(attributeId, value === "" ? [] : [value]);
@@ -19,7 +19,7 @@ export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributes: FormsetData<ProductAttributeInputData, string[]>,
   triggerChange: () => void
-): FormsetChange {
+): FormsetChange<string> {
   return (attributeId: string, value: string) => {
     const attribute = attributes.find(
       attribute => attribute.id === attributeId
