@@ -26,7 +26,6 @@ interface Value {
 export interface PricingCardProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
-  defaultCurrency: string;
   disabled: boolean;
   onChange: (channelId: string, value: Value) => void;
 }
@@ -35,7 +34,6 @@ const numberOfColumns = 2;
 
 export const PricingCard: React.FC<PricingCardProps> = ({
   channels,
-  defaultCurrency,
   disabled,
   errors,
   onChange
@@ -105,7 +103,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                           price: e.target.value
                         })
                       }
-                      currencySymbol={defaultCurrency}
+                      currencySymbol={channel.currency}
                       required
                       hint={error ? getShippingErrorMessage(error, intl) : ""}
                     />

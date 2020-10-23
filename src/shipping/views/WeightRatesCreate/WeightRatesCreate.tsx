@@ -8,7 +8,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
@@ -35,7 +34,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const shop = useShop();
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
 
@@ -124,7 +122,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        defaultCurrency={shop?.defaultCurrency}
         disabled={
           channelsLoading ||
           createShippingRateOpts?.status === "loading" ||

@@ -26,7 +26,6 @@ interface Value {
 export interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
-  defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;
   onChange: (event: ChangeEvent) => void;
@@ -37,7 +36,6 @@ const numberOfColumns = 3;
 
 export const OrderValue: React.FC<OrderValueProps> = ({
   channels,
-  defaultCurrency,
   errors,
   noLimits,
   disabled,
@@ -146,7 +144,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                             minValue: e.target.value
                           })
                         }
-                        currencySymbol={defaultCurrency}
+                        currencySymbol={channel.currency}
                         hint={
                           minError
                             ? getShippingErrorMessage(minError, intl)
@@ -169,7 +167,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                             maxValue: e.target.value
                           })
                         }
-                        currencySymbol={defaultCurrency}
+                        currencySymbol={channel.currency}
                         hint={
                           maxError
                             ? getShippingErrorMessage(maxError, intl)

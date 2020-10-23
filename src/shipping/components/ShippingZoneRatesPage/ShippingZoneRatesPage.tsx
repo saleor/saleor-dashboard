@@ -33,7 +33,6 @@ export interface FormData {
 export interface ShippingZoneRatesPageProps {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
-  defaultCurrency: string;
   disabled: boolean;
   hasChannelChanged?: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
@@ -51,7 +50,6 @@ export interface ShippingZoneRatesPageProps {
 export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   allChannelsCount,
   shippingChannels,
-  defaultCurrency,
   channelErrors,
   disabled,
   errors,
@@ -124,7 +122,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                     errors={channelErrors}
                     noLimits={data.noLimits}
                     disabled={disabled}
-                    defaultCurrency={defaultCurrency}
                     onChange={change}
                     onChannelsChange={handleChannelsChange}
                   />
@@ -143,7 +140,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   channels={data.channelListing}
                   onChange={handleChannelsChange}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={channelErrors}
                 />
                 <CardSpacer />
