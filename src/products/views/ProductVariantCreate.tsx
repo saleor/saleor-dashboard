@@ -92,7 +92,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         id: variantId,
         input: data.channelListing.map(listing => ({
           channelId: listing.id,
-          costPrice: listing.costPrice,
+          costPrice: listing.costPrice || null,
           price: listing.price
         }))
       }
@@ -169,8 +169,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       <ProductVariantCreatePage
         channels={channels}
         channelErrors={
-          updateChannelsOpts?.data?.productVariantChannelListingUpdate
-            ?.errors || []
+          updateChannelsOpts?.data?.productVariantChannelListingUpdate?.errors
         }
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}

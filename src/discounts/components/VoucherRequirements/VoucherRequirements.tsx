@@ -152,11 +152,7 @@ const VoucherRequirements = ({
                                 }
                                 label={minimalOrderValueText}
                                 name="minSpent"
-                                value={
-                                  listing.minSpent !== null
-                                    ? listing.minSpent
-                                    : ""
-                                }
+                                value={listing.minSpent || ""}
                                 onChange={e =>
                                   onChannelChange(listing.id, {
                                     minSpent: e.target.value

@@ -28,9 +28,9 @@ export function createChannelsChangeHandler(
       {
         ...channel,
         ...(minSpent !== undefined
-          ? { minSpent: minSpent ? parseInt(minSpent, 10) : null }
+          ? { minSpent }
           : {
-              discountValue: discountValue ? parseInt(discountValue, 10) : null
+              discountValue
             })
       },
       ...channelListing.slice(channelIndex + 1)
@@ -53,7 +53,7 @@ export function createSaleChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        discountValue: !discountValue ? null : parseInt(discountValue, 10)
+        discountValue
       },
       ...channelListing.slice(channelIndex + 1)
     ];

@@ -101,17 +101,13 @@ const SaleValue: React.FC<SaleValueProps> = ({
                                   )
                                 : ""
                             }
-                            name={"value"}
+                            name="value"
                             onChange={e => onChange(listing.id, e.target.value)}
                             label={intl.formatMessage({
                               defaultMessage: "Discount Value",
                               description: "sale discount"
                             })}
-                            value={
-                              listing.discountValue !== null
-                                ? listing.discountValue
-                                : ""
-                            }
+                            value={listing.discountValue || ""}
                             type="number"
                             fullWidth
                             inputProps={{

@@ -7,13 +7,6 @@ import { toggle } from "@saleor/utils/lists";
 import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { getAttributeInputFromProductType, ProductType } from "./data";
 
-const setPrice = (price: string, initialPrice: number) =>
-  typeof price === "string"
-    ? price
-      ? parseInt(price, 10)
-      : null
-    : initialPrice;
-
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   triggerChange: () => void
@@ -38,8 +31,8 @@ export function createChannelsPriceChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        costPrice: setPrice(costPrice, channel.costPrice),
-        price: setPrice(price, channel.price)
+        costPrice,
+        price
       },
       ...channelListing.slice(channelIndex + 1)
     ];
@@ -88,8 +81,8 @@ export function createVariantChannelsChangeHandler(
       ...channelListing.slice(0, channelIndex),
       {
         ...channel,
-        costPrice: setPrice(costPrice, channel.costPrice),
-        price: setPrice(price, channel.price)
+        costPrice,
+        price
       },
       ...channelListing.slice(channelIndex + 1)
     ];
