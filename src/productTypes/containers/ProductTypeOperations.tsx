@@ -10,14 +10,14 @@ import { getMutationProviderData } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
 import {
   ProductTypeAttributeReorderMutation,
-  TypedAssignAttributeMutation,
+  TypedAssignProductAttributeMutation,
   TypedProductTypeDeleteMutation,
-  TypedUnassignAttributeMutation
+  TypedUnassignProductAttributeMutation
 } from "../mutations";
 import {
-  AssignAttribute,
-  AssignAttributeVariables
-} from "../types/AssignAttribute";
+  AssignProductAttribute,
+  AssignProductAttributeVariables
+} from "../types/AssignProductAttribute";
 import {
   ProductTypeAttributeReorder,
   ProductTypeAttributeReorderVariables
@@ -27,9 +27,9 @@ import {
   ProductTypeDeleteVariables
 } from "../types/ProductTypeDelete";
 import {
-  UnassignAttribute,
-  UnassignAttributeVariables
-} from "../types/UnassignAttribute";
+  UnassignProductAttribute,
+  UnassignProductAttributeVariables
+} from "../types/UnassignProductAttribute";
 
 function moveAttribute(
   attributes: ProductTypeDetailsFragment_productAttributes[],
@@ -55,12 +55,12 @@ function moveAttribute(
 interface ProductTypeOperationsProps {
   children: (props: {
     assignAttribute: PartialMutationProviderOutput<
-      AssignAttribute,
-      AssignAttributeVariables
+      AssignProductAttribute,
+      AssignProductAttributeVariables
     >;
     unassignAttribute: PartialMutationProviderOutput<
-      UnassignAttribute,
-      UnassignAttributeVariables
+      UnassignProductAttribute,
+      UnassignProductAttributeVariables
     >;
     deleteProductType: PartialMutationProviderOutput<
       ProductTypeDelete,
@@ -72,8 +72,8 @@ interface ProductTypeOperationsProps {
     >;
   }) => React.ReactNode;
   productType: ProductTypeDetailsFragment;
-  onAssignAttribute: (data: AssignAttribute) => void;
-  onUnassignAttribute: (data: UnassignAttribute) => void;
+  onAssignAttribute: (data: AssignProductAttribute) => void;
+  onUnassignAttribute: (data: UnassignProductAttribute) => void;
   onProductTypeAttributeReorder: (data: ProductTypeAttributeReorder) => void;
   onProductTypeDelete: (data: ProductTypeDelete) => void;
 }
@@ -88,9 +88,11 @@ const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
 }) => (
   <TypedProductTypeDeleteMutation onCompleted={onProductTypeDelete}>
     {(...deleteProductType) => (
-      <TypedAssignAttributeMutation onCompleted={onAssignAttribute}>
+      <TypedAssignProductAttributeMutation onCompleted={onAssignAttribute}>
         {(...assignAttribute) => (
-          <TypedUnassignAttributeMutation onCompleted={onUnassignAttribute}>
+          <TypedUnassignProductAttributeMutation
+            onCompleted={onUnassignAttribute}
+          >
             {(...unassignAttribute) => (
               <ProductTypeAttributeReorderMutation
                 onCompleted={onProductTypeAttributeReorder}
@@ -147,9 +149,9 @@ const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
                 }}
               </ProductTypeAttributeReorderMutation>
             )}
-          </TypedUnassignAttributeMutation>
+          </TypedUnassignProductAttributeMutation>
         )}
-      </TypedAssignAttributeMutation>
+      </TypedAssignProductAttributeMutation>
     )}
   </TypedProductTypeDeleteMutation>
 );
