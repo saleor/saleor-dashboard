@@ -43,7 +43,7 @@ storiesOf("Views / Page types / Page type details", module)
       {...props}
       pageType={{
         ...pageType,
-        pageAttributes: []
+        attributes: []
       }}
     />
   ))

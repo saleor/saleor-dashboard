@@ -15,15 +15,11 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { PageTypeDetails_pageType_attributes } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-// import {
-//   PageTypeDetails_pageType_pageAttributes,
-//   PageTypeDetails_pageType_variantAttributes
-// } from "../../types/PageTypeDetails";
 
 const useStyles = makeStyles(
   {
@@ -51,7 +47,7 @@ const useStyles = makeStyles(
 );
 
 interface PageTypeAttributesProps extends ListActions {
-  attributes: any[]; // TODO FIX!!!
+  attributes: PageTypeDetails_pageType_attributes[];
   disabled: boolean;
   type: string;
   onAttributeAssign: (type: AttributeTypeEnum) => void;

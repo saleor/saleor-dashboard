@@ -12,6 +12,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -19,7 +20,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-// import { PageTypeDetails_pageType } from "../../types/PageTypeDetails";
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
 
@@ -35,7 +35,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 export interface PageTypeDetailsPageProps {
   errors: UserError[];
-  pageType: any; // TODO FIX!!!
+  pageType: PageTypeDetails_pageType;
   disabled: boolean;
   pageTitle: string;
   attributeList: ListActions;
