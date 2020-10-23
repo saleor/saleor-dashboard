@@ -121,12 +121,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {renderCollection(
               ProductVariantChannelListings,
               (listing, index) => {
-                const error = formErrors.price?.channels?.find(
+                const priceError = formErrors.price?.channels?.find(
                   id => id === listing.id
                 );
                 const costPriceError = formErrors.costPrice?.channels?.find(
                   id => id === listing.id
                 );
+
                 return (
                   <TableRow key={listing?.id || `skeleton-${index}`}>
                     <TableCell>{listing?.name || <Skeleton />}</TableCell>
@@ -134,22 +135,23 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       {listing ? (
                         <PriceField
                           className={classes.input}
-                          error={!!error?.length}
+                          error={!!priceError?.length}
                           label={intl.formatMessage({
                             defaultMessage: "Price"
                           })}
                           name={`${listing.id}-channel-price`}
-                          value={listing.price === null ? "" : listing.price}
+                          value={listing.price || ""}
                           currencySymbol={listing.currency}
                           onChange={e =>
                             onChange(listing.id, {
+                              costPrice: listing.costPrice,
                               price: e.target.value
                             })
                           }
                           disabled={loading}
                           required
                           hint={
-                            error
+                            priceError
                               ? getProductErrorMessage(formErrors.price, intl)
                               : ""
                           }
@@ -168,13 +170,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                             description: "tabel column header"
                           })}
                           name={`${listing.id}-channel-costPrice`}
-                          value={
-                            listing.costPrice === null ? "" : listing.costPrice
-                          }
+                          value={listing.costPrice || ""}
                           currencySymbol={listing.currency}
                           onChange={e =>
                             onChange(listing.id, {
-                              costPrice: e.target.value
+                              costPrice: e.target.value,
+                              price: listing.price
                             })
                           }
                           disabled={loading}

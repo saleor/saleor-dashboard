@@ -58,7 +58,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           currency: listing.channel.currencyCode,
           id: listing.channel.id,
           name: listing.channel.name,
-          price: null
+          price: ""
         }))}
         attributes={data?.product?.productType?.variantAttributes || []}
         onSubmit={inputs =>

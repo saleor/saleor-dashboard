@@ -102,7 +102,7 @@ export function createHandler(
             id: variantId,
             input: formData.channelListing.map(listing => ({
               channelId: listing.id,
-              costPrice: listing.costPrice,
+              costPrice: listing.costPrice || null,
               price: listing.price
             }))
           }

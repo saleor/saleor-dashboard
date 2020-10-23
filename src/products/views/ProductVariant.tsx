@@ -134,8 +134,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variantChannel => variantChannel.channel.id === channel.id
       );
       return (
-        channel.price !== variantChannel?.price?.amount ||
-        channel.costPrice !== variantChannel?.costPrice?.amount
+        channel.price !== variantChannel?.price?.amount.toString() ||
+        channel.costPrice !== variantChannel?.costPrice?.amount.toString()
       );
     });
     if (isChannelPriceChange) {
@@ -144,7 +144,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           id: variant.id,
           input: data.channelListing.map(listing => ({
             channelId: listing.id,
-            costPrice: listing.costPrice,
+            costPrice: listing.costPrice || null,
             price: listing.price
           }))
         }
