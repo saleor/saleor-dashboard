@@ -105,8 +105,8 @@ export const orderToFulfill: OrderFulfillData_order = {
             __typename: "Stock",
             id: "U3RvY2s6NTE=",
             warehouse: warehouseList[2],
-            quantity: 20,
-            quantityAllocated: 20
+            quantity: 760,
+            quantityAllocated: 33
           },
           {
             __typename: "Stock",

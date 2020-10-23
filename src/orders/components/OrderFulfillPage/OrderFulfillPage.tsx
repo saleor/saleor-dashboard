@@ -340,8 +340,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
-                            const availableQuantity = warehouseStock.quantity;
-
                             return (
                               <TableCell
                                 className={classes.colQuantity}
@@ -386,7 +384,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     overfulfill ||
                                     (line.variant.trackInventory &&
                                       formsetStock.quantity >
-                                        availableQuantity) ||
+                                        warehouseStock.quantityAllocated) ||
                                     !!errors?.find(
                                       err =>
                                         err.warehouse === warehouse.id &&
@@ -401,7 +399,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       <div
                                         className={classes.remainingQuantity}
                                       >
-                                        / {availableQuantity}
+                                        / {warehouseStock.quantityAllocated}
                                       </div>
                                     )
                                   }}
