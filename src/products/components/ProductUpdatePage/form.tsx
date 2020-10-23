@@ -62,18 +62,19 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   removeStocks: string[];
 }
 
+type ProductUpdateHandlers = Record<
+  "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxRate",
+  FormChange
+> &
+  Record<
+    "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+    FormsetChange<string>
+  > &
+  Record<"addStock" | "deleteStock", (id: string) => void>;
 export interface UseProductUpdateFormResult {
   change: FormChange;
   data: ProductUpdateData;
-  handlers: Record<
-    "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxRate",
-    FormChange
-  > &
-    Record<
-      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
-      FormsetChange
-    > &
-    Record<"addStock" | "deleteStock", (id: string) => void>;
+  handlers: ProductUpdateHandlers;
   hasChanged: boolean;
   submit: () => Promise<boolean>;
 }
@@ -185,7 +186,7 @@ function useProductUpdateForm(
     attributes.data,
     triggerChange
   );
-  const handleStockChange: FormsetChange = (id, value) => {
+  const handleStockChange: FormsetChange<string> = (id, value) => {
     triggerChange();
     stocks.change(id, value);
   };
