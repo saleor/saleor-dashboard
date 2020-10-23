@@ -4,6 +4,10 @@ import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import {
+  AssignPageAttribute,
+  AssignPageAttributeVariables
+} from "./types/AssignPageAttribute";
+import {
   PageTypeCreate,
   PageTypeCreateVariables
 } from "./types/PageTypeCreate";
@@ -11,6 +15,10 @@ import {
   PageTypeUpdate,
   PageTypeUpdateVariables
 } from "./types/PageTypeUpdate";
+import {
+  UnassignPageAttribute,
+  UnassignPageAttributeVariables
+} from "./types/UnassignPageAttribute";
 
 export const pageTypeUpdateMutation = gql`
   ${pageTypeDetailsFragment}
@@ -49,3 +57,41 @@ export const usePageTypeCreateMutation = makeMutation<
   PageTypeCreate,
   PageTypeCreateVariables
 >(pageTypeCreateMutation);
+
+export const assignPageAttributeMutation = gql`
+  ${pageTypeDetailsFragment}
+  mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
+    pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
+      errors: pageErrors {
+        field
+        message
+      }
+      pageType {
+        ...PageTypeDetailsFragment
+      }
+    }
+  }
+`;
+export const useAssignPageAttributeMutation = makeMutation<
+  AssignPageAttribute,
+  AssignPageAttributeVariables
+>(assignPageAttributeMutation);
+
+export const unassignPageAttributeMutation = gql`
+  ${pageTypeDetailsFragment}
+  mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
+    pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
+      errors: pageErrors {
+        field
+        message
+      }
+      pageType {
+        ...PageTypeDetailsFragment
+      }
+    }
+  }
+`;
+export const useUnassignPageAttributeMutation = makeMutation<
+  UnassignPageAttribute,
+  UnassignPageAttributeVariables
+>(unassignPageAttributeMutation);

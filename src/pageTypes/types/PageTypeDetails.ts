@@ -31,6 +31,34 @@ export interface PageTypeDetails_pageType_attributes {
   filterableInStorefront: boolean;
 }
 
+export interface PageTypeDetails_pageType_availableAttributes_pageInfo {
+  __typename: "PageInfo";
+  hasNextPage: boolean;
+  endCursor: string | null;
+}
+
+export interface PageTypeDetails_pageType_availableAttributes_edges_node {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+}
+
+export interface PageTypeDetails_pageType_availableAttributes_edges {
+  __typename: "AttributeCountableEdge";
+  node: PageTypeDetails_pageType_availableAttributes_edges_node;
+}
+
+export interface PageTypeDetails_pageType_availableAttributes {
+  __typename: "AttributeCountableConnection";
+  pageInfo: PageTypeDetails_pageType_availableAttributes_pageInfo;
+  edges: PageTypeDetails_pageType_availableAttributes_edges[];
+}
+
 export interface PageTypeDetails_pageType {
   __typename: "PageType";
   id: string;
@@ -38,6 +66,7 @@ export interface PageTypeDetails_pageType {
   metadata: (PageTypeDetails_pageType_metadata | null)[];
   privateMetadata: (PageTypeDetails_pageType_privateMetadata | null)[];
   attributes: (PageTypeDetails_pageType_attributes | null)[] | null;
+  availableAttributes: PageTypeDetails_pageType_availableAttributes | null;
 }
 
 export interface PageTypeDetails {
