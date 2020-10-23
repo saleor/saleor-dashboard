@@ -1060,10 +1060,6 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
-  "src_dot_categories_dot_components_dot_CategoryProducts_dot_4183335632": {
-    "context": "categpry product channel",
-    "string": "Channel:"
-  },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2159874182": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -1620,6 +1616,10 @@
   "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
     "context": "section header button",
     "string": "Manage"
+  },
+  "src_dot_components_dot_ChannelsSelect_dot_4183335632": {
+    "context": "channel select label",
+    "string": "Channel:"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -4859,10 +4859,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_4017567521": {
     "context": "product variant inventory",
     "string": "Not stocked"
-  },
-  "src_dot_products_dot_components_dot_ProductVariants_dot_4183335632": {
-    "context": "variant channel",
-    "string": "Channel:"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"

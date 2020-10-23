@@ -174,10 +174,9 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel =
-                product?.channelListing.find(
-                  listing => listing.channel.id === selectedChannel
-                ) || product?.channelListing[0];
+              const channel = product?.channelListing.find(
+                listing => listing.channel.id === selectedChannel
+              );
 
               return (
                 <TableRow
@@ -214,7 +213,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     ) : product?.channelListing !== undefined ? (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
-                        currentChannel={channel}
+                        currentChannel={channel || product?.channelListing[0]}
                         channels={product?.channelListing}
                       />
                     ) : (

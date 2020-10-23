@@ -2,9 +2,8 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
-import LinkChoice from "@saleor/components/LinkChoice";
+import { ChannelsSelect } from "@saleor/components/ChannelsSelect";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React from "react";
@@ -23,18 +22,8 @@ interface CategoryProductsProps extends PageListProps, ListActions {
 
 const useStyles = makeStyles(
   theme => ({
-    channelSelect: {
-      marginRight: theme.spacing(1)
-    },
     channelsSelectContainer: {
       paddingTop: theme.spacing(2)
-    },
-    label: {
-      display: "inline-block",
-      marginRight: theme.spacing(1)
-    },
-    select: {
-      display: "inline-block"
     }
   }),
   { name: "CategoryProducts" }
@@ -84,23 +73,11 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
         }
       />
       <CardContent className={classes.channelsSelectContainer}>
-        {channelChoices?.length && (
-          <>
-            <Typography className={classes.label}>
-              <FormattedMessage
-                defaultMessage="Channel:"
-                description="categpry product channel"
-              />
-            </Typography>
-            <LinkChoice
-              className={classes.select}
-              choices={channelChoices}
-              name="channels"
-              value={channelChoice}
-              onChange={event => setChannelChoice(event.target.value)}
-            />
-          </>
-        )}
+        <ChannelsSelect
+          channelChoice={channelChoice}
+          channelChoices={channelChoices}
+          setChannelChoice={setChannelChoice}
+        />
       </CardContent>
       <CategoryProductList
         channelsCount={channelsCount}

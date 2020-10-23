@@ -7,6 +7,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
+import { ChannelsSelect } from "@saleor/components/ChannelsSelect";
 import Checkbox from "@saleor/components/Checkbox";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
@@ -19,7 +20,6 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -203,7 +203,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     disabled,
     variants,
     product,
-
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
@@ -262,18 +261,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
       {variants.length > 0 ? (
         <CardContent className={classes.warehouseSelectContainer}>
-          <Typography className={classes.warehouseLabel}>
-            <FormattedMessage
-              defaultMessage="Channel:"
-              description="variant channel"
-            />
-          </Typography>
-          <LinkChoice
-            className={classNames(classes.select, classes.channelSelect)}
-            choices={channelChoices}
-            name="channels"
-            value={channelChoice}
-            onChange={event => setChannelChoice(event.target.value)}
+          <ChannelsSelect
+            channelChoice={channelChoice}
+            channelChoices={channelChoices}
+            setChannelChoice={setChannelChoice}
           />
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
