@@ -53,7 +53,7 @@ export interface ProductVariantCreatePageSubmitData
 
 interface ProductVariantCreatePageProps {
   channels: ChannelPriceData[];
-  channelErrors: ProductChannelListingErrorFragment[];
+  channelErrors: ProductChannelListingErrorFragment[] | undefined;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -70,7 +70,7 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   channels,
-  channelErrors,
+  channelErrors = [],
   disabled,
   errors,
   header,

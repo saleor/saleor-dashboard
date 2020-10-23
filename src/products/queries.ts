@@ -295,8 +295,8 @@ export const useAvailableInGridAttributesQuery = makeQuery<
 const createMultipleVariantsData = gql`
   ${productVariantAttributesFragment}
   ${warehouseFragment}
-  query CreateMultipleVariantsData($id: ID!, $channel: String) {
-    product(id: $id, channel: $channel) {
+  query CreateMultipleVariantsData($id: ID!) {
+    product(id: $id) {
       ...ProductVariantAttributesFragment
     }
     warehouses(first: 20) {

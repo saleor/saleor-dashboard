@@ -90,7 +90,7 @@ const getChannelsVariables = (
 const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
   data.channelListing.map(listing => ({
     channelId: listing.id,
-    costPrice: listing.costPrice,
+    costPrice: listing.costPrice || null,
     price: listing.price
   }));
 

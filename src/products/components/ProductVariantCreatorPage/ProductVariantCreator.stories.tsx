@@ -90,7 +90,7 @@ const props: ProductVariantCreatorContentProps = {
     currency: listing.discountedPrice.currency,
     id: listing.channel.id,
     name: listing.channel.name,
-    price: listing.discountedPrice.amount
+    price: listing.discountedPrice?.amount.toString() || ""
   })),
   data: {
     ...data,
