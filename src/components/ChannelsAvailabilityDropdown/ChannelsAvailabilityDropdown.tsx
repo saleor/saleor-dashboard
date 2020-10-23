@@ -1,6 +1,7 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
+import { CollectionList_collections_edges_node_channelListing } from "@saleor/collections/types/CollectionList";
 import Hr from "@saleor/components/Hr";
 import StatusLabel from "@saleor/components/StatusLabel";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
@@ -10,15 +11,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
+type Channels =
+  | ProductList_products_edges_node_channelListing
+  | CollectionList_collections_edges_node_channelListing;
+
 export interface ChannelsAvailabilityDropdownProps {
   allChannelsCount: number;
-  channels: ProductList_products_edges_node_channelListing[];
-  currentChannel: ProductList_products_edges_node_channelListing;
+  channels: Channels[];
+  currentChannel: Channels;
 }
 
-const isActive = (
-  channelData: ProductList_products_edges_node_channelListing
-) => channelData.isPublished;
+const isActive = (channelData: Channels) => channelData.isPublished;
 
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
   allChannelsCount,

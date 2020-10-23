@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -21,7 +21,7 @@ export interface CollectionDetailsProps {
     name: string;
   };
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: CollectionErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 

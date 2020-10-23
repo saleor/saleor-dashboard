@@ -208,6 +208,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
+        channelsCount={channelChoices?.length}
         selectedChannel={selectedChannel}
         onSettingsOpen={
           !!channelChoices?.length ? () => openModal("settings") : undefined

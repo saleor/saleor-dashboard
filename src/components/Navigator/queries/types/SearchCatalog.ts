@@ -22,12 +22,24 @@ export interface SearchCatalog_categories {
   edges: SearchCatalog_categories_edges[];
 }
 
+export interface SearchCatalog_collections_edges_node_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface SearchCatalog_collections_edges_node_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: SearchCatalog_collections_edges_node_channelListing_channel;
+}
+
 export interface SearchCatalog_collections_edges_node {
   __typename: "Collection";
   id: string;
   name: string;
-  isPublished: boolean;
-  publicationDate: any | null;
+  channelListing: SearchCatalog_collections_edges_node_channelListing[] | null;
 }
 
 export interface SearchCatalog_collections_edges {

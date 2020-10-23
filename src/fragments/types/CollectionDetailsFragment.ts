@@ -6,6 +6,19 @@
 // GraphQL fragment: CollectionDetailsFragment
 // ====================================================
 
+export interface CollectionDetailsFragment_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CollectionDetailsFragment_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionDetailsFragment_channelListing_channel;
+}
+
 export interface CollectionDetailsFragment_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -27,14 +40,13 @@ export interface CollectionDetailsFragment_backgroundImage {
 export interface CollectionDetailsFragment {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CollectionDetailsFragment_channelListing[] | null;
   metadata: (CollectionDetailsFragment_metadata | null)[];
   privateMetadata: (CollectionDetailsFragment_privateMetadata | null)[];
   backgroundImage: CollectionDetailsFragment_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

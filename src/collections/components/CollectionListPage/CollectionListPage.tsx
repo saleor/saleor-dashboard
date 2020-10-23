@@ -32,6 +32,7 @@ export interface CollectionListPageProps
     SortPage<CollectionListUrlSortField>,
     TabPageProps {
   collections: CollectionList_collections_edges_node[];
+  channelsCount: number;
   selectedChannel: string;
   onSettingsOpen?: () => void;
 }
@@ -46,6 +47,7 @@ const useStyles = makeStyles(
 );
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
+  channelsCount,
   currencySymbol,
   currentTab,
   disabled,
@@ -59,6 +61,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  selectedChannel,
   tabs,
   ...listProps
 }) => {
@@ -116,7 +119,12 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <CollectionList disabled={disabled} {...listProps} />
+        <CollectionList
+          disabled={disabled}
+          channelsCount={channelsCount}
+          selectedChannel={selectedChannel}
+          {...listProps}
+        />
       </Card>
     </Container>
   );

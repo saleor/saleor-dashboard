@@ -1,7 +1,7 @@
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { CollectionErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -46,23 +46,15 @@ storiesOf("Views / Collections / Collection details", module)
       {...props}
       errors={[
         {
-          code: ProductErrorCode.REQUIRED,
+          code: CollectionErrorCode.REQUIRED,
           field: "name"
         },
         {
-          code: ProductErrorCode.REQUIRED,
+          code: CollectionErrorCode.REQUIRED,
           field: "descriptionJson"
-        },
-        {
-          code: ProductErrorCode.INVALID,
-          field: "publicationDate"
-        },
-        {
-          code: ProductErrorCode.INVALID,
-          field: "isPublished"
         }
       ].map(err => ({
-        __typename: "ProductError",
+        __typename: "CollectionError",
         ...err
       }))}
     />

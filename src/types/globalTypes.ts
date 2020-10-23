@@ -109,11 +109,20 @@ export enum CategorySortField {
   PRODUCT_COUNT = "PRODUCT_COUNT",
   SUBCATEGORY_COUNT = "SUBCATEGORY_COUNT",
 }
-
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum CollectionErrorCode {
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1080,6 +1089,7 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1117,6 +1127,7 @@ export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1133,6 +1144,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 

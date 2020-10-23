@@ -1,4 +1,5 @@
 import { BulkProductErrorFragment } from "@saleor/fragments/types/BulkProductErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
@@ -50,7 +51,9 @@ const messages = defineMessages({
 });
 
 function getProductErrorMessage(
-  err: Omit<ProductErrorFragment, "__typename"> | undefined,
+  err:
+    | Omit<ProductErrorFragment | CollectionErrorFragment, "__typename">
+    | undefined,
   intl: IntlShape
 ): string {
   if (err) {

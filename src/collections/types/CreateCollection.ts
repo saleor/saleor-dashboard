@@ -2,11 +2,24 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionCreateInput, ProductErrorCode } from "./../../types/globalTypes";
+import { CollectionCreateInput, CollectionErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateCollection
 // ====================================================
+
+export interface CreateCollection_collectionCreate_collection_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CreateCollection_collectionCreate_collection_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CreateCollection_collectionCreate_collection_channelListing_channel;
+}
 
 export interface CreateCollection_collectionCreate_collection_metadata {
   __typename: "MetadataItem";
@@ -29,21 +42,20 @@ export interface CreateCollection_collectionCreate_collection_backgroundImage {
 export interface CreateCollection_collectionCreate_collection {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CreateCollection_collectionCreate_collection_channelListing[] | null;
   metadata: (CreateCollection_collectionCreate_collection_metadata | null)[];
   privateMetadata: (CreateCollection_collectionCreate_collection_privateMetadata | null)[];
   backgroundImage: CreateCollection_collectionCreate_collection_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
 
 export interface CreateCollection_collectionCreate_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "CollectionError";
+  code: CollectionErrorCode;
   field: string | null;
 }
 

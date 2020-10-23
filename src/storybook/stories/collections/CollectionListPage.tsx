@@ -23,6 +23,7 @@ const props: CollectionListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...filterPageProps,
+  channelsCount: 2,
   filterOpts: {
     status: {
       active: false,

@@ -32,6 +32,20 @@ export const fragmentProductImage = gql`
   }
 `;
 
+export const channelListingAvailabilityFragment = gql`
+  ${fragmentMoney}
+  fragment ChannelListingAvailabilityFragment on ProductChannelListing {
+    isPublished
+    publicationDate
+    # isAvailableForPurchase
+    # availableForPurchase
+    channel {
+      id
+      name
+    }
+  }
+`;
+
 export const channelListingProductFragment = gql`
   ${fragmentMoney}
   fragment ChannelListingProductFragment on ProductChannelListing {

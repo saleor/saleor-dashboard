@@ -34,7 +34,6 @@ import {
   useCollectionAssignProductMutation,
   useCollectionRemoveMutation,
   useCollectionUpdateMutation,
-  useCollectionUpdateWithHomepageMutation,
   useUnassignCollectionProductMutation
 } from "../mutations";
 import { TypedCollectionDetailsQuery } from "../queries";
@@ -91,17 +90,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   };
   const [updateCollection, updateCollectionOpts] = useCollectionUpdateMutation({
     onCompleted: handleCollectionUpdate
-  });
-
-  const [
-    updateCollectionWithHomepage,
-    updateCollectionWithHomepageOpts
-  ] = useCollectionUpdateWithHomepageMutation({
-    onCompleted: data => {
-      if (data.homepageCollectionUpdate.errors.length === 0) {
-        handleCollectionUpdate(data);
-      }
-    }
   });
 
   const [assignProduct, assignProductOpts] = useCollectionAssignProductMutation(
@@ -179,41 +167,43 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
             descriptionJson: JSON.stringify(formData.description),
-            isPublished: formData.isPublished,
             name: formData.name,
-            publicationDate: formData.publicationDate,
             seo: {
               description: formData.seoDescription,
               title: formData.seoTitle
             },
             slug: formData.slug
           };
-          const isFeatured = data.shop.homepageCollection
-            ? data.shop.homepageCollection.id === data.collection.id
-            : false;
+          // const isFeatured = data.shop.homepageCollection
+          //   ? data.shop.homepageCollection.id === data.collection.id
+          //   : false;
 
-          if (formData.isFeatured !== isFeatured) {
-            const result = await updateCollectionWithHomepage({
-              variables: {
-                homepageId: formData.isFeatured ? id : null,
-                id,
-                input
-              }
-            });
-            return [
-              ...result.data.collectionUpdate.errors,
-              ...result.data.homepageCollectionUpdate.errors
-            ];
-          } else {
-            const result = await updateCollection({
-              variables: {
-                id,
-                input
-              }
-            });
-
-            return result.data.collectionUpdate.errors;
-          }
+          // if (formData.isFeatured !== isFeatured) {
+          //   const result = await updateCollectionWithHomepage({
+          //     variables: {
+          //       homepageId: formData.isFeatured ? id : null,
+          //       id,
+          //       input
+          //     }
+          //   });
+          //   return [
+          //     ...result.data.collectionUpdate.errors,
+          //     ...result.data.homepageCollectionUpdate.errors
+          //   ];
+          // } else {
+          //   const result = await updateCollection({
+          //     variables: {
+          //       id,
+          //       input
+          //     }
+          //   });
+          const result = await updateCollection({
+            variables: {
+              id,
+              input
+            }
+          });
+          return result.data.collectionUpdate.errors;
         };
         const handleSubmit = createMetadataUpdateHandler(
           data?.collection,
@@ -223,13 +213,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         );
 
         const formTransitionState = getMutationState(
-          updateCollectionOpts.called ||
-            updateCollectionWithHomepageOpts.called,
-          updateCollectionOpts.loading ||
-            updateCollectionWithHomepageOpts.loading,
-          updateCollectionOpts.data?.collectionUpdate.errors,
-          updateCollectionWithHomepageOpts.data?.collectionUpdate.errors,
-          updateCollectionWithHomepageOpts.data?.homepageCollectionUpdate.errors
+          updateCollectionOpts.called,
+          updateCollectionOpts.loading,
+          updateCollectionOpts.data?.collectionUpdate.errors
         );
 
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -240,17 +226,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
         return (
           <>
-            <WindowTitle title={maybe(() => data.collection.name)} />
+            <WindowTitle title={data?.collection?.name} />
             <CollectionDetailsPage
               onAdd={() => openModal("assign")}
               onBack={handleBack}
               disabled={loading}
               collection={data?.collection}
               errors={updateCollectionOpts?.data?.collectionUpdate.errors || []}
-              isFeatured={maybe(
-                () => data.shop.homepageCollection.id === data.collection.id,
-                false
-              )}
+              isFeatured={false}
               onCollectionRemove={() => openModal("remove")}
               onImageDelete={() => openModal("removeImage")}
               onImageUpload={file =>

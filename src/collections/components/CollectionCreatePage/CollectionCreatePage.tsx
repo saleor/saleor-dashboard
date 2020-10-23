@@ -8,9 +8,7 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
@@ -29,15 +27,13 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
   description: RawDraftContentState;
   name: string;
   slug: string;
-  publicationDate: string;
-  isPublished: boolean;
   seoDescription: string;
   seoTitle: string;
 }
 
 export interface CollectionCreatePageProps {
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: CollectionErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: CollectionCreatePageFormData) => void;
@@ -50,11 +46,9 @@ const initialForm: CollectionCreatePageFormData = {
   },
   backgroundImageAlt: "",
   description: convertToRaw(ContentState.createFromText("")),
-  isPublished: false,
   metadata: [],
   name: "",
   privateMetadata: [],
-  publicationDate: "",
   seoDescription: "",
   seoTitle: "",
   slug: ""
@@ -68,7 +62,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
   onSubmit
 }: CollectionCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -151,33 +144,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
-              </div>
-              <div>
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Hidden",
-                      description: "collection label"
-                    }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "collection"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Visible",
-                      description: "collection label"
-                    })
-                  }}
-                  onChange={change}
-                />
               </div>
             </Grid>
             <SaveButtonBar

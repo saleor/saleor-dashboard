@@ -82,11 +82,6 @@ export const collectionDetails = gql`
         }
       }
     }
-    shop {
-      homepageCollection {
-        id
-      }
-    }
   }
 `;
 export const TypedCollectionDetailsQuery = TypedQuery<

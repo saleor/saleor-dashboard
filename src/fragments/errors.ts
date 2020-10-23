@@ -170,7 +170,7 @@ export const metadataErrorFragment = gql`
 `;
 
 export const collectionsErrorFragment = gql`
-  fragment CollectionErrorFragment on CollectionProductError {
+  fragment CollectionErrorFragment on CollectionError {
     code
     field
   }

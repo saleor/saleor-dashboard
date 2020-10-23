@@ -42,11 +42,11 @@ export function searchInCatalog(
   )
     .map<QuickSearchActionInput>(collection => ({
       caption: intl.formatMessage(messages.collection),
-      extraInfo: intl.formatMessage(
-        collection.isPublished
-          ? messages.collectionPublished
-          : messages.collectionUnpublished
-      ),
+      // extraInfo: intl.formatMessage(
+      //   collection.isPublished
+      //     ? messages.collectionPublished
+      //     : messages.collectionUnpublished
+      // ),
       label: collection.name,
       onClick: () => {
         navigate(collectionUrl(collection.id));

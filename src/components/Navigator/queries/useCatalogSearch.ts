@@ -21,8 +21,14 @@ const searchCatalog = gql`
         node {
           id
           name
-          isPublished
-          publicationDate
+          channelListing {
+            isPublished
+            publicationDate
+            channel {
+              id
+              name
+            }
+          }
         }
       }
     }

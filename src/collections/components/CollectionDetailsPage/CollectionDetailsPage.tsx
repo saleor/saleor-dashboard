@@ -2,19 +2,14 @@ import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -22,7 +17,6 @@ import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
@@ -34,17 +28,15 @@ export interface CollectionDetailsPageFormData extends MetadataFormData {
   description: RawDraftContentState;
   name: string;
   slug: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   isFeatured: boolean;
-  isPublished: boolean;
 }
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   channelsCount: number;
   collection: CollectionDetails_collection;
-  errors: ProductErrorFragment[];
+  errors: CollectionErrorFragment[];
   isFeatured: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedChannel: string;
@@ -72,7 +64,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
+  // const localizeDate = useDateLocalize();
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -96,18 +88,18 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   return (
     <Form
       initial={{
-        backgroundImageAlt: maybe(() => collection.backgroundImage.alt, ""),
-        description: maybe(() => JSON.parse(collection.descriptionJson)),
+        backgroundImageAlt: collection?.backgroundImage?.alt || "",
+        description: collection?.descriptionJson
+          ? JSON.parse(collection.descriptionJson)
+          : "",
         isFeatured,
-        isPublished: maybe(() => collection.isPublished, false),
         metadata: collection?.metadata?.map(mapMetadataItemToInput),
-        name: maybe(() => collection.name, ""),
+        name: collection?.name || "",
         privateMetadata: collection?.privateMetadata?.map(
           mapMetadataItemToInput
         ),
-        publicationDate: maybe(() => collection.publicationDate, ""),
-        seoDescription: maybe(() => collection.seoDescription, ""),
-        seoTitle: maybe(() => collection.seoTitle, ""),
+        seoDescription: collection?.seoDescription || "",
+        seoTitle: collection?.seoTitle || "",
         slug: collection?.slug || ""
       }}
       onSubmit={handleSubmit}
@@ -121,7 +113,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
             <AppHeader onBack={onBack}>
               {intl.formatMessage(sectionNames.collections)}
             </AppHeader>
-            <PageHeader title={maybe(() => collection.name)} />
+            <PageHeader title={collection?.name} />
             <Grid>
               <div>
                 <CollectionDetails
@@ -134,7 +126,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 <CardSpacer />
                 <CollectionImage
                   data={data}
-                  image={maybe(() => collection.backgroundImage)}
+                  image={collection?.backgroundImage}
                   onImageDelete={onImageDelete}
                   onImageUpload={onImageUpload}
                   onChange={change}
@@ -162,51 +154,11 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                   slug={data.slug}
                   slugPlaceholder={data.name}
                   title={data.seoTitle}
-                  titlePlaceholder={maybe(() => collection.name)}
+                  titlePlaceholder={collection?.name}
                   onChange={change}
                 />
               </div>
-              <div>
-                <div>
-                  <VisibilityCard
-                    data={data}
-                    errors={errors}
-                    messages={{
-                      hiddenLabel: intl.formatMessage({
-                        defaultMessage: "Hidden",
-                        description: "collection label"
-                      }),
-                      hiddenSecondLabel: intl.formatMessage(
-                        {
-                          defaultMessage: "will be visible from {date}",
-                          description: "collection"
-                        },
-                        {
-                          date: localizeDate(data.publicationDate, "L")
-                        }
-                      ),
-                      visibleLabel: intl.formatMessage({
-                        defaultMessage: "Visible",
-                        description: "collection label"
-                      })
-                    }}
-                    onChange={change}
-                  >
-                    <FormSpacer />
-                    <Hr />
-                    <ControlledCheckbox
-                      name={"isFeatured" as keyof CollectionDetailsPageFormData}
-                      label={intl.formatMessage({
-                        defaultMessage: "Feature on Homepage",
-                        description: "switch button"
-                      })}
-                      checked={data.isFeatured}
-                      onChange={change}
-                      disabled={disabled}
-                    />
-                  </VisibilityCard>
-                </div>
-              </div>
+              <div></div>
             </Grid>
             <SaveButtonBar
               state={saveButtonBarState}
