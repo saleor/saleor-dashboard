@@ -3,7 +3,6 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import {
-  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
@@ -21,8 +20,6 @@ const props: PageTypeListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...filterPageProps,
-  filterOpts: {},
   sort: {
     ...sortPageProps.sort,
     sort: PageTypeListUrlSortField.name

@@ -2,8 +2,8 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
 import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
@@ -11,23 +11,18 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  FilterPageProps,
   ListActions,
   PageListProps,
+  SearchPageProps,
   SortPage,
   TabPageProps
 } from "../../../types";
 import PageTypeList from "../PageTypeList";
-import {
-  createFilterStructure,
-  PageTypeFilterKeys,
-  PageTypeListFilterOpts
-} from "./filters";
 
 export interface PageTypeListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<PageTypeFilterKeys, PageTypeListFilterOpts>,
+    SearchPageProps,
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
   pageTypes: PageTypeList_pageTypes_edges_node[];
@@ -35,14 +30,11 @@ export interface PageTypeListPageProps
 }
 
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
-  currencySymbol,
   currentTab,
-  filterOpts,
   initialSearch,
   onAdd,
   onAll,
   onBack,
-  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -51,9 +43,6 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-
-  const structure = createFilterStructure();
-
   return (
     <Container>
       <AppHeader onBack={onBack}>
@@ -68,21 +57,18 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <FilterBar
+        <SearchBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Page Types",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Page Type"
           })}
           tabs={tabs}
           onAll={onAll}
-          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

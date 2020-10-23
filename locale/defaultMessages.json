@@ -9,6 +9,9 @@
   "configurationMenuNavigation": {
     "string": "Define how users can navigate through your store"
   },
+  "configurationMenuPageTypes": {
+    "string": "Define types of content pages used in your store"
+  },
   "configurationMenuPages": {
     "string": "Manage and add additional pages"
   },
@@ -1969,6 +1972,9 @@
   "src_dot_configuration_dot_3140151600": {
     "string": "Staff Settings"
   },
+  "src_dot_configuration_dot_3351299924": {
+    "string": "Content Management"
+  },
   "src_dot_configuration_dot_3655543906": {
     "string": "Product Settings"
   },
@@ -3544,6 +3550,28 @@
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
     "string": "Order draft successfully created"
+  },
+  "src_dot_pageTypes": {
+    "context": "page types section name",
+    "string": "Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
+    "context": "button",
+    "string": "create page type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793828289": {
+    "string": "Search Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_464566131": {
+    "context": "tab name",
+    "string": "All Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_1631499902": {
+    "context": "page type name",
+    "string": "Content Type Name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
+    "string": "No page types found"
   },
   "src_dot_pages": {
     "context": "pages section name",
