@@ -149,6 +149,7 @@ export const product: (
   isAvailable: false,
   isFeatured: false,
   isPublished: true,
+  jsonPrivateMetadata: "{}",
   margin: { __typename: "Margin", start: 2, stop: 7 },
   name: "Ergonomic Plastic Bacon",
   pricing: {

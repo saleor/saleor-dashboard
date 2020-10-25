@@ -188,7 +188,20 @@ export function getFilterOpts(
     stockStatus: {
       active: maybe(() => params.stockStatus !== undefined, false),
       value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability))
-    }
+    },
+    updatedAt: {
+      active: maybe(
+        () =>
+          [params.updatedAtFrom, params.updatedAtTo].some(
+            field => field !== undefined
+          ),
+        false
+      ),
+      value: {
+        max: maybe(() => params.updatedAtTo, ""),
+        min: maybe(() => params.updatedAtFrom, "")
+      }
+    },
   };
 }
 
@@ -222,7 +235,11 @@ export function getFilterVariables(
     stockAvailability:
       params.stockStatus !== undefined
         ? findValueInEnum(params.stockStatus, StockAvailability)
-        : null
+        : null,
+    updatedAt: getGteLteVariables({
+      gte: params.updatedAtFrom,
+      lte: params.updatedAtTo
+    }),
   };
 }
 
@@ -256,6 +273,13 @@ export function getFilterQueryParam(
       return getMultipleValueQueryParam(
         filter,
         ProductListUrlFiltersWithMultipleValues.collections
+      );
+
+    case ProductFilterKeys.updatedAt:
+      return getMinMaxQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.updatedAtFrom,
+        ProductListUrlFiltersEnum.updatedAtTo
       );
 
     case ProductFilterKeys.price:

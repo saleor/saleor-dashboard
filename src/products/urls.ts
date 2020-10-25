@@ -30,7 +30,9 @@ export enum ProductListUrlFiltersEnum {
   status = "status",
   stockStatus = "stockStatus",
   query = "query",
-  allegroStatus = "allegroStatus"
+  allegroStatus = "allegroStatus",
+  updatedAtFrom = "updatedAtFrom",
+  updatedAtTo = "updatedAtTo"
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",

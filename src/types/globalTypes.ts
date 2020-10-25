@@ -1190,6 +1190,7 @@ export interface ProductFilterInput {
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
   allegroStatus?: string | null;
+  updatedAt?: DateRangeInput | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;

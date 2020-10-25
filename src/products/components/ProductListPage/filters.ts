@@ -4,7 +4,7 @@ import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import {
-  createAutocompleteField,
+  createAutocompleteField, createDateField,
   createOptionsField,
   createPriceField
 } from "@saleor/utils/filters/fields";
@@ -14,6 +14,7 @@ export enum ProductFilterKeys {
   attributes = "attributes",
   categories = "categories",
   collections = "collections",
+  updatedAt = "updatedAt",
   status = "status",
   price = "price",
   productType = "productType",
@@ -30,6 +31,7 @@ export interface ProductListFilterOpts {
   >;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
+  updatedAt?: FilterOpts<MinMax>;
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   status: FilterOpts<ProductStatus>;
@@ -53,6 +55,10 @@ const messages = defineMessages({
   outOfStock: {
     defaultMessage: "Out Of Stock",
     description: "product status"
+  },
+  placed: {
+    defaultMessage: "Utworzono",
+    description: "product"
   },
   price: {
     defaultMessage: "Price"
@@ -157,6 +163,14 @@ export function createFilterStructure(
         }
       ),
       active: opts.collections.active
+    },
+    {
+      ...createDateField(
+        ProductFilterKeys.updatedAt,
+        intl.formatMessage(messages.placed),
+        opts.updatedAt.value
+      ),
+      active: opts.updatedAt.active
     },
     {
       ...createAutocompleteField(
