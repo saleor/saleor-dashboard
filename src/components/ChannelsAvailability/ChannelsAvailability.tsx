@@ -8,6 +8,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
@@ -41,6 +42,11 @@ export interface Message {
   availableSecondLabel?: string;
   setAvailabilityDateLabel?: string;
 }
+
+type Error =
+  | ProductChannelListingErrorFragment
+  | CollectionChannelListingErrorFragment;
+
 interface Value {
   availableForPurchase?: string;
   isAvailableForPurchase?: boolean;
@@ -52,7 +58,7 @@ interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
   channelsMessages?: { [id: string]: Message };
-  errors: ProductChannelListingErrorFragment[];
+  errors: Error[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -67,7 +73,7 @@ export type ChannelsAvailabilityProps = RequireOnlyOne<
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  errors: ProductChannelListingErrorFragment[];
+  errors: Error[];
   messages: Message;
   onChange: (id: string, data: Value) => void;
 }

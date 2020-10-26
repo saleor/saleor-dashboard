@@ -10,9 +10,9 @@ import { CollectionChannelListingUpdateInput, ProductErrorCode } from "./../../t
 
 export interface CollectionChannelListingUpdate_collectionChannelListingUpdate_errors {
   __typename: "CollectionChannelListingError";
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
-  code: ProductErrorCode;
   channels: string[] | null;
 }
 

@@ -7,6 +7,7 @@ import {
   collectionProductFragment
 } from "@saleor/fragments/collections";
 import {
+  collectionChannelListingErrorFragment,
   collectionsErrorFragment,
   productErrorFragment
 } from "@saleor/fragments/errors";
@@ -195,16 +196,14 @@ export const useCollectionBulkDelete = makeMutation<
 >(collectionBulkDelete);
 
 const collectionChannelListingUpdate = gql`
+  ${collectionChannelListingErrorFragment}
   mutation CollectionChannelListingUpdate(
     $id: ID!
     $input: CollectionChannelListingUpdateInput!
   ) {
     collectionChannelListingUpdate(id: $id, input: $input) {
       errors: collectionChannelListingErrors {
-        field
-        message
-        code
-        channels
+        ...CollectionChannelListingErrorFragment
       }
     }
   }

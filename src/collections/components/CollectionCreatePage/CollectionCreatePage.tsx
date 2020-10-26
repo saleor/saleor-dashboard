@@ -1,5 +1,4 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
-import { CollectionChannelListingUpdate_collectionChannelListingUpdate_errors } from "@saleor/collections/types/CollectionChannelListingUpdate";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
@@ -12,6 +11,7 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -38,7 +38,7 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
 
 export interface CollectionCreatePageProps {
   channelsCount: number;
-  channelsErrors: CollectionChannelListingUpdate_collectionChannelListingUpdate_errors[];
+  channelsErrors: CollectionChannelListingErrorFragment[];
   currentChannels: ChannelCollectionData[];
   disabled: boolean;
   errors: CollectionErrorFragment[];
@@ -51,6 +51,7 @@ export interface CollectionCreatePageProps {
 
 const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
   channelsCount,
+  channelsErrors,
   currentChannels = [],
   disabled,
   errors,
@@ -179,7 +180,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                       description: "collection label"
                     })
                   }}
-                  errors={[]}
+                  errors={channelsErrors}
                   selectedChannelsCount={data.channelListing.length}
                   allChannelsCount={channelsCount}
                   channels={currentChannels}

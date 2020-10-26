@@ -1,5 +1,4 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
-import { CollectionChannelListingUpdate_collectionChannelListingUpdate_errors } from "@saleor/collections/types/CollectionChannelListingUpdate";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
@@ -13,6 +12,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -39,7 +39,7 @@ export interface CollectionDetailsPageFormData extends MetadataFormData {
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   channelsCount: number;
-  channelsErrors: CollectionChannelListingUpdate_collectionChannelListingUpdate_errors[];
+  channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetails_collection;
   currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
@@ -58,6 +58,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   channelsCount,
+  channelsErrors,
   collection,
   currentChannels = [],
   disabled,
@@ -90,7 +91,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
 
     onSubmit({
       ...data,
-      isPublished: data.isPublished || !!data.publicationDate,
       metadata,
       privateMetadata
     });
@@ -187,7 +187,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                       description: "collection label"
                     })
                   }}
-                  errors={[]}
+                  errors={channelsErrors}
                   selectedChannelsCount={data.channelListing.length}
                   allChannelsCount={channelsCount}
                   channels={currentChannels}

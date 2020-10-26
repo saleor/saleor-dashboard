@@ -79,14 +79,6 @@ export const CollectionCreate: React.FC = () => {
     }
   });
 
-  const getPublicationData = ({
-    publicationDate,
-    isPublished
-  }: CollectionCreatePageFormData) => ({
-    isPublished: !!publicationDate || isPublished,
-    publicationDate: publicationDate || null
-  });
-
   const handleCreate = async (formData: CollectionCreatePageFormData) => {
     const result = await createCollection({
       variables: {
@@ -98,8 +90,7 @@ export const CollectionCreate: React.FC = () => {
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
-          },
-          ...getPublicationData(formData)
+          }
         }
       }
     });
