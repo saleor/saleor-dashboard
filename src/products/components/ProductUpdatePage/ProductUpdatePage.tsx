@@ -243,7 +243,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       variants={variants}
                       product={product}
                       channelChoices={channelChoices}
-                      product={product}
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
                       onVariantsAdd={onVariantsAdd}
