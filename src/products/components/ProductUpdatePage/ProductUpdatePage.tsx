@@ -209,16 +209,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const getAvailabilityData = ({
-    availableForPurchase,
-    isAvailableForPurchase,
-    isPublished,
-    publicationDate
-  }: ProductUpdatePageFormData) => ({
-    isAvailableForPurchase: isAvailableForPurchase || !!availableForPurchase,
-    isPublished: isPublished || !!publicationDate
-  });
-
   const getStocksData = () => {
     if (product.productType.hasVariants) {
       return { removeStocks: [], updateStocks: [] };
@@ -247,7 +237,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const getParsedData = (data: ProductUpdatePageFormData) => ({
     ...data,
-    ...getAvailabilityData(data),
     ...getStocksData(),
     ...getMetadata(data),
     addStocks: [],
