@@ -20,16 +20,5 @@ export const pageTypeDetailsFragment = gql`
     attributes {
       ...AttributeFragment
     }
-    availableAttributes {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          ...AttributeFragment
-        }
-      }
-    }
   }
 `;

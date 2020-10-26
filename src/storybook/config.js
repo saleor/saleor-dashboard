@@ -13,6 +13,8 @@ function loadStories() {
   require("./stories/components/AddressEdit");
   require("./stories/components/AddressFormatter");
   require("./stories/components/AssignAttributeDialog");
+  require("./stories/components/AttributeUnassignDialog");
+  require("./stories/components/BulkAttributeUnassignDialog");
   require("./stories/components/AssignProductDialog");
   require("./stories/components/AutocompleteSelectMenu");
   require("./stories/components/CardMenu");
@@ -135,8 +137,6 @@ function loadStories() {
   require("./stories/orders/OrderInvoiceList");
 
   // Product types
-  require("./stories/productTypes/ProductTypeAttributeUnassignDialog");
-  require("./stories/productTypes/ProductTypeBulkAttributeUnassignDialog");
   require("./stories/productTypes/ProductTypeCreatePage");
   require("./stories/productTypes/ProductTypeDeleteDialog");
   require("./stories/productTypes/ProductTypeDetailsPage");

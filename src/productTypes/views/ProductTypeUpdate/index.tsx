@@ -1,5 +1,8 @@
 import Button from "@material-ui/core/Button";
 import { attributeUrl } from "@saleor/attributes/urls";
+import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
+import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
+import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -8,7 +11,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
@@ -20,14 +22,12 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductTypeAttributeUnassignDialog from "../../components/ProductTypeAttributeUnassignDialog";
-import ProductTypeBulkAttributeUnassignDialog from "../../components/ProductTypeBulkAttributeUnassignDialog";
 import ProductTypeDeleteDialog from "../../components/ProductTypeDeleteDialog";
 import ProductTypeDetailsPage, {
   ProductTypeForm
 } from "../../components/ProductTypeDetailsPage";
 import ProductTypeOperations from "../../containers/ProductTypeOperations";
-import useAvailableAttributeSearch from "../../hooks/useAvailableAttributeSearch";
+import useAvailableProductAttributeSearch from "../../hooks/useAvailableProductAttributeSearch";
 import { TypedProductTypeDetailsQuery } from "../../queries";
 import { AssignProductAttribute } from "../../types/AssignProductAttribute";
 import { ProductTypeDelete } from "../../types/ProductTypeDelete";
@@ -52,7 +52,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const intl = useIntl();
-  const { loadMore, search, result } = useAvailableAttributeSearch({
+  const { loadMore, search, result } = useAvailableProductAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       id
@@ -391,15 +391,23 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     onClose={() => navigate(productTypeUrl(id))}
                     onConfirm={handleProductTypeDelete}
                   />
-                  <ProductTypeBulkAttributeUnassignDialog
+                  <BulkAttributeUnassignDialog
+                    title={intl.formatMessage({
+                      defaultMessage: "Unassign Attribute from Product Type",
+                      description: "dialog header"
+                    })}
                     attributeQuantity={maybe(() => params.ids.length)}
                     confirmButtonState={unassignAttribute.opts.status}
                     onClose={closeModal}
                     onConfirm={handleBulkAttributeUnassign}
                     open={params.action === "unassign-attributes"}
-                    productTypeName={maybe(() => data.productType.name, "...")}
+                    itemTypeName={data?.productType.name || "..."}
                   />
-                  <ProductTypeAttributeUnassignDialog
+                  <AttributeUnassignDialog
+                    title={intl.formatMessage({
+                      defaultMessage: "Unassign Attribute From Product Type",
+                      description: "dialog header"
+                    })}
                     attributeName={maybe(
                       () =>
                         [
@@ -412,7 +420,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     onClose={closeModal}
                     onConfirm={handleAttributeUnassign}
                     open={params.action === "unassign-attribute"}
-                    productTypeName={maybe(() => data.productType.name, "...")}
+                    itemTypeName={data?.productType.name || "..."}
                   />
                 </>
               );
