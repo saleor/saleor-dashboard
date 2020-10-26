@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -77,7 +77,7 @@ interface ProductUpdateHandlers
       "changeStock" | "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
     >,
-    Record<"changeChannelPrice", (id: string, price: number) => void>,
+    Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
     Record<
       "changeChannels",
       (
