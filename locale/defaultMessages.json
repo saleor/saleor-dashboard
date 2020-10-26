@@ -1428,6 +1428,23 @@
     "context": "section header",
     "string": "App Status"
   },
+  "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
+    "context": "button",
+    "string": "Assign attributes"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
+    "context": "dialog header",
+    "string": "Assign Attribute"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
+    "string": "No results found"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_524117994": {
+    "string": "Search by attribute name"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
+    "string": "Search Attributes"
+  },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Search Categories"
   },
@@ -1470,6 +1487,9 @@
     "context": "dialog header",
     "string": "Assign Product"
   },
+  "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
+    "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
@@ -1488,6 +1508,10 @@
   "src_dot_components_dot_AvailabilityCard_dot_825317195": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_3177750460": {
+    "context": "unassign multiple attributes from item",
+    "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -3590,9 +3614,17 @@
   "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
     "string": "No page types found"
   },
+  "src_dot_pageTypes_dot_views_dot_2634056946": {
+    "context": "dialog header",
+    "string": "Unassign Attribute from Page Type"
+  },
   "src_dot_pageTypes_dot_views_dot_870815507": {
     "context": "unassign attribute from page type, button",
     "string": "Unassign"
+  },
+  "src_dot_pageTypes_dot_views_dot_891131033": {
+    "context": "dialog header",
+    "string": "Unassign Attribute From Page Type"
   },
   "src_dot_pageTypes_dot_views_dot_98187848": {
     "string": "Successfully created page type"
@@ -3959,30 +3991,6 @@
     "context": "product types section name",
     "string": "Product Types"
   },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
-    "context": "button",
-    "string": "Assign attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
-    "context": "dialog header",
-    "string": "Assign Attribute"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
-    "string": "No results found"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_524117994": {
-    "string": "Search by attribute name"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_902296540": {
-    "string": "Search Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_404238501": {
-    "context": "dialog header",
-    "string": "Unassign Attribute From Product Type"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_722498450": {
-    "string": "Are you sure you want to unassign {attributeName} from {productTypeName}?"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1192828581": {
     "string": "No attributes found"
   },
@@ -4004,14 +4012,6 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
     "context": "section header",
     "string": "Variant Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_2646729060": {
-    "context": "unassign multiple attributes from product type",
-    "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {productTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {productTypeName}?}}"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_766918870": {
-    "context": "dialog header",
-    "string": "Unassign Attribute from Product Type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
     "context": "delete product type",
@@ -4113,6 +4113,14 @@
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Product type deleted"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_404238501": {
+    "context": "dialog header",
+    "string": "Unassign Attribute From Product Type"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_766918870": {
+    "context": "dialog header",
+    "string": "Unassign Attribute from Product Type"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",

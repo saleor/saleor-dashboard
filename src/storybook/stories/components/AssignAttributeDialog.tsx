@@ -1,8 +1,8 @@
 import { attributes } from "@saleor/attributes/fixtures";
-import { fetchMoreProps } from "@saleor/fixtures";
 import AssignAttributeDialog, {
   AssignAttributeDialogProps
-} from "@saleor/productTypes/components/AssignAttributeDialog";
+} from "@saleor/components/AssignAttributeDialog";
+import { fetchMoreProps } from "@saleor/fixtures";
 import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";

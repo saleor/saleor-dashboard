@@ -37,34 +37,6 @@ export interface UnassignPageAttribute_pageAttributeUnassign_pageType_attributes
   filterableInStorefront: boolean;
 }
 
-export interface UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_pageInfo {
-  __typename: "PageInfo";
-  hasNextPage: boolean;
-  endCursor: string | null;
-}
-
-export interface UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_edges_node {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  type: AttributeTypeEnum | null;
-  visibleInStorefront: boolean;
-  filterableInDashboard: boolean;
-  filterableInStorefront: boolean;
-}
-
-export interface UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_edges {
-  __typename: "AttributeCountableEdge";
-  node: UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_edges_node;
-}
-
-export interface UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes {
-  __typename: "AttributeCountableConnection";
-  pageInfo: UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_pageInfo;
-  edges: UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes_edges[];
-}
-
 export interface UnassignPageAttribute_pageAttributeUnassign_pageType {
   __typename: "PageType";
   id: string;
@@ -72,7 +44,6 @@ export interface UnassignPageAttribute_pageAttributeUnassign_pageType {
   metadata: (UnassignPageAttribute_pageAttributeUnassign_pageType_metadata | null)[];
   privateMetadata: (UnassignPageAttribute_pageAttributeUnassign_pageType_privateMetadata | null)[];
   attributes: (UnassignPageAttribute_pageAttributeUnassign_pageType_attributes | null)[] | null;
-  availableAttributes: UnassignPageAttribute_pageAttributeUnassign_pageType_availableAttributes | null;
 }
 
 export interface UnassignPageAttribute_pageAttributeUnassign {

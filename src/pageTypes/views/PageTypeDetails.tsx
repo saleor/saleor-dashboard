@@ -1,5 +1,8 @@
 import Button from "@material-ui/core/Button";
 import { attributeUrl } from "@saleor/attributes/urls";
+import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
+import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
+import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -12,7 +15,6 @@ import {
   usePageTypeUpdateMutation,
   useUnassignPageAttributeMutation
 } from "@saleor/pageTypes/mutations";
-import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -24,7 +26,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
-import useAvailableAttributeSearch from "../hooks/useAvailableAttributeSearch";
+import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
 import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
@@ -66,14 +68,42 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       }
     }
   });
-  const [
-    assignAttribute,
-    assignAttributeOpts
-  ] = useAssignPageAttributeMutation({ onCompleted: data => undefined });
+  const [assignAttribute, assignAttributeOpts] = useAssignPageAttributeMutation(
+    {
+      onCompleted: data => {
+        if (data.pageAttributeAssign.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges)
+          });
+          closeModal();
+        } else if (
+          data.pageAttributeAssign.errors !== null &&
+          data.pageAttributeAssign.errors.length > 0
+        ) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            addAttributeErrors: data.pageAttributeAssign.errors
+          }));
+        }
+      }
+    }
+  );
   const [
     unassignAttribute,
     unassignAttributeOpts
-  ] = useUnassignPageAttributeMutation({ onCompleted: data => undefined });
+  ] = useUnassignPageAttributeMutation({
+    onCompleted: data => {
+      if (data.pageAttributeUnassign.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+        attributeListActions.reset();
+      }
+    }
+  });
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
@@ -106,12 +136,19 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
         ids: [params.id]
       }
     });
+  const handleBulkAttributeUnassign = () =>
+    unassignAttribute({
+      variables: {
+        id,
+        ids: params.ids
+      }
+    });
 
   const { data, loading: dataLoading } = usePageTypeDetailsQuery({
     variables: { id }
   });
 
-  const { loadMore, search, result } = useAvailableAttributeSearch({
+  const { loadMore, search, result } = useAvailablePageAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       id
@@ -198,7 +235,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       />
       {!dataLoading && (
         <AssignAttributeDialog
-          attributes={assignAttributeOpts.data?.pageAttributeAssign.pageType.availableAttributes.edges.map(
+          attributes={result.data?.pageType.availableAttributes.edges.map(
             edge => edge.node
           )}
           confirmButtonState={assignAttributeOpts.status}
@@ -207,15 +244,14 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
               ? [assignAttributeOpts.error.message]
               : []
           }
-          loading={assignAttributeOpts.loading}
+          loading={result.loading}
           onClose={closeModal}
           onSubmit={handleAssignAttribute}
           onFetch={search}
           onFetchMore={loadMore}
           onOpen={result.refetch}
           hasMore={
-            !!assignAttributeOpts.data?.pageAttributeAssign.pageType
-              .availableAttributes.pageInfo.hasNextPage
+            !!result.data?.pageType.availableAttributes.pageInfo.hasNextPage
           }
           open={params.action === "assign-attribute"}
           selected={params.ids || []}
@@ -232,6 +268,34 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           }}
         />
       )}
+      <BulkAttributeUnassignDialog
+        title={intl.formatMessage({
+          defaultMessage: "Unassign Attribute from Page Type",
+          description: "dialog header"
+        })}
+        attributeQuantity={params.ids?.length}
+        confirmButtonState={unassignAttributeOpts.status}
+        onClose={closeModal}
+        onConfirm={handleBulkAttributeUnassign}
+        open={params.action === "unassign-attributes"}
+        itemTypeName={data?.pageType.name || "..."}
+      />
+      <AttributeUnassignDialog
+        title={intl.formatMessage({
+          defaultMessage: "Unassign Attribute From Page Type",
+          description: "dialog header"
+        })}
+        attributeName={
+          data?.pageType.attributes.find(
+            attribute => attribute.id === params.id
+          )?.name || "..."
+        }
+        confirmButtonState={unassignAttributeOpts.status}
+        onClose={closeModal}
+        onConfirm={handleAttributeUnassign}
+        open={params.action === "unassign-attribute"}
+        itemTypeName={data?.pageType.name || "..."}
+      />
     </>
   );
 };
