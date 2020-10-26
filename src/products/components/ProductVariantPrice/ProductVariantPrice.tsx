@@ -15,7 +15,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { renderCollection } from "@saleor/misc";
-import { getFormChannelErrors } from "@saleor/utils/errors";
+import {
+  getFormChannelError,
+  getFormChannelErrors
+} from "@saleor/utils/errors";
 import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -121,11 +124,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {renderCollection(
               ProductVariantChannelListings,
               (listing, index) => {
-                const priceError = formErrors.price?.find(error =>
-                  error.channels?.find(id => id === listing.id)
+                const priceError = getFormChannelError(
+                  formErrors.price,
+                  listing.id
                 );
-                const costPriceError = formErrors.costPrice?.find(error =>
-                  error.channels?.find(id => id === listing.id)
+                const costPriceError = getFormChannelError(
+                  formErrors.costPrice,
+                  listing.id
                 );
 
                 return (
@@ -151,9 +156,8 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           disabled={loading}
                           required
                           hint={
-                            priceError
-                              ? getProductErrorMessage(priceError, intl)
-                              : ""
+                            priceError &&
+                            getProductErrorMessage(priceError, intl)
                           }
                         />
                       ) : (

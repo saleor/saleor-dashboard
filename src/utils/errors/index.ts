@@ -25,7 +25,6 @@ export function getFormErrors<TField extends string, TError extends UserError>(
 
 export interface ChannelError {
   field: string | null;
-  code: string;
   channels: string[] | [];
 }
 
@@ -47,6 +46,13 @@ export function getFormChannelErrors<
     ];
     return errs;
   }, {} as Record<TField, TError[]>);
+}
+
+export function getFormChannelError<TError extends ChannelError>(
+  formError: TError[],
+  channelId: string
+) {
+  return formError?.find(error => error.channels?.find(id => id === channelId));
 }
 
 export { default as getProductErrorMessage } from "./product";

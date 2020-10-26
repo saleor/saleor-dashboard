@@ -12,7 +12,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { getFormChannelErrors } from "@saleor/utils/errors";
+import {
+  getFormChannelError,
+  getFormChannelErrors
+} from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -117,11 +120,13 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             </TableHead>
             <TableBody>
               {channels?.map(channel => {
-                const minError = formErrors.minimumOrderPrice?.find(error =>
-                  error.channels?.find(id => id === channel.id)
+                const minError = getFormChannelError(
+                  formErrors.minimumOrderPrice,
+                  channel.id
                 );
-                const maxError = formErrors.maximumOrderPrice?.find(error =>
-                  error.channels?.find(id => id === channel.id)
+                const maxError = getFormChannelError(
+                  formErrors.maximumOrderPrice,
+                  channel.id
                 );
 
                 return (
@@ -146,9 +151,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         }
                         currencySymbol={channel.currency}
                         hint={
-                          minError
-                            ? getShippingErrorMessage(minError, intl)
-                            : ""
+                          minError && getShippingErrorMessage(minError, intl)
                         }
                       />
                     </TableCell>
@@ -169,9 +172,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         }
                         currencySymbol={channel.currency}
                         hint={
-                          maxError
-                            ? getShippingErrorMessage(maxError, intl)
-                            : ""
+                          maxError && getShippingErrorMessage(maxError, intl)
                         }
                       />
                     </TableCell>

@@ -104,9 +104,8 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         <Money
           money={{
             amount: channel.discountedPrice?.amount,
-            currency: channel.discountedPrice?.currency
-              ? channel.discountedPrice?.currency
-              : channel.channel.currencyCode
+            currency:
+              channel.discountedPrice?.currency || channel.channel.currencyCode
           }}
         />
       );
