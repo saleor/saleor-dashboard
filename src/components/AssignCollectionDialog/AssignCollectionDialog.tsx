@@ -114,7 +114,10 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={scrollableDialogClasses.content}>
+      <DialogContent
+        className={scrollableDialogClasses.content}
+        ref={container}
+      >
         <TextField
           name="query"
           value={query}

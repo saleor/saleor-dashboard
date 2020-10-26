@@ -19,6 +19,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
@@ -32,7 +33,7 @@ export interface FormData {
 }
 
 const useStyles = makeStyles(
-  theme => ({
+  {
     avatar: {
       "&&:first-child": {
         paddingLeft: 0
@@ -45,22 +46,8 @@ const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      height: theme.spacing(3),
-      justifyContent: "center",
-      marginTop: theme.spacing(3)
-    },
-    overflow: {
-      overflowY: "visible"
-    },
-    scrollArea: {
-      height: 500,
-      overflowY: "scroll"
     }
-  }),
+  },
   { name: "AssignProductDialog" }
 );
 
@@ -104,20 +91,24 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onSubmit
   } = props;
   const classes = useStyles(props);
+  const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
     SearchProducts_search_edges_node[]
   >([]);
+  const container = React.useRef<HTMLDivElement>();
 
   const handleSubmit = () => onSubmit(selectedProducts);
+
+  const containerHeight = container.current?.scrollHeight - 130;
 
   return (
     <Dialog
       onClose={onClose}
       open={open}
-      classes={{ paper: classes.overflow }}
+      classes={{ paper: scrollableDialogClasses.dialog }}
       fullWidth
       maxWidth="sm"
     >
@@ -127,7 +118,10 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        className={scrollableDialogClasses.content}
+        ref={container}
+      >
         <TextField
           name="query"
           value={query}
@@ -146,14 +140,17 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           }}
         />
         <FormSpacer />
-        <div className={classes.scrollArea}>
+        <div
+          className={scrollableDialogClasses.scrollArea}
+          style={{ height: containerHeight }}
+        >
           <InfiniteScroll
             pageStart={0}
             loadMore={onFetchMore}
             hasMore={hasMore}
             useWindow={false}
             loader={
-              <div className={classes.loadMoreLoaderContainer}>
+              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
                 <CircularProgress size={16} />
               </div>
             }
