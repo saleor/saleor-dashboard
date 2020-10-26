@@ -82,6 +82,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
@@ -484,8 +485,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchProductsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
+                              onFetchMore={loadMoreProducts}
                               loading={searchProductsOpts.loading}
                               onClose={closeModal}
                               onSubmit={products =>

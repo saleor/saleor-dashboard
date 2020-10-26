@@ -19,7 +19,9 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "../Checkbox";
@@ -30,7 +32,7 @@ export interface FormData {
 }
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     avatar: {
       "&&:first-child": {
         paddingLeft: 0
@@ -44,17 +46,25 @@ const useStyles = makeStyles(
     colName: {
       paddingLeft: 0
     },
+    loadMoreLoaderContainer: {
+      alignItems: "center",
+      display: "flex",
+      height: theme.spacing(3),
+      justifyContent: "center",
+      marginTop: theme.spacing(3)
+    },
     overflow: {
       overflowY: "visible"
     },
     scrollArea: {
+      height: 500,
       overflowY: "scroll"
     }
-  },
+  }),
   { name: "AssignProductDialog" }
 );
 
-export interface AssignProductDialogProps {
+export interface AssignProductDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   products: SearchProducts_search_edges_node[];
@@ -84,11 +94,13 @@ function handleProductAssign(
 const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const {
     confirmButtonState,
+    hasMore,
     open,
     loading,
     products,
     onClose,
     onFetch,
+    onFetchMore,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -135,44 +147,57 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         />
         <FormSpacer />
         <div className={classes.scrollArea}>
-          <ResponsiveTable>
-            <TableBody>
-              {products &&
-                products.map(product => {
-                  const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct.id === product.id
-                  );
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={onFetchMore}
+            hasMore={hasMore}
+            useWindow={false}
+            loader={
+              <div className={classes.loadMoreLoaderContainer}>
+                <CircularProgress size={16} />
+              </div>
+            }
+            threshold={10}
+          >
+            <ResponsiveTable key="table">
+              <TableBody>
+                {products &&
+                  products.map(product => {
+                    const isSelected = selectedProducts.some(
+                      selectedProduct => selectedProduct.id === product.id
+                    );
 
-                  return (
-                    <TableRow key={product.id}>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => product.thumbnail.url)}
-                      />
-                      <TableCell className={classes.colName}>
-                        {product.name}
-                      </TableCell>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={() =>
-                            handleProductAssign(
-                              product,
-                              isSelected,
-                              selectedProducts,
-                              setSelectedProducts
-                            )
-                          }
+                    return (
+                      <TableRow key={product.id}>
+                        <TableCellAvatar
+                          className={classes.avatar}
+                          thumbnail={maybe(() => product.thumbnail.url)}
                         />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </ResponsiveTable>
+                        <TableCell className={classes.colName}>
+                          {product.name}
+                        </TableCell>
+                        <TableCell
+                          padding="checkbox"
+                          className={classes.checkboxCell}
+                        >
+                          <Checkbox
+                            checked={isSelected}
+                            onChange={() =>
+                              handleProductAssign(
+                                product,
+                                isSelected,
+                                selectedProducts,
+                                setSelectedProducts
+                              )
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
         </div>
       </DialogContent>
       <DialogActions>

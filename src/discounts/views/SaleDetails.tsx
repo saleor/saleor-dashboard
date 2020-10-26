@@ -68,18 +68,21 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   );
   const intl = useIntl();
   const {
+    // loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    // loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
@@ -325,8 +328,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             />
                             <AssignProductDialog
                               confirmButtonState={saleCataloguesAddOpts.status}
+                              hasMore={
+                                searchProductsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
+                              onFetchMore={loadMoreProducts}
                               loading={searchProductsOpts.loading}
                               onClose={closeModal}
                               onSubmit={products =>
