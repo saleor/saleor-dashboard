@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum } from "./../../types/globalTypes";
+import { PageErrorCode, AttributeTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AssignPageAttribute
@@ -10,8 +10,8 @@ import { AttributeTypeEnum } from "./../../types/globalTypes";
 
 export interface AssignPageAttribute_pageAttributeAssign_errors {
   __typename: "PageError";
+  code: PageErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface AssignPageAttribute_pageAttributeAssign_pageType_metadata {

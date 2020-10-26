@@ -15,6 +15,7 @@ import {
   usePageTypeUpdateMutation,
   useUnassignPageAttributeMutation
 } from "@saleor/pageTypes/mutations";
+import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -240,8 +241,10 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           )}
           confirmButtonState={assignAttributeOpts.status}
           errors={
-            assignAttributeOpts.error?.message
-              ? [assignAttributeOpts.error.message]
+            assignAttributeOpts.data?.pageAttributeAssign.errors
+              ? assignAttributeOpts.data.pageAttributeAssign.errors.map(err =>
+                  getPageErrorMessage(err, intl)
+                )
               : []
           }
           loading={result.loading}

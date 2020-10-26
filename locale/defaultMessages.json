@@ -5847,7 +5847,7 @@
   },
   "src_dot_utils_dot_errors_dot_notFound": {
     "context": "error message",
-    "string": "Invoice not found"
+    "string": "Page not found."
   },
   "src_dot_utils_dot_errors_dot_notReady": {
     "context": "error message",

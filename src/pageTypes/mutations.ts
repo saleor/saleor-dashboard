@@ -60,11 +60,11 @@ export const usePageTypeCreateMutation = makeMutation<
 
 export const assignPageAttributeMutation = gql`
   ${pageTypeDetailsFragment}
+  ${pageErrorFragment}
   mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
       errors: pageErrors {
-        field
-        message
+        ...PageErrorFragment
       }
       pageType {
         ...PageTypeDetailsFragment
@@ -79,11 +79,11 @@ export const useAssignPageAttributeMutation = makeMutation<
 
 export const unassignPageAttributeMutation = gql`
   ${pageTypeDetailsFragment}
+  ${pageErrorFragment}
   mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
       errors: pageErrors {
-        field
-        message
+        ...PageErrorFragment
       }
       pageType {
         ...PageTypeDetailsFragment
