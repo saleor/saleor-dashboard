@@ -61,10 +61,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const paginate = usePaginator();
   const intl = useIntl();
   const { search, loadMore, result } = useProductSearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 100
-    }
+    variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
