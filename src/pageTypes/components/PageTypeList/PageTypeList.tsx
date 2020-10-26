@@ -15,25 +15,14 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
 
 const useStyles = makeStyles(
-  theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colName: {},
-      colTax: {
-        width: 300
-      },
-      colType: {
-        width: 300
-      }
-    },
+  () => ({
     colName: {
       paddingLeft: 0
     },
-    colTax: {},
-    colType: {},
     link: {
       cursor: "pointer"
     }
@@ -120,7 +109,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 onClick={pageType ? onRowClick(pageType.id) : undefined}
                 selected={isSelected}
                 data-test="id"
-                data-test-id={maybe(() => pageType.id)}
+                data-test-id={pageType?.id}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
