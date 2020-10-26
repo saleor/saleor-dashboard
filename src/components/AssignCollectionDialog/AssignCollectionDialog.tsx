@@ -13,7 +13,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
+import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "../Checkbox";
@@ -37,9 +40,6 @@ const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0
     },
-    overflow: {
-      overflowY: "visible"
-    },
     wideCell: {
       width: "100%"
     }
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
   { name: "AssignCollectionDialog" }
 );
 
-interface AssignCollectionDialogProps {
+interface AssignCollectionDialogProps extends FetchMoreProps {
   collections: SearchCollections_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
@@ -77,28 +77,34 @@ function handleCollectionAssign(
 const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
   const {
     confirmButtonState,
+    hasMore,
     open,
     loading,
     collections,
     onClose,
     onFetch,
+    onFetchMore,
     onSubmit
   } = props;
   const classes = useStyles(props);
+  const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [selectedCollections, setSelectedCollections] = React.useState<
     SearchCollections_search_edges_node[]
   >([]);
+  const container = React.useRef<HTMLDivElement>();
 
   const handleSubmit = () => onSubmit(selectedCollections);
+
+  const containerHeight = container.current?.scrollHeight - 130;
 
   return (
     <Dialog
       onClose={onClose}
       open={open}
-      classes={{ paper: classes.overflow }}
+      classes={{ paper: scrollableDialogClasses.dialog }}
       fullWidth
       maxWidth="sm"
     >
@@ -108,7 +114,7 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow}>
+      <DialogContent className={scrollableDialogClasses.content}>
         <TextField
           name="query"
           value={query}
@@ -126,40 +132,59 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
           }}
         />
         <FormSpacer />
-        <ResponsiveTable>
-          <TableBody>
-            {collections &&
-              collections.map(collection => {
-                const isSelected = !!selectedCollections.find(
-                  selectedCollection => selectedCollection.id === collection.id
-                );
+        <div
+          className={scrollableDialogClasses.scrollArea}
+          style={{ height: containerHeight }}
+        >
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={onFetchMore}
+            hasMore={hasMore}
+            useWindow={false}
+            loader={
+              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
+                <CircularProgress size={16} />
+              </div>
+            }
+            threshold={10}
+          >
+            <ResponsiveTable>
+              <TableBody>
+                {collections &&
+                  collections.map(collection => {
+                    const isSelected = !!selectedCollections.find(
+                      selectedCollection =>
+                        selectedCollection.id === collection.id
+                    );
 
-                return (
-                  <TableRow key={collection.id}>
-                    <TableCell
-                      padding="checkbox"
-                      className={classes.checkboxCell}
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={() =>
-                          handleCollectionAssign(
-                            collection,
-                            isSelected,
-                            selectedCollections,
-                            setSelectedCollections
-                          )
-                        }
-                      />
-                    </TableCell>
-                    <TableCell className={classes.wideCell}>
-                      {collection.name}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </ResponsiveTable>
+                    return (
+                      <TableRow key={collection.id}>
+                        <TableCell
+                          padding="checkbox"
+                          className={classes.checkboxCell}
+                        >
+                          <Checkbox
+                            checked={isSelected}
+                            onChange={() =>
+                              handleCollectionAssign(
+                                collection,
+                                isSelected,
+                                selectedCollections,
+                                setSelectedCollections
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.wideCell}>
+                          {collection.name}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>

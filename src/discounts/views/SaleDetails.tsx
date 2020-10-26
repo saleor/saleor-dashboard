@@ -68,14 +68,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   );
   const intl = useIntl();
   const {
-    // loadMore: loadMoreCategories,
+    loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
-    // loadMore: loadMoreCollections,
+    loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
@@ -367,8 +367,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                   )
                               )}
                               confirmButtonState={saleCataloguesAddOpts.status}
+                              hasMore={
+                                searchCategoriesOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
+                              onFetchMore={loadMoreCategories}
                               loading={searchCategoriesOpts.loading}
                               onClose={closeModal}
                               onSubmit={categories =>
@@ -394,8 +399,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                   )
                               )}
                               confirmButtonState={saleCataloguesAddOpts.status}
+                              hasMore={
+                                searchCollectionsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
+                              onFetchMore={loadMoreCollections}
                               loading={searchCollectionsOpts.loading}
                               onClose={closeModal}
                               onSubmit={collections =>

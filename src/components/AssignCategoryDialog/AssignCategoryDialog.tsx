@@ -17,7 +17,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "../Checkbox";
@@ -37,9 +40,6 @@ const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0
     },
-    overflow: {
-      overflowY: "visible"
-    },
     wideCell: {
       width: "100%"
     }
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
   { name: "AssignCategoryDialog" }
 );
 
-interface AssignCategoriesDialogProps {
+interface AssignCategoriesDialogProps extends FetchMoreProps {
   categories: SearchCategories_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
@@ -80,25 +80,31 @@ const AssignCategoriesDialog: React.FC<AssignCategoriesDialogProps> = props => {
     open,
     loading,
     categories: categories,
+    hasMore,
     onClose,
     onFetch,
+    onFetchMore,
     onSubmit
   } = props;
   const classes = useStyles(props);
+  const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [selectedCategories, setSelectedCategories] = React.useState<
     SearchCategories_search_edges_node[]
   >([]);
+  const container = React.useRef<HTMLDivElement>();
 
   const handleSubmit = () => onSubmit(selectedCategories);
 
+  const containerHeight = container.current?.scrollHeight - 130;
+
   return (
     <Dialog
+      classes={{ paper: scrollableDialogClasses.dialog }}
       open={open}
       onClose={onClose}
-      classes={{ paper: classes.overflow }}
       fullWidth
       maxWidth="sm"
     >
@@ -108,7 +114,10 @@ const AssignCategoriesDialog: React.FC<AssignCategoriesDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow}>
+      <DialogContent
+        className={scrollableDialogClasses.content}
+        ref={container}
+      >
         <TextField
           name="query"
           value={query}
@@ -126,40 +135,59 @@ const AssignCategoriesDialog: React.FC<AssignCategoriesDialogProps> = props => {
           }}
         />
         <FormSpacer />
-        <ResponsiveTable>
-          <TableBody>
-            {categories &&
-              categories.map(category => {
-                const isSelected = !!selectedCategories.find(
-                  selectedCategories => selectedCategories.id === category.id
-                );
+        <div
+          className={scrollableDialogClasses.scrollArea}
+          style={{ height: containerHeight }}
+        >
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={onFetchMore}
+            hasMore={hasMore}
+            useWindow={false}
+            loader={
+              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
+                <CircularProgress size={16} />
+              </div>
+            }
+            threshold={10}
+          >
+            <ResponsiveTable key="table">
+              <TableBody>
+                {categories &&
+                  categories.map(category => {
+                    const isSelected = !!selectedCategories.find(
+                      selectedCategories =>
+                        selectedCategories.id === category.id
+                    );
 
-                return (
-                  <TableRow key={category.id}>
-                    <TableCell
-                      padding="checkbox"
-                      className={classes.checkboxCell}
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={() =>
-                          handleCategoryAssign(
-                            category,
-                            isSelected,
-                            selectedCategories,
-                            setSelectedCategories
-                          )
-                        }
-                      />
-                    </TableCell>
-                    <TableCell className={classes.wideCell}>
-                      {category.name}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </ResponsiveTable>
+                    return (
+                      <TableRow key={category.id}>
+                        <TableCell
+                          padding="checkbox"
+                          className={classes.checkboxCell}
+                        >
+                          <Checkbox
+                            checked={isSelected}
+                            onChange={() =>
+                              handleCategoryAssign(
+                                category,
+                                isSelected,
+                                selectedCategories,
+                                setSelectedCategories
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.wideCell}>
+                          {category.name}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
