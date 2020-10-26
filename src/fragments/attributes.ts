@@ -32,3 +32,11 @@ export const attributeDetailsFragment = gql`
     }
   }
 `;
+
+export const availableAttributeFragment = gql`
+  fragment AvailableAttributeFragment on Attribute {
+    id
+    name
+    slug
+  }
+`;
