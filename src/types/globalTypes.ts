@@ -109,6 +109,7 @@ export enum CategorySortField {
   PRODUCT_COUNT = "PRODUCT_COUNT",
   SUBCATEGORY_COUNT = "SUBCATEGORY_COUNT",
 }
+
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
@@ -1110,6 +1111,11 @@ export interface ChannelUpdateInput {
   slug?: string | null;
 }
 
+export interface CollectionChannelListingUpdateInput {
+  addChannels?: PublishableChannelListingInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;
@@ -1526,6 +1532,12 @@ export interface ProductVariantInput {
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+}
+
+export interface PublishableChannelListingInput {
+  channelId: string;
+  isPublished?: boolean | null;
+  publicationDate?: any | null;
 }
 
 export interface ReorderInput {

@@ -1,4 +1,8 @@
+import { ChannelCollectionData } from "@saleor/channels/utils";
+import { CollectionChannelListingUpdate_collectionChannelListingUpdate_errors } from "@saleor/collections/types/CollectionChannelListingUpdate";
+import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
@@ -24,6 +28,7 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
     value: string;
   };
   backgroundImageAlt: string;
+  channelListing: ChannelCollectionData[];
   description: RawDraftContentState;
   name: string;
   slug: string;
@@ -32,44 +37,60 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
 }
 
 export interface CollectionCreatePageProps {
+  channelsCount: number;
+  channelsErrors: CollectionChannelListingUpdate_collectionChannelListingUpdate_errors[];
+  currentChannels: ChannelCollectionData[];
   disabled: boolean;
   errors: CollectionErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: CollectionCreatePageFormData) => void;
+  onChannelsChange: (data: ChannelCollectionData[]) => void;
+  openChannelsModal: () => void;
 }
 
-const initialForm: CollectionCreatePageFormData = {
-  backgroundImage: {
-    url: null,
-    value: null
-  },
-  backgroundImageAlt: "",
-  description: convertToRaw(ContentState.createFromText("")),
-  metadata: [],
-  name: "",
-  privateMetadata: [],
-  seoDescription: "",
-  seoTitle: "",
-  slug: ""
-};
-
 const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
+  channelsCount,
+  currentChannels = [],
   disabled,
   errors,
   saveButtonBarState,
   onBack,
+  onChannelsChange,
+  openChannelsModal,
   onSubmit
 }: CollectionCreatePageProps) => {
   const intl = useIntl();
+
+  const initialForm: CollectionCreatePageFormData = {
+    backgroundImage: {
+      url: null,
+      value: null
+    },
+    backgroundImageAlt: "",
+    channelListing: currentChannels,
+    description: convertToRaw(ContentState.createFromText("")),
+    metadata: [],
+    name: "",
+    privateMetadata: [],
+    seoDescription: "",
+    seoTitle: "",
+    slug: ""
+  };
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListing,
+          onChannelsChange,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -144,6 +165,28 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
+              </div>
+              <div>
+                <AvailabilityCard
+                  messages={{
+                    hiddenLabel: intl.formatMessage({
+                      defaultMessage: "Hidden",
+                      description: "collection label"
+                    }),
+
+                    visibleLabel: intl.formatMessage({
+                      defaultMessage: "Visible",
+                      description: "collection label"
+                    })
+                  }}
+                  errors={[]}
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={channelsCount}
+                  channels={currentChannels}
+                  disabled={disabled}
+                  onChange={handleChannelChange}
+                  openModal={openChannelsModal}
+                />
               </div>
             </Grid>
             <SaveButtonBar

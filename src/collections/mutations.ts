@@ -1,4 +1,8 @@
 import {
+  CollectionChannelListingUpdate,
+  CollectionChannelListingUpdateVariables
+} from "@saleor/collections/types/CollectionChannelListingUpdate";
+import {
   collectionDetailsFragment,
   collectionProductFragment
 } from "@saleor/fragments/collections";
@@ -191,12 +195,11 @@ export const useCollectionBulkDelete = makeMutation<
 >(collectionBulkDelete);
 
 const collectionChannelListingUpdate = gql`
-  ${productErrorFragment}
   mutation CollectionChannelListingUpdate(
     $id: ID!
     $input: CollectionChannelListingUpdateInput!
   ) {
-    collectionChannelListingUpdate(ids: $ids) {
+    collectionChannelListingUpdate(id: $id, input: $input) {
       errors: collectionChannelListingErrors {
         field
         message
@@ -206,6 +209,7 @@ const collectionChannelListingUpdate = gql`
     }
   }
 `;
-export const useCollectionChannelListingUpdate = makeMutation(
-  collectionChannelListingUpdate
-);
+export const useCollectionChannelListingUpdate = makeMutation<
+  CollectionChannelListingUpdate,
+  CollectionChannelListingUpdateVariables
+>(collectionChannelListingUpdate);

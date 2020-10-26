@@ -1,4 +1,8 @@
+import { ChannelCollectionData } from "@saleor/channels/utils";
+import { CollectionChannelListingUpdate_collectionChannelListingUpdate_errors } from "@saleor/collections/types/CollectionChannelListingUpdate";
+import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
@@ -25,19 +29,21 @@ import CollectionProducts from "../CollectionProducts/CollectionProducts";
 
 export interface CollectionDetailsPageFormData extends MetadataFormData {
   backgroundImageAlt: string;
+  channelListing: ChannelCollectionData[];
   description: RawDraftContentState;
   name: string;
   slug: string;
   seoDescription: string;
   seoTitle: string;
-  isFeatured: boolean;
 }
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   channelsCount: number;
+  channelsErrors: CollectionChannelListingUpdate_collectionChannelListingUpdate_errors[];
   collection: CollectionDetails_collection;
+  currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
-  isFeatured: boolean;
+  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedChannel: string;
   onBack: () => void;
@@ -46,14 +52,17 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   onImageUpload: (file: File) => void;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onSubmit: (data: CollectionDetailsPageFormData) => void;
+  onChannelsChange: (data: ChannelCollectionData[]) => void;
+  openChannelsModal: () => void;
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   channelsCount,
   collection,
+  currentChannels = [],
   disabled,
   errors,
-  isFeatured,
+  hasChannelChanged,
   saveButtonBarState,
   selectedChannel,
   onBack,
@@ -61,10 +70,12 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   onImageDelete,
   onImageUpload,
   onSubmit,
+  onChannelsChange,
+  openChannelsModal,
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
-  // const localizeDate = useDateLocalize();
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -89,10 +100,10 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     <Form
       initial={{
         backgroundImageAlt: collection?.backgroundImage?.alt || "",
+        channelListing: currentChannels,
         description: collection?.descriptionJson
           ? JSON.parse(collection.descriptionJson)
           : "",
-        isFeatured,
         metadata: collection?.metadata?.map(mapMetadataItemToInput),
         name: collection?.name || "",
         privateMetadata: collection?.privateMetadata?.map(
@@ -105,8 +116,13 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       onSubmit={handleSubmit}
       confirmLeave
     >
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListing,
+          onChannelsChange,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -158,11 +174,32 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                   onChange={change}
                 />
               </div>
-              <div></div>
+              <div>
+                <AvailabilityCard
+                  messages={{
+                    hiddenLabel: intl.formatMessage({
+                      defaultMessage: "Hidden",
+                      description: "collection label"
+                    }),
+
+                    visibleLabel: intl.formatMessage({
+                      defaultMessage: "Visible",
+                      description: "collection label"
+                    })
+                  }}
+                  errors={[]}
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={channelsCount}
+                  channels={currentChannels}
+                  disabled={disabled}
+                  onChange={handleChannelChange}
+                  openModal={openChannelsModal}
+                />
+              </div>
             </Grid>
             <SaveButtonBar
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={disabled || (!hasChanged && !hasChannelChanged)}
               onCancel={onBack}
               onDelete={onCollectionRemove}
               onSave={submit}

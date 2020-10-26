@@ -1,6 +1,7 @@
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
+import { createCollectionChannelsData } from "@saleor/channels/utils";
 import { CollectionErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -16,21 +17,26 @@ const collection = collectionFixture(
   placeholderCollectionImage,
   placeholderProductImage
 );
+const channels = createCollectionChannelsData(collection);
 
 const props: Omit<CollectionDetailsPageProps, "classes"> = {
   ...listActionsProps,
   ...pageListProps.default,
   channelsCount: 2,
+  channelsErrors: [],
   collection,
+  currentChannels: channels,
   disabled: false,
   errors: [],
-  isFeatured: true,
+  hasChannelChanged: false,
   onBack: () => undefined,
+  onChannelsChange: () => undefined,
   onCollectionRemove: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onProductUnassign: () => undefined,
   onSubmit: () => undefined,
+  openChannelsModal: () => undefined,
   saveButtonBarState: "default",
   selectedChannel: "123"
 };

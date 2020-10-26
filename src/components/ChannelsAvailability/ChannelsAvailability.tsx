@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
+import { Channel as ChannelList } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
@@ -19,6 +19,16 @@ import { useIntl } from "react-intl";
 
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
+
+export interface ChannelData {
+  id: string;
+  isPublished: boolean;
+  name: string;
+  publicationDate: string | null;
+  availableForPurchase?: string;
+  isAvailableForPurchase?: boolean;
+  visibleInListings?: boolean;
+}
 
 export interface Message {
   visibleLabel: string;
@@ -79,11 +89,13 @@ const Channel: React.FC<ChannelProps> = ({
     name
   } = data;
   const formData = {
-    availableForPurchase,
-    isAvailableForPurchase: isAvailable,
+    ...(availableForPurchase !== undefined ? { availableForPurchase } : {}),
+    ...(isAvailable !== undefined
+      ? { isAvailableForPurchase: isAvailable }
+      : {}),
     isPublished,
     publicationDate,
-    visibleInListings
+    ...(visibleInListings !== undefined ? { visibleInListings } : {})
   };
   const dateNow = React.useContext(DateContext);
   const localizeDate = useDateLocalize();

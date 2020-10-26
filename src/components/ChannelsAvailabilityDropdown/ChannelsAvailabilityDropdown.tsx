@@ -21,7 +21,7 @@ export interface ChannelsAvailabilityDropdownProps {
   currentChannel: Channels;
 }
 
-const isActive = (channelData: Channels) => channelData.isPublished;
+const isActive = (channelData: Channels) => channelData?.isPublished;
 
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
   allChannelsCount,
