@@ -15,12 +15,10 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
@@ -40,8 +38,6 @@ import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
-  getFilterOpts,
-  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -56,7 +52,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -104,17 +99,15 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: collectionListUrl,
-    getFilterQueryParam,
-    navigate,
-    params
-  });
+  const handleSearchChange = (query: string) => {
+    navigate(
+      collectionListUrl({
+        ...getActiveFilters(params),
+        activeTab: undefined,
+        query
+      })
+    );
+  };
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
@@ -155,7 +148,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, collectionListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <>
@@ -170,14 +162,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         />
       )}
       <CollectionListPage
-        currencySymbol={currencySymbol}
         currentTab={currentTab}
-        filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
         onAdd={() => navigate(collectionAddUrl)}
-        onAll={resetFilters}
+        onAll={() => navigate(collectionListUrl())}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
