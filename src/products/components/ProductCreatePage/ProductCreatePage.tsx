@@ -99,7 +99,6 @@ interface ProductCreatePageProps {
     hasVariants: boolean;
     productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
-  hasChannelChanged: boolean;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -128,7 +127,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
-  hasChannelChanged,
   header,
   initial,
   productTypes: productTypeChoiceList,
@@ -440,12 +438,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={
-                disabled ||
-                !onSubmit ||
-                formDisabled ||
-                (!hasChanged && !hasChannelChanged)
-              }
+              disabled={disabled || !onSubmit || formDisabled || !hasChanged}
             />
           </Container>
         );

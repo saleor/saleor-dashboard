@@ -8,7 +8,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
@@ -43,7 +42,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const shop = useShop();
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
@@ -58,19 +56,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
-  ] = useShippingMethodChannelListingUpdate({
-    onCompleted: data => {
-      const errors = data.shippingMethodChannelListingUpdate.errors;
-      if (errors.length) {
-        errors.map(err =>
-          notify({
-            status: "error",
-            text: getShippingErrorMessage(err, intl)
-          })
-        );
-      }
-    }
-  });
+  ] = useShippingMethodChannelListingUpdate({});
 
   const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
   const allChannels = createSortedShippingChannels(channelsData?.channels);
@@ -120,6 +106,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
+          formData.noLimits,
           formData.channelListing,
           shippingChannels
         )
@@ -172,12 +159,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        defaultCurrency={shop?.defaultCurrency}
         disabled={
           loading ||
           updateShippingRateOpts?.status === "loading" ||
           updateShippingMethodChannelListingOpts?.status === "loading"
         }
+        hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={handleDelete}
         onSubmit={handleSubmit}

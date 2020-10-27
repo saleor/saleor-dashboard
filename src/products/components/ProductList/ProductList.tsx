@@ -22,10 +22,7 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
-import {
-  ProductList_products_edges_node,
-  ProductList_products_edges_node_channelListing
-} from "@saleor/products/types/ProductList";
+import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -139,24 +136,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     isAttributeColumnValue
   );
   const numberOfColumns = 2 + settings.columns.length;
-
-  const getProductPrice = (
-    channel: ProductList_products_edges_node_channelListing
-  ) => {
-    if (channel?.discountedPrice) {
-      return (
-        <Money
-          money={{
-            amount: channel.discountedPrice?.amount,
-            currency: channel.discountedPrice?.currency
-              ? channel.discountedPrice?.currency
-              : channel.channel.currencyCode
-          }}
-        />
-      );
-    }
-    return "-";
-  };
 
   return (
     <div className={classes.tableContainer}>
@@ -306,10 +285,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel =
-                product?.channelListing.find(
-                  listing => listing.channel.id === selectedChannel
-                ) || product?.channelListing[0];
+              const channel = product?.channelListing.find(
+                listing => listing.channel.id === selectedChannel
+              );
+
               return (
                 <TableRow
                   selected={isSelected}
@@ -381,7 +360,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       ) : product?.channelListing !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={channel}
+                          currentChannel={channel || product?.channelListing[0]}
                           channels={product?.channelListing}
                         />
                       ) : (
@@ -419,7 +398,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell className={classes.colPrice}>
                       {product?.channelListing ? (
-                        getProductPrice(channel)
+                        <Money money={channel?.discountedPrice} />
                       ) : (
                         <Skeleton />
                       )}

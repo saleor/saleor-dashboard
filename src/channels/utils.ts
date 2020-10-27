@@ -126,13 +126,13 @@ export const createChannelsDataWithDiscountPrice = (
 export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchase: null,
-    costPrice: null,
+    costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
     isAvailableForPurchase: false,
     isPublished: false,
     name: channel.name,
-    price: null,
+    price: "",
     publicationDate: null,
     visibleInListings: false
   })) || [];
@@ -154,6 +154,7 @@ export const createShippingChannels = (
   data?: Channels_channels[]
 ): ChannelShippingData[] =>
   data?.map(channel => ({
+    currency: channel.currencyCode,
     id: channel.id,
     maxValue: "",
     minValue: "",
@@ -165,6 +166,7 @@ export const createShippingChannelsFromRate = (
   data?: ShippingZone_shippingZone_shippingMethods_channelListing[]
 ): ChannelShippingData[] =>
   data?.map(channelData => ({
+    currency: channelData.channel.currencyCode,
     id: channelData.channel.id,
     maxValue: channelData.maximumOrderPrice
       ? channelData.maximumOrderPrice.amount.toString()
@@ -176,6 +178,7 @@ export const createShippingChannelsFromRate = (
     price: channelData.price ? channelData.price.amount.toString() : ""
   })) || [];
 export interface ChannelShippingData {
+  currency: string;
   id: string;
   minValue: string;
   name: string;

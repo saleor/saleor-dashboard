@@ -1,4 +1,4 @@
-import { createChannelsDataFromProduct } from "@saleor/channels/utils";
+import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
@@ -69,7 +69,7 @@ const getChannelsVariables = (
   data: ProductUpdatePageSubmitData,
   product: ProductDetails_product
 ) => {
-  const productChannels = createChannelsDataFromProduct(product);
+  const productChannels = createSortedChannelsDataFromProduct(product);
   const diffChannels = diff(
     productChannels,
     data.channelListing,

@@ -16,7 +16,6 @@ export const useStyles = makeStyles(
       textAlign: "right",
       width: 200
     },
-
     pricingContent: {
       "&:last-child": {
         paddingBottom: 0
