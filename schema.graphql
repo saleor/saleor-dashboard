@@ -4974,8 +4974,6 @@ type Shop {
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
-  currencies: [String]!
-  defaultCurrency: String!
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
   defaultMailSenderAddress: String

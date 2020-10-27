@@ -4,7 +4,7 @@ import { TypedQuery } from "../queries";
 import { Home } from "./types/Home";
 
 const home = gql`
-  query Home {
+  query Home($channel: String!) {
     salesToday: ordersTotal(period: TODAY) {
       gross {
         amount
@@ -23,7 +23,11 @@ const home = gql`
     productsOutOfStock: products(stockAvailability: OUT_OF_STOCK) {
       totalCount
     }
-    productTopToday: reportProductSales(period: TODAY, first: 5) {
+    productTopToday: reportProductSales(
+      period: TODAY
+      first: 5
+      channel: $channel
+    ) {
       edges {
         node {
           id
