@@ -14,9 +14,18 @@ import Decorator from "../../Decorator";
 
 const category = categoryFixture(placeholderImage);
 
+const channelChoices = category.products.edges[0].node.channelListing.map(
+  listing => ({
+    label: listing.channel.name,
+    value: listing.channel.id
+  })
+);
+
 const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   category,
   changeTab: undefined,
+  channelChoices,
+  channelsCount: 2,
   currentTab: CategoryPageTab.categories,
   disabled: false,
   errors: [],

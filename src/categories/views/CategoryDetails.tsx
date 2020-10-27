@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -77,6 +78,13 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     displayLoader: true,
     variables: { ...paginationState, id }
   });
+
+  const { data: channelsData } = useChannelsList({});
+
+  const channelChoices = channelsData?.channels?.map(channel => ({
+    label: channel.name,
+    value: channel.id
+  }));
 
   const category = data?.category;
 
@@ -205,6 +213,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
+        channelsCount={channelsData?.channels?.length}
+        channelChoices={channelChoices}
         changeTab={changeTab}
         currentTab={params.activeTab}
         category={maybe(() => data.category)}

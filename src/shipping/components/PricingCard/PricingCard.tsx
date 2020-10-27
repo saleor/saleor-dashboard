@@ -9,7 +9,12 @@ import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
+import {
+  getFormChannelError,
+  getFormChannelErrors
+} from "@saleor/utils/errors";
+import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,8 +28,7 @@ interface Value {
 
 export interface PricingCardProps {
   channels: ChannelShippingData[];
-  errors: ShippingErrorFragment[];
-  defaultCurrency: string;
+  errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
   onChange: (channelId: string, value: Value) => void;
 }
@@ -33,12 +37,14 @@ const numberOfColumns = 2;
 
 export const PricingCard: React.FC<PricingCardProps> = ({
   channels,
-  defaultCurrency,
   disabled,
+  errors,
   onChange
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const formErrors = getFormChannelErrors(["price"], errors);
+
   return (
     <Card>
       <CardTitle
@@ -75,31 +81,38 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             </TableCell>
           </TableHead>
           <TableBody>
-            {channels?.map(channel => (
-              <TableRow key={channel.id}>
-                <TableCell>
-                  <Typography>{channel.name}</Typography>
-                </TableCell>
-                <TableCell>
-                  <PriceField
-                    disabled={disabled}
-                    label={intl.formatMessage({
-                      defaultMessage: "Price",
-                      description: "column title"
-                    })}
-                    name="price"
-                    value={channel.price}
-                    onChange={e =>
-                      onChange(channel.id, {
-                        ...channel,
-                        price: e.target.value
-                      })
-                    }
-                    currencySymbol={defaultCurrency}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {channels?.map(channel => {
+              const error = getFormChannelError(formErrors.price, channel.id);
+
+              return (
+                <TableRow key={channel.id}>
+                  <TableCell>
+                    <Typography>{channel.name}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <PriceField
+                      disabled={disabled}
+                      error={!!error}
+                      label={intl.formatMessage({
+                        defaultMessage: "Price",
+                        description: "column title"
+                      })}
+                      name="price"
+                      value={channel.price}
+                      onChange={e =>
+                        onChange(channel.id, {
+                          ...channel,
+                          price: e.target.value
+                        })
+                      }
+                      currencySymbol={channel.currency}
+                      required
+                      hint={error && getShippingErrorMessage(error, intl)}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </ResponsiveTable>
       </CardContent>

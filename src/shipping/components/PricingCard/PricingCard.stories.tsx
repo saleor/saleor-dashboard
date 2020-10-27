@@ -10,7 +10,6 @@ const props: PricingCardProps = {
   channels: createShippingChannelsFromRate(
     shippingZone.shippingMethods[0].channelListing
   ),
-  defaultCurrency: "USD",
   disabled: false,
   errors: [],
   onChange: () => undefined

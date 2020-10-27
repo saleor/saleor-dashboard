@@ -68,6 +68,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  channels: string[] | null;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate {

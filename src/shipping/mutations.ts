@@ -1,4 +1,7 @@
-import { shippingErrorFragment } from "@saleor/fragments/errors";
+import {
+  shippingChannelsErrorFragment,
+  shippingErrorFragment
+} from "@saleor/fragments/errors";
 import {
   shippingMethodFragment,
   shippingZoneDetailsFragment
@@ -221,7 +224,7 @@ export const useShippingRateBulkDelete = makeMutation<
 >(bulkDeleteShippingRate);
 
 export const shippingMethodChannelListingUpdate = gql`
-  ${shippingErrorFragment}
+  ${shippingChannelsErrorFragment}
   ${shippingMethodFragment}
   mutation ShippingMethodChannelListingUpdate(
     $id: ID!
@@ -232,7 +235,7 @@ export const shippingMethodChannelListingUpdate = gql`
         ...ShippingMethodFragment
       }
       errors: shippingErrors {
-        ...ShippingErrorFragment
+        ...ShippingChannelsErrorFragment
       }
     }
   }

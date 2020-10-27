@@ -8,6 +8,7 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
+import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -26,6 +27,8 @@ import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 
 export interface SaleProductsProps extends ListProps, ListActions {
   discount: SaleDetails_sale | VoucherDetails_voucher;
+  channelsCount: number;
+  selectedChannel: string;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -65,8 +68,8 @@ const numberOfColumns = 5;
 
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const {
+    channelsCount,
     discount: sale,
-
     disabled,
     pageInfo,
     onRowClick,
@@ -76,6 +79,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     onNextPage,
     isChecked,
     selected,
+    selectedChannel,
     toggle,
     toggleAll,
     toolbar
@@ -126,8 +130,8 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
-              defaultMessage="Published"
-              description="product is published"
+              defaultMessage="Availability"
+              description="product availability"
             />
           </TableCell>
           <TableCell className={classes.colActions} />
@@ -150,6 +154,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
             maybe(() => sale.products.edges.map(edge => edge.node)),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
+              const channel =
+                product?.channelListing.find(
+                  listing => listing.channel.id === selectedChannel
+                ) || product?.channelListing[0];
               return (
                 <TableRow
                   hover={!!product}
@@ -175,6 +183,19 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => product.productType.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colType}>
+                    {product && !product?.channelListing?.length ? (
+                      "-"
+                    ) : product?.channelListing !== undefined ? (
+                      <ChannelsAvailabilityDropdown
+                        allChannelsCount={channelsCount}
+                        currentChannel={channel}
+                        channels={product?.channelListing}
+                      />
+                    ) : (
                       <Skeleton />
                     )}
                   </TableCell>
