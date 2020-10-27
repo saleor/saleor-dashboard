@@ -35,7 +35,7 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
-} from "./fliters";
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface PageTypeListProps {

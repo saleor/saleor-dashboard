@@ -11,16 +11,13 @@ const props: Omit<PageTypeCreatePageProps, "classes"> = {
   errors: [],
   onBack: () => undefined,
   onSubmit: () => undefined,
-  pageTitle: "Create page type",
   saveButtonBarState: "default"
 };
 
 storiesOf("Views / Page types / Create page type", module)
   .addDecorator(Decorator)
   .add("default", () => <PageTypeCreatePage {...props} />)
-  .add("loading", () => (
-    <PageTypeCreatePage {...props} disabled={true} pageTitle={undefined} />
-  ))
+  .add("loading", () => <PageTypeCreatePage {...props} disabled={true} />)
   .add("form errors", () => (
     <PageTypeCreatePage
       {...props}

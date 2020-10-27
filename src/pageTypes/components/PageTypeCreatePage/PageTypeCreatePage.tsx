@@ -24,7 +24,6 @@ export interface PageTypeForm extends MetadataFormData {
 export interface PageTypeCreatePageProps {
   errors: PageErrorFragment[];
   disabled: boolean;
-  pageTitle: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: PageTypeForm) => void;
@@ -49,14 +48,7 @@ const useStyles = makeStyles(
 );
 
 const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
-  const {
-    disabled,
-    errors,
-    pageTitle,
-    saveButtonBarState,
-    onBack,
-    onSubmit
-  } = props;
+  const { disabled, errors, saveButtonBarState, onBack, onSubmit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const {
@@ -73,7 +65,12 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
             <AppHeader onBack={onBack}>
               {intl.formatMessage(sectionNames.pageTypes)}
             </AppHeader>
-            <PageHeader title={pageTitle} />
+            <PageHeader
+              title={intl.formatMessage({
+                defaultMessage: "Create Page Type",
+                description: "header"
+              })}
+            />
             <Grid variant="inverted">
               <div>
                 <Typography>
