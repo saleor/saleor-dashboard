@@ -3,13 +3,13 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import ChannelsSelect, { ChannelsSelectProps } from "./ChannelsSelect";
+
 const product = productFixture("");
 const channelChoices = product.channelListing.map(listing => ({
   label: listing.channel.name,
   value: listing.channel.id
 }));
-
-import ChannelsSelect, { ChannelsSelectProps } from "./ChannelsSelect";
 
 const props: ChannelsSelectProps = {
   channelChoice: channelChoices[0].value,

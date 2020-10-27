@@ -126,13 +126,13 @@ export const createChannelsDataWithDiscountPrice = (
 export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchase: null,
-    costPrice: null,
+    costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
     isAvailableForPurchase: false,
     isPublished: false,
     name: channel.name,
-    price: null,
+    price: "",
     publicationDate: null,
     visibleInListings: false
   })) || [];

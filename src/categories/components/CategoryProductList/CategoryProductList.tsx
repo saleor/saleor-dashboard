@@ -13,7 +13,6 @@ import TableCellAvatar, {
 } from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { ChannelListingProductFragment } from "@saleor/fragments/types/ChannelListingProductFragment";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
@@ -97,21 +96,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const classes = useStyles(props);
 
   const numberOfColumns = 5;
-
-  const getProductPrice = (channel: ChannelListingProductFragment) => {
-    if (channel?.discountedPrice) {
-      return (
-        <Money
-          money={{
-            amount: channel.discountedPrice?.amount,
-            currency:
-              channel.discountedPrice?.currency || channel.channel.currencyCode
-          }}
-        />
-      );
-    }
-    return "-";
-  };
 
   return (
     <div className={classes.tableContainer}>
@@ -221,7 +205,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   </TableCell>
                   <TableCell className={classes.colPrice}>
                     {product?.channelListing ? (
-                      getProductPrice(channel)
+                      <Money money={channel?.discountedPrice} />
                     ) : (
                       <Skeleton />
                     )}
