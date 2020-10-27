@@ -32,8 +32,6 @@ export const PageTypeUpdate: React.FC<PageTypeUpdateProps> = ({ id }) => {
   const attributeListActions = useBulkActions();
   const intl = useIntl();
   const [errors, setErrors] = React.useState({
-    addAttributeErrors: [],
-    editAttributeErrors: [],
     formErrors: []
   });
 

@@ -1,12 +1,12 @@
 import { Omit } from "@material-ui/core";
 import { listActionsProps } from "@saleor/fixtures";
-import { formError } from "@saleor/storybook/misc";
+import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
 import { pageType } from "../../fixtures";
-import PageTypeDetailsPage, { PageTypeDetailsPageProps, PageTypeForm } from ".";
+import PageTypeDetailsPage, { PageTypeDetailsPageProps } from ".";
 
 const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   attributeList: listActionsProps,
@@ -47,6 +47,14 @@ storiesOf("Views / Page types / Page type details", module)
   .add("form errors", () => (
     <PageTypeDetailsPage
       {...props}
-      errors={(["name"] as Array<keyof PageTypeForm>).map(formError)}
+      errors={[
+        {
+          code: PageErrorCode.REQUIRED,
+          field: "name"
+        }
+      ].map(err => ({
+        __typename: "PageError",
+        ...err
+      }))}
     />
   ));

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PageTypeCreateInput, AttributeTypeEnum } from "./../../types/globalTypes";
+import { PageTypeCreateInput, PageErrorCode, AttributeTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PageTypeCreate
@@ -10,8 +10,8 @@ import { PageTypeCreateInput, AttributeTypeEnum } from "./../../types/globalType
 
 export interface PageTypeCreate_pageTypeCreate_errors {
   __typename: "PageError";
+  code: PageErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface PageTypeCreate_pageTypeCreate_pageType_metadata {

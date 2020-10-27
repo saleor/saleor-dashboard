@@ -10,10 +10,11 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
-import { ListActions, ReorderEvent, UserError } from "@saleor/types";
+import { ListActions, ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -34,7 +35,7 @@ export interface PageTypeForm extends MetadataFormData {
 }
 
 export interface PageTypeDetailsPageProps {
-  errors: UserError[];
+  errors: PageErrorFragment[];
   pageType: PageTypeDetails_pageType;
   disabled: boolean;
   pageTitle: string;

@@ -3,9 +3,10 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import getPageErrorMessage from "@saleor/utils/errors/page";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,15 +24,16 @@ interface PageTypeDetailsProps {
     name: string;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: PageErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
+  const intl = useIntl();
   const classes = useStyles(props);
 
-  const intl = useIntl();
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card className={classes.root}>
@@ -41,9 +43,9 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "name")}
           fullWidth
-          helperText={getFieldError(errors, "name")?.message}
+          error={!!formErrors.name}
+          helperText={getPageErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
             defaultMessage: "Content Type Name"
           })}
