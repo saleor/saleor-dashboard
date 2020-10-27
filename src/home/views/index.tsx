@@ -18,7 +18,7 @@ const HomeSection = () => {
 
   const channelChoices = channelsData?.channels?.map(channel => ({
     label: channel.name,
-    value: channel.id
+    value: channel.slug
   }));
 
   const [channelChoice, setChannelChoice] = useStateFromProps(

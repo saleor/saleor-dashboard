@@ -13,7 +13,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -56,7 +55,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -149,7 +147,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedProductTypeBulkDeleteMutation
@@ -166,7 +163,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         return (
           <>
             <ProductTypeListPage
-              currencySymbol={currencySymbol}
               currentTab={currentTab}
               filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}

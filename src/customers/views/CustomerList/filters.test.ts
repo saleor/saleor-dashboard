@@ -20,13 +20,11 @@ describe("Filtering query params", () => {
   it("should not be empty object if params given", () => {
     const params: CustomerListUrlFilters = {
       joinedFrom: date.from,
-      moneySpentFrom: "2",
-      moneySpentTo: "39.50",
       numberOfOrdersTo: "5"
     };
     const filterVariables = getFilterVariables(params);
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+    expect(getExistingKeys(filterVariables)).toHaveLength(2);
   });
 });
 
@@ -39,13 +37,6 @@ describe("Filtering URL params", () => {
       value: {
         max: date.to,
         min: date.from
-      }
-    },
-    moneySpent: {
-      active: false,
-      value: {
-        max: "39.50",
-        min: "2"
       }
     },
     numberOfOrders: {

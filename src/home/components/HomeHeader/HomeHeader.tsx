@@ -10,9 +10,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     headerContainer: {
+      alignItems: "flex-end",
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(6)
     },
     pageHeader: {
       fontWeight: 600 as 600

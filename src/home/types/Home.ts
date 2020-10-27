@@ -133,3 +133,7 @@ export interface Home {
   productTopToday: Home_productTopToday | null;
   activities: Home_activities | null;
 }
+
+export interface HomeVariables {
+  channel: string;
+}

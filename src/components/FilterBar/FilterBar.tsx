@@ -14,6 +14,7 @@ export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchBarProps {
   filterStructure: IFilter<TKeys>;
+  currencySymbol?: string;
 }
 
 const useStyles = makeStyles(
@@ -84,8 +85,8 @@ const FilterBar: React.FC<FilterBarProps> = props => {
       </FilterTabs>
       <div className={classes.root}>
         <Filter
-          currencySymbol={currencySymbol}
           menu={filterStructure}
+          currencySymbol={currencySymbol}
           onFilterAdd={onFilterChange}
         />
         <SearchInput

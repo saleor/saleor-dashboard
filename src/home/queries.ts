@@ -5,22 +5,25 @@ import { Home } from "./types/Home";
 
 const home = gql`
   query Home($channel: String!) {
-    salesToday: ordersTotal(period: TODAY) {
+    salesToday: ordersTotal(period: TODAY, channel: $channel) {
       gross {
         amount
         currency
       }
     }
-    ordersToday: orders(created: TODAY) {
+    ordersToday: orders(created: TODAY, channel: $channel) {
       totalCount
     }
-    ordersToFulfill: orders(status: READY_TO_FULFILL) {
+    ordersToFulfill: orders(status: READY_TO_FULFILL, channel: $channel) {
       totalCount
     }
-    ordersToCapture: orders(status: READY_TO_CAPTURE) {
+    ordersToCapture: orders(status: READY_TO_CAPTURE, channel: $channel) {
       totalCount
     }
-    productsOutOfStock: products(stockAvailability: OUT_OF_STOCK) {
+    productsOutOfStock: products(
+      stockAvailability: OUT_OF_STOCK
+      channel: $channel
+    ) {
       totalCount
     }
     productTopToday: reportProductSales(
