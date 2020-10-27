@@ -256,10 +256,6 @@
     "context": "product field",
     "string": "Visibility"
   },
-  "productStatusLabel": {
-    "context": "product",
-    "string": "Published"
-  },
   "productStockHeader": {
     "context": "product stock, section header",
     "string": "Inventory"
@@ -1048,13 +1044,9 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
-    "context": "product",
-    "string": "Not published"
-  },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3640454975": {
-    "context": "product status",
-    "string": "Published"
+  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3326160357": {
+    "context": "availability status",
+    "string": "Availability"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_636461959": {
     "context": "product",
@@ -1620,6 +1612,10 @@
   "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
     "context": "section header button",
     "string": "Manage"
+  },
+  "src_dot_components_dot_ChannelsSelect_dot_4183335632": {
+    "context": "channel select label",
+    "string": "Channel:"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -2436,9 +2432,9 @@
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
     "string": "Product Name"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3640454975": {
-    "context": "product is published",
-    "string": "Published"
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3326160357": {
+    "context": "product availability",
+    "string": "Availability"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_4257289053": {
     "string": "Product Type"
@@ -4838,10 +4834,6 @@
     "context": "product variant inventory",
     "string": "Not stocked"
   },
-  "src_dot_products_dot_components_dot_ProductVariants_dot_4183335632": {
-    "context": "variant channel",
-    "string": "Channel:"
-  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"
   },
@@ -5937,6 +5929,10 @@
   },
   "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
     "string": "Url has invalid format"
+  },
+  "src_dot_utils_dot_errors_dot_lessThanMin": {
+    "context": "error message",
+    "string": "Max value cannot be less than min value"
   },
   "src_dot_utils_dot_errors_dot_misconfigured": {
     "string": "Plugin is misconfigured and cannot be activated"

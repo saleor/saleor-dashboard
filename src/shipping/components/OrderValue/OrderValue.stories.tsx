@@ -10,7 +10,6 @@ const props: OrderValueProps = {
   channels: createShippingChannelsFromRate(
     shippingZone.shippingMethods[0].channelListing
   ),
-  defaultCurrency: "USD",
   disabled: false,
   errors: [],
   noLimits: false,

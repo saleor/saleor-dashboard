@@ -96,11 +96,12 @@ export function getUpdateShippingWeightRateVariables(
 }
 export function getShippingMethodChannelVariables(
   id: string,
+  noLimits: boolean,
   formChannels: ChannelShippingData[],
   prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
   const removeChannels = prevChannels
-    ? diff(formChannels, prevChannels, (a, b) => a.id === b.id).removed?.map(
+    ? diff(prevChannels, formChannels, (a, b) => a.id === b.id).removed?.map(
         removedChannel => removedChannel.id
       )
     : [];
@@ -111,8 +112,10 @@ export function getShippingMethodChannelVariables(
       addChannels:
         formChannels?.map(channel => ({
           channelId: channel.id,
-          maximumOrderPrice: channel.maxValue || null,
-          minimumOrderPrice: channel.minValue || null,
+          maximumOrderPrice:
+            channel.maxValue && !noLimits ? channel.maxValue : null,
+          minimumOrderPrice:
+            channel.minValue && !noLimits ? channel.minValue : null,
           price: channel.price || null
         })) || [],
       removeChannels

@@ -9,18 +9,38 @@ import ShippingZoneRatesPage, {
 } from "./ShippingZoneRatesPage";
 
 const channels = [
-  { id: "1", maxValue: "10", minValue: "0", name: "channel", price: "5" },
-  { id: "2", maxValue: "20", minValue: "1", name: "test", price: "6" }
+  {
+    currency: "USD",
+    id: "1",
+    maxValue: "10",
+    minValue: "0",
+    name: "channel",
+    price: "5"
+  },
+  {
+    currency: "USD",
+    id: "2",
+    maxValue: "20",
+    minValue: "1",
+    name: "test",
+    price: "6"
+  }
 ];
 
 const defaultChannels = [
-  { id: "1", maxValue: "", minValue: "", name: "channel", price: "" }
+  {
+    currency: "USD",
+    id: "1",
+    maxValue: "",
+    minValue: "",
+    name: "channel",
+    price: ""
+  }
 ];
 
 const props: ShippingZoneRatesPageProps = {
   allChannelsCount: 3,
   channelErrors: [],
-  defaultCurrency: "USD",
   disabled: false,
   errors: [],
   onBack: () => undefined,

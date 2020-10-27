@@ -8,7 +8,9 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
@@ -31,10 +33,10 @@ export interface FormData {
 export interface ShippingZoneRatesPageProps {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
-  defaultCurrency: string;
   disabled: boolean;
+  hasChannelChanged?: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
-  channelErrors: ShippingErrorFragment[];
+  channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -48,10 +50,10 @@ export interface ShippingZoneRatesPageProps {
 export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   allChannelsCount,
   shippingChannels,
-  defaultCurrency,
   channelErrors,
   disabled,
   errors,
+  hasChannelChanged,
   onBack,
   onDelete,
   onSubmit,
@@ -78,6 +80,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           shippingChannels,
           onChannelsChange,
           triggerChange
+        );
+        const formDisabled = data.channelListing?.some(
+          channel =>
+            validatePrice(channel.minValue) ||
+            validatePrice(channel.maxValue) ||
+            validatePrice(channel.price)
         );
 
         return (
@@ -114,7 +122,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                     errors={channelErrors}
                     noLimits={data.noLimits}
                     disabled={disabled}
-                    defaultCurrency={defaultCurrency}
                     onChange={change}
                     onChannelsChange={handleChannelsChange}
                   />
@@ -133,7 +140,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   channels={data.channelListing}
                   onChange={handleChannelsChange}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={channelErrors}
                 />
                 <CardSpacer />
@@ -151,7 +157,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled || !hasChanged}
+              disabled={
+                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+              }
               onCancel={onBack}
               onDelete={onDelete}
               onSave={submit}

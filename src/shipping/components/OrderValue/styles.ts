@@ -25,6 +25,9 @@ export const useStyles = makeStyles(
     info: {
       fontSize: 14
     },
+    price: {
+      verticalAlign: "top"
+    },
     subheader: {
       padding: theme.spacing(0, 3, 2, 3)
     },
