@@ -49,7 +49,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     disabled,
     error,
     label,
-    hint,
+    hint = "",
     currencySymbol,
     name,
     onChange,

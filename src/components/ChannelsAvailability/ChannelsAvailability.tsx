@@ -93,9 +93,7 @@ const Channel: React.FC<ChannelProps> = ({
   const [isPublicationDate, setPublicationDate] = useState(
     publicationDate === null ? true : false
   );
-  const [isAvailableDate, setAvailableDate] = useState(
-    availableForPurchase === null ? true : false
-  );
+  const [isAvailableDate, setAvailableDate] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const intl = useIntl();
   const classes = useStyles({});

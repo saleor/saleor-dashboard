@@ -3,11 +3,10 @@ import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import useListActions from "@saleor/hooks/useListActions";
+import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
@@ -77,7 +76,19 @@ export const ProductCreateView: React.FC = () => {
   const allChannels: ChannelData[] = createSortedChannelsData(
     channelsData?.channels
   );
-  const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
+
+  const {
+    channelListElements,
+    channelsToggle,
+    currentChannels,
+    handleChannelsConfirm,
+    handleChannelsModalClose,
+    handleChannelsModalOpen,
+    isChannelSelected,
+    isChannelsModalOpen,
+    setCurrentChannels,
+    toggleAllChannels
+  } = useChannels(allChannels);
 
   const handleSuccess = (productId: string) => {
     notify({
@@ -102,32 +113,6 @@ export const ProductCreateView: React.FC = () => {
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdate({});
 
-  const {
-    isSelected: isChannelSelected,
-    listElements: channelListElements,
-    set: setChannels,
-    toggle: channelsToggle
-  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
-  const toggleAllChannels = (items: ChannelData[], selected: number) => {
-    if (selected !== items.length) {
-      setChannels(items);
-    } else {
-      setChannels([]);
-    }
-  };
-
-  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
-
-  const handleChannelsModalClose = () => {
-    setChannelsModalOpen(false);
-    setChannels(currentChannels);
-  };
-
-  const handleChannelsConfirm = () => {
-    setCurrentChannels(channelListElements);
-    setChannelsModalOpen(false);
-  };
-
   const handleBack = () => navigate(productListUrl());
 
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
@@ -148,16 +133,14 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleCreate = createHandler(
-    productTypes,
-    variables => productCreate({ variables }),
-    variables => productVariantCreate({ variables }),
-    updateChannels,
-    updateVariantChannels
-  );
-
   const handleSubmit = createMetadataCreateHandler(
-    handleCreate,
+    createHandler(
+      productTypes,
+      variables => productCreate({ variables }),
+      variables => productVariantCreate({ variables }),
+      updateChannels,
+      updateVariantChannels
+    ),
     updateMetadata,
     updatePrivateMetadata
   );
@@ -190,7 +173,6 @@ export const ProductCreateView: React.FC = () => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        hasChannelChanged={allChannels?.length !== currentChannels?.length}
         currency={shop?.defaultCurrency}
         categories={(searchCategoryOpts?.data?.search?.edges || []).map(
           edge => edge.node
@@ -244,7 +226,7 @@ export const ProductCreateView: React.FC = () => {
         }
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
-        openChannelsModal={() => setChannelsModalOpen(true)}
+        openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />
     </>

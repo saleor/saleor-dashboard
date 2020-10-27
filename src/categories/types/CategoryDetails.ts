@@ -85,13 +85,37 @@ export interface CategoryDetails_category_products_edges_node_productType {
   name: string;
 }
 
+export interface CategoryDetails_category_products_edges_node_channelListing_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListing {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: CategoryDetails_category_products_edges_node_channelListing_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: CategoryDetails_category_products_edges_node_channelListing_channel;
+}
+
 export interface CategoryDetails_category_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
-  isAvailable: boolean | null;
   thumbnail: CategoryDetails_category_products_edges_node_thumbnail | null;
   productType: CategoryDetails_category_products_edges_node_productType;
+  channelListing: CategoryDetails_category_products_edges_node_channelListing[] | null;
 }
 
 export interface CategoryDetails_category_products_edges {

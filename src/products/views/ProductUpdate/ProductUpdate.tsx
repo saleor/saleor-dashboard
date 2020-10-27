@@ -14,12 +14,11 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useListActions from "@saleor/hooks/useListActions";
+import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import {
   useProductChannelListingUpdate,
@@ -44,7 +43,7 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -194,32 +193,25 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
     product,
     channelsData?.channels
+  ).sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
   );
+
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product
   );
-  const [currentChannels, setCurrentChannels] = useStateFromProps(
-    productChannelsChoices
-  );
-
   const {
-    isSelected: isChannelSelected,
-    listElements: channelListElements,
-    set: setChannels,
-    toggle: channelsToggle
-  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
-  const toggleAllChannels = (items: ChannelData[], selected: number) => {
-    if (selected !== items.length) {
-      setChannels(items);
-    } else {
-      setChannels([]);
-    }
-  };
-  useEffect(() => {
-    if (!currentChannels.length && productChannelsChoices.length) {
-      setCurrentChannels(productChannelsChoices);
-    }
-  }, [productChannelsChoices]);
+    channelListElements,
+    channelsToggle,
+    currentChannels,
+    handleChannelsConfirm,
+    handleChannelsModalClose,
+    handleChannelsModalOpen,
+    isChannelSelected,
+    isChannelsModalOpen,
+    setCurrentChannels,
+    toggleAllChannels
+  } = useChannels(productChannelsChoices);
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
@@ -241,21 +233,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     value: listing.channel.id
   }));
 
-  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
-
-  const handleChannelsModalClose = () => {
-    setChannelsModalOpen(false);
-    setChannels(currentChannels);
-  };
-
-  const handleChannelsConfirm = () => {
-    setCurrentChannels(channelListElements);
-    setChannelsModalOpen(false);
-  };
 
   const handleBack = () => navigate(productListUrl());
 
@@ -423,7 +404,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
-        openChannelsModal={() => setChannelsModalOpen(true)}
+        openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />
       <ActionDialog
