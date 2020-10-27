@@ -1,3 +1,4 @@
+import { pageErrorFragment } from "@saleor/fragments/errors";
 import { pageTypeDetailsFragment } from "@saleor/fragments/pageTypes";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
@@ -13,11 +14,11 @@ import {
 
 export const pageTypeUpdateMutation = gql`
   ${pageTypeDetailsFragment}
+  ${pageErrorFragment}
   mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
     pageTypeUpdate(id: $id, input: $input) {
       errors: pageErrors {
-        field
-        message
+        ...PageErrorFragment
       }
       pageType {
         ...PageTypeDetailsFragment
@@ -32,11 +33,11 @@ export const usePageTypeUpdateMutation = makeMutation<
 
 export const pageTypeCreateMutation = gql`
   ${pageTypeDetailsFragment}
+  ${pageErrorFragment}
   mutation PageTypeCreate($input: PageTypeCreateInput!) {
     pageTypeCreate(input: $input) {
       errors: pageErrors {
-        field
-        message
+        ...PageErrorFragment
       }
       pageType {
         ...PageTypeDetailsFragment
