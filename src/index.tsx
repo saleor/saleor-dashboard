@@ -44,6 +44,7 @@ import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
+import PageTypesSection from "./pageTypes";
 import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
@@ -174,6 +175,11 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_PAGES]}
                 path="/pages"
                 component={PageSection}
+              />
+              <SectionRoute
+                permissions={[PermissionEnum.MANAGE_PAGES]}
+                path="/page-types"
+                component={PageTypesSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PLUGINS]}
