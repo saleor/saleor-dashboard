@@ -9,8 +9,8 @@ import Hr from "@saleor/components/Hr";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { UserError } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +22,7 @@ export interface PageTypeForm extends MetadataFormData {
 }
 
 export interface PageTypeCreatePageProps {
-  errors: UserError[];
+  errors: PageErrorFragment[];
   disabled: boolean;
   pageTitle: string;
   saveButtonBarState: ConfirmButtonTransitionState;
