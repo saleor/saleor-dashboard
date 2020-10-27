@@ -21,12 +21,12 @@ import PageTypeDetailsPage, {
 import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
-interface PageTypeUpdateProps {
+interface PageTypeDetailsProps {
   id: string;
   params: PageTypeUrlQueryParams;
 }
 
-export const PageTypeUpdate: React.FC<PageTypeUpdateProps> = ({ id }) => {
+export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const attributeListActions = useBulkActions();
@@ -158,4 +158,4 @@ export const PageTypeUpdate: React.FC<PageTypeUpdateProps> = ({ id }) => {
     </>
   );
 };
-export default PageTypeUpdate;
+export default PageTypeDetails;

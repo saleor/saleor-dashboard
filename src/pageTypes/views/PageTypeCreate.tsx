@@ -66,11 +66,6 @@ export const PageTypeCreate: React.FC = () => {
       <PageTypeCreatePage
         disabled={createPageTypeOpts.loading}
         errors={createPageTypeOpts.data?.pageTypeCreate.errors || []}
-        pageTitle={intl.formatMessage({
-          defaultMessage: "Create Page Type",
-          description: "header",
-          id: "pageTypeCreatePageHeader"
-        })}
         saveButtonBarState={createPageTypeOpts.status}
         onBack={() => navigate(pageTypeListUrl())}
         onSubmit={handleSubmit}

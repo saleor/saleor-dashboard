@@ -219,6 +219,10 @@
     "context": "header",
     "string": "Create Page Type"
   },
+  "productExportFieldAvailability": {
+    "context": "product field",
+    "string": "Available for purchase"
+  },
   "productExportFieldCategory": {
     "context": "product field",
     "string": "Category"
@@ -3762,6 +3766,10 @@
   "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1509432322": {
     "context": "section header",
     "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_4047854353": {
+    "context": "header",
+    "string": "Create Page Type"
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
     "string": "These are general information about this Content Type."
