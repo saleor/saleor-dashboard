@@ -4,12 +4,9 @@ import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import PageTypeDetailsPage, {
-  PageTypeDetailsPageProps,
-  PageTypeForm
-} from "../../../pageTypes/components/PageTypeDetailsPage";
-import { pageType } from "../../../pageTypes/fixtures";
-import Decorator from "../../Decorator";
+import Decorator from "../../../storybook/Decorator";
+import { pageType } from "../../fixtures";
+import PageTypeDetailsPage, { PageTypeDetailsPageProps, PageTypeForm } from ".";
 
 const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   attributeList: listActionsProps,

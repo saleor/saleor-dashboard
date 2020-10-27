@@ -3,11 +3,8 @@ import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import PageTypeCreatePage, {
-  PageTypeCreatePageProps,
-  PageTypeForm
-} from "../../../pageTypes/components/PageTypeCreatePage";
-import Decorator from "../../Decorator";
+import Decorator from "../../../storybook/Decorator";
+import PageTypeCreatePage, { PageTypeCreatePageProps, PageTypeForm } from ".";
 
 const props: Omit<PageTypeCreatePageProps, "classes"> = {
   disabled: false,
