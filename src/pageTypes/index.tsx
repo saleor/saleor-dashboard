@@ -15,8 +15,8 @@ import {
   PageTypeUrlQueryParams
 } from "./urls";
 import PageTypeCreate from "./views/PageTypeCreate";
+import PageTypeDetailsComponent from "./views/PageTypeDetails";
 import PageTypeListComponent from "./views/PageTypeList";
-import PageTypeUpdateComponent from "./views/PageTypeUpdate";
 
 const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -27,17 +27,17 @@ const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   return <PageTypeListComponent params={params} />;
 };
 
-interface PageTypeUpdateRouteParams {
+interface PageTypeDetailsRouteParams {
   id: string;
 }
-const PageTypeUpdate: React.FC<RouteComponentProps<
-  PageTypeUpdateRouteParams
+const PageTypeDetails: React.FC<RouteComponentProps<
+  PageTypeDetailsRouteParams
 >> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageTypeUrlQueryParams = qs;
 
   return (
-    <PageTypeUpdateComponent
+    <PageTypeDetailsComponent
       id={decodeURIComponent(match.params.id)}
       params={params}
     />
@@ -53,7 +53,7 @@ export const PageTypeRouter: React.FC = () => {
       <Switch>
         <Route exact path={pageTypeListPath} component={PageTypeList} />
         <Route exact path={pageTypeAddPath} component={PageTypeCreate} />
-        <Route path={pageTypePath(":id")} component={PageTypeUpdate} />
+        <Route path={pageTypePath(":id")} component={PageTypeDetails} />
       </Switch>
     </>
   );

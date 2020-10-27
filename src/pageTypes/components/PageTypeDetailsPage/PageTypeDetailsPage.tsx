@@ -10,9 +10,9 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
@@ -24,14 +24,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
 
-interface ChoiceType {
-  label: string;
-  value: string;
-}
-
 export interface PageTypeForm extends MetadataFormData {
   name: string;
-  attributes: ChoiceType[];
+  attributes: SingleAutocompleteChoiceType[];
 }
 
 export interface PageTypeDetailsPageProps {
@@ -93,7 +88,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         value: attribute.id
       })) || [],
     metadata: pageType?.metadata?.map(mapMetadataItemToInput),
-    name: maybe(() => pageType.name) !== undefined ? pageType.name : "",
+    name: pageType?.name || "",
     privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput)
   };
 
