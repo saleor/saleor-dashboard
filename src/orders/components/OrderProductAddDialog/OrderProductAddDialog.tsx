@@ -186,13 +186,16 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose: () => setVariants([])
   });
 
-  const selectedVariantsToProductsMap = products
-    ? products.map(product =>
+  const productChoices = products.filter(
+    product => product.variants?.length > 0
+  );
+  const selectedVariantsToProductsMap = productChoices
+    ? productChoices.map(product =>
         product.variants.map(variant => isVariantSelected(variant, variants))
       )
     : [];
-  const productsWithAllVariantsSelected = products
-    ? products.map(product =>
+  const productsWithAllVariantsSelected = productChoices
+    ? productChoices.map(product =>
         hasAllVariantsSelected(product.variants, variants)
       )
     : [];
@@ -248,7 +251,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           <ResponsiveTable key="table">
             <TableBody>
               {renderCollection(
-                products,
+                productChoices,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRow>
