@@ -19,14 +19,14 @@ import { renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
 
 const useStyles = makeStyles(
-  () => ({
+  {
     colName: {
       paddingLeft: 0
     },
     link: {
       cursor: "pointer"
     }
-  }),
+  },
   { name: "PageTypeList" }
 );
 

@@ -9,11 +9,9 @@ import {
   sortPageProps,
   tabPageProps
 } from "../../../fixtures";
-import PageTypeListPage, {
-  PageTypeListPageProps
-} from "../../../pageTypes/components/PageTypeListPage";
-import { pageTypes } from "../../../pageTypes/fixtures";
-import Decorator from "../../Decorator";
+import Decorator from "../../../storybook/Decorator";
+import { pageTypes } from "../../fixtures";
+import PageTypeListPage, { PageTypeListPageProps } from ".";
 
 const props: PageTypeListPageProps = {
   ...listActionsProps,
