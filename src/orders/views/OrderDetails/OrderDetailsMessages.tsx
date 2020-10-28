@@ -255,7 +255,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
           defaultMessage: "Draft order successfully finalized"
         })
       });
-      closeModal();
     }
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
