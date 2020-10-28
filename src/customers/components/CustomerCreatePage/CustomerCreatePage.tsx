@@ -76,7 +76,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   const {
     errors: validationErrors,
     submit: handleSubmitWithAddress
-  } = useAddressValidation<CustomerCreatePageFormData>(formData =>
+  } = useAddressValidation<CustomerCreatePageFormData, void>(formData =>
     onSubmit({
       address: {
         city: formData.city,
