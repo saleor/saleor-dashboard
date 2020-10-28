@@ -112,7 +112,7 @@ export const CollectionCreate: React.FC = () => {
       });
     }
 
-    return result.data?.collectionCreate.collection?.id || null;
+    return id;
   };
 
   const handleSubmit = createMetadataCreateHandler(
