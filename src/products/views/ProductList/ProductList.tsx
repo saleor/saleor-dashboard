@@ -136,6 +136,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const {
     channelChoices,
+    channels,
     handleChannelSelectConfirm,
     selectedChannel
   } = useChannelsSettings("productsListChannel", { closeModal, openModal });
@@ -434,6 +435,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         attributes={(searchAttributes.result.data?.search.edges || []).map(
           edge => edge.node
         )}
+        channels={channels}
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={searchAttributes.result.loading}
         onFetch={searchAttributes.search}

@@ -29,6 +29,7 @@ function useChannelsSettings(key: string, { openModal, closeModal }: Actions) {
 
   return {
     channelChoices,
+    channels: channelsData?.channels,
     handleChannelSelectConfirm,
     selectedChannel
   };
