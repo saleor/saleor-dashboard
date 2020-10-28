@@ -21,5 +21,9 @@ export const pageDetailsFragment = gql`
     seoTitle
     seoDescription
     publicationDate
+    pageType {
+      id
+      name
+    }
   }
 `;

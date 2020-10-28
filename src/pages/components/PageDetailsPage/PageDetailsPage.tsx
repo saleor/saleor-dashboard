@@ -10,8 +10,12 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
+import { FetchMoreProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import {
@@ -26,6 +30,7 @@ import { useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
+import PageOrganizeContent from "../PageOrganizeContent";
 
 export interface FormData extends MetadataFormData {
   content: RawDraftContentState;
@@ -35,27 +40,34 @@ export interface FormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
+  pageType: string;
 }
 
 export interface PageDetailsPageProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   page: PageDetails_page;
+  pageTypes?: PageTypeFragment[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: FormData) => void;
+  fetchPageTypes?: (data: string) => void;
+  fetchMorePageTypes?: FetchMoreProps;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   disabled,
   errors,
   page,
+  pageTypes,
   saveButtonBarState,
   onBack,
   onRemove,
-  onSubmit
+  onSubmit,
+  fetchPageTypes,
+  fetchMorePageTypes
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -74,6 +86,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     ),
     isPublished: page?.isPublished,
     metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
+    pageType: page?.pageType.id || "",
     privateMetadata: pageExists
       ? page?.privateMetadata?.map(mapMetadataItemToInput)
       : [],
@@ -98,10 +111,20 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     });
   };
 
+  const [pageType, setPageType] = useStateFromProps<PageTypeFragment>(
+    page?.pageType || null
+  );
+
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
+
+        const handlePageTypeSelect = createPageTypeSelectHandler(
+          change,
+          setPageType,
+          pageTypes
+        );
 
         return (
           <Container>
@@ -154,7 +177,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
-                <CardSpacer />
                 <VisibilityCard
                   data={data}
                   errors={errors}
@@ -179,6 +201,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     })
                   }}
                   onChange={change}
+                />
+                <CardSpacer />
+                <PageOrganizeContent
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  pageTypes={pageTypes}
+                  pageType={pageType}
+                  pageTypeInputDisplayValue={pageType?.name || ""}
+                  onPageTypeChange={handlePageTypeSelect}
+                  fetchPageTypes={fetchPageTypes}
+                  fetchMorePageTypes={fetchMorePageTypes}
+                  canChangeType={!page?.pageType}
                 />
               </div>
             </Grid>
