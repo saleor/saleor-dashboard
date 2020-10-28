@@ -45,7 +45,7 @@ export interface PageDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: PageDetailsPageFormData) => void;
+  onSubmit: (data: PageDetailsPageFormData) => Promise<any[]>;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -84,13 +84,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     title: page?.title || ""
   };
 
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: PageDetailsPageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       isPublished: data.isPublished || !!data.publicationDate,
       metadata,

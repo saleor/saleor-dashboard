@@ -58,7 +58,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   const {
     errors: validationErrors,
     submit: handleSubmit
-  } = useAddressValidation<WarehouseCreatePageFormData>(onSubmit);
+  } = useAddressValidation(onSubmit);
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
