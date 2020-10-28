@@ -2,32 +2,23 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionInput, ShopErrorCode, ProductErrorCode } from "./../../types/globalTypes";
+import { CollectionInput, CollectionErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionUpdateWithHomepage
 // ====================================================
 
-export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_errors {
-  __typename: "ShopError";
-  code: ShopErrorCode;
-  field: string | null;
-}
-
-export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_shop_homepageCollection {
-  __typename: "Collection";
+export interface CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing_channel {
+  __typename: "Channel";
   id: string;
+  name: string;
 }
 
-export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_shop {
-  __typename: "Shop";
-  homepageCollection: CollectionUpdateWithHomepage_homepageCollectionUpdate_shop_homepageCollection | null;
-}
-
-export interface CollectionUpdateWithHomepage_homepageCollectionUpdate {
-  __typename: "HomepageCollectionUpdate";
-  errors: CollectionUpdateWithHomepage_homepageCollectionUpdate_errors[];
-  shop: CollectionUpdateWithHomepage_homepageCollectionUpdate_shop | null;
+export interface CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing_channel;
 }
 
 export interface CollectionUpdateWithHomepage_collectionUpdate_collection_metadata {
@@ -51,21 +42,20 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection_backgr
 export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing[] | null;
   metadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
 
 export interface CollectionUpdateWithHomepage_collectionUpdate_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "CollectionError";
+  code: CollectionErrorCode;
   field: string | null;
 }
 
@@ -76,12 +66,10 @@ export interface CollectionUpdateWithHomepage_collectionUpdate {
 }
 
 export interface CollectionUpdateWithHomepage {
-  homepageCollectionUpdate: CollectionUpdateWithHomepage_homepageCollectionUpdate | null;
   collectionUpdate: CollectionUpdateWithHomepage_collectionUpdate | null;
 }
 
 export interface CollectionUpdateWithHomepageVariables {
   id: string;
   input: CollectionInput;
-  homepageId?: string | null;
 }

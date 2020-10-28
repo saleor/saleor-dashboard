@@ -2,11 +2,24 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionInput, ProductErrorCode } from "./../../types/globalTypes";
+import { CollectionInput, CollectionErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionUpdate
 // ====================================================
+
+export interface CollectionUpdate_collectionUpdate_collection_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CollectionUpdate_collectionUpdate_collection_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionUpdate_collectionUpdate_collection_channelListing_channel;
+}
 
 export interface CollectionUpdate_collectionUpdate_collection_metadata {
   __typename: "MetadataItem";
@@ -29,21 +42,20 @@ export interface CollectionUpdate_collectionUpdate_collection_backgroundImage {
 export interface CollectionUpdate_collectionUpdate_collection {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CollectionUpdate_collectionUpdate_collection_channelListing[] | null;
   metadata: (CollectionUpdate_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdate_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdate_collectionUpdate_collection_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
 
 export interface CollectionUpdate_collectionUpdate_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "CollectionError";
+  code: CollectionErrorCode;
   field: string | null;
 }
 

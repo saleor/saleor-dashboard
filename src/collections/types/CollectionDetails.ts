@@ -6,6 +6,19 @@
 // GraphQL query operation: CollectionDetails
 // ====================================================
 
+export interface CollectionDetails_collection_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CollectionDetails_collection_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionDetails_collection_channelListing_channel;
+}
+
 export interface CollectionDetails_collection_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -90,32 +103,20 @@ export interface CollectionDetails_collection_products {
 export interface CollectionDetails_collection {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CollectionDetails_collection_channelListing[] | null;
   metadata: (CollectionDetails_collection_metadata | null)[];
   privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   products: CollectionDetails_collection_products | null;
 }
 
-export interface CollectionDetails_shop_homepageCollection {
-  __typename: "Collection";
-  id: string;
-}
-
-export interface CollectionDetails_shop {
-  __typename: "Shop";
-  homepageCollection: CollectionDetails_shop_homepageCollection | null;
-}
-
 export interface CollectionDetails {
   collection: CollectionDetails_collection | null;
-  shop: CollectionDetails_shop;
 }
 
 export interface CollectionDetailsVariables {

@@ -3,11 +3,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
+import { Channel as ChannelList } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
@@ -20,6 +21,16 @@ import { useIntl } from "react-intl";
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
 
+export interface ChannelData {
+  id: string;
+  isPublished: boolean;
+  name: string;
+  publicationDate: string | null;
+  availableForPurchase?: string;
+  isAvailableForPurchase?: boolean;
+  visibleInListings?: boolean;
+}
+
 export interface Message {
   visibleLabel: string;
   hiddenLabel: string;
@@ -31,6 +42,11 @@ export interface Message {
   availableSecondLabel?: string;
   setAvailabilityDateLabel?: string;
 }
+
+type Error =
+  | ProductChannelListingErrorFragment
+  | CollectionChannelListingErrorFragment;
+
 interface Value {
   availableForPurchase?: string;
   isAvailableForPurchase?: boolean;
@@ -42,7 +58,7 @@ interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
   channelsMessages?: { [id: string]: Message };
-  errors: ProductChannelListingErrorFragment[];
+  errors: Error[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -57,7 +73,7 @@ export type ChannelsAvailabilityProps = RequireOnlyOne<
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  errors: ProductChannelListingErrorFragment[];
+  errors: Error[];
   messages: Message;
   onChange: (id: string, data: Value) => void;
 }
@@ -79,11 +95,13 @@ const Channel: React.FC<ChannelProps> = ({
     name
   } = data;
   const formData = {
-    availableForPurchase,
-    isAvailableForPurchase: isAvailable,
+    ...(availableForPurchase !== undefined ? { availableForPurchase } : {}),
+    ...(isAvailable !== undefined
+      ? { isAvailableForPurchase: isAvailable }
+      : {}),
     isPublished,
     publicationDate,
-    visibleInListings
+    ...(visibleInListings !== undefined ? { visibleInListings } : {})
   };
   const dateNow = React.useContext(DateContext);
   const localizeDate = useDateLocalize();

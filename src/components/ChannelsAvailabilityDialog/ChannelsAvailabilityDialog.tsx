@@ -1,6 +1,7 @@
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import {
+  ChannelCollectionData,
   ChannelData,
   ChannelSaleData,
   ChannelShippingData,
@@ -20,7 +21,8 @@ type ChannelOption =
   | ChannelData
   | ChannelShippingData
   | ChannelVoucherData
-  | ChannelSaleData;
+  | ChannelSaleData
+  | ChannelCollectionData;
 
 export interface ChannelsAvailabilityDialogProps {
   isSelected: (option: ChannelOption) => boolean;

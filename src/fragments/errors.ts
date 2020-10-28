@@ -24,6 +24,15 @@ export const productChannelListingErrorFragment = gql`
   }
 `;
 
+export const collectionChannelListingErrorFragment = gql`
+  fragment CollectionChannelListingErrorFragment on CollectionChannelListingError {
+    code
+    field
+    message
+    channels
+  }
+`;
+
 export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code
@@ -170,7 +179,7 @@ export const metadataErrorFragment = gql`
 `;
 
 export const collectionsErrorFragment = gql`
-  fragment CollectionErrorFragment on CollectionProductError {
+  fragment CollectionErrorFragment on CollectionError {
     code
     field
   }

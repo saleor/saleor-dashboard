@@ -1,4 +1,6 @@
+import { ChannelCollectionData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
@@ -7,15 +9,13 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
@@ -25,9 +25,11 @@ import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   channelsCount: number;
+  channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetails_collection;
-  errors: ProductErrorFragment[];
-  isFeatured: boolean;
+  currentChannels: ChannelCollectionData[];
+  errors: CollectionErrorFragment[];
+  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedChannel: string;
   onBack: () => void;
@@ -36,14 +38,18 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   onImageUpload: (file: File) => void;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onSubmit: (data: CollectionUpdateData) => SubmitPromise;
+  onChannelsChange: (data: ChannelCollectionData[]) => void;
+  openChannelsModal: () => void;
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   channelsCount,
+  channelsErrors,
   collection,
+  currentChannels = [],
   disabled,
   errors,
-  isFeatured,
+  hasChannelChanged,
   saveButtonBarState,
   selectedChannel,
   onBack,
@@ -51,15 +57,17 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   onImageDelete,
   onImageUpload,
   onSubmit,
+  onChannelsChange,
+  openChannelsModal,
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   return (
     <CollectionUpdateForm
       collection={collection}
-      isFeatured={isFeatured}
+      currentChannels={currentChannels}
+      setChannnels={onChannelsChange}
       onSubmit={onSubmit}
     >
       {({ change, data, handlers, hasChanged, submit }) => (
@@ -67,7 +75,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.collections)}
           </AppHeader>
-          <PageHeader title={maybe(() => collection.name)} />
+          <PageHeader title={collection?.name} />
           <Grid>
             <div>
               <CollectionDetails
@@ -80,7 +88,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <CardSpacer />
               <CollectionImage
                 data={data}
-                image={maybe(() => collection.backgroundImage)}
+                image={collection?.backgroundImage}
                 onImageDelete={onImageDelete}
                 onImageUpload={onImageUpload}
                 onChange={change}
@@ -108,43 +116,38 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 slug={data.slug}
                 slugPlaceholder={data.name}
                 title={data.seoTitle}
-                titlePlaceholder={maybe(() => collection.name)}
+                titlePlaceholder={collection?.name}
                 onChange={change}
               />
             </div>
             <div>
               <div>
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
+                <AvailabilityCard
                   messages={{
                     hiddenLabel: intl.formatMessage({
                       defaultMessage: "Hidden",
                       description: "collection label"
                     }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "collection"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
+
                     visibleLabel: intl.formatMessage({
                       defaultMessage: "Visible",
                       description: "collection label"
                     })
                   }}
-                  onChange={change}
+                  errors={channelsErrors}
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={channelsCount}
+                  channels={data.channelListing}
                   disabled={disabled}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
               </div>
             </div>
           </Grid>
           <SaveButtonBar
             state={saveButtonBarState}
-            disabled={disabled || !hasChanged}
+            disabled={disabled || (!hasChanged && !hasChannelChanged)}
             onCancel={onBack}
             onDelete={onCollectionRemove}
             onSave={submit}

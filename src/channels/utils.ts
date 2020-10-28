@@ -1,4 +1,5 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
+import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { RequireOnlyOne } from "@saleor/misc";
@@ -56,6 +57,21 @@ export interface ChannelSaleData {
   discountValue: string;
   currency: string;
 }
+
+export interface ChannelCollectionData {
+  id: string;
+  isPublished: boolean;
+  name: string;
+  publicationDate: string | null;
+}
+
+export const createCollectionChannels = (data?: Channels_channels[]) =>
+  data?.map(channel => ({
+    id: channel.id,
+    isPublished: false,
+    name: channel.name,
+    publicationDate: null
+  }));
 
 export const createVoucherChannels = (data?: Channels_channels[]) =>
   data?.map(channel => ({
@@ -177,6 +193,21 @@ export const createShippingChannelsFromRate = (
     name: channelData.channel.name,
     price: channelData.price ? channelData.price.amount.toString() : ""
   })) || [];
+
+export const createCollectionChannelsData = (
+  collectionData?: CollectionDetails_collection
+) => {
+  if (collectionData?.channelListing) {
+    const collectionDataArr = collectionData?.channelListing.map(listing => ({
+      id: listing.channel.id,
+      isPublished: listing.isPublished,
+      name: listing.channel.name,
+      publicationDate: listing.publicationDate
+    }));
+    return collectionDataArr;
+  }
+};
+
 export interface ChannelShippingData {
   currency: string;
   id: string;

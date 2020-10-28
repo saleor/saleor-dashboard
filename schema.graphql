@@ -911,6 +911,7 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
+  channel: String
   field: CategorySortField!
 }
 
@@ -1199,8 +1200,6 @@ type Collection implements Node & ObjectWithMetadata {
   name: String!
   description: String!
   descriptionJson: JSONString!
-  publicationDate: Date
-  isPublished: Boolean!
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
@@ -1215,6 +1214,7 @@ type Collection implements Node & ObjectWithMetadata {
   ): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
+  channelListing: [CollectionChannelListing!]
 }
 
 type CollectionAddProducts {
@@ -1223,7 +1223,7 @@ type CollectionAddProducts {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   collection: Collection
-  productErrors: [CollectionProductError!]!
+  collectionErrors: [CollectionError!]!
 }
 
 type CollectionBulkDelete {
@@ -1277,10 +1277,28 @@ type CollectionDelete {
   collection: Collection
 }
 
+type CollectionError {
+  field: String
+  message: String
+  products: [ID!]
+  code: CollectionErrorCode!
+}
+
+enum CollectionErrorCode {
+  DUPLICATED_INPUT_ITEM
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT
+}
+
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
   ids: [ID]
+  channel: String
 }
 
 input CollectionInput {
@@ -1295,14 +1313,6 @@ input CollectionInput {
   publicationDate: Date
 }
 
-type CollectionProductError {
-  field: String
-  message: String
-  code: ProductErrorCode!
-  attributes: [ID!]
-  products: [ID!]
-}
-
 enum CollectionPublished {
   PUBLISHED
   HIDDEN
@@ -1314,7 +1324,7 @@ type CollectionRemoveProducts {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   collection: Collection
-  productErrors: [ProductError!]!
+  collectionErrors: [CollectionError!]!
 }
 
 type CollectionReorderProducts {
@@ -1323,7 +1333,7 @@ type CollectionReorderProducts {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   collection: Collection
-  productErrors: [ProductError!]!
+  collectionErrors: [CollectionError!]!
 }
 
 enum CollectionSortField {
@@ -1335,6 +1345,7 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
+  channel: String
   field: CollectionSortField!
 }
 
@@ -2835,7 +2846,6 @@ type Mutation {
     input: StaffNotificationRecipientInput!
   ): StaffNotificationRecipientUpdate
   staffNotificationRecipientDelete(id: ID!): StaffNotificationRecipientDelete
-  homepageCollectionUpdate(collection: ID): HomepageCollectionUpdate
   shopDomainUpdate(input: SiteDomainInput): ShopDomainUpdate
   shopSettingsUpdate(input: ShopSettingsInput!): ShopSettingsUpdate
   shopFetchTaxRates: ShopFetchTaxRates
@@ -4703,6 +4713,12 @@ type ProductVariantUpdate {
     )
   productErrors: [ProductError!]!
   productVariant: ProductVariant
+}
+
+input PublishableChannelListingInput {
+  channelId: ID!
+  isPublished: Boolean
+  publicationDate: Date
 }
 
 type Query {
