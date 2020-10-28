@@ -1,6 +1,8 @@
+import { useChannelsList } from "@saleor/channels/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useUser from "@saleor/hooks/useUser";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { getUserName, maybe } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
@@ -12,9 +14,19 @@ import { HomePageQuery } from "../queries";
 const HomeSection = () => {
   const navigate = useNavigator();
   const { user } = useUser();
+  const { data: channelsData } = useChannelsList({});
+
+  const channelChoices = channelsData?.channels?.map(channel => ({
+    label: channel.name,
+    value: channel.id
+  }));
+
+  const [channelChoice, setChannelChoice] = useStateFromProps(
+    channelChoices?.length ? channelChoices[0]?.value : ""
+  );
 
   return (
-    <HomePageQuery displayLoader>
+    <HomePageQuery displayLoader variables={{ channel: channelChoice }}>
       {({ data }) => (
         <HomePage
           activities={maybe(() =>
@@ -25,6 +37,9 @@ const HomeSection = () => {
           topProducts={maybe(() =>
             data.productTopToday.edges.map(edge => edge.node)
           )}
+          channelChoices={channelChoices}
+          channelValue={channelChoice}
+          onChannelChange={useCallback(value => setChannelChoice(value), [])}
           onProductClick={(productId, variantId) =>
             navigate(productVariantEditUrl(productId, variantId))
           }
