@@ -257,7 +257,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <TableBody>
                   {renderCollection(
                     order?.lines.filter(line => getRemainingQuantity(line) > 0),
-                    (line, lineIndex) => {
+                    (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
                           <TableRow key={lineIndex}>
@@ -340,6 +340,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
+                            const warehouseAllocation = line.allocations.find(
+                              allocation =>
+                                allocation.warehouse.id === warehouse.id
+                            );
+                            const allocatedQuantityForLine =
+                              warehouseAllocation?.quantity || 0;
+                            const availableQuantity =
+                              warehouseStock.quantity -
+                              warehouseStock.quantityAllocated +
+                              allocatedQuantityForLine;
+
                             return (
                               <TableCell
                                 className={classes.colQuantity}
@@ -357,7 +368,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     ),
                                     max: (
                                       line.variant.trackInventory &&
-                                      warehouseStock.quantity
+                                      availableQuantity
                                     ).toString(),
                                     min: 0,
                                     style: { textAlign: "right" }
@@ -384,7 +395,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     overfulfill ||
                                     (line.variant.trackInventory &&
                                       formsetStock.quantity >
-                                        warehouseStock.quantityAllocated) ||
+                                        availableQuantity) ||
                                     !!errors?.find(
                                       err =>
                                         err.warehouse === warehouse.id &&
@@ -399,7 +410,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       <div
                                         className={classes.remainingQuantity}
                                       >
-                                        / {warehouseStock.quantityAllocated}
+                                        / {availableQuantity}
                                       </div>
                                     )
                                   }}
@@ -407,6 +418,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               </TableCell>
                             );
                           })}
+
                           <TableCell
                             className={classes.colQuantityTotal}
                             key="total"
