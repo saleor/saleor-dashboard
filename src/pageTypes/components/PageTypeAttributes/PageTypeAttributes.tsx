@@ -14,7 +14,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { renderCollection, stopPropagation } from "@saleor/misc";
 import { PageTypeDetails_pageType_attributes } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
@@ -143,10 +143,10 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                       ? () => onAttributeClick(attribute.id)
                       : undefined
                   }
-                  key={maybe(() => attribute.id)}
+                  key={attribute?.id}
                   index={attributeIndex || 0}
                   data-test="id"
-                  data-test-id={maybe(() => attribute.id)}
+                  data-test-id={attribute?.id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -157,18 +157,10 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                     />
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
-                    {maybe(() => attribute.name) ? (
-                      attribute.name
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {attribute?.name || <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colSlug} data-test="slug">
-                    {maybe(() => attribute.slug) ? (
-                      attribute.slug
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {attribute?.slug || <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton

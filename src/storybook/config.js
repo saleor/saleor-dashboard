@@ -12,9 +12,6 @@ function loadStories() {
   require("./stories/components/ActionDialog");
   require("./stories/components/AddressEdit");
   require("./stories/components/AddressFormatter");
-  require("./stories/components/AssignAttributeDialog");
-  require("./stories/components/AttributeUnassignDialog");
-  require("./stories/components/BulkAttributeUnassignDialog");
   require("./stories/components/AssignProductDialog");
   require("./stories/components/AutocompleteSelectMenu");
   require("./stories/components/CardMenu");
