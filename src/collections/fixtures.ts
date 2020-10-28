@@ -5,8 +5,19 @@ import { CollectionList_collections_edges_node } from "./types/CollectionList";
 export const collections: CollectionList_collections_edges_node[] = [
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjox",
-    isPublished: true,
     name: "Summer collection",
     products: {
       __typename: "ProductCountableConnection",
@@ -15,8 +26,19 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjoy",
-    isPublished: true,
     name: "Winter sale",
     products: {
       __typename: "ProductCountableConnection",
@@ -25,8 +47,19 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "125",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjoz",
-    isPublished: true,
     name: "Vintage vibes",
     products: {
       __typename: "ProductCountableConnection",
@@ -35,8 +68,19 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "126",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjoa",
-    isPublished: true,
     name: "Merry Christmas",
     products: {
       __typename: "ProductCountableConnection",
@@ -45,8 +89,19 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "127",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjob",
-    isPublished: true,
     name: "80s Miami",
     products: {
       __typename: "ProductCountableConnection",
@@ -55,8 +110,19 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
+    channelListing: [
+      {
+        __typename: "CollectionChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "128",
+          name: "Channel"
+        },
+        isPublished: false,
+        publicationDate: null
+      }
+    ],
     id: "Q29sbGVjdGlvbjoc",
-    isPublished: true,
     name: "Yellow Submarine 2019",
     products: {
       __typename: "ProductCountableConnection",
@@ -77,9 +143,20 @@ export const collection: (
     alt: "Alt text",
     url: placeholderCollectionImage
   },
+  channelListing: [
+    {
+      __typename: "CollectionChannelListing",
+      channel: {
+        __typename: "Channel",
+        id: "223",
+        name: "Channel"
+      },
+      isPublished: false,
+      publicationDate: null
+    }
+  ],
   descriptionJson: JSON.stringify(content),
   id: "Q29sbGVjdGlvbjox",
-  isPublished: true,
   metadata: [
     {
       __typename: "MetadataItem",
@@ -317,7 +394,6 @@ export const collection: (
       startCursor: ""
     }
   },
-  publicationDate: "2018-08-25T18:45:54.125Z",
   seoDescription: "",
   seoTitle: "",
   slug: "summer-collection"

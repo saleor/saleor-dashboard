@@ -4,13 +4,13 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import CardMenu from "@saleor/components/CardMenu";
 import { Container } from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
 import {
-  FilterPageProps,
   ListActions,
   PageListProps,
+  SearchPageProps,
   SortPage,
   TabPageProps
 } from "@saleor/types";
@@ -19,19 +19,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 import CollectionList from "../CollectionList/CollectionList";
-import {
-  CollectionFilterKeys,
-  CollectionListFilterOpts,
-  createFilterStructure
-} from "./filters";
 
 export interface CollectionListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
+    SearchPageProps,
     SortPage<CollectionListUrlSortField>,
     TabPageProps {
   collections: CollectionList_collections_edges_node[];
+  channelsCount: number;
   selectedChannel: string;
   onSettingsOpen?: () => void;
 }
@@ -46,25 +42,23 @@ const useStyles = makeStyles(
 );
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
-  currencySymbol,
+  channelsCount,
   currentTab,
   disabled,
-  filterOpts,
   initialSearch,
   onAdd,
   onAll,
-  onFilterChange,
   onSearchChange,
   onSettingsOpen,
   onTabChange,
   onTabDelete,
   onTabSave,
+  selectedChannel,
   tabs,
   ...listProps
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -96,27 +90,29 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <FilterBar
+        <SearchBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Collections",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Collection"
           })}
           tabs={tabs}
           onAll={onAll}
-          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <CollectionList disabled={disabled} {...listProps} />
+        <CollectionList
+          disabled={disabled}
+          channelsCount={channelsCount}
+          selectedChannel={selectedChannel}
+          {...listProps}
+        />
       </Card>
     </Container>
   );

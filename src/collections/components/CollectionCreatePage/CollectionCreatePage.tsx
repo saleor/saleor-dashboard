@@ -1,4 +1,7 @@
+import { ChannelCollectionData } from "@saleor/channels/utils";
+import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
@@ -8,9 +11,8 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
@@ -26,57 +28,70 @@ export interface CollectionCreatePageFormData extends MetadataFormData {
     value: string;
   };
   backgroundImageAlt: string;
+  channelListing: ChannelCollectionData[];
   description: RawDraftContentState;
   name: string;
   slug: string;
-  publicationDate: string;
-  isPublished: boolean;
   seoDescription: string;
   seoTitle: string;
 }
 
 export interface CollectionCreatePageProps {
+  channelsCount: number;
+  channelsErrors: CollectionChannelListingErrorFragment[];
+  currentChannels: ChannelCollectionData[];
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: CollectionErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: CollectionCreatePageFormData) => void;
+  onChannelsChange: (data: ChannelCollectionData[]) => void;
+  openChannelsModal: () => void;
 }
 
-const initialForm: CollectionCreatePageFormData = {
-  backgroundImage: {
-    url: null,
-    value: null
-  },
-  backgroundImageAlt: "",
-  description: convertToRaw(ContentState.createFromText("")),
-  isPublished: false,
-  metadata: [],
-  name: "",
-  privateMetadata: [],
-  publicationDate: "",
-  seoDescription: "",
-  seoTitle: "",
-  slug: ""
-};
-
 const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
+  channelsCount,
+  channelsErrors,
+  currentChannels = [],
   disabled,
   errors,
   saveButtonBarState,
   onBack,
+  onChannelsChange,
+  openChannelsModal,
   onSubmit
 }: CollectionCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
+
+  const initialForm: CollectionCreatePageFormData = {
+    backgroundImage: {
+      url: null,
+      value: null
+    },
+    backgroundImageAlt: "",
+    channelListing: currentChannels,
+    description: convertToRaw(ContentState.createFromText("")),
+    metadata: [],
+    name: "",
+    privateMetadata: [],
+    seoDescription: "",
+    seoTitle: "",
+    slug: ""
+  };
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListing,
+          onChannelsChange,
+          triggerChange
+        );
 
         return (
           <Container>
@@ -153,30 +168,25 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
+                <AvailabilityCard
                   messages={{
                     hiddenLabel: intl.formatMessage({
                       defaultMessage: "Hidden",
                       description: "collection label"
                     }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "collection"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
+
                     visibleLabel: intl.formatMessage({
                       defaultMessage: "Visible",
                       description: "collection label"
                     })
                   }}
-                  onChange={change}
+                  errors={channelsErrors}
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={channelsCount}
+                  channels={currentChannels}
+                  disabled={disabled}
+                  onChange={handleChannelChange}
+                  openModal={openChannelsModal}
                 />
               </div>
             </Grid>

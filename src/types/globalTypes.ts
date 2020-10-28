@@ -121,6 +121,16 @@ export enum ChannelErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum CollectionErrorCode {
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum CollectionPublished {
   HIDDEN = "HIDDEN",
   PUBLISHED = "PUBLISHED",
@@ -1080,6 +1090,7 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1100,6 +1111,11 @@ export interface ChannelUpdateInput {
   slug?: string | null;
 }
 
+export interface CollectionChannelListingUpdateInput {
+  addChannels?: PublishableChannelListingInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;
@@ -1117,6 +1133,7 @@ export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1133,6 +1150,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1515,6 +1533,12 @@ export interface ProductVariantInput {
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+}
+
+export interface PublishableChannelListingInput {
+  channelId: string;
+  isPublished?: boolean | null;
+  publicationDate?: any | null;
 }
 
 export interface ReorderInput {

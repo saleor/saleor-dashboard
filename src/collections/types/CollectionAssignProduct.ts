@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
+import { CollectionErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionAssignProduct
@@ -78,8 +78,8 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_errors {
-  __typename: "CollectionProductError";
-  code: ProductErrorCode;
+  __typename: "CollectionError";
+  code: CollectionErrorCode;
   field: string | null;
 }
 

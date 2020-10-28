@@ -4,6 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
@@ -81,7 +82,9 @@ interface SeoFormProps {
   description?: string;
   descriptionPlaceholder: string;
   disabled?: boolean;
-  errors?: Array<PageErrorFragment | ProductErrorFragment>;
+  errors?: Array<
+    PageErrorFragment | ProductErrorFragment | CollectionErrorFragment
+  >;
   loading?: boolean;
   helperText?: string;
   allowEmptySlug?: boolean;

@@ -8,6 +8,19 @@ import { CollectionFilterInput, CollectionSortingInput } from "./../../types/glo
 // GraphQL query operation: CollectionList
 // ====================================================
 
+export interface CollectionList_collections_edges_node_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CollectionList_collections_edges_node_channelListing {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionList_collections_edges_node_channelListing_channel;
+}
+
 export interface CollectionList_collections_edges_node_products {
   __typename: "ProductCountableConnection";
   totalCount: number | null;
@@ -16,8 +29,8 @@ export interface CollectionList_collections_edges_node_products {
 export interface CollectionList_collections_edges_node {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListing: CollectionList_collections_edges_node_channelListing[] | null;
   products: CollectionList_collections_edges_node_products | null;
 }
 
