@@ -580,7 +580,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                       </>
                     )}
                     <OrderAddressEditDialog
-                      confirmButtonState={orderUpdate.opts.status}
+                      confirmButtonState={
+                        order?.status === OrderStatus.DRAFT
+                          ? orderDraftUpdate.opts.status
+                          : orderUpdate.opts.status
+                      }
                       address={transformAddressToForm(order?.shippingAddress)}
                       countries={
                         data?.shop?.countries.map(country => ({
@@ -588,21 +592,33 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           label: country.country
                         })) || []
                       }
-                      errors={orderUpdate.opts.data?.orderUpdate.errors || []}
+                      errors={
+                        (order?.status === OrderStatus.DRAFT
+                          ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors
+                          : orderUpdate.opts.data?.orderUpdate.errors) || []
+                      }
                       open={params.action === "edit-shipping-address"}
                       variant="shipping"
                       onClose={closeModal}
-                      onConfirm={shippingAddress =>
-                        orderUpdate.mutate({
+                      onConfirm={shippingAddress => {
+                        const updateMutation =
+                          order?.status === OrderStatus.DRAFT
+                            ? orderDraftUpdate
+                            : orderUpdate;
+                        updateMutation.mutate({
                           id,
                           input: {
                             shippingAddress
                           }
-                        })
-                      }
+                        });
+                      }}
                     />
                     <OrderAddressEditDialog
-                      confirmButtonState={orderUpdate.opts.status}
+                      confirmButtonState={
+                        order?.status === OrderStatus.DRAFT
+                          ? orderDraftUpdate.opts.status
+                          : orderUpdate.opts.status
+                      }
                       address={transformAddressToForm(order?.billingAddress)}
                       countries={
                         data?.shop?.countries.map(country => ({
@@ -610,18 +626,26 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           label: country.country
                         })) || []
                       }
-                      errors={orderUpdate.opts.data?.orderUpdate.errors || []}
+                      errors={
+                        (order?.status === OrderStatus.DRAFT
+                          ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors
+                          : orderUpdate.opts.data?.orderUpdate.errors) || []
+                      }
                       open={params.action === "edit-billing-address"}
                       variant="billing"
                       onClose={closeModal}
-                      onConfirm={billingAddress =>
-                        orderUpdate.mutate({
+                      onConfirm={billingAddress => {
+                        const updateMutation =
+                          order?.status === OrderStatus.DRAFT
+                            ? orderDraftUpdate
+                            : orderUpdate;
+                        updateMutation.mutate({
                           id,
                           input: {
                             billingAddress
                           }
-                        })
-                      }
+                        });
+                      }}
                     />
                   </>
                 )}

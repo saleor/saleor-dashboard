@@ -173,6 +173,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         })
       });
     }
+    closeModal();
   };
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
     const errs = data.orderUpdateShipping?.errors;
