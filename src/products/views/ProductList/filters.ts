@@ -194,7 +194,8 @@ export function getFilterOpts(
 }
 
 export function getFilterVariables(
-  params: ProductListUrlFilters
+  params: ProductListUrlFilters,
+  channel: string | undefined
 ): ProductFilterInput {
   return {
     attributes: !!params.attributes
@@ -207,15 +208,18 @@ export function getFilterVariables(
         }))
       : null,
     categories: params.categories !== undefined ? params.categories : null,
+    channel: channel || null,
     collections: params.collections !== undefined ? params.collections : null,
     isPublished:
       params.status !== undefined
         ? params.status === ProductStatus.PUBLISHED
         : null,
-    price: getGteLteVariables({
-      gte: parseFloat(params.priceFrom),
-      lte: parseFloat(params.priceTo)
-    }),
+    price: channel
+      ? getGteLteVariables({
+          gte: parseFloat(params.priceFrom),
+          lte: parseFloat(params.priceTo)
+        })
+      : null,
     productTypes:
       params.productTypes !== undefined ? params.productTypes : null,
     search: params.query,

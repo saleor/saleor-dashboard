@@ -18,8 +18,6 @@ export const customerListPath = customerSection;
 export enum CustomerListUrlFiltersEnum {
   joinedFrom = "joinedFrom",
   joinedTo = "joinedTo",
-  moneySpentFrom = "moneySpentFrom",
-  moneySpentTo = "moneySpentTo",
   numberOfOrdersFrom = "numberOfOrdersFrom",
   numberOfOrdersTo = "numberOfOrdersTo",
   query = "query"

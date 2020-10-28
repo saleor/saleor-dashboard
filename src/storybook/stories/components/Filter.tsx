@@ -11,7 +11,6 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const props: FilterContentProps = {
-  currencySymbol: "USD",
   filters: [
     createPriceField("price", "Price", {
       max: "100.00",

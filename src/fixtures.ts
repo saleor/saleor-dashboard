@@ -306,7 +306,6 @@ export const searchPageProps: SearchPageProps = {
 export const filterPageProps: FilterPageProps<string, object> = {
   ...searchPageProps,
   ...tabPageProps,
-  currencySymbol: "USD",
   filterOpts: {},
   onFilterChange: () => undefined
 };

@@ -25,7 +25,6 @@ const props: SaleListPageProps = {
   ...filterPageProps,
   ...sortPageProps,
   ...tabPageProps,
-  defaultCurrency: "USD",
   filterOpts: {
     saleType: {
       active: false,
