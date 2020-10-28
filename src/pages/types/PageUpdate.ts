@@ -14,12 +14,26 @@ export interface PageUpdate_pageUpdate_errors {
   field: string | null;
 }
 
+export interface PageUpdate_pageUpdate_page_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface PageUpdate_pageUpdate_page_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface PageUpdate_pageUpdate_page {
   __typename: "Page";
   id: string;
   title: string;
   slug: string;
   isPublished: boolean;
+  metadata: (PageUpdate_pageUpdate_page_metadata | null)[];
+  privateMetadata: (PageUpdate_pageUpdate_page_privateMetadata | null)[];
   contentJson: any;
   seoTitle: string | null;
   seoDescription: string | null;

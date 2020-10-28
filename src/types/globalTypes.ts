@@ -119,6 +119,7 @@ export enum CollectionSortField {
   AVAILABILITY = "AVAILABILITY",
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
 }
 
 export enum ConfigurationTypeFieldEnum {
@@ -737,6 +738,7 @@ export enum ProductOrderField {
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
   TYPE = "TYPE",
 }
@@ -1176,6 +1178,7 @@ export interface IntRangeInput {
 
 export interface MenuCreateInput {
   name: string;
+  slug?: string | null;
   items?: (MenuItemInput | null)[] | null;
 }
 
@@ -1379,6 +1382,7 @@ export interface ProductFilterInput {
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface ProductInput {
