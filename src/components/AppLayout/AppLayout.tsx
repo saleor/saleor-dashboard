@@ -50,6 +50,9 @@ const useStyles = makeStyles(
       position: "sticky",
       zIndex: 10
     },
+    appActionDocked: {
+      position: "static"
+    },
     appLoader: {
       height: appLoaderHeight,
       marginBottom: theme.spacing(2),
@@ -313,6 +316,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [appState, dispatchAppState] = useAppState();
   const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
+  const [docked, setDocked] = React.useState(true);
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -365,7 +369,13 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         setVisibility={setNavigatorVisibility}
       />
       <AppHeaderContext.Provider value={appHeaderAnchor}>
-        <AppActionContext.Provider value={appActionAnchor}>
+        <AppActionContext.Provider
+          value={{
+            anchor: appActionAnchor,
+            docked,
+            setDocked
+          }}
+        >
           <div className={classes.root}>
             <div className={classes.sideBar}>
               <ResponsiveDrawer
@@ -533,7 +543,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     : children}
                 </main>
               </div>
-              <div className={classes.appAction} ref={appActionAnchor} />
+              <div
+                className={classNames(classes.appAction, {
+                  [classes.appActionDocked]: docked
+                })}
+                ref={appActionAnchor}
+              />
             </div>
           </div>
         </AppActionContext.Provider>
