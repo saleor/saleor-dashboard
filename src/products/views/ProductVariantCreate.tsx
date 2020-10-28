@@ -15,9 +15,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { decimal, weight } from "../../misc";
-import ProductVariantCreatePage, {
-  ProductVariantCreatePageSubmitData
-} from "../components/ProductVariantCreatePage";
+import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
+import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
   useProductVariantReorderMutation,
   useVariantCreateMutation
@@ -84,7 +83,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   );
 
   const handleBack = () => navigate(productUrl(productId));
-  const handleCreate = async (formData: ProductVariantCreatePageSubmitData) => {
+  const handleCreate = async (formData: ProductVariantCreateData) => {
     const result = await variantCreate({
       variables: {
         input: {

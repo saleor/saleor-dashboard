@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ProductCreatePage, {
-  ProductCreatePageSubmitData
+  ProductCreateFormData
 } from "../../../products/components/ProductCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import { productTypes } from "../../../productTypes/fixtures";
@@ -74,17 +74,15 @@ storiesOf("Views / Products / Create product", module)
         "productType",
         "category",
         "sku"
-      ] as Array<keyof ProductCreatePageSubmitData | "attributes">).map(
-        field => ({
-          __typename: "ProductError",
-          attributes:
-            field === "attributes"
-              ? [productTypes[0].productAttributes[0].id]
-              : null,
-          code: ProductErrorCode.INVALID,
-          field
-        })
-      )}
+      ] as Array<keyof ProductCreateFormData | "attributes">).map(field => ({
+        __typename: "ProductError",
+        attributes:
+          field === "attributes"
+            ? [productTypes[0].productAttributes[0].id]
+            : null,
+        code: ProductErrorCode.INVALID,
+        field
+      }))}
       header="Add product"
       collections={product.collections}
       fetchCategories={() => undefined}
@@ -94,7 +92,7 @@ storiesOf("Views / Products / Create product", module)
       fetchMoreCollections={fetchMoreProps}
       fetchMoreProductTypes={fetchMoreProps}
       initial={{
-        productType: productTypes[0].id
+        productType: productTypes[0]
       }}
       productTypes={productTypes}
       categories={[product.category]}

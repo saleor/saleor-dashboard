@@ -3,9 +3,8 @@ import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
+import Metadata from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -13,70 +12,29 @@ import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import {
-  getAttributeInputFromProductType,
-  getChoices,
-  ProductType
-} from "@saleor/products/utils/data";
+import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
+import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+import { ContentState, convertToRaw } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { FetchMoreProps } from "../../../types";
-import {
-  createAttributeChangeHandler,
-  createAttributeMultiChangeHandler,
-  createProductTypeSelectHandler
-} from "../../utils/handlers";
-import ProductAttributes, {
-  ProductAttributeInput,
-  ProductAttributeInputData
-} from "../ProductAttributes";
+import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
-
-interface FormData extends MetadataFormData {
-  availableForPurchase: string;
-  basePrice: number;
-  category: string;
-  changeTaxCode: boolean;
-  chargeTaxes: boolean;
-  collections: string[];
-  description: RawDraftContentState;
-  isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
-  name: string;
-  slug: string;
-  productType: string;
-  publicationDate: string;
-  seoDescription: string;
-  seoTitle: string;
-  sku: string;
-  stockQuantity: number;
-  taxCode: string;
-  trackInventory: boolean;
-  visibleInListings: boolean;
-  weight: string;
-}
-export interface ProductCreatePageSubmitData extends FormData {
-  attributes: ProductAttributeInput[];
-  stocks: ProductStockInput[];
-}
+import ProductCreateForm, {
+  ProductCreateData,
+  ProductCreateFormData
+} from "./form";
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
@@ -87,13 +45,8 @@ interface ProductCreatePageProps {
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
-  initial?: Partial<FormData>;
-  productTypes?: Array<{
-    id: string;
-    name: string;
-    hasVariants: boolean;
-    productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
-  }>;
+  initial?: Partial<ProductCreateFormData>;
+  productTypes?: SearchProductTypes_search_edges_node[];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -104,7 +57,7 @@ interface ProductCreatePageProps {
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
   onBack?();
-  onSubmit?(data: ProductCreatePageSubmitData);
+  onSubmit?(data: ProductCreateData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
@@ -133,64 +86,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
-  const initialProductType = productTypeChoiceList?.find(
-    productType => initial?.productType === productType.id
-  );
-
-  // Form values
-  const {
-    change: changeAttributeData,
-    data: attributes,
-    set: setAttributeData
-  } = useFormset<ProductAttributeInputData>(
-    initial?.productType
-      ? getAttributeInputFromProductType(initialProductType)
-      : []
-  );
-  const {
-    add: addStock,
-    change: changeStockData,
-    data: stocks,
-    remove: removeStock
-  } = useFormset<null, string>([]);
-
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
   const initialDescription = React.useRef(
     convertToRaw(ContentState.createFromText(""))
   );
-
-  const {
-    makeChangeHandler: makeMetadataChangeHandler
-  } = useMetadataChangeTrigger();
-
-  const initialData: FormData = {
-    ...(initial || {}),
-    availableForPurchase: "",
-    basePrice: 0,
-    category: "",
-    changeTaxCode: false,
-    chargeTaxes: false,
-    collections: [],
-    description: {} as any,
-    isAvailable: false,
-    isAvailableForPurchase: false,
-    isPublished: false,
-    metadata: [],
-    name: "",
-    privateMetadata: [],
-    productType: "",
-    publicationDate: "",
-    seoDescription: "",
-    seoTitle: "",
-    sku: null,
-    slug: "",
-    stockQuantity: null,
-    taxCode: null,
-    trackInventory: false,
-    visibleInListings: false,
-    weight: ""
-  };
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
@@ -201,9 +101,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     MultiAutocompleteChoiceType[]
   >([]);
 
-  const [productType, setProductType] = useStateFromProps<ProductType>(
-    initialProductType || null
-  );
   const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
     initial?.taxCode || null
   );
@@ -217,50 +114,23 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const handleSubmit = (data: FormData) =>
-    onSubmit({
-      ...data,
-      attributes,
-      stocks
-    });
-
   return (
-    <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
-        const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          setSelectedCollections,
-          selectedCollections,
-          collections
-        );
-        const handleCategorySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedCategory,
-          categories
-        );
-        const handleAttributeChange = createAttributeChangeHandler(
-          changeAttributeData,
-          triggerChange
-        );
-        const handleAttributeMultiChange = createAttributeMultiChangeHandler(
-          changeAttributeData,
-          attributes,
-          triggerChange
-        );
-
-        const handleProductTypeSelect = createProductTypeSelectHandler(
-          change,
-          setAttributeData,
-          setProductType,
-          productTypeChoiceList
-        );
-        const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedTaxType,
-          taxTypeChoices
-        );
-
-        const changeMetadata = makeMetadataChangeHandler(change);
+    <ProductCreateForm
+      onSubmit={onSubmit}
+      initial={initial}
+      categories={categories}
+      collections={collections}
+      productTypes={productTypeChoiceList}
+      selectedCollections={selectedCollections}
+      setSelectedCategory={setSelectedCategory}
+      setSelectedCollections={setSelectedCollections}
+      setSelectedTaxType={setSelectedTaxType}
+      taxTypes={taxTypeChoices}
+      warehouses={warehouses}
+    >
+      {({ change, data, handlers, hasChanged, submit }) => {
+        // Comparing explicitly to false because `hasVariants` can be undefined
+        const isSimpleProduct = data.productType?.hasVariants === false;
 
         return (
           <Container>
@@ -278,17 +148,17 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                {attributes.length > 0 && (
+                {data.attributes.length > 0 && (
                   <ProductAttributes
-                    attributes={attributes}
+                    attributes={data.attributes}
                     disabled={disabled}
                     errors={errors}
-                    onChange={handleAttributeChange}
-                    onMultiChange={handleAttributeMultiChange}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMultiple}
                   />
                 )}
                 <CardSpacer />
-                {!!productType && !productType.hasVariants && (
+                {isSimpleProduct && (
                   <>
                     <ProductShipping
                       data={data}
@@ -311,27 +181,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       hasVariants={false}
                       onFormDataChange={change}
                       errors={errors}
-                      stocks={stocks}
+                      stocks={data.stocks}
                       warehouses={warehouses}
-                      onChange={(id, value) => {
-                        triggerChange();
-                        changeStockData(id, value);
-                      }}
-                      onWarehouseStockAdd={id => {
-                        triggerChange();
-                        addStock({
-                          data: null,
-                          id,
-                          label: warehouses.find(
-                            warehouse => warehouse.id === id
-                          ).name,
-                          value: "0"
-                        });
-                      }}
-                      onWarehouseStockDelete={id => {
-                        triggerChange();
-                        removeStock(id);
-                      }}
+                      onChange={handlers.changeStock}
+                      onWarehouseStockAdd={handlers.addStock}
+                      onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
                     />
                     <CardSpacer />
@@ -353,7 +207,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
+                <Metadata data={data} onChange={handlers.changeMetadata} />
               </div>
               <div>
                 <ProductOrganization
@@ -370,12 +224,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   fetchMoreCollections={fetchMoreCollections}
                   fetchMoreProductTypes={fetchMoreProductTypes}
                   fetchProductTypes={fetchProductTypes}
-                  productType={productType}
-                  productTypeInputDisplayValue={productType?.name || ""}
+                  productType={data.productType}
+                  productTypeInputDisplayValue={data.productType?.name || ""}
                   productTypes={productTypes}
-                  onCategoryChange={handleCategorySelect}
-                  onCollectionChange={handleCollectionSelect}
-                  onProductTypeChange={handleProductTypeSelect}
+                  onCategoryChange={handlers.selectCategory}
+                  onCollectionChange={handlers.selectCollection}
+                  onProductTypeChange={handlers.selectProductType}
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
@@ -409,7 +263,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   onChange={change}
-                  onTaxTypeChange={handleTaxTypeSelect}
+                  onTaxTypeChange={handlers.selectTaxRate}
                   selectedTaxTypeDisplayName={selectedTaxType}
                   taxTypes={taxTypes}
                 />
@@ -424,7 +278,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           </Container>
         );
       }}
-    </Form>
+    </ProductCreateForm>
   );
 };
 ProductCreatePage.displayName = "ProductCreatePage";
