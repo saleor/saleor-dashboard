@@ -5,21 +5,18 @@ import Quote from "@editorjs/quote";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import { CreateCSSProperties } from "@material-ui/styles/withStyles";
 import { FormChange } from "@saleor/hooks/useForm";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import classNames from "classnames";
-import createGenericInlineTool, {
-  ItalicInlineTool,
-  UnderlineInlineTool
-} from "editorjs-inline-tool";
+import createGenericInlineTool from "editorjs-inline-tool";
 import React from "react";
 
 export interface RichTextEditorProps {
   disabled: boolean;
   error: boolean;
   helperText: string;
-  initial: OutputData;
+  // TODO: Remove any type
+  initial: OutputData | any;
   label: string;
   name: string;
   onChange: FormChange;
@@ -103,9 +100,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   error,
   helperText,
   initial,
-  label,
-  name,
-  onChange
+  label
 }) => {
   const classes = useStyles({});
 
