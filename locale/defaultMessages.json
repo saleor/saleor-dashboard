@@ -1248,10 +1248,6 @@
     "context": "collections section name",
     "string": "Collections"
   },
-  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
-    "context": "collection",
-    "string": "will be visible from {date}"
-  },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_643174786": {
     "context": "collection label",
     "string": "Visible"
@@ -1266,14 +1262,6 @@
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_951411809": {
     "context": "page header",
     "string": "Add Collection"
-  },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
-    "context": "collection",
-    "string": "will be visible from {date}"
-  },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2906897537": {
-    "context": "switch button",
-    "string": "Feature on Homepage"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_643174786": {
     "context": "collection label",
@@ -1324,10 +1312,6 @@
   "src_dot_collections_dot_components_dot_CollectionList_dot_2137803833": {
     "string": "No collections found"
   },
-  "src_dot_collections_dot_components_dot_CollectionList_dot_2341910657": {
-    "context": "collection is not published",
-    "string": "Not published"
-  },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2527742754": {
     "string": "No. of Products"
   },
@@ -1337,10 +1321,6 @@
   "src_dot_collections_dot_components_dot_CollectionList_dot_3326160357": {
     "context": "collection availability",
     "string": "Availability"
-  },
-  "src_dot_collections_dot_components_dot_CollectionList_dot_3640454975": {
-    "context": "collection is published",
-    "string": "Published"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
     "string": "No products found"
@@ -1379,6 +1359,9 @@
   },
   "src_dot_collections_dot_views_dot_3482612628": {
     "string": "Deleted product from collection"
+  },
+  "src_dot_collections_dot_views_dot_3576236500": {
+    "string": "Manage Collection Channel Availability"
   },
   "src_dot_collections_dot_views_dot_3791354625": {
     "context": "dialog title",

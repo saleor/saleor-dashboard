@@ -6,8 +6,15 @@ import { metadataFragment } from "./metadata";
 export const collectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
-    isPublished
     name
+    channelListing {
+      isPublished
+      publicationDate
+      channel {
+        id
+        name
+      }
+    }
   }
 `;
 
@@ -23,10 +30,8 @@ export const collectionDetailsFragment = gql`
     }
     slug
     descriptionJson
-    publicationDate
     seoDescription
     seoTitle
-    isPublished
   }
 `;
 
