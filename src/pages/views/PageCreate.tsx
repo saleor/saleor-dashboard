@@ -1,6 +1,8 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -26,6 +28,14 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
+  const {
+    loadMore: loadMorePageTypes,
+    search: searchPageTypes,
+    result: searchPageTypesOpts
+  } = usePageTypeSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   const handlePageCreate = (data: PageCreateData) => {
     if (data.pageCreate.errors.length === 0) {
       notify({
@@ -47,6 +57,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               input: {
                 contentJson: JSON.stringify(formData.content),
                 isPublished: formData.isPublished,
+                pageType: formData.pageType,
                 publicationDate: formData.publicationDate,
                 seo: {
                   description: formData.seoDescription,
@@ -79,9 +90,18 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
               page={null}
+              pageTypes={searchPageTypesOpts.data?.search.edges.map(
+                edge => edge.node
+              )}
               onBack={() => navigate(pageListUrl())}
               onRemove={() => undefined}
               onSubmit={handleSubmit}
+              fetchPageTypes={searchPageTypes}
+              fetchMorePageTypes={{
+                hasMore: searchPageTypesOpts.data?.search.pageInfo.hasNextPage,
+                loading: searchPageTypesOpts.loading,
+                onFetchMore: loadMorePageTypes
+              }}
             />
           </>
         );

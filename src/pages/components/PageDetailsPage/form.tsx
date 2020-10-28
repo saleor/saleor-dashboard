@@ -1,8 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { PageDetails_page } from "@saleor/pages/types/PageDetails";
+import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -18,6 +21,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
+  pageType: string;
 }
 export interface PageData extends PageFormData {
   content: OutputData;
@@ -26,10 +30,12 @@ export interface PageData extends PageFormData {
 interface PageUpdateHandlers {
   changeMetadata: FormChange;
   changeContent: RichTextEditorChange;
+  selectPageType: FormChange;
 }
 export interface UsePageUpdateFormResult {
   change: FormChange;
   data: PageData;
+  pageType: PageTypeFragment;
   handlers: PageUpdateHandlers;
   hasChanged: boolean;
   submit: () => void;
@@ -38,12 +44,14 @@ export interface UsePageUpdateFormResult {
 export interface PageFormProps {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
+  pageTypes?: PageTypeFragment[];
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
 function usePageForm(
   page: PageDetails_page,
-  onSubmit: (data: PageData) => SubmitPromise
+  onSubmit: (data: PageData) => SubmitPromise,
+  pageTypes?: PageTypeFragment[]
 ): UsePageUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
@@ -53,6 +61,7 @@ function usePageForm(
   const form = useForm<PageFormData>({
     isPublished: page?.isPublished,
     metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
+    pageType: page?.pageType.id || "",
     privateMetadata: pageExists
       ? page?.privateMetadata?.map(mapMetadataItemToInput)
       : [],
@@ -67,6 +76,10 @@ function usePageForm(
     triggerChange
   });
 
+  const [pageType, setPageType] = useStateFromProps<PageTypeFragment>(
+    page?.pageType || null
+  );
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -78,6 +91,11 @@ function usePageForm(
     triggerChange();
   };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const selectPageType = createPageTypeSelectHandler(
+    handleChange,
+    setPageType,
+    pageTypes
+  );
 
   // Need to make it function to always have content.current up to date
   const getData = (): PageData => ({
@@ -101,15 +119,22 @@ function usePageForm(
     data: getData(),
     handlers: {
       changeContent,
-      changeMetadata
+      changeMetadata,
+      selectPageType
     },
     hasChanged: changed,
+    pageType,
     submit
   };
 }
 
-const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit }) => {
-  const props = usePageForm(page, onSubmit);
+const PageForm: React.FC<PageFormProps> = ({
+  children,
+  page,
+  pageTypes,
+  onSubmit
+}) => {
+  const props = usePageForm(page, onSubmit, pageTypes);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

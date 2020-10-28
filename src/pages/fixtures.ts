@@ -46,6 +46,11 @@ export const page: PageDetails_page = {
       value: "100023123"
     }
   ],
+  pageType: {
+    __typename: "PageType",
+    id: "UGFnZVR5cGU6MQ==",
+    name: "Blog"
+  },
   privateMetadata: [],
   publicationDate: "",
   seoDescription: "About",

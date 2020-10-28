@@ -9,35 +9,44 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
+import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData } from "./form";
 
 export interface PageDetailsPageProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   page: PageDetails_page;
+  pageTypes?: PageTypeFragment[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
+  fetchPageTypes?: (data: string) => void;
+  fetchMorePageTypes?: FetchMoreProps;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   disabled,
   errors,
   page,
+  pageTypes,
   saveButtonBarState,
   onBack,
   onRemove,
-  onSubmit
+  onSubmit,
+  fetchPageTypes,
+  fetchMorePageTypes
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -46,7 +55,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   return (
     <PageForm page={page} onSubmit={onSubmit}>
-      {({ change, data, handlers, hasChanged, submit }) => (
+      {({ change, data, pageType, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -116,6 +125,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   })
                 }}
                 onChange={change}
+              />
+              <CardSpacer />
+              <PageOrganizeContent
+                data={data}
+                errors={errors}
+                disabled={disabled}
+                pageTypes={pageTypes}
+                pageType={pageType}
+                pageTypeInputDisplayValue={pageType?.name || ""}
+                onPageTypeChange={handlers.selectPageType}
+                fetchPageTypes={fetchPageTypes}
+                fetchMorePageTypes={fetchMorePageTypes}
+                canChangeType={!page?.pageType}
               />
             </div>
           </Grid>
