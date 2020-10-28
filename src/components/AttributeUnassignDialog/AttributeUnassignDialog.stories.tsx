@@ -4,7 +4,7 @@ import AttributeUnassignDialog, {
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../Decorator";
+import Decorator from "../../storybook/Decorator";
 
 const props: AttributeUnassignDialogProps = {
   attributeName: "Size",

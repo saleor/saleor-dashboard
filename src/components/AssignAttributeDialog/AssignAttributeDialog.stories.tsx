@@ -7,7 +7,7 @@ import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../Decorator";
+import Decorator from "../../storybook/Decorator";
 
 const props: AssignAttributeDialogProps = {
   ...fetchMoreProps,
