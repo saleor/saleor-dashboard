@@ -44,9 +44,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const notify = useNotifier();
   const attributeListActions = useBulkActions();
   const intl = useIntl();
-  const [errors, setErrors] = React.useState({
-    formErrors: []
-  });
 
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
     onCompleted: updateData => {
@@ -58,14 +55,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-      } else if (
-        updateData.pageTypeUpdate.errors !== null &&
-        updateData.pageTypeUpdate.errors.length > 0
-      ) {
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          formErrors: updateData.pageTypeUpdate.errors
-        }));
       }
     }
   });
@@ -78,14 +67,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             text: intl.formatMessage(commonMessages.savedChanges)
           });
           closeModal();
-        } else if (
-          data.pageAttributeAssign.errors !== null &&
-          data.pageAttributeAssign.errors.length > 0
-        ) {
-          setErrors(prevErrors => ({
-            ...prevErrors,
-            addAttributeErrors: data.pageAttributeAssign.errors
-          }));
         }
       }
     }
@@ -178,7 +159,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       <WindowTitle title={data?.pageType.name} />
       <PageTypeDetailsPage
         disabled={loading}
-        errors={errors.formErrors}
+        errors={updatePageTypeOpts.data?.pageTypeUpdate.errors}
         pageTitle={data?.pageType.name}
         pageType={data?.pageType}
         saveButtonBarState={updatePageTypeOpts.status}
