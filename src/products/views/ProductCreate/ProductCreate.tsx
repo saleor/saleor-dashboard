@@ -173,7 +173,6 @@ export const ProductCreateView: React.FC = () => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        currency={shop?.defaultCurrency}
         categories={
           searchCategoryOpts?.data?.search?.edges || [].map(edge => edge.node)
         }

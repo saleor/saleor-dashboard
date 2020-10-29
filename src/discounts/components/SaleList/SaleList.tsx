@@ -26,7 +26,6 @@ export interface SaleListProps
   extends ListProps,
     ListActions,
     SortPage<SaleListUrlSortField> {
-  defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
   selectedChannel: string;
 }

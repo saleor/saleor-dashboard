@@ -14,7 +14,6 @@ const shopInfo = gql`
         code
         country
       }
-      defaultCurrency
       defaultWeightUnit
       displayGrossPrices
       domain {

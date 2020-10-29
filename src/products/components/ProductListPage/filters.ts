@@ -14,7 +14,6 @@ export enum ProductFilterKeys {
   attributes = "attributes",
   categories = "categories",
   collections = "collections",
-  status = "status",
   price = "price",
   productType = "productType",
   stock = "stock"
@@ -32,13 +31,7 @@ export interface ProductListFilterOpts {
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
-  status: FilterOpts<ProductStatus>;
   stockStatus: FilterOpts<StockAvailability>;
-}
-
-export enum ProductStatus {
-  PUBLISHED = "published",
-  HIDDEN = "hidden"
 }
 
 const messages = defineMessages({
@@ -76,25 +69,6 @@ export function createFilterStructure(
   opts: ProductListFilterOpts
 ): IFilter<ProductFilterKeys> {
   return [
-    {
-      ...createOptionsField(
-        ProductFilterKeys.status,
-        intl.formatMessage(messages.visibility),
-        [opts.status.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.visible),
-            value: ProductStatus.PUBLISHED
-          },
-          {
-            label: intl.formatMessage(messages.hidden),
-            value: ProductStatus.HIDDEN
-          }
-        ]
-      ),
-      active: opts.status.active
-    },
     {
       ...createOptionsField(
         ProductFilterKeys.stock,

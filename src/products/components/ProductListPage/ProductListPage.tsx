@@ -103,13 +103,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const columns: ColumnPickerChoice[] = [
     {
       label: intl.formatMessage({
-        defaultMessage: "Published",
-        description: "product status"
-      }),
-      value: "isPublished" as ProductListColumns
-    },
-    {
-      label: intl.formatMessage({
         defaultMessage: "Price",
         description: "product price"
       }),

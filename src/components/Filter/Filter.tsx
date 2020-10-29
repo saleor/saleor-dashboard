@@ -14,7 +14,7 @@ import { IFilter, IFilterElement } from "./types";
 import useFilter from "./useFilter";
 
 export interface FilterProps<TFilterKeys extends string = string> {
-  currencySymbol: string;
+  currencySymbol?: string;
   menu: IFilter<TFilterKeys>;
   onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
 }

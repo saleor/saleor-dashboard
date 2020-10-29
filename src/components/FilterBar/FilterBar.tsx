@@ -84,8 +84,8 @@ const FilterBar: React.FC<FilterBarProps> = props => {
       </FilterTabs>
       <div className={classes.root}>
         <Filter
-          currencySymbol={currencySymbol}
           menu={filterStructure}
+          currencySymbol={currencySymbol}
           onFilterAdd={onFilterChange}
         />
         <SearchInput

@@ -24,7 +24,6 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      currency="USD"
       disabled={false}
       errors={[]}
       header="Add product"
@@ -53,7 +52,6 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      currency="USD"
       disabled={true}
       errors={[]}
       header="Add product"
@@ -82,7 +80,6 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      currency="USD"
       disabled={false}
       errors={([
         "attributes",

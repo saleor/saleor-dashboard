@@ -103,7 +103,7 @@ export interface FilterPageProps<TKeys extends string, TOpts extends object>
 }
 
 export interface FilterProps<TKeys extends string> {
-  currencySymbol: string;
+  currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
 }
 

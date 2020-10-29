@@ -35,7 +35,6 @@ export interface AttributeListPageProps
 }
 
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
-  currencySymbol,
   filterOpts,
   initialSearch,
   onAdd,
@@ -73,7 +72,6 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
             defaultMessage: "All Attributes",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
