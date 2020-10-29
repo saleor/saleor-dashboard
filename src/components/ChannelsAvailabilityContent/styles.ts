@@ -43,5 +43,5 @@ export const useStyles = makeStyles(
       marginBottom: 5
     }
   }),
-  { name: "ChannelsAvailabilityDialog" }
+  { name: "ChannelsAvailabilityContent" }
 );

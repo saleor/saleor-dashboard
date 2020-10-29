@@ -1528,19 +1528,19 @@
     "context": "product unavailability",
     "string": "Unavailable for purchase"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_1528830621": {
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_1528830621": {
     "string": "Select channels you want for {contentType} to be available on"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_1866672276": {
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_1866672276": {
     "string": "No Channels found"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_3630122739": {
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_3630122739": {
     "string": "Available at all channels"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_3754190292": {
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_3754190292": {
     "string": "Channels A to Z"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDialog_dot_4243012684": {
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_4243012684": {
     "string": "Search through channels"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
@@ -4269,6 +4269,9 @@
     "context": "there are more elements of list that are hidden",
     "string": "and {number} more"
   },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1583816707": {
+    "string": "Add all channels"
+  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1890035856": {
     "context": "informations about product organization, header",
     "string": "Product Organization"
@@ -5831,6 +5834,9 @@
   },
   "src_dot_utils_dot_errors_dot_channelAlreadyExist": {
     "string": "This channel has already been created"
+  },
+  "src_dot_utils_dot_errors_dot_channelSameCurrency": {
+    "string": "Currency in both channels must be the same"
   },
   "src_dot_utils_dot_errors_dot_channelUnique": {
     "string": "Slug must be unique"
