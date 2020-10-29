@@ -5861,6 +5861,9 @@
   "src_dot_utils_dot_errors_dot_channelAlreadyExist": {
     "string": "This channel has already been created"
   },
+  "src_dot_utils_dot_errors_dot_channelSameCurrency": {
+    "string": "Currency in both channels must be the same"
+  },
   "src_dot_utils_dot_errors_dot_channelUnique": {
     "string": "Slug must be unique"
   },
