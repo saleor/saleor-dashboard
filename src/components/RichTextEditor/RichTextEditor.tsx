@@ -40,7 +40,7 @@ const useStyles = makeStyles(
       label: {
         color: theme.palette.text.secondary,
         position: "absolute",
-        top: theme.spacing(4),
+        top: theme.spacing(1),
         transition: theme.transitions.duration.short + "ms"
       },
       labelActive: {
@@ -49,6 +49,10 @@ const useStyles = makeStyles(
       root: {
         "& .cdx-quote__text": {
           minHeight: 24
+        },
+        "& .ce-block__content": {
+          margin: 0,
+          maxWidth: "unset"
         },
         "& .ce-conversion-tool": {
           ...hover
@@ -80,10 +84,11 @@ const useStyles = makeStyles(
         "&:hover": {
           borderColor: theme.palette.primary.main
         },
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 8,
+        border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
+        borderRadius: 4,
         boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
         padding: theme.spacing(3, 2),
+        position: "relative",
         transition: theme.transitions.duration.short + "ms"
       },
       rootActive: {
