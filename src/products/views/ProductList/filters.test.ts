@@ -27,7 +27,7 @@ describe("Filtering query params", () => {
     };
     const filterVariables = getFilterVariables(params, "default-channel");
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(4);
+    expect(getExistingKeys(filterVariables)).toHaveLength(3);
   });
 });
 
