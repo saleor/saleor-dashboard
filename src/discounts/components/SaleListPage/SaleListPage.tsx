@@ -31,7 +31,6 @@ export interface SaleListPageProps
     FilterPageProps<SaleFilterKeys, SaleListFilterOpts>,
     SortPage<SaleListUrlSortField>,
     TabPageProps {
-  defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
   selectedChannel: string;
   onSettingsOpen?: () => void;
@@ -46,7 +45,6 @@ const useStyles = makeStyles(
 );
 
 const SaleListPage: React.FC<SaleListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -92,7 +90,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
             defaultMessage: "All Sales",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

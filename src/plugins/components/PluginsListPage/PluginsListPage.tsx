@@ -32,7 +32,6 @@ export interface PluginsListPageProps
 }
 
 const PluginsListPage: React.FC<PluginsListPageProps> = ({
-  currencySymbol,
   currentTab,
   initialSearch,
   filterOpts,
@@ -59,7 +58,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
       <Card>
         <FilterBar
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           initialSearch={initialSearch}
           onAll={onAll}

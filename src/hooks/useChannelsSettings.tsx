@@ -27,10 +27,16 @@ function useChannelsSettings(key: string, { openModal, closeModal }: Actions) {
     }
   }, [selectedChannel]);
 
+  const channel = channelsData?.channels.find(
+    channel => channel.id === selectedChannel
+  );
+
   return {
+    channel,
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel
+    selectedChannel,
+    slug: channel?.slug
   };
 }
 

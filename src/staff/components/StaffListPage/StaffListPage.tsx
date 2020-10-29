@@ -34,7 +34,6 @@ export interface StaffListPageProps
 }
 
 const StaffListPage: React.FC<StaffListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -72,7 +71,6 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             defaultMessage: "All Staff Members",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

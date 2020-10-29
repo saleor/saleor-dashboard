@@ -15,7 +15,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -66,7 +65,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     ListViews.DRAFT_LIST
   );
   const intl = useIntl();
-  const shop = useShop();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
@@ -170,7 +168,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <>
@@ -198,7 +195,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
           return (
             <>
               <OrderDraftListPage
-                currencySymbol={currencySymbol}
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
                 initialSearch={params.query || ""}
