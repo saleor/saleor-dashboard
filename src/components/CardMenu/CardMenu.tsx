@@ -26,6 +26,9 @@ export interface CardMenuProps {
 
 const useStyles = makeStyles(
   theme => ({
+    container: {
+      zIndex: 1
+    },
     iconButton: {
       background: theme.palette.background.paper,
       borderRadius: "100%",
@@ -98,6 +101,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
       </IconButton>
       <Popper
         placement="bottom-end"
+        className={classes.container}
         open={open}
         anchorEl={anchorRef.current}
         transition

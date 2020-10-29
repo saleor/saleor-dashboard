@@ -134,6 +134,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const {
     channel,
+    channels,
     channelChoices,
     handleChannelSelectConfirm,
     selectedChannel,
@@ -448,6 +449,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
+        channels={channels}
         onClose={closeModal}
         onSubmit={data =>
           exportProducts({

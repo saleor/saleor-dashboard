@@ -34,6 +34,7 @@ function useChannelsSettings(key: string, { openModal, closeModal }: Actions) {
   return {
     channel,
     channelChoices,
+    channels: channelsData?.channels,
     handleChannelSelectConfirm,
     selectedChannel,
     slug: channel?.slug
