@@ -437,7 +437,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           description: "informations about product prices etc, header"
         })}
         data={data}
-        fields={[ProductFieldEnum.CHARGE_TAXES, ProductFieldEnum.VISIBLE]}
+        fields={[ProductFieldEnum.CHARGE_TAXES]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
         data-test="financial"
