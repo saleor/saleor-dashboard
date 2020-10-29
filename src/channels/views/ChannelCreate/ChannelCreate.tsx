@@ -6,6 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { sectionNames } from "@saleor/intl";
+import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,7 +14,7 @@ import { ChannelCreateInput } from "../../../types/globalTypes";
 import { useChannelCreateMutation } from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { ChannelCreate } from "../../types/ChannelCreate";
-import { channelsListUrl } from "../../urls";
+import { channelPath, channelsListUrl } from "../../urls";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
@@ -28,7 +29,7 @@ export const ChannelCreateView = ({}) => {
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      handleBack();
+      navigate(channelPath(data.channelCreate.channel.id));
     }
   };
 
@@ -39,9 +40,14 @@ export const ChannelCreateView = ({}) => {
   const handleSubmit = (data: ChannelCreateInput) =>
     createChannel({
       variables: {
-        input: data
+        input: { ...data, currencyCode: data.currencyCode.toUpperCase() }
       }
     });
+
+  const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
+    label: `${currencyData.code} - ${currencyData.countries.join(",")}`,
+    value: currencyData.code
+  }));
 
   return (
     <>
@@ -64,6 +70,7 @@ export const ChannelCreateView = ({}) => {
         <ChannelDetailsPage
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
+          currencyCodes={currencyCodeChoices}
           onSubmit={handleSubmit}
           onBack={handleBack}
           saveButtonBarState={createChannelOpts.status}

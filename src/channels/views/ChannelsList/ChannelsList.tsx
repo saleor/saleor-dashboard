@@ -64,14 +64,21 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     onCompleted
   });
 
+  const selectedChannel = data?.channels.find(
+    channel => channel.id === params?.id
+  );
   const channelsChoices =
     params.id &&
     data?.channels
-      ?.map(channel => ({
+      ?.filter(
+        channel =>
+          channel.id !== params.id &&
+          channel.currencyCode === selectedChannel.currencyCode
+      )
+      .map(channel => ({
         label: channel.name,
         value: channel.id
-      }))
-      .filter(channel => channel.value !== params.id);
+      }));
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
@@ -93,16 +100,14 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
           })
         }
       />
-      {!!channelsChoices?.length && (
-        <ChannelDeleteDialog
-          channelsChoices={channelsChoices}
-          hasChannelOrders={!!ordersData?.orders?.edges?.length}
-          open={params.action === "remove"}
-          confirmButtonState={deleteChannelOpts.status}
-          onClose={closeModal}
-          onConfirm={handleRemoveConfirm}
-        />
-      )}
+      <ChannelDeleteDialog
+        channelsChoices={channelsChoices}
+        hasChannelOrders={!!ordersData?.orders?.edges?.length}
+        open={params.action === "remove"}
+        confirmButtonState={deleteChannelOpts.status}
+        onClose={closeModal}
+        onConfirm={handleRemoveConfirm}
+      />
     </>
   );
 };

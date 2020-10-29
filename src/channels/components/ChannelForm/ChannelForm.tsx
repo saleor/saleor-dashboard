@@ -6,8 +6,12 @@ import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteChoiceType
+} from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import useClipboard from "@saleor/hooks/useClipboard";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -26,17 +30,21 @@ export interface FormData {
 export interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
-  editableCurrency?: boolean;
+  currencyCodes?: SingleAutocompleteChoiceType[];
   errors: ChannelErrorFragment[];
+  selectedCurrencyCode?: string;
   onChange: FormChange;
+  onCurrencyCodeChange?: (event: ChangeEvent) => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
+  currencyCodes,
   data,
   disabled,
-  editableCurrency,
   errors,
-  onChange
+  selectedCurrencyCode,
+  onChange,
+  onCurrencyCodeChange
 }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
@@ -114,22 +122,24 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           })}
         />
         <CardContent>
-          {editableCurrency ? (
-            <TextField
+          {!!currencyCodes ? (
+            <SingleAutocompleteSelectField
+              allowCustomValues
               error={!!formErrors.currencyCode}
               helperText={getChannelsErrorMessage(
                 formErrors?.currencyCode,
                 intl
               )}
               disabled={disabled}
-              fullWidth
               label={intl.formatMessage({
                 defaultMessage: "Currency",
                 description: "channel currency"
               })}
+              choices={currencyCodes}
               name="currencyCode"
-              value={data.currencyCode}
-              onChange={onChange}
+              displayValue={selectedCurrencyCode}
+              value={selectedCurrencyCode}
+              onChange={onCurrencyCodeChange}
             />
           ) : (
             <>

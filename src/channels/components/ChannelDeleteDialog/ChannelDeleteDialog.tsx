@@ -46,7 +46,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
       variant="delete"
     >
       <div>
-        {hasChannelOrders && (
+        {hasChannelOrders && !!channelsChoices?.length && (
           <>
             <Typography>
               <FormattedMessage
