@@ -1,3 +1,4 @@
+import { channelsList } from "@saleor/channels/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import {
   ExportErrorCode,
@@ -18,6 +19,7 @@ const props: ProductExportDialogProps = {
     id: attr.id,
     name: attr.name
   })),
+  channels: channelsList,
   confirmButtonState: "default",
   errors: [],
   hasMore: true,
