@@ -25,6 +25,8 @@ const HomeSection = () => {
     channelChoices?.length ? channelChoices[0]?.value : ""
   );
 
+  const handleChannelChange = useCallback(value => setChannelChoice(value), []);
+
   return (
     <HomePageQuery displayLoader variables={{ channel: channelChoice }}>
       {({ data }) => (
@@ -39,7 +41,7 @@ const HomeSection = () => {
           )}
           channelChoices={channelChoices}
           channelValue={channelChoice}
-          onChannelChange={useCallback(value => setChannelChoice(value), [])}
+          onChannelChange={handleChannelChange}
           onProductClick={(productId, variantId) =>
             navigate(productVariantEditUrl(productId, variantId))
           }
