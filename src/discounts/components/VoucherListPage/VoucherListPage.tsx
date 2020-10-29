@@ -45,7 +45,6 @@ const useStyles = makeStyles(
 );
 
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -94,7 +93,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
             defaultMessage: "All Vouchers",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

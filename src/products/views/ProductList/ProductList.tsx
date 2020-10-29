@@ -23,7 +23,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
@@ -84,7 +83,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const paginate = usePaginator();
   const { queue } = useBackgroundTask();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -135,9 +133,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   >(navigate, productListUrl, params);
 
   const {
+    channel,
     channelChoices,
     handleChannelSelectConfirm,
-    selectedChannel
+    selectedChannel,
+    slug
   } = useChannelsSettings("productsListChannel", { closeModal, openModal });
 
   React.useEffect(() => {
@@ -230,14 +230,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = shop?.defaultCurrency || "USD";
-  const filter = getFilterVariables(params);
-  const sort = getSortQueryVariables(params);
+  const filter = getFilterVariables(params, slug);
+  const sort = getSortQueryVariables(params, slug);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
-      sort
+      ...(slug ? { sort } : {})
     }),
     [params, settings.rowNumber]
   );
@@ -311,7 +310,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           () => attributes.data.availableInGrid.edges.map(edge => edge.node),
           []
         )}
-        currencySymbol={currencySymbol}
+        currencySymbol={channel?.currencyCode}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}

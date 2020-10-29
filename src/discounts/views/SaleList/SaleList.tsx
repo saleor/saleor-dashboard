@@ -16,7 +16,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -58,7 +57,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -155,7 +153,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
@@ -181,7 +178,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
               />
             )}
             <SaleListPage
-              currencySymbol={currencySymbol}
               currentTab={currentTab}
               filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
@@ -192,7 +188,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
               tabs={tabs.map(tab => tab.name)}
-              defaultCurrency={maybe(() => shop.defaultCurrency)}
               sales={maybe(() => data.sales.edges.map(edge => edge.node))}
               settings={settings}
               disabled={loading}

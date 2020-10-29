@@ -13,7 +13,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -62,7 +61,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     ListViews.CUSTOMER_LIST
   );
   const intl = useIntl();
-  const shop = useShop();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -144,14 +142,12 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedBulkRemoveCustomers onCompleted={handleBulkCustomerDelete}>
       {(bulkRemoveCustomers, bulkRemoveCustomersOpts) => (
         <>
           <CustomerListPage
-            currencySymbol={currencySymbol}
             currentTab={currentTab}
             filterOpts={getFilterOpts(params)}
             initialSearch={params.query || ""}

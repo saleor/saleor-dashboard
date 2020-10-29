@@ -37,6 +37,7 @@ const props: ProductListPageProps = {
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
   channelsCount: 6,
+  currencySymbol: "USD",
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,

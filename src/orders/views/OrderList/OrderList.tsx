@@ -10,7 +10,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -50,7 +49,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
@@ -120,7 +118,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   };
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   const queryVariables = React.useMemo(
     () => ({
@@ -156,7 +153,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         />
       )}
       <OrderListPage
-        currencySymbol={currencySymbol}
         settings={settings}
         currentTab={currentTab}
         disabled={loading}

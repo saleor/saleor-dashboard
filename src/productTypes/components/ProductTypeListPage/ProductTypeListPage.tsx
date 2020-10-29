@@ -35,7 +35,6 @@ export interface ProductTypeListPageProps
 }
 
 const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -73,7 +72,6 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
             defaultMessage: "All Product Types",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

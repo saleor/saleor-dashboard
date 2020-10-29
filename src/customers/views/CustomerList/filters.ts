@@ -37,19 +37,6 @@ export function getFilterOpts(
         min: maybe(() => params.joinedFrom, "")
       }
     },
-    moneySpent: {
-      active: maybe(
-        () =>
-          [params.moneySpentFrom, params.moneySpentTo].some(
-            field => field !== undefined
-          ),
-        false
-      ),
-      value: {
-        max: maybe(() => params.moneySpentTo, ""),
-        min: maybe(() => params.moneySpentFrom, "")
-      }
-    },
     numberOfOrders: {
       active: maybe(
         () =>
@@ -74,10 +61,6 @@ export function getFilterVariables(
       gte: params.joinedFrom,
       lte: params.joinedTo
     }),
-    moneySpent: getGteLteVariables({
-      gte: parseInt(params.moneySpentFrom, 0),
-      lte: parseInt(params.moneySpentTo, 0)
-    }),
     numberOfOrders: getGteLteVariables({
       gte: parseInt(params.numberOfOrdersFrom, 0),
       lte: parseInt(params.numberOfOrdersTo, 0)
@@ -97,13 +80,6 @@ export function getFilterQueryParam(
         filter,
         CustomerListUrlFiltersEnum.joinedFrom,
         CustomerListUrlFiltersEnum.joinedTo
-      );
-
-    case CustomerFilterKeys.moneySpent:
-      return getMinMaxQueryParam(
-        filter,
-        CustomerListUrlFiltersEnum.moneySpentFrom,
-        CustomerListUrlFiltersEnum.moneySpentTo
       );
 
     case CustomerFilterKeys.numberOfOrders:

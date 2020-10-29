@@ -19,7 +19,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -52,7 +51,6 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -145,13 +143,11 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <>
       <AttributeListPage
         attributes={maybe(() => data.attributes.edges.map(edge => edge.node))}
-        currencySymbol={currencySymbol}
         currentTab={currentTab}
         disabled={loading || attributeBulkDeleteOpts.loading}
         filterOpts={getFilterOpts(params)}

@@ -37,7 +37,6 @@ const useStyles = makeStyles(
 );
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
-  currencySymbol,
   currentTab,
   initialSearch,
   filterOpts,
@@ -82,7 +81,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
       </PageHeader>
       <Card>
         <FilterBar
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           initialSearch={initialSearch}
           onAll={onAll}

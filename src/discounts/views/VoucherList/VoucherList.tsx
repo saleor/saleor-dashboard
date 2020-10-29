@@ -16,7 +16,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -58,7 +57,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -155,7 +153,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
-  const currencySymbol = shop?.defaultCurrency || "USD";
 
   return (
     <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
@@ -181,7 +178,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
               />
             )}
             <VoucherListPage
-              currencySymbol={currencySymbol}
               currentTab={currentTab}
               filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}

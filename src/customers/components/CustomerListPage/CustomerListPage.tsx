@@ -33,7 +33,6 @@ export interface CustomerListPageProps
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -67,7 +66,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             defaultMessage: "All Customers",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

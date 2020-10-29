@@ -32,13 +32,6 @@ const props: CustomerListPageProps = {
         min: undefined
       }
     },
-    moneySpent: {
-      active: false,
-      value: {
-        max: undefined,
-        min: undefined
-      }
-    },
     numberOfOrders: {
       active: false,
       value: {
