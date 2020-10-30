@@ -150,7 +150,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
             };
 
             // fix for bug where input value is returned from debounce as id instead of label
-            if (value === inputValue && inputValue !== "") {
+            if (value === inputValue && !!inputValue) {
               ensureProperValues();
             }
 
