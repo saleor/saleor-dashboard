@@ -141,9 +141,9 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                       });
 
                       return [
-                        result.data.shopAddressUpdate.errors,
-                        result.data.shopDomainUpdate.errors,
-                        result.data.shopSettingsUpdate.errors
+                        ...result.data.shopAddressUpdate.errors,
+                        ...result.data.shopDomainUpdate.errors,
+                        ...result.data.shopSettingsUpdate.errors
                       ];
                     };
 
