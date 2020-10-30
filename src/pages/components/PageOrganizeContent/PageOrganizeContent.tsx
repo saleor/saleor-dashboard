@@ -90,7 +90,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
         ) : (
           <>
             <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Page type" />
+              <FormattedMessage defaultMessage="Content type" />
             </Typography>
             <Typography>{pageType?.name}</Typography>
           </>
