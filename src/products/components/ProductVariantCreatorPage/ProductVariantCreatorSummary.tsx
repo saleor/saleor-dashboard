@@ -107,7 +107,7 @@ const useStyles = makeStyles<
         `minmax(180px, auto) repeat(${props.data.variants[0].channelListings
           .length +
           props.data.variants[0].stocks
-            .length}, minmax(100px, auto)) 140px 64px`,
+            .length}, minmax(180px, auto)) 140px 64px`,
       overflowX: "scroll",
       rowGap: theme.spacing() + "px"
     }
