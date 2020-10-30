@@ -60,7 +60,7 @@ const useStyles = makeStyles(
 const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const {
     disabled,
-    errors = [],
+    errors,
     pageTitle,
     pageType,
     attributeList,
