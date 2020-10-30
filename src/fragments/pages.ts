@@ -11,11 +11,37 @@ export const pageFragment = gql`
   }
 `;
 
+export const pageAttributesFragment = gql`
+  fragment PageAttributesFragment on Page {
+    attributes {
+      attribute {
+        id
+        slug
+        name
+        inputType
+        valueRequired
+        values {
+          id
+          name
+          slug
+        }
+      }
+      values {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
+
 export const pageDetailsFragment = gql`
   ${pageFragment}
+  ${pageAttributesFragment}
   ${metadataFragment}
   fragment PageDetailsFragment on Page {
     ...PageFragment
+    ...PageAttributesFragment
     ...MetadataFragment
     contentJson
     seoTitle

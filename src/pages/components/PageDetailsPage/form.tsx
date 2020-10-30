@@ -6,7 +6,7 @@ import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { PageDetails_page } from "@saleor/pages/types/PageDetails";
-import { getAttributeInputFromPageType } from "@saleor/pages/utils/data";
+import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import {
   createAttributeChangeHandler,
@@ -69,17 +69,16 @@ function usePageForm(
 
   const pageExists = page !== null;
 
-  const initialPageType =
-    page?.pageType ||
-    pageTypes?.find(pageType => page?.pageType.id === pageType.id);
+  const attributesFromPage = React.useMemo(
+    () => getAttributeInputFromPage(page),
+    [page]
+  );
 
   const {
     change: changeAttributeData,
     data: attributes,
     set: setAttributeData
-  } = useFormset<PageAttributeInputData>(
-    page?.pageType ? getAttributeInputFromPageType(initialPageType) : []
-  );
+  } = useFormset<PageAttributeInputData>(attributesFromPage || []);
 
   const form = useForm<PageFormData>({
     isPublished: page?.isPublished,

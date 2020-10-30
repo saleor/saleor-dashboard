@@ -11,12 +11,11 @@ import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { FormData } from "../PageDetailsPage";
+import { PageFormData } from "../PageDetailsPage/form";
 
 export interface PageOrganizeContentProps {
   canChangeType: boolean;
-  data: FormData;
+  data: PageFormData;
   pageType?: PageTypeFragment;
   pageTypeInputDisplayValue?: string;
   errors: PageErrorFragment[];
@@ -74,7 +73,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             })}
             error={!!formErrors.pageType}
             helperText={getPageErrorMessage(formErrors.pageType, intl)}
-            name={"pageType" as keyof FormData}
+            name={"pageType" as keyof PageFormData}
             onChange={onPageTypeChange}
             value={data.pageType}
             choices={

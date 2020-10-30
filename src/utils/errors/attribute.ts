@@ -7,13 +7,13 @@ import commonErrorMessages from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
-    defaultMessage: "A product with this SKU already exists"
+    defaultMessage: "An attribute already exists."
   },
   nameAlreadyTaken: {
     defaultMessage: "This name is already taken. Please provide another."
   },
   notFound: {
-    defaultMessage: "Attribute not found"
+    defaultMessage: "Attribute not found."
   }
 });
 

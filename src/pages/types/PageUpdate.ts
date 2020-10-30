@@ -15,6 +15,36 @@ export interface PageUpdate_pageUpdate_errors {
   attributes: string[] | null;
 }
 
+export interface PageUpdate_pageUpdate_page_attributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageUpdate_pageUpdate_page_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  slug: string | null;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (PageUpdate_pageUpdate_page_attributes_attribute_values | null)[] | null;
+}
+
+export interface PageUpdate_pageUpdate_page_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageUpdate_pageUpdate_page_attributes {
+  __typename: "SelectedAttribute";
+  attribute: PageUpdate_pageUpdate_page_attributes_attribute;
+  values: (PageUpdate_pageUpdate_page_attributes_values | null)[];
+}
+
 export interface PageUpdate_pageUpdate_page_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -56,6 +86,7 @@ export interface PageUpdate_pageUpdate_page {
   title: string;
   slug: string;
   isPublished: boolean;
+  attributes: PageUpdate_pageUpdate_page_attributes[];
   metadata: (PageUpdate_pageUpdate_page_metadata | null)[];
   privateMetadata: (PageUpdate_pageUpdate_page_privateMetadata | null)[];
   contentJson: any;
