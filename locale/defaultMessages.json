@@ -1229,6 +1229,10 @@
     "context": "button",
     "string": "Create Channel"
   },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_2071399707": {
+    "context": "currency code select",
+    "string": "{code} - {countries}"
+  },
   "src_dot_channels_dot_views_dot_ChannelCreate_dot_4169662653": {
     "context": "channel create",
     "string": "New Channel"

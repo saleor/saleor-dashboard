@@ -4,12 +4,12 @@ import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import { Channel_channel } from "../../types/Channel";
-import createSingleAutocompleteSelectHandler from "./handlers";
 
 export interface ChannelDetailsPageProps {
   channel?: Channel_channel;

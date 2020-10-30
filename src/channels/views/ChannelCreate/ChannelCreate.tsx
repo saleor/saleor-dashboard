@@ -45,7 +45,16 @@ export const ChannelCreateView = ({}) => {
     });
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
-    label: `${currencyData.code} - ${currencyData.countries.join(",")}`,
+    label: intl.formatMessage(
+      {
+        defaultMessage: "{code} - {countries}",
+        description: "currency code select"
+      },
+      {
+        code: currencyData.code,
+        countries: currencyData.countries.join(",")
+      }
+    ),
     value: currencyData.code
   }));
 
