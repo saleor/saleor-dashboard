@@ -1,7 +1,6 @@
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { useOrderListQuery } from "@saleor/orders/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -30,9 +29,10 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const intl = useIntl();
 
   const { data, refetch } = useChannelsList({ displayLoader: true });
-  const { data: ordersData } = useOrderListQuery({
-    variables: { first: 1 }
-  });
+
+  const selectedChannel = data?.channels.find(
+    channel => channel.id === params?.id
+  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsListUrlDialog,
@@ -64,21 +64,18 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     onCompleted
   });
 
-  const selectedChannel = data?.channels.find(
-    channel => channel.id === params?.id
-  );
-  const channelsChoices =
-    params.id &&
-    data?.channels
-      ?.filter(
-        channel =>
-          channel.id !== params.id &&
-          channel.currencyCode === selectedChannel.currencyCode
-      )
-      .map(channel => ({
-        label: channel.name,
-        value: channel.id
-      }));
+  const channelsChoices = params.id
+    ? data?.channels
+        ?.filter(
+          channel =>
+            channel.id !== params.id &&
+            channel.currencyCode === selectedChannel.currencyCode
+        )
+        .map(channel => ({
+          label: channel.name,
+          value: channel.id
+        }))
+    : [];
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
@@ -100,14 +97,17 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
           })
         }
       />
-      <ChannelDeleteDialog
-        channelsChoices={channelsChoices}
-        hasChannelOrders={!!ordersData?.orders?.edges?.length}
-        open={params.action === "remove"}
-        confirmButtonState={deleteChannelOpts.status}
-        onClose={closeModal}
-        onConfirm={handleRemoveConfirm}
-      />
+
+      {!!selectedChannel && (
+        <ChannelDeleteDialog
+          channelsChoices={channelsChoices}
+          open={params.action === "remove"}
+          confirmButtonState={deleteChannelOpts.status}
+          onBack={() => navigate(channelsListUrl())}
+          onClose={closeModal}
+          onConfirm={handleRemoveConfirm}
+        />
+      )}
     </>
   );
 };
