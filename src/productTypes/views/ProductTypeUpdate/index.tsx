@@ -10,7 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
@@ -401,7 +401,9 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     onClose={closeModal}
                     onConfirm={handleBulkAttributeUnassign}
                     open={params.action === "unassign-attributes"}
-                    itemTypeName={data?.productType.name || "..."}
+                    itemTypeName={getStringOrPlaceholder(
+                      data?.productType.name
+                    )}
                   />
                   <AttributeUnassignDialog
                     title={intl.formatMessage({
@@ -420,7 +422,9 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     onClose={closeModal}
                     onConfirm={handleAttributeUnassign}
                     open={params.action === "unassign-attribute"}
-                    itemTypeName={data?.productType.name || "..."}
+                    itemTypeName={getStringOrPlaceholder(
+                      data?.productType.name
+                    )}
                   />
                 </>
               );
