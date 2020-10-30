@@ -46,5 +46,8 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
     </Card>
   );
 };
+PageTypeDetails.defaultProps = {
+  errors: []
+};
 PageTypeDetails.displayName = "PageTypeDetails";
 export default PageTypeDetails;
