@@ -16,6 +16,18 @@ export interface PageCreate_pageCreate_errors {
   attributes: string[] | null;
 }
 
+export interface PageCreate_pageCreate_page_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface PageCreate_pageCreate_page_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface PageCreate_pageCreate_page_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -30,18 +42,6 @@ export interface PageCreate_pageCreate_page_pageType_attributes {
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
   values: (PageCreate_pageCreate_page_pageType_attributes_values | null)[] | null;
-}
-
-export interface PageCreate_pageCreate_page_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface PageCreate_pageCreate_page_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
 }
 
 export interface PageCreate_pageCreate_page_pageType {

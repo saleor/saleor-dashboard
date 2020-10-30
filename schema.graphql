@@ -405,21 +405,22 @@ type Attribute implements Node & ObjectWithMetadata {
   storefrontSearchPosition: Int!
 }
 
-type AttributeAssign {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productType: ProductType
-  productErrors: [ProductError!]!
-}
-
-input AttributeAssignInput {
-  id: ID!
-  type: ProductAttributeType!
-}
-
 type AttributeBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
+}
+
+type AttributeClearMeta {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  attributeErrors: [AttributeError!]!
+  attribute: Attribute
+}
+
+type AttributeClearPrivateMeta {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  attributeErrors: [AttributeError!]!
+  attribute: Attribute
 }
 
 type AttributeCountableConnection {
@@ -436,7 +437,7 @@ type AttributeCountableEdge {
 type AttributeCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
 }
 
 input AttributeCreateInput {
@@ -456,8 +457,23 @@ input AttributeCreateInput {
 
 type AttributeDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
   attribute: Attribute
+}
+
+type AttributeError {
+  field: String
+  message: String
+  code: AttributeErrorCode!
+}
+
+enum AttributeErrorCode {
+  ALREADY_EXISTS
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
 }
 
 input AttributeFilterInput {
@@ -489,7 +505,7 @@ enum AttributeInputTypeEnum {
 type AttributeReorderValues {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
 }
 
 enum AttributeSortField {
@@ -533,16 +549,10 @@ enum AttributeTypeEnum {
   PAGE_TYPE
 }
 
-type AttributeUnassign {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productType: ProductType
-  productErrors: [ProductError!]!
-}
-
 type AttributeUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
 }
 
 input AttributeUpdateInput {
@@ -557,6 +567,18 @@ input AttributeUpdateInput {
   filterableInDashboard: Boolean
   storefrontSearchPosition: Int
   availableInGrid: Boolean
+}
+
+type AttributeUpdateMeta {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  attributeErrors: [AttributeError!]!
+  attribute: Attribute
+}
+
+type AttributeUpdatePrivateMeta {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  attributeErrors: [AttributeError!]!
+  attribute: Attribute
 }
 
 type AttributeValue implements Node {
@@ -577,7 +599,7 @@ type AttributeValueBulkDelete {
 type AttributeValueCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
 }
 
@@ -588,7 +610,7 @@ input AttributeValueCreateInput {
 type AttributeValueDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
 }
 
@@ -626,7 +648,7 @@ enum AttributeValueType {
 type AttributeValueUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
-  productErrors: [ProductError!]!
+  attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
 }
 
@@ -2641,8 +2663,11 @@ type Mutation {
   pageTranslate(id: ID!, input: PageTranslationInput!, languageCode: LanguageCodeEnum!): PageTranslate
   pageTypeCreate(input: PageTypeCreateInput!): PageTypeCreate
   pageTypeUpdate(id: ID, input: PageTypeUpdateInput!): PageTypeUpdate
+  pageTypeDelete(id: ID!): PageTypeDelete
+  pageTypeBulkDelete(ids: [ID!]!): PageTypeBulkDelete
   pageAttributeAssign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeAssign
   pageAttributeUnassign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeUnassign
+  pageTypeReorderAttributes(moves: [ReorderInput!]!, pageTypeId: ID!): PageTypeReorderAttributes
   draftOrderComplete(id: ID!): DraftOrderComplete
   draftOrderCreate(input: DraftOrderCreateInput!): DraftOrderCreate
   draftOrderDelete(id: ID!): DraftOrderDelete
@@ -3165,6 +3190,7 @@ type Page implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   translation(languageCode: LanguageCodeEnum!): PageTranslation
+  attributes: [SelectedAttribute!]!
 }
 
 type PageAttributeAssign {
@@ -3213,6 +3239,7 @@ input PageCreateInput {
   title: String
   content: String
   contentJson: JSONString
+  attributes: [AttributeValueInput!]
   isPublished: Boolean
   publicationDate: String
   seo: SeoInput
@@ -3258,6 +3285,7 @@ input PageInput {
   title: String
   content: String
   contentJson: JSONString
+  attributes: [AttributeValueInput!]
   isPublished: Boolean
   publicationDate: String
   seo: SeoInput
@@ -3323,6 +3351,12 @@ type PageType implements Node & ObjectWithMetadata {
   availableAttributes(filter: AttributeFilterInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
 }
 
+type PageTypeBulkDelete {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  count: Int!
+  pageErrors: [PageError!]!
+}
+
 type PageTypeCountableConnection {
   pageInfo: PageInfo!
   edges: [PageTypeCountableEdge!]!
@@ -3346,8 +3380,20 @@ input PageTypeCreateInput {
   addAttributes: [ID!]
 }
 
+type PageTypeDelete {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  pageErrors: [PageError!]!
+  pageType: PageType
+}
+
 input PageTypeFilterInput {
   search: String
+}
+
+type PageTypeReorderAttributes {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  pageType: PageType
+  pageErrors: [PageError!]!
 }
 
 enum PageTypeSortField {

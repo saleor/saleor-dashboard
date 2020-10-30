@@ -1,5 +1,12 @@
 import gql from "graphql-tag";
 
+export const attributeErrorFragment = gql`
+  fragment AttributeErrorFragment on AttributeError {
+    code
+    field
+  }
+`;
+
 export const productErrorFragment = gql`
   fragment ProductErrorFragment on ProductError {
     code

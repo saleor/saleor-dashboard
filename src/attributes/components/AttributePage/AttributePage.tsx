@@ -12,7 +12,7 @@ import {
   AttributeDetailsFragment,
   AttributeDetailsFragment_values
 } from "@saleor/fragments/types/AttributeDetailsFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
@@ -34,7 +34,7 @@ import AttributeValues from "../AttributeValues";
 export interface AttributePageProps {
   attribute: AttributeDetailsFragment | null;
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values: AttributeDetailsFragment_values[];
   onBack: () => void;

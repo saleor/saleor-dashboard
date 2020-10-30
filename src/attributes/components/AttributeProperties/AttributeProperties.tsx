@@ -8,10 +8,11 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,7 +21,7 @@ import { AttributePageFormData } from "../AttributePage";
 export interface AttributePropertiesProps {
   data: AttributePageFormData;
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: AttributeErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -97,7 +98,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
               disabled={disabled}
               error={!!formErrors.storefrontSearchPosition}
               fullWidth
-              helperText={getProductErrorMessage(
+              helperText={getAttributeErrorMessage(
                 formErrors.storefrontSearchPosition,
                 intl
               )}
