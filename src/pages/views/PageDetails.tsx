@@ -28,10 +28,10 @@ export interface PageDetailsProps {
 }
 
 const createPageInput = (data: PageCreatePageSubmitData): PageInput => ({
-  // attributes: data.attributes.map(attribute => ({
-  //   id: attribute.id,
-  //   values: attribute.value
-  // })),
+  attributes: data.attributes.map(attribute => ({
+    id: attribute.id,
+    values: attribute.value
+  })),
   contentJson: JSON.stringify(data.content),
   isPublished: data.isPublished,
   publicationDate: data.publicationDate,

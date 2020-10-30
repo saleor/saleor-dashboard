@@ -15,6 +15,36 @@ export interface PageCreate_pageCreate_errors {
   attributes: string[] | null;
 }
 
+export interface PageCreate_pageCreate_page_attributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageCreate_pageCreate_page_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  slug: string | null;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (PageCreate_pageCreate_page_attributes_attribute_values | null)[] | null;
+}
+
+export interface PageCreate_pageCreate_page_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageCreate_pageCreate_page_attributes {
+  __typename: "SelectedAttribute";
+  attribute: PageCreate_pageCreate_page_attributes_attribute;
+  values: (PageCreate_pageCreate_page_attributes_values | null)[];
+}
+
 export interface PageCreate_pageCreate_page_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -56,6 +86,7 @@ export interface PageCreate_pageCreate_page {
   title: string;
   slug: string;
   isPublished: boolean;
+  attributes: PageCreate_pageCreate_page_attributes[];
   metadata: (PageCreate_pageCreate_page_metadata | null)[];
   privateMetadata: (PageCreate_pageCreate_page_privateMetadata | null)[];
   contentJson: any;

@@ -15,7 +15,7 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { getAttributeInputFromPageType } from "@saleor/pages/utils/data";
+import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
@@ -94,17 +94,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   const pageExists = page !== null;
 
-  const initialPageType =
-    page?.pageType ||
-    pageTypes?.find(pageType => page?.pageType.id === pageType.id);
+  const attributesFromPage = React.useMemo(
+    () => getAttributeInputFromPage(page),
+    [page]
+  );
 
   const {
     change: changeAttributeData,
     data: attributes,
     set: setAttributeData
-  } = useFormset<PageAttributeInputData>(
-    page?.pageType ? getAttributeInputFromPageType(initialPageType) : []
-  );
+  } = useFormset<PageAttributeInputData>(attributesFromPage || []);
 
   const initialForm: FormData = {
     content: maybe(
