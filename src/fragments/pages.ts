@@ -24,6 +24,17 @@ export const pageDetailsFragment = gql`
     pageType {
       id
       name
+      attributes {
+        id
+        name
+        inputType
+        valueRequired
+        values {
+          id
+          name
+          slug
+        }
+      }
     }
   }
 `;

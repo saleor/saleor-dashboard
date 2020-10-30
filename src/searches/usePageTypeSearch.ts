@@ -19,6 +19,18 @@ export const searchPageTypes = gql`
         node {
           id
           name
+          attributes {
+            id
+            inputType
+            slug
+            name
+            valueRequired
+            values {
+              id
+              name
+              slug
+            }
+          }
         }
       }
       pageInfo {

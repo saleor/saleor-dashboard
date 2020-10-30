@@ -50,6 +50,14 @@ export const pageErrorFragment = gql`
   }
 `;
 
+export const pageErrorWithAttributesFragment = gql`
+  ${pageErrorFragment}
+  fragment PageErrorWithAttributesFragment on PageError {
+    ...PageErrorFragment
+    attributes
+  }
+`;
+
 export const permissionGroupErrorFragment = gql`
   fragment PermissionGroupErrorFragment on PermissionGroupError {
     code

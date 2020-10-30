@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: PageDetails
 // ====================================================
@@ -18,10 +20,27 @@ export interface PageDetails_page_privateMetadata {
   value: string;
 }
 
+export interface PageDetails_page_pageType_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageDetails_page_pageType_attributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (PageDetails_page_pageType_attributes_values | null)[] | null;
+}
+
 export interface PageDetails_page_pageType {
   __typename: "PageType";
   id: string;
   name: string;
+  attributes: (PageDetails_page_pageType_attributes | null)[] | null;
 }
 
 export interface PageDetails_page {

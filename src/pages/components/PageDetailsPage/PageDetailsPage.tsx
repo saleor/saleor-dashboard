@@ -9,12 +9,19 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
+import { getAttributeInputFromPageType } from "@saleor/pages/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler,
+  createPageTypeSelectHandler
+} from "@saleor/pages/utils/handlers";
+import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import { FetchMoreProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -29,6 +36,10 @@ import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
+import PageAttributes, {
+  PageAttributeInput,
+  PageAttributeInputData
+} from "../PageAttributes";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 
@@ -43,16 +54,20 @@ export interface FormData extends MetadataFormData {
   pageType: string;
 }
 
+export interface PageCreatePageSubmitData extends FormData {
+  attributes: PageAttributeInput[];
+}
+
 export interface PageDetailsPageProps {
   disabled: boolean;
-  errors: PageErrorFragment[];
+  errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
-  pageTypes?: PageTypeFragment[];
+  pageTypes?: SearchPageTypes_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: PageCreatePageSubmitData) => void;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
 }
@@ -78,6 +93,18 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   const pageExists = page !== null;
+
+  const initialPageType =
+    page?.pageType ||
+    pageTypes?.find(pageType => page?.pageType.id === pageType.id);
+
+  const {
+    change: changeAttributeData,
+    data: attributes,
+    set: setAttributeData
+  } = useFormset<PageAttributeInputData>(
+    page?.pageType ? getAttributeInputFromPageType(initialPageType) : []
+  );
 
   const initialForm: FormData = {
     content: maybe(
@@ -105,6 +132,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
     onSubmit({
       ...data,
+      attributes,
       isPublished: data.isPublished || !!data.publicationDate,
       metadata,
       privateMetadata
@@ -117,14 +145,23 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
-
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const handlePageTypeSelect = createPageTypeSelectHandler(
           change,
+          setAttributeData,
           setPageType,
           pageTypes
         );
+        const handleAttributeChange = createAttributeChangeHandler(
+          changeAttributeData,
+          triggerChange
+        );
+        const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+          changeAttributeData,
+          attributes,
+          triggerChange
+        );
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -173,6 +210,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                       "Add search engine title and description to make this page easier to find"
                   })}
                 />
+                <CardSpacer />
+                {attributes.length > 0 && (
+                  <PageAttributes
+                    attributes={attributes}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={handleAttributeChange}
+                    onMultiChange={handleAttributeMultiChange}
+                  />
+                )}
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
