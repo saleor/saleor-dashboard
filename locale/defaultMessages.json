@@ -2901,39 +2901,6 @@
     "context": "button",
     "string": "Add products"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
-    "string": "No billing address"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1161061962": {
-    "context": "dialog header",
-    "string": "Finalize Draft Order"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1297434244": {
-    "string": "No user information"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1472924390": {
-    "string": "There are missing or incorrect informations about this order:"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2430492151": {
-    "string": "No shipping address"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2725265632": {
-    "context": "button",
-    "string": "Finalize"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2824936338": {
-    "string": "Shipping method provided, but no product requires it"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2968256006": {
-    "string": "Some products require shipping, but no method provided"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_3358029330": {
-    "string": "Are you sure you want to finalize draft #{orderNumber}?"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
-    "context": "button",
-    "string": "Finalize anyway"
-  },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
     "string": "Create order"

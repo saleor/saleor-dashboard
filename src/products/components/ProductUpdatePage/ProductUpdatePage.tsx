@@ -199,7 +199,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const getStocksData = () => {
     if (product.productType.hasVariants) {
-      return { removeStocks: [], updateStocks: [] };
+      return { addStocks: [], removeStocks: [], updateStocks: [] };
     }
 
     const dataStocks = stocks.map(stock => stock.id);
@@ -209,6 +209,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     const stockDiff = diff(variantStocks, dataStocks);
 
     return {
+      addStocks: stocks.filter(stock =>
+        stockDiff.added.some(addedStock => addedStock === stock.id)
+      ),
       removeStocks: stockDiff.removed,
       updateStocks: stocks.filter(
         stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
@@ -228,7 +231,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     ...getAvailabilityData(data),
     ...getStocksData(),
     ...getMetadata(data),
-    addStocks: [],
     attributes
   });
 

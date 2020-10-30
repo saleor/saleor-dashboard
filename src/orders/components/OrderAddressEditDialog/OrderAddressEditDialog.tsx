@@ -49,9 +49,9 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
     address,
     confirmButtonState,
     open,
-    errors,
+    errors = [],
     variant,
-    countries,
+    countries = [],
     onClose,
     onConfirm
   } = props;
