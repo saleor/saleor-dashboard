@@ -3,8 +3,8 @@ import AttributePage, {
 } from "@saleor/attributes/components/AttributePage";
 import { attribute } from "@saleor/attributes/fixtures";
 import {
-  AttributeInputTypeEnum,
-  ProductErrorCode
+  AttributeErrorCode,
+  AttributeInputTypeEnum
 } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -42,8 +42,8 @@ storiesOf("Views / Attributes / Attribute details", module)
     <AttributePage
       {...props}
       errors={["name", "slug", "storefrontSearchPosition"].map(field => ({
-        __typename: "ProductError",
-        code: ProductErrorCode.INVALID,
+        __typename: "AttributeError",
+        code: AttributeErrorCode.INVALID,
         field
       }))}
     />
