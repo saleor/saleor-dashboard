@@ -23,19 +23,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
-import {
-  getMutationState,
-  getStringOrPlaceholder,
-  maybe,
-  transformAddressToForm
-} from "../../../misc";
+import { getMutationState, getStringOrPlaceholder, maybe } from "../../../misc";
 import { productUrl } from "../../../products/urls";
 import {
   FulfillmentStatus,
   JobStatusEnum,
   OrderStatus
 } from "../../../types/globalTypes";
-import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
 import OrderDraftCancelDialog from "../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
@@ -57,6 +51,7 @@ import {
   OrderUrlDialog,
   OrderUrlQueryParams
 } from "../../urls";
+import OrderAddressFields from "./OrderAddressFields";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 
 interface OrderDetailsProps {
@@ -579,49 +574,14 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         />
                       </>
                     )}
-                    <OrderAddressEditDialog
-                      confirmButtonState={orderUpdate.opts.status}
-                      address={transformAddressToForm(order?.shippingAddress)}
-                      countries={
-                        data?.shop?.countries.map(country => ({
-                          code: country.code,
-                          label: country.country
-                        })) || []
-                      }
-                      errors={orderUpdate.opts.data?.orderUpdate.errors || []}
-                      open={params.action === "edit-shipping-address"}
-                      variant="shipping"
+                    <OrderAddressFields
+                      isDraft={order?.status === OrderStatus.DRAFT}
+                      orderUpdate={orderUpdate}
+                      orderDraftUpdate={orderDraftUpdate}
+                      data={data}
+                      id={id}
                       onClose={closeModal}
-                      onConfirm={shippingAddress =>
-                        orderUpdate.mutate({
-                          id,
-                          input: {
-                            shippingAddress
-                          }
-                        })
-                      }
-                    />
-                    <OrderAddressEditDialog
-                      confirmButtonState={orderUpdate.opts.status}
-                      address={transformAddressToForm(order?.billingAddress)}
-                      countries={
-                        data?.shop?.countries.map(country => ({
-                          code: country.code,
-                          label: country.country
-                        })) || []
-                      }
-                      errors={orderUpdate.opts.data?.orderUpdate.errors || []}
-                      open={params.action === "edit-billing-address"}
-                      variant="billing"
-                      onClose={closeModal}
-                      onConfirm={billingAddress =>
-                        orderUpdate.mutate({
-                          id,
-                          input: {
-                            billingAddress
-                          }
-                        })
-                      }
+                      action={params.action}
                     />
                   </>
                 )}
