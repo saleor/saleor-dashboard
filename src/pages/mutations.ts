@@ -1,4 +1,7 @@
-import { pageErrorFragment } from "@saleor/fragments/errors";
+import {
+  pageErrorFragment,
+  pageErrorWithAttributesFragment
+} from "@saleor/fragments/errors";
 import { pageDetailsFragment } from "@saleor/fragments/pages";
 import gql from "graphql-tag";
 
@@ -17,11 +20,11 @@ import { PageUpdate, PageUpdateVariables } from "./types/PageUpdate";
 
 const pageCreate = gql`
   ${pageDetailsFragment}
-  ${pageErrorFragment}
+  ${pageErrorWithAttributesFragment}
   mutation PageCreate($input: PageCreateInput!) {
     pageCreate(input: $input) {
       errors: pageErrors {
-        ...PageErrorFragment
+        ...PageErrorWithAttributesFragment
         message
       }
       page {
@@ -36,11 +39,11 @@ export const TypedPageCreate = TypedMutation<PageCreate, PageCreateVariables>(
 
 const pageUpdate = gql`
   ${pageDetailsFragment}
-  ${pageErrorFragment}
+  ${pageErrorWithAttributesFragment}
   mutation PageUpdate($id: ID!, $input: PageInput!) {
     pageUpdate(id: $id, input: $input) {
       errors: pageErrors {
-        ...PageErrorFragment
+        ...PageErrorWithAttributesFragment
       }
       page {
         ...PageDetailsFragment

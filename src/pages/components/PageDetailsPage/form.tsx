@@ -3,9 +3,15 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { PageDetails_page } from "@saleor/pages/types/PageDetails";
+import { getAttributeInputFromPageType } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
+import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler
+} from "@saleor/products/utils/handlers";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -13,6 +19,8 @@ import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
+
+import { PageAttributeInput, PageAttributeInputData } from "../PageAttributes";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -24,6 +32,7 @@ export interface PageFormData extends MetadataFormData {
   pageType: string;
 }
 export interface PageData extends PageFormData {
+  attributes: PageAttributeInput[];
   content: OutputData;
 }
 
@@ -31,6 +40,8 @@ interface PageUpdateHandlers {
   changeMetadata: FormChange;
   changeContent: RichTextEditorChange;
   selectPageType: FormChange;
+  changeAttribute: FormsetChange<string>;
+  changeAttributeMulti: FormsetChange<string>;
 }
 export interface UsePageUpdateFormResult {
   change: FormChange;
@@ -57,6 +68,18 @@ function usePageForm(
   const triggerChange = () => setChanged(true);
 
   const pageExists = page !== null;
+
+  const initialPageType =
+    page?.pageType ||
+    pageTypes?.find(pageType => page?.pageType.id === pageType.id);
+
+  const {
+    change: changeAttributeData,
+    data: attributes,
+    set: setAttributeData
+  } = useFormset<PageAttributeInputData>(
+    page?.pageType ? getAttributeInputFromPageType(initialPageType) : []
+  );
 
   const form = useForm<PageFormData>({
     isPublished: page?.isPublished,
@@ -93,13 +116,24 @@ function usePageForm(
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const selectPageType = createPageTypeSelectHandler(
     handleChange,
+    setAttributeData,
     setPageType,
     pageTypes
+  );
+  const changeAttribute = createAttributeChangeHandler(
+    changeAttributeData,
+    triggerChange
+  );
+  const changeAttributeMulti = createAttributeMultiChangeHandler(
+    changeAttributeData,
+    attributes,
+    triggerChange
   );
 
   // Need to make it function to always have content.current up to date
   const getData = (): PageData => ({
     ...form.data,
+    attributes,
     content: content.current
   });
 
@@ -118,6 +152,8 @@ function usePageForm(
     change: handleChange,
     data: getData(),
     handlers: {
+      changeAttribute,
+      changeAttributeMulti,
       changeContent,
       changeMetadata,
       selectPageType

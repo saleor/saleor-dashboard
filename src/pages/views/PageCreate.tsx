@@ -55,6 +55,10 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
           const result = await pageCreate({
             variables: {
               input: {
+                // attributes: formData.attributes.map(attribute => ({
+                //   id: attribute.id,
+                //   values: attribute.value
+                // })),
                 contentJson: JSON.stringify(formData.content),
                 isPublished: formData.isPublished,
                 pageType: formData.pageType,

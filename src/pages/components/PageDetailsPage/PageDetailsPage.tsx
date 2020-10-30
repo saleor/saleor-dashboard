@@ -8,25 +8,26 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
+import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
+import PageAttributes from "../PageAttributes";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData } from "./form";
 
 export interface PageDetailsPageProps {
   disabled: boolean;
-  errors: PageErrorFragment[];
+  errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
-  pageTypes?: PageTypeFragment[];
+  pageTypes?: SearchPageTypes_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -96,6 +97,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     "Add search engine title and description to make this page easier to find"
                 })}
               />
+              <CardSpacer />
+              {data.attributes.length > 0 && (
+                <PageAttributes
+                  attributes={data.attributes}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={handlers.changeAttribute}
+                  onMultiChange={handlers.changeAttributeMulti}
+                />
+              )}
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>

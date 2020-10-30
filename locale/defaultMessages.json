@@ -219,6 +219,9 @@
     "context": "header",
     "string": "Create Page Type"
   },
+  "pageTypeInputLabel": {
+    "string": "Select content type"
+  },
   "productExportFieldAvailability": {
     "context": "product field",
     "string": "Available for purchase"
@@ -3852,6 +3855,22 @@
     "context": "pages section name",
     "string": "Pages"
   },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1071548120": {
+    "context": "number of page attributes",
+    "string": "{number} Attributes"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1148029984": {
+    "context": "attribute value",
+    "string": "Value"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1207761269": {
+    "context": "attribute values",
+    "string": "Values"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_4153345096": {
+    "context": "page attributes, section header",
+    "string": "Attributes"
+  },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
     "string": "Create Page"
@@ -3905,6 +3924,13 @@
   "src_dot_pages_dot_components_dot_PageList_dot_3767550649": {
     "context": "page status",
     "string": "Not Published"
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_4253279144": {
+    "string": "Page type"
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_590187004": {
+    "context": "section header",
+    "string": "Organize Content"
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
