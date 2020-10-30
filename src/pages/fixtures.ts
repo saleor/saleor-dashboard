@@ -37,6 +37,14 @@ export const page: PageDetails_page = {
   contentJson: JSON.stringify(content),
   id: "Kzx152sEm==",
   isPublished: false,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
+  privateMetadata: [],
   publicationDate: "",
   seoDescription: "About",
   seoTitle: "About",

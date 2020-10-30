@@ -67,5 +67,5 @@ export const getProductAvailabilityVariables = ({
 }: ProductAvailabilityArgs) => ({
   isAvailable: isAvailableForPurchase,
   productId,
-  startDate: availableForPurchase
+  startDate: availableForPurchase || null
 });

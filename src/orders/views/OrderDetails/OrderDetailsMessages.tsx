@@ -173,6 +173,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         })
       });
     }
+    closeModal();
   };
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
     const errs = data.orderUpdateShipping?.errors;
@@ -255,7 +256,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
           defaultMessage: "Draft order successfully finalized"
         })
       });
-      closeModal();
     }
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequest) => {

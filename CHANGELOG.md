@@ -54,6 +54,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix order draft back button redirect - #753 by @orzechdev
 - Add manage product types and attributes permission - #768 by @orzechdev
 - Fix isPublished and isAvailable behaviour for products, collections and pages - #780 by @mmarkusik
+- Add metadata editor to page views - #782 by @dominik-zeglen
 - Fix for fulfilling order when allocated quantity equals total quantity - #788 by @GrzegorzDerdak
 
 ## 2.10.1
