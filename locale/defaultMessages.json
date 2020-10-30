@@ -1400,23 +1400,15 @@
     "context": "section header",
     "string": "App Status"
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
-    "string": "Search Categories"
-  },
-  "src_dot_components_dot_AssignCategoryDialog_dot_190977792": {
+  "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
-    "string": "Assign Categories"
+    "string": "Assign Category"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_3690273268": {
     "string": "Search by category name, etc..."
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_3973677075": {
-    "context": "button",
-    "string": "Assign categories"
-  },
-  "src_dot_components_dot_AssignCollectionDialog_dot_1035511604": {
-    "context": "button",
-    "string": "Assign collections"
+  "src_dot_components_dot_AssignCategoryDialog_dot_3841025483": {
+    "string": "Search Category"
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_2605414502": {
     "string": "Search by collection name, etc..."
@@ -1427,6 +1419,10 @@
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_4057224233": {
     "string": "Search Collection"
+  },
+  "src_dot_components_dot_AssignContainerDialog_dot_1731102929": {
+    "context": "button",
+    "string": "Assign"
   },
   "src_dot_components_dot_AssignProductDialog_dot_2100305525": {
     "context": "button",

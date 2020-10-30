@@ -382,9 +382,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                     ...paginationState,
                                     id,
                                     input: {
-                                      categories: categories.map(
-                                        product => product.id
-                                      )
+                                      categories
                                     }
                                   }
                                 })
@@ -414,9 +412,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                     ...paginationState,
                                     id,
                                     input: {
-                                      collections: collections.map(
-                                        product => product.id
-                                      )
+                                      collections
                                     }
                                   }
                                 })
