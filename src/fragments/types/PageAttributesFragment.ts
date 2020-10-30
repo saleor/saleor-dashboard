@@ -38,7 +38,31 @@ export interface PageAttributesFragment_attributes {
   values: (PageAttributesFragment_attributes_values | null)[];
 }
 
+export interface PageAttributesFragment_pageType_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface PageAttributesFragment_pageType_attributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (PageAttributesFragment_pageType_attributes_values | null)[] | null;
+}
+
+export interface PageAttributesFragment_pageType {
+  __typename: "PageType";
+  id: string;
+  name: string;
+  attributes: (PageAttributesFragment_pageType_attributes | null)[] | null;
+}
+
 export interface PageAttributesFragment {
   __typename: "Page";
   attributes: PageAttributesFragment_attributes[];
+  pageType: PageAttributesFragment_pageType;
 }

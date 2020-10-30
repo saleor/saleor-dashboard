@@ -38,18 +38,6 @@ export interface PageDetailsFragment_attributes {
   values: (PageDetailsFragment_attributes_values | null)[];
 }
 
-export interface PageDetailsFragment_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface PageDetailsFragment_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
 export interface PageDetailsFragment_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -73,6 +61,18 @@ export interface PageDetailsFragment_pageType {
   attributes: (PageDetailsFragment_pageType_attributes | null)[] | null;
 }
 
+export interface PageDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface PageDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface PageDetailsFragment {
   __typename: "Page";
   id: string;
@@ -80,11 +80,11 @@ export interface PageDetailsFragment {
   slug: string;
   isPublished: boolean;
   attributes: PageDetailsFragment_attributes[];
+  pageType: PageDetailsFragment_pageType;
   metadata: (PageDetailsFragment_metadata | null)[];
   privateMetadata: (PageDetailsFragment_privateMetadata | null)[];
   contentJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;
-  pageType: PageDetailsFragment_pageType;
 }

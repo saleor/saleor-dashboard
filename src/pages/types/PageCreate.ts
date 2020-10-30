@@ -45,18 +45,6 @@ export interface PageCreate_pageCreate_page_attributes {
   values: (PageCreate_pageCreate_page_attributes_values | null)[];
 }
 
-export interface PageCreate_pageCreate_page_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface PageCreate_pageCreate_page_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
 export interface PageCreate_pageCreate_page_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -80,6 +68,18 @@ export interface PageCreate_pageCreate_page_pageType {
   attributes: (PageCreate_pageCreate_page_pageType_attributes | null)[] | null;
 }
 
+export interface PageCreate_pageCreate_page_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface PageCreate_pageCreate_page_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface PageCreate_pageCreate_page {
   __typename: "Page";
   id: string;
@@ -87,13 +87,13 @@ export interface PageCreate_pageCreate_page {
   slug: string;
   isPublished: boolean;
   attributes: PageCreate_pageCreate_page_attributes[];
+  pageType: PageCreate_pageCreate_page_pageType;
   metadata: (PageCreate_pageCreate_page_metadata | null)[];
   privateMetadata: (PageCreate_pageCreate_page_privateMetadata | null)[];
   contentJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;
-  pageType: PageCreate_pageCreate_page_pageType;
 }
 
 export interface PageCreate_pageCreate {
