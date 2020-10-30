@@ -32,21 +32,6 @@ export const pageAttributesFragment = gql`
         slug
       }
     }
-  }
-`;
-
-export const pageDetailsFragment = gql`
-  ${pageFragment}
-  ${pageAttributesFragment}
-  ${metadataFragment}
-  fragment PageDetailsFragment on Page {
-    ...PageFragment
-    ...PageAttributesFragment
-    ...MetadataFragment
-    contentJson
-    seoTitle
-    seoDescription
-    publicationDate
     pageType {
       id
       name
@@ -62,5 +47,20 @@ export const pageDetailsFragment = gql`
         }
       }
     }
+  }
+`;
+
+export const pageDetailsFragment = gql`
+  ${pageFragment}
+  ${pageAttributesFragment}
+  ${metadataFragment}
+  fragment PageDetailsFragment on Page {
+    ...PageFragment
+    ...PageAttributesFragment
+    ...MetadataFragment
+    contentJson
+    seoTitle
+    seoDescription
+    publicationDate
   }
 `;
