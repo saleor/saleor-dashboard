@@ -8,7 +8,6 @@ import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import { useAppAction } from "../AppLayout/AppActionContext";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -85,10 +84,11 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const scrollPosition = useWindowScroll();
 
   React.useEffect(() => {
-    appAction.setDocked(disabled);
-
-    return () => appAction.setDocked(true);
+    if (!disabled && state !== "loading") {
+      appAction.setDocked(false);
+    }
   }, [disabled]);
+  React.useEffect(() => () => appAction.setDocked(true), []);
 
   const scrolledToBottom =
     scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
@@ -109,9 +109,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
                   className={classes.deleteButton}
                   data-test="button-bar-delete"
                 >
-                  {labels && labels.delete
-                    ? labels.delete
-                    : intl.formatMessage(buttonMessages.delete)}
+                  {labels?.delete || intl.formatMessage(buttonMessages.delete)}
                 </Button>
               )}
               <div className={classes.spacer} />
@@ -121,21 +119,16 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
                 onClick={onCancel}
                 data-test="button-bar-cancel"
               >
-                {maybe(
-                  () => labels.cancel,
-                  intl.formatMessage(buttonMessages.back)
-                )}
+                {labels?.cancel || intl.formatMessage(buttonMessages.back)}
               </Button>
               <ConfirmButton
                 disabled={disabled}
                 onClick={onSave}
                 transitionState={state}
                 data-test="button-bar-confirm"
+                onTransitionToDefault={() => appAction.setDocked(true)}
               >
-                {maybe(
-                  () => labels.save,
-                  intl.formatMessage(buttonMessages.save)
-                )}
+                {labels?.save || intl.formatMessage(buttonMessages.save)}
               </ConfirmButton>
             </CardContent>
           </Card>

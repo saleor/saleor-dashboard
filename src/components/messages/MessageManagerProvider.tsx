@@ -1,3 +1,4 @@
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { TransitionGroup } from "react-transition-group";
@@ -43,32 +44,35 @@ const MessageManagerProvider = ({ children }) => {
     );
   }, []);
 
-  const show = useCallback((message = {}, timeout = 3000) => {
-    const id = Date.now();
-    const notification = {
-      close: () => remove(id),
-      id,
-      message,
-      timeout
-    };
-    if (timeout !== null) {
-      const timeoutId = window.setTimeout(() => {
-        timerCallback(notification);
-      }, timeout);
+  const show = useCallback(
+    (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
+      const id = Date.now();
+      const notification = {
+        close: () => remove(id),
+        id,
+        message,
+        timeout
+      };
+      if (timeout !== null) {
+        const timeoutId = window.setTimeout(() => {
+          timerCallback(notification);
+        }, timeout);
 
-      timersArr.current.push({
-        id: notification.id,
-        notification,
-        remaining: timeout,
-        start: new Date().getTime(),
-        timeoutId
-      });
-    }
+        timersArr.current.push({
+          id: notification.id,
+          notification,
+          remaining: timeout,
+          start: new Date().getTime(),
+          timeoutId
+        });
+      }
 
-    setNotifications(state => [notification, ...state]);
+      setNotifications(state => [notification, ...state]);
 
-    return notification;
-  }, []);
+      return notification;
+    },
+    []
+  );
 
   const getCurrentTimer = (notification: INotification) => {
     const currentTimerIndex = timersArr.current.findIndex(

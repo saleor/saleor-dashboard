@@ -7,6 +7,7 @@ import {
   withStyles
 } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
 import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
@@ -61,6 +62,7 @@ export interface ConfirmButtonProps
   extends Omit<ButtonProps, "classes">,
     WithStyles<typeof styles> {
   transitionState: ConfirmButtonTransitionState;
+  onTransitionToDefault?: () => void;
 }
 
 interface ConfirmButtonState {
@@ -93,20 +95,21 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
     }
 
     componentDidUpdate(prevProps: ConfirmButtonProps) {
-      const { transitionState } = this.props;
+      const { transitionState, onTransitionToDefault } = this.props;
       if (prevProps.transitionState !== transitionState) {
         if (
           (["error", "success"] as ConfirmButtonTransitionState[]).includes(
             transitionState
           )
         ) {
-          this.timeout = setTimeout(
-            () =>
-              this.setState({
-                displayCompletedActionState: false
-              }),
-            2000
-          );
+          this.timeout = setTimeout(() => {
+            this.setState({
+              displayCompletedActionState: false
+            });
+            if (onTransitionToDefault) {
+              onTransitionToDefault();
+            }
+          }, DEFAULT_NOTIFICATION_SHOW_TIME);
         } else if (transitionState === "loading") {
           clearTimeout(this.timeout);
         }
@@ -125,6 +128,7 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
         disabled,
         transitionState,
         onClick,
+        onTransitionToDefault: _,
         ...props
       } = this.props;
       const { displayCompletedActionState } = this.state;
