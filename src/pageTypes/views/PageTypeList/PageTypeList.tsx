@@ -1,7 +1,5 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -15,13 +13,14 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import PageTypeBulkDeleteDialog from "@saleor/pageTypes/components/PageTypeBulkDeleteDialog";
 import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
@@ -156,6 +155,11 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }
     });
 
+  const selectedPageTypesHasPages = data?.pageTypes.edges.some(
+    pageType =>
+      pageType.node.hasPages && params.ids?.some(id => id === pageType.node.id)
+  );
+
   return (
     <>
       <PageTypeListPage
@@ -194,28 +198,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
-      <ActionDialog
+      <PageTypeBulkDeleteDialog
         confirmButtonState={pageTypeBulkDeleteOpts.status}
+        quantity={params.ids?.length}
+        hasPages={selectedPageTypesHasPages}
+        open={params.action === "remove"}
         onClose={closeModal}
         onConfirm={hanldePageTypeBulkDelete}
-        open={params.action === "remove"}
-        title={intl.formatMessage({
-          defaultMessage: "Delete Page Types",
-          description: "dialog header"
-        })}
-        variant="delete"
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this page type? Deleting it will also delete any associated pages.} other{Are you sure you want to delete {displayQuantity} page types? Deleting them will also delete any associated pages.}}"
-            description="dialog content"
-            values={{
-              counter: params.ids?.length,
-              displayQuantity: <strong>{params.ids?.length}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
+      />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

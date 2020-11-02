@@ -8,16 +8,19 @@ export const pageTypes: PageTypeList_pageTypes_edges_node[] = [
   {
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
+    hasPages: true,
     __typename: "PageType"
   },
   {
     id: "UGFnZVR5cGU6Mw==",
     name: "Landing Page",
+    hasPages: true,
     __typename: "PageType"
   },
   {
     id: "UGFnZVR5cGU6Mg==",
     name: "Marketing Page",
+    hasPages: false,
     __typename: "PageType"
   }
 ];
@@ -33,6 +36,7 @@ export const pageType: PageTypeDetails_pageType = {
     }
   ],
   name: "Blog",
+  hasPages: true,
   attributes: [
     {
       __typename: "Attribute" as "Attribute",

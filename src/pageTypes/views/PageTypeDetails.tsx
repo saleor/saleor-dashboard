@@ -235,6 +235,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       <PageTypeDeleteDialog
         confirmButtonState={deletePageTypeOpts.status}
         name={getStringOrPlaceholder(data?.pageType.name)}
+        hasPages={data?.pageType.hasPages}
         open={params.action === "remove"}
         onClose={() => navigate(pageTypeUrl(id))}
         onConfirm={handlePageTypeDelete}

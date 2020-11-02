@@ -34,6 +34,7 @@ export const pageTypeListQuery = gql`
       edges {
         node {
           ...PageTypeFragment
+          hasPages
         }
       }
       pageInfo {
@@ -52,6 +53,7 @@ export const pageTypeDetailsQuery = gql`
   query PageTypeDetails($id: ID!) {
     pageType(id: $id) {
       ...PageTypeDetailsFragment
+      hasPages
     }
   }
 `;
