@@ -1146,6 +1146,10 @@
     "context": "delete channel",
     "string": "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
   },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_863901": {
+    "context": "currency channel",
+    "string": "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it."
+  },
   "src_dot_channels_dot_components_dot_ChannelForm_dot_1223259680": {
     "context": "channel settings",
     "string": "Channel Settings"
@@ -1224,6 +1228,10 @@
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4224047662": {
     "context": "button",
     "string": "Create Channel"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_2071399707": {
+    "context": "currency code select",
+    "string": "{code} - {countries}"
   },
   "src_dot_channels_dot_views_dot_ChannelCreate_dot_4169662653": {
     "context": "channel create",

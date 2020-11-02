@@ -8,9 +8,12 @@ import ChannelDetailsPage, {
 } from "./ChannelDetailsPage";
 
 const props: ChannelDetailsPageProps = {
+  currencyCodes: [
+    { label: "USD", value: "USD" },
+    { label: "PLN", value: "PLN" }
+  ],
   disabled: false,
   disabledStatus: false,
-  editableCurrency: true,
   errors: [],
   onBack: () => undefined,
   onSubmit: () => undefined,
@@ -27,7 +30,11 @@ storiesOf("Views / Channels / Channel details", module)
   ))
   .add("with data", () => <ChannelDetailsPage {...props} channel={channel} />)
   .add("without editable currency code", () => (
-    <ChannelDetailsPage {...props} editableCurrency={false} channel={channel} />
+    <ChannelDetailsPage
+      {...props}
+      currencyCodes={undefined}
+      channel={channel}
+    />
   ))
   .add("with errors", () => (
     <ChannelDetailsPage {...props} errors={channelCreateErrors} />

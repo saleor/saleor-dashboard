@@ -107,7 +107,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading
           }
-          editableCurrency={false}
           errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
           onSubmit={handleSubmit}
           onBack={handleBack}
