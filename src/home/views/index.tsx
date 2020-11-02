@@ -1,6 +1,6 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useUser from "@saleor/hooks/useUser";
 import React, { useCallback } from "react";
 
@@ -20,8 +20,8 @@ const HomeSection = () => {
     label: channel.name,
     value: channel.slug
   }));
-
-  const [channelChoice, setChannelChoice] = useStateFromProps(
+  const [channelChoice, setChannelChoice] = useLocalStorage(
+    "homepageChannelChoice",
     channelChoices?.length ? channelChoices[0]?.value : ""
   );
 
