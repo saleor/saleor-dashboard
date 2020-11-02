@@ -27,7 +27,7 @@ import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 
-export interface FormData extends MetadataFormData {
+export interface PageDetailsPageFormData extends MetadataFormData {
   content: RawDraftContentState;
   isPublished: boolean;
   publicationDate: string;
@@ -45,7 +45,7 @@ export interface PageDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: PageDetailsPageFormData) => Promise<any[]>;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -67,7 +67,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   const pageExists = page !== null;
 
-  const initialForm: FormData = {
+  const initialForm: PageDetailsPageFormData = {
     content: maybe(
       () => JSON.parse(page.contentJson),
       convertToRaw(ContentState.createFromText(""))
@@ -84,13 +84,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     title: page?.title || ""
   };
 
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: PageDetailsPageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       isPublished: data.isPublished || !!data.publicationDate,
       metadata,

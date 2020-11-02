@@ -36,7 +36,7 @@ export interface MenuDetailsPageProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
-  onSubmit: (data: MenuDetailsSubmitData) => Promise<boolean>;
+  onSubmit: (data: MenuDetailsSubmitData) => Promise<any[]>;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
@@ -62,14 +62,16 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   );
 
   const handleSubmit = async (data: MenuDetailsFormData) => {
-    if (
-      await onSubmit({
-        name: data.name,
-        operations: treeOperations
-      })
-    ) {
+    const result = await onSubmit({
+      name: data.name,
+      operations: treeOperations
+    });
+
+    if (result) {
       setTreeOperations([]);
     }
+
+    return result;
   };
 
   const handleChange = (operation: TreeOperation) => {

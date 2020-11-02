@@ -14,10 +14,10 @@ import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
-import { FormData } from "../PageDetailsPage";
+import { PageDetailsPageFormData } from "../PageDetailsPage";
 
 export interface PageInfoProps {
-  data: FormData;
+  data: PageDetailsPageFormData;
   disabled: boolean;
   errors: PageErrorFragment[];
   page: PageDetails_page;
@@ -56,7 +56,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
             defaultMessage: "Title",
             description: "page title"
           })}
-          name={"title" as keyof FormData}
+          name={"title" as keyof PageDetailsPageFormData}
           value={data.title}
           onChange={onChange}
         />
@@ -70,7 +70,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
             defaultMessage: "Content",
             description: "page content"
           })}
-          name={"content" as keyof FormData}
+          name={"content" as keyof PageDetailsPageFormData}
           onChange={onChange}
         />
       </CardContent>

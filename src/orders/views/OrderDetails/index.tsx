@@ -122,6 +122,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
+
+          return result;
         };
 
         return (

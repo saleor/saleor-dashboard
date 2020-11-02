@@ -9,7 +9,9 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import PageDetailsPage, { FormData } from "../components/PageDetailsPage";
+import PageDetailsPage, {
+  PageDetailsPageFormData
+} from "../components/PageDetailsPage";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
@@ -40,7 +42,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
       {(pageCreate, pageCreateOpts) => {
-        const handleCreate = async (formData: FormData) => {
+        const handleCreate = async (formData: PageDetailsPageFormData) => {
           const result = await pageCreate({
             variables: {
               input: {

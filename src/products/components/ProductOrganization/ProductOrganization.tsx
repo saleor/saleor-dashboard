@@ -51,7 +51,7 @@ interface ProductOrganizationProps {
   data: {
     category: string;
     collections: string[];
-    productType?: string;
+    productType?: ProductType;
   };
   disabled: boolean;
   errors: ProductErrorFragment[];
@@ -121,7 +121,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               defaultMessage: "Product Type"
             })}
             choices={productTypes}
-            value={data.productType}
+            value={data.productType?.id}
             onChange={onProductTypeChange}
             fetchChoices={fetchProductTypes}
             data-test="product-type"

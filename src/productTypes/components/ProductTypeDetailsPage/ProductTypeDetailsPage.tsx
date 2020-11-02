@@ -61,7 +61,7 @@ export interface ProductTypeDetailsPageProps {
   onBack: () => void;
   onDelete: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
-  onSubmit: (data: ProductTypeForm) => void;
+  onSubmit: (data: ProductTypeForm) => Promise<any[]>;
 }
 
 function handleTaxTypeChange(
@@ -141,7 +141,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       metadata,
       privateMetadata

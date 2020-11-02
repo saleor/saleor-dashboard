@@ -8,8 +8,7 @@ import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
-import AppActionContext from "../AppLayout/AppActionContext";
+import { useAppAction } from "../AppLayout/AppActionContext";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
@@ -41,8 +40,12 @@ const useStyles = makeStyles(
       backgroundColor: theme.palette.error.main,
       color: theme.palette.error.contrastText
     },
+    paper: {
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
+    },
     root: {
-      height: 120
+      height: 70
     },
     spacer: {
       flex: "1"
@@ -76,67 +79,63 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   } = props;
   const classes = useStyles(props);
 
+  const appAction = useAppAction();
   const intl = useIntl();
   const scrollPosition = useWindowScroll();
+
+  React.useEffect(() => {
+    if (!disabled && state !== "loading") {
+      appAction.setDocked(false);
+    }
+  }, [disabled]);
+  React.useEffect(() => () => appAction.setDocked(true), []);
+
   const scrolledToBottom =
     scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
-  const shouldDisplay = onDelete || !disabled;
 
-  return (
-    <AppActionContext.Consumer>
-      {anchor =>
-        anchor ? (
-          <Portal container={anchor.current}>
-            {shouldDisplay && (
-              <div className={classes.root} {...rest}>
-                <Container>
-                  <Card elevation={scrolledToBottom ? 0 : 16}>
-                    <CardContent className={classes.content}>
-                      {!!onDelete && (
-                        <Button
-                          variant="contained"
-                          onClick={onDelete}
-                          className={classes.deleteButton}
-                          data-test="button-bar-delete"
-                        >
-                          {labels && labels.delete
-                            ? labels.delete
-                            : intl.formatMessage(buttonMessages.delete)}
-                        </Button>
-                      )}
-                      <div className={classes.spacer} />
-                      <Button
-                        className={classes.cancelButton}
-                        variant="text"
-                        onClick={onCancel}
-                        data-test="button-bar-cancel"
-                      >
-                        {maybe(
-                          () => labels.cancel,
-                          intl.formatMessage(buttonMessages.back)
-                        )}
-                      </Button>
-                      <ConfirmButton
-                        disabled={disabled}
-                        onClick={onSave}
-                        transitionState={state}
-                        data-test="button-bar-confirm"
-                      >
-                        {maybe(
-                          () => labels.save,
-                          intl.formatMessage(buttonMessages.save)
-                        )}
-                      </ConfirmButton>
-                    </CardContent>
-                  </Card>
-                </Container>
-              </div>
-            )}
-          </Portal>
-        ) : null
-      }
-    </AppActionContext.Consumer>
-  );
+  return appAction.anchor ? (
+    <Portal container={appAction.anchor.current}>
+      <div className={classes.root} {...rest}>
+        <Container>
+          <Card
+            className={classes.paper}
+            elevation={!(appAction.docked || scrolledToBottom) ? 16 : 0}
+          >
+            <CardContent className={classes.content}>
+              {!!onDelete && (
+                <Button
+                  variant="contained"
+                  onClick={onDelete}
+                  className={classes.deleteButton}
+                  data-test="button-bar-delete"
+                >
+                  {labels?.delete || intl.formatMessage(buttonMessages.delete)}
+                </Button>
+              )}
+              <div className={classes.spacer} />
+              <Button
+                className={classes.cancelButton}
+                variant="text"
+                onClick={onCancel}
+                data-test="button-bar-cancel"
+              >
+                {labels?.cancel || intl.formatMessage(buttonMessages.back)}
+              </Button>
+              <ConfirmButton
+                disabled={disabled}
+                onClick={onSave}
+                transitionState={state}
+                data-test="button-bar-confirm"
+                onTransitionToDefault={() => appAction.setDocked(true)}
+              >
+                {labels?.save || intl.formatMessage(buttonMessages.save)}
+              </ConfirmButton>
+            </CardContent>
+          </Card>
+        </Container>
+      </div>
+    </Portal>
+  ) : null;
 };
 SaveButtonBar.displayName = "SaveButtonBar";
 export default SaveButtonBar;

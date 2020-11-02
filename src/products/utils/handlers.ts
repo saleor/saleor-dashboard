@@ -8,7 +8,7 @@ import { getAttributeInputFromProductType, ProductType } from "./data";
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   triggerChange: () => void
-): FormsetChange {
+): FormsetChange<string> {
   return (attributeId: string, value: string) => {
     triggerChange();
     changeAttributeData(attributeId, value === "" ? [] : [value]);
@@ -19,7 +19,7 @@ export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributes: FormsetData<ProductAttributeInputData, string[]>,
   triggerChange: () => void
-): FormsetChange {
+): FormsetChange<string> {
   return (attributeId: string, value: string) => {
     const attribute = attributes.find(
       attribute => attribute.id === attributeId
@@ -37,19 +37,18 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  change: FormChange,
   setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
-  productTypeChoiceList: ProductType[]
+  productTypeChoiceList: ProductType[],
+  triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
     const selectedProductType = productTypeChoiceList.find(
       productType => productType.id === id
     );
+    triggerChange();
     setProductType(selectedProductType);
-    change(event);
-
     setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }

@@ -9,7 +9,9 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PluginsDetailsPage from "../components/PluginsDetailsPage";
+import PluginsDetailsPage, {
+  PluginDetailsPageFormData
+} from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
@@ -89,6 +91,25 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                 }
               });
 
+            const handleSubmit = async (
+              formData: PluginDetailsPageFormData
+            ) => {
+              const result = await pluginUpdate({
+                variables: {
+                  id,
+                  input: {
+                    active: formData.active,
+                    configuration: getConfigurationInput(
+                      pluginDetails.data.plugin.configuration,
+                      formData.configuration
+                    )
+                  }
+                }
+              });
+
+              return result.data.pluginUpdate.errors;
+            };
+
             return (
               <>
                 <WindowTitle title={pluginDetails.data?.plugin?.name} />
@@ -110,20 +131,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                       id
                     })
                   }
-                  onSubmit={formData =>
-                    pluginUpdate({
-                      variables: {
-                        id,
-                        input: {
-                          active: formData.active,
-                          configuration: getConfigurationInput(
-                            pluginDetails.data.plugin.configuration,
-                            formData.configuration
-                          )
-                        }
-                      }
-                    })
-                  }
+                  onSubmit={handleSubmit}
                 />
                 {pluginDetails.data?.plugin?.configuration && (
                   <>

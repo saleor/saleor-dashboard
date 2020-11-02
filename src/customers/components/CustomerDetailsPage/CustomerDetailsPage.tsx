@@ -33,7 +33,7 @@ export interface CustomerDetailsPageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerDetailsPageFormData) => void;
+  onSubmit: (data: CustomerDetailsPageFormData) => Promise<any[]>;
   onViewAllOrdersClick: () => void;
   onRowClick: (id: string) => void;
   onAddressManageClick: () => void;

@@ -106,7 +106,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                           keyType: data.type
                         }
                       });
-                    const handleUpdateShopSettings = (
+                    const handleUpdateShopSettings = async (
                       data: SiteSettingsPageFormData
                     ) => {
                       const addressInput = areAddressInputFieldsModified(data)
@@ -123,7 +123,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                         : {
                             companyName: data.companyName
                           };
-                      updateShopSettings({
+                      const result = await updateShopSettings({
                         variables: {
                           addressInput,
                           shopDomainInput: {
@@ -139,6 +139,12 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                           }
                         }
                       });
+
+                      return [
+                        ...result.data.shopAddressUpdate.errors,
+                        ...result.data.shopDomainUpdate.errors,
+                        ...result.data.shopSettingsUpdate.errors
+                      ];
                     };
 
                     return (

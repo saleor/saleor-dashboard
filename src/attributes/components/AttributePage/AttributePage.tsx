@@ -126,7 +126,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
         ? data.privateMetadata
         : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       metadata,
       privateMetadata,

@@ -148,13 +148,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = (submitData: FormData) => {
+  const handleSubmit = async (submitData: FormData) => {
     const warehouseDiff = diff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
       submitData.warehouses
     );
 
-    updateShippingZone({
+    const result = await updateShippingZone({
       variables: {
         id,
         input: {
@@ -164,6 +164,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
       }
     });
+
+    return result.data.shippingZoneUpdate.errors;
   };
 
   if (data?.shippingZone === null) {
