@@ -12,6 +12,7 @@ export interface PageTypeList_pageTypes_edges_node {
   __typename: "PageType";
   id: string;
   name: string;
+  hasPages: boolean | null;
 }
 
 export interface PageTypeList_pageTypes_edges {
