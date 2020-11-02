@@ -13,6 +13,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -61,7 +62,7 @@ export interface CategoryUpdatePageProps
   };
   saveButtonBarState: ConfirmButtonTransitionState;
   onImageDelete: () => void;
-  onSubmit: (data: FormData) => Promise<any[]>;
+  onSubmit: (data: FormData) => SubmitPromise;
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();

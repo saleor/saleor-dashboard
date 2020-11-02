@@ -9,7 +9,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -61,7 +61,7 @@ export interface ProductTypeDetailsPageProps {
   onBack: () => void;
   onDelete: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
-  onSubmit: (data: ProductTypeForm) => Promise<any[]>;
+  onSubmit: (data: ProductTypeForm) => SubmitPromise;
 }
 
 function handleTaxTypeChange(

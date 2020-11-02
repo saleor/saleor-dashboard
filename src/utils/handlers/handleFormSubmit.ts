@@ -1,6 +1,8 @@
+import { SubmitPromise } from "@saleor/hooks/useForm";
+
 async function handleFormSubmit<T>(
   data: T,
-  onSubmit: (data: T) => Promise<any[]>,
+  onSubmit: (data: T) => SubmitPromise,
   setChanged: (changed: boolean) => void
 ): Promise<boolean> {
   const errors = await onSubmit(data);

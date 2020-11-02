@@ -1,7 +1,7 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -96,7 +96,7 @@ export interface UseProductUpdateFormOpts
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormResult) => React.ReactNode;
   product: ProductDetails_product;
-  onSubmit: (data: ProductUpdateSubmitData) => Promise<any[]>;
+  onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
 }
 
 const getAvailabilityData = ({
@@ -144,7 +144,7 @@ const getMetadata = (
 
 function useProductUpdateForm(
   product: ProductDetails_product,
-  onSubmit: (data: ProductUpdateSubmitData) => Promise<any[]>,
+  onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
