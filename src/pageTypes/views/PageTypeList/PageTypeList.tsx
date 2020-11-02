@@ -1,5 +1,7 @@
+import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -7,15 +9,19 @@ import SaveFilterTabDialog, {
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
@@ -45,9 +51,11 @@ interface PageTypeListProps {
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
+  const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -59,7 +67,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     }),
     [params]
   );
-  const { data, loading } = usePageTypeListQuery({
+  const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
     variables: queryVariables
   });
@@ -118,6 +126,36 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
+  const [
+    pageTypeBulkDelete,
+    pageTypeBulkDeleteOpts
+  ] = usePageTypeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.pageTypeBulkDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        reset();
+        refetch();
+        navigate(
+          pageTypeListUrl({
+            ...params,
+            action: undefined,
+            ids: undefined
+          })
+        );
+      }
+    }
+  });
+
+  const hanldePageTypeBulkDelete = () =>
+    pageTypeBulkDelete({
+      variables: {
+        ids: params.ids
+      }
+    });
+
   return (
     <>
       <PageTypeListPage
@@ -156,6 +194,28 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
+      <ActionDialog
+        confirmButtonState={pageTypeBulkDeleteOpts.status}
+        onClose={closeModal}
+        onConfirm={hanldePageTypeBulkDelete}
+        open={params.action === "remove"}
+        title={intl.formatMessage({
+          defaultMessage: "Delete Page Types",
+          description: "dialog header"
+        })}
+        variant="delete"
+      >
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this page type? Deleting it will also delete any associated pages.} other{Are you sure you want to delete {displayQuantity} page types? Deleting them will also delete any associated pages.}}"
+            description="dialog content"
+            values={{
+              counter: params.ids?.length,
+              displayQuantity: <strong>{params.ids?.length}</strong>
+            }}
+          />
+        </DialogContentText>
+      </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
