@@ -14,10 +14,12 @@ import { getStringOrPlaceholder } from "@saleor/misc";
 import PageTypeDeleteDialog from "@saleor/pageTypes/components/PageTypeDeleteDialog";
 import {
   useAssignPageAttributeMutation,
+  usePageTypeAttributeReorderMutation,
   usePageTypeDeleteMutation,
   usePageTypeUpdateMutation,
   useUnassignPageAttributeMutation
 } from "@saleor/pageTypes/mutations";
+import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -102,6 +104,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       }
     }
   });
+  const [reorderAttribute] = usePageTypeAttributeReorderMutation({});
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
@@ -140,6 +143,16 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       variables: {
         id,
         ids: params.ids
+      }
+    });
+  const handleAttributeReorder = (event: ReorderEvent) =>
+    reorderAttribute({
+      variables: {
+        move: {
+          id: data.pageType.attributes[event.oldIndex].id,
+          sortOrder: event.newIndex - event.oldIndex
+        },
+        pageTypeId: id
       }
     });
 
@@ -189,7 +202,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           )
         }
         onAttributeClick={attributeId => navigate(attributeUrl(attributeId))}
-        onAttributeReorder={() => undefined}
+        onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
           navigate(
             pageTypeUrl(id, {
