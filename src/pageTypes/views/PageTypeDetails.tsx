@@ -10,8 +10,11 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
+import PageTypeDeleteDialog from "@saleor/pageTypes/components/PageTypeDeleteDialog";
 import {
   useAssignPageAttributeMutation,
+  usePageTypeDeleteMutation,
   usePageTypeUpdateMutation,
   useUnassignPageAttributeMutation
 } from "@saleor/pageTypes/mutations";
@@ -55,6 +58,19 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
+      }
+    }
+  });
+  const [deletePageType, deletePageTypeOpts] = usePageTypeDeleteMutation({
+    onCompleted: deleteData => {
+      if (deleteData.pageTypeDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Page type deleted"
+          })
+        });
+        navigate(pageTypeListUrl(), true);
       }
     }
   });
@@ -104,6 +120,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
 
     return result.data.pageTypeUpdate.errors;
   };
+  const handlePageTypeDelete = () => deletePageType({ variables: { id } });
   const handleAssignAttribute = () =>
     assignAttribute({
       variables: {
@@ -215,6 +232,13 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           )
         }}
       />
+      <PageTypeDeleteDialog
+        confirmButtonState={deletePageTypeOpts.status}
+        name={getStringOrPlaceholder(data?.pageType.name)}
+        open={params.action === "remove"}
+        onClose={() => navigate(pageTypeUrl(id))}
+        onConfirm={handlePageTypeDelete}
+      />
       {!dataLoading && (
         <AssignAttributeDialog
           attributes={result.data?.pageType.availableAttributes.edges.map(
@@ -262,23 +286,23 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
         onClose={closeModal}
         onConfirm={handleBulkAttributeUnassign}
         open={params.action === "unassign-attributes"}
-        itemTypeName={data?.pageType.name || "..."}
+        itemTypeName={getStringOrPlaceholder(data?.pageType.name)}
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
           defaultMessage: "Unassign Attribute From Page Type",
           description: "dialog header"
         })}
-        attributeName={
+        attributeName={getStringOrPlaceholder(
           data?.pageType.attributes.find(
             attribute => attribute.id === params.id
-          )?.name || "..."
-        }
+          )?.name
+        )}
         confirmButtonState={unassignAttributeOpts.status}
         onClose={closeModal}
         onConfirm={handleAttributeUnassign}
         open={params.action === "unassign-attribute"}
-        itemTypeName={data?.pageType.name || "..."}
+        itemTypeName={getStringOrPlaceholder(data?.pageType.name)}
       />
     </>
   );

@@ -8,9 +8,17 @@ import {
   AssignPageAttributeVariables
 } from "./types/AssignPageAttribute";
 import {
+  PageTypeBulkDelete,
+  PageTypeBulkDeleteVariables
+} from "./types/PageTypeBulkDelete";
+import {
   PageTypeCreate,
   PageTypeCreateVariables
 } from "./types/PageTypeCreate";
+import {
+  PageTypeDelete,
+  PageTypeDeleteVariables
+} from "./types/PageTypeDelete";
 import {
   PageTypeUpdate,
   PageTypeUpdateVariables
@@ -95,3 +103,36 @@ export const useUnassignPageAttributeMutation = makeMutation<
   UnassignPageAttribute,
   UnassignPageAttributeVariables
 >(unassignPageAttributeMutation);
+
+export const pageTypeDeleteMutation = gql`
+  mutation PageTypeDelete($id: ID!) {
+    pageTypeDelete(id: $id) {
+      errors: pageErrors {
+        field
+        message
+      }
+      pageType {
+        id
+      }
+    }
+  }
+`;
+export const usePageTypeDeleteMutation = makeMutation<
+  PageTypeDelete,
+  PageTypeDeleteVariables
+>(pageTypeDeleteMutation);
+
+export const pageTypeBulkDeleteMutation = gql`
+  mutation PageTypeBulkDelete($ids: [ID!]!) {
+    pageTypeBulkDelete(ids: $ids) {
+      errors: pageErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+export const usePageTypeBulkDeleteMutation = makeMutation<
+  PageTypeBulkDelete,
+  PageTypeBulkDeleteVariables
+>(pageTypeBulkDeleteMutation);

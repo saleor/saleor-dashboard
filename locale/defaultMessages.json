@@ -3801,6 +3801,14 @@
     "context": "header",
     "string": "Create Page Type"
   },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3120835055": {
+    "context": "dialog header",
+    "string": "Delete Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3883138009": {
+    "context": "delete page type",
+    "string": "Are you sure you want to delete {name}? Deleting it will also delete any associated pages."
+  },
   "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
     "string": "These are general information about this Content Type."
   },
@@ -3840,6 +3848,9 @@
     "context": "dialog header",
     "string": "Unassign Attribute from Page Type"
   },
+  "src_dot_pageTypes_dot_views_dot_3442954831": {
+    "string": "Page type deleted"
+  },
   "src_dot_pageTypes_dot_views_dot_870815507": {
     "context": "unassign attribute from page type, button",
     "string": "Unassign"
@@ -3850,6 +3861,14 @@
   },
   "src_dot_pageTypes_dot_views_dot_98187848": {
     "string": "Successfully created page type"
+  },
+  "src_dot_pageTypes_dot_views_dot_PageTypeList_dot_2454912045": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this page type? Deleting it will also delete any associated pages.} other{Are you sure you want to delete {displayQuantity} page types? Deleting them will also delete any associated pages.}}"
+  },
+  "src_dot_pageTypes_dot_views_dot_PageTypeList_dot_69987032": {
+    "context": "dialog header",
+    "string": "Delete Page Types"
   },
   "src_dot_pages": {
     "context": "pages section name",
