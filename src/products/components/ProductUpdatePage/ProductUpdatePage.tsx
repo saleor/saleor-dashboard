@@ -215,9 +215,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     }
 
     const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0]?.stocks.map(
-      stock => stock.warehouse.id
-    );
+    const variantStocks =
+      product.variants[0]?.stocks.map(stock => stock.warehouse.id) || [];
     const stockDiff = diff(variantStocks, dataStocks);
 
     return {
