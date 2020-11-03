@@ -1,5 +1,7 @@
+import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -21,7 +23,6 @@ import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -35,7 +36,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   changeTaxCode: boolean;
   chargeTaxes: boolean;
   collections: string[];
-  description: RawDraftContentState;
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
@@ -52,27 +52,36 @@ export interface ProductUpdateFormData extends MetadataFormData {
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: ProductAttributeInput[];
+  description: OutputData;
   stocks: ProductStockInput[];
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: ProductAttributeInput[];
   collections: string[];
+  description: OutputData;
   addStocks: ProductStockInput[];
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
 
-type ProductUpdateHandlers = Record<
-  "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxRate",
-  FormChange
-> &
-  Record<
-    "changeStock" | "selectAttribute" | "selectAttributeMultiple",
-    FormsetChange<string>
-  > &
-  Record<"addStock" | "deleteStock", (id: string) => void>;
+interface ProductUpdateHandlers
+  extends Record<
+      | "changeMetadata"
+      | "selectCategory"
+      | "selectCollection"
+      | "selectTaxRate",
+      FormChange
+    >,
+    Record<
+      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+      FormsetChange<string>
+    >,
+    Record<"addStock" | "deleteStock", (id: string) => void> {
+  changeDescription: RichTextEditorChange;
+}
 export interface UseProductUpdateFormResult {
   change: FormChange;
+
   data: ProductUpdateData;
   handlers: ProductUpdateHandlers;
   hasChanged: boolean;
@@ -155,6 +164,15 @@ function useProductUpdateForm(
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
+  const description = React.useRef<OutputData>();
+
+  React.useEffect(() => {
+    try {
+      description.current = JSON.parse(product.descriptionJson);
+    } catch {
+      description.current = undefined;
+    }
+  }, [product]);
 
   const {
     isMetadataModified,
@@ -209,28 +227,36 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const changeDescription: RichTextEditorChange = data => {
+    triggerChange();
+    description.current = data;
+  };
 
   const data: ProductUpdateData = {
     ...form.data,
     attributes: attributes.data,
+    description: description.current,
     stocks: stocks.data
   };
-  const submitData: ProductUpdateSubmitData = {
+  // Need to make it function to always have description.current up to date
+  const getSubmitData = (): ProductUpdateSubmitData => ({
     ...data,
     ...getAvailabilityData(data),
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     addStocks: [],
-    attributes: attributes.data
-  };
+    attributes: attributes.data,
+    description: description.current
+  });
 
-  const submit = () => handleFormSubmit(submitData, onSubmit, setChanged);
+  const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
   return {
     change: handleChange,
     data,
     handlers: {
       addStock: handleStockAdd,
+      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,

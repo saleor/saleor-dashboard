@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -175,7 +176,6 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   changeTaxCode: boolean;
   chargeTaxes: boolean;
   collections: string[];
-  description: RawDraftContentState;
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
@@ -205,7 +205,6 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    description: maybe(() => JSON.parse(product.descriptionJson)),
     isAvailable: !!product?.isAvailable,
     isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),

@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import AppHeader from "@saleor/components/AppHeader";
 import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -19,7 +20,6 @@ import { maybe } from "@saleor/misc";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
-import { convertFromRaw, RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -75,11 +75,12 @@ export interface ProductUpdatePageProps extends ListActions {
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
+  addStocks: ProductStockInput[];
   attributes: ProductAttributeInput[];
   collections: string[];
-  addStocks: ProductStockInput[];
-  updateStocks: ProductStockInput[];
+  description: OutputData;
   removeStocks: string[];
+  updateStocks: ProductStockInput[];
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
@@ -135,10 +136,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     product?.taxType.description
   );
 
-  const initialDescription = maybe<RawDraftContentState>(() =>
-    JSON.parse(product.descriptionJson)
-  );
-
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const currency = product?.variants[0]?.price.currency;
@@ -175,7 +172,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  initialDescription={initialDescription}
+                  onDescriptionChange={handlers.changeDescription}
                   onChange={change}
                 />
                 <CardSpacer />
@@ -262,11 +259,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   title={data.seoTitle}
                   titlePlaceholder={data.name}
                   description={data.seoDescription}
-                  descriptionPlaceholder={maybe(() =>
-                    convertFromRaw(data.description)
-                      .getPlainText()
-                      .slice(0, 300)
-                  )}
+                  descriptionPlaceholder={""} // TODO: cast description to string
                   slug={data.slug}
                   slugPlaceholder={data.name}
                   loading={disabled}

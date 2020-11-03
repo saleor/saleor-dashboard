@@ -5,21 +5,20 @@ import Quote from "@editorjs/quote";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import { FormChange } from "@saleor/hooks/useForm";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import classNames from "classnames";
 import createGenericInlineTool from "editorjs-inline-tool";
 import React from "react";
 
+export type RichTextEditorChange = (data: OutputData) => void;
 export interface RichTextEditorProps {
+  data: OutputData;
   disabled: boolean;
   error: boolean;
   helperText: string;
-  // TODO: Remove any type
-  initial: OutputData | any;
   label: string;
   name: string;
-  onChange: FormChange;
+  onChange: RichTextEditorChange;
 }
 
 const useStyles = makeStyles(
@@ -99,45 +98,56 @@ const useStyles = makeStyles(
   { name: "RichTextEditor" }
 );
 
-class NewEditor extends EditorJS {}
-
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  data,
   error,
   helperText,
-  initial,
-  label
+  label,
+  onChange
 }) => {
   const classes = useStyles({});
 
   const [isFocused, setFocus] = React.useState(false);
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
-  React.useEffect(() => {
-    editor.current = new NewEditor({
-      data: initial,
-      holder: editorContainer.current,
-      tools: {
-        header: {
-          class: Header,
-          config: {
-            defaultLevel: 1,
-            levels: [1, 2, 3]
-          }
-        },
-        list: List,
-        quote: Quote,
-        strikethrough: createGenericInlineTool({
-          sanitize: {
-            s: true
+  React.useEffect(
+    () => {
+      if (data) {
+        editor.current = new EditorJS({
+          data,
+          holder: editorContainer.current,
+          onChange: async api => {
+            const savedData = await api.saver.save();
+            onChange(savedData);
           },
-          shortcut: "CMD+S",
-          tagName: "s",
-          toolboxIcon: strikethroughIcon
-        })
+          tools: {
+            header: {
+              class: Header,
+              config: {
+                defaultLevel: 1,
+                levels: [1, 2, 3]
+              }
+            },
+            list: List,
+            quote: Quote,
+            strikethrough: createGenericInlineTool({
+              sanitize: {
+                s: true
+              },
+              shortcut: "CMD+S",
+              tagName: "s",
+              toolboxIcon: strikethroughIcon
+            })
+          }
+        });
       }
-    });
-  }, []);
-  React.useEffect(() => () => editor.current.destroy(), []);
+
+      return editor.current?.destroy;
+    },
+    // Rerender editor only if changed from undefined to defined state
+    [data === undefined]
+  );
+  React.useEffect(() => editor.current?.destroy, []);
 
   return (
     <div>
