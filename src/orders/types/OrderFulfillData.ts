@@ -52,6 +52,7 @@ export interface OrderFulfillData_order_lines {
   productName: string;
   quantity: number;
   quantityFulfilled: number;
+  allocations: OrderFulfillData_order_allocation[];
   variant: OrderFulfillData_order_lines_variant | null;
   thumbnail: OrderFulfillData_order_lines_thumbnail | null;
 }
@@ -69,4 +70,16 @@ export interface OrderFulfillData {
 
 export interface OrderFulfillDataVariables {
   orderId: string;
+}
+
+export interface OrderFulfillData_order_allocation {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderFulfillData_order_allocation_warehouse;
+}
+
+export interface OrderFulfillData_order_allocation_warehouse {
+  __typename: "Warehouse";
+  id: string;
 }
