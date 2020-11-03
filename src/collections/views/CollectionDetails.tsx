@@ -60,7 +60,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   );
   const paginate = usePaginator();
   const intl = useIntl();
-  const { search, result } = useProductSearch({
+  const { search, loadMore, result } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const [updateMetadata] = useMetadataUpdate({});
@@ -296,8 +296,10 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             />
             <AssignProductDialog
               confirmButtonState={assignProductOpts.status}
+              hasMore={result.data?.search?.pageInfo.hasNextPage}
               open={params.action === "assign"}
               onFetch={search}
+              onFetchMore={loadMore}
               loading={result.loading}
               onClose={closeModal}
               onSubmit={products =>

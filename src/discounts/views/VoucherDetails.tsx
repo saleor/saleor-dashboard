@@ -71,18 +71,21 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   );
   const intl = useIntl();
   const {
+    loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
@@ -407,8 +410,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchCategoriesOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
+                              onFetchMore={loadMoreCategories}
                               loading={searchCategoriesOpts.loading}
                               onClose={closeModal}
                               onSubmit={categories =>
@@ -417,9 +425,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     ...paginationState,
                                     id,
                                     input: {
-                                      categories: categories.map(
-                                        product => product.id
-                                      )
+                                      categories
                                     }
                                   }
                                 })
@@ -436,8 +442,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchCollectionsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
+                              onFetchMore={loadMoreCollections}
                               loading={searchCollectionsOpts.loading}
                               onClose={closeModal}
                               onSubmit={collections =>
@@ -446,9 +457,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     ...paginationState,
                                     id,
                                     input: {
-                                      collections: collections.map(
-                                        product => product.id
-                                      )
+                                      collections
                                     }
                                   }
                                 })
@@ -481,8 +490,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchProductsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
+                              onFetchMore={loadMoreProducts}
                               loading={searchProductsOpts.loading}
                               onClose={closeModal}
                               onSubmit={products =>

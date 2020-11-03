@@ -55,6 +55,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add manage product types and attributes permission - #768 by @orzechdev
 - Fix isPublished and isAvailable behaviour for products, collections and pages - #780 by @mmarkusik
 - Add metadata editor to page views - #782 by @dominik-zeglen
+- Add missing infinite scroll to searches - #793 by @dominik-zeglen
 
 ## 2.10.1
 
