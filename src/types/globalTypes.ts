@@ -82,6 +82,7 @@ export enum AttributeErrorCode {
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   MULTISELECT = "MULTISELECT",
+  FILE = "FILE"
 }
 
 export enum AttributeSortField {
