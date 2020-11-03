@@ -83,13 +83,13 @@ function useCollectionUpdateForm(
   // Need to make it function to always have description.current up to date
   const getData = (): CollectionUpdateData => ({
     ...form.data,
-    description: description.current,
-    isPublished: form.data.isPublished || !!form.data.publicationDate
+    description: description.current
   });
 
   const getSubmitData = (): CollectionUpdateData => ({
     ...getData(),
-    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
+    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
+    isPublished: form.data.isPublished || !!form.data.publicationDate
   });
 
   const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
