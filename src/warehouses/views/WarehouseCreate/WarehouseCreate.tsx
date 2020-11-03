@@ -57,6 +57,7 @@ const WarehouseCreate: React.FC = () => {
                   streetAddress1: data.streetAddress1,
                   streetAddress2: data.streetAddress2
                 },
+                companyName: data.companyName,
                 name: data.name
               }
             }
