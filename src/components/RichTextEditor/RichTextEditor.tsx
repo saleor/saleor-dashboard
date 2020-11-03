@@ -74,6 +74,19 @@ const useStyles = makeStyles(
         "& .ce-inline-toolbar__toggler-and-button-wrapper": {
           paddingRight: 0
         },
+        "& .ce-toolbar__actions": {
+          right: 0,
+          top: 0
+        },
+        "& .ce-toolbar__content": {
+          maxWidth: "unset"
+        },
+        "& .ce-toolbar__plus": {
+          left: -9
+        },
+        "& .ce-toolbox.ce-toolbox--opened": {
+          left: 16
+        },
         "& .codex-editor__redactor": {
           marginRight: `${theme.spacing(4)}px !important`,
           paddingBottom: "0 !important"

@@ -22,6 +22,7 @@ import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/Searc
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import { diff } from "fast-array-diff";
@@ -142,15 +143,6 @@ const getStocksData = (
     )
   };
 };
-
-const getMetadata = (
-  data: ProductUpdateFormData,
-  isMetadataModified: boolean,
-  isPrivateMetadataModified: boolean
-) => ({
-  metadata: isMetadataModified ? data.metadata : undefined,
-  privateMetadata: isPrivateMetadataModified ? data.privateMetadata : undefined
-});
 
 function useProductUpdateForm(
   product: ProductDetails_product,

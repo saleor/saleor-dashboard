@@ -11,6 +11,7 @@ import {
 } from "@saleor/products/utils/data";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
 import React from "react";
@@ -117,11 +118,6 @@ function useProductVariantUpdateForm(
     stocks.remove(id);
   };
 
-  const metadata = isMetadataModified ? form.data.metadata : undefined;
-  const privateMetadata = isPrivateMetadataModified
-    ? form.data.privateMetadata
-    : undefined;
-
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = diff(variantStocks, dataStocks);
@@ -140,10 +136,9 @@ function useProductVariantUpdateForm(
   };
   const submitData: ProductVariantUpdateSubmitData = {
     ...form.data,
+    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     addStocks,
     attributes: attributes.data,
-    metadata,
-    privateMetadata,
     removeStocks: stockDiff.removed,
     updateStocks
   };

@@ -3,7 +3,7 @@ import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { MutableRefObject, useEffect, useRef } from "react";
 
 function useRichText(opts: {
-  initial?: string | null;
+  initial: string | null;
   triggerChange: () => void;
 }): [MutableRefObject<OutputData>, RichTextEditorChange] {
   const data = useRef<OutputData>(
