@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## 2.11.0
+
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
 - Migrate product base price to variant prices - #555 by @orzechdev
 - Migrate old notifications to the new ones - #587 by @AlicjaSzu
@@ -52,7 +54,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix order draft back button redirect - #753 by @orzechdev
 - Add manage product types and attributes permission - #768 by @orzechdev
 - Fix isPublished and isAvailable behaviour for products, collections and pages - #780 by @mmarkusik
-
 
 ## 2.10.1
 
