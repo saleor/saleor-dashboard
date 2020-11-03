@@ -72,7 +72,7 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
         </Typography>
       </div>
       <div>
-        {channelChoices?.length && (
+        {!!channelChoices?.length && (
           <SingleSelectField
             name="channel"
             label={intl.formatMessage({
