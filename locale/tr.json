@@ -205,6 +205,66 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
+  "productExportFieldAvailability": {
+    "context": "product field",
+    "string": "Available for purchase"
+  },
+  "productExportFieldCategory": {
+    "context": "product field",
+    "string": "Kategori"
+  },
+  "productExportFieldCollections": {
+    "context": "product field",
+    "string": "Koleksiyonlar"
+  },
+  "productExportFieldDescription": {
+    "context": "product field",
+    "string": "Açıklama"
+  },
+  "productExportFieldName": {
+    "context": "product field",
+    "string": "İsim"
+  },
+  "productExportFieldPrice": {
+    "context": "product field",
+    "string": "Cost Price"
+  },
+  "productExportFieldProductImages": {
+    "context": "product field",
+    "string": "Product Images"
+  },
+  "productExportFieldProductWeight": {
+    "context": "product field",
+    "string": "Export Product Weight"
+  },
+  "productExportFieldTaxes": {
+    "context": "product field",
+    "string": "Charge Taxes"
+  },
+  "productExportFieldType": {
+    "context": "product field",
+    "string": "Tip"
+  },
+  "productExportFieldVariantImages": {
+    "context": "product field",
+    "string": "Variant Images"
+  },
+  "productExportFieldVariantPrice": {
+    "context": "product field",
+    "string": "Variant Price"
+  },
+  "productExportFieldVariantSku": {
+    "context": "product field",
+    "string": "Export Variant SKU"
+  },
+  "productExportFieldVariantWeight": {
+    "context": "product field",
+    "string": "Export Variant Weight"
+  },
+  "productExportFieldVisibility": {
+    "context": "product field",
+    "string": "Görünüm"
+  },
   "productStatusLabel": {
     "context": "product",
     "string": "Yayınlanan"
@@ -242,6 +302,10 @@
     "context": "variant stock, header",
     "string": "Stok"
   },
+  "productVariantCreatorWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. You can configure variants without providing stock quantities."
+  },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
     "string": "Warehouses"
@@ -250,9 +314,13 @@
     "context": "optional field",
     "string": "İsteğe bağlı"
   },
-  "productVariantPriceOptionalPriceField": {
-    "context": "optional field",
-    "string": "İsteğe bağlı"
+  "productVariantWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
+  },
+  "productWarehouseSectionDescription": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -297,6 +365,357 @@
   "src_dot_accept": {
     "context": "button",
     "string": "Kabul et"
+  },
+  "src_dot_apps": {
+    "context": "apps section name",
+    "string": "Apps"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
+    "context": "dialog header",
+    "string": "Activate App"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3356885734": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate {name}? Activating will start gathering events."
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3761045983": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate this app? Activating will start gathering events"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3865193889": {
+    "context": "button label",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_1782042241": {
+    "context": "button label",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2031792590": {
+    "context": "dialog header",
+    "string": "Dectivate App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2955925498": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_329373780": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1347203024": {
+    "context": "delete custom app",
+    "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_1782042241": {
+    "context": "link",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2432433023": {
+    "context": "app privacy policy link",
+    "string": "View this app’s privacy policy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2973480575": {
+    "context": "link",
+    "string": "Edit settings"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3744068622": {
+    "context": "section header",
+    "string": "Data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3768793197": {
+    "context": "link",
+    "string": "Get Support"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3817397882": {
+    "context": "button",
+    "string": "Open App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3865193889": {
+    "context": "link",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_846582072": {
+    "context": "apps about permissions",
+    "string": "This app has permissions to:"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_85811128": {
+    "context": "section header",
+    "string": "About this app"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_198187074": {
+    "context": "button",
+    "string": "Support/FAQ"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3302125406": {
+    "context": "button",
+    "string": "My App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3662390044": {
+    "context": "button",
+    "string": "Panel"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
+    "context": "title",
+    "string": "There’s a problem with app."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1261716527": {
+    "context": "content",
+    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_3375237564": {
+    "context": "button",
+    "string": "Back to homepage"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_127674832": {
+    "context": "app data privacy link",
+    "string": "Learn more about data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2538706256": {
+    "context": "install button",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2936990163": {
+    "context": "install app permissions",
+    "string": "Installing this app will give it following permissions:"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3436300370": {
+    "context": "install app privacy",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}. "
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3688014441": {
+    "context": "section header",
+    "string": "You are about to install {name}"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
+    "context": "section header",
+    "string": "Ongoing Installations"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2398081356": {
+    "context": "retry installation",
+    "string": "Retry"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2868351060": {
+    "context": "app installation error",
+    "string": "There was a problem during installation"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_3733091754": {
+    "context": "app installation",
+    "string": "Installing app..."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_1414896555": {
+    "context": "checkbox label",
+    "string": "Grant this app full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3189779214": {
+    "context": "header",
+    "string": "Create New App"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2080322626": {
+    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2864204643": {
+    "context": "button",
+    "string": "Copied"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_4189999598": {
+    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1414896555": {
+    "context": "checkbox label",
+    "string": "Grant this app full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_2860466085": {
+    "context": "header",
+    "string": "App Information"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_3001692357": {
+    "context": "custom app name",
+    "string": "App Name"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2446088470": {
+    "context": "custom app token key",
+    "string": "Anahtar"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2639089057": {
+    "string": "No tokens found"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3209034045": {
+    "context": "header",
+    "string": "Tokens"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3875340101": {
+    "context": "button",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4190792473": {
+    "context": "table actions",
+    "string": "Actions"
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
+    "context": "custom apps content",
+    "string": "Your custom created apps will be shown here."
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3230241731": {
+    "context": "create app button",
+    "string": "Create App"
+  },
+  "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
+    "context": "app deactivated",
+    "string": "Deactivated"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
+    "context": "about app",
+    "string": "About"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
+    "context": "apps content",
+    "string": "You don’t have any installed apps in your dashboard"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_3504763431": {
+    "context": "section header",
+    "string": "Third-party Apps"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
+    "context": "section header",
+    "string": "Saleor Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3259214524": {
+    "context": "marketplace content",
+    "string": "Marketplace is coming soon"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3910026447": {
+    "context": "marketplace button",
+    "string": "Visit Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_52985091": {
+    "context": "marketplace content",
+    "string": "Discover great free and paid apps in our Saleor Marketplace."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_2530792168": {
+    "string": "Access token is used to authenticate service accounts"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3009959880": {
+    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3875340101": {
+    "context": "header",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4120989039": {
+    "context": "create service token, button",
+    "string": "Oluştur"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_2164262076": {
+    "context": "dialog title",
+    "string": "Delete Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_981802752": {
+    "context": "delete token",
+    "string": "Are you sure you want to delete token {token}?"
+  },
+  "src_dot_apps_dot_views_dot_AppDetailsSettings_dot_2140018198": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
+  },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
+    "context": "snackbar text",
+    "string": "App activated"
+  },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_3791371350": {
+    "context": "snackbar text",
+    "string": "App deactivated"
+  },
+  "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
+    "context": "window title",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
+    "context": "app has been installed",
+    "string": "{name} is ready to be used"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
+    "context": "app has been removed",
+    "string": "App successfully removed"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
+    "context": "message title",
+    "string": "Couldn’t Install {name}"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_966773578": {
+    "context": "message title",
+    "string": "App installed"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
+    "context": "window title",
+    "string": "Create App"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
@@ -520,10 +939,10 @@
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_4028609483": {
     "context": "button",
-    "string": "Reset your password"
+    "string": "Parolanızı sıfırlayın"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
-    "string": "New Password"
+    "string": "Yeni Parola"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1915811227": {
     "string": "Please set up a new password."
@@ -533,10 +952,10 @@
     "string": "Set new password"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2799926859": {
-    "string": "Confirm Password"
+    "string": "Parolayı doğrula"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_4253911811": {
-    "string": "Passwords do not match"
+    "string": "Parolalar eşleşmiyor"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2370700732": {
     "string": "Forgot your password? Don't worry, we'll reset it for you."
@@ -560,7 +979,7 @@
   },
   "src_dot_back": {
     "context": "button",
-    "string": "Back"
+    "string": "Geri"
   },
   "src_dot_cancel": {
     "context": "button",
@@ -579,7 +998,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "Arkaplan Resim (isteğe bağlı)"
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_3289097895": {
     "context": "field is optional",
@@ -594,17 +1013,17 @@
   },
   "src_dot_categories_dot_components_dot_CategoryDeleteDialog_dot_2004894945": {
     "context": "dialog title",
-    "string": "Delete category"
+    "string": "Kategori sil"
   },
   "src_dot_categories_dot_components_dot_CategoryDeleteDialog_dot_847492725": {
     "context": "delete category",
-    "string": "Are you sure you want to delete {categoryName}?"
+    "string": "{categoryName} kategorisini silmek istiyor musunuz?"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Kategori Adı"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_4037703468": {
-    "string": "Category Description"
+    "string": "Kategori Açıklaması"
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_1140231710": {
     "context": "button",
@@ -615,16 +1034,16 @@
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_4294878092": {
     "context": "tab name",
-    "string": "All Categories"
+    "string": "Tüm Kategoriler"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Kategori Adı"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2054128296": {
-    "string": "No categories found"
+    "string": "Kategori bulunamadı"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2155313053": {
-    "string": "No subcategories found"
+    "string": "Altkategoriler bulunamadı"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2159874182": {
     "context": "number of subcategories",
@@ -643,7 +1062,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Tip"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
     "context": "product",
@@ -663,7 +1082,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_4164156574": {
     "context": "header",
-    "string": "Products in {categoryName}"
+    "string": "{categoryName} kategorisindeki ürünler"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2159874182": {
     "context": "number of subcategories in category",
@@ -692,31 +1111,34 @@
     "string": "{counter,plural,one {Are you sure you want to delete this product?} other {Are you sure you want to delete {displayQuantity} products?}}"
   },
   "src_dot_categories_dot_views_dot_1754466114": {
-    "string": "Category created"
+    "string": "Kategori oluşturuldu"
   },
   "src_dot_categories_dot_views_dot_1823337870": {
-    "string": "{counter,plural,one {Are you sure you want to delete this category?} other {Are you sure you want to delete {displayQuantity} categories?}}"
+    "string": "{counter,plural,one {Bu kategoriyi silmek istiyor musunuz?} other { {displayQuantity} kategoriyi silmek istiyor musunuz?}}"
   },
   "src_dot_categories_dot_views_dot_2004894945": {
     "context": "dialog title",
-    "string": "Delete category"
+    "string": "Kategori sil"
   },
   "src_dot_categories_dot_views_dot_2189424032": {
-    "string": "Category deleted"
+    "string": "Kategori silindi"
   },
   "src_dot_categories_dot_views_dot_2507763081": {
     "context": "dialog title",
-    "string": "Delete products"
+    "string": "Ürünleri sil"
+  },
+  "src_dot_categories_dot_views_dot_3296953393": {
+    "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
   },
   "src_dot_categories_dot_views_dot_3488150607": {
     "string": "Remember this will also delete all products assigned to this category."
   },
   "src_dot_categories_dot_views_dot_712767046": {
     "context": "dialog title",
-    "string": "Delete categories"
+    "string": "Kategorileri sil"
   },
   "src_dot_categories_dot_views_dot_847492725": {
-    "string": "Are you sure you want to delete {categoryName}?"
+    "string": "{categoryName} kategorisini silmek istiyor musunuz?"
   },
   "src_dot_categories_dot_views_dot_CategoryList_dot_1823337870": {
     "string": "{counter,plural,one {Are you sure you want to delete this category?} other {Are you sure you want to delete {displayQuantity} categories?}}"
@@ -726,7 +1148,7 @@
   },
   "src_dot_categories_dot_views_dot_CategoryList_dot_712767046": {
     "context": "dialog title",
-    "string": "Delete categories"
+    "string": "Kategorileri sil"
   },
   "src_dot_clear": {
     "context": "button",
@@ -736,13 +1158,17 @@
     "context": "collections section name",
     "string": "Koleksiyonlar"
   },
-  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_1815688500": {
-    "context": "collection",
-    "string": "since {date}"
-  },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "{date} tarihinden sonra görünür olacak"
+  },
+  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_643174786": {
+    "context": "collection label",
+    "string": "Visible"
+  },
+  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_77815154": {
+    "context": "collection label",
+    "string": "Gizlenmiş"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_946315389": {
     "string": "Add search engine title and description to make this collection easier to find"
@@ -751,17 +1177,21 @@
     "context": "page header",
     "string": "Add Collection"
   },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
-    "context": "collection",
-    "string": "since {date}"
-  },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "{date} tarihinden sonra görünür olacak"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2906897537": {
     "context": "switch button",
     "string": "Feature on Homepage"
+  },
+  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_643174786": {
+    "context": "collection label",
+    "string": "Visible"
+  },
+  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_77815154": {
+    "context": "collection label",
+    "string": "Gizlenmiş"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_946315389": {
     "string": "Add search engine title and description to make this collection easier to find"
@@ -772,7 +1202,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "Arkaplan Resim (isteğe bağlı)"
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_3289097895": {
     "context": "field is optional",
@@ -823,7 +1253,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Tip"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
     "context": "product is not published",
@@ -881,7 +1311,7 @@
   },
   "src_dot_collections_dot_views_dot_942133001": {
     "context": "dialog title",
-    "string": "Delete image"
+    "string": "Görseli sil"
   },
   "src_dot_collections_dot_views_dot_CollectionList_dot_1547167026": {
     "context": "publish collections",
@@ -931,33 +1361,26 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
-  "src_dot_components_dot_AccountStatus_dot_2183517419": {
-    "context": "section header",
-    "string": "Account Status"
-  },
-  "src_dot_components_dot_AccountStatus_dot_2683780981": {
-    "string": "If you want to disable this account uncheck the box below"
-  },
   "src_dot_components_dot_AddressEdit_dot_1139500589": {
     "string": "Ülke"
   },
   "src_dot_components_dot_AddressEdit_dot_1271289966": {
-    "string": "Phone"
+    "string": "Telefon"
   },
   "src_dot_components_dot_AddressEdit_dot_1363074570": {
-    "string": "Address line 1"
+    "string": "Adres satırı 1"
   },
   "src_dot_components_dot_AddressEdit_dot_253031977": {
     "string": "Şehir"
   },
   "src_dot_components_dot_AddressEdit_dot_2965971965": {
-    "string": "ZIP / Postal code"
+    "string": "ZIP / Posta kodu"
   },
   "src_dot_components_dot_AddressEdit_dot_3121963259": {
-    "string": "Address line 2"
+    "string": "Adres satırı 2"
   },
   "src_dot_components_dot_AddressEdit_dot_3570415321": {
-    "string": "Company"
+    "string": "Firma/Şirket"
   },
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
@@ -968,25 +1391,24 @@
   },
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
-    "string": "Account Settings"
+    "string": "Hesap ayarları"
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
-    "string": "Search Categories"
+  "src_dot_components_dot_AppStatus_dot_1624959454": {
+    "string": "If you want to disable this App please uncheck the box below."
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_190977792": {
+  "src_dot_components_dot_AppStatus_dot_1750277107": {
+    "context": "section header",
+    "string": "App Status"
+  },
+  "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
-    "string": "Assign Categories"
+    "string": "Assign Category"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_3690273268": {
     "string": "Search by category name, etc..."
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_3973677075": {
-    "context": "button",
-    "string": "Assign categories"
-  },
-  "src_dot_components_dot_AssignCollectionDialog_dot_1035511604": {
-    "context": "button",
-    "string": "Assign collections"
+  "src_dot_components_dot_AssignCategoryDialog_dot_3841025483": {
+    "string": "Search Category"
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_2605414502": {
     "string": "Search by collection name, etc..."
@@ -997,6 +1419,10 @@
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_4057224233": {
     "string": "Search Collection"
+  },
+  "src_dot_components_dot_AssignContainerDialog_dot_1731102929": {
+    "context": "button",
+    "string": "Assign"
   },
   "src_dot_components_dot_AssignProductDialog_dot_2100305525": {
     "context": "button",
@@ -1013,11 +1439,27 @@
     "string": "Assign Product"
   },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
-    "string": "No results"
+    "string": "Sonuç yok"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_1306298759": {
+    "context": "product availability",
+    "string": "Available for purchase"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_2938074852": {
+    "context": "product available for purchase date",
+    "string": "will become available on {date}"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_570524410": {
+    "context": "product availability date label",
+    "string": "Set availability date"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_825317195": {
+    "context": "product unavailability",
+    "string": "Unavailable for purchase"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
-    "string": "Reset"
+    "string": "Sıfırla"
   },
   "src_dot_components_dot_ColumnPicker_dot_2539195044": {
     "context": "select visible columns button",
@@ -1031,29 +1473,29 @@
     "string": "Ülke"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_1271289966": {
-    "string": "Phone"
+    "string": "Telefon"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_1363074570": {
-    "string": "Address line 1"
+    "string": "Adres satırı 1"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_253031977": {
     "string": "Şehir"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_2965971965": {
-    "string": "ZIP / Postal code"
+    "string": "ZIP / Posta kodu"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3121963259": {
-    "string": "Address line 2"
+    "string": "Adres satırı 2"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3570415321": {
-    "string": "Company"
+    "string": "Firma/Şirket"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_944851093": {
     "string": "Country area"
   },
   "src_dot_components_dot_ConfirmButton_dot_2845142593": {
     "context": "button",
-    "string": "Error"
+    "string": "Hata"
   },
   "src_dot_components_dot_CountryList_dot_2460766407": {
     "context": "number of countries",
@@ -1072,27 +1514,27 @@
   },
   "src_dot_components_dot_ErrorMessageCard_dot_2845142593": {
     "context": "header",
-    "string": "Error"
+    "string": "Hata"
   },
   "src_dot_components_dot_ErrorPage_dot_1723676032": {
     "context": "button",
-    "string": "Back to home"
+    "string": "Anasayfaya dön"
   },
   "src_dot_components_dot_ErrorPage_dot_2736139139": {
-    "string": "Ooops!..."
+    "string": "Amanın!..."
   },
   "src_dot_components_dot_ErrorPage_dot_2845142593": {
-    "string": "Error"
+    "string": "Hata"
   },
   "src_dot_components_dot_ErrorPage_dot_3090161573": {
-    "string": "Don't worry, everything is gonna be fine"
+    "string": "Endişelenmeyin, her şey çok güzel olacak"
   },
   "src_dot_components_dot_ErrorPage_dot_3182212440": {
-    "string": "We've encountered a problem..."
+    "string": "Bir sorunla karşılaştık..."
   },
   "src_dot_components_dot_FileUpload_dot_3050254265": {
     "context": "upload file, button",
-    "string": "Upload"
+    "string": "Yükle"
   },
   "src_dot_components_dot_FilterBar_dot_2173195312": {
     "context": "button",
@@ -1110,15 +1552,15 @@
   },
   "src_dot_components_dot_Filter_dot_2332404293": {
     "context": "search",
-    "string": "No results"
+    "string": "Sonuç yok"
   },
   "src_dot_components_dot_Filter_dot_2683154806": {
     "context": "is filter range or value",
-    "string": "equal to"
+    "string": "eşittir"
   },
   "src_dot_components_dot_Filter_dot_2779594451": {
     "context": "filter range separator",
-    "string": "and"
+    "string": "ve"
   },
   "src_dot_components_dot_Filter_dot_4190318230": {
     "context": "search results",
@@ -1126,7 +1568,7 @@
   },
   "src_dot_components_dot_Filter_dot_773313536": {
     "context": "is filter range or value",
-    "string": "between"
+    "string": "arasında"
   },
   "src_dot_components_dot_Filter_dot_996289613": {
     "string": "Filtreler"
@@ -1142,6 +1584,46 @@
   "src_dot_components_dot_ListField_dot_3099331554": {
     "context": "button",
     "string": "Ekle"
+  },
+  "src_dot_components_dot_Metadata_dot_1148029984": {
+    "context": "metadata field value, header",
+    "string": "Değer"
+  },
+  "src_dot_components_dot_Metadata_dot_1509432322": {
+    "context": "header",
+    "string": "Metadata"
+  },
+  "src_dot_components_dot_Metadata_dot_1535223586": {
+    "context": "header",
+    "string": "Private Metadata"
+  },
+  "src_dot_components_dot_Metadata_dot_2024779015": {
+    "context": "empty metadata text",
+    "string": "There is no private metadata created for this element."
+  },
+  "src_dot_components_dot_Metadata_dot_2087058956": {
+    "context": "empty metadata text",
+    "string": "There is no metadata created for this element."
+  },
+  "src_dot_components_dot_Metadata_dot_2537046678": {
+    "context": "metadata field name, header",
+    "string": "Field"
+  },
+  "src_dot_components_dot_Metadata_dot_3181473584": {
+    "context": "add metadata field,button",
+    "string": "Add Field"
+  },
+  "src_dot_components_dot_Metadata_dot_4190792473": {
+    "context": "table action",
+    "string": "Actions"
+  },
+  "src_dot_components_dot_Metadata_dot_549104951": {
+    "context": "number of metadata fields in model",
+    "string": "{number,plural,one {{number} Field} other {{number} Fields}}"
+  },
+  "src_dot_components_dot_Metadata_dot_553451245": {
+    "context": "empty metadata text",
+    "string": "Use the button below to add new metadata field"
   },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
@@ -1160,14 +1642,17 @@
     "string": "Add new value: {value}"
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
   },
   "src_dot_components_dot_MultiSelectField_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
+  },
+  "src_dot_components_dot_NavigatorButton_dot_154826674": {
+    "string": "Navigator"
   },
   "src_dot_components_dot_Navigator_dot_1116468870": {
     "context": "navigator placeholder",
-    "string": "Order Number"
+    "string": "Sipariş numarası"
   },
   "src_dot_components_dot_Navigator_dot_1167695965": {
     "context": "navigator placeholder",
@@ -1175,11 +1660,11 @@
   },
   "src_dot_components_dot_Navigator_dot_1643417013": {
     "context": "navigator placeholder",
-    "string": "Search Customer"
+    "string": "Müşteri ara"
   },
   "src_dot_components_dot_Navigator_dot_1809988825": {
     "context": "navigator section header",
-    "string": "Search in Customers"
+    "string": "Müşterilerde ara"
   },
   "src_dot_components_dot_Navigator_dot_2874620973": {
     "context": "navigator placeholder",
@@ -1199,7 +1684,7 @@
   },
   "src_dot_components_dot_Navigator_dot_3636839115": {
     "context": "navigator section header",
-    "string": "Quick Actions"
+    "string": "Hızlı İşlemler"
   },
   "src_dot_components_dot_Navigator_dot_4290208300": {
     "context": "navigator notification title",
@@ -1217,31 +1702,31 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_collectionUnpublished": {
     "context": "collection",
-    "string": "Not Published"
+    "string": "Yayımlanmadı"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCategory": {
     "context": "button",
-    "string": "Create Category"
+    "string": "Kategori Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCollection": {
     "context": "button",
-    "string": "Create Collection"
+    "string": "Koleksiyon Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCustomer": {
     "context": "button",
-    "string": "Create Customer"
+    "string": "Müşteri Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createOrder": {
     "context": "button",
-    "string": "Create Order"
+    "string": "Sipariş Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createPermissionGroup": {
     "context": "button",
-    "string": "Create Permission Group"
+    "string": "Yetki Grubu Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createProduct": {
     "context": "button",
-    "string": "Create Product"
+    "string": "Ürün Oluştur"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createVoucher": {
     "context": "button",
@@ -1252,7 +1737,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_goToOrder": {
     "context": "navigator action",
-    "string": "Go to order #{orderNumber}"
+    "string": "#{orderNumber} nolu siparişe git"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpCatalogMode": {
     "context": "navigator catalog mode description",
@@ -1264,7 +1749,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpCustomersMode": {
     "context": "navigator customer mode description",
-    "string": "Search Customers"
+    "string": "Müşterileri ara"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpDefaultMode": {
     "context": "navigator default mode description",
@@ -1276,19 +1761,19 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpOrdersMode": {
     "context": "navigator order mode description",
-    "string": "Search Orders"
+    "string": "Siparişleri ara"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_noResults": {
-    "string": "No Results"
+    "string": "Sonuç Yok"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_product": {
     "string": "Ürün"
   },
   "src_dot_components_dot_NotFoundPage_dot_2736139139": {
-    "string": "Ooops!..."
+    "string": "Hooop!"
   },
   "src_dot_components_dot_NotFoundPage_dot_4036415297": {
-    "string": "Something's missing"
+    "string": "Eksikler var"
   },
   "src_dot_components_dot_NotFoundPage_dot_4205980614": {
     "string": "Sorry, the page was not found"
@@ -1298,7 +1783,7 @@
     "string": "Go back to dashboard"
   },
   "src_dot_components_dot_RadioGroupField_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
   },
   "src_dot_components_dot_RichTextEditor_dot_1603794322": {
     "context": "dialog header",
@@ -1350,9 +1835,6 @@
   "src_dot_components_dot_SeoForm_dot_1991321627": {
     "string": "Search engine description"
   },
-  "src_dot_components_dot_SeoForm_dot_2378618579": {
-    "string": "Eğer boşsa, önizleme otomatik üretileni göstersin."
-  },
   "src_dot_components_dot_SeoForm_dot_3198271020": {
     "context": "button",
     "string": "Edit website SEO"
@@ -1360,9 +1842,15 @@
   "src_dot_components_dot_SeoForm_dot_3468022343": {
     "string": "Search Engine Preview"
   },
+  "src_dot_components_dot_SeoForm_dot_3478065224": {
+    "string": "Jeton"
+  },
   "src_dot_components_dot_SeoForm_dot_3877274856": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
+  },
+  "src_dot_components_dot_SeoForm_dot_seoFieldMessage": {
+    "string": "Eğer boşsa, önizleme otomatik üretileni göstersin."
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
@@ -1372,10 +1860,10 @@
     "string": "None"
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
   },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
@@ -1387,22 +1875,30 @@
   "src_dot_components_dot_Timeline_dot_3028189627": {
     "string": "Leave your note here..."
   },
+  "src_dot_components_dot_VisibilityCard_dot_1311467573": {
+    "string": "Show in product listings"
+  },
   "src_dot_components_dot_VisibilityCard_dot_1459686496": {
     "context": "section header",
     "string": "Görünüm"
+  },
+  "src_dot_components_dot_VisibilityCard_dot_1815688500": {
+    "context": "date",
+    "string": "{date} tarihinden bu yana"
   },
   "src_dot_components_dot_VisibilityCard_dot_2060790769": {
     "context": "publish on date",
     "string": "Publish on"
   },
+  "src_dot_components_dot_VisibilityCard_dot_2264302389": {
+    "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+  },
+  "src_dot_components_dot_VisibilityCard_dot_2699516026": {
+    "context": "available on date",
+    "string": "Set available on"
+  },
   "src_dot_components_dot_VisibilityCard_dot_292404896": {
     "string": "Set publication date"
-  },
-  "src_dot_components_dot_VisibilityCard_dot_643174786": {
-    "string": "Visible"
-  },
-  "src_dot_components_dot_VisibilityCard_dot_77815154": {
-    "string": "Gizlenmiş"
   },
   "src_dot_components_dot_WeightRange_dot_264731940": {
     "context": "weight",
@@ -1420,6 +1916,18 @@
     "context": "weight",
     "string": "{value} {unit}"
   },
+  "src_dot_components_dot_messages_dot_1219076963": {
+    "context": "snackbar expand",
+    "string": "Expand"
+  },
+  "src_dot_components_dot_messages_dot_2473863536": {
+    "context": "snackbar button undo",
+    "string": "Undo"
+  },
+  "src_dot_components_dot_messages_dot_3444275093": {
+    "context": "snackbar collapse",
+    "string": "Collapse"
+  },
   "src_dot_configuration": {
     "context": "configuration section name",
     "string": "Konfigürasyon"
@@ -1430,14 +1938,8 @@
   "src_dot_configuration_dot_1440737903": {
     "string": "Shipping Settings"
   },
-  "src_dot_configuration_dot_1639245766": {
-    "string": "View and update your webhook and their settings"
-  },
-  "src_dot_configuration_dot_2326418019": {
-    "string": "Attributes and Product Typess"
-  },
-  "src_dot_configuration_dot_2387898569": {
-    "string": "Manage external integrations accounts"
+  "src_dot_configuration_dot_1742602794": {
+    "string": "Attributes and Product Types"
   },
   "src_dot_configuration_dot_3140151600": {
     "string": "Staff Settings"
@@ -1449,9 +1951,33 @@
     "context": "button",
     "string": "Confirm"
   },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFailedTitle": {
+    "string": "Product Export Failed"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFinishedText": {
+    "string": "Product export has finished and was sent to your email address."
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFinishedTitle": {
+    "context": "csv file exporting has finished, header",
+    "string": "Exporting CSV finished"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerateFinishedText": {
+    "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerateFinishedTitle": {
+    "context": "invoice generating has finished, header",
+    "string": "Invoice Generated"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerationFailedTitle": {
+    "context": "dialog header, title",
+    "string": "Invoice Generation"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Oluştur"
+  },
+  "src_dot_customApps": {
+    "string": "Local Apps"
   },
   "src_dot_customers": {
     "context": "customers section name",
@@ -1517,7 +2043,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_4282475982": {
     "context": "subsection header",
-    "string": "Billing Address"
+    "string": "Fatura Adresi"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateAddress_dot_1751533141": {
     "context": "page header",
@@ -1543,7 +2069,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerCreatePage_dot_4025686004": {
     "context": "page header",
-    "string": "Create Customer"
+    "string": "Müşteri Oluştur"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_2968565128": {
     "context": "check to mark this account as active",
@@ -1566,7 +2092,7 @@
     "string": "Contact Informations"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_1643417013": {
-    "string": "Search Customer"
+    "string": "Müşteri ara"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_2859116187": {
     "context": "button",
@@ -1693,7 +2219,7 @@
     "string": "Eligible Categories"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_2054128296": {
-    "string": "No categories found"
+    "string": "Kategori bulunamadı"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_2968663655": {
     "context": "number of products",
@@ -1742,7 +2268,7 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_2777439857": {
     "context": "country selection",
-    "string": "Countries A to Z"
+    "string": "Ülkeler A'dan Z'ye"
   },
   "src_dot_discounts_dot_components_dot_DiscountDates_dot_1596226028": {
     "context": "voucher end date, switch button",
@@ -2193,7 +2719,7 @@
     "string": "End Hour"
   },
   "src_dot_firstName": {
-    "string": "First Name"
+    "string": "Ad"
   },
   "src_dot_fulfilled": {
     "context": "order status",
@@ -2209,14 +2735,20 @@
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_draft": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
   },
+  "src_dot_home_dot_components_dot_HomeActivityCard_dot_draft_no_email": {
+    "string": "Order #{orderId} was placed from draft"
+  },
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_paid": {
     "string": "Order #{orderId} was fully paid"
   },
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_placed": {
     "string": "Order #{orderId} was placed"
   },
+  "src_dot_hooks_dot_3382262667": {
+    "string": "Variant {name} has been set as default."
+  },
   "src_dot_lastName": {
-    "string": "Last Name"
+    "string": "Soyadı"
   },
   "src_dot_manage": {
     "context": "button",
@@ -2225,6 +2757,10 @@
   "src_dot_navigation": {
     "context": "navigation section name",
     "string": "Menü"
+  },
+  "src_dot_nextStep": {
+    "context": "go to next step, button",
+    "string": "Next"
   },
   "src_dot_no": {
     "string": "No"
@@ -2278,7 +2814,7 @@
     "string": "Contact Information"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2433460203": {
-    "string": "Search Customers"
+    "string": "Müşterileri ara"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2672803871": {
     "context": "link",
@@ -2299,7 +2835,7 @@
     "string": "Anonymous user"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
-    "string": "Billing Address"
+    "string": "Fatura Adresi"
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_1854613983": {
     "context": "button",
@@ -2319,12 +2855,21 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1895667608": {
     "string": "Ürün"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_270371448": {
+    "string": "Product is out of stock"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2796503714": {
     "context": "quantity of ordered products",
     "string": "Adet"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2963336581": {
+    "string": "Product is unavailable to purchase"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_546865199": {
     "string": "No Products added to Order"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_59548500": {
+    "string": "Product is hidden"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_878013594": {
     "context": "total price of ordered products",
@@ -2355,39 +2900,6 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
     "string": "Add products"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
-    "string": "Fatura adresi yok"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1161061962": {
-    "context": "dialog header",
-    "string": "Finalize Draft Order"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1297434244": {
-    "string": "No user information"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1472924390": {
-    "string": "There are missing or incorrect informations about this order:"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2430492151": {
-    "string": "Kargo adresi yok"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2725265632": {
-    "context": "button",
-    "string": "Finalize"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2824936338": {
-    "string": "Shipping method provided, but no product requires it"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2968256006": {
-    "string": "Some products require shipping, but no method provided"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_3358029330": {
-    "string": "Are you sure you want to finalize draft #{orderNumber}?"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
-    "context": "button",
-    "string": "Finalize anyway"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -2521,6 +3033,10 @@
     "context": "product name",
     "string": "Ürün"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2211099657": {
+    "context": "fulfillment group tracking number",
+    "string": "Takip düzenle"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
     "context": "ordered product quantity",
     "string": "Adet"
@@ -2592,6 +3108,10 @@
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_2421636085": {
+    "context": "order history message",
+    "string": "Invoice was requested by {requestedBy}"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2566971846": {
     "context": "order history message",
     "string": "Payment was voided"
@@ -2612,6 +3132,10 @@
     "context": "order history message",
     "string": "Draft order was created"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3237374063": {
+    "context": "order history message",
+    "string": "Payment was authorized"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
     "context": "order history message",
     "string": "Marked order as paid"
@@ -2628,6 +3152,10 @@
     "context": "order history message",
     "string": "Products were added to draft order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
+    "context": "order history message",
+    "string": "Invoice no. {invoiceNumber} was updated"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3990160018": {
     "string": "Order History"
   },
@@ -2639,6 +3167,10 @@
     "context": "order history message",
     "string": "Products were deleted from draft order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_4121987561": {
+    "context": "order history message",
+    "string": "Order refund information was sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4265697648": {
     "context": "order history message",
     "string": "Updated fulfillment group's tracking number"
@@ -2647,13 +3179,51 @@
     "context": "order history message",
     "string": "Payment failed"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_493321552": {
+    "context": "order history message",
+    "string": "Order cancel information was sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_651019008": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_748112244": {
+    "context": "order history message",
+    "string": "Invoice no. {invoiceNumber} was generated by {generatedBy}"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_88351908": {
+    "context": "order history message",
+    "string": "Invoice was sent to customer by {sentBy}"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_950782935": {
     "context": "order history message",
     "string": "Order was cancelled"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
+    "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_2166306944": {
+    "context": "dialog header",
+    "string": "Send Invoice"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_24460204": {
+    "context": "section header",
+    "string": "Invoices"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_2739475235": {
+    "context": "invoice create date prefix",
+    "string": "oluşturuldu"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_3340654960": {
+    "string": "No invoices to be shown"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_3589949197": {
+    "context": "invoice number prefix",
+    "string": "Fatura"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
+    "context": "generate invoice button",
+    "string": "Generate"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
@@ -2829,6 +3399,9 @@
     "context": "order line total price",
     "string": "Toplam"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
+    "string": "We’re generating the invoice you requested. Please wait a couple of moments"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1056718390": {
     "string": "Payment successfully captured"
   },
@@ -2861,6 +3434,12 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
+    "string": "Invoice email sent"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
+    "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
     "context": "window title",
@@ -2916,16 +3495,20 @@
     "context": "page header",
     "string": "Create Page"
   },
-  "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1815688500": {
-    "context": "page",
-    "string": "since {date}"
-  },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1996767833": {
     "string": "Add search engine title and description to make this page easier to find"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_2001551496": {
     "context": "page",
-    "string": "will be visible from {date}"
+    "string": "{date} tarihinden sonra görünür olacak"
+  },
+  "src_dot_pages_dot_components_dot_PageDetailsPage_dot_643174786": {
+    "context": "page label",
+    "string": "Visible"
+  },
+  "src_dot_pages_dot_components_dot_PageDetailsPage_dot_77815154": {
+    "context": "page label",
+    "string": "Gizlenmiş"
   },
   "src_dot_pages_dot_components_dot_PageInfo_dot_1116746286": {
     "context": "page content",
@@ -2960,17 +3543,7 @@
   },
   "src_dot_pages_dot_components_dot_PageList_dot_3767550649": {
     "context": "page status",
-    "string": "Not Published"
-  },
-  "src_dot_pages_dot_components_dot_PageSlug_dot_1324178587": {
-    "string": "URL"
-  },
-  "src_dot_pages_dot_components_dot_PageSlug_dot_3478065224": {
-    "context": "page internal name",
-    "string": "Jeton"
-  },
-  "src_dot_pages_dot_components_dot_PageSlug_dot_4210828158": {
-    "string": "If empty, URL will be autogenerated from Page Name"
+    "string": "Yayımlanmadı"
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
@@ -3138,7 +3711,7 @@
     "string": "No members found"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1789607185": {
-    "string": "Email Address"
+    "string": "E-posta Adresi"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_2457011428": {
     "context": "button",
@@ -3235,9 +3808,6 @@
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_4241018152": {
-    "string": "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
-  },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
     "string": "Search Plugins..."
   },
@@ -3288,19 +3858,13 @@
     "string": "Assign Attribute"
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
-    "string": "No results found"
+    "string": "Sonuç bulunamadı"
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_524117994": {
     "string": "Search by attribute name"
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_902296540": {
     "string": "Search Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_1228425832": {
-    "string": "Attribute name"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_335542212": {
-    "string": "Attribute values"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_404238501": {
     "context": "dialog header",
@@ -3379,7 +3943,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_type": {
     "context": "product type is digital or physical",
-    "string": "Type"
+    "string": "Tip"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1126553969": {
     "string": "No product types found"
@@ -3390,11 +3954,11 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1240292548": {
     "context": "tax rate for a product type",
-    "string": "Tax"
+    "string": "Vergi"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1952810469": {
     "context": "product type is either simple or configurable",
-    "string": "Type"
+    "string": "Tip"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_2253986440": {
     "context": "product type name",
@@ -3474,20 +4038,118 @@
     "context": "product organization, header",
     "string": "Organization"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
+  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2232321263": {
+    "context": "product publication date label",
+    "string": "will become published on {date}"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
+  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2341910657": {
+    "context": "product label",
+    "string": "Yayınlanmayan"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
   },
+  "src_dot_products_dot_components_dot_ProductCreatePage_dot_3640454975": {
+    "context": "product label",
+    "string": "Yayınlanan"
+  },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
     "string": "İsim"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1004476569": {
+    "context": "option",
+    "string": "Export stock for all warehouses"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_108342258": {
+    "context": "button",
+    "string": "Load More"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1547327218": {
+    "context": "there are more elements of list that are hidden",
+    "string": "and {number} more"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1890035856": {
+    "context": "informations about product organization, header",
+    "string": "Product Organization"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2119710854": {
+    "context": "informations about product seo, header",
+    "string": "SEO Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2167661409": {
+    "context": "export selected products to csv file",
+    "string": "Selected products ({number})"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
+    "context": "export products to csv file, choice field label",
+    "string": "Export information for:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
+    "context": "export all products to csv file",
+    "string": "All products ({number})"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2474350154": {
+    "context": "list of warehouses",
+    "string": "Warehouses A to Z"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2659464408": {
+    "context": "product export to csv file, header",
+    "string": "Information exported"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2693217446": {
+    "context": "export products as csv or spreadsheet file",
+    "string": "Export as:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2883720012": {
+    "context": "export products to csv file, button",
+    "string": "export products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3012202273": {
+    "context": "export products to csv file, dialog header",
+    "string": "Export Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3365843236": {
+    "context": "product export to csv file, header",
+    "string": "Export Settings"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3443345452": {
+    "context": "selectt all options",
+    "string": "Select All"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3518309850": {
+    "context": "export products as spreadsheet",
+    "string": "Spreadsheet for Excel, Numbers etc."
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3599582104": {
+    "string": "Search Atrtibuttes"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3902059658": {
+    "string": "Export Product Stock Quantity to CSV"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3919525499": {
+    "context": "informations about product stock, header",
+    "string": "Inventory Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_4118932547": {
+    "context": "export products as csv file",
+    "string": "Plain CSV file"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
+    "context": "select product informations to be exported",
+    "string": "Information exported:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_524117994": {
+    "context": "input helper text, search attributes",
+    "string": "Search by attribute name"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_700651641": {
+    "context": "export filtered products to csv file",
+    "string": "Current search ({number})"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
+    "context": "informations about product prices etc, header",
+    "string": "Financial Information"
   },
   "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
     "context": "section header",
@@ -3511,7 +4173,7 @@
   },
   "src_dot_products_dot_components_dot_ProductImages_dot_3240888698": {
     "context": "section header",
-    "string": "Images"
+    "string": "Görseller"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
     "context": "product price",
@@ -3519,11 +4181,15 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
-    "string": "Create Product"
+    "string": "Ürün Oluştur"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Tip"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_2059406063": {
+    "context": "export products to csv file, button",
+    "string": "Export Products"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
@@ -3567,16 +4233,24 @@
     "context": "product price",
     "string": "Ücret"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
+    "context": "product type",
+    "string": "Simple"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
     "string": "Ürün bulunamadı"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Tip"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
     "context": "product status",
     "string": "Yayınlanmayan"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
+    "context": "product type",
+    "string": "Configurable"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
     "context": "product status",
@@ -3619,8 +4293,13 @@
     "context": "product price",
     "string": "Ücret"
   },
-  "src_dot_products_dot_components_dot_ProductPricing_dot_3015886868": {
-    "string": "Charge taxes for this item"
+  "src_dot_products_dot_components_dot_ProductShipping_dot_1325966144": {
+    "context": "product shipping",
+    "string": "Kargo"
+  },
+  "src_dot_products_dot_components_dot_ProductShipping_dot_746695941": {
+    "context": "product weight",
+    "string": "Ağırlık"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2585918415": {
     "string": "SKU (Stock Keeping Unit)"
@@ -3648,24 +4327,32 @@
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
   },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_1943864488": {
+    "context": "checkbox",
+    "string": "Bu üründe vergi ücreti yansıt"
   },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_2022558114": {
+    "context": "select tax ratte",
+    "string": "Tax Rate"
+  },
+  "src_dot_products_dot_components_dot_ProductTaxes_dot_2771905943": {
+    "context": "checkbox",
+    "string": "Override the product type's tax rate"
+  },
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2232321263": {
+    "context": "product publication date label",
+    "string": "will become published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2341910657": {
+    "context": "product label",
+    "string": "Yayınlanmayan"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
   },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1536841622": {
-    "context": "product attribute error",
-    "string": "All attributes should have value"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_258966189": {
-    "context": "product attribute error",
-    "string": "This variant already exists"
+  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_3640454975": {
+    "context": "product label",
+    "string": "Yayınlanan"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",
@@ -3673,7 +4360,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_3726089650": {
     "context": "button",
-    "string": "Delete Variant"
+    "string": "Varyantı Sil"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
     "context": "variant price",
@@ -3742,7 +4429,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_520980261": {
     "context": "variant creator summary card header",
-    "string": "Created Variants"
+    "string": "Varyantlar Oluştur"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_551319747": {
     "string": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
@@ -3759,7 +4446,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_904693740": {
     "context": "previous step, button",
-    "string": "Previous"
+    "string": "Önceki"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_998917294": {
     "context": "variant name",
@@ -3767,7 +4454,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_1583616500": {
     "context": "button",
-    "string": "Delete variant"
+    "string": "Varyantı sil"
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_2297471173": {
     "context": "delete product variant",
@@ -3775,44 +4462,52 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_3726089650": {
     "context": "dialog header",
-    "string": "Delete Variant"
+    "string": "Varyantı Sil"
   },
   "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_3196043669": {
     "context": "dialog header",
-    "string": "Image Selection"
+    "string": "Görsel Seçimi"
   },
   "src_dot_products_dot_components_dot_ProductVariantImages_dot_3240888698": {
     "context": "section header",
-    "string": "Images"
+    "string": "Görseller"
   },
   "src_dot_products_dot_components_dot_ProductVariantImages_dot_3449133076": {
-    "string": "Select a specific variant image from product images"
+    "string": "Ürün fotoğraflarından belirli bir varyant görselini seçin"
   },
   "src_dot_products_dot_components_dot_ProductVariantImages_dot_989683980": {
     "context": "button",
-    "string": "Choose photos"
+    "string": "Fotoğrafları seç"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_1222345317": {
+    "context": "default product variant indicator",
+    "string": "Default"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_2153006789": {
     "context": "section header",
-    "string": "Variants"
+    "string": "Varyantlar"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_2845381934": {
     "context": "button",
-    "string": "Add variant"
+    "string": "Varyant ekle"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_3185562157": {
     "context": "variant name",
-    "string": "New Variant"
+    "string": "Yeni Varyant"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1099355007": {
     "context": "product pricing, section header",
     "string": "Pricing"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1416480328": {
-    "string": "Cost price override"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
+    "string": "Ücret"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2238565650": {
-    "string": "Satış fiyatı değişti"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
+    "string": "Maliyet ücreti"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantSetDefault_dot_3683859003": {
+    "context": "set variant as default, button",
+    "string": "Set as default"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1001303107": {
     "context": "product variant inventory",
@@ -3826,9 +4521,13 @@
     "context": "product variant price",
     "string": "Ücret"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1222345317": {
+    "context": "default product variant indicator",
+    "string": "Default"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1252282784": {
     "context": "product variant inventory",
-    "string": "{stockQuantity,plural,one {{stockQuantity} available} other {{stockQuantity} available}}"
+    "string": "{stockQuantity,plural,one {{stockQuantity} adet mevcut} other {{stockQuantity} adet mevcut}}"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1614793985": {
     "context": "variant stock status",
@@ -3836,11 +4535,11 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1721716102": {
     "context": "button",
-    "string": "Create variants"
+    "string": "Varyantlar oluştur"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_2153006789": {
     "context": "section header",
-    "string": "Variants"
+    "string": "Varyantlar"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_2496096212": {
     "context": "product variant inventory",
@@ -3859,7 +4558,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3989383405": {
     "context": "button",
-    "string": "Create variant"
+    "string": "Varyant oluştur"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_4017567521": {
     "context": "product variant inventory",
@@ -3874,36 +4573,40 @@
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
-    "string": "Create Product"
+    "string": "Ürün Oluştur"
   },
   "src_dot_products_dot_views_dot_1591632382": {
     "context": "page header",
-    "string": "New Product"
+    "string": "Yeni Ürün"
   },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
-    "string": "Delete Image"
+    "string": "Görseli Sil"
   },
   "src_dot_products_dot_views_dot_2279302139": {
-    "string": "Variant removed"
+    "string": "Varyant kaldırıldı"
   },
   "src_dot_products_dot_views_dot_2362587265": {
     "context": "header",
-    "string": "Create Variant"
+    "string": "Varyant Oluştur"
   },
   "src_dot_products_dot_views_dot_2880386427": {
-    "string": "Are you sure you want to delete this image?"
+    "string": "Bu görseli silmek istediğinize emin misiniz?"
   },
   "src_dot_products_dot_views_dot_2899821092": {
-    "string": "Product created"
+    "string": "Ürün oluşturuldu"
   },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
-    "string": "Create variant"
+    "string": "Varyant oluştur"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_1204353135": {
     "context": "dialog content",
     "string": "{counter,plural,one {Are you sure you want to delete this product?} other {Are you sure you want to delete {displayQuantity} products?}}"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_1505423810": {
+    "context": "waiting for export to end, header",
+    "string": "Exporting CSV"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
     "context": "publish product, button",
@@ -3931,7 +4634,10 @@
   },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
-    "string": "Delete Products"
+    "string": "Ürünleri Sil"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_44832327": {
+    "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1177237881": {
     "context": "dialog content",
@@ -3939,18 +4645,22 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
-    "string": "Delete Product Variants"
+    "string": "Ürün Varyantlarını Sil"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
-    "string": "Product removed"
+    "string": "Ürün kaldırıldı"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_671489548": {
+    "context": "snackbar text",
+    "string": "Product availability updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_879305849": {
     "context": "dialog header",
-    "string": "Delete Product"
+    "string": "Ürünü Sil"
   },
   "src_dot_products_dot_views_dot_ProductVariantCreator_dot_2292700443": {
     "context": "success message",
@@ -3983,7 +4693,7 @@
     "string": "Kaldır"
   },
   "src_dot_requiredField": {
-    "string": "This field is required"
+    "string": "Bu alan zorunludur"
   },
   "src_dot_sales": {
     "context": "sales section name",
@@ -3996,162 +4706,17 @@
   "src_dot_savedChanges": {
     "string": "Saved changes"
   },
+  "src_dot_selectAll": {
+    "context": "select all options, button",
+    "string": "Select All"
+  },
+  "src_dot_send": {
+    "context": "button",
+    "string": "Send"
+  },
   "src_dot_serviceAccounts": {
     "context": "service accounts section name",
     "string": "Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
-    "context": "header",
-    "string": "Create New Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2080322626": {
-    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2864204643": {
-    "context": "button",
-    "string": "Copied"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_4189999598": {
-    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_1534767622": {
-    "context": "dialog header",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_2297471173": {
-    "context": "delete service account",
-    "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
-    "context": "service account",
-    "string": "Account Name"
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_1895355592": {
-    "string": "Search Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_4040605455": {
-    "context": "tab name",
-    "string": "All Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_624280156": {
-    "context": "button",
-    "string": "Create account"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_active": {
-    "context": "service account",
-    "string": "Aktif"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_deactivated": {
-    "context": "service account",
-    "string": "Inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_1342308051": {
-    "string": "No service accounts found"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_31853942": {
-    "context": "account status",
-    "string": "active"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_3239722049": {
-    "context": "account status",
-    "string": "inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_636461959": {
-    "context": "service name",
-    "string": "İsim"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_2530792168": {
-    "string": "Access token is used to authenticate service accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3009959880": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3875340101": {
-    "context": "header",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4120989039": {
-    "context": "create service token, button",
-    "string": "Oluştur"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_1534767622": {
-    "context": "dialog title",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_981802752": {
-    "context": "delete token",
-    "string": "Are you sure you want to delete token {token}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2446088470": {
-    "context": "service account key",
-    "string": "Anahtar"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2639089057": {
-    "string": "No tokens found"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_3875340101": {
-    "context": "button",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
-    "context": "table actions",
-    "string": "Actions"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
-    "context": "window title",
-    "string": "Create Service Account"
   },
   "src_dot_sessionExpired": {
     "string": "Your session has expired. Please log in again to continue."
@@ -4198,7 +4763,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2777439857": {
     "context": "country selection",
-    "string": "Countries A to Z"
+    "string": "Ülkeler A'dan Z'ye"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_3510295703": {
     "string": "Search Countries"
@@ -4413,11 +4978,11 @@
   },
   "src_dot_show": {
     "context": "button",
-    "string": "Show"
+    "string": "Göster"
   },
   "src_dot_siteSettings": {
     "context": "site settings section name",
-    "string": "Site Settings"
+    "string": "Site Ayarları"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_1008586926": {
     "string": "Name of your store is shown on tab in web browser"
@@ -4439,7 +5004,7 @@
     "string": "Add New Authorization Key"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2237029987": {
-    "string": "Şifre"
+    "string": "Parola"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2446088470": {
     "context": "authentication provider API key",
@@ -4585,7 +5150,7 @@
     "string": "Inactive"
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_1789607185": {
-    "string": "Email Address"
+    "string": "E-posta Adresi"
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_3247064221": {
     "context": "staff member status",
@@ -4600,7 +5165,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffPasswordResetDialog_dot_1254879564": {
     "context": "input label",
-    "string": "New Password"
+    "string": "Yeni Parola"
   },
   "src_dot_staff_dot_components_dot_StaffPasswordResetDialog_dot_1651415182": {
     "string": "New password must be at least 8 characters long"
@@ -4845,7 +5410,7 @@
     "string": "No translation yet"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Kategori Adı"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -5048,6 +5613,10 @@
   "src_dot_utils_dot_errors_dot_attributeCannotBeAssigned": {
     "string": "This attribute cannot be assigned to this product type"
   },
+  "src_dot_utils_dot_errors_dot_attributeRequired": {
+    "context": "product attribute error",
+    "string": "All attributes should have value"
+  },
   "src_dot_utils_dot_errors_dot_attributeVariantsDisabled": {
     "string": "Variants are disabled in this product type"
   },
@@ -5085,14 +5654,37 @@
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"
   },
+  "src_dot_utils_dot_errors_dot_emailNotSet": {
+    "context": "error message",
+    "string": "Email address is not set"
+  },
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
   },
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"
   },
+  "src_dot_utils_dot_errors_dot_invalidManifestFormat": {
+    "string": "Invalid manifest format"
+  },
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
+  },
+  "src_dot_utils_dot_errors_dot_invalidPermission": {
+    "string": "Permission is invalid"
+  },
+  "src_dot_utils_dot_errors_dot_invalidStatus": {
+    "context": "error message",
+    "string": "Status is invalid"
+  },
+  "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
+    "string": "Url has invalid format"
+  },
+  "src_dot_utils_dot_errors_dot_misconfigured": {
+    "string": "Plugin is misconfigured and cannot be activated"
+  },
+  "src_dot_utils_dot_errors_dot_nameAlreadyTaken": {
+    "string": "This name is already taken. Please provide another."
   },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
@@ -5102,8 +5694,26 @@
     "context": "error message",
     "string": "Only draft orders can be edited"
   },
+  "src_dot_utils_dot_errors_dot_notFound": {
+    "context": "error message",
+    "string": "Invoice not found"
+  },
+  "src_dot_utils_dot_errors_dot_notReady": {
+    "context": "error message",
+    "string": "Billing address is not set or invoice is not ready to be send"
+  },
+  "src_dot_utils_dot_errors_dot_numberNotSet": {
+    "context": "error message",
+    "string": "Number not set for an invoice"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopeApp": {
+    "string": "App is out of your permissions scope"
+  },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
     "string": "Group is out of your permission scope"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopePermission": {
+    "string": "Permission is out of your scope"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeUser": {
     "string": "User is out of your permissions scope"
@@ -5149,8 +5759,16 @@
   "src_dot_utils_dot_errors_dot_unknownError": {
     "string": "Unknown error"
   },
+  "src_dot_utils_dot_errors_dot_urlNotSet": {
+    "context": "error message",
+    "string": "URL not set for an invoice"
+  },
   "src_dot_utils_dot_errors_dot_variantNoDigitalContent": {
     "string": "This variant does not have any digital content"
+  },
+  "src_dot_utils_dot_errors_dot_variantUnique": {
+    "context": "product attribute error",
+    "string": "This variant already exists"
   },
   "src_dot_vouchers": {
     "context": "vouchers section name",
@@ -5238,6 +5856,14 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
+    "context": "event",
+    "string": "Checkout updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
+    "context": "event",
+    "string": "Invoice deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
     "context": "section header",
     "string": "Events"
@@ -5246,17 +5872,29 @@
     "context": "event",
     "string": "Order updated"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
+    "context": "event",
+    "string": "Checkout created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
+    "context": "event",
+    "string": "Invoice sent"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
     "context": "event",
-    "string": "Product created"
+    "string": "Ürün oluşturuldu"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
     "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
+    "context": "event",
+    "string": "Product updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
     "context": "event",
@@ -5281,6 +5919,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
     "string": "Changed quantity in checkout"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
+    "context": "event",
+    "string": "Invoice requested"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
     "context": "event",
@@ -5314,9 +5956,6 @@
     "context": "webhook specific information",
     "string": "Webhook specific information"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_819389696": {
-    "string": "Assign to Service Account"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
     "context": "webhooks active",
     "string": "Webhook is active"
@@ -5337,31 +5976,16 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_1432828311": {
-    "string": "Search Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_2295583901": {
-    "context": "button",
-    "string": "Create webhook"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_3300314452": {
-    "context": "tab name",
-    "string": "All Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_active": {
-    "context": "webhook",
-    "string": "Aktif"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_inactive": {
-    "context": "webhook",
-    "string": "Inactive"
-  },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_2487865635": {
-    "context": "webhook service account",
-    "string": "Service Account"
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3493926696": {
+    "context": "button",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3861572549": {
+    "context": "header",
+    "string": "Webhooks"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",
