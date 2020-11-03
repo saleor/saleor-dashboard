@@ -16,10 +16,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherValueProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   defaultCurrency: string;
   errors: DiscountErrorFragment[];
   disabled: boolean;
@@ -74,11 +74,11 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               data.discountType === DiscountValueTypeEnum.FIXED
                 ? defaultCurrency
                 : "%",
-            name: "discountType" as keyof FormData,
+            name: "discountType" as keyof VoucherDetailsPageFormData,
             values: null
           }}
           helperText={getDiscountErrorMessage(formErrors.discountValue, intl)}
-          name={"value" as keyof FormData}
+          name={"value" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
           label={intl.formatMessage({
             defaultMessage: "Discount Value"
@@ -102,7 +102,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               label={intl.formatMessage({
                 defaultMessage: "Voucher Specific Information"
               })}
-              name={"type" as keyof FormData}
+              name={"type" as keyof VoucherDetailsPageFormData}
               value={data.type}
               onChange={onChange}
             />
@@ -111,7 +111,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         <Hr className={classes.hr} />
         <FormSpacer />
         <ControlledCheckbox
-          name={"applyOncePerOrder" as keyof FormData}
+          name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}
           label={
             <>
               <FormattedMessage

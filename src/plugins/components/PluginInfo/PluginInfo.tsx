@@ -13,10 +13,10 @@ import getPluginErrorMessage from "@saleor/utils/errors/plugins";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { FormData } from "../PluginsDetailsPage";
+import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
 
 interface PluginInfoProps {
-  data: FormData;
+  data: PluginDetailsPageFormData;
   description: string;
   errors: PluginErrorFragment[];
   name: string;
@@ -83,7 +83,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
           })}
         </Typography>
         <ControlledCheckbox
-          name={"active" as keyof FormData}
+          name={"active" as keyof PluginDetailsPageFormData}
           label={intl.formatMessage({
             defaultMessage: "Set plugin as Active"
           })}

@@ -1,4 +1,4 @@
-import useForm, { UseFormResult } from "@saleor/hooks/useForm";
+import useForm, { SubmitPromise, UseFormResult } from "@saleor/hooks/useForm";
 import React from "react";
 
 export interface FormProps<T> {
@@ -6,7 +6,7 @@ export interface FormProps<T> {
   confirmLeave?: boolean;
   initial?: T;
   resetOnSubmit?: boolean;
-  onSubmit?: (data: T) => void;
+  onSubmit?: (data: T) => SubmitPromise | void;
 }
 
 function Form<T>(props: FormProps<T>) {

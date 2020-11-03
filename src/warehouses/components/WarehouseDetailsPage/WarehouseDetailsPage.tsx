@@ -11,6 +11,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { findValueInEnum, maybe } from "@saleor/misc";
@@ -36,7 +37,7 @@ export interface WarehouseDetailsPageProps {
   onBack: () => void;
   onDelete: () => void;
   onShippingZoneClick: (id: string) => void;
-  onSubmit: (data: WarehouseDetailsPageFormData) => void;
+  onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
 const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
@@ -58,7 +59,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   const {
     errors: validationErrors,
     submit: handleSubmit
-  } = useAddressValidation<WarehouseDetailsPageFormData>(onSubmit);
+  } = useAddressValidation(onSubmit);
 
   const initialForm: WarehouseDetailsPageFormData = {
     city: maybe(() => warehouse.address.city, ""),
@@ -76,7 +77,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, submit }) => {
+      {({ change, data, hasChanged, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -121,7 +122,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={disabled}
+              disabled={disabled || !hasChanged}
               onCancel={onBack}
               onDelete={onDelete}
               onSave={submit}

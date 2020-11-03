@@ -19,9 +19,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { decimal, weight } from "../../misc";
-import ProductCreatePage, {
-  ProductCreatePageSubmitData
-} from "../components/ProductCreatePage";
+import ProductCreatePage from "../components/ProductCreatePage";
+import { ProductCreateData } from "../components/ProductCreatePage/form";
 import {
   useProductCreateMutation,
   useProductSetAvailabilityForPurchase
@@ -91,7 +90,7 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleCreate = async (formData: ProductCreatePageSubmitData) => {
+  const handleCreate = async (formData: ProductCreateData) => {
     const result = await productCreate({
       variables: {
         input: {
@@ -106,7 +105,7 @@ export const ProductCreateView: React.FC = () => {
           descriptionJson: JSON.stringify(formData.description),
           isPublished: formData.isPublished,
           name: formData.name,
-          productType: formData.productType,
+          productType: formData.productType?.id,
           publicationDate:
             formData.publicationDate !== "" ? formData.publicationDate : null,
           seo: {

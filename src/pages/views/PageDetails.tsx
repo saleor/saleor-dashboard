@@ -14,7 +14,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder, maybe } from "../../misc";
 import { PageInput } from "../../types/globalTypes";
-import PageDetailsPage, { FormData } from "../components/PageDetailsPage";
+import PageDetailsPage, {
+  PageDetailsPageFormData
+} from "../components/PageDetailsPage";
 import { TypedPageRemove, TypedPageUpdate } from "../mutations";
 import { TypedPageDetailsQuery } from "../queries";
 import { PageRemove } from "../types/PageRemove";
@@ -25,7 +27,7 @@ export interface PageDetailsProps {
   params: PageUrlQueryParams;
 }
 
-const createPageInput = (data: FormData): PageInput => ({
+const createPageInput = (data: PageDetailsPageFormData): PageInput => ({
   contentJson: JSON.stringify(data.content),
   isPublished: data.isPublished,
   publicationDate: data.publicationDate,
@@ -61,7 +63,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           {(pageUpdate, pageUpdateOpts) => (
             <TypedPageDetailsQuery variables={{ id }}>
               {pageDetails => {
-                const handleUpdate = async (data: FormData) => {
+                const handleUpdate = async (data: PageDetailsPageFormData) => {
                   const result = await pageUpdate({
                     variables: {
                       id,

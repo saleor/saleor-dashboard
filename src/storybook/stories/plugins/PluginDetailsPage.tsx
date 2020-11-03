@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import PluginsDetailsPage, {
-  FormData,
+  PluginDetailsPageFormData,
   PluginsDetailsPageProps
 } from "../../../plugins/components/PluginsDetailsPage";
 import { plugin } from "../../../plugins/fixtures";
@@ -31,7 +31,7 @@ storiesOf("Views / Plugins / Plugin details", module)
       {...props}
       errors={[
         ...(["active", "Username or account", "Password or license"] as Array<
-          keyof FormData
+          keyof PluginDetailsPageFormData
         >).map(field => ({
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.INVALID,

@@ -11,6 +11,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -27,7 +28,7 @@ import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 
-export interface FormData extends MetadataFormData {
+export interface PageDetailsPageFormData extends MetadataFormData {
   content: RawDraftContentState;
   isPublished: boolean;
   publicationDate: string;
@@ -45,7 +46,7 @@ export interface PageDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: PageDetailsPageFormData) => SubmitPromise;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -67,7 +68,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   const pageExists = page !== null;
 
-  const initialForm: FormData = {
+  const initialForm: PageDetailsPageFormData = {
     content: maybe(
       () => JSON.parse(page.contentJson),
       convertToRaw(ContentState.createFromText(""))
@@ -84,13 +85,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     title: page?.title || ""
   };
 
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: PageDetailsPageFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       ...data,
       isPublished: data.isPublished || !!data.publicationDate,
       metadata,

@@ -11,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -54,7 +55,7 @@ export interface SiteSettingsPageProps {
   onBack: () => void;
   onKeyAdd: () => void;
   onKeyRemove: (keyType: AuthorizationKeyType) => void;
-  onSubmit: (data: SiteSettingsPageFormData) => void;
+  onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
 
 export function areAddressInputFieldsModified(
@@ -105,7 +106,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const {
     errors: validationErrors,
     submit: handleSubmitWithAddress
-  } = useAddressValidation<SiteSettingsPageFormData>(onSubmit);
+  } = useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: maybe(() => shop.companyAddress.city, ""),
@@ -134,7 +135,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const submitFunc = areAddressInputFieldsModified(data)
           ? handleSubmitWithAddress
           : onSubmit;
-        submitFunc(data);
+        return submitFunc(data);
       }}
       confirmLeave
     >

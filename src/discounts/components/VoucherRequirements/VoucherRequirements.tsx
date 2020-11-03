@@ -11,10 +11,10 @@ import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherRequirementsProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
@@ -73,7 +73,7 @@ const VoucherRequirements = ({
         <RadioGroupField
           choices={requirementsPickerChoices}
           disabled={disabled}
-          name={"requirementsPicker" as keyof FormData}
+          name={"requirementsPicker" as keyof VoucherDetailsPageFormData}
           value={data.requirementsPicker}
           onChange={onChange}
         />
@@ -86,7 +86,7 @@ const VoucherRequirements = ({
             error={!!formErrors.minSpent}
             helperText={getDiscountErrorMessage(formErrors.minSpent, intl)}
             label={minimalOrderValueText}
-            name={"minSpent" as keyof FormData}
+            name={"minSpent" as keyof VoucherDetailsPageFormData}
             value={data.minSpent}
             onChange={onChange}
             fullWidth
@@ -100,7 +100,9 @@ const VoucherRequirements = ({
               intl
             )}
             label={minimalQuantityText}
-            name={"minCheckoutItemsQuantity" as keyof FormData}
+            name={
+              "minCheckoutItemsQuantity" as keyof VoucherDetailsPageFormData
+            }
             value={data.minCheckoutItemsQuantity}
             onChange={onChange}
             fullWidth

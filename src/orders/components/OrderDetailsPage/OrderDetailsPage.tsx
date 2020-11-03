@@ -12,6 +12,7 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -74,7 +75,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
-  onSubmit(data: MetadataFormData);
+  onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -123,7 +124,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       ? data.privateMetadata
       : undefined;
 
-    onSubmit({
+    return onSubmit({
       metadata,
       privateMetadata
     });

@@ -130,8 +130,8 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     onCompleted: onTokenDelete
   });
 
-  const handleSubmit = (data: CustomAppDetailsPageFormData) =>
-    updateApp({
+  const handleSubmit = async (data: CustomAppDetailsPageFormData) => {
+    const result = await updateApp({
       variables: {
         id,
         input: {
@@ -143,6 +143,9 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         }
       }
     });
+
+    return result.data.appUpdate.errors;
+  };
 
   const handleTokenCreate = (name: string) =>
     createToken({

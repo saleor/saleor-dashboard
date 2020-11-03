@@ -123,16 +123,14 @@ export function getStockInputFromVariant(
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateData_product
 ): VariantAttributeInput[] {
-  return maybe(() =>
-    product.productType.variantAttributes.map(attribute => ({
-      data: {
-        values: attribute.values
-      },
-      id: attribute.id,
-      label: attribute.name,
-      value: ""
-    }))
-  );
+  return product?.productType?.variantAttributes?.map(attribute => ({
+    data: {
+      values: attribute.values
+    },
+    id: attribute.id,
+    label: attribute.name,
+    value: ""
+  }));
 }
 
 export function getStockInputFromProduct(
