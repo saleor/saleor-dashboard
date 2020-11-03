@@ -1,6 +1,6 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -57,12 +57,12 @@ export interface ProductVariantUpdateFormProps
   extends UseProductVariantUpdateFormOpts {
   children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
   variant: ProductVariant;
-  onSubmit: (data: ProductVariantUpdateSubmitData) => Promise<any[]>;
+  onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;
 }
 
 function useProductVariantUpdateForm(
   variant: ProductVariant,
-  onSubmit: (data: ProductVariantUpdateSubmitData) => Promise<any[]>,
+  onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
   opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {
   const [changed, setChanged] = React.useState(false);

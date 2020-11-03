@@ -14,6 +14,7 @@ import {
   ShippingZoneDetailsFragment,
   ShippingZoneDetailsFragment_warehouses
 } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
@@ -46,7 +47,7 @@ export interface ShippingZoneDetailsPageProps
   onPriceRateAdd: () => void;
   onPriceRateEdit: (id: string) => void;
   onRateRemove: (rateId: string) => void;
-  onSubmit: (data: FormData) => Promise<any[]>;
+  onSubmit: (data: FormData) => SubmitPromise;
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;

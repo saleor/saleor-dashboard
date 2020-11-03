@@ -11,6 +11,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -45,7 +46,7 @@ export interface PageDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: PageDetailsPageFormData) => Promise<any[]>;
+  onSubmit: (data: PageDetailsPageFormData) => SubmitPromise;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({

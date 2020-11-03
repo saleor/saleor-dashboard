@@ -7,6 +7,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -36,7 +37,7 @@ export interface MenuDetailsPageProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
-  onSubmit: (data: MenuDetailsSubmitData) => Promise<any[]>;
+  onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({

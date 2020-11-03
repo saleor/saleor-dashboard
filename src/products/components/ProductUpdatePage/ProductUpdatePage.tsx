@@ -12,6 +12,7 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -61,7 +62,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
-  onSubmit: (data: ProductUpdatePageSubmitData) => Promise<any[]>;
+  onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
