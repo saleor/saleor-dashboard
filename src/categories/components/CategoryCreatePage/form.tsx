@@ -55,8 +55,6 @@ function useCategoryCreateForm(
   });
 
   const {
-    isMetadataModified,
-    isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
@@ -69,7 +67,6 @@ function useCategoryCreateForm(
   // Need to make it function to always have description.current up to date
   const getData = (): CategoryCreateData => ({
     ...form.data,
-    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     description: description.current
   });
 

@@ -78,8 +78,12 @@ function useCategoryUpdateForm(
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     description: description.current
   });
+  const getSubmitData = (): CategoryUpdateData => ({
+    ...getData(),
+    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
+  });
 
-  const submit = () => handleFormSubmit(getData(), onSubmit, setChanged);
+  const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
   return {
     change: handleChange,
