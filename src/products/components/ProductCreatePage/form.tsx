@@ -1,5 +1,7 @@
+import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
@@ -17,7 +19,7 @@ import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/Searc
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { RawDraftContentState } from "draft-js";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
 import { SearchProductTypes_search_edges_node } from "../../../searches/types/SearchProductTypes";
@@ -34,7 +36,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   changeTaxCode: boolean;
   chargeTaxes: boolean;
   collections: string[];
-  description: RawDraftContentState;
+  description: OutputData;
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
@@ -56,19 +58,22 @@ export interface ProductCreateData extends ProductCreateFormData {
   stocks: ProductStockInput[];
 }
 
-type ProductCreateHandlers = Record<
-  | "changeMetadata"
-  | "selectCategory"
-  | "selectCollection"
-  | "selectProductType"
-  | "selectTaxRate",
-  FormChange
-> &
-  Record<
-    "changeStock" | "selectAttribute" | "selectAttributeMultiple",
-    FormsetChange<string>
-  > &
-  Record<"addStock" | "deleteStock", (id: string) => void>;
+interface ProductCreateHandlers
+  extends Record<
+      | "changeMetadata"
+      | "selectCategory"
+      | "selectCollection"
+      | "selectProductType"
+      | "selectTaxRate",
+      FormChange
+    >,
+    Record<
+      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+      FormsetChange<string>
+    >,
+    Record<"addStock" | "deleteStock", (id: string) => void> {
+  changeDescription: RichTextEditorChange;
+}
 export interface UseProductCreateFormResult {
   change: FormChange;
   data: ProductCreateData;
@@ -106,7 +111,7 @@ const defaultInitialFormData: ProductCreateFormData &
   changeTaxCode: false,
   chargeTaxes: false,
   collections: [],
-  description: {} as any,
+  description: null,
   isAvailable: false,
   isAvailableForPurchase: false,
   isPublished: false,
@@ -117,7 +122,7 @@ const defaultInitialFormData: ProductCreateFormData &
   publicationDate: "",
   seoDescription: "",
   seoTitle: "",
-  sku: null,
+  sku: "",
   slug: "",
   stockQuantity: null,
   taxCode: null,
@@ -152,6 +157,10 @@ function useProductCreateForm(
   const [productType, setProductType] = useStateFromProps<ProductType>(
     initialProductType || null
   );
+  const [description, changeDescription] = useRichText({
+    initial: null,
+    triggerChange
+  });
 
   const {
     makeChangeHandler: makeMetadataChangeHandler
@@ -211,19 +220,21 @@ function useProductCreateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const data: ProductCreateData = {
+  const getData = (): ProductCreateData => ({
     ...form.data,
     attributes: attributes.data,
+    description: description.current,
     productType,
     stocks: stocks.data
-  };
-  const submit = () => onSubmit(data);
+  });
+  const submit = () => onSubmit(getData());
 
   return {
     change: handleChange,
-    data,
+    data: getData(),
     handlers: {
       addStock: handleStockAdd,
+      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,

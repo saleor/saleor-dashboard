@@ -86,12 +86,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
-  // Ensures that it will not change after component rerenders, because it
-  // generates different block keys and it causes editor to lose its content.
-  const initialDescription = React.useRef(
-    convertToRaw(ContentState.createFromText(""))
-  );
-
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || ""
@@ -144,8 +138,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  initialDescription={initialDescription.current}
                   onChange={change}
+                  onDescriptionChange={handlers.changeDescription}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -167,6 +161,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       weightUnit={weightUnit}
                       onChange={change}
                     />
+                    <CardSpacer />
                     <ProductPricing
                       currency={currency}
                       data={data}

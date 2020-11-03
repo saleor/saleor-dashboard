@@ -19,6 +19,7 @@ export interface RichTextEditorProps {
   label: string;
   name: string;
   onChange: RichTextEditorChange;
+  onReady?: () => void;
 }
 
 const useStyles = makeStyles(
@@ -86,7 +87,10 @@ const useStyles = makeStyles(
         border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
         borderRadius: 4,
         boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
+        fontSize: theme.typography.body1.fontSize,
         padding: theme.spacing(3, 2),
+        paddingBottom: theme.spacing(),
+        paddingLeft: 10,
         position: "relative",
         transition: theme.transitions.duration.short + "ms"
       },
@@ -103,7 +107,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   error,
   helperText,
   label,
-  onChange
+  onChange,
+  onReady
 }) => {
   const classes = useStyles({});
 
@@ -120,6 +125,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             const savedData = await api.saver.save();
             onChange(savedData);
           },
+          onReady,
           tools: {
             header: {
               class: Header,

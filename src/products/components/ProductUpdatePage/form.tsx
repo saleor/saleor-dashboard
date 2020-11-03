@@ -23,6 +23,7 @@ import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import useRichText from "@saleor/utils/richText/useRichText";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -164,15 +165,10 @@ function useProductUpdateForm(
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
-  const description = React.useRef<OutputData>();
-
-  React.useEffect(() => {
-    try {
-      description.current = JSON.parse(product.descriptionJson);
-    } catch {
-      description.current = undefined;
-    }
-  }, [product]);
+  const [description, changeDescription] = useRichText({
+    initial: product?.descriptionJson,
+    triggerChange
+  });
 
   const {
     isMetadataModified,
@@ -227,10 +223,6 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const changeDescription: RichTextEditorChange = data => {
-    triggerChange();
-    description.current = data;
-  };
 
   const data: ProductUpdateData = {
     ...form.data,
