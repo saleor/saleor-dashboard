@@ -60,6 +60,10 @@ const useStyles = makeStyles(
         "& .ce-conversion-tool--focused": {
           background: `${fade(theme.palette.primary.main, 0.1)} !important`
         },
+        "& .ce-header": {
+          marginBottom: 0,
+          paddingBottom: theme.spacing(1)
+        },
         "& .ce-inline-tool": {
           ...hover,
           height: 32,
