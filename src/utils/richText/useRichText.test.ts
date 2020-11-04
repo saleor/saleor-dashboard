@@ -39,6 +39,7 @@ describe("useRichText", () => {
     const triggerChange = jest.fn();
     const hook = renderHook(() =>
       useRichText({
+        initial: null,
         triggerChange
       })
     );

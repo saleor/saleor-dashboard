@@ -1,6 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 function useRichText(opts: {
   initial: string | null;
@@ -9,9 +9,11 @@ function useRichText(opts: {
   const data = useRef<OutputData>(
     opts.initial === null ? { blocks: [] } : undefined
   );
+  const [, setLoaded] = useState(false);
   useEffect(() => {
     try {
       data.current = JSON.parse(opts.initial);
+      setLoaded(true);
     } catch {
       data.current = undefined;
     }

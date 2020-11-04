@@ -3,6 +3,7 @@ import { CollectionDetails_collection } from "@saleor/collections/types/Collecti
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
+import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -89,7 +90,7 @@ function useCollectionUpdateForm(
   const getSubmitData = (): CollectionUpdateData => ({
     ...getData(),
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
-    isPublished: form.data.isPublished || !!form.data.publicationDate
+    ...getPublicationData(form.data)
   });
 
   const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);

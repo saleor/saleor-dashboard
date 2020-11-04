@@ -22,6 +22,7 @@ const pageCreate = gql`
     pageCreate(input: $input) {
       errors: pageErrors {
         ...PageErrorFragment
+        message
       }
       page {
         ...PageDetailsFragment
