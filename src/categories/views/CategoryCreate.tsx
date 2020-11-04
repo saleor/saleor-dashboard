@@ -9,7 +9,8 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import CategoryCreatePage, { FormData } from "../components/CategoryCreatePage";
+import CategoryCreatePage from "../components/CategoryCreatePage";
+import { CategoryCreateData } from "../components/CategoryCreatePage/form";
 import { useCategoryCreateMutation } from "../mutations";
 import { CategoryCreate } from "../types/CategoryCreate";
 import { categoryListUrl, categoryUrl } from "../urls";
@@ -43,7 +44,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     onCompleted: handleSuccess
   });
 
-  const handleCreate = async (formData: FormData) => {
+  const handleCreate = async (formData: CategoryCreateData) => {
     const result = await createCategory({
       variables: {
         input: {

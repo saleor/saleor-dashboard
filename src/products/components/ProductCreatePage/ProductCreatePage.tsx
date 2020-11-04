@@ -19,7 +19,6 @@ import { SearchCategories_search_edges_node } from "@saleor/searches/types/Searc
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { ContentState, convertToRaw } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
