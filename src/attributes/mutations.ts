@@ -1,8 +1,5 @@
 import { attributeDetailsFragment } from "@saleor/fragments/attributes";
-import {
-  attributeErrorFragment,
-  productErrorFragment
-} from "@saleor/fragments/errors";
+import { attributeErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
@@ -40,11 +37,11 @@ import {
 } from "./types/AttributeValueUpdate";
 
 const attributeBulkDelete = gql`
-  ${productErrorFragment}
+  ${attributeErrorFragment}
   mutation AttributeBulkDelete($ids: [ID!]!) {
     attributeBulkDelete(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors: attributeErrors {
+        ...AttributeErrorFragment
       }
     }
   }
