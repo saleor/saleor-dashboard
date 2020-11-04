@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ProductVariant
@@ -32,6 +32,7 @@ export interface ProductVariant_attributes_attribute {
   id: string;
   name: string | null;
   slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariant_attributes_attribute_values | null)[] | null;
 }

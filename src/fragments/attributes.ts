@@ -2,6 +2,14 @@ import gql from "graphql-tag";
 
 import { metadataFragment } from "./metadata";
 
+export const attributeValueFragment = gql`
+  fragment AttributeValueFragment on AttributeValue {
+    id
+    name
+    slug
+  }
+`;
+
 export const attributeFragment = gql`
   fragment AttributeFragment on Attribute {
     id
@@ -17,6 +25,7 @@ export const attributeFragment = gql`
 export const attributeDetailsFragment = gql`
   ${attributeFragment}
   ${metadataFragment}
+  ${attributeValueFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
     ...MetadataFragment
@@ -25,9 +34,7 @@ export const attributeDetailsFragment = gql`
     storefrontSearchPosition
     valueRequired
     values {
-      id
-      name
-      slug
+      ...AttributeValueFragment
       type
     }
   }

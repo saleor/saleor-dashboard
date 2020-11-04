@@ -1,4 +1,5 @@
 import { ChannelData } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -14,9 +15,7 @@ import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/
 import { StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 
-import { ProductAttributeInput } from "../components/ProductAttributes";
 import { ProductStockInput } from "../components/ProductStocks";
-import { VariantAttributeInput } from "../components/ProductVariantAttributes";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
@@ -38,9 +37,9 @@ export interface ProductType {
 
 export function getAttributeInputFromProduct(
   product: ProductDetails_product
-): ProductAttributeInput[] {
+): AttributeInput[] {
   return maybe(
-    (): ProductAttributeInput[] =>
+    (): AttributeInput[] =>
       product.attributes.map(attribute => ({
         data: {
           inputType: attribute.attribute.inputType,
@@ -77,7 +76,7 @@ export function getSelectedAttributesFromProduct(
 
 export function getAttributeInputFromProductType(
   productType: ProductType
-): ProductAttributeInput[] {
+): AttributeInput[] {
   return productType.productAttributes.map(attribute => ({
     data: {
       inputType: attribute.inputType,
@@ -92,16 +91,18 @@ export function getAttributeInputFromProductType(
 
 export function getAttributeInputFromVariant(
   variant: ProductVariant
-): VariantAttributeInput[] {
+): AttributeInput[] {
   return maybe(
-    (): VariantAttributeInput[] =>
+    (): AttributeInput[] =>
       variant.attributes.map(attribute => ({
         data: {
+          inputType: attribute.attribute.inputType,
+          isRequired: attribute.attribute.valueRequired,
           values: attribute.attribute.values
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: maybe(() => attribute.values[0].slug, null)
+        value: [maybe(() => attribute.values[0].slug, null)]
       })),
     []
   );
@@ -122,14 +123,16 @@ export function getStockInputFromVariant(
 
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateData_product
-): VariantAttributeInput[] {
+): AttributeInput[] {
   return product?.productType?.variantAttributes?.map(attribute => ({
     data: {
+      inputType: attribute.inputType,
+      isRequired: attribute.valueRequired,
       values: attribute.values
     },
     id: attribute.id,
     label: attribute.name,
-    value: ""
+    value: [""]
   }));
 }
 

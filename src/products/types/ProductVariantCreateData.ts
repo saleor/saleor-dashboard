@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: ProductVariantCreateData
 // ====================================================
@@ -37,6 +39,7 @@ export interface ProductVariantCreateData_product_productType_variantAttributes 
   id: string;
   slug: string | null;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantCreateData_product_productType_variantAttributes_values | null)[] | null;
 }

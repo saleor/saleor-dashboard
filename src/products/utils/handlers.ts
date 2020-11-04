@@ -3,11 +3,11 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
+import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { toggle } from "@saleor/utils/lists";
 
-import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createAttributeChangeHandler(
@@ -101,7 +101,7 @@ export function createVariantChannelsChangeHandler(
 
 export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributes: FormsetData<ProductAttributeInputData, string[]>,
+  attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void
 ): FormsetChange<string> {
   return (attributeId: string, value: string) => {
@@ -121,7 +121,7 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
+  setAttributes: (data: FormsetData<AttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
   productTypeChoiceList: ProductType[],
   triggerChange: () => void

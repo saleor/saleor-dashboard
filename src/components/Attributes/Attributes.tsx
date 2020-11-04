@@ -13,28 +13,29 @@ import MultiAutocompleteSelectField, {
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { PageDetailsFragment_pageType_attributes_values } from "@saleor/fragments/types/PageDetailsFragment";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
+import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
-export interface PageAttributeInputData {
+export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
   isRequired: boolean;
-  values: PageDetailsFragment_pageType_attributes_values[];
+  values: AttributeValueFragment[];
 }
-export type PageAttributeInput = FormsetAtomicData<
-  PageAttributeInputData,
-  string[]
->;
-export interface PageAttributesProps {
-  attributes: PageAttributeInput[];
+export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
+export interface AttributesProps {
+  attributes: AttributeInput[];
   disabled: boolean;
-  errors: PageErrorWithAttributesFragment[];
+  errors: Array<
+    ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
+  >;
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
 }
@@ -82,11 +83,11 @@ const useStyles = makeStyles(
       transform: "rotate(180deg)"
     }
   }),
-  { name: "PageAttributes" }
+  { name: "Attributes" }
 );
 
 function getMultiChoices(
-  values: PageDetailsFragment_pageType_attributes_values[]
+  values: AttributeValueFragment[]
 ): MultiAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
@@ -95,7 +96,7 @@ function getMultiChoices(
 }
 
 function getMultiDisplayValue(
-  attribute: PageAttributeInput
+  attribute: AttributeInput
 ): MultiAutocompleteChoiceType[] {
   return attribute.value.map(attributeValue => {
     const definedAttributeValue = attribute.data.values.find(
@@ -116,7 +117,7 @@ function getMultiDisplayValue(
 }
 
 function getSingleChoices(
-  values: PageDetailsFragment_pageType_attributes_values[]
+  values: AttributeValueFragment[]
 ): SingleAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
@@ -124,7 +125,19 @@ function getSingleChoices(
   }));
 }
 
-const PageAttributes: React.FC<PageAttributesProps> = ({
+function getErrorMessage(
+  err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment,
+  intl: IntlShape
+): string {
+  switch (err?.__typename) {
+    case "ProductError":
+      return getProductErrorMessage(err, intl);
+    case "PageError":
+      return getPageErrorMessage(err, intl);
+  }
+}
+
+const Attributes: React.FC<AttributesProps> = ({
   attributes,
   disabled,
   errors,
@@ -141,7 +154,7 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Attributes",
-          description: "page attributes, section header"
+          description: "attributes, section header"
         })}
       />
       <CardContent className={classes.cardContent}>
@@ -150,7 +163,7 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
             <Typography className={classes.expansionBarLabel} variant="caption">
               <FormattedMessage
                 defaultMessage="{number} Attributes"
-                description="number of page attributes"
+                description="number of attributes"
                 values={{
                   number: attributes.length
                 }}
@@ -160,7 +173,7 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
           <IconButton
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
-            data-test="page-attributes-expand"
+            data-test="attributes-expand"
           >
             <ArrowDropDownIcon
               className={classNames(classes.expansionBarButtonIcon, {
@@ -183,11 +196,11 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
                   <Grid className={classes.attributeSection} variant="uniform">
                     <div
                       className={classes.attributeSectionLabel}
-                      data-test="page-attribute-label"
+                      data-test="attribute-label"
                     >
                       <Typography>{attribute.label}</Typography>
                     </div>
-                    <div data-test="page-attribute-value">
+                    <div data-test="attribute-value">
                       {attribute.data.inputType ===
                       AttributeInputTypeEnum.DROPDOWN ? (
                         <SingleAutocompleteSelectField
@@ -202,7 +215,7 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
                           }
                           emptyOption={!attribute.data.isRequired}
                           error={!!error}
-                          helperText={getPageErrorMessage(error, intl)}
+                          helperText={getErrorMessage(error, intl)}
                           name={`attribute:${attribute.label}`}
                           label={intl.formatMessage({
                             defaultMessage: "Value",
@@ -219,7 +232,7 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
                           choices={getMultiChoices(attribute.data.values)}
                           displayValues={getMultiDisplayValue(attribute)}
                           error={!!error}
-                          helperText={getPageErrorMessage(error, intl)}
+                          helperText={getErrorMessage(error, intl)}
                           label={intl.formatMessage({
                             defaultMessage: "Values",
                             description: "attribute values"
@@ -243,5 +256,5 @@ const PageAttributes: React.FC<PageAttributesProps> = ({
     </Card>
   );
 };
-PageAttributes.displayName = "PageAttributes";
-export default PageAttributes;
+Attributes.displayName = "Attributes";
+export default Attributes;

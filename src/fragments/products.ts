@@ -243,6 +243,7 @@ export const fragmentVariant = gql`
         id
         name
         slug
+        inputType
         valueRequired
         values {
           id
