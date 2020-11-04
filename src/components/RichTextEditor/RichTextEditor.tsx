@@ -22,6 +22,7 @@ export interface RichTextEditorProps {
   onReady?: () => void;
 }
 
+// TODO: improve dark mode
 const useStyles = makeStyles(
   theme => {
     const hover = {
