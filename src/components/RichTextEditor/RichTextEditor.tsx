@@ -5,10 +5,8 @@ import Quote from "@editorjs/quote";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import Typography from "@material-ui/core/Typography";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import classNames from "classnames";
 import createGenericInlineTool from "editorjs-inline-tool";
@@ -40,6 +38,9 @@ const useStyles = makeStyles(
         "& .cdx-quote__text": {
           minHeight: 24
         },
+        "& .ce-block--selected .ce-block__content": {
+          background: `${fade(theme.palette.primary.main, 0.4)} !important`
+        },
         "& .ce-block__content": {
           margin: 0,
           maxWidth: "unset"
@@ -50,15 +51,29 @@ const useStyles = makeStyles(
         "& .ce-conversion-tool--focused": {
           background: `${fade(theme.palette.primary.main, 0.1)} !important`
         },
+        "& .ce-conversion-tool__icon": {
+          background: "none"
+        },
+        "& .ce-conversion-toolbar": {
+          background: theme.palette.background.paper
+        },
         "& .ce-header": {
           marginBottom: 0,
           paddingBottom: theme.spacing(1)
         },
         "& .ce-inline-tool": {
           ...hover,
+          color: theme.palette.text.primary,
           height: 32,
           transition: theme.transitions.duration.short + "ms",
           width: 32
+        },
+        "& .ce-inline-toolbar": {
+          "& input": {
+            background: "none"
+          },
+          background: theme.palette.background.paper,
+          color: theme.palette.text.primary
         },
         "& .ce-inline-toolbar__dropdown": {
           ...hover,
