@@ -1,8 +1,9 @@
+import { OutputData } from "@editorjs/editorjs";
 import Typography from "@material-ui/core/Typography";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import DraftRenderer from "@saleor/components/DraftRenderer";
-import Form from "@saleor/components/Form";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -14,7 +15,7 @@ interface TranslationFieldsRichProps {
   initial: string;
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
-  onSubmit: (data: string) => void;
+  onSubmit: (data: OutputData) => void;
 }
 
 const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
@@ -26,40 +27,39 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+  const [content, change] = useRichText({
+    initial,
+    triggerChange: () => undefined
+  });
+
+  const submit = () => onSubmit(content.current);
 
   return edit ? (
-    <Form
-      initial={{ translation: initial }}
-      onSubmit={data => onSubmit(data.translation)}
-    >
-      {({ change, submit }) => (
-        <div>
-          <RichTextEditor
-            disabled={disabled}
-            error={undefined}
-            helperText={undefined}
-            initial={JSON.parse(initial)}
-            label={intl.formatMessage({
-              defaultMessage: "Translation"
-            })}
-            name="translation"
-            onChange={change}
-          />
-          <TranslationFieldsSave
-            saveButtonState={saveButtonState}
-            onDiscard={onDiscard}
-            onSave={submit}
-          />
-        </div>
-      )}
-    </Form>
+    <form onSubmit={submit}>
+      <RichTextEditor
+        data={content.current}
+        disabled={disabled}
+        error={undefined}
+        helperText={undefined}
+        label={intl.formatMessage({
+          defaultMessage: "Translation"
+        })}
+        name="translation"
+        onChange={change}
+      />
+      <TranslationFieldsSave
+        saveButtonState={saveButtonState}
+        onDiscard={onDiscard}
+        onSave={submit}
+      />
+    </form>
   ) : initial === null ? (
     <Typography color="textSecondary">
       <FormattedMessage defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>
-      <DraftRenderer content={JSON.parse(initial)} />
+      <RichTextEditorContent data={JSON.parse(initial)} />
     </Typography>
   );
 };

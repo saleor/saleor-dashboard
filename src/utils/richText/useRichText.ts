@@ -11,11 +11,13 @@ function useRichText(opts: {
   );
   const [, setLoaded] = useState(false);
   useEffect(() => {
-    try {
-      data.current = JSON.parse(opts.initial);
-      setLoaded(true);
-    } catch {
-      data.current = undefined;
+    if (opts.initial !== null) {
+      try {
+        data.current = JSON.parse(opts.initial);
+        setLoaded(true);
+      } catch {
+        data.current = undefined;
+      }
     }
   }, [opts.initial]);
 
