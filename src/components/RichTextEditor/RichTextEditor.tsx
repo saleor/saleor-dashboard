@@ -39,7 +39,7 @@ const useStyles = makeStyles(
           minHeight: 24
         },
         "& .ce-block--selected .ce-block__content": {
-          background: `${fade(theme.palette.primary.main, 0.4)} !important`
+          background: `${fade(theme.palette.primary.main, 0.2)} !important`
         },
         "& .ce-block__content": {
           margin: 0,
