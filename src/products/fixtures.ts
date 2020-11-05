@@ -5,10 +5,12 @@ import {
 } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
-import { content } from "../storybook/stories/components/RichTextEditor";
+import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
 import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
+
+const content = richTextEditorFixtures.richTextEditor;
 
 export const product: (
   placeholderImage: string

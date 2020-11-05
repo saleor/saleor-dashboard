@@ -2,6 +2,10 @@ import EditorJS, { OutputData } from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
@@ -32,21 +36,6 @@ const useStyles = makeStyles(
     };
 
     return {
-      error: {
-        color: theme.palette.error.main
-      },
-      helperText: {
-        marginTop: theme.spacing(0.75)
-      },
-      label: {
-        color: theme.palette.text.secondary,
-        position: "absolute",
-        top: theme.spacing(1),
-        transition: theme.transitions.duration.short + "ms"
-      },
-      labelActive: {
-        color: theme.palette.primary.main
-      },
       root: {
         "& .cdx-quote__text": {
           minHeight: 24
@@ -99,13 +88,14 @@ const useStyles = makeStyles(
         "& a": {
           color: theme.palette.primary.light
         },
-        "&:hover": {
+        "&:not($rootDisabled):hover": {
           borderColor: theme.palette.primary.main
         },
         border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
         borderRadius: 4,
         boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
         fontSize: theme.typography.body1.fontSize,
+        minHeight: 56,
         padding: theme.spacing(3, 2),
         paddingBottom: theme.spacing(),
         paddingLeft: 10,
@@ -114,6 +104,12 @@ const useStyles = makeStyles(
       },
       rootActive: {
         boxShadow: `inset 0px 0px 0 2px ${theme.palette.primary.main}`
+      },
+      rootDisabled: {
+        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"]
+      },
+      rootError: {
+        borderColor: theme.palette.error.main
       }
     };
   },
@@ -122,9 +118,11 @@ const useStyles = makeStyles(
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   data,
+  disabled,
   error,
   helperText,
   label,
+  name,
   onChange,
   onReady
 }) => {
@@ -144,6 +142,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             onChange(savedData);
           },
           onReady,
+          readOnly: disabled,
           tools: {
             header: {
               class: Header,
@@ -172,39 +171,36 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     [data === undefined]
   );
   React.useEffect(() => editor.current?.destroy, []);
+  React.useEffect(() => {
+    if (editor.current?.readOnly) {
+      editor.current.readOnly.toggle(disabled);
+    }
+  }, [disabled]);
 
   return (
-    <div>
+    <FormControl
+      data-test="richTextEditor"
+      data-test-id={name}
+      disabled={disabled}
+      error={error}
+      fullWidth
+      variant="outlined"
+    >
+      <InputLabel focused={true} shrink={true}>
+        {label}
+      </InputLabel>
       <div
         className={classNames(classes.root, {
-          [classes.rootActive]: isFocused
+          [classes.rootActive]: isFocused,
+          [classes.rootDisabled]: disabled,
+          [classes.rootError]: error
         })}
         ref={editorContainer}
-        data-test="richTextEditor"
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-      >
-        <Typography
-          className={classNames(classes.label, {
-            [classes.labelActive]: isFocused
-          })}
-          variant="caption"
-        >
-          {label}
-        </Typography>
-      </div>
-      {helperText && (
-        <Typography
-          className={classNames({
-            [classes.error]: error,
-            [classes.helperText]: true
-          })}
-          variant="caption"
-        >
-          {helperText}
-        </Typography>
-      )}
-    </div>
+      />
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormControl>
   );
 };
 
