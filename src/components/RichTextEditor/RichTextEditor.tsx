@@ -3,6 +3,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import classNames from "classnames";
+import Undo from "editorjs-undo";
 import React from "react";
 
 import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
@@ -43,7 +44,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             const savedData = await api.saver.save();
             onChange(savedData);
           },
-          onReady,
+          onReady: () => {
+            const undo = new Undo({ editor });
+            undo.initialize(data);
+            if (onReady) {
+              onReady();
+            }
+          },
           readOnly: disabled,
           tools
         });
