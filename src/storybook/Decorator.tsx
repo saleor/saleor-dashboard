@@ -17,7 +17,7 @@ export const Decorator = storyFn => (
     >
       <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
         <TimezoneProvider value="America/New_York">
-          <ThemeProvider isDefaultDark={true}>
+          <ThemeProvider isDefaultDark={false}>
             <MessageManagerProvider>
               <div
                 style={{

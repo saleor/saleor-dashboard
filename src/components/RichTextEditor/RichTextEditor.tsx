@@ -170,7 +170,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             quote: Quote,
             strikethrough: createGenericInlineTool({
               sanitize: {
-                s: true
+                s: {}
               },
               shortcut: "CMD+S",
               tagName: "s",
