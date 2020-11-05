@@ -6,9 +6,11 @@ import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
+import { FormChange } from "@saleor/hooks/useForm";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +24,7 @@ export interface PageOrganizeContentProps {
   errors: PageErrorFragment[];
   disabled: boolean;
   pageTypes: PageTypeFragment[];
-  onPageTypeChange?: (event: React.ChangeEvent<any>) => void;
+  onPageTypeChange?: FormChange;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
 }
@@ -77,10 +79,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             name={"pageType" as keyof FormData}
             onChange={onPageTypeChange}
             value={data.pageType}
-            choices={
-              pageTypes?.map(({ name, id }) => ({ label: name, value: id })) ||
-              []
-            }
+            choices={pageTypes ? mapNodeToChoice(pageTypes) : []}
             InputProps={{
               autoComplete: "off"
             }}
