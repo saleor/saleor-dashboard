@@ -27,7 +27,7 @@ function useChannelsSettings(key: string, { openModal, closeModal }: Actions) {
     }
   }, [selectedChannel]);
 
-  const channel = channelsData?.channels.find(
+  const channel = channelsData?.channels?.find(
     channel => channel.id === selectedChannel
   );
 

@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
-} from "@saleor/components/SingleAutocompleteSelectField";
+import SingleSelectField, {
+  Choices
+} from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,7 +27,7 @@ const useStyles = makeStyles(
 
 interface HomeOrdersCardProps {
   userName: string;
-  channelChoices: SingleAutocompleteChoiceType[];
+  channelChoices: Choices;
   channelValue: string;
   onChannelChange: (value: string) => void;
 }
@@ -72,9 +72,8 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
         </Typography>
       </div>
       <div>
-        {channelChoices?.length && (
-          <SingleAutocompleteSelectField
-            displayValue={channelValue}
+        {!!channelChoices?.length && (
+          <SingleSelectField
             name="channel"
             label={intl.formatMessage({
               defaultMessage: "Channel"

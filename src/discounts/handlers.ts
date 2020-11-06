@@ -1,6 +1,6 @@
 import { ChannelSaleData, ChannelVoucherData } from "@saleor/channels/utils";
-import { FormData as SaleFormData } from "@saleor/discounts/components/SaleDetailsPage";
-import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { SaleDetailsPageFormData } from "@saleor/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { RequireOnlyOne } from "@saleor/misc";
 import { diff } from "fast-array-diff";
@@ -64,7 +64,7 @@ export function createSaleChannelsChangeHandler(
 
 export const getChannelsVariables = (
   id: string,
-  formData: FormData,
+  formData: VoucherDetailsPageFormData,
   prevChannels?: ChannelVoucherData[]
 ) => {
   const removeChannels = prevChannels
@@ -99,7 +99,7 @@ export const getChannelsVariables = (
 
 export const getSaleChannelsVariables = (
   id: string,
-  formData: SaleFormData,
+  formData: SaleDetailsPageFormData,
   prevChannels?: ChannelSaleData[]
 ) => {
   const removeChannels = prevChannels

@@ -1,8 +1,8 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useUser from "@saleor/hooks/useUser";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { getUserName, maybe } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
@@ -16,14 +16,22 @@ const HomeSection = () => {
   const { user } = useUser();
   const { data: channelsData } = useChannelsList({});
 
-  const channelChoices = channelsData?.channels?.map(channel => ({
-    label: channel.name,
-    value: channel.slug
-  }));
+  const channelChoices =
+    channelsData?.channels?.map(channel => ({
+      label: channel.name,
+      value: channel.slug
+    })) || [];
 
-  const [channelChoice, setChannelChoice] = useStateFromProps(
+  const [channelChoice, setChannelChoice] = useLocalStorage(
+    "homepageChannelChoice",
     channelChoices?.length ? channelChoices[0]?.value : ""
   );
+
+  useEffect(() => {
+    if (!channelChoice && channelChoices[0]) {
+      setChannelChoice(channelChoices[0].value);
+    }
+  }, [channelChoices]);
 
   const handleChannelChange = useCallback(value => setChannelChoice(value), []);
 

@@ -21,8 +21,8 @@ export function createAttributeChangeHandler(
 }
 
 export function createChannelsPriceChangeHandler(
-  channelListing: ChannelData[],
-  updateChannels: (data: ChannelData[]) => void,
+  channelListing: ChannelPriceData[],
+  updateChannels: (data: ChannelPriceData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
@@ -137,8 +137,8 @@ export const getChannelsInput = (channels: ChannelPriceData[]) =>
     id: channel.id,
     label: channel.name,
     value: {
-      costPrice: channel.costPrice,
-      price: channel.price
+      costPrice: channel.costPrice || "",
+      price: channel.price || ""
     }
   }));
 

@@ -215,6 +215,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductVariantReorder_productVariantReorder_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductVariantReorder_productVariantReorder_product_variants | null)[] | null;
   weight: ProductVariantReorder_productVariantReorder_product_weight | null;
   taxType: ProductVariantReorder_productVariantReorder_product_taxType | null;

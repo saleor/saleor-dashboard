@@ -4,7 +4,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { Choices } from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -54,7 +54,7 @@ export interface HomePageProps extends UserPermissionProps {
   sales: Home_salesToday_gross;
   topProducts: Home_productTopToday_edges_node[];
   userName: string;
-  channelChoices: SingleAutocompleteChoiceType[];
+  channelChoices: Choices;
   channelValue: string;
   onChannelChange: (value: string) => void;
   onOrdersToCaptureClick: () => void;

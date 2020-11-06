@@ -94,7 +94,6 @@ function useCollectionUpdateForm(
     ...getData(),
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
   });
-
   const handleChannelChange = createChannelsChangeHandler(
     currentChannels,
     setChannels,
@@ -117,10 +116,10 @@ function useCollectionUpdateForm(
 }
 
 const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
-  children,
   collection,
   currentChannels,
   setChannels,
+  children,
   onSubmit
 }) => {
   const props = useCollectionUpdateForm(

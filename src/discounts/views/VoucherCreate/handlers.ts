@@ -1,4 +1,4 @@
-import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import {
@@ -24,7 +24,7 @@ export function createHandler(
     variables: VoucherChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<VoucherChannelListingUpdate>>
 ) {
-  return async (formData: FormData) => {
+  return async (formData: VoucherDetailsPageFormData) => {
     const response = await voucherCreate({
       input: {
         applyOncePerCustomer: formData.applyOncePerCustomer,

@@ -170,6 +170,7 @@ export const productFragmentDetails = gql`
     images {
       ...ProductImageFragment
     }
+    isAvailable
     variants {
       id
       sku

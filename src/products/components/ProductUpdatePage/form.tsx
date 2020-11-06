@@ -21,6 +21,10 @@ import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -92,6 +96,7 @@ export interface UseProductUpdateFormResult {
   change: FormChange;
 
   data: ProductUpdateData;
+  disabled: boolean;
   handlers: ProductUpdateHandlers;
   hasChanged: boolean;
   submit: () => Promise<boolean>;
@@ -111,6 +116,7 @@ export interface UseProductUpdateFormOpts
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
+  hasVariants: boolean;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -247,9 +253,18 @@ function useProductUpdateForm(
 
   const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
+  const disabled =
+    !opts.hasVariants &&
+    (!data.sku ||
+      data.channelListing.some(
+        channel =>
+          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+      ));
+
   return {
     change: handleChange,
     data,
+    disabled,
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,

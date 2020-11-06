@@ -238,7 +238,7 @@ const useStyles = makeStyles(
       padding: 25
     },
     popover: {
-      zIndex: 1
+      zIndex: 2
     },
     root: {
       width: `100%`

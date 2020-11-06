@@ -1,5 +1,5 @@
 import { ChannelSaleData } from "@saleor/channels/utils";
-import { FormData } from "@saleor/discounts/components/SaleDetailsPage";
+import { SaleDetailsPageFormData } from "@saleor/discounts/components/SaleDetailsPage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
   SaleChannelListingUpdate,
@@ -30,7 +30,7 @@ export function createUpdateHandler(
     variables: SaleChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<SaleChannelListingUpdate>>
 ) {
-  return (formData: FormData) => {
+  return (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
     updateSale({
       id,

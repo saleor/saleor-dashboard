@@ -216,6 +216,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   collections: (SimpleProductUpdate_productUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: SimpleProductUpdate_productUpdate_product_weight | null;
   taxType: SimpleProductUpdate_productUpdate_product_taxType | null;

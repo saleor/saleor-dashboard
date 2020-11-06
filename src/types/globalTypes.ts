@@ -488,6 +488,7 @@ export enum LanguageCodeEnum {
   IS = "IS",
   IT = "IT",
   JA = "JA",
+  KA = "KA",
   KM = "KM",
   KO = "KO",
   LT = "LT",
@@ -1162,7 +1163,6 @@ export interface ConfigurationItemInput {
 
 export interface CustomerFilterInput {
   dateJoined?: DateRangeInput | null;
-  moneySpent?: PriceRangeInput | null;
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;

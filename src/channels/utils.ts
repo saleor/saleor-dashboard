@@ -34,7 +34,7 @@ export interface ChannelPriceData {
   costPrice?: string;
 }
 
-interface IChannelPriceArgs {
+export interface IChannelPriceArgs {
   price: string;
   costPrice: string;
 }

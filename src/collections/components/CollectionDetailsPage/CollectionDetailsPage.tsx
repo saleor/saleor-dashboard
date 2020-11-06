@@ -67,7 +67,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     <CollectionUpdateForm
       collection={collection}
       currentChannels={currentChannels}
-      setChannnels={onChannelsChange}
+      setChannels={onChannelsChange}
       onSubmit={onSubmit}
     >
       {({ change, data, handlers, hasChanged, submit }) => (
