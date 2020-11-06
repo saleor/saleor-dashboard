@@ -1,5 +1,5 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
-import { FormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import {
@@ -28,7 +28,7 @@ export function createUpdateHandler(
     variables: VoucherChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<VoucherChannelListingUpdate>>
 ) {
-  return (formData: FormData) => {
+  return (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
     updateVoucher({
       id,

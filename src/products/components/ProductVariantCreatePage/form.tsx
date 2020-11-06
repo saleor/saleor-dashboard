@@ -1,4 +1,4 @@
-import { ChannelPriceData } from "@saleor/channels/utils";
+import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -8,6 +8,10 @@ import useFormset, {
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -16,13 +20,13 @@ import { ProductStockInput } from "../ProductStocks";
 import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
-  channelListing: ChannelPriceData[];
   sku: string;
   trackInventory: boolean;
   weight: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
+  channelListing: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   stocks: ProductStockInput[];
 }
 
@@ -34,6 +38,7 @@ export interface UseProductVariantCreateFormOpts {
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
+  disabled: boolean;
   // TODO: type FormsetChange
   handlers: Record<
     "changeStock" | "selectAttribute" | "changeChannels",
@@ -54,7 +59,6 @@ export interface ProductVariantCreateFormProps
 }
 
 const initial: ProductVariantCreateFormData = {
-  channelListing: [],
   metadata: [],
   privateMetadata: [],
   sku: "",
@@ -112,9 +116,16 @@ function useProductVariantCreateForm(
     triggerChange();
   };
 
+  const disabled = channels?.data.some(
+    channelData =>
+      validatePrice(channelData.value.price) ||
+      validateCostPrice(channelData.value.costPrice)
+  );
+
   const data: ProductVariantCreateData = {
     ...form.data,
     attributes: attributes.data,
+    channelListing: channels.data,
     stocks: stocks.data
   };
 
@@ -123,6 +134,7 @@ function useProductVariantCreateForm(
   return {
     change: handleChange,
     data,
+    disabled,
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,

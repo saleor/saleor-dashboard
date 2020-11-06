@@ -9,10 +9,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import {
-  validateCostPrice,
-  validatePrice
-} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
@@ -68,88 +64,93 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       warehouses={warehouses}
       currentChannels={channels}
     >
-      {({ change, data, handlers, hasChanged, submit }) => {
-        const formDisabled = data.channelListing?.some(
-          channel =>
-            validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-        );
-
-        return (
-          <Container>
-            <AppHeader onBack={onBack}>{product?.name}</AppHeader>
-            <PageHeader title={header} />
-            <Grid variant="inverted">
-              <div>
-                <ProductVariantNavigation
-                  fallbackThumbnail={product?.thumbnail?.url}
-                  variants={product?.variants}
-                  onRowClick={(variantId: string) => {
-                    if (product && product.variants) {
-                      return onVariantClick(variantId);
-                    }
-                  }}
-                  onReorder={onVariantReorder}
-                />
-              </div>
-              <div>
-                <ProductVariantAttributes
-                  attributes={data.attributes}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={handlers.selectAttribute}
-                />
-                <CardSpacer />
-                <ProductShipping
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  weightUnit={weightUnit}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <ProductVariantPrice
-                  ProductVariantChannelListings={data.channelListing}
-                  errors={channelErrors}
-                  loading={disabled}
-                  onChange={handlers.changeChannels}
-                />
-                <CardSpacer />
-                <ProductStocks
-                  data={data}
-                  disabled={disabled}
-                  hasVariants={true}
-                  onFormDataChange={change}
-                  errors={errors}
-                  stocks={data.stocks}
-                  warehouses={warehouses}
-                  onChange={handlers.changeStock}
-                  onWarehouseStockAdd={handlers.addStock}
-                  onWarehouseStockDelete={handlers.deleteStock}
-                  onWarehouseConfigure={onWarehouseConfigure}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={handlers.changeMetadata} />
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || formDisabled || !onSubmit || !hasChanged}
-              labels={{
-                delete: intl.formatMessage({
-                  defaultMessage: "Delete Variant",
-                  description: "button"
-                }),
-                save: intl.formatMessage({
-                  defaultMessage: "Save variant",
-                  description: "button"
-                })
-              }}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onSave={submit}
-            />
-          </Container>
-        );
-      }}
+      {({
+        change,
+        data,
+        disabled: formDisabled,
+        handlers,
+        hasChanged,
+        submit
+      }) => (
+        <Container>
+          <AppHeader onBack={onBack}>{product?.name}</AppHeader>
+          <PageHeader title={header} />
+          <Grid variant="inverted">
+            <div>
+              <ProductVariantNavigation
+                fallbackThumbnail={product?.thumbnail?.url}
+                variants={product?.variants}
+                onRowClick={(variantId: string) => {
+                  if (product && product.variants) {
+                    return onVariantClick(variantId);
+                  }
+                }}
+                onReorder={onVariantReorder}
+              />
+            </div>
+            <div>
+              <ProductVariantAttributes
+                attributes={data.attributes}
+                disabled={disabled}
+                errors={errors}
+                onChange={handlers.selectAttribute}
+              />
+              <CardSpacer />
+              <ProductShipping
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                weightUnit={weightUnit}
+                onChange={change}
+              />
+              <CardSpacer />
+              <ProductVariantPrice
+                ProductVariantChannelListings={data.channelListing.map(
+                  channel => ({
+                    ...channel.data,
+                    ...channel.value
+                  })
+                )}
+                errors={channelErrors}
+                loading={disabled}
+                onChange={handlers.changeChannels}
+              />
+              <CardSpacer />
+              <ProductStocks
+                data={data}
+                disabled={disabled}
+                hasVariants={true}
+                onFormDataChange={change}
+                errors={errors}
+                stocks={data.stocks}
+                warehouses={warehouses}
+                onChange={handlers.changeStock}
+                onWarehouseStockAdd={handlers.addStock}
+                onWarehouseStockDelete={handlers.deleteStock}
+                onWarehouseConfigure={onWarehouseConfigure}
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={handlers.changeMetadata} />
+            </div>
+          </Grid>
+          <SaveButtonBar
+            disabled={disabled || formDisabled || !onSubmit || !hasChanged}
+            labels={{
+              delete: intl.formatMessage({
+                defaultMessage: "Delete Variant",
+                description: "button"
+              }),
+              save: intl.formatMessage({
+                defaultMessage: "Save variant",
+                description: "button"
+              })
+            }}
+            state={saveButtonBarState}
+            onCancel={onBack}
+            onSave={submit}
+          />
+        </Container>
+      )}
     </ProductVariantCreateForm>
   );
 };

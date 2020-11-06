@@ -215,6 +215,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   collections: (ProductVariantSetDefault_productVariantSetDefault_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductVariantSetDefault_productVariantSetDefault_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductVariantSetDefault_productVariantSetDefault_product_variants | null)[] | null;
   weight: ProductVariantSetDefault_productVariantSetDefault_product_weight | null;
   taxType: ProductVariantSetDefault_productVariantSetDefault_product_taxType | null;

@@ -83,7 +83,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   }));
 
   const handleSubmitChannels = (
-    data: ProductVariantCreatePageSubmitData,
+    data: ProductVariantCreateData,
     variantId: string
   ) =>
     updateChannels({
@@ -91,8 +91,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         id: variantId,
         input: data.channelListing.map(listing => ({
           channelId: listing.id,
-          costPrice: listing.costPrice || null,
-          price: listing.price
+          costPrice: listing.value.costPrice || null,
+          price: listing.value.price
         }))
       }
     });

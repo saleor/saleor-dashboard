@@ -173,13 +173,12 @@ export const ProductCreateView: React.FC = () => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        categories={
-          searchCategoryOpts?.data?.search?.edges || [].map(edge => edge.node)
-        }
-        collections={
-          searchCollectionOpts?.data?.search?.edges || [].map(edge => edge.node)
-        }
-        initial={{ channelListing: currentChannels || [] }}
+        categories={(searchCategoryOpts?.data?.search?.edges || []).map(
+          edge => edge.node
+        )}
+        collections={(searchCollectionOpts?.data?.search?.edges || []).map(
+          edge => edge.node
+        )}
         disabled={
           productCreateOpts.loading ||
           productVariantCreateOpts.loading ||

@@ -209,6 +209,7 @@ export interface Product {
   collections: (Product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (Product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;
   taxType: Product_taxType | null;

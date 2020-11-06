@@ -78,14 +78,8 @@ export function createHandler(
           description: formData.seoDescription,
           title: formData.seoTitle
         },
-        sku: formData.sku,
         slug: formData.slug,
-        stocks: formData.stocks.map(stock => ({
-          quantity: parseInt(stock.value, 0),
-          warehouse: stock.id
-        })),
         taxCode: formData.changeTaxCode ? formData.taxCode : undefined,
-        trackInventory: formData.trackInventory,
         weight: weight(formData.weight)
       }
     };
@@ -105,7 +99,7 @@ export function createHandler(
         productVariantCreate(getSimpleProductVariables(formData, productId))
       ]);
       const variantErrors = result[1].data.productVariantCreate.errors;
-      const variantId = result[1].data.productVariantCreate.productVariant.id;
+      const variantId = result[1].data.productVariantCreate.productVariant?.id;
       if (variantErrors.length === 0 && variantId) {
         updateVariantChannels({
           variables: {

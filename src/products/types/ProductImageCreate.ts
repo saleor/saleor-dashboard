@@ -215,6 +215,7 @@ export interface ProductImageCreate_productImageCreate_product {
   collections: (ProductImageCreate_productImageCreate_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
   weight: ProductImageCreate_productImageCreate_product_weight | null;
   taxType: ProductImageCreate_productImageCreate_product_taxType | null;

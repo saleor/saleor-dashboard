@@ -209,6 +209,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   collections: (ProductChannelListingUpdate_productChannelListingUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductChannelListingUpdate_productChannelListingUpdate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants | null)[] | null;
   weight: ProductChannelListingUpdate_productChannelListingUpdate_product_weight | null;
   taxType: ProductChannelListingUpdate_productChannelListingUpdate_product_taxType | null;

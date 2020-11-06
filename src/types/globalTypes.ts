@@ -1155,7 +1155,6 @@ export interface ConfigurationItemInput {
 
 export interface CustomerFilterInput {
   dateJoined?: DateRangeInput | null;
-  moneySpent?: PriceRangeInput | null;
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;

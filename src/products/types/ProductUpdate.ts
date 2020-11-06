@@ -216,6 +216,7 @@ export interface ProductUpdate_productUpdate_product {
   collections: (ProductUpdate_productUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
   images: (ProductUpdate_productUpdate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: ProductUpdate_productUpdate_product_weight | null;
   taxType: ProductUpdate_productUpdate_product_taxType | null;

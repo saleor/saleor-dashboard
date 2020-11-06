@@ -22,9 +22,8 @@ import { useIntl } from "react-intl";
 
 import { weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
-import ProductVariantPage, {
-  ProductVariantPageSubmitData
-} from "../components/ProductVariantPage";
+import ProductVariantPage from "../components/ProductVariantPage";
+import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import {
   useProductVariantReorderMutation,
   useVariantDeleteMutation,
@@ -126,7 +125,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   });
 
   const handleSubmitChannels = (
-    data: ProductVariantPageSubmitData,
+    data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
     const isChannelPriceChange = data.channelListing.some(channel => {
@@ -134,8 +133,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variantChannel => variantChannel.channel.id === channel.id
       );
       return (
-        channel.price !== variantChannel?.price?.amount.toString() ||
-        channel.costPrice !== variantChannel?.costPrice?.amount.toString()
+        channel.value.price !== variantChannel?.price?.amount.toString() ||
+        channel.value.costPrice !== variantChannel?.costPrice?.amount.toString()
       );
     });
     if (isChannelPriceChange) {
@@ -144,8 +143,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           id: variant.id,
           input: data.channelListing.map(listing => ({
             channelId: listing.id,
-            costPrice: listing.costPrice || null,
-            price: listing.price
+            costPrice: listing.value.costPrice || null,
+            price: listing.value.price
           }))
         }
       });
@@ -199,7 +198,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   };
 
-  const handleUpdate = async (data: ProductVariantPageSubmitData) => {
+  const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
