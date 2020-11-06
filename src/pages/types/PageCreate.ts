@@ -14,6 +14,7 @@ export interface PageCreate_pageCreate_errors {
   field: string | null;
   message: string | null;
   attributes: string[] | null;
+  message: string | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes_attribute_values {
