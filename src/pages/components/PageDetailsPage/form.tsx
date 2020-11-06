@@ -1,7 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import { PageDetails_page } from "@saleor/pages/types/PageDetails";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
@@ -38,12 +38,12 @@ export interface UsePageUpdateFormResult {
 export interface PageFormProps {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
-  onSubmit: (data: PageData) => Promise<any[]>;
+  onSubmit: (data: PageData) => SubmitPromise;
 }
 
 function usePageForm(
   page: PageDetails_page,
-  onSubmit: (data: PageData) => Promise<any[]>
+  onSubmit: (data: PageData) => SubmitPromise
 ): UsePageUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);

@@ -1,7 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
@@ -38,11 +38,11 @@ export interface UseCollectionCreateFormResult {
 
 export interface CollectionCreateFormProps {
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
-  onSubmit: (data: CollectionCreateData) => Promise<any[]>;
+  onSubmit: (data: CollectionCreateData) => SubmitPromise;
 }
 
 function useCollectionCreateForm(
-  onSubmit: (data: CollectionCreateData) => Promise<any[]>
+  onSubmit: (data: CollectionCreateData) => SubmitPromise
 ): UseCollectionCreateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);

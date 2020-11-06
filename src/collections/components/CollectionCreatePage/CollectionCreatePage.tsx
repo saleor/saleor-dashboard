@@ -10,6 +10,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -23,7 +24,7 @@ export interface CollectionCreatePageProps {
   errors: ProductErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CollectionCreateData) => Promise<any[]>;
+  onSubmit: (data: CollectionCreateData) => SubmitPromise;
 }
 
 const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({

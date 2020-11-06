@@ -13,6 +13,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -35,7 +36,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
-  onSubmit: (data: CollectionUpdateData) => Promise<any>;
+  onSubmit: (data: CollectionUpdateData) => SubmitPromise;
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
