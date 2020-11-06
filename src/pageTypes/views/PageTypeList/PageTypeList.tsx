@@ -7,15 +7,20 @@ import SaveFilterTabDialog, {
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import PageTypeBulkDeleteDialog from "@saleor/pageTypes/components/PageTypeBulkDeleteDialog";
+import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
@@ -45,9 +50,11 @@ interface PageTypeListProps {
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
+  const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -59,7 +66,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     }),
     [params]
   );
-  const { data, loading } = usePageTypeListQuery({
+  const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
     variables: queryVariables
   });
@@ -118,6 +125,41 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
+  const [
+    pageTypeBulkDelete,
+    pageTypeBulkDeleteOpts
+  ] = usePageTypeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.pageTypeBulkDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        reset();
+        refetch();
+        navigate(
+          pageTypeListUrl({
+            ...params,
+            action: undefined,
+            ids: undefined
+          })
+        );
+      }
+    }
+  });
+
+  const hanldePageTypeBulkDelete = () =>
+    pageTypeBulkDelete({
+      variables: {
+        ids: params.ids
+      }
+    });
+
+  const selectedPageTypesHasPages = data?.pageTypes.edges.some(
+    pageType =>
+      pageType.node.hasPages && params.ids?.some(id => id === pageType.node.id)
+  );
+
   return (
     <>
       <PageTypeListPage
@@ -155,6 +197,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
             <DeleteIcon />
           </IconButton>
         }
+      />
+      <PageTypeBulkDeleteDialog
+        confirmButtonState={pageTypeBulkDeleteOpts.status}
+        quantity={params.ids?.length}
+        hasPages={selectedPageTypesHasPages}
+        open={params.action === "remove"}
+        onClose={closeModal}
+        onConfirm={hanldePageTypeBulkDelete}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

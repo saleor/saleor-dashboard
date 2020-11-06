@@ -38,6 +38,7 @@ export interface PageTypeDetails_pageType {
   metadata: (PageTypeDetails_pageType_metadata | null)[];
   privateMetadata: (PageTypeDetails_pageType_privateMetadata | null)[];
   attributes: (PageTypeDetails_pageType_attributes | null)[] | null;
+  hasPages: boolean | null;
 }
 
 export interface PageTypeDetails {
