@@ -2,15 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
+import { AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeBulkDelete
 // ====================================================
 
 export interface AttributeBulkDelete_attributeBulkDelete_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "AttributeError";
+  code: AttributeErrorCode;
   field: string | null;
 }
 

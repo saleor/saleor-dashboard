@@ -70,6 +70,15 @@ export enum AppTypeEnum {
   THIRDPARTY = "THIRDPARTY",
 }
 
+export enum AttributeErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   MULTISELECT = "MULTISELECT",
@@ -1287,6 +1296,18 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
+export interface PageCreateInput {
+  slug?: string | null;
+  title?: string | null;
+  content?: string | null;
+  contentJson?: any | null;
+  attributes?: AttributeValueInput[] | null;
+  isPublished?: boolean | null;
+  publicationDate?: string | null;
+  seo?: SeoInput | null;
+  pageType: string;
+}
+
 export interface PageFilterInput {
   search?: string | null;
 }
@@ -1296,6 +1317,7 @@ export interface PageInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+  attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
   seo?: SeoInput | null;

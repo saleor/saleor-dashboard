@@ -9,9 +9,20 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
+import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import useFormset from "@saleor/hooks/useFormset";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler,
+  createPageTypeSelectHandler
+} from "@saleor/pages/utils/handlers";
+import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
+import { FetchMoreProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import {
@@ -25,7 +36,12 @@ import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { PageDetails_page } from "../../types/PageDetails";
+import PageAttributes, {
+  PageAttributeInput,
+  PageAttributeInputData
+} from "../PageAttributes";
 import PageInfo from "../PageInfo";
+import PageOrganizeContent from "../PageOrganizeContent";
 
 export interface FormData extends MetadataFormData {
   content: RawDraftContentState;
@@ -35,27 +51,38 @@ export interface FormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
+  pageType: string;
+}
+
+export interface PageCreatePageSubmitData extends FormData {
+  attributes: PageAttributeInput[];
 }
 
 export interface PageDetailsPageProps {
   disabled: boolean;
-  errors: PageErrorFragment[];
+  errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
+  pageTypes?: SearchPageTypes_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: PageCreatePageSubmitData) => void;
+  fetchPageTypes?: (data: string) => void;
+  fetchMorePageTypes?: FetchMoreProps;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   disabled,
   errors,
   page,
+  pageTypes,
   saveButtonBarState,
   onBack,
   onRemove,
-  onSubmit
+  onSubmit,
+  fetchPageTypes,
+  fetchMorePageTypes
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -67,6 +94,17 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   const pageExists = page !== null;
 
+  const attributesFromPage = React.useMemo(
+    () => getAttributeInputFromPage(page),
+    [page]
+  );
+
+  const {
+    change: changeAttributeData,
+    data: attributes,
+    set: setAttributeData
+  } = useFormset<PageAttributeInputData>(attributesFromPage || []);
+
   const initialForm: FormData = {
     content: maybe(
       () => JSON.parse(page.contentJson),
@@ -74,6 +112,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     ),
     isPublished: page?.isPublished,
     metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
+    pageType: page?.pageType.id || "",
     privateMetadata: pageExists
       ? page?.privateMetadata?.map(mapMetadataItemToInput)
       : [],
@@ -92,15 +131,35 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
     onSubmit({
       ...data,
+      attributes,
       isPublished: data.isPublished || !!data.publicationDate,
       metadata,
       privateMetadata
     });
   };
 
+  const [pageType, setPageType] = useStateFromProps<PageTypeFragment>(
+    page?.pageType || null
+  );
+
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, triggerChange }) => {
+        const handlePageTypeSelect = createPageTypeSelectHandler(
+          change,
+          setAttributeData,
+          setPageType,
+          pageTypes
+        );
+        const handleAttributeChange = createAttributeChangeHandler(
+          changeAttributeData,
+          triggerChange
+        );
+        const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+          changeAttributeData,
+          attributes,
+          triggerChange
+        );
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -151,10 +210,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   })}
                 />
                 <CardSpacer />
+                {attributes.length > 0 && (
+                  <PageAttributes
+                    attributes={attributes}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={handleAttributeChange}
+                    onMultiChange={handleAttributeMultiChange}
+                  />
+                )}
+                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
-                <CardSpacer />
                 <VisibilityCard
                   data={data}
                   errors={errors}
@@ -179,6 +247,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     })
                   }}
                   onChange={change}
+                />
+                <CardSpacer />
+                <PageOrganizeContent
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  pageTypes={pageTypes}
+                  pageType={pageType}
+                  pageTypeInputDisplayValue={pageType?.name || ""}
+                  onPageTypeChange={handlePageTypeSelect}
+                  fetchPageTypes={fetchPageTypes}
+                  fetchMorePageTypes={fetchMorePageTypes}
+                  canChangeType={!page?.pageType}
                 />
               </div>
             </Grid>

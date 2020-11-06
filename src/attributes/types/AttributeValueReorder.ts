@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ReorderInput, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueReorder
@@ -20,8 +20,8 @@ export interface AttributeValueReorder_attributeReorderValues_attribute {
 }
 
 export interface AttributeValueReorder_attributeReorderValues_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "AttributeError";
+  code: AttributeErrorCode;
   field: string | null;
 }
 

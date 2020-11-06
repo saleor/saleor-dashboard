@@ -1,5 +1,12 @@
 import gql from "graphql-tag";
 
+export const attributeErrorFragment = gql`
+  fragment AttributeErrorFragment on AttributeError {
+    code
+    field
+  }
+`;
+
 export const productErrorFragment = gql`
   fragment ProductErrorFragment on ProductError {
     code
@@ -47,6 +54,14 @@ export const pageErrorFragment = gql`
   fragment PageErrorFragment on PageError {
     code
     field
+  }
+`;
+
+export const pageErrorWithAttributesFragment = gql`
+  ${pageErrorFragment}
+  fragment PageErrorWithAttributesFragment on PageError {
+    ...PageErrorFragment
+    attributes
   }
 `;
 
