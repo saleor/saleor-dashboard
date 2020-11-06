@@ -2,7 +2,6 @@
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
-import { content } from "../storybook/stories/components/RichTextEditor";
 import { PageDetails_page } from "./types/PageDetails";
 import { PageList_pages_edges_node } from "./types/PageList";
 
