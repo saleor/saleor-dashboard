@@ -14,26 +14,26 @@ export interface VoucherList_vouchers_edges_node_countries {
   country: string;
 }
 
-export interface VoucherList_vouchers_edges_node_channelListing_channel {
+export interface VoucherList_vouchers_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherList_vouchers_edges_node_channelListing_minSpent {
+export interface VoucherList_vouchers_edges_node_channelListings_minSpent {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherList_vouchers_edges_node_channelListing {
+export interface VoucherList_vouchers_edges_node_channelListings {
   __typename: "VoucherChannelListing";
   id: string;
-  channel: VoucherList_vouchers_edges_node_channelListing_channel;
+  channel: VoucherList_vouchers_edges_node_channelListings_channel;
   discountValue: number;
   currency: string;
-  minSpent: VoucherList_vouchers_edges_node_channelListing_minSpent | null;
+  minSpent: VoucherList_vouchers_edges_node_channelListings_minSpent | null;
 }
 
 export interface VoucherList_vouchers_edges_node {
@@ -46,7 +46,7 @@ export interface VoucherList_vouchers_edges_node {
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
-  channelListing: VoucherList_vouchers_edges_node_channelListing[] | null;
+  channelListings: VoucherList_vouchers_edges_node_channelListings[] | null;
 }
 
 export interface VoucherList_vouchers_edges {

@@ -21,26 +21,26 @@ export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher
   country: string;
 }
 
-export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing_channel {
+export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing_minSpent {
+export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings_minSpent {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing {
+export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings {
   __typename: "VoucherChannelListing";
   id: string;
-  channel: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing_channel;
+  channel: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings_channel;
   discountValue: number;
   currency: string;
-  minSpent: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing_minSpent | null;
+  minSpent: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings_minSpent | null;
 }
 
 export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher {
@@ -53,7 +53,7 @@ export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
-  channelListing: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListing[] | null;
+  channelListings: VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_channelListings[] | null;
 }
 
 export interface VoucherChannelListingUpdate_voucherChannelListingUpdate {

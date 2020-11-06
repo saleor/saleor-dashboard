@@ -58,23 +58,23 @@ export interface ProductVariantAttributesFragment_productType {
   variantAttributes: (ProductVariantAttributesFragment_productType_variantAttributes | null)[] | null;
 }
 
-export interface ProductVariantAttributesFragment_channelListing_channel {
+export interface ProductVariantAttributesFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantAttributesFragment_channelListing_discountedPrice {
+export interface ProductVariantAttributesFragment_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantAttributesFragment_channelListing {
+export interface ProductVariantAttributesFragment_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductVariantAttributesFragment_channelListing_channel;
-  discountedPrice: ProductVariantAttributesFragment_channelListing_discountedPrice | null;
+  channel: ProductVariantAttributesFragment_channelListings_channel;
+  discountedPrice: ProductVariantAttributesFragment_channelListings_discountedPrice | null;
 }
 
 export interface ProductVariantAttributesFragment {
@@ -82,5 +82,5 @@ export interface ProductVariantAttributesFragment {
   id: string;
   attributes: ProductVariantAttributesFragment_attributes[];
   productType: ProductVariantAttributesFragment_productType;
-  channelListing: ProductVariantAttributesFragment_channelListing[] | null;
+  channelListings: ProductVariantAttributesFragment_channelListings[] | null;
 }

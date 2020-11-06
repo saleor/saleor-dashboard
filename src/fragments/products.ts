@@ -81,7 +81,7 @@ export const productFragment = gql`
       name
       hasVariants
     }
-    channelListing {
+    channelListings {
       ...ChannelListingProductFragment
     }
   }
@@ -122,7 +122,7 @@ export const productVariantAttributesFragment = gql`
         }
       }
     }
-    channelListing {
+    channelListings {
       channel {
         id
         name
@@ -164,7 +164,7 @@ export const productFragmentDetails = gql`
       name
     }
     chargeTaxes
-    channelListing {
+    channelListings {
       ...ChannelListingProductFragment
     }
     images {
@@ -180,7 +180,7 @@ export const productFragmentDetails = gql`
         ...StockFragment
       }
       trackInventory
-      channelListing {
+      channelListings {
         ...ChannelListingProductVariantFragment
       }
     }
@@ -246,7 +246,7 @@ export const fragmentVariant = gql`
       thumbnail {
         url
       }
-      channelListing {
+      channelListings {
         channel {
           id
           name
@@ -269,7 +269,7 @@ export const fragmentVariant = gql`
         id
       }
     }
-    channelListing {
+    channelListings {
       ...ChannelListingProductVariantFragment
     }
     sku

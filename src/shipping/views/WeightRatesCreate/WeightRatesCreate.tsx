@@ -84,7 +84,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
         variables: getShippingMethodChannelVariables(
           response.data.shippingPriceCreate.shippingMethod.id,
           data.noLimits,
-          data.channelListing
+          data.channelListings
         )
       });
     } else {

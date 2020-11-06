@@ -6,7 +6,7 @@ import React from "react";
 import ChannelsSelect, { ChannelsSelectProps } from "./ChannelsSelect";
 
 const product = productFixture("");
-const channelChoices = product.channelListing.map(listing => ({
+const channelChoices = product.channelListings.map(listing => ({
   label: listing.channel.name,
   value: listing.channel.id
 }));

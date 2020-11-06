@@ -26,38 +26,38 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOr
   value: number;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_channel {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_price {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_minimumOrderPrice {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_maximumOrderPrice {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_channel;
-  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_price | null;
-  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing_maximumOrderPrice | null;
+  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_channel;
+  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_price | null;
+  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
@@ -67,7 +67,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListing[] | null;
+  channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {

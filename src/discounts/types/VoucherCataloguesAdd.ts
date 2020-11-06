@@ -21,26 +21,26 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_countries {
   country: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing_channel {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing_minSpent {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings_minSpent {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings {
   __typename: "VoucherChannelListing";
   id: string;
-  channel: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing_channel;
+  channel: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings_channel;
   discountValue: number;
   currency: string;
-  minSpent: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing_minSpent | null;
+  minSpent: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings_minSpent | null;
 }
 
 export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_productType {
@@ -54,28 +54,28 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edge
   url: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing_discountedPrice {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing_channel {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing {
+export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing_channel;
+  channel: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_channel;
 }
 
 export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node {
@@ -84,7 +84,7 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edge
   name: string;
   productType: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_productType;
   thumbnail: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_thumbnail | null;
-  channelListing: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListing[] | null;
+  channelListings: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings[] | null;
 }
 
 export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges {
@@ -181,7 +181,7 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher {
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherCataloguesAdd_voucherCataloguesAdd_voucher_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
-  channelListing: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListing[] | null;
+  channelListings: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_channelListings[] | null;
   type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;

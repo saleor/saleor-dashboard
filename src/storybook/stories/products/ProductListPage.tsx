@@ -71,6 +71,6 @@ storiesOf("Views / Products / Product list", module)
       channelsCount={0}
       onSettingsOpen={undefined}
       selectedChannel={""}
-      products={products.map(product => ({ ...product, channelListing: [] }))}
+      products={products.map(product => ({ ...product, channelListings: [] }))}
     />
   ));

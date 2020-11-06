@@ -1550,7 +1550,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
   shippingMethods: [
     {
       __typename: "ShippingMethod",
-      channelListing: [
+      channelListings: [
         {
           __typename: "ShippingMethodChannelListing",
           channel: {
@@ -1593,7 +1593,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
-      channelListing: [],
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1606,7 +1606,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
-      channelListing: [],
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1620,7 +1620,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     },
     {
       __typename: "ShippingMethod",
-      channelListing: [],
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderWeight: null,
       minimumOrderWeight: {

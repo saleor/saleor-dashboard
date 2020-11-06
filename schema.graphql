@@ -1214,7 +1214,7 @@ type Collection implements Node & ObjectWithMetadata {
   ): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
-  channelListing: [CollectionChannelListing!]
+  channelListings: [CollectionChannelListing!]
 }
 
 type CollectionAddProducts {
@@ -4122,7 +4122,7 @@ type Product implements Node & ObjectWithMetadata {
   isAvailable: Boolean
   taxType: TaxType
   attributes: [SelectedAttribute!]!
-  channelListing: [ProductChannelListing!]
+  channelListings: [ProductChannelListing!]
   imageById(id: ID): ProductImage
   variants: [ProductVariant]
   images: [ProductImage]
@@ -5073,7 +5073,7 @@ type Sale implements Node {
     last: Int
   ): ProductCountableConnection
   translation(languageCode: LanguageCodeEnum!): SaleTranslation
-  channelListing: [SaleChannelListing!]
+  channelListings: [SaleChannelListing!]
   discountValue: Float
   currency: String
 }
@@ -5278,7 +5278,7 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   type: ShippingMethodTypeEnum
   translation(languageCode: LanguageCodeEnum!): ShippingMethodTranslation
-  channelListing: [ShippingMethodChannelListing!]
+  channelListings: [ShippingMethodChannelListing!]
   price: Money
   maximumOrderPrice: Money
   minimumOrderPrice: Money
@@ -6115,7 +6115,7 @@ type Voucher implements Node {
   discountValue: Float
   currency: String
   minSpent: Money
-  channelListing: [VoucherChannelListing!]
+  channelListings: [VoucherChannelListing!]
 }
 
 type VoucherAddCatalogues {

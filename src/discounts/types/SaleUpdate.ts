@@ -15,17 +15,17 @@ export interface SaleUpdate_saleUpdate_errors {
   channels: string[] | null;
 }
 
-export interface SaleUpdate_saleUpdate_sale_channelListing_channel {
+export interface SaleUpdate_saleUpdate_sale_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface SaleUpdate_saleUpdate_sale_channelListing {
+export interface SaleUpdate_saleUpdate_sale_channelListings {
   __typename: "SaleChannelListing";
   id: string;
-  channel: SaleUpdate_saleUpdate_sale_channelListing_channel;
+  channel: SaleUpdate_saleUpdate_sale_channelListings_channel;
   discountValue: number;
   currency: string;
 }
@@ -37,7 +37,7 @@ export interface SaleUpdate_saleUpdate_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  channelListing: SaleUpdate_saleUpdate_sale_channelListing[] | null;
+  channelListings: SaleUpdate_saleUpdate_sale_channelListings[] | null;
 }
 
 export interface SaleUpdate_saleUpdate {

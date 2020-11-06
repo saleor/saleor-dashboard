@@ -89,7 +89,7 @@ export const VoucherDetails: React.FC = () => {
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
             <VoucherCreatePage
               allChannelsCount={allChannels?.length}
-              channelListing={currentChannels}
+              channelListings={currentChannels}
               hasChannelChanged={
                 allChannels?.length !== currentChannels?.length
               }

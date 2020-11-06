@@ -13,7 +13,7 @@ import { VoucherList_vouchers_edges_node } from "./types/VoucherList";
 export const saleList: SaleList_sales_edges_node[] = [
   {
     __typename: "Sale" as "Sale",
-    channelListing: [
+    channelListings: [
       {
         __typename: "SaleChannelListing",
         channel: {
@@ -35,7 +35,7 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
-    channelListing: [
+    channelListings: [
       {
         __typename: "SaleChannelListing",
         channel: {
@@ -57,7 +57,7 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
-    channelListing: [
+    channelListings: [
       {
         __typename: "SaleChannelListing",
         channel: {
@@ -79,7 +79,7 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
-    channelListing: [
+    channelListings: [
       {
         __typename: "SaleChannelListing",
         channel: {
@@ -101,7 +101,7 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
-    channelListing: [
+    channelListings: [
       {
         __typename: "SaleChannelListing",
         channel: {
@@ -126,7 +126,7 @@ export const saleList: SaleList_sales_edges_node[] = [
 export const voucherList: VoucherList_vouchers_edges_node[] = [
   {
     __typename: "Voucher" as "Voucher",
-    channelListing: [
+    channelListings: [
       {
         __typename: "VoucherChannelListing",
         channel: {
@@ -162,7 +162,7 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
   },
   {
     __typename: "Voucher" as "Voucher",
-    channelListing: [
+    channelListings: [
       {
         __typename: "VoucherChannelListing",
         channel: {
@@ -219,7 +219,7 @@ export const sale: SaleDetails_sale = {
     },
     totalCount: 2
   },
-  channelListing: [
+  channelListings: [
     {
       __typename: "SaleChannelListing",
       channel: {
@@ -268,7 +268,7 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -306,7 +306,7 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -344,7 +344,7 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -382,7 +382,7 @@ export const sale: SaleDetails_sale = {
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -446,7 +446,7 @@ export const voucherDetails: VoucherDetails_voucher = {
     },
     totalCount: 0
   },
-  channelListing: [
+  channelListings: [
     {
       __typename: "VoucherChannelListing",
       channel: {

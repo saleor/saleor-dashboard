@@ -109,7 +109,7 @@ export const product: (
     id: "Q2F0ZWdvcnk6MQ==",
     name: "Apparel"
   },
-  channelListing: [
+  channelListings: [
     {
       __typename: "ProductChannelListing",
       availableForPurchase: null,
@@ -277,7 +277,7 @@ export const product: (
   variants: [
     {
       __typename: "ProductVariant",
-      channelListing: [],
+      channelListings: [],
       id: "pv75934",
       images: [
         {
@@ -319,7 +319,7 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
-      channelListing: [
+      channelListings: [
         {
           __typename: "ProductVariantChannelListing",
           channel: {
@@ -405,7 +405,7 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -461,7 +461,7 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -517,7 +517,7 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -588,7 +588,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -659,7 +659,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -730,7 +730,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -802,7 +802,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -873,7 +873,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -944,7 +944,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1015,7 +1015,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1086,7 +1086,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1157,7 +1157,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1228,7 +1228,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1299,7 +1299,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1370,7 +1370,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1441,7 +1441,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1512,7 +1512,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1583,7 +1583,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1654,7 +1654,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1725,7 +1725,7 @@ export const products = (
         ]
       }
     ],
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -1860,7 +1860,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       ]
     }
   ],
-  channelListing: [
+  channelListings: [
     {
       __typename: "ProductVariantChannelListing",
       channel: {
@@ -1934,7 +1934,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
   privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
-    channelListing: [
+    channelListings: [
       {
         __typename: "ProductChannelListing",
         channel: {

@@ -73,23 +73,23 @@ export interface ProductVariantReorder_productVariantReorder_product_productType
   taxType: ProductVariantReorder_productVariantReorder_product_productType_taxType | null;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_channelListing_channel {
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_channelListing_discountedPrice {
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_channelListing {
+export interface ProductVariantReorder_productVariantReorder_product_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductVariantReorder_productVariantReorder_product_channelListing_channel;
-  discountedPrice: ProductVariantReorder_productVariantReorder_product_channelListing_discountedPrice | null;
+  channel: ProductVariantReorder_productVariantReorder_product_channelListings_channel;
+  discountedPrice: ProductVariantReorder_productVariantReorder_product_channelListings_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;
@@ -148,30 +148,30 @@ export interface ProductVariantReorder_productVariantReorder_product_variants_st
   warehouse: ProductVariantReorder_productVariantReorder_product_variants_stocks_warehouse;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_variants_channelListing_channel {
+export interface ProductVariantReorder_productVariantReorder_product_variants_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_variants_channelListing_price {
+export interface ProductVariantReorder_productVariantReorder_product_variants_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_variants_channelListing_costPrice {
+export interface ProductVariantReorder_productVariantReorder_product_variants_channelListings_costPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_variants_channelListing {
+export interface ProductVariantReorder_productVariantReorder_product_variants_channelListings {
   __typename: "ProductVariantChannelListing";
-  channel: ProductVariantReorder_productVariantReorder_product_variants_channelListing_channel;
-  price: ProductVariantReorder_productVariantReorder_product_variants_channelListing_price | null;
-  costPrice: ProductVariantReorder_productVariantReorder_product_variants_channelListing_costPrice | null;
+  channel: ProductVariantReorder_productVariantReorder_product_variants_channelListings_channel;
+  price: ProductVariantReorder_productVariantReorder_product_variants_channelListings_price | null;
+  costPrice: ProductVariantReorder_productVariantReorder_product_variants_channelListings_costPrice | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_variants {
@@ -182,7 +182,7 @@ export interface ProductVariantReorder_productVariantReorder_product_variants {
   margin: number | null;
   stocks: (ProductVariantReorder_productVariantReorder_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  channelListing: ProductVariantReorder_productVariantReorder_product_variants_channelListing[] | null;
+  channelListings: ProductVariantReorder_productVariantReorder_product_variants_channelListings[] | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_weight {
@@ -202,7 +202,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   id: string;
   attributes: ProductVariantReorder_productVariantReorder_product_attributes[];
   productType: ProductVariantReorder_productVariantReorder_product_productType;
-  channelListing: ProductVariantReorder_productVariantReorder_product_channelListing[] | null;
+  channelListings: ProductVariantReorder_productVariantReorder_product_channelListings[] | null;
   metadata: (ProductVariantReorder_productVariantReorder_product_metadata | null)[];
   privateMetadata: (ProductVariantReorder_productVariantReorder_product_privateMetadata | null)[];
   name: string;

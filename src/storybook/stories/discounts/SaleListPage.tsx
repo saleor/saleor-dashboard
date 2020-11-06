@@ -59,7 +59,7 @@ storiesOf("Views / Discounts / Sale list", module)
   .add("no channels", () => (
     <SaleListPage
       {...props}
-      sales={saleList.map(sale => ({ ...sale, channelListing: [] }))}
+      sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
       selectedChannel=""
       onSettingsOpen={undefined}
     />

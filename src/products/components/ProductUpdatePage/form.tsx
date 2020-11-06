@@ -42,7 +42,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
-  channelListing: ChannelData[];
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -256,7 +256,7 @@ function useProductUpdateForm(
   const disabled =
     !opts.hasVariants &&
     (!data.sku ||
-      data.channelListing.some(
+      data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ));

@@ -30,7 +30,7 @@ import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
 export interface SaleDetailsPageFormData {
-  channelListing: ChannelSaleData[];
+  channelListings: ChannelSaleData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -63,7 +63,7 @@ export interface SaleDetailsPageProps
   sale: SaleDetails_sale;
   selectedChannel: string;
   allChannelsCount: number;
-  channelListing: ChannelSaleData[];
+  channelListings: ChannelSaleData[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -90,7 +90,7 @@ const ProductsTab = Tab(SaleDetailsPageTab.products);
 const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
   allChannelsCount,
-  channelListing = [],
+  channelListings = [],
   disabled,
   errors,
   onRemove,
@@ -126,7 +126,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: SaleDetailsPageFormData = {
-    channelListing,
+    channelListings,
     endDate: splitDateTime(maybe(() => sale.endDate, "")).date,
     endTime: splitDateTime(maybe(() => sale.endDate, "")).time,
     hasEndDate: maybe(() => !!sale.endDate),
@@ -139,11 +139,11 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
-          data.channelListing,
+          data.channelListings,
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(channel =>
+        const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel.discountValue)
         );
         return (
@@ -290,9 +290,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 <SaleSummary selectedChannel={selectedChannel} sale={sale} />
                 <CardSpacer />
                 <ChannelsAvailability
-                  selectedChannelsCount={data.channelListing.length}
+                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListing.map(channel => ({
+                  channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
                     name: channel.name
                   }))}

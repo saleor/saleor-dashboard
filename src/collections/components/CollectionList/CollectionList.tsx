@@ -146,7 +146,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           collections,
           collection => {
             const isSelected = collection ? isChecked(collection.id) : false;
-            const channel = collection?.channelListing.find(
+            const channel = collection?.channelListings.find(
               listing => listing.channel.id === selectedChannel
             );
             return (
@@ -179,15 +179,15 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 <TableCell
                   className={classes.colAvailability}
                   data-test="availability"
-                  data-test-availability={!!collection?.channelListing?.length}
+                  data-test-availability={!!collection?.channelListings?.length}
                 >
-                  {collection && !collection?.channelListing?.length ? (
+                  {collection && !collection?.channelListings?.length ? (
                     "-"
-                  ) : collection?.channelListing !== undefined ? (
+                  ) : collection?.channelListings !== undefined ? (
                     <ChannelsAvailabilityDropdown
                       allChannelsCount={channelsCount}
                       currentChannel={channel}
-                      channels={collection?.channelListing}
+                      channels={collection?.channelListings}
                     />
                   ) : (
                     <Skeleton />

@@ -73,23 +73,23 @@ export interface ProductVariant_product_thumbnail {
   url: string;
 }
 
-export interface ProductVariant_product_channelListing_channel {
+export interface ProductVariant_product_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariant_product_channelListing_discountedPrice {
+export interface ProductVariant_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariant_product_channelListing {
+export interface ProductVariant_product_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductVariant_product_channelListing_channel;
-  discountedPrice: ProductVariant_product_channelListing_discountedPrice | null;
+  channel: ProductVariant_product_channelListings_channel;
+  discountedPrice: ProductVariant_product_channelListings_discountedPrice | null;
 }
 
 export interface ProductVariant_product_variants_images {
@@ -113,34 +113,34 @@ export interface ProductVariant_product {
   images: (ProductVariant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
-  channelListing: ProductVariant_product_channelListing[] | null;
+  channelListings: ProductVariant_product_channelListings[] | null;
   variants: (ProductVariant_product_variants | null)[] | null;
 }
 
-export interface ProductVariant_channelListing_channel {
+export interface ProductVariant_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariant_channelListing_price {
+export interface ProductVariant_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariant_channelListing_costPrice {
+export interface ProductVariant_channelListings_costPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariant_channelListing {
+export interface ProductVariant_channelListings {
   __typename: "ProductVariantChannelListing";
-  channel: ProductVariant_channelListing_channel;
-  price: ProductVariant_channelListing_price | null;
-  costPrice: ProductVariant_channelListing_costPrice | null;
+  channel: ProductVariant_channelListings_channel;
+  price: ProductVariant_channelListings_price | null;
+  costPrice: ProductVariant_channelListings_costPrice | null;
 }
 
 export interface ProductVariant_stocks_warehouse {
@@ -172,7 +172,7 @@ export interface ProductVariant {
   images: (ProductVariant_images | null)[] | null;
   name: string;
   product: ProductVariant_product;
-  channelListing: ProductVariant_channelListing[] | null;
+  channelListings: ProductVariant_channelListings[] | null;
   sku: string;
   stocks: (ProductVariant_stocks | null)[] | null;
   trackInventory: boolean;

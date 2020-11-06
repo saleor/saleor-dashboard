@@ -8,7 +8,7 @@ import OrderValue, { OrderValueProps } from "./OrderValue";
 
 const props: OrderValueProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channelListing
+    shippingZone.shippingMethods[0].channelListings
   ),
   disabled: false,
   errors: [],

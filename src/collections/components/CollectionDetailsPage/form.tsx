@@ -14,7 +14,7 @@ import React from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
-  channelListing: ChannelCollectionData[];
+  channelListings: ChannelCollectionData[];
   name: string;
   slug: string;
   seoDescription: string;
@@ -59,7 +59,7 @@ function useCollectionUpdateForm(
 
   const form = useForm<CollectionUpdateFormData>({
     backgroundImageAlt: collection?.backgroundImage?.alt || "",
-    channelListing: currentChannels,
+    channelListings: currentChannels,
     metadata: collection?.metadata?.map(mapMetadataItemToInput),
     name: collection?.name || "",
     privateMetadata: collection?.privateMetadata?.map(mapMetadataItemToInput),
@@ -94,6 +94,7 @@ function useCollectionUpdateForm(
     ...getData(),
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
   });
+
   const handleChannelChange = createChannelsChangeHandler(
     currentChannels,
     setChannels,

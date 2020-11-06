@@ -1,5 +1,5 @@
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
-import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
+import { ProductDetails_product_channelListings } from "@saleor/products/types/ProductDetails";
 import { ChannelErrorCode } from "@saleor/types/globalTypes";
 
 import { Channel_channel } from "./types/Channel";
@@ -82,7 +82,7 @@ export const channel: Channel_channel = {
   slug: "test"
 };
 
-export const productChannels: ProductDetails_product_channelListing[] = [
+export const productChannels: ProductDetails_product_channelListings[] = [
   {
     __typename: "ProductChannelListing",
     availableForPurchase: null,

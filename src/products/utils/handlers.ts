@@ -21,23 +21,25 @@ export function createAttributeChangeHandler(
 }
 
 export function createChannelsPriceChangeHandler(
-  channelListing: ChannelPriceData[],
+  channelListings: ChannelPriceData[],
   updateChannels: (data: ChannelPriceData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
     const { costPrice, price } = priceData;
-    const channelIndex = channelListing.findIndex(channel => channel.id === id);
-    const channel = channelListing[channelIndex];
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
 
     const updatedChannels = [
-      ...channelListing.slice(0, channelIndex),
+      ...channelListings.slice(0, channelIndex),
       {
         ...channel,
         costPrice,
         price
       },
-      ...channelListing.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
     triggerChange();
@@ -45,7 +47,7 @@ export function createChannelsPriceChangeHandler(
 }
 
 export function createChannelsChangeHandler(
-  channelListing: ChannelData[],
+  channelListings: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
@@ -53,16 +55,18 @@ export function createChannelsChangeHandler(
     id: string,
     data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
-    const channelIndex = channelListing.findIndex(channel => channel.id === id);
-    const channel = channelListing[channelIndex];
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
 
     const updatedChannels = [
-      ...channelListing.slice(0, channelIndex),
+      ...channelListings.slice(0, channelIndex),
       {
         ...channel,
         ...data
       },
-      ...channelListing.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
     triggerChange();
@@ -70,23 +74,25 @@ export function createChannelsChangeHandler(
 }
 
 export function createVariantChannelsChangeHandler(
-  channelListing: ChannelPriceData[],
+  channelListings: ChannelPriceData[],
   setData: (data: ChannelPriceData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
     const { costPrice, price } = priceData;
-    const channelIndex = channelListing.findIndex(channel => channel.id === id);
-    const channel = channelListing[channelIndex];
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
 
     const updatedChannels = [
-      ...channelListing.slice(0, channelIndex),
+      ...channelListings.slice(0, channelIndex),
       {
         ...channel,
         costPrice,
         price
       },
-      ...channelListing.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1)
     ];
     setData(updatedChannels);
     triggerChange();

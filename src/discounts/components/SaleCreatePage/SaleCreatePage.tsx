@@ -19,7 +19,7 @@ import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
 
 export interface FormData {
-  channelListing: ChannelSaleData[];
+  channelListings: ChannelSaleData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -32,7 +32,7 @@ export interface FormData {
 
 export interface SaleCreatePageProps {
   allChannelsCount: number;
-  channelListing: ChannelSaleData[];
+  channelListings: ChannelSaleData[];
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -43,7 +43,7 @@ export interface SaleCreatePageProps {
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   allChannelsCount,
-  channelListing = [],
+  channelListings = [],
   disabled,
   errors,
   onSubmit,
@@ -54,7 +54,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   const intl = useIntl();
 
   const initialForm: FormData = {
-    channelListing,
+    channelListings,
     endDate: "",
     endTime: "",
     hasEndDate: false,
@@ -97,9 +97,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
             </div>
             <div>
               <ChannelsAvailability
-                selectedChannelsCount={data.channelListing.length}
+                selectedChannelsCount={data.channelListings.length}
                 allChannelsCount={allChannelsCount}
-                channelsList={data.channelListing.map(channel => ({
+                channelsList={data.channelListings.map(channel => ({
                   id: channel.id,
                   name: channel.name
                 }))}

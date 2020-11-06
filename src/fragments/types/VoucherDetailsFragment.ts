@@ -14,26 +14,26 @@ export interface VoucherDetailsFragment_countries {
   country: string;
 }
 
-export interface VoucherDetailsFragment_channelListing_channel {
+export interface VoucherDetailsFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherDetailsFragment_channelListing_minSpent {
+export interface VoucherDetailsFragment_channelListings_minSpent {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherDetailsFragment_channelListing {
+export interface VoucherDetailsFragment_channelListings {
   __typename: "VoucherChannelListing";
   id: string;
-  channel: VoucherDetailsFragment_channelListing_channel;
+  channel: VoucherDetailsFragment_channelListings_channel;
   discountValue: number;
   currency: string;
-  minSpent: VoucherDetailsFragment_channelListing_minSpent | null;
+  minSpent: VoucherDetailsFragment_channelListings_minSpent | null;
 }
 
 export interface VoucherDetailsFragment_products_edges_node_productType {
@@ -47,28 +47,28 @@ export interface VoucherDetailsFragment_products_edges_node_thumbnail {
   url: string;
 }
 
-export interface VoucherDetailsFragment_products_edges_node_channelListing_discountedPrice {
+export interface VoucherDetailsFragment_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherDetailsFragment_products_edges_node_channelListing_channel {
+export interface VoucherDetailsFragment_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherDetailsFragment_products_edges_node_channelListing {
+export interface VoucherDetailsFragment_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: VoucherDetailsFragment_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: VoucherDetailsFragment_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: VoucherDetailsFragment_products_edges_node_channelListing_channel;
+  channel: VoucherDetailsFragment_products_edges_node_channelListings_channel;
 }
 
 export interface VoucherDetailsFragment_products_edges_node {
@@ -77,7 +77,7 @@ export interface VoucherDetailsFragment_products_edges_node {
   name: string;
   productType: VoucherDetailsFragment_products_edges_node_productType;
   thumbnail: VoucherDetailsFragment_products_edges_node_thumbnail | null;
-  channelListing: VoucherDetailsFragment_products_edges_node_channelListing[] | null;
+  channelListings: VoucherDetailsFragment_products_edges_node_channelListings[] | null;
 }
 
 export interface VoucherDetailsFragment_products_edges {
@@ -174,7 +174,7 @@ export interface VoucherDetailsFragment {
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherDetailsFragment_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
-  channelListing: VoucherDetailsFragment_channelListing[] | null;
+  channelListings: VoucherDetailsFragment_channelListings[] | null;
   type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;

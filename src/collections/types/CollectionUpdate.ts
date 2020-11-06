@@ -8,17 +8,17 @@ import { CollectionInput, CollectionErrorCode } from "./../../types/globalTypes"
 // GraphQL mutation operation: CollectionUpdate
 // ====================================================
 
-export interface CollectionUpdate_collectionUpdate_collection_channelListing_channel {
+export interface CollectionUpdate_collectionUpdate_collection_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
 }
 
-export interface CollectionUpdate_collectionUpdate_collection_channelListing {
+export interface CollectionUpdate_collectionUpdate_collection_channelListings {
   __typename: "CollectionChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  channel: CollectionUpdate_collectionUpdate_collection_channelListing_channel;
+  channel: CollectionUpdate_collectionUpdate_collection_channelListings_channel;
 }
 
 export interface CollectionUpdate_collectionUpdate_collection_metadata {
@@ -43,7 +43,7 @@ export interface CollectionUpdate_collectionUpdate_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  channelListing: CollectionUpdate_collectionUpdate_collection_channelListing[] | null;
+  channelListings: CollectionUpdate_collectionUpdate_collection_channelListings[] | null;
   metadata: (CollectionUpdate_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdate_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdate_collectionUpdate_collection_backgroundImage | null;

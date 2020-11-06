@@ -14,7 +14,7 @@ const channels = createVoucherChannels(channelsList);
 
 const props: VoucherCreatePageProps = {
   allChannelsCount: channels.length,
-  channelListing: channels,
+  channelListings: channels,
   disabled: false,
   errors: [],
   hasChannelChanged: false,

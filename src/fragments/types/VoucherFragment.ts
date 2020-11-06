@@ -14,26 +14,26 @@ export interface VoucherFragment_countries {
   country: string;
 }
 
-export interface VoucherFragment_channelListing_channel {
+export interface VoucherFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface VoucherFragment_channelListing_minSpent {
+export interface VoucherFragment_channelListings_minSpent {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface VoucherFragment_channelListing {
+export interface VoucherFragment_channelListings {
   __typename: "VoucherChannelListing";
   id: string;
-  channel: VoucherFragment_channelListing_channel;
+  channel: VoucherFragment_channelListings_channel;
   discountValue: number;
   currency: string;
-  minSpent: VoucherFragment_channelListing_minSpent | null;
+  minSpent: VoucherFragment_channelListings_minSpent | null;
 }
 
 export interface VoucherFragment {
@@ -46,5 +46,5 @@ export interface VoucherFragment {
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherFragment_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
-  channelListing: VoucherFragment_channelListing[] | null;
+  channelListings: VoucherFragment_channelListings[] | null;
 }

@@ -222,7 +222,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {!!product?.productType && !hasVariants && (
                   <>
                     <ProductVariantPrice
-                      ProductVariantChannelListings={data.channelListing}
+                      ProductVariantChannelListings={data.channelListings}
                       errors={channelsErrors}
                       loading={disabled}
                       onChange={handlers.changeChannelPrice}
@@ -324,9 +324,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     })
                   }}
                   errors={channelsErrors}
-                  selectedChannelsCount={data.channelListing.length}
+                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
-                  channels={data.channelListing}
+                  channels={data.channelListings}
                   disabled={disabled}
                   onChange={handlers.changeChannels}
                   openModal={openChannelsModal}

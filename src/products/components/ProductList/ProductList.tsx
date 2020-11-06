@@ -285,7 +285,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel = product?.channelListing.find(
+              const channel = product?.channelListings.find(
                 listing => listing.channel.id === selectedChannel
               );
 
@@ -353,15 +353,19 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colPublished}
                       data-test="availability"
-                      data-test-availability={!!product?.channelListing?.length}
+                      data-test-availability={
+                        !!product?.channelListings?.length
+                      }
                     >
-                      {product && !product?.channelListing?.length ? (
+                      {product && !product?.channelListings?.length ? (
                         "-"
-                      ) : product?.channelListing !== undefined ? (
+                      ) : product?.channelListings !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={channel || product?.channelListing[0]}
-                          channels={product?.channelListing}
+                          currentChannel={
+                            channel || product?.channelListings[0]
+                          }
+                          channels={product?.channelListings}
                         />
                       ) : (
                         <Skeleton />
@@ -397,7 +401,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {product?.channelListing ? (
+                      {product?.channelListings ? (
                         <Money money={channel?.discountedPrice} />
                       ) : (
                         <Skeleton />

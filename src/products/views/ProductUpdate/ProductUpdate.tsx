@@ -228,7 +228,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdate({});
 
-  const channelChoices = product?.channelListing.map(listing => ({
+  const channelChoices = product?.channelListings.map(listing => ({
     label: listing.channel.name,
     value: listing.channel.id
   }));

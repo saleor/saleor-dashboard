@@ -57,7 +57,7 @@ export function createHandler(
         variables: getChannelsVariables(
           response.data.voucherCreate.voucher.id,
           formData,
-          formData.channelListing
+          formData.channelListings
         )
       });
     }

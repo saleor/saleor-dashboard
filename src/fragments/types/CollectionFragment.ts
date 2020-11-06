@@ -6,22 +6,22 @@
 // GraphQL fragment: CollectionFragment
 // ====================================================
 
-export interface CollectionFragment_channelListing_channel {
+export interface CollectionFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
 }
 
-export interface CollectionFragment_channelListing {
+export interface CollectionFragment_channelListings {
   __typename: "CollectionChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  channel: CollectionFragment_channelListing_channel;
+  channel: CollectionFragment_channelListings_channel;
 }
 
 export interface CollectionFragment {
   __typename: "Collection";
   id: string;
   name: string;
-  channelListing: CollectionFragment_channelListing[] | null;
+  channelListings: CollectionFragment_channelListings[] | null;
 }

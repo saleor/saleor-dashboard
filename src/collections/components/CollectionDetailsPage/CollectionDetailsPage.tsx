@@ -135,9 +135,9 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     })
                   }}
                   errors={channelsErrors}
-                  selectedChannelsCount={data.channelListing.length}
+                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={channelsCount}
-                  channels={data.channelListing}
+                  channels={data.channelListings}
                   disabled={disabled}
                   onChange={handlers.changeChannels}
                   openModal={openChannelsModal}

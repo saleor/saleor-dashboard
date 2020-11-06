@@ -32,38 +32,38 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   value: number;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_channel {
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_price {
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_minimumOrderPrice {
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_maximumOrderPrice {
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing {
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_channel;
-  price: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_price | null;
-  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing_maximumOrderPrice | null;
+  channel: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_channel;
+  price: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_price | null;
+  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods {
@@ -73,7 +73,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListing[] | null;
+  channelListings: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses {
@@ -104,38 +104,38 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOr
   value: number;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_channel {
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_price {
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_minimumOrderPrice {
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_maximumOrderPrice {
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing {
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_channel;
-  price: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_price | null;
-  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing_maximumOrderPrice | null;
+  channel: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_channel;
+  price: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_price | null;
+  minimumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
@@ -145,7 +145,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListing[] | null;
+  channelListings: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate {

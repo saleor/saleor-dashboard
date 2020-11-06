@@ -128,8 +128,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
-    const isChannelPriceChange = data.channelListing.some(channel => {
-      const variantChannel = variant.channelListing.find(
+    const isChannelPriceChange = data.channelListings.some(channel => {
+      const variantChannel = variant.channelListings.find(
         variantChannel => variantChannel.channel.id === channel.id
       );
       return (
@@ -141,7 +141,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       updateChannels({
         variables: {
           id: variant.id,
-          input: data.channelListing.map(listing => ({
+          input: data.channelListings.map(listing => ({
             channelId: listing.id,
             costPrice: listing.value.costPrice || null,
             price: listing.value.price

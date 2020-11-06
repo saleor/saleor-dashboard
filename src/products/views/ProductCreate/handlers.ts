@@ -94,7 +94,7 @@ export function createHandler(
     if (!hasVariants) {
       const result = await Promise.all([
         updateChannels(
-          getChannelsVariables(productId, formData.channelListing)
+          getChannelsVariables(productId, formData.channelListings)
         ),
         productVariantCreate(getSimpleProductVariables(formData, productId))
       ]);
@@ -104,7 +104,7 @@ export function createHandler(
         updateVariantChannels({
           variables: {
             id: variantId,
-            input: formData.channelListing.map(listing => ({
+            input: formData.channelListings.map(listing => ({
               channelId: listing.id,
               costPrice: listing.costPrice || null,
               price: listing.price
@@ -113,7 +113,7 @@ export function createHandler(
         });
       }
     } else {
-      updateChannels(getChannelsVariables(productId, formData.channelListing));
+      updateChannels(getChannelsVariables(productId, formData.channelListings));
     }
     return productId || null;
   };

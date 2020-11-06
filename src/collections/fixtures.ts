@@ -7,7 +7,7 @@ const content = richTextEditorFixtures.richTextEditor;
 export const collections: CollectionList_collections_edges_node[] = [
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -28,7 +28,7 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -49,7 +49,7 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -70,7 +70,7 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -91,7 +91,7 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -112,7 +112,7 @@ export const collections: CollectionList_collections_edges_node[] = [
   },
   {
     __typename: "Collection",
-    channelListing: [
+    channelListings: [
       {
         __typename: "CollectionChannelListing",
         channel: {
@@ -145,7 +145,7 @@ export const collection: (
     alt: "Alt text",
     url: placeholderCollectionImage
   },
-  channelListing: [
+  channelListings: [
     {
       __typename: "CollectionChannelListing",
       channel: {
@@ -175,7 +175,7 @@ export const collection: (
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -229,7 +229,7 @@ export const collection: (
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -283,7 +283,7 @@ export const collection: (
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -337,7 +337,7 @@ export const collection: (
         __typename: "ProductCountableEdge",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,

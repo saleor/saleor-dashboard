@@ -19,28 +19,28 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   url: string;
 }
 
-export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_discountedPrice {
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_channel {
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing {
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing_channel;
+  channel: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_channel;
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node {
@@ -49,7 +49,7 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   name: string;
   productType: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_productType;
   thumbnail: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_thumbnail | null;
-  channelListing: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListing[] | null;
+  channelListings: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings[] | null;
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges {

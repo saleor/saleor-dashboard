@@ -193,7 +193,7 @@ const productVariantCreateQuery = gql`
         sortOrder
         url
       }
-      channelListing {
+      channelListings {
         channel {
           id
           name

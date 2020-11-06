@@ -1340,7 +1340,7 @@ export const orderLineSearch = (
     variants: [
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {
@@ -1378,7 +1378,7 @@ export const orderLineSearch = (
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {
@@ -1416,7 +1416,7 @@ export const orderLineSearch = (
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {
@@ -1465,7 +1465,7 @@ export const orderLineSearch = (
     variants: [
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {
@@ -1503,7 +1503,7 @@ export const orderLineSearch = (
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {
@@ -1541,7 +1541,7 @@ export const orderLineSearch = (
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        channelListing: [
+        channelListings: [
           {
             __typename: "ProductVariantChannelListing",
             channel: {

@@ -8,17 +8,17 @@ import { CollectionCreateInput, CollectionErrorCode } from "./../../types/global
 // GraphQL mutation operation: CreateCollection
 // ====================================================
 
-export interface CreateCollection_collectionCreate_collection_channelListing_channel {
+export interface CreateCollection_collectionCreate_collection_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
 }
 
-export interface CreateCollection_collectionCreate_collection_channelListing {
+export interface CreateCollection_collectionCreate_collection_channelListings {
   __typename: "CollectionChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  channel: CreateCollection_collectionCreate_collection_channelListing_channel;
+  channel: CreateCollection_collectionCreate_collection_channelListings_channel;
 }
 
 export interface CreateCollection_collectionCreate_collection_metadata {
@@ -43,7 +43,7 @@ export interface CreateCollection_collectionCreate_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  channelListing: CreateCollection_collectionCreate_collection_channelListing[] | null;
+  channelListings: CreateCollection_collectionCreate_collection_channelListings[] | null;
   metadata: (CreateCollection_collectionCreate_collection_metadata | null)[];
   privateMetadata: (CreateCollection_collectionCreate_collection_privateMetadata | null)[];
   backgroundImage: CreateCollection_collectionCreate_collection_backgroundImage | null;

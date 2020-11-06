@@ -85,28 +85,28 @@ export interface CategoryDetails_category_products_edges_node_productType {
   name: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_channelListing_discountedPrice {
+export interface CategoryDetails_category_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_channelListing_channel {
+export interface CategoryDetails_category_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_channelListing {
+export interface CategoryDetails_category_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: CategoryDetails_category_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: CategoryDetails_category_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: CategoryDetails_category_products_edges_node_channelListing_channel;
+  channel: CategoryDetails_category_products_edges_node_channelListings_channel;
 }
 
 export interface CategoryDetails_category_products_edges_node {
@@ -115,7 +115,7 @@ export interface CategoryDetails_category_products_edges_node {
   name: string;
   thumbnail: CategoryDetails_category_products_edges_node_thumbnail | null;
   productType: CategoryDetails_category_products_edges_node_productType;
-  channelListing: CategoryDetails_category_products_edges_node_channelListing[] | null;
+  channelListings: CategoryDetails_category_products_edges_node_channelListings[] | null;
 }
 
 export interface CategoryDetails_category_products_edges {

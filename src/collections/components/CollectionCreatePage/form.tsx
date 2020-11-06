@@ -15,7 +15,7 @@ export interface CollectionCreateFormData extends MetadataFormData {
     value: string;
   };
   backgroundImageAlt: string;
-  channelListing: ChannelCollectionData[];
+  channelListings: ChannelCollectionData[];
   name: string;
   slug: string;
   seoDescription: string;
@@ -62,7 +62,7 @@ function useCollectionCreateForm(
       value: null
     },
     backgroundImageAlt: "",
-    channelListing: currentChannels,
+    channelListings: currentChannels,
     metadata: [],
     name: "",
     privateMetadata: [],

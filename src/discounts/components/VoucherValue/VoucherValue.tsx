@@ -90,7 +90,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             </TableHead>
             <TableBody>
               {renderCollection(
-                data.channelListing,
+                data.channelListings,
                 (listing, index) => {
                   const error = formErrors.discountValue?.channels?.find(
                     id => id === listing.id

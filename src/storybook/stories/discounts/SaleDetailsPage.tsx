@@ -18,7 +18,7 @@ const props: SaleDetailsPageProps = {
   activeTab: SaleDetailsPageTab.categories,
   allChannelsCount: channels.length,
   categoryListToolbar: null,
-  channelListing: channels,
+  channelListings: channels,
   collectionListToolbar: null,
   disabled: false,
   errors: [],
