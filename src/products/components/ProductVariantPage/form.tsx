@@ -33,14 +33,14 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
-  channelListing: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   stocks: ProductStockInput[];
 }
 export interface ProductVariantUpdateSubmitData
   extends ProductVariantUpdateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
   addStocks: ProductStockInput[];
-  channelListing: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
@@ -152,7 +152,7 @@ function useProductVariantUpdateForm(
   const data: ProductVariantUpdateData = {
     ...form.data,
     attributes: attributes.data,
-    channelListing: channels.data,
+    channelListings: channels.data,
     stocks: stocks.data
   };
   const submitData: ProductVariantUpdateSubmitData = {
@@ -160,7 +160,7 @@ function useProductVariantUpdateForm(
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     addStocks,
     attributes: attributes.data,
-    channelListing: channels.data,
+    channelListings: channels.data,
     removeStocks: stockDiff.removed,
     updateStocks
   };

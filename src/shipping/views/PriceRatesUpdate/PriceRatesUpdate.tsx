@@ -58,7 +58,9 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     updateShippingMethodChannelListingOpts
   ] = useShippingMethodChannelListingUpdate({});
 
-  const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
+  const shippingChannels = createShippingChannelsFromRate(
+    rate?.channelListings
+  );
   const allChannels = createSortedShippingChannels(channelsData?.channels);
 
   const {
@@ -107,7 +109,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         variables: getShippingMethodChannelVariables(
           rateId,
           formData.noLimits,
-          formData.channelListing,
+          formData.channelListings,
           shippingChannels
         )
       });

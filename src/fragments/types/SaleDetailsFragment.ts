@@ -8,17 +8,17 @@ import { SaleType } from "./../../types/globalTypes";
 // GraphQL fragment: SaleDetailsFragment
 // ====================================================
 
-export interface SaleDetailsFragment_channelListing_channel {
+export interface SaleDetailsFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface SaleDetailsFragment_channelListing {
+export interface SaleDetailsFragment_channelListings {
   __typename: "SaleChannelListing";
   id: string;
-  channel: SaleDetailsFragment_channelListing_channel;
+  channel: SaleDetailsFragment_channelListings_channel;
   discountValue: number;
   currency: string;
 }
@@ -34,28 +34,28 @@ export interface SaleDetailsFragment_products_edges_node_thumbnail {
   url: string;
 }
 
-export interface SaleDetailsFragment_products_edges_node_channelListing_discountedPrice {
+export interface SaleDetailsFragment_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface SaleDetailsFragment_products_edges_node_channelListing_channel {
+export interface SaleDetailsFragment_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface SaleDetailsFragment_products_edges_node_channelListing {
+export interface SaleDetailsFragment_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: SaleDetailsFragment_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: SaleDetailsFragment_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: SaleDetailsFragment_products_edges_node_channelListing_channel;
+  channel: SaleDetailsFragment_products_edges_node_channelListings_channel;
 }
 
 export interface SaleDetailsFragment_products_edges_node {
@@ -64,7 +64,7 @@ export interface SaleDetailsFragment_products_edges_node {
   name: string;
   productType: SaleDetailsFragment_products_edges_node_productType;
   thumbnail: SaleDetailsFragment_products_edges_node_thumbnail | null;
-  channelListing: SaleDetailsFragment_products_edges_node_channelListing[] | null;
+  channelListings: SaleDetailsFragment_products_edges_node_channelListings[] | null;
 }
 
 export interface SaleDetailsFragment_products_edges {
@@ -158,7 +158,7 @@ export interface SaleDetailsFragment {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  channelListing: SaleDetailsFragment_channelListing[] | null;
+  channelListings: SaleDetailsFragment_channelListings[] | null;
   products: SaleDetailsFragment_products | null;
   categories: SaleDetailsFragment_categories | null;
   collections: SaleDetailsFragment_collections | null;

@@ -15,16 +15,18 @@ export type ChannelInput = RequireOnlyOne<
 >;
 
 export function createChannelsChangeHandler(
-  channelListing: ChannelVoucherData[],
+  channelListings: ChannelVoucherData[],
   updateChannels: (data: ChannelVoucherData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, input: ChannelInput) => {
-    const channelIndex = channelListing.findIndex(channel => channel.id === id);
-    const channel = channelListing[channelIndex];
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
     const { discountValue, minSpent } = input;
     const updatedChannels = [
-      ...channelListing.slice(0, channelIndex),
+      ...channelListings.slice(0, channelIndex),
       {
         ...channel,
         ...(minSpent !== undefined
@@ -33,7 +35,7 @@ export function createChannelsChangeHandler(
               discountValue
             })
       },
-      ...channelListing.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
     triggerChange();
@@ -41,21 +43,23 @@ export function createChannelsChangeHandler(
 }
 
 export function createSaleChannelsChangeHandler(
-  channelListing: ChannelSaleData[],
+  channelListings: ChannelSaleData[],
   updateChannels: (data: ChannelSaleData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, discountValue: string) => {
-    const channelIndex = channelListing.findIndex(channel => channel.id === id);
-    const channel = channelListing[channelIndex];
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
 
     const updatedChannels = [
-      ...channelListing.slice(0, channelIndex),
+      ...channelListings.slice(0, channelIndex),
       {
         ...channel,
         discountValue
       },
-      ...channelListing.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
     triggerChange();
@@ -70,7 +74,7 @@ export const getChannelsVariables = (
   const removeChannels = prevChannels
     ? diff(
         prevChannels,
-        formData.channelListing,
+        formData.channelListings,
         (a, b) => a.id === b.id
       ).removed?.map(removedChannel => removedChannel.id)
     : [];
@@ -79,7 +83,7 @@ export const getChannelsVariables = (
     id,
     input: {
       addChannels:
-        formData.channelListing?.map(channel => ({
+        formData.channelListings?.map(channel => ({
           channelId: channel.id,
           discountValue:
             formData.discountType.toString() === "SHIPPING"
@@ -105,7 +109,7 @@ export const getSaleChannelsVariables = (
   const removeChannels = prevChannels
     ? diff(
         prevChannels,
-        formData.channelListing,
+        formData.channelListings,
         (a, b) => a.id === b.id
       ).removed?.map(removedChannel => removedChannel.id)
     : [];
@@ -114,7 +118,7 @@ export const getSaleChannelsVariables = (
     id,
     input: {
       addChannels:
-        formData.channelListing?.map(channel => ({
+        formData.channelListings?.map(channel => ({
           channelId: channel.id,
           discountValue: channel.discountValue
         })) || [],

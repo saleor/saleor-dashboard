@@ -22,7 +22,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
-  channelListing: ChannelShippingData[];
+  channelListings: ChannelShippingData[];
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -65,7 +65,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    channelListing: shippingChannels,
+    channelListings: shippingChannels,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
@@ -81,7 +81,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(
+        const formDisabled = data.channelListings?.some(
           channel =>
             validatePrice(channel.minValue) ||
             validatePrice(channel.maxValue) ||
@@ -118,7 +118,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <CardSpacer />
                 {variant === ShippingMethodTypeEnum.PRICE ? (
                   <OrderValue
-                    channels={data.channelListing}
+                    channels={data.channelListings}
                     errors={channelErrors}
                     noLimits={data.noLimits}
                     disabled={disabled}
@@ -137,7 +137,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 )}
                 <CardSpacer />
                 <PricingCard
-                  channels={data.channelListing}
+                  channels={data.channelListings}
                   onChange={handleChannelsChange}
                   disabled={disabled}
                   errors={channelErrors}
@@ -148,7 +148,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <ChannelsAvailability
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
-                  channelsList={data.channelListing.map(channel => ({
+                  channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
                     name: channel.name
                   }))}

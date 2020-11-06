@@ -172,7 +172,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
-  channelListing: ChannelData[];
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -192,10 +192,13 @@ export function getProductUpdatePageFormData(
   currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
-    basePrice: maybe(() => product.channelListing[0].discountedPrice.amount, 0),
+    basePrice: maybe(
+      () => product.channelListings[0].discountedPrice.amount,
+      0
+    ),
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
-    channelListing: currentChannels,
+    channelListings: currentChannels,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),

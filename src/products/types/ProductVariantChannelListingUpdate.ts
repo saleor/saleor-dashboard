@@ -73,23 +73,23 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   url: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_channel {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_discountedPrice {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_channel;
-  discountedPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing_discountedPrice | null;
+  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_channel;
+  discountedPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_discountedPrice | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants_images {
@@ -113,34 +113,34 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_images | null)[] | null;
   name: string;
   thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
-  channelListing: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListing[] | null;
+  channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings[] | null;
   variants: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants | null)[] | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_channel {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_price {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_costPrice {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings {
   __typename: "ProductVariantChannelListing";
-  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_channel;
-  price: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_price | null;
-  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing_costPrice | null;
+  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel;
+  price: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price | null;
+  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks_warehouse {
@@ -172,7 +172,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images | null)[] | null;
   name: string;
   product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;
-  channelListing: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListing[] | null;
+  channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings[] | null;
   sku: string;
   stocks: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks | null)[] | null;
   trackInventory: boolean;

@@ -80,7 +80,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
         variables: getShippingMethodChannelVariables(
           response.data.shippingPriceCreate.shippingMethod.id,
           data.noLimits,
-          data.channelListing
+          data.channelListings
         )
       });
     } else {

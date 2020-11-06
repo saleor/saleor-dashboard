@@ -73,23 +73,23 @@ export interface ProductImageCreate_productImageCreate_product_productType {
   taxType: ProductImageCreate_productImageCreate_product_productType_taxType | null;
 }
 
-export interface ProductImageCreate_productImageCreate_product_channelListing_channel {
+export interface ProductImageCreate_productImageCreate_product_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_channelListing_discountedPrice {
+export interface ProductImageCreate_productImageCreate_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_channelListing {
+export interface ProductImageCreate_productImageCreate_product_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductImageCreate_productImageCreate_product_channelListing_channel;
-  discountedPrice: ProductImageCreate_productImageCreate_product_channelListing_discountedPrice | null;
+  channel: ProductImageCreate_productImageCreate_product_channelListings_channel;
+  discountedPrice: ProductImageCreate_productImageCreate_product_channelListings_discountedPrice | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;
@@ -148,30 +148,30 @@ export interface ProductImageCreate_productImageCreate_product_variants_stocks {
   warehouse: ProductImageCreate_productImageCreate_product_variants_stocks_warehouse;
 }
 
-export interface ProductImageCreate_productImageCreate_product_variants_channelListing_channel {
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_variants_channelListing_price {
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_variants_channelListing_costPrice {
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_costPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_variants_channelListing {
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings {
   __typename: "ProductVariantChannelListing";
-  channel: ProductImageCreate_productImageCreate_product_variants_channelListing_channel;
-  price: ProductImageCreate_productImageCreate_product_variants_channelListing_price | null;
-  costPrice: ProductImageCreate_productImageCreate_product_variants_channelListing_costPrice | null;
+  channel: ProductImageCreate_productImageCreate_product_variants_channelListings_channel;
+  price: ProductImageCreate_productImageCreate_product_variants_channelListings_price | null;
+  costPrice: ProductImageCreate_productImageCreate_product_variants_channelListings_costPrice | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_variants {
@@ -182,7 +182,7 @@ export interface ProductImageCreate_productImageCreate_product_variants {
   margin: number | null;
   stocks: (ProductImageCreate_productImageCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  channelListing: ProductImageCreate_productImageCreate_product_variants_channelListing[] | null;
+  channelListings: ProductImageCreate_productImageCreate_product_variants_channelListings[] | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_weight {
@@ -202,7 +202,7 @@ export interface ProductImageCreate_productImageCreate_product {
   id: string;
   attributes: ProductImageCreate_productImageCreate_product_attributes[];
   productType: ProductImageCreate_productImageCreate_product_productType;
-  channelListing: ProductImageCreate_productImageCreate_product_channelListing[] | null;
+  channelListings: ProductImageCreate_productImageCreate_product_channelListings[] | null;
   metadata: (ProductImageCreate_productImageCreate_product_metadata | null)[];
   privateMetadata: (ProductImageCreate_productImageCreate_product_privateMetadata | null)[];
   name: string;

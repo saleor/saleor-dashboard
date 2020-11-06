@@ -30,7 +30,7 @@ import VoucherValue from "../VoucherValue";
 export interface FormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
-  channelListing: ChannelVoucherData[];
+  channelListings: ChannelVoucherData[];
   code: string;
   discountType: DiscountValueTypeEnum;
   endDate: string;
@@ -48,7 +48,7 @@ export interface FormData {
 
 export interface VoucherCreatePageProps {
   allChannelsCount: number;
-  channelListing: ChannelVoucherData[];
+  channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;
   disabled: boolean;
   errors: DiscountErrorFragment[];
@@ -61,7 +61,7 @@ export interface VoucherCreatePageProps {
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   allChannelsCount,
-  channelListing = [],
+  channelListings = [],
   disabled,
   errors,
   saveButtonBarState,
@@ -76,7 +76,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
-    channelListing,
+    channelListings,
     code: "",
     discountType: DiscountValueTypeEnum.FIXED,
     endDate: "",
@@ -96,11 +96,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createChannelsChangeHandler(
-          data.channelListing,
+          data.channelListings,
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(
+        const formDisabled = data.channelListings?.some(
           channel =>
             validatePrice(channel.discountValue) ||
             (data.requirementsPicker === RequirementsPicker.ORDER &&
@@ -171,9 +171,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               </div>
               <div>
                 <ChannelsAvailability
-                  selectedChannelsCount={data.channelListing.length}
+                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListing.map(channel => ({
+                  channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
                     name: channel.name
                   }))}

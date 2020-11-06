@@ -57,7 +57,9 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
   ] = useShippingMethodChannelListingUpdate({});
-  const shippingChannels = createShippingChannelsFromRate(rate?.channelListing);
+  const shippingChannels = createShippingChannelsFromRate(
+    rate?.channelListings
+  );
   const allChannels = createSortedShippingChannels(channelsData?.channels);
 
   const {
@@ -107,7 +109,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         variables: getShippingMethodChannelVariables(
           rateId,
           data.noLimits,
-          data.channelListing,
+          data.channelListings,
           shippingChannels
         )
       });

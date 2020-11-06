@@ -279,7 +279,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <VoucherDetailsPage
                             voucher={data?.voucher}
                             allChannelsCount={allChannels?.length}
-                            channelListing={currentChannels}
+                            channelListings={currentChannels}
                             hasChannelChanged={
                               voucherChannelsChoices?.length !==
                               currentChannels?.length

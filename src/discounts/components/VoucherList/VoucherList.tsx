@@ -218,7 +218,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           vouchers,
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
-            const channel = voucher?.channelListing?.find(
+            const channel = voucher?.channelListings?.find(
               listing => listing.channel.id === selectedChannel
             );
             return (

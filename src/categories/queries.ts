@@ -88,7 +88,7 @@ export const categoryDetails = gql`
               id
               name
             }
-            channelListing {
+            channelListings {
               ...ChannelListingProductFragment
             }
           }

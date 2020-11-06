@@ -121,7 +121,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           {renderCollection(
             rates,
             rate => {
-              const channel = rate?.channelListing?.find(
+              const channel = rate?.channelListings?.find(
                 listing => listing.channel.id === selectedChannel
               );
               return (

@@ -13,16 +13,16 @@ export interface ProductVariantCreateData_product_images {
   url: string;
 }
 
-export interface ProductVariantCreateData_product_channelListing_channel {
+export interface ProductVariantCreateData_product_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductVariantCreateData_product_channelListing {
+export interface ProductVariantCreateData_product_channelListings {
   __typename: "ProductChannelListing";
-  channel: ProductVariantCreateData_product_channelListing_channel;
+  channel: ProductVariantCreateData_product_channelListings_channel;
 }
 
 export interface ProductVariantCreateData_product_productType_variantAttributes_values {
@@ -70,7 +70,7 @@ export interface ProductVariantCreateData_product {
   __typename: "Product";
   id: string;
   images: (ProductVariantCreateData_product_images | null)[] | null;
-  channelListing: ProductVariantCreateData_product_channelListing[] | null;
+  channelListings: ProductVariantCreateData_product_channelListings[] | null;
   name: string;
   productType: ProductVariantCreateData_product_productType;
   thumbnail: ProductVariantCreateData_product_thumbnail | null;

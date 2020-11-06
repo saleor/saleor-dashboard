@@ -40,7 +40,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   basePrice: number;
   category: string;
   changeTaxCode: boolean;
-  channelListing: ChannelData[];
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   description: OutputData;
@@ -128,7 +128,7 @@ function useProductCreateForm(
     basePrice: 0,
     category: "",
     changeTaxCode: false,
-    channelListing: opts.currentChannels,
+    channelListings: opts.currentChannels,
     chargeTaxes: false,
     collections: [],
     description: null,
@@ -258,7 +258,7 @@ function useProductCreateForm(
   const disabled =
     !productTypeChoice?.hasVariants &&
     (!data.sku ||
-      data.channelListing.some(
+      data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ));

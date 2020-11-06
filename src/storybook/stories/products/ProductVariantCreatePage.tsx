@@ -9,7 +9,7 @@ import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
-const channels = product.channelListing.map(listing => ({
+const channels = product.channelListings.map(listing => ({
   costPrice: null,
   currency: listing.channel.currencyCode,
   id: listing.channel.id,

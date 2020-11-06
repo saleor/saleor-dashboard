@@ -72,7 +72,7 @@ storiesOf("Views / Discounts / Voucher list", module)
       onSettingsOpen={undefined}
       vouchers={voucherList.map(voucher => ({
         ...voucher,
-        channelListing: []
+        channelListings: []
       }))}
     />
   ));

@@ -20,38 +20,38 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   value: number;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_channel {
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_price {
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_minimumOrderPrice {
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_maximumOrderPrice {
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing {
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_channel;
-  price: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_price | null;
-  minimumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing_maximumOrderPrice | null;
+  channel: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_channel;
+  price: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_price | null;
+  minimumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
@@ -61,7 +61,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   maximumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListing[] | null;
+  channelListings: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings[] | null;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_errors {

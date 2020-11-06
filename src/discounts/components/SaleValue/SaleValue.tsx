@@ -76,7 +76,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
             </TableHead>
             <TableBody>
               {renderCollection(
-                data.channelListing,
+                data.channelListings,
                 (listing, index) => {
                   const error = formErrors.value?.channels?.find(
                     id => id === listing.id

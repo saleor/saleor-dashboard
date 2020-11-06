@@ -20,38 +20,38 @@ export interface ShippingMethodFragment_maximumOrderWeight {
   value: number;
 }
 
-export interface ShippingMethodFragment_channelListing_channel {
+export interface ShippingMethodFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingMethodFragment_channelListing_price {
+export interface ShippingMethodFragment_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListing_minimumOrderPrice {
+export interface ShippingMethodFragment_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListing_maximumOrderPrice {
+export interface ShippingMethodFragment_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListing {
+export interface ShippingMethodFragment_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingMethodFragment_channelListing_channel;
-  price: ShippingMethodFragment_channelListing_price | null;
-  minimumOrderPrice: ShippingMethodFragment_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: ShippingMethodFragment_channelListing_maximumOrderPrice | null;
+  channel: ShippingMethodFragment_channelListings_channel;
+  price: ShippingMethodFragment_channelListings_price | null;
+  minimumOrderPrice: ShippingMethodFragment_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingMethodFragment_channelListings_maximumOrderPrice | null;
 }
 
 export interface ShippingMethodFragment {
@@ -61,5 +61,5 @@ export interface ShippingMethodFragment {
   maximumOrderWeight: ShippingMethodFragment_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: ShippingMethodFragment_channelListing[] | null;
+  channelListings: ShippingMethodFragment_channelListings[] | null;
 }

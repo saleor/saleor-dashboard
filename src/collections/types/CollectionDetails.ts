@@ -6,17 +6,17 @@
 // GraphQL query operation: CollectionDetails
 // ====================================================
 
-export interface CollectionDetails_collection_channelListing_channel {
+export interface CollectionDetails_collection_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
 }
 
-export interface CollectionDetails_collection_channelListing {
+export interface CollectionDetails_collection_channelListings {
   __typename: "CollectionChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  channel: CollectionDetails_collection_channelListing_channel;
+  channel: CollectionDetails_collection_channelListings_channel;
 }
 
 export interface CollectionDetails_collection_metadata {
@@ -48,28 +48,28 @@ export interface CollectionDetails_collection_products_edges_node_thumbnail {
   url: string;
 }
 
-export interface CollectionDetails_collection_products_edges_node_channelListing_discountedPrice {
+export interface CollectionDetails_collection_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CollectionDetails_collection_products_edges_node_channelListing_channel {
+export interface CollectionDetails_collection_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface CollectionDetails_collection_products_edges_node_channelListing {
+export interface CollectionDetails_collection_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: CollectionDetails_collection_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: CollectionDetails_collection_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: CollectionDetails_collection_products_edges_node_channelListing_channel;
+  channel: CollectionDetails_collection_products_edges_node_channelListings_channel;
 }
 
 export interface CollectionDetails_collection_products_edges_node {
@@ -78,7 +78,7 @@ export interface CollectionDetails_collection_products_edges_node {
   name: string;
   productType: CollectionDetails_collection_products_edges_node_productType;
   thumbnail: CollectionDetails_collection_products_edges_node_thumbnail | null;
-  channelListing: CollectionDetails_collection_products_edges_node_channelListing[] | null;
+  channelListings: CollectionDetails_collection_products_edges_node_channelListings[] | null;
 }
 
 export interface CollectionDetails_collection_products_edges {
@@ -104,7 +104,7 @@ export interface CollectionDetails_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  channelListing: CollectionDetails_collection_channelListing[] | null;
+  channelListings: CollectionDetails_collection_channelListings[] | null;
   metadata: (CollectionDetails_collection_metadata | null)[];
   privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;

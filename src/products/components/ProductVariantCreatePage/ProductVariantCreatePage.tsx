@@ -105,7 +105,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
               <CardSpacer />
               <ProductVariantPrice
-                ProductVariantChannelListings={data.channelListing.map(
+                ProductVariantChannelListings={data.channelListings.map(
                   channel => ({
                     ...channel.data,
                     ...channel.value

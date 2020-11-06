@@ -20,28 +20,28 @@ export interface ProductList_products_edges_node_productType {
   hasVariants: boolean;
 }
 
-export interface ProductList_products_edges_node_channelListing_discountedPrice {
+export interface ProductList_products_edges_node_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductList_products_edges_node_channelListing_channel {
+export interface ProductList_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductList_products_edges_node_channelListing {
+export interface ProductList_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: ProductList_products_edges_node_channelListing_discountedPrice | null;
+  discountedPrice: ProductList_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: ProductList_products_edges_node_channelListing_channel;
+  channel: ProductList_products_edges_node_channelListings_channel;
 }
 
 export interface ProductList_products_edges_node_attributes_attribute {
@@ -67,7 +67,7 @@ export interface ProductList_products_edges_node {
   name: string;
   thumbnail: ProductList_products_edges_node_thumbnail | null;
   productType: ProductList_products_edges_node_productType;
-  channelListing: ProductList_products_edges_node_channelListing[] | null;
+  channelListings: ProductList_products_edges_node_channelListings[] | null;
   attributes: ProductList_products_edges_node_attributes[];
 }
 

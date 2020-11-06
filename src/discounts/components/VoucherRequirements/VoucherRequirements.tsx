@@ -125,7 +125,7 @@ const VoucherRequirements = ({
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    data.channelListing,
+                    data.channelListings,
                     (listing, index) => {
                       const error = formErrors.minSpent?.channels?.find(
                         id => id === listing.id

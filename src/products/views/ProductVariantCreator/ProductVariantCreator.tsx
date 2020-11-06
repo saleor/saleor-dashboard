@@ -54,7 +54,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []
         }
-        channelListings={data?.product?.channelListing?.map(listing => ({
+        channelListings={data?.product?.channelListings?.map(listing => ({
           currency: listing.channel.currencyCode,
           id: listing.channel.id,
           name: listing.channel.name,

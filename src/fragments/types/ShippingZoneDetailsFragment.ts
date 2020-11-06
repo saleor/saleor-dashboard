@@ -26,38 +26,38 @@ export interface ShippingZoneDetailsFragment_shippingMethods_maximumOrderWeight 
   value: number;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_channelListing_channel {
+export interface ShippingZoneDetailsFragment_shippingMethods_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_channelListing_price {
+export interface ShippingZoneDetailsFragment_shippingMethods_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_channelListing_minimumOrderPrice {
+export interface ShippingZoneDetailsFragment_shippingMethods_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_channelListing_maximumOrderPrice {
+export interface ShippingZoneDetailsFragment_shippingMethods_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_channelListing {
+export interface ShippingZoneDetailsFragment_shippingMethods_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingZoneDetailsFragment_shippingMethods_channelListing_channel;
-  price: ShippingZoneDetailsFragment_shippingMethods_channelListing_price | null;
-  minimumOrderPrice: ShippingZoneDetailsFragment_shippingMethods_channelListing_minimumOrderPrice | null;
-  maximumOrderPrice: ShippingZoneDetailsFragment_shippingMethods_channelListing_maximumOrderPrice | null;
+  channel: ShippingZoneDetailsFragment_shippingMethods_channelListings_channel;
+  price: ShippingZoneDetailsFragment_shippingMethods_channelListings_price | null;
+  minimumOrderPrice: ShippingZoneDetailsFragment_shippingMethods_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingZoneDetailsFragment_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
 export interface ShippingZoneDetailsFragment_shippingMethods {
@@ -67,7 +67,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   maximumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
-  channelListing: ShippingZoneDetailsFragment_shippingMethods_channelListing[] | null;
+  channelListings: ShippingZoneDetailsFragment_shippingMethods_channelListings[] | null;
 }
 
 export interface ShippingZoneDetailsFragment_warehouses {

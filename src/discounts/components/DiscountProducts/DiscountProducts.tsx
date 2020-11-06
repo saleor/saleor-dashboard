@@ -155,9 +155,9 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel =
-                product?.channelListing.find(
+                product?.channelListings.find(
                   listing => listing.channel.id === selectedChannel
-                ) || product?.channelListing[0];
+                ) || product?.channelListings[0];
               return (
                 <TableRow
                   hover={!!product}
@@ -187,13 +187,13 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colType}>
-                    {product && !product?.channelListing?.length ? (
+                    {product && !product?.channelListings?.length ? (
                       "-"
-                    ) : product?.channelListing !== undefined ? (
+                    ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
                         currentChannel={channel}
-                        channels={product?.channelListing}
+                        channels={product?.channelListings}
                       />
                     ) : (
                       <Skeleton />

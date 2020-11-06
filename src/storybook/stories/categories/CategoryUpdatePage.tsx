@@ -14,7 +14,7 @@ import Decorator from "../../Decorator";
 
 const category = categoryFixture(placeholderImage);
 
-const channelChoices = category.products.edges[0].node.channelListing.map(
+const channelChoices = category.products.edges[0].node.channelListings.map(
   listing => ({
     label: listing.channel.name,
     value: listing.channel.id

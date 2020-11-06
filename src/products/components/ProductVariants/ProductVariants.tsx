@@ -344,7 +344,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       0
                     )
                   : null;
-              const channel = variant.channelListing.find(
+              const channel = variant.channelListings.find(
                 listing => listing.channel.id === channelChoice
               );
 

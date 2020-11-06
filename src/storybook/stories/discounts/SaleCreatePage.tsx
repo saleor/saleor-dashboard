@@ -13,7 +13,7 @@ const channels = createSaleChannels(channelsList);
 
 const props: SaleCreatePageProps = {
   allChannelsCount: channels.length,
-  channelListing: channels,
+  channelListings: channels,
   disabled: false,
   errors: [],
   onBack: () => undefined,

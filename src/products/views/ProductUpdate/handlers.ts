@@ -72,14 +72,14 @@ const getChannelsVariables = (
   const productChannels = createSortedChannelsDataFromProduct(product);
   const diffChannels = diff(
     productChannels,
-    data.channelListing,
+    data.channelListings,
     (a, b) => a.id === b.id
   );
 
   return {
     id: product.id,
     input: {
-      addChannels: getAvailabilityVariables(data.channelListing),
+      addChannels: getAvailabilityVariables(data.channelListings),
       removeChannels: diffChannels.removed?.map(
         removedChannel => removedChannel.id
       )
@@ -88,7 +88,7 @@ const getChannelsVariables = (
 };
 
 const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
-  data.channelListing.map(listing => ({
+  data.channelListings.map(listing => ({
     channelId: listing.id,
     costPrice: listing.costPrice || null,
     price: listing.price

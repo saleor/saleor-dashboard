@@ -212,7 +212,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           });
           const diffChannels = diff(
             collectionChannelsChoices,
-            formData.channelListing,
+            formData.channelListings,
             (a, b) => a.id === b.id
           );
 
@@ -220,7 +220,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             variables: {
               id: collection.id,
               input: {
-                addChannels: formData.channelListing.map(channel => ({
+                addChannels: formData.channelListings.map(channel => ({
                   channelId: channel.id,
                   isPublished: channel.isPublished,
                   publicationDate: channel.publicationDate

@@ -25,7 +25,7 @@ export interface SaleSummaryProps {
 const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannel, sale }) => {
   const intl = useIntl();
 
-  const channel = sale?.channelListing?.find(
+  const channel = sale?.channelListings?.find(
     listing => listing.channel.id === selectedChannel
   );
   return (

@@ -1,19 +1,19 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import { CollectionList_collections_edges_node_channelListing } from "@saleor/collections/types/CollectionList";
+import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
 import Hr from "@saleor/components/Hr";
 import StatusLabel from "@saleor/components/StatusLabel";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { ProductList_products_edges_node_channelListing } from "@saleor/products/types/ProductList";
+import { ProductList_products_edges_node_channelListings } from "@saleor/products/types/ProductList";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
 type Channels =
-  | ProductList_products_edges_node_channelListing
-  | CollectionList_collections_edges_node_channelListing;
+  | ProductList_products_edges_node_channelListings
+  | CollectionList_collections_edges_node_channelListings;
 
 export interface ChannelsAvailabilityDropdownProps {
   allChannelsCount: number;

@@ -54,7 +54,7 @@ export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
 export interface VoucherDetailsPageFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
-  channelListing: ChannelVoucherData[];
+  channelListings: ChannelVoucherData[];
   code: string;
   discountType: DiscountValueTypeEnum;
   endDate: string;
@@ -80,7 +80,7 @@ export interface VoucherDetailsPageProps
   voucher: VoucherDetails_voucher;
   selectedChannel: string;
   allChannelsCount: number;
-  channelListing: ChannelVoucherData[];
+  channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;
   onBack: () => void;
   onCategoryAssign: () => void;
@@ -108,7 +108,7 @@ const ProductsTab = Tab(VoucherDetailsPageTab.products);
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   allChannelsCount,
-  channelListing = [],
+  channelListings = [],
   disabled,
   errors,
   pageInfo,
@@ -144,7 +144,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
-  const channel = voucher?.channelListing?.find(
+  const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannel
   );
   let requirementsPickerInitValue;
@@ -159,7 +159,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const initialForm: VoucherDetailsPageFormData = {
     applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
-    channelListing,
+    channelListings,
     code: voucher?.code || "",
     discountType: maybe(
       () => voucher.discountValueType,
@@ -184,11 +184,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createChannelsChangeHandler(
-          data.channelListing,
+          data.channelListings,
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListing?.some(
+        const formDisabled = data.channelListings?.some(
           channel =>
             validatePrice(channel.discountValue) ||
             (data.requirementsPicker === RequirementsPicker.ORDER &&
@@ -395,9 +395,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <ChannelsAvailability
-                  selectedChannelsCount={data.channelListing.length}
+                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListing.map(channel => ({
+                  channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
                     name: channel.name
                   }))}

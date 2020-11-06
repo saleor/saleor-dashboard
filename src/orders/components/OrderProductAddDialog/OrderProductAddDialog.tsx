@@ -256,7 +256,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 productChoices,
                 (product, productIndex) =>
                   product.variants.some(variant =>
-                    variant.channelListing.some(
+                    variant.channelListings.some(
                       listing => listing.channel.id === selectedChannel
                     )
                   ) ? (
@@ -292,7 +292,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                       </TableRow>
                       {maybe(() => product.variants, []).map(
                         (variant, variantIndex) =>
-                          variant.channelListing.some(
+                          variant.channelListings.some(
                             listing => listing.channel.id === selectedChannel
                           ) ? (
                             <TableRow key={variant.id}>
@@ -331,9 +331,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                                 </div>
                               </TableCell>
                               <TableCell className={classes.textRight}>
-                                {variant?.channelListing[0]?.price && (
+                                {variant?.channelListings[0]?.price && (
                                   <Money
-                                    money={variant.channelListing[0].price}
+                                    money={variant.channelListings[0].price}
                                   />
                                 )}
                               </TableCell>

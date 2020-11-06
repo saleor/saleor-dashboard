@@ -169,7 +169,7 @@ const SaleList: React.FC<SaleListProps> = props => {
           sales,
           sale => {
             const isSelected = sale ? isChecked(sale.id) : false;
-            const channel = sale?.channelListing?.find(
+            const channel = sale?.channelListings?.find(
               lisiting => lisiting.channel.id === selectedChannel
             );
             return (

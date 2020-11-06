@@ -26,7 +26,7 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
-  channelListing: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   stocks: ProductStockInput[];
 }
 
@@ -125,7 +125,7 @@ function useProductVariantCreateForm(
   const data: ProductVariantCreateData = {
     ...form.data,
     attributes: attributes.data,
-    channelListing: channels.data,
+    channelListings: channels.data,
     stocks: stocks.data
   };
 

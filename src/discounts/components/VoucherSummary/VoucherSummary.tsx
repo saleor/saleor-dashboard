@@ -30,7 +30,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
   const intl = useIntl();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
-  const channel = voucher?.channelListing?.find(
+  const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannel
   );
 

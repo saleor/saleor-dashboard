@@ -128,7 +128,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjA=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -185,7 +185,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjE=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -222,7 +222,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjI=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -259,7 +259,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjM=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -296,7 +296,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjQ=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -333,7 +333,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjU=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -370,7 +370,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjY=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -407,7 +407,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjc=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -444,7 +444,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjg=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,
@@ -481,7 +481,7 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjk=",
         node: {
           __typename: "Product",
-          channelListing: [
+          channelListings: [
             {
               __typename: "ProductChannelListing",
               availableForPurchase: null,

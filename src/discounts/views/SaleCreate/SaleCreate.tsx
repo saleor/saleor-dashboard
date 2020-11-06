@@ -83,7 +83,7 @@ export const SaleDetails: React.FC = () => {
               <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
               <SaleCreatePage
                 allChannelsCount={allChannels?.length}
-                channelListing={currentChannels}
+                channelListings={currentChannels}
                 disabled={saleCreateOpts.loading || updateChannelsOpts.loading}
                 errors={[
                   ...(saleCreateOpts.data?.saleCreate.errors || []),

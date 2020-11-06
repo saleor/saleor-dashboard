@@ -264,7 +264,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           <SaleDetailsPage
                             sale={maybe(() => data.sale)}
                             allChannelsCount={allChannels?.length}
-                            channelListing={currentChannels}
+                            channelListings={currentChannels}
                             hasChannelChanged={
                               saleChannelsChoices?.length !==
                               currentChannels?.length

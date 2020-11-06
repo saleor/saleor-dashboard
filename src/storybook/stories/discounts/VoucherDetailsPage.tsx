@@ -24,7 +24,7 @@ const props: VoucherDetailsPageProps = {
   activeTab: VoucherDetailsPageTab.products,
   allChannelsCount: channels.length,
   categoryListToolbar: null,
-  channelListing: channels,
+  channelListings: channels,
   collectionListToolbar: null,
   errors: [],
   hasChannelChanged: false,

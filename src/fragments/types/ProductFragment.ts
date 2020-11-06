@@ -18,28 +18,28 @@ export interface ProductFragment_productType {
   hasVariants: boolean;
 }
 
-export interface ProductFragment_channelListing_discountedPrice {
+export interface ProductFragment_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductFragment_channelListing_channel {
+export interface ProductFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ProductFragment_channelListing {
+export interface ProductFragment_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: ProductFragment_channelListing_discountedPrice | null;
+  discountedPrice: ProductFragment_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  channel: ProductFragment_channelListing_channel;
+  channel: ProductFragment_channelListings_channel;
 }
 
 export interface ProductFragment {
@@ -48,5 +48,5 @@ export interface ProductFragment {
   name: string;
   thumbnail: ProductFragment_thumbnail | null;
   productType: ProductFragment_productType;
-  channelListing: ProductFragment_channelListing[] | null;
+  channelListings: ProductFragment_channelListings[] | null;
 }

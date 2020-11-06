@@ -10,7 +10,7 @@ export const saleFragment = gql`
     type
     startDate
     endDate
-    channelListing {
+    channelListings {
       id
       channel {
         id
@@ -41,7 +41,7 @@ export const saleDetailsFragment = gql`
           thumbnail {
             url
           }
-          channelListing {
+          channelListings {
             ...ChannelListingProductFragment
           }
         }
@@ -97,7 +97,7 @@ export const voucherFragment = gql`
       country
     }
     minCheckoutItemsQuantity
-    channelListing {
+    channelListings {
       id
       channel {
         id
@@ -138,7 +138,7 @@ export const voucherDetailsFragment = gql`
           thumbnail {
             url
           }
-          channelListing {
+          channelListings {
             ...ChannelListingProductFragment
           }
         }

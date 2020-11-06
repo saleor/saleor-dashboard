@@ -74,13 +74,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const channels: ChannelPriceData[] = product?.channelListing.map(listing => ({
-    costPrice: null,
-    currency: listing.channel.currencyCode,
-    id: listing.channel.id,
-    name: listing.channel.name,
-    price: null
-  }));
+  const channels: ChannelPriceData[] = product?.channelListings.map(
+    listing => ({
+      costPrice: null,
+      currency: listing.channel.currencyCode,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: null
+    })
+  );
 
   const handleSubmitChannels = (
     data: ProductVariantCreateData,
@@ -89,7 +91,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     updateChannels({
       variables: {
         id: variantId,
-        input: data.channelListing.map(listing => ({
+        input: data.channelListings.map(listing => ({
           channelId: listing.id,
           costPrice: listing.value.costPrice || null,
           price: listing.value.price

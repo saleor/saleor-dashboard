@@ -43,7 +43,7 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  channelListing: CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing[] | null;
+  channelListings: CollectionUpdateWithHomepage_collectionUpdate_collection_channelListing[] | null;
   metadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_metadata | null)[];
   privateMetadata: (CollectionUpdateWithHomepage_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage | null;

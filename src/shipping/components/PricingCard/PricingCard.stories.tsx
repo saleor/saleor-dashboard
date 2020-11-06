@@ -8,7 +8,7 @@ import PricingCard, { PricingCardProps } from "./PricingCard";
 
 const props: PricingCardProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channelListing
+    shippingZone.shippingMethods[0].channelListings
   ),
   disabled: false,
   errors: [],

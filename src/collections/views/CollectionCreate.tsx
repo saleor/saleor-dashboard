@@ -100,7 +100,7 @@ export const CollectionCreate: React.FC = () => {
         variables: {
           id,
           input: {
-            addChannels: formData.channelListing.map(channel => ({
+            addChannels: formData.channelListings.map(channel => ({
               channelId: channel.id,
               isPublished: channel.isPublished,
               publicationDate: channel.publicationDate

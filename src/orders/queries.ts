@@ -161,7 +161,7 @@ export const searchOrderVariant = gql`
             id
             name
             sku
-            channelListing {
+            channelListings {
               channel {
                 id
                 isActive

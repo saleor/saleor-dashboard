@@ -25,7 +25,7 @@ export const shippingMethodFragment = gql`
     }
     name
     type
-    channelListing {
+    channelListings {
       id
       channel {
         id

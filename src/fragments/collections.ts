@@ -7,7 +7,7 @@ export const collectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
     name
-    channelListing {
+    channelListings {
       isPublished
       publicationDate
       channel {
@@ -51,7 +51,7 @@ export const collectionProductFragment = gql`
     thumbnail {
       url
     }
-    channelListing {
+    channelListings {
       ...ChannelListingProductFragment
     }
   }

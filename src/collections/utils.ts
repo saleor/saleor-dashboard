@@ -1,20 +1,20 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
 
 export const createChannelsChangeHandler = (
-  channelListing: ChannelCollectionData[],
+  channelListings: ChannelCollectionData[],
   updateChannels: (data: ChannelCollectionData[]) => void,
   triggerChange: () => void
 ) => (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
-  const channelIndex = channelListing.findIndex(channel => channel.id === id);
-  const channel = channelListing[channelIndex];
+  const channelIndex = channelListings.findIndex(channel => channel.id === id);
+  const channel = channelListings[channelIndex];
 
   const updatedChannels = [
-    ...channelListing.slice(0, channelIndex),
+    ...channelListings.slice(0, channelIndex),
     {
       ...channel,
       ...data
     },
-    ...channelListing.slice(channelIndex + 1)
+    ...channelListings.slice(channelIndex + 1)
   ];
   updateChannels(updatedChannels);
   triggerChange();
