@@ -45,7 +45,7 @@ describe("useRichText", () => {
     );
 
     const [data, change] = hook.result.current;
-    expect(data.current).toBe(undefined);
+    expect(data.current).toMatchObject({ blocks: [] });
 
     change(fixtures.short);
 
