@@ -1444,14 +1444,6 @@
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
   },
-  "src_dot_components_dot_AppLayout_dot_21332146": {
-    "context": "button",
-    "string": "Log out"
-  },
-  "src_dot_components_dot_AppLayout_dot_248888005": {
-    "context": "button",
-    "string": "Account Settings"
-  },
   "src_dot_components_dot_AppStatus_dot_1624959454": {
     "string": "If you want to disable this App please uncheck the box below."
   },
@@ -2006,6 +1998,14 @@
   },
   "src_dot_components_dot_Timeline_dot_3028189627": {
     "string": "Leave your note here..."
+  },
+  "src_dot_components_dot_UserChip_dot_21332146": {
+    "context": "button",
+    "string": "Log out"
+  },
+  "src_dot_components_dot_UserChip_dot_248888005": {
+    "context": "button",
+    "string": "Account Settings"
   },
   "src_dot_components_dot_VisibilityCard_dot_1311467573": {
     "string": "Show in product listings"

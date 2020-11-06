@@ -34,7 +34,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(0.5),
       transition: theme.transitions.duration.standard + "ms",
       [theme.breakpoints.down("sm")]: {
-        display: "none"
+        margin: theme.spacing(4, 0, 0, 0)
       }
     },
     skeleton: {
@@ -45,10 +45,7 @@ const useStyles = makeStyles(
       color: "inherit",
       flex: 1,
       marginLeft: theme.spacing(),
-      textTransform: "uppercase",
-      [theme.breakpoints.down("sm")]: {
-        display: "none"
-      }
+      textTransform: "uppercase"
     }
   }),
   { name: "AppHeader" }
