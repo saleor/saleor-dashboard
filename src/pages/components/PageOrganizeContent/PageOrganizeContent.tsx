@@ -13,6 +13,7 @@ import getPageErrorMessage from "@saleor/utils/errors/page";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
 import { PageFormData } from "../PageDetailsPage/form";
 
 export interface PageOrganizeContentProps {
