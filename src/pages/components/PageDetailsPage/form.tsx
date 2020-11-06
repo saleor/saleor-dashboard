@@ -5,7 +5,10 @@ import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { PageDetails_page } from "@saleor/pages/types/PageDetails";
+import {
+  PageDetails_page,
+  PageDetails_page_pageType
+} from "@saleor/pages/types/PageDetails";
 import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import {
@@ -55,14 +58,14 @@ export interface UsePageUpdateFormResult {
 export interface PageFormProps {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
-  pageTypes?: PageTypeFragment[];
+  pageTypes?: PageDetails_page_pageType[];
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
 function usePageForm(
   page: PageDetails_page,
   onSubmit: (data: PageData) => SubmitPromise,
-  pageTypes?: PageTypeFragment[]
+  pageTypes?: PageDetails_page_pageType[]
 ): UsePageUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);

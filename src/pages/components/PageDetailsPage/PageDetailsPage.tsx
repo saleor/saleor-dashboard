@@ -55,7 +55,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const pageExists = page !== null;
 
   return (
-    <PageForm page={page} onSubmit={onSubmit}>
+    <PageForm page={page} pageTypes={pageTypes} onSubmit={onSubmit}>
       {({ change, data, pageType, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
