@@ -5838,6 +5838,10 @@
     "context": "event",
     "string": "Checkout updated"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1366770851": {
+    "context": "event",
+    "string": "Order confirmed"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
     "context": "event",
     "string": "Invoice deleted"

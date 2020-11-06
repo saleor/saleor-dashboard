@@ -52,6 +52,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Order created",
       description: "event"
     }),
+    [WebhookEventTypeEnum.ORDER_CONFIRMED]: intl.formatMessage({
+      defaultMessage: "Order confirmed",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.ORDER_FULFILLED]: intl.formatMessage({
       defaultMessage: "Order fulfilled",
       description: "event"
