@@ -1,6 +1,8 @@
-import { content } from "../storybook/stories/components/RichTextEditor";
+import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { PageDetails_page } from "./types/PageDetails";
 import { PageList_pages_edges_node } from "./types/PageList";
+
+const content = richTextEditorFixtures.richTextEditor;
 
 export const pageList: PageList_pages_edges_node[] = [
   {

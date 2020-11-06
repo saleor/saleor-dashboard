@@ -25,9 +25,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
-import CollectionDetailsPage, {
-  CollectionDetailsPageFormData
-} from "../components/CollectionDetailsPage/CollectionDetailsPage";
+import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
+import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
   useCollectionAssignProductMutation,
   useCollectionRemoveMutation,
@@ -168,9 +167,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           return <NotFoundPage onBack={handleBack} />;
         }
 
-        const handleUpdate = async (
-          formData: CollectionDetailsPageFormData
-        ) => {
+        const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
             descriptionJson: JSON.stringify(formData.description),

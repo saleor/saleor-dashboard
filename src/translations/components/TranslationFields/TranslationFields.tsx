@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -36,7 +37,7 @@ export interface TranslationFieldsProps {
   saveButtonState: ConfirmButtonTransitionState;
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: string, data: string) => void;
+  onSubmit: (field: string, data: string | OutputData) => void;
 }
 
 const useStyles = makeStyles(

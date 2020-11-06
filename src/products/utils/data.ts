@@ -12,7 +12,6 @@ import {
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import { RawDraftContentState } from "draft-js";
 
 import { ProductAttributeInput } from "../components/ProductAttributes";
 import { ProductStockInput } from "../components/ProductStocks";
@@ -175,7 +174,6 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   changeTaxCode: boolean;
   chargeTaxes: boolean;
   collections: string[];
-  description: RawDraftContentState;
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
@@ -205,7 +203,6 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    description: maybe(() => JSON.parse(product.descriptionJson)),
     isAvailable: !!product?.isAvailable,
     isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),

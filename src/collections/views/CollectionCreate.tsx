@@ -2,6 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import getPublicationData from "@saleor/utils/data/getPublicationData";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -11,9 +12,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { CollectionCreateInput } from "../../types/globalTypes";
-import CollectionCreatePage, {
-  CollectionCreatePageFormData
-} from "../components/CollectionCreatePage/CollectionCreatePage";
+import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
+import { CollectionCreateData } from "../components/CollectionCreatePage/form";
 import { useCollectionCreateMutation } from "../mutations";
 import { collectionListUrl, collectionUrl } from "../urls";
 
@@ -47,15 +47,7 @@ export const CollectionCreate: React.FC = () => {
     }
   });
 
-  const getPublicationData = ({
-    publicationDate,
-    isPublished
-  }: CollectionCreatePageFormData) => ({
-    isPublished: !!publicationDate || isPublished,
-    publicationDate: publicationDate || null
-  });
-
-  const handleCreate = async (formData: CollectionCreatePageFormData) => {
+  const handleCreate = async (formData: CollectionCreateData) => {
     const result = await createCollection({
       variables: {
         input: {

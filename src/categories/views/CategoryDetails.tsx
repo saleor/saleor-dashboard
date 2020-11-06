@@ -27,9 +27,9 @@ import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
 import {
   CategoryPageTab,
-  CategoryUpdatePage,
-  FormData
+  CategoryUpdatePage
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
+import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
 import {
   useCategoryBulkDeleteMutation,
   useCategoryDeleteMutation,
@@ -175,7 +175,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params
   );
 
-  const handleUpdate = async (formData: FormData) => {
+  const handleUpdate = async (formData: CategoryUpdateData) => {
     const result = await updateCategory({
       variables: {
         id,

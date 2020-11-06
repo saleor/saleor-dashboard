@@ -13,7 +13,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryDetails_category_backgroundImage } from "../../types/CategoryDetails";
-import { FormData } from "../CategoryUpdatePage";
+import { CategoryUpdateData } from "../CategoryUpdatePage/form";
 
 const useStyles = makeStyles(
   theme => ({
@@ -42,7 +42,7 @@ const useStyles = makeStyles(
 );
 
 export interface CategoryBackgroundProps {
-  data: FormData;
+  data: CategoryUpdateData;
   image: CategoryDetails_category_backgroundImage;
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;

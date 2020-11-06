@@ -1,35 +1,34 @@
+import { OutputData } from "@editorjs/editorjs";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
-import RichTextEditor from "@saleor/components/RichTextEditor";
+import RichTextEditor, {
+  RichTextEditorChange
+} from "@saleor/components/RichTextEditor";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
-import { CategoryDetails_category } from "../../types/CategoryDetails";
-
 interface CategoryDetailsFormProps {
-  category?: CategoryDetails_category;
   data: {
     name: string;
-    description: RawDraftContentState;
+    description: OutputData;
   };
   disabled: boolean;
   errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
+  onDescriptionChange: RichTextEditorChange;
 }
 
 export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
-  category,
   disabled,
   data,
   onChange,
+  onDescriptionChange,
   errors
 }) => {
   const intl = useIntl();
@@ -58,15 +57,15 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
         </div>
         <FormSpacer />
         <RichTextEditor
+          data={data.description}
           disabled={disabled}
           error={!!formErrors.descriptionJson}
           helperText={getProductErrorMessage(formErrors.descriptionJson, intl)}
           label={intl.formatMessage({
             defaultMessage: "Category Description"
           })}
-          initial={maybe(() => JSON.parse(category.descriptionJson))}
           name="description"
-          onChange={onChange}
+          onChange={onDescriptionChange}
         />
       </CardContent>
     </Card>

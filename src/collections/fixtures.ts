@@ -1,6 +1,8 @@
-import { content } from "../storybook/stories/components/RichTextEditor";
+import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { CollectionDetails_collection } from "./types/CollectionDetails";
 import { CollectionList_collections_edges_node } from "./types/CollectionList";
+
+const content = richTextEditorFixtures.richTextEditor;
 
 export const collections: CollectionList_collections_edges_node[] = [
   {
