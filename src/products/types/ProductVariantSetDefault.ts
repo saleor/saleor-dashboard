@@ -210,6 +210,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant | null;
   category: ProductVariantSetDefault_productVariantSetDefault_product_category | null;
   collections: (ProductVariantSetDefault_productVariantSetDefault_product_collections | null)[] | null;

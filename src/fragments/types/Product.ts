@@ -204,6 +204,7 @@ export interface Product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: Product_defaultVariant | null;
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;

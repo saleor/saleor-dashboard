@@ -47,6 +47,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   isAvailable: boolean;
   name: string;
   productType: ProductType;
+  rating: number;
   seoDescription: string;
   seoTitle: string;
   sku: string;
@@ -137,6 +138,7 @@ function useProductCreateForm(
     name: "",
     privateMetadata: [],
     productType: null,
+    rating: 0,
     seoDescription: "",
     seoTitle: "",
     sku: "",

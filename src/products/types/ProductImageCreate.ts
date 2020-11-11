@@ -210,6 +210,7 @@ export interface ProductImageCreate_productImageCreate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: ProductImageCreate_productImageCreate_product_defaultVariant | null;
   category: ProductImageCreate_productImageCreate_product_category | null;
   collections: (ProductImageCreate_productImageCreate_product_collections | null)[] | null;

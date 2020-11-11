@@ -211,6 +211,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: SimpleProductUpdate_productUpdate_product_defaultVariant | null;
   category: SimpleProductUpdate_productUpdate_product_category | null;
   collections: (SimpleProductUpdate_productUpdate_product_collections | null)[] | null;

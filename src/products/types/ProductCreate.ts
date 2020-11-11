@@ -211,6 +211,7 @@ export interface ProductCreate_productCreate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: ProductCreate_productCreate_product_defaultVariant | null;
   category: ProductCreate_productCreate_product_category | null;
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;

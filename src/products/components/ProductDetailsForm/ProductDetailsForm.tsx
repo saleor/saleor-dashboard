@@ -4,6 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
+import Hr from "@saleor/components/Hr";
 import RichTextEditor, {
   RichTextEditorChange
 } from "@saleor/components/RichTextEditor";
@@ -17,6 +18,7 @@ interface ProductDetailsFormProps {
   data: {
     description: OutputData;
     name: string;
+    rating: number;
   };
   disabled?: boolean;
   errors: ProductErrorFragment[];
@@ -34,7 +36,10 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name", "descriptionJson"], errors);
+  const formErrors = getFormErrors(
+    ["name", "descriptionJson", "rating"],
+    errors
+  );
 
   return (
     <Card>
@@ -64,6 +69,21 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           label={intl.formatMessage(commonMessages.description)}
           name="description"
           onChange={onDescriptionChange}
+        />
+        <Hr />
+        <FormSpacer />
+        <TextField
+          type="number"
+          error={!!formErrors.rating}
+          helperText={getProductErrorMessage(formErrors.rating, intl)}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Product Rating",
+            description: "product rating"
+          })}
+          name="rating"
+          value={data.rating || ""}
+          onChange={onChange}
         />
       </CardContent>
     </Card>

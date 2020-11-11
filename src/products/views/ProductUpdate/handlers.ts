@@ -125,6 +125,7 @@ export function createUpdateHandler(
         collections: data.collections,
         descriptionJson: JSON.stringify(data.description),
         name: data.name,
+        rating: data.rating,
         seo: {
           description: data.seoDescription,
           title: data.seoTitle
