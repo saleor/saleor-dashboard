@@ -29,7 +29,6 @@ export enum AccountErrorCode {
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
   OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
-  OUT_OF_SCOPE_SERVICE_ACCOUNT = "OUT_OF_SCOPE_SERVICE_ACCOUNT",
   OUT_OF_SCOPE_USER = "OUT_OF_SCOPE_USER",
   PASSWORD_ENTIRELY_NUMERIC = "PASSWORD_ENTIRELY_NUMERIC",
   PASSWORD_TOO_COMMON = "PASSWORD_TOO_COMMON",
@@ -465,6 +464,7 @@ export enum LanguageCodeEnum {
   IS = "IS",
   IT = "IT",
   JA = "JA",
+  KA = "KA",
   KM = "KM",
   KO = "KO",
   LT = "LT",
@@ -661,7 +661,6 @@ export enum PermissionEnum {
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
-  MANAGE_SERVICE_ACCOUNTS = "MANAGE_SERVICE_ACCOUNTS",
   MANAGE_SETTINGS = "MANAGE_SETTINGS",
   MANAGE_SHIPPING = "MANAGE_SHIPPING",
   MANAGE_STAFF = "MANAGE_STAFF",
@@ -912,13 +911,6 @@ export enum WebhookEventTypeEnum {
   ORDER_UPDATED = "ORDER_UPDATED",
   PRODUCT_CREATED = "PRODUCT_CREATED",
   PRODUCT_UPDATED = "PRODUCT_UPDATED",
-}
-
-export enum WebhookSortField {
-  APP = "APP",
-  NAME = "NAME",
-  SERVICE_ACCOUNT = "SERVICE_ACCOUNT",
-  TARGET_URL = "TARGET_URL",
 }
 
 export enum WeightUnitsEnum {
@@ -1678,27 +1670,15 @@ export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  serviceAccount?: string | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
-}
-
-export interface WebhookFilterInput {
-  search?: string | null;
-  isActive?: boolean | null;
-}
-
-export interface WebhookSortingInput {
-  direction: OrderDirection;
-  field: WebhookSortField;
 }
 
 export interface WebhookUpdateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  serviceAccount?: string | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
