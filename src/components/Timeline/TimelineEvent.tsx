@@ -10,6 +10,15 @@ import { DateTime } from "../Date";
 
 const useStyles = makeStyles(
   theme => ({
+    container: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      marginBottom: theme.spacing(),
+      marginLeft: theme.spacing(3),
+      width: "100%"
+    },
     date: {
       color: theme.typography.caption.color
     },
@@ -31,8 +40,6 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing(),
-      marginLeft: theme.spacing(3),
       width: "100%"
     },
     panel: {
@@ -57,6 +64,11 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
       position: "relative",
       width: "100%"
+    },
+    secondaryTitle: {
+      color: "#9e9e9e",
+      fontSize: 14,
+      marginTop: theme.spacing(2)
     }
   }),
   { name: "TimelineEvent" }
@@ -65,11 +77,12 @@ const useStyles = makeStyles(
 interface TimelineEventProps {
   children?: React.ReactNode;
   date: string;
+  secondaryTitle?: string;
   title: string;
 }
 
 export const TimelineEvent: React.FC<TimelineEventProps> = props => {
-  const { children, date, title } = props;
+  const { children, date, secondaryTitle, title } = props;
 
   const classes = useStyles(props);
 
@@ -87,11 +100,20 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ) : (
-        <div className={classes.noExpander}>
-          <Typography>{title}</Typography>
-          <Typography className={classes.date}>
-            <DateTime date={date} />
-          </Typography>
+        <div className={classes.container}>
+          <div className={classes.noExpander}>
+            <Typography>{title}</Typography>
+            <Typography className={classes.date}>
+              <DateTime date={date} />
+            </Typography>
+          </div>
+          {secondaryTitle && (
+            <div className={classes.noExpander}>
+              <Typography className={classes.secondaryTitle}>
+                {secondaryTitle}
+              </Typography>
+            </div>
+          )}
         </div>
       )}
     </div>

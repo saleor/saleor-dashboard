@@ -30,6 +30,7 @@ export interface OrderAddNote_orderAddNote_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderAddNote_orderAddNote_order_events_user | null;
 }

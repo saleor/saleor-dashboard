@@ -64,6 +64,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLinesAdd_draftOrderLinesCreate_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
   invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_draftOrderLinesCreate_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

@@ -166,7 +166,7 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
       });
     case OrderEventsEnum.ORDER_MARKED_AS_PAID:
       return intl.formatMessage({
-        defaultMessage: "Marked order as paid",
+        defaultMessage: "Order was marked as paid",
         description: "order history message"
       });
     case OrderEventsEnum.OTHER:
@@ -284,6 +284,23 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     date={event.date}
                     user={event.user}
                     message={event.message}
+                    key={event.id}
+                  />
+                );
+              }
+              if (event.type === OrderEventsEnum.ORDER_MARKED_AS_PAID) {
+                return (
+                  <TimelineEvent
+                    date={event.date}
+                    title={getEventMessage(event, intl)}
+                    secondaryTitle={intl.formatMessage(
+                      {
+                        defaultMessage:
+                          "Transaction Reference {transactionReference}",
+                        description: "transaction reference"
+                      },
+                      { transactionReference: event.transactionReference }
+                    )}
                     key={event.id}
                   />
                 );

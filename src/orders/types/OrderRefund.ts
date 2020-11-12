@@ -64,6 +64,7 @@ export interface OrderRefund_orderRefund_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderRefund_orderRefund_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderRefund_orderRefund_order {
   discount: OrderRefund_orderRefund_order_discount | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
   channel: OrderRefund_orderRefund_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderRefund_orderRefund {

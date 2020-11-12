@@ -66,6 +66,7 @@ export interface FulfillOrder_orderFulfill_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: FulfillOrder_orderFulfill_order_events_user | null;
 }
@@ -328,6 +329,7 @@ export interface FulfillOrder_orderFulfill_order {
   discount: FulfillOrder_orderFulfill_order_discount | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface FulfillOrder_orderFulfill {

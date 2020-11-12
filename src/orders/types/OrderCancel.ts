@@ -64,6 +64,7 @@ export interface OrderCancel_orderCancel_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderCancel_orderCancel_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderCancel_orderCancel_order {
   discount: OrderCancel_orderCancel_order_discount | null;
   invoices: (OrderCancel_orderCancel_order_invoices | null)[] | null;
   channel: OrderCancel_orderCancel_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderCancel_orderCancel {

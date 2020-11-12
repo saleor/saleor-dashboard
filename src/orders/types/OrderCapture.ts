@@ -64,6 +64,7 @@ export interface OrderCapture_orderCapture_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderCapture_orderCapture_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderCapture_orderCapture_order {
   discount: OrderCapture_orderCapture_order_discount | null;
   invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
   channel: OrderCapture_orderCapture_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderCapture_orderCapture {

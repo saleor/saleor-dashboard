@@ -64,6 +64,7 @@ export interface OrderUpdate_orderUpdate_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderUpdate_orderUpdate_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderUpdate_orderUpdate_order {
   discount: OrderUpdate_orderUpdate_order_discount | null;
   invoices: (OrderUpdate_orderUpdate_order_invoices | null)[] | null;
   channel: OrderUpdate_orderUpdate_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderUpdate_orderUpdate {

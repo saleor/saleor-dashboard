@@ -64,6 +64,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

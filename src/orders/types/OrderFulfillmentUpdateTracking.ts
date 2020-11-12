@@ -64,6 +64,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   discount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discount | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
   channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking {

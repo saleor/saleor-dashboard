@@ -58,6 +58,7 @@ export interface OrderDetailsFragment_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDetailsFragment_events_user | null;
 }
@@ -320,4 +321,5 @@ export interface OrderDetailsFragment {
   discount: OrderDetailsFragment_discount | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
+  isPaid: boolean | null;
 }

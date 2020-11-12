@@ -64,6 +64,7 @@ export interface OrderVoid_orderVoid_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderVoid_orderVoid_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderVoid_orderVoid_order {
   discount: OrderVoid_orderVoid_order_discount | null;
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
   channel: OrderVoid_orderVoid_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderVoid_orderVoid {
