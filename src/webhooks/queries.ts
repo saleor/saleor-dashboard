@@ -6,43 +6,6 @@ import {
   WebhookDetails,
   WebhookDetailsVariables
 } from "./types/WebhookDetails";
-import { Webhooks, WebhooksVariables } from "./types/Webhooks";
-
-const webhooksList = gql`
-  ${webhooksFragment}
-  query Webhooks(
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-    $filter: WebhookFilterInput
-    $sort: WebhookSortingInput
-  ) {
-    webhooks(
-      first: $first
-      after: $after
-      before: $before
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
-      edges {
-        node {
-          ...WebhookFragment
-        }
-      }
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-`;
-export const useWebhooksListQuery = makeQuery<Webhooks, WebhooksVariables>(
-  webhooksList
-);
 
 const webhooksDetails = gql`
   ${webhooksFragment}

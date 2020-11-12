@@ -52,7 +52,6 @@ enum AccountErrorCode {
   LEFT_NOT_MANAGEABLE_PERMISSION
   INVALID_CREDENTIALS
   NOT_FOUND
-  OUT_OF_SCOPE_SERVICE_ACCOUNT
   OUT_OF_SCOPE_USER
   OUT_OF_SCOPE_GROUP
   OUT_OF_SCOPE_PERMISSION
@@ -101,12 +100,6 @@ type AccountSetDefaultAddress {
 }
 
 type AccountUpdate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  user: User
-}
-
-type AccountUpdateMeta {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
@@ -195,6 +188,12 @@ type AddressValidationData {
   postalCodePrefix: String
 }
 
+type Allocation implements Node {
+  id: ID!
+  quantity: Int!
+  warehouse: Warehouse!
+}
+
 type App implements Node & ObjectWithMetadata {
   id: ID!
   name: String
@@ -204,8 +203,6 @@ type App implements Node & ObjectWithMetadata {
   tokens: [AppToken]
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   type: AppTypeEnum
   webhooks: [Webhook]
   aboutApp: String
@@ -394,8 +391,6 @@ type Attribute implements Node & ObjectWithMetadata {
   productVariantTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   inputType: AttributeInputTypeEnum
   name: String
   slug: String
@@ -424,18 +419,6 @@ type AttributeBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type AttributeClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  attribute: Attribute
-}
-
-type AttributeClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  attribute: Attribute
 }
 
 type AttributeCountableConnection {
@@ -570,18 +553,6 @@ input AttributeUpdateInput {
   filterableInDashboard: Boolean
   storefrontSearchPosition: Int
   availableInGrid: Boolean
-}
-
-type AttributeUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  attribute: Attribute
-}
-
-type AttributeUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  attribute: Attribute
 }
 
 type AttributeValue implements Node {
@@ -719,8 +690,6 @@ type Category implements Node & ObjectWithMetadata {
   level: Int!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   ancestors(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
   url: String @deprecated(reason: "This field will be removed after 2020-07-31.")
@@ -733,18 +702,6 @@ type CategoryBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type CategoryClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  category: Category
-}
-
-type CategoryClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  category: Category
 }
 
 type CategoryCountableConnection {
@@ -829,18 +786,6 @@ type CategoryUpdate {
   category: Category
 }
 
-type CategoryUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  category: Category
-}
-
-type CategoryUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  category: Category
-}
-
 type Checkout implements Node & ObjectWithMetadata {
   created: DateTime!
   lastChange: DateTime!
@@ -858,8 +803,6 @@ type Checkout implements Node & ObjectWithMetadata {
   id: ID!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   availableShippingMethods: [ShippingMethod]!
   availablePaymentGateways: [PaymentGateway!]!
   email: String!
@@ -881,18 +824,6 @@ type CheckoutBillingAddressUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
-}
-
-type CheckoutClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  checkoutErrors: [CheckoutError!]!
-  checkout: Checkout
-}
-
-type CheckoutClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  checkoutErrors: [CheckoutError!]!
-  checkout: Checkout
 }
 
 type CheckoutComplete {
@@ -1043,18 +974,6 @@ type CheckoutShippingMethodUpdate {
   checkoutErrors: [CheckoutError!]!
 }
 
-type CheckoutUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  checkoutErrors: [CheckoutError!]!
-  checkout: Checkout
-}
-
-type CheckoutUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  checkoutErrors: [CheckoutError!]!
-  checkout: Checkout
-}
-
 type ChoiceValue {
   raw: String
   verbose: String
@@ -1072,8 +991,6 @@ type Collection implements Node & ObjectWithMetadata {
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
@@ -1095,18 +1012,6 @@ type CollectionBulkPublish {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type CollectionClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  collection: Collection
-}
-
-type CollectionClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  collection: Collection
 }
 
 type CollectionCountableConnection {
@@ -1220,18 +1125,6 @@ type CollectionTranslation implements Node {
 }
 
 type CollectionUpdate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  collection: Collection
-}
-
-type CollectionUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  collection: Collection
-}
-
-type CollectionUpdatePrivateMeta {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   collection: Collection
@@ -1656,8 +1549,6 @@ type DigitalContent implements Node & ObjectWithMetadata {
   id: ID!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
 }
 
 type DigitalContentCountableConnection {
@@ -1953,8 +1844,6 @@ type Fulfillment implements Node & ObjectWithMetadata {
   created: DateTime!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   lines: [FulfillmentLine]
   statusDisplay: String
   warehouse: Warehouse
@@ -1971,16 +1860,6 @@ input FulfillmentCancelInput {
   warehouseId: ID!
 }
 
-type FulfillmentClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  fulfillment: Fulfillment
-}
-
-type FulfillmentClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  fulfillment: Fulfillment
-}
-
 type FulfillmentLine implements Node {
   id: ID!
   quantity: Int!
@@ -1990,16 +1869,6 @@ type FulfillmentLine implements Node {
 enum FulfillmentStatus {
   FULFILLED
   CANCELED
-}
-
-type FulfillmentUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  fulfillment: Fulfillment
-}
-
-type FulfillmentUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  fulfillment: Fulfillment
 }
 
 type FulfillmentUpdateTracking {
@@ -2146,8 +2015,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
   number: String
   externalUrl: String
   privateMetadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   createdAt: DateTime!
   updatedAt: DateTime!
   message: String
@@ -2252,6 +2119,7 @@ enum LanguageCodeEnum {
   IS
   IT
   JA
+  KA
   KM
   KO
   LT
@@ -2501,34 +2369,6 @@ type MenuUpdate {
   menu: Menu
 }
 
-type MetaClientStore {
-  name: String!
-  metadata: [MetaItem]!
-}
-
-input MetaInput {
-  namespace: String!
-  clientName: String!
-  key: String!
-  value: String!
-}
-
-type MetaItem {
-  key: String!
-  value: String!
-}
-
-input MetaPath {
-  namespace: String!
-  clientName: String!
-  key: String!
-}
-
-type MetaStore {
-  namespace: String!
-  clients: [MetaClientStore]!
-}
-
 type MetadataError {
   field: String
   message: String
@@ -2604,10 +2444,6 @@ type Mutation {
   attributeUnassign(attributeIds: [ID]!, productTypeId: ID!): AttributeUnassign
   attributeUpdate(id: ID!, input: AttributeUpdateInput!): AttributeUpdate
   attributeTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): AttributeTranslate
-  attributeUpdateMetadata(id: ID!, input: MetaInput!): AttributeUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  attributeClearMetadata(id: ID!, input: MetaPath!): AttributeClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  attributeUpdatePrivateMetadata(id: ID!, input: MetaInput!): AttributeUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  attributeClearPrivateMetadata(id: ID!, input: MetaPath!): AttributeClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   attributeValueCreate(attribute: ID!, input: AttributeValueCreateInput!): AttributeValueCreate
   attributeValueDelete(id: ID!): AttributeValueDelete
   attributeValueBulkDelete(ids: [ID]!): AttributeValueBulkDelete
@@ -2619,10 +2455,6 @@ type Mutation {
   categoryBulkDelete(ids: [ID]!): CategoryBulkDelete
   categoryUpdate(id: ID!, input: CategoryInput!): CategoryUpdate
   categoryTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): CategoryTranslate
-  categoryUpdateMetadata(id: ID!, input: MetaInput!): CategoryUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  categoryClearMetadata(id: ID!, input: MetaPath!): CategoryClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  categoryUpdatePrivateMetadata(id: ID!, input: MetaInput!): CategoryUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  categoryClearPrivateMetadata(id: ID!, input: MetaPath!): CategoryClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   collectionAddProducts(collectionId: ID!, products: [ID]!): CollectionAddProducts
   collectionCreate(input: CollectionCreateInput!): CollectionCreate
   collectionDelete(id: ID!): CollectionDelete
@@ -2632,20 +2464,12 @@ type Mutation {
   collectionRemoveProducts(collectionId: ID!, products: [ID]!): CollectionRemoveProducts
   collectionUpdate(id: ID!, input: CollectionInput!): CollectionUpdate
   collectionTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): CollectionTranslate
-  collectionUpdateMetadata(id: ID!, input: MetaInput!): CollectionUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  collectionClearMetadata(id: ID!, input: MetaPath!): CollectionClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  collectionUpdatePrivateMetadata(id: ID!, input: MetaInput!): CollectionUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  collectionClearPrivateMetadata(id: ID!, input: MetaPath!): CollectionClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productCreate(input: ProductCreateInput!): ProductCreate
   productDelete(id: ID!): ProductDelete
   productBulkDelete(ids: [ID]!): ProductBulkDelete
   productBulkPublish(ids: [ID]!, isPublished: Boolean!): ProductBulkPublish
   productUpdate(id: ID!, input: ProductInput!): ProductUpdate
   productTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): ProductTranslate
-  productUpdateMetadata(id: ID!, input: MetaInput!): ProductUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productClearMetadata(id: ID!, input: MetaPath!): ProductClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productClearPrivateMetadata(id: ID!, input: MetaPath!): ProductClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productSetAvailabilityForPurchase(isAvailable: Boolean!, productId: ID!, startDate: Date): ProductSetAvailabilityForPurchase
   productImageCreate(input: ProductImageCreateInput!): ProductImageCreate
   productVariantReorder(moves: [ReorderInput]!, productId: ID!): ProductVariantReorder
@@ -2658,10 +2482,6 @@ type Mutation {
   productTypeBulkDelete(ids: [ID]!): ProductTypeBulkDelete
   productTypeUpdate(id: ID!, input: ProductTypeInput!): ProductTypeUpdate
   productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: AttributeTypeEnum!): ProductTypeReorderAttributes
-  productTypeUpdateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeClearMetadata(id: ID!, input: MetaPath!): ProductTypeClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeClearPrivateMetadata(id: ID!, input: MetaPath!): ProductTypeClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   digitalContentCreate(input: DigitalContentUploadInput!, variantId: ID!): DigitalContentCreate
   digitalContentDelete(variantId: ID!): DigitalContentDelete
   digitalContentUpdate(input: DigitalContentInput!, variantId: ID!): DigitalContentUpdate
@@ -2676,10 +2496,6 @@ type Mutation {
   productVariantUpdate(id: ID!, input: ProductVariantInput!): ProductVariantUpdate
   productVariantSetDefault(productId: ID!, variantId: ID!): ProductVariantSetDefault
   productVariantTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ProductVariantTranslate
-  productVariantUpdateMetadata(id: ID!, input: MetaInput!): ProductVariantUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productVariantClearMetadata(id: ID!, input: MetaPath!): ProductVariantClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productVariantUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductVariantUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productVariantClearPrivateMetadata(id: ID!, input: MetaPath!): ProductVariantClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   variantImageAssign(imageId: ID!, variantId: ID!): VariantImageAssign
   variantImageUnassign(imageId: ID!, variantId: ID!): VariantImageUnassign
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
@@ -2703,20 +2519,12 @@ type Mutation {
   orderAddNote(order: ID!, input: OrderAddNoteInput!): OrderAddNote
   orderCancel(id: ID!): OrderCancel
   orderCapture(amount: PositiveDecimal!, id: ID!): OrderCapture
-  orderClearPrivateMeta(id: ID!, input: MetaPath!): OrderClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  orderClearMeta(input: MetaPath!, token: UUID!): OrderClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderFulfill(input: OrderFulfillInput!, order: ID): OrderFulfill
   orderFulfillmentCancel(id: ID!, input: FulfillmentCancelInput!): FulfillmentCancel
   orderFulfillmentUpdateTracking(id: ID!, input: FulfillmentUpdateTrackingInput!): FulfillmentUpdateTracking
-  orderFulfillmentClearMeta(id: ID!, input: MetaPath!): FulfillmentClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  orderFulfillmentClearPrivateMeta(id: ID!, input: MetaPath!): FulfillmentClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  orderFulfillmentUpdateMeta(id: ID!, input: MetaInput!): FulfillmentUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  orderFulfillmentUpdatePrivateMeta(id: ID!, input: MetaInput!): FulfillmentUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderMarkAsPaid(id: ID!): OrderMarkAsPaid
   orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
-  orderUpdateMeta(input: MetaInput!, token: UUID!): OrderUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  orderUpdatePrivateMeta(id: ID!, input: MetaInput!): OrderUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderUpdateShipping(order: ID!, input: OrderUpdateShippingInput): OrderUpdateShipping
   orderVoid(id: ID!): OrderVoid
   orderBulkCancel(ids: [ID]!): OrderBulkCancel
@@ -2775,10 +2583,6 @@ type Mutation {
   checkoutPaymentCreate(checkoutId: ID!, input: PaymentInput!): CheckoutPaymentCreate
   checkoutShippingAddressUpdate(checkoutId: ID!, shippingAddress: AddressInput!): CheckoutShippingAddressUpdate
   checkoutShippingMethodUpdate(checkoutId: ID, shippingMethodId: ID!): CheckoutShippingMethodUpdate
-  checkoutUpdateMetadata(id: ID!, input: MetaInput!): CheckoutUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation. This field will be removed after 2020-07-31.")
-  checkoutClearMetadata(id: ID!, input: MetaPath!): CheckoutClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation. This field will be removed after 2020-07-31.")
-  checkoutUpdatePrivateMetadata(id: ID!, input: MetaInput!): CheckoutUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation. This field will be removed after 2020-07-31.")
-  checkoutClearPrivateMetadata(id: ID!, input: MetaPath!): CheckoutClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation. This field will be removed after 2020-07-31.")
   appCreate(input: AppInput!): AppCreate
   appUpdate(id: ID!, input: AppInput!): AppUpdate
   appDelete(id: ID!): AppDelete
@@ -2809,7 +2613,6 @@ type Mutation {
   accountUpdate(input: AccountInput!): AccountUpdate
   accountRequestDeletion(redirectUrl: String!): AccountRequestDeletion
   accountDelete(token: String!): AccountDelete
-  accountUpdateMeta(input: MetaInput!): AccountUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation. This field will be removed after 2020-07-31.")
   addressCreate(input: AddressInput!, userId: ID!): AddressCreate
   addressUpdate(id: ID!, input: AddressInput!): AddressUpdate
   addressDelete(id: ID!): AddressDelete
@@ -2825,17 +2628,6 @@ type Mutation {
   userAvatarUpdate(image: Upload!): UserAvatarUpdate
   userAvatarDelete: UserAvatarDelete
   userBulkSetActive(ids: [ID]!, isActive: Boolean!): UserBulkSetActive
-  userUpdateMetadata(id: ID!, input: MetaInput!): UserUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation. This field will be removed after 2020-07-31.")
-  userClearMetadata(id: ID!, input: MetaPath!): UserClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation. This field will be removed after 2020-07-31.")
-  userUpdatePrivateMetadata(id: ID!, input: MetaInput!): UserUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation. This field will be removed after 2020-07-31.")
-  userClearPrivateMetadata(id: ID!, input: MetaPath!): UserClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation. This field will be removed after 2020-07-31.")
-  serviceAccountCreate(input: ServiceAccountInput!): ServiceAccountCreate @deprecated(reason: "Use the `appCreate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountUpdate(id: ID!, input: ServiceAccountInput!): ServiceAccountUpdate @deprecated(reason: "Use the `appUpdate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountDelete(id: ID!): ServiceAccountDelete @deprecated(reason: "Use the `appDelete` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountUpdatePrivateMetadata(id: ID!, input: MetaInput!): ServiceAccountUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation with App instead.This field will be removed after 2020-07-31.")
-  serviceAccountClearPrivateMetadata(id: ID!, input: MetaPath!): ServiceAccountClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation with App instead.This field will be removed after 2020-07-31.")
-  serviceAccountTokenCreate(input: ServiceAccountTokenInput!): ServiceAccountTokenCreate @deprecated(reason: "Use the `appTokenCreate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountTokenDelete(id: ID!): ServiceAccountTokenDelete @deprecated(reason: "Use the `appTokenDelete` mutation instead. This field will be removed after 2020-07-31.")
   permissionGroupCreate(input: PermissionGroupCreateInput!): PermissionGroupCreate
   permissionGroupUpdate(id: ID!, input: PermissionGroupUpdateInput!): PermissionGroupUpdate
   permissionGroupDelete(id: ID!): PermissionGroupDelete
@@ -2862,8 +2654,6 @@ interface Node {
 interface ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
 }
 
 type Order implements Node & ObjectWithMetadata {
@@ -2889,8 +2679,6 @@ type Order implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   fulfillments: [Fulfillment]!
   lines: [OrderLine]!
   actions: [OrderAction]!
@@ -2947,16 +2735,6 @@ type OrderCapture {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
-}
-
-type OrderClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  order: Order
-}
-
-type OrderClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  order: Order
 }
 
 type OrderCountableConnection {
@@ -3142,6 +2920,7 @@ type OrderLine implements Node {
   variant: ProductVariant
   translatedProductName: String!
   translatedVariantName: String!
+  allocations: [Allocation!]
 }
 
 input OrderLineCreateInput {
@@ -3208,16 +2987,6 @@ input OrderUpdateInput {
   shippingAddress: AddressInput
 }
 
-type OrderUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  order: Order
-}
-
-type OrderUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  order: Order
-}
-
 type OrderUpdateShipping {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
@@ -3247,8 +3016,6 @@ type Page implements Node & ObjectWithMetadata {
   created: DateTime!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
 }
 
@@ -3491,7 +3258,6 @@ type Permission {
 enum PermissionEnum {
   MANAGE_USERS
   MANAGE_STAFF
-  MANAGE_SERVICE_ACCOUNTS
   MANAGE_APPS
   MANAGE_DISCOUNTS
   MANAGE_PLUGINS
@@ -3658,8 +3424,6 @@ type Product implements Node & ObjectWithMetadata {
   defaultVariant: ProductVariant
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   url: String! @deprecated(reason: "This field will be removed after 2020-07-31.")
   thumbnail(size: Int): Image
   pricing: ProductPricingInfo
@@ -3687,18 +3451,6 @@ type ProductBulkPublish {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type ProductClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  product: Product
-}
-
-type ProductClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  product: Product
 }
 
 type ProductCountableConnection {
@@ -3948,8 +3700,6 @@ type ProductType implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
   taxRate: TaxRateType
   taxType: TaxType
@@ -3962,18 +3712,6 @@ type ProductTypeBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type ProductTypeClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productType: ProductType
-}
-
-type ProductTypeClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productType: ProductType
 }
 
 enum ProductTypeConfigurable {
@@ -4051,31 +3789,7 @@ type ProductTypeUpdate {
   productType: ProductType
 }
 
-type ProductTypeUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productType: ProductType
-}
-
-type ProductTypeUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productType: ProductType
-}
-
 type ProductUpdate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  product: Product
-}
-
-type ProductUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  product: Product
-}
-
-type ProductUpdatePrivateMeta {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   product: Product
@@ -4090,8 +3804,6 @@ type ProductVariant implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   quantity: Int! @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
   quantityAllocated: Int @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
   stockQuantity: Int! @deprecated(reason: "Use the quantityAvailable field instead. This field will be removed after 2020-07-31.")
@@ -4131,18 +3843,6 @@ type ProductVariantBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
-}
-
-type ProductVariantClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productVariant: ProductVariant
-}
-
-type ProductVariantClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productVariant: ProductVariant
 }
 
 type ProductVariantCountableConnection {
@@ -4248,21 +3948,8 @@ type ProductVariantUpdate {
   productVariant: ProductVariant
 }
 
-type ProductVariantUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productVariant: ProductVariant
-}
-
-type ProductVariantUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  productErrors: [ProductError!]!
-  productVariant: ProductVariant
-}
-
 type Query {
   webhook(id: ID!): Webhook
-  webhooks(sortBy: WebhookSortingInput, filter: WebhookFilterInput, before: String, after: String, first: Int, last: Int): WebhookCountableConnection @deprecated(reason: "Use webhooks field on app(s) query instead. This field will be removed after 2020-07-31.")
   webhookEvents: [WebhookEvent]
   webhookSamplePayload(eventType: WebhookSampleEventTypeEnum!): JSONString
   warehouse(id: ID!): Warehouse
@@ -4328,8 +4015,6 @@ type Query {
   permissionGroup(id: ID!): Group
   me: User
   staffUsers(filter: StaffUserInput, sortBy: UserSortingInput, before: String, after: String, first: Int, last: Int): UserCountableConnection
-  serviceAccounts(filter: ServiceAccountFilterInput, sortBy: ServiceAccountSortingInput, before: String, after: String, first: Int, last: Int): ServiceAccountCountableConnection @deprecated(reason: "Use the `apps` query instead. This field will be removed after 2020-07-31.")
-  serviceAccount(id: ID!): ServiceAccount @deprecated(reason: "Use the `app` query instead. This field will be removed after 2020-07-31.")
   user(id: ID!): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
@@ -4493,106 +4178,6 @@ input SeoInput {
   description: String
 }
 
-type ServiceAccount implements Node & ObjectWithMetadata {
-  id: ID!
-  name: String
-  created: DateTime
-  isActive: Boolean
-  permissions: [Permission]
-  tokens: [ServiceAccountToken]
-  privateMetadata: [MetadataItem]!
-  metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
-}
-
-type ServiceAccountClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-type ServiceAccountCountableConnection {
-  pageInfo: PageInfo!
-  edges: [ServiceAccountCountableEdge!]!
-  totalCount: Int
-}
-
-type ServiceAccountCountableEdge {
-  node: ServiceAccount!
-  cursor: String!
-}
-
-type ServiceAccountCreate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  authToken: String
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-type ServiceAccountDelete {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-input ServiceAccountFilterInput {
-  search: String
-  isActive: Boolean
-}
-
-input ServiceAccountInput {
-  name: String
-  isActive: Boolean
-  permissions: [PermissionEnum]
-}
-
-enum ServiceAccountSortField {
-  NAME
-  CREATION_DATE
-}
-
-input ServiceAccountSortingInput {
-  direction: OrderDirection!
-  field: ServiceAccountSortField!
-}
-
-type ServiceAccountToken implements Node {
-  name: String
-  authToken: String
-  id: ID!
-}
-
-type ServiceAccountTokenCreate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  authToken: String
-  accountErrors: [AccountError!]!
-  serviceAccountToken: ServiceAccountToken
-}
-
-type ServiceAccountTokenDelete {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccountToken: ServiceAccountToken
-}
-
-input ServiceAccountTokenInput {
-  name: String
-  serviceAccount: ID!
-}
-
-type ServiceAccountUpdate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-type ServiceAccountUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
 type SetPassword {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
@@ -4620,7 +4205,7 @@ enum ShippingErrorCode {
   DUPLICATED_INPUT_ITEM
 }
 
-type ShippingMethod implements Node {
+type ShippingMethod implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   price: Money
@@ -4628,6 +4213,8 @@ type ShippingMethod implements Node {
   maximumOrderPrice: Money
   minimumOrderWeight: Weight
   maximumOrderWeight: Weight
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   type: ShippingMethodTypeEnum
   translation(languageCode: LanguageCodeEnum!): ShippingMethodTranslation
 }
@@ -4694,10 +4281,12 @@ type ShippingPriceUpdate {
   shippingMethod: ShippingMethod
 }
 
-type ShippingZone implements Node {
+type ShippingZone implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   default: Boolean!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   priceRange: MoneyRange
   countries: [CountryDisplay]
   shippingMethods: [ShippingMethod]
@@ -4759,8 +4348,8 @@ type Shop {
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
-  currencies: [String]!
-  defaultCurrency: String!
+  currencies: [String]! @deprecated(reason: "This field will be removed in Saleor 3.0")
+  defaultCurrency: String! @deprecated(reason: "This field will be removed in Saleor 3.0")
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
   defaultMailSenderAddress: String
@@ -5172,8 +4761,6 @@ type User implements Node & ObjectWithMetadata {
   defaultBillingAddress: Address
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
-  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   addresses: [Address]
   checkout: Checkout
   giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
@@ -5203,18 +4790,6 @@ type UserBulkSetActive {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   accountErrors: [AccountError!]!
-}
-
-type UserClearMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  user: User
-}
-
-type UserClearPrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  user: User
 }
 
 type UserCountableConnection {
@@ -5255,18 +4830,6 @@ enum UserSortField {
 input UserSortingInput {
   direction: OrderDirection!
   field: UserSortField!
-}
-
-type UserUpdateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  user: User
-}
-
-type UserUpdatePrivateMeta {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  user: User
 }
 
 type VAT {
@@ -5563,19 +5126,7 @@ type Webhook implements Node {
   secretKey: String
   id: ID!
   events: [WebhookEvent!]!
-  serviceAccount: ServiceAccount! @deprecated(reason: "Use the `app` field instead. This field will be removed after 2020-07-31.")
   app: App!
-}
-
-type WebhookCountableConnection {
-  pageInfo: PageInfo!
-  edges: [WebhookCountableEdge!]!
-  totalCount: Int
-}
-
-type WebhookCountableEdge {
-  node: Webhook!
-  cursor: String!
 }
 
 type WebhookCreate {
@@ -5588,7 +5139,6 @@ input WebhookCreateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
-  serviceAccount: ID
   app: ID
   isActive: Boolean
   secretKey: String
@@ -5638,11 +5188,6 @@ enum WebhookEventTypeEnum {
   FULFILLMENT_CREATED
 }
 
-input WebhookFilterInput {
-  search: String
-  isActive: Boolean
-}
-
 enum WebhookSampleEventTypeEnum {
   ORDER_CREATED
   ORDER_FULLY_PAID
@@ -5661,18 +5206,6 @@ enum WebhookSampleEventTypeEnum {
   FULFILLMENT_CREATED
 }
 
-enum WebhookSortField {
-  NAME
-  SERVICE_ACCOUNT
-  TARGET_URL
-  APP
-}
-
-input WebhookSortingInput {
-  direction: OrderDirection!
-  field: WebhookSortField!
-}
-
 type WebhookUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   webhookErrors: [WebhookError!]!
@@ -5683,7 +5216,6 @@ input WebhookUpdateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
-  serviceAccount: ID
   app: ID
   isActive: Boolean
   secretKey: String
@@ -5705,7 +5237,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | ServiceAccount | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage
+union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage
 
 type _Service {
   sdl: String
