@@ -450,16 +450,6 @@ export const adminUserPermissions: User_userPermissions[] = [
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_SERVICE_ACCOUNTS,
-    name: "Manage service account"
-  },
-  {
-    __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_SERVICE_ACCOUNTS,
-    name: "Manage service account"
-  },
-  {
-    __typename: "UserPermission",
     code: PermissionEnum.MANAGE_SETTINGS,
     name: "Manage settings."
   },
