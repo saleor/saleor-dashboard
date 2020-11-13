@@ -126,6 +126,7 @@ export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
+  SECRETMULTILINE = "SECRETMULTILINE",
   STRING = "STRING",
 }
 
@@ -465,6 +466,7 @@ export enum LanguageCodeEnum {
   IS = "IS",
   IT = "IT",
   JA = "JA",
+  KA = "KA",
   KM = "KM",
   KO = "KO",
   LT = "LT",

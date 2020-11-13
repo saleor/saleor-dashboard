@@ -8,6 +8,7 @@ export function isSecretField(
 ) {
   return [
     ConfigurationTypeFieldEnum.PASSWORD,
-    ConfigurationTypeFieldEnum.SECRET
+    ConfigurationTypeFieldEnum.SECRET,
+    ConfigurationTypeFieldEnum.SECRETMULTILINE
   ].includes(config.find(configField => configField.name === field).type);
 }

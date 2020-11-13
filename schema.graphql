@@ -195,6 +195,12 @@ type AddressValidationData {
   postalCodePrefix: String
 }
 
+type Allocation implements Node {
+  id: ID!
+  quantity: Int!
+  warehouse: Warehouse!
+}
+
 type App implements Node & ObjectWithMetadata {
   id: ID!
   name: String
@@ -1068,7 +1074,6 @@ type Collection implements Node & ObjectWithMetadata {
   description: String!
   descriptionJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
@@ -1077,6 +1082,7 @@ type Collection implements Node & ObjectWithMetadata {
   products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
+  isPublished: Boolean!
 }
 
 type CollectionAddProducts {
@@ -1255,6 +1261,7 @@ enum ConfigurationTypeFieldEnum {
   BOOLEAN
   SECRET
   PASSWORD
+  SECRETMULTILINE
 }
 
 type ConfirmAccount {
@@ -2252,6 +2259,7 @@ enum LanguageCodeEnum {
   IS
   IT
   JA
+  KA
   KM
   KO
   LT
@@ -2685,6 +2693,7 @@ type Mutation {
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
   paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
+  paymentInitialize(gateway: String!, paymentData: JSONString): PaymentInitialize
   pageCreate(input: PageInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
@@ -3142,6 +3151,7 @@ type OrderLine implements Node {
   variant: ProductVariant
   translatedProductName: String!
   translatedVariantName: String!
+  allocations: [Allocation!]
 }
 
 input OrderLineCreateInput {
@@ -3242,7 +3252,6 @@ type Page implements Node & ObjectWithMetadata {
   content: String!
   contentJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   slug: String!
   created: DateTime!
   privateMetadata: [MetadataItem]!
@@ -3250,6 +3259,7 @@ type Page implements Node & ObjectWithMetadata {
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
+  isPublished: Boolean!
 }
 
 type PageBulkDelete {
@@ -3458,6 +3468,18 @@ type PaymentGateway {
   currencies: [String]!
 }
 
+type PaymentInitialize {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  initializedPayment: PaymentInitialized
+  paymentErrors: [PaymentError!]!
+}
+
+type PaymentInitialized {
+  gateway: String!
+  name: String!
+  data: JSONString
+}
+
 input PaymentInput {
   gateway: String!
   token: String
@@ -3646,7 +3668,6 @@ type Product implements Node & ObjectWithMetadata {
   description: String!
   descriptionJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   productType: ProductType!
   slug: String!
   category: Category
@@ -3675,6 +3696,7 @@ type Product implements Node & ObjectWithMetadata {
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   isAvailableForPurchase: Boolean
+  isPublished: Boolean!
 }
 
 type ProductBulkDelete {
@@ -4759,8 +4781,8 @@ type Shop {
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
-  currencies: [String]!
-  defaultCurrency: String!
+  currencies: [String]! @deprecated(reason: "This field will be removed in Saleor 3.0")
+  defaultCurrency: String! @deprecated(reason: "This field will be removed in Saleor 3.0")
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
   defaultMailSenderAddress: String
