@@ -40,7 +40,7 @@ $ cd saleor-dashboard
 To use the official stable release, checkout to a release tag:
 
 ```
-$ git checkout 2.11.0
+$ git checkout 2.11.1
 ```
 
 See the list of all releases here: https://github.com/mirumee/saleor-dashboard/releases/
