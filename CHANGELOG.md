@@ -4,6 +4,10 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+# 2.11.1
+
+- Support multiline text in plugin configuration secret field - #829 by @karolinakuzniewicz
+
 ## 2.11.0
 
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
