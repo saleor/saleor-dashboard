@@ -59,7 +59,8 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
         {secretFields.map((field, fieldIndex) => (
           <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
-              {field.type === ConfigurationTypeFieldEnum.SECRET ? (
+              {field.type === ConfigurationTypeFieldEnum.SECRET ||
+              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
                   <Typography variant="body1">{field.label}</Typography>
                   {field.value !== null && (
