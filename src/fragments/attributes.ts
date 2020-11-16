@@ -35,7 +35,6 @@ export const attributeDetailsFragment = gql`
     valueRequired
     values {
       ...AttributeValueFragment
-      type
     }
   }
 `;
