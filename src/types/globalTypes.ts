@@ -125,6 +125,7 @@ export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
+  SECRETMULTILINE = "SECRETMULTILINE",
   STRING = "STRING",
 }
 
