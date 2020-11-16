@@ -102,7 +102,7 @@ export function getAttributeInputFromVariant(
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: [maybe(() => attribute.values[0].slug, null)]
+        value: [(attribute.values.length && attribute.values[0]?.slug) || null]
       })),
     []
   );

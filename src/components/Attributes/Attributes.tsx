@@ -231,6 +231,7 @@ const Attributes: React.FC<AttributesProps> = ({
                         <MultiAutocompleteSelectField
                           choices={getMultiChoices(attribute.data.values)}
                           displayValues={getMultiDisplayValue(attribute)}
+                          disabled={disabled}
                           error={!!error}
                           helperText={getErrorMessage(error, intl)}
                           label={intl.formatMessage({
