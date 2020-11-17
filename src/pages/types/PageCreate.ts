@@ -12,7 +12,6 @@ export interface PageCreate_pageCreate_errors {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
-  message: string | null;
   attributes: string[] | null;
   message: string | null;
 }
