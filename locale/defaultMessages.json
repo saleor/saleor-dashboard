@@ -215,16 +215,8 @@
     "context": "window title",
     "string": "Create Page Type"
   },
-  "pageTypeCreatePageHeader": {
-    "context": "header",
-    "string": "Create Page Type"
-  },
   "pageTypeInputLabel": {
     "string": "Select content type"
-  },
-  "productExportFieldAvailability": {
-    "context": "product field",
-    "string": "Available for purchase"
   },
   "productExportFieldCategory": {
     "context": "product field",
