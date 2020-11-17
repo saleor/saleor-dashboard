@@ -565,7 +565,6 @@ export enum OrderErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
-  MISSING_CHANNEL = "MISSING_CHANNEL",
   NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
@@ -759,12 +758,14 @@ export enum ProductFieldEnum {
 }
 
 export enum ProductOrderField {
+  COLLECTION = "COLLECTION",
   DATE = "DATE",
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  RATING = "RATING",
   TYPE = "TYPE",
 }
 
@@ -1427,6 +1428,7 @@ export interface ProductCreateInput {
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
+  rating?: number | null;
   productType: string;
 }
 
@@ -1459,6 +1461,7 @@ export interface ProductInput {
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
+  rating?: number | null;
 }
 
 export interface ProductOrder {
