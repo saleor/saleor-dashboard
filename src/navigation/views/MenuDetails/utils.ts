@@ -87,15 +87,21 @@ export function getInitialDisplayValue(item: MenuDetails_menu_items): string {
   }
 }
 
-export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
-  return data.operations
+export const getMoves = (
+  data: MenuDetailsSubmitData,
+  items: MenuDetails_menu_items[]
+): MenuItemMoveInput[] =>
+  data.operations
     .filter(operation => operation.type === "move")
-    .map(move => ({
-      itemId: move.id,
-      parentId: move.parentId,
-      sortOrder: move.sortOrder
-    }));
-}
+    .map(({ id, parentId, sortOrder }) => {
+      const itemCurrentIndex = items.findIndex(item => item.id === id);
+
+      return {
+        itemId: id,
+        parentId,
+        sortOrder: sortOrder - itemCurrentIndex
+      };
+    });
 
 export function getRemoveIds(data: MenuDetailsSubmitData): string[] {
   return data.operations
