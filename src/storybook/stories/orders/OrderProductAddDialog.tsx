@@ -10,6 +10,8 @@ import OrderProductAddDialog, {
 import { orderLineSearch } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
 
+const products = orderLineSearch(placeholderImage);
+
 const props: OrderProductAddDialogProps = {
   ...fetchMoreProps,
   confirmButtonState: "default",
@@ -18,7 +20,8 @@ const props: OrderProductAddDialogProps = {
   onFetch: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  products: orderLineSearch(placeholderImage)
+  products,
+  selectedChannel: products[0].variants[0].channelListings[0].channel.id
 };
 
 storiesOf("Orders / OrderProductAddDialog", module)

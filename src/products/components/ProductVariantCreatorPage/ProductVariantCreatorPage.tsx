@@ -5,6 +5,7 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
+import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -48,13 +49,17 @@ function canHitNext(
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
-        if (data.price.value === "") {
+        if (data.price.channels.some(channel => validatePrice(channel.price))) {
           return false;
         }
       } else if (data.price.mode === "attribute") {
         if (
-          data.price.attribute === "" ||
-          data.price.values.some(attributeValue => attributeValue.value === "")
+          !data.price.attribute ||
+          data.price.values.some(
+            attribute =>
+              attribute.value.length < data.price.channels.length ||
+              attribute.value.some(channel => validatePrice(channel.price))
+          )
         ) {
           return false;
         }
@@ -66,7 +71,11 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return data.variants.every(variant => variant.sku !== "");
+      return !data.variants.some(
+        variant =>
+          variant.sku === "" ||
+          variant.channelListings.some(channel => validatePrice(channel.price))
+      );
 
     default:
       return false;
@@ -78,7 +87,6 @@ export interface ProductVariantCreatePageProps
     ProductVariantCreatorContentProps,
     "data" | "dispatchFormDataAction" | "step" | "onStepClick"
   > {
-  defaultPrice: string;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
@@ -128,7 +136,7 @@ function getDescription(
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
   const {
     attributes,
-    defaultPrice,
+    channelListings,
     errors,
     onSubmit,
     warehouses,
@@ -138,7 +146,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const intl = useIntl();
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, defaultPrice, warehouses)
+    createInitialForm(attributes, channelListings, warehouses)
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
@@ -162,7 +170,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const reloadForm = () =>
     dispatchFormDataAction({
       reload: {
-        data: createInitialForm(attributes, defaultPrice, warehouses)
+        data: createInitialForm(attributes, channelListings, warehouses)
       },
       type: ProductVariantCreateReducerActionType.reload
     });
@@ -219,6 +227,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
+        channelListings={channelListings}
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}

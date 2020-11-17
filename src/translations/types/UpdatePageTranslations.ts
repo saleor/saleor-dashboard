@@ -14,6 +14,15 @@ export interface UpdatePageTranslations_pageTranslate_errors {
   message: string | null;
 }
 
+export interface UpdatePageTranslations_pageTranslate_page_page {
+  __typename: "Page";
+  id: string;
+  contentJson: any;
+  seoDescription: string | null;
+  seoTitle: string | null;
+  title: string;
+}
+
 export interface UpdatePageTranslations_pageTranslate_page_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -32,11 +41,7 @@ export interface UpdatePageTranslations_pageTranslate_page_translation {
 
 export interface UpdatePageTranslations_pageTranslate_page {
   __typename: "PageTranslatableContent";
-  id: string;
-  contentJson: any;
-  seoDescription: string | null;
-  seoTitle: string | null;
-  title: string;
+  page: UpdatePageTranslations_pageTranslate_page_page | null;
   translation: UpdatePageTranslations_pageTranslate_page_translation | null;
 }
 

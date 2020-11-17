@@ -14,22 +14,10 @@ export interface UpdateShippingRate_shippingPriceUpdate_errors {
   field: string | null;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight {
@@ -38,22 +26,48 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOr
   value: number;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_price {
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings {
+  __typename: "ShippingMethodChannelListing";
+  id: string;
+  channel: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_channel;
+  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_price | null;
+  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
+}
+
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderPrice | null;
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;
-  maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderPrice | null;
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
-  price: UpdateShippingRate_shippingPriceUpdate_shippingMethod_price | null;
   type: ShippingMethodTypeEnum | null;
+  channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {

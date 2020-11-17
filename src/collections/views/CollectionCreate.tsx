@@ -1,8 +1,11 @@
+import { useChannelsList } from "@saleor/channels/queries";
+import { createCollectionChannels } from "@saleor/channels/utils";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import getPublicationData from "@saleor/utils/data/getPublicationData";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -14,7 +17,10 @@ import { useIntl } from "react-intl";
 import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { CollectionCreateData } from "../components/CollectionCreatePage/form";
-import { useCollectionCreateMutation } from "../mutations";
+import {
+  useCollectionChannelListingUpdate,
+  useCollectionCreateMutation
+} from "../mutations";
 import { collectionListUrl, collectionUrl } from "../urls";
 
 export const CollectionCreate: React.FC = () => {
@@ -23,6 +29,31 @@ export const CollectionCreate: React.FC = () => {
   const intl = useIntl();
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useCollectionChannelListingUpdate({});
+  const { data: channelsData } = useChannelsList({});
+
+  const allChannels = createCollectionChannels(
+    channelsData?.channels
+  )?.sort((channel, nextChannel) =>
+    channel.name.localeCompare(nextChannel.name)
+  );
+
+  const {
+    channelListElements,
+    channelsToggle,
+    currentChannels,
+    handleChannelsConfirm,
+    handleChannelsModalClose,
+    handleChannelsModalOpen,
+    isChannelSelected,
+    isChannelsModalOpen,
+    setCurrentChannels,
+    toggleAllChannels
+  } = useChannels(allChannels);
 
   const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
     onCompleted: data => {
@@ -58,13 +89,29 @@ export const CollectionCreate: React.FC = () => {
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle
-          },
-          ...getPublicationData(formData)
+          }
         }
       }
     });
 
-    return result.data?.collectionCreate.collection?.id || null;
+    const id = result.data?.collectionCreate.collection?.id || null;
+    if (id) {
+      updateChannels({
+        variables: {
+          id,
+          input: {
+            addChannels: formData.channelListings.map(channel => ({
+              channelId: channel.id,
+              isPublished: channel.isPublished,
+              publicationDate: channel.publicationDate
+            })),
+            removeChannels: []
+          }
+        }
+      });
+    }
+
+    return id;
   };
 
   const handleSubmit = createMetadataCreateHandler(
@@ -81,10 +128,34 @@ export const CollectionCreate: React.FC = () => {
           description: "window title"
         })}
       />
+      {!!allChannels?.length && (
+        <ChannelsAvailabilityDialog
+          isSelected={isChannelSelected}
+          disabled={!channelListElements.length}
+          channels={allChannels}
+          onChange={channelsToggle}
+          onClose={handleChannelsModalClose}
+          open={isChannelsModalOpen}
+          title={intl.formatMessage({
+            defaultMessage: "Manage Collection Channel Availability"
+          })}
+          confirmButtonState="default"
+          selected={channelListElements.length}
+          onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
+        />
+      )}
       <CollectionCreatePage
         errors={createCollectionOpts.data?.collectionCreate.errors || []}
+        channelsErrors={
+          updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []
+        }
+        currentChannels={currentChannels}
+        channelsCount={channelsData?.channels?.length}
+        openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
         onBack={() => navigate(collectionListUrl())}
-        disabled={createCollectionOpts.loading}
+        disabled={createCollectionOpts.loading || updateChannelsOpts.loading}
         onSubmit={handleSubmit}
         saveButtonBarState={createCollectionOpts.status}
       />

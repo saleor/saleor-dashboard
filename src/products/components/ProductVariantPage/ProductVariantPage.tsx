@@ -1,48 +1,32 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
-import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { FormsetData } from "@saleor/hooks/useFormset";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
-import ProductVariantAttributes, {
-  VariantAttributeInputData
-} from "../ProductVariantAttributes";
+import ProductStocks from "../ProductStocks";
+import ProductVariantAttributes from "../ProductVariantAttributes";
 import ProductVariantImages from "../ProductVariantImages";
 import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
-import ProductVariantUpdateForm from "./form";
-
-export interface ProductVariantPageFormData extends MetadataFormData {
-  costPrice: string;
-  price: string;
-  sku: string;
-  trackInventory: boolean;
-  weight: string;
-}
-
-export interface ProductVariantPageSubmitData
-  extends ProductVariantPageFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
-  addStocks: ProductStockInput[];
-  updateStocks: ProductStockInput[];
-  removeStocks: string[];
-}
+import ProductVariantUpdateForm, {
+  ProductVariantUpdateSubmitData
+} from "./form";
 
 interface ProductVariantPageProps {
   defaultVariantId?: string;
@@ -51,6 +35,8 @@ interface ProductVariantPageProps {
     | ProductErrorWithAttributesFragment[]
     | VariantUpdate_productVariantUpdate_errors[];
   header: string;
+  channels: ChannelPriceData[];
+  channelErrors: ProductChannelListingErrorFragment[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -60,7 +46,7 @@ interface ProductVariantPageProps {
   onAdd();
   onBack();
   onDelete();
-  onSubmit(data: ProductVariantPageSubmitData);
+  onSubmit(data: ProductVariantUpdateSubmitData);
   onImageSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
@@ -68,6 +54,8 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  channels,
+  channelErrors,
   defaultVariantId,
   defaultWeightUnit,
   errors,
@@ -101,9 +89,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>
-          {maybe(() => variant.product.name)}
-        </AppHeader>
+        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -115,8 +101,16 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variant={variant}
           onSubmit={onSubmit}
           warehouses={warehouses}
+          currentChannels={channels}
         >
-          {({ change, data, handlers, hasChanged, submit }) => (
+          {({
+            change,
+            data,
+            disabled: formDisabled,
+            handlers,
+            hasChanged,
+            submit
+          }) => (
             <>
               <Grid variant="inverted">
                 <div>
@@ -152,17 +146,15 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <ProductVariantPrice
-                    data={data}
-                    errors={errors}
-                    currencySymbol={
-                      variant && variant.price
-                        ? variant.price.currency
-                        : variant && variant.costPrice
-                        ? variant.costPrice.currency
-                        : ""
-                    }
+                    ProductVariantChannelListings={data.channelListings.map(
+                      channel => ({
+                        ...channel.data,
+                        ...channel.value
+                      })
+                    )}
+                    errors={channelErrors}
                     loading={loading}
-                    onChange={change}
+                    onChange={handlers.changeChannels}
                   />
                   <CardSpacer />
                   <ProductShipping
@@ -191,7 +183,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 </div>
               </Grid>
               <SaveButtonBar
-                disabled={loading || !hasChanged}
+                disabled={loading || formDisabled || !hasChanged}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onDelete={onDelete}

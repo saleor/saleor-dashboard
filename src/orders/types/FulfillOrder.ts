@@ -70,17 +70,9 @@ export interface FulfillOrder_orderFulfill_order_events {
   user: FulfillOrder_orderFulfill_order_events_user | null;
 }
 
-export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -143,17 +135,9 @@ export interface FulfillOrder_orderFulfill_order_fulfillments {
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_warehouse | null;
 }
 
-export interface FulfillOrder_orderFulfill_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface FulfillOrder_orderFulfill_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: FulfillOrder_orderFulfill_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -306,6 +290,14 @@ export interface FulfillOrder_orderFulfill_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface FulfillOrder_orderFulfill_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
@@ -335,6 +327,7 @@ export interface FulfillOrder_orderFulfill_order {
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
   discount: FulfillOrder_orderFulfill_order_discount | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
+  channel: FulfillOrder_orderFulfill_order_channel;
 }
 
 export interface FulfillOrder_orderFulfill {

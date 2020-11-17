@@ -36,14 +36,18 @@ const props: ProductListPageProps = {
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
+  channelsCount: 6,
+  currencySymbol: "USD",
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
   onExport: () => undefined,
+  onSettingsOpen: () => undefined,
   products,
+  selectedChannel: "123",
   settings: {
     ...pageListProps.default.settings,
-    columns: ["isPublished", "productType", "price"]
+    columns: ["availability", "productType", "price"]
   },
   totalGridAttributes: attributes.length
 };
@@ -59,16 +63,14 @@ storiesOf("Views / Products / Product list", module)
       disabled={true}
     />
   ))
-  .add("published", () => (
+  .add("with data", () => <ProductListPage {...props} products={products} />)
+  .add("no data", () => <ProductListPage {...props} products={[]} />)
+  .add("no channels", () => (
     <ProductListPage
       {...props}
-      products={products.filter(product => product.isPublished)}
+      channelsCount={0}
+      onSettingsOpen={undefined}
+      selectedChannel={""}
+      products={products.map(product => ({ ...product, channelListings: [] }))}
     />
-  ))
-  .add("not published", () => (
-    <ProductListPage
-      {...props}
-      products={products.filter(product => !product.isPublished)}
-    />
-  ))
-  .add("no data", () => <ProductListPage {...props} products={[]} />);
+  ));

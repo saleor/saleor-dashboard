@@ -68,17 +68,9 @@ export interface OrderRefund_orderRefund_order_events {
   user: OrderRefund_orderRefund_order_events_user | null;
 }
 
-export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderRefund_orderRefund_order_fulfillments {
   warehouse: OrderRefund_orderRefund_order_fulfillments_warehouse | null;
 }
 
-export interface OrderRefund_orderRefund_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderRefund_orderRefund_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderRefund_orderRefund_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderRefund_orderRefund_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderRefund_orderRefund_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderRefund_orderRefund_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderRefund_orderRefund_order {
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
   discount: OrderRefund_orderRefund_order_discount | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
+  channel: OrderRefund_orderRefund_order_channel;
 }
 
 export interface OrderRefund_orderRefund {

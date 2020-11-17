@@ -18,13 +18,16 @@ import { SaleType } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 
 export interface SaleSummaryProps {
-  defaultCurrency: string;
+  selectedChannel: string;
   sale: SaleDetails_sale;
 }
 
-const SaleSummary: React.FC<SaleSummaryProps> = ({ defaultCurrency, sale }) => {
+const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannel, sale }) => {
   const intl = useIntl();
 
+  const channel = sale?.channelListings?.find(
+    listing => listing.channel.id === selectedChannel
+  );
   return (
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
@@ -41,18 +44,20 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ defaultCurrency, sale }) => {
           <FormattedMessage defaultMessage="Value" description="sale value" />
         </Typography>
         <Typography>
-          {maybe<React.ReactNode>(
-            () =>
-              sale.type === SaleType.FIXED ? (
-                <Money
-                  money={{
-                    amount: sale.value,
-                    currency: defaultCurrency
-                  }}
-                />
-              ) : (
-                <Percent amount={sale.value} />
-              ),
+          {sale ? (
+            sale.type === SaleType.FIXED && channel?.discountValue ? (
+              <Money
+                money={{
+                  amount: channel.discountValue,
+                  currency: channel.currency
+                }}
+              />
+            ) : channel?.discountValue ? (
+              <Percent amount={channel.discountValue} />
+            ) : (
+              "-"
+            )
+          ) : (
             <Skeleton />
           )}
         </Typography>

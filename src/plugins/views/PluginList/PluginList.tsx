@@ -8,7 +8,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -44,7 +43,6 @@ interface PluginsListProps {
 export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
-  const shop = useShop();
   const { updateListSettings, settings } = useListSettings(
     ListViews.PLUGINS_LIST
   );
@@ -114,12 +112,10 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, pluginListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <>
       <PluginsListPage
-        currencySymbol={currencySymbol}
         currentTab={currentTab}
         disabled={loading}
         filterOpts={getFilterOpts(params)}

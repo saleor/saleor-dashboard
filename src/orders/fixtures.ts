@@ -811,6 +811,13 @@ export const order = (placeholder: string): OrderDetails_order => ({
     streetAddress2: ""
   },
   canFinalize: true,
+  channel: {
+    __typename: "Channel",
+    currencyCode: "USD",
+    id: "123454",
+    isActive: true,
+    name: "Default Channel"
+  },
   created: "2018-09-11T09:37:28.185874+00:00",
   customerNote: "Lorem ipsum dolor sit amet",
   discount: null,
@@ -948,12 +955,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              product: {
-                __typename: "Product",
-                id: "345678393",
-                isAvailableForPurchase: true,
-                isPublished: true
-              },
               quantityAvailable: 10
             }
           },
@@ -1000,12 +1001,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              product: {
-                __typename: "Product",
-                id: "345678393",
-                isAvailableForPurchase: true,
-                isPublished: true
-              },
               quantityAvailable: 10
             }
           },
@@ -1057,12 +1052,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        product: {
-          __typename: "Product",
-          id: "345678393",
-          isAvailableForPurchase: true,
-          isPublished: true
-        },
         quantityAvailable: 10
       }
     },
@@ -1094,12 +1083,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        product: {
-          __typename: "Product",
-          id: "345678393",
-          isAvailableForPurchase: true,
-          isPublished: true
-        },
         quantityAvailable: 10
       }
     }
@@ -1184,6 +1167,13 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   availableShippingMethods: null,
   billingAddress: null,
   canFinalize: true,
+  channel: {
+    __typename: "Channel",
+    currencyCode: "USD",
+    id: "123454",
+    isActive: true,
+    name: "Default Channel"
+  },
   created: "2018-09-20T23:23:39.811428+00:00",
   customerNote: "Lorem ipsum dolor sit",
   discount: null,
@@ -1229,12 +1219,6 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        product: {
-          __typename: "Product",
-          id: "345678393",
-          isAvailableForPurchase: true,
-          isPublished: true
-        },
         quantityAvailable: 10
       }
     },
@@ -1266,12 +1250,6 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        product: {
-          __typename: "Product",
-          id: "345678393",
-          isAvailableForPurchase: true,
-          isPublished: true
-        },
         quantityAvailable: 10
       }
     }
@@ -1362,53 +1340,116 @@ export const orderLineSearch = (
     variants: [
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
-        name: "500ml",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 3.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
+        name: "500ml",
         sku: "93855755"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
-        name: "1l",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 5.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
+        name: "1l",
         sku: "43226647"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
-        name: "2l",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 7.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
+        name: "2l",
         sku: "80884671"
       }
     ]
@@ -1424,53 +1465,116 @@ export const orderLineSearch = (
     variants: [
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
-        name: "500ml",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 3.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
+        name: "500ml",
         sku: "43200242"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
-        name: "1l",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 5.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
+        name: "1l",
         sku: "79129513"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
-        id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
-        name: "2l",
-        pricing: {
-          __typename: "VariantPricingInfo",
-          priceUndiscounted: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money" as "Money",
-              amount: 7.0,
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "123",
+              isActive: true,
+              name: "Channel1"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
+              currency: "USD"
+            }
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              currencyCode: "USD",
+              id: "124",
+              isActive: true,
+              name: "Channel2"
+            },
+            price: {
+              __typename: "Money",
+              amount: 1,
               currency: "USD"
             }
           }
-        },
+        ],
+        id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
+        name: "2l",
         sku: "75799450"
       }
     ]

@@ -1,5 +1,7 @@
+import { ChannelSaleData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -17,6 +19,7 @@ import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
 
 export interface FormData {
+  channelListings: ChannelSaleData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -28,25 +31,30 @@ export interface FormData {
 }
 
 export interface SaleCreatePageProps {
-  defaultCurrency: string;
+  allChannelsCount: number;
+  channelListings: ChannelSaleData[];
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
+  openChannelsModal: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
-  defaultCurrency,
+  allChannelsCount,
+  channelListings = [],
   disabled,
   errors,
   onSubmit,
+  openChannelsModal,
   saveButtonBarState,
   onBack
 }) => {
   const intl = useIntl();
 
   const initialForm: FormData = {
+    channelListings,
     endDate: "",
     endTime: "",
     hasEndDate: false,
@@ -83,9 +91,20 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               <DiscountDates
                 data={data}
                 disabled={disabled}
-                defaultCurrency={defaultCurrency}
                 errors={errors}
                 onChange={change}
+              />
+            </div>
+            <div>
+              <ChannelsAvailability
+                selectedChannelsCount={data.channelListings.length}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings.map(channel => ({
+                  id: channel.id,
+                  name: channel.name
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
               />
             </div>
           </Grid>

@@ -74,37 +74,28 @@ export interface ProductCreate_productCreate_product_productType {
   taxType: ProductCreate_productCreate_product_productType_taxType | null;
 }
 
-export interface ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_start_gross {
+export interface ProductCreate_productCreate_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductCreate_productCreate_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductCreate_productCreate_product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductCreate_productCreate_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductCreate_productCreate_product_pricing_priceRangeUndiscounted | null;
+export interface ProductCreate_productCreate_product_channelListings {
+  __typename: "ProductChannelListing";
+  channel: ProductCreate_productCreate_product_channelListings_channel;
+  discountedPrice: ProductCreate_productCreate_product_channelListings_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductCreate_productCreate_product_metadata {
@@ -136,42 +127,12 @@ export interface ProductCreate_productCreate_product_collections {
   name: string;
 }
 
-export interface ProductCreate_productCreate_product_margin {
-  __typename: "Margin";
-  start: number | null;
-  stop: number | null;
-}
-
-export interface ProductCreate_productCreate_product_purchaseCost_start {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductCreate_productCreate_product_purchaseCost_stop {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductCreate_productCreate_product_purchaseCost {
-  __typename: "MoneyRange";
-  start: ProductCreate_productCreate_product_purchaseCost_start | null;
-  stop: ProductCreate_productCreate_product_purchaseCost_stop | null;
-}
-
 export interface ProductCreate_productCreate_product_images {
   __typename: "ProductImage";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
-}
-
-export interface ProductCreate_productCreate_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductCreate_productCreate_product_variants_stocks_warehouse {
@@ -188,15 +149,41 @@ export interface ProductCreate_productCreate_product_variants_stocks {
   warehouse: ProductCreate_productCreate_product_variants_stocks_warehouse;
 }
 
+export interface ProductCreate_productCreate_product_variants_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductCreate_productCreate_product_variants_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductCreate_productCreate_product_variants_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductCreate_productCreate_product_variants_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductCreate_productCreate_product_variants_channelListings_channel;
+  price: ProductCreate_productCreate_product_variants_channelListings_price | null;
+  costPrice: ProductCreate_productCreate_product_variants_channelListings_costPrice | null;
+}
+
 export interface ProductCreate_productCreate_product_variants {
   __typename: "ProductVariant";
   id: string;
   sku: string;
   name: string;
-  price: ProductCreate_productCreate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductCreate_productCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  channelListings: ProductCreate_productCreate_product_variants_channelListings[] | null;
 }
 
 export interface ProductCreate_productCreate_product_weight {
@@ -216,7 +203,7 @@ export interface ProductCreate_productCreate_product {
   id: string;
   attributes: ProductCreate_productCreate_product_attributes[];
   productType: ProductCreate_productCreate_product_productType;
-  pricing: ProductCreate_productCreate_product_pricing | null;
+  channelListings: ProductCreate_productCreate_product_channelListings[] | null;
   metadata: (ProductCreate_productCreate_product_metadata | null)[];
   privateMetadata: (ProductCreate_productCreate_product_privateMetadata | null)[];
   name: string;
@@ -227,19 +214,12 @@ export interface ProductCreate_productCreate_product {
   defaultVariant: ProductCreate_productCreate_product_defaultVariant | null;
   category: ProductCreate_productCreate_product_category | null;
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;
-  margin: ProductCreate_productCreate_product_margin | null;
-  purchaseCost: ProductCreate_productCreate_product_purchaseCost | null;
-  isAvailableForPurchase: boolean | null;
-  isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
   images: (ProductCreate_productCreate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
   weight: ProductCreate_productCreate_product_weight | null;
   taxType: ProductCreate_productCreate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductCreate_productCreate {

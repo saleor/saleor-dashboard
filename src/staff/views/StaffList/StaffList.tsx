@@ -11,7 +11,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
@@ -61,10 +60,8 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     ListViews.STAFF_MEMBERS_LIST
   );
   const intl = useIntl();
-  const shop = useShop();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = shop?.defaultCurrency || "USD";
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -171,7 +168,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         return (
           <>
             <StaffListPage
-              currencySymbol={currencySymbol}
               currentTab={currentTab}
               filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}

@@ -95,9 +95,10 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                 onClickAway={() => setExpandedState(false)}
                 mouseEvent="onClick"
               >
-                {languages.map(lang => (
-                  <Menu>
+                <Menu>
+                  {languages.map(lang => (
                     <MenuItem
+                      key={lang.code}
                       className={classes.menuItem}
                       onClick={() => {
                         setExpandedState(false);
@@ -113,8 +114,8 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                         }}
                       />
                     </MenuItem>
-                  </Menu>
-                ))}
+                  ))}
+                </Menu>
               </ClickAwayListener>
             </Paper>
           </Grow>

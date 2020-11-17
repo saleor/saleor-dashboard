@@ -1550,17 +1550,38 @@ export const shippingZone: ShippingZoneDetailsFragment = {
   shippingMethods: [
     {
       __typename: "ShippingMethod",
+      channelListings: [
+        {
+          __typename: "ShippingMethodChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "Q2hhbm5lbDo5",
+            name: "Channel USD"
+          },
+          id: "U2hpcHBpbmdNZXRob2RDaGFubmVsTGlzdGluZzo0",
+          maximumOrderPrice: {
+            __typename: "Money",
+            amount: 2,
+            currency: "USD"
+          },
+          minimumOrderPrice: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          },
+          price: {
+            __typename: "Money",
+            amount: 86.21,
+            currency: "USD"
+          }
+        }
+      ],
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
-      maximumOrderPrice: null,
       maximumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 80
-      },
-      minimumOrderPrice: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD"
       },
       minimumOrderWeight: {
         __typename: "Weight",
@@ -1568,46 +1589,26 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "DB Schenker",
-      price: {
-        __typename: "Money",
-        amount: 45.93,
-        currency: "USD"
-      },
       type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
-      maximumOrderPrice: null,
       maximumOrderWeight: null,
-      minimumOrderPrice: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD"
-      },
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "Registred priority",
-      price: {
-        __typename: "Money",
-        amount: 73.87,
-        currency: "USD"
-      },
       type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
-      maximumOrderPrice: null,
       maximumOrderWeight: null,
-      minimumOrderPrice: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD"
-      },
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
@@ -1615,34 +1616,19 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
 
       name: "UPS",
-      price: {
-        __typename: "Money",
-        amount: 48.11,
-        currency: "USD"
-      },
       type: ShippingMethodTypeEnum.PRICE
     },
     {
       __typename: "ShippingMethod",
+      channelListings: [],
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
-      maximumOrderPrice: null,
       maximumOrderWeight: null,
-      minimumOrderPrice: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD"
-      },
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DHL",
-      price: {
-        __typename: "Money",
-        amount: 95.24,
-        currency: "USD"
-      },
       type: ShippingMethodTypeEnum.PRICE
     }
   ],

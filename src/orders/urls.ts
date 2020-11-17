@@ -28,7 +28,7 @@ export enum OrderListUrlFiltersWithMultipleValuesEnum {
 }
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
-export type OrderListUrlDialog = "cancel" | TabActionDialog;
+export type OrderListUrlDialog = "cancel" | "settings" | TabActionDialog;
 export enum OrderListUrlSortField {
   number = "number",
   customer = "customer",
@@ -61,7 +61,7 @@ export enum OrderDraftListUrlFiltersEnum {
   query = "query"
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
-export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export type OrderDraftListUrlDialog = "remove" | "settings" | TabActionDialog;
 export enum OrderDraftListUrlSortField {
   number = "number",
   customer = "customer",

@@ -109,6 +109,46 @@ export const product: (
     id: "Q2F0ZWdvcnk6MQ==",
     name: "Apparel"
   },
+  channelListings: [
+    {
+      __typename: "ProductChannelListing",
+      availableForPurchase: null,
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "123",
+        name: "Channel1"
+      },
+      discountedPrice: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
+      },
+      isAvailableForPurchase: false,
+      isPublished: true,
+      publicationDate: "2020-07-14",
+      visibleInListings: true
+    },
+    {
+      __typename: "ProductChannelListing",
+      availableForPurchase: null,
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "124",
+        name: "Channel2"
+      },
+      discountedPrice: {
+        __typename: "Money",
+        amount: 1,
+        currency: "USD"
+      },
+      isAvailableForPurchase: false,
+      isPublished: false,
+      publicationDate: "2020-07-30",
+      visibleInListings: true
+    }
+  ],
   chargeTaxes: true,
   collections: [
     {
@@ -160,7 +200,6 @@ export const product: (
   isAvailable: false,
   isAvailableForPurchase: false,
   isFeatured: false,
-  isPublished: true,
   margin: { __typename: "Margin", start: 2, stop: 7 },
   metadata: [
     {
@@ -170,38 +209,6 @@ export const product: (
     }
   ],
   name: "Ergonomic Plastic Bacon",
-  pricing: {
-    __typename: "ProductPricingInfo",
-    priceRangeUndiscounted: {
-      __typename: "TaxedMoneyRange",
-      start: {
-        __typename: "TaxedMoney",
-        gross: {
-          __typename: "Money",
-          amount: 12.3,
-          currency: "USD"
-        },
-        net: {
-          __typename: "Money",
-          amount: 10,
-          currency: "USD"
-        }
-      },
-      stop: {
-        __typename: "TaxedMoney",
-        gross: {
-          __typename: "Money",
-          amount: 24.6,
-          currency: "USD"
-        },
-        net: {
-          __typename: "Money",
-          amount: 20,
-          currency: "USD"
-        }
-      }
-    }
-  },
   privateMetadata: [],
   productType: {
     __typename: "ProductType",
@@ -270,6 +277,7 @@ export const product: (
   variants: [
     {
       __typename: "ProductVariant",
+      channelListings: [],
       id: "pv75934",
       images: [
         {
@@ -285,11 +293,6 @@ export const product: (
       ],
       margin: 2,
       name: "Cordoba Oro",
-      price: {
-        __typename: "Money",
-        amount: 678.78,
-        currency: "USD"
-      },
       sku: "87192-94370",
       stocks: [
         {
@@ -316,6 +319,46 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
+      channelListings: [
+        {
+          __typename: "ProductVariantChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "123",
+            name: "Channel1"
+          },
+          costPrice: {
+            __typename: "Money",
+            amount: 10,
+            currency: "USD"
+          },
+          price: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          }
+        },
+        {
+          __typename: "ProductVariantChannelListing",
+          channel: {
+            __typename: "Channel",
+            currencyCode: "USD",
+            id: "124",
+            name: "Channel2"
+          },
+          costPrice: {
+            __typename: "Money",
+            amount: 10,
+            currency: "USD"
+          },
+          price: {
+            __typename: "Money",
+            amount: 1,
+            currency: "USD"
+          }
+        }
+      ],
       id: "pv68615",
       images: [
         {
@@ -331,7 +374,6 @@ export const product: (
       ],
       margin: 7,
       name: "silver",
-      price: null,
       sku: "69055-15190",
       stocks: [
         {
@@ -363,32 +405,48 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
+      }
+    ],
     id: "UHJvZHVjdDo2MQ==",
-    isAvailable: true,
-    isPublished: true,
     name: "Nebula Night Sky Paint",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -403,32 +461,48 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
+      }
+    ],
     id: "UHJvZHVjdDo2NA==",
-    isAvailable: true,
-    isPublished: false,
     name: "Light Speed Yellow Paint",
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -443,33 +517,48 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
-    id: "UHJvZHVjdDo2NQ==",
-    isAvailable: true,
-    isPublished: false,
-    name: "Hyperspace Turquoise Paint",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo2NQ==",
+    name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -499,33 +588,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3NQ==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Pineapple Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3NQ==",
+    name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -555,33 +659,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3Ng==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Coconut Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3Ng==",
+    name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -611,33 +730,49 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3Mg==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Apple Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3Mg==",
+    name: "Apple Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -667,33 +802,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3MQ==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Orange Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3MQ==",
+    name: "Orange Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -723,33 +873,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3NA==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Banana Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3NA==",
+    name: "Banana Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -779,33 +944,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3OQ==",
-    isAvailable: true,
-    isPublished: false,
-    name: "Bean Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3OQ==",
+    name: "Bean Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -835,33 +1015,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3Mw==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Carrot Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3Mw==",
+    name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -891,33 +1086,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo3OA==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Green Juice",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
-    },
+    ],
+    id: "UHJvZHVjdDo3OA==",
+    name: "Green Juice",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -947,33 +1157,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo4OQ==",
-    isAvailable: true,
-    isPublished: true,
-    name: "Code Division T-shirt",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
-    },
+    ],
+    id: "UHJvZHVjdDo4OQ==",
+    name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1001,35 +1226,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMDc=",
-    isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1057,35 +1297,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMDg=",
-    isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1113,35 +1368,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMDk=",
-    isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1169,35 +1439,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMTA=",
-    isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1225,35 +1510,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: false
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: false
       }
     ],
     id: "UHJvZHVjdDoxMTU=",
-    isAvailable: true,
-    isPublished: false,
     name: "Black Hoodie",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1281,35 +1581,50 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 3.99,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
     ],
     id: "UHJvZHVjdDoxMTY=",
-    isAvailable: true,
-    isPublished: true,
     name: "Blue Hoodie",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
-        },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
-      }
-    },
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1339,33 +1654,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDoxMTc=",
-    isAvailable: true,
-    isPublished: true,
-    name: "Mustard Hoodie",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
-    },
+    ],
+    id: "UHJvZHVjdDoxMTc=",
+    name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1395,33 +1725,48 @@ export const products = (
         ]
       }
     ],
-    id: "UHJvZHVjdDo4NQ==",
-    isAvailable: true,
-    isPublished: false,
-    name: "Colored Parrot Cushion",
-
-    pricing: {
-      __typename: "ProductPricingInfo",
-      priceRangeUndiscounted: {
-        __typename: "TaxedMoneyRange",
-        start: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 3,
-            currency: "USD"
-          }
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "123",
+          name: "Channel1"
         },
-        stop: {
-          __typename: "TaxedMoney",
-          gross: {
-            __typename: "Money",
-            amount: 8,
-            currency: "USD"
-          }
-        }
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: true,
+        publicationDate: "2020-07-14",
+        visibleInListings: true
+      },
+      {
+        __typename: "ProductChannelListing",
+        availableForPurchase: null,
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "124",
+          name: "Channel2"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 1,
+          currency: "USD"
+        },
+        isAvailableForPurchase: false,
+        isPublished: false,
+        publicationDate: "2020-07-30",
+        visibleInListings: true
       }
-    },
+    ],
+    id: "UHJvZHVjdDo4NQ==",
+    name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
       hasVariants: true,
@@ -1515,11 +1860,46 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       ]
     }
   ],
-  costPrice: {
-    __typename: "Money",
-    amount: 12,
-    currency: "USD"
-  },
+  channelListings: [
+    {
+      __typename: "ProductVariantChannelListing",
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "test1",
+        name: "Test channel"
+      },
+      costPrice: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
+      },
+      price: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
+      }
+    },
+    {
+      __typename: "ProductVariantChannelListing",
+      channel: {
+        __typename: "Channel",
+        currencyCode: "USD",
+        id: "test2",
+        name: "Test channel other"
+      },
+      costPrice: {
+        __typename: "Money",
+        amount: 10,
+        currency: "USD"
+      },
+      price: {
+        __typename: "Money",
+        amount: 20,
+        currency: "USD"
+      }
+    }
+  ],
   id: "var1",
   images: [
     {
@@ -1551,14 +1931,39 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
-  price: {
-    __typename: "Money",
-    amount: 100,
-    currency: "USD"
-  },
   privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "test1",
+          name: "Test channel"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 10,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          currencyCode: "USD",
+          id: "test2",
+          name: "Test channel other"
+        },
+        discountedPrice: {
+          __typename: "Money",
+          amount: 20,
+          currency: "USD"
+        }
+      }
+    ],
     defaultVariant: {
       __typename: "ProductVariant",
       id: "var1"

@@ -1,5 +1,6 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,11 +10,12 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
@@ -26,7 +28,6 @@ import { FetchMoreProps } from "../../../types";
 import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -37,9 +38,11 @@ import ProductCreateForm, {
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductChannelListingErrorFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
-  currency: string;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -55,12 +58,16 @@ interface ProductCreatePageProps {
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
+  openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onSubmit?(data: ProductCreateData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
-  currency,
+  allChannelsCount,
+  channelsErrors,
+  currentChannels,
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -80,10 +87,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchProductTypes,
   weightUnit,
   onSubmit,
-  onWarehouseConfigure
+  onChannelsChange,
+  onWarehouseConfigure,
+  openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
@@ -118,10 +126,20 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
+      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
+      currentChannels={currentChannels}
+      productTypeChoiceList={productTypeChoiceList}
     >
-      {({ change, data, handlers, hasChanged, submit }) => {
+      {({
+        change,
+        data,
+        disabled: formDisabled,
+        handlers,
+        hasChanged,
+        submit
+      }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
@@ -161,12 +179,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       onChange={change}
                     />
                     <CardSpacer />
-                    <ProductPricing
-                      currency={currency}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListings}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handlers.changeChannelPrice}
                     />
                     <CardSpacer />
                     <ProductStocks
@@ -228,29 +245,24 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <AvailabilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
                   messages={{
                     hiddenLabel: intl.formatMessage({
                       defaultMessage: "Not published",
                       description: "product label"
                     }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will become published on {date}",
-                        description: "product publication date label"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
+
                     visibleLabel: intl.formatMessage({
                       defaultMessage: "Published",
                       description: "product label"
                     })
                   }}
-                  onChange={change}
+                  errors={channelsErrors}
+                  selectedChannelsCount={data.channelListings.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListings}
+                  disabled={disabled}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
@@ -267,7 +279,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={disabled || !onSubmit || formDisabled || !hasChanged}
             />
           </Container>
         );

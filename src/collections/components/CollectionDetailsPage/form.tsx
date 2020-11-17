@@ -1,9 +1,10 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelCollectionData } from "@saleor/channels/utils";
 import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
+import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
-import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -13,13 +14,11 @@ import React from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
+  channelListings: ChannelCollectionData[];
   name: string;
   slug: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
-  isFeatured: boolean;
-  isPublished: boolean;
 }
 export interface CollectionUpdateData extends CollectionUpdateFormData {
   description: OutputData;
@@ -28,6 +27,10 @@ export interface CollectionUpdateData extends CollectionUpdateFormData {
 interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
   changeDescription: RichTextEditorChange;
+  changeChannels: (
+    id: string,
+    data: Omit<ChannelCollectionData, "name" | "id">
+  ) => void;
 }
 export interface UseCollectionUpdateFormResult {
   change: FormChange;
@@ -40,26 +43,26 @@ export interface UseCollectionUpdateFormResult {
 export interface CollectionUpdateFormProps {
   children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
   collection: CollectionDetails_collection;
-  isFeatured: boolean;
+  currentChannels: ChannelCollectionData[];
+  setChannels: (data: ChannelCollectionData[]) => void;
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>;
 }
 
 function useCollectionUpdateForm(
   collection: CollectionDetails_collection,
-  onSubmit: (data: CollectionUpdateData) => Promise<any[]>,
-  isFeatured: boolean
+  currentChannels: ChannelCollectionData[],
+  setChannels: (data: ChannelCollectionData[]) => void,
+  onSubmit: (data: CollectionUpdateData) => Promise<any[]>
 ): UseCollectionUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
   const form = useForm<CollectionUpdateFormData>({
     backgroundImageAlt: collection?.backgroundImage?.alt || "",
-    isFeatured,
-    isPublished: !!collection?.isPublished,
+    channelListings: currentChannels,
     metadata: collection?.metadata?.map(mapMetadataItemToInput),
     name: collection?.name || "",
     privateMetadata: collection?.privateMetadata?.map(mapMetadataItemToInput),
-    publicationDate: collection?.publicationDate || "",
     seoDescription: collection?.seoDescription || "",
     seoTitle: collection?.seoTitle || "",
     slug: collection?.slug || ""
@@ -89,9 +92,14 @@ function useCollectionUpdateForm(
 
   const getSubmitData = (): CollectionUpdateData => ({
     ...getData(),
-    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
-    ...getPublicationData(form.data)
+    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
   });
+
+  const handleChannelChange = createChannelsChangeHandler(
+    currentChannels,
+    setChannels,
+    triggerChange
+  );
 
   const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
@@ -99,6 +107,7 @@ function useCollectionUpdateForm(
     change: handleChange,
     data: getData(),
     handlers: {
+      changeChannels: handleChannelChange,
       changeDescription,
       changeMetadata
     },
@@ -108,12 +117,18 @@ function useCollectionUpdateForm(
 }
 
 const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
-  children,
   collection,
-  isFeatured,
+  currentChannels,
+  setChannels,
+  children,
   onSubmit
 }) => {
-  const props = useCollectionUpdateForm(collection, onSubmit, isFeatured);
+  const props = useCollectionUpdateForm(
+    collection,
+    currentChannels,
+    setChannels,
+    onSubmit
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

@@ -4,7 +4,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { Channels_channels } from "@saleor/channels/types/Channels";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
+import ChannelsAvailabilityContent from "@saleor/components/ChannelsAvailabilityContent";
 import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
@@ -83,6 +85,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing()
     },
     optionLabel: {
+      fontSize: 14,
       marginLeft: 0
     },
     quickPeekContainer: {
@@ -204,6 +207,8 @@ const FieldAccordion: React.FC<AccordionProps & {
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
   attributes: MultiAutocompleteChoiceType[];
+  channels: Channels_channels[];
+  selectedChannels: Channels_channels[];
   warehouses: MultiAutocompleteChoiceType[];
   data: ExportProductsInput;
   selectedAttributes: MultiAutocompleteChoiceType[];
@@ -212,20 +217,26 @@ export interface ProductExportDialogInfoProps extends FetchMoreProps {
   onChange: FormChange;
   onFetch: (query: string) => void;
   onSelectAllWarehouses: FormChange;
+  onSelectAllChannels: (items: Channels_channels[], selected: number) => void;
+  onChannelSelect: (option: Channels_channels) => void;
 }
 
 const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   attributes,
+  channels,
   data,
   hasMore,
   selectedAttributes,
+  selectedChannels,
   loading,
   warehouses,
   onAttrtibuteSelect,
   onWarehouseSelect,
+  onChannelSelect,
   onChange,
   onFetch,
   onFetchMore,
+  onSelectAllChannels,
   onSelectAllWarehouses
 }) => {
   const classes = useStyles({});
@@ -280,6 +291,50 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           description="select product informations to be exported"
         />
       </Typography>
+      <Accordion
+        className={classes.accordion}
+        title={intl.formatMessage(sectionNames.channels)}
+        quickPeek={
+          selectedChannels.length > 0 && (
+            <div className={classes.quickPeekContainer}>
+              {selectedChannels.slice(0, maxChips).map(channel => (
+                <Chip
+                  className={classes.chip}
+                  label={channel.name}
+                  onClose={() => onChannelSelect(channel)}
+                  key={channel.id}
+                />
+              ))}
+              {selectedChannels.length > maxChips && (
+                <Typography className={classes.moreLabel} variant="caption">
+                  <FormattedMessage
+                    defaultMessage="and {number} more"
+                    description="there are more elements of list that are hidden"
+                    values={{
+                      number: selectedChannels.length - maxChips
+                    }}
+                  />
+                </Typography>
+              )}
+            </div>
+          )
+        }
+        data-test="channels"
+      >
+        <ChannelsAvailabilityContent
+          channels={channels}
+          disabled={loading}
+          selected={selectedChannels?.length}
+          toggleAllText={intl.formatMessage({
+            defaultMessage: "Add all channels"
+          })}
+          isSelected={option =>
+            !!selectedChannels.find(channel => channel.id === option.id)
+          }
+          onChange={onChannelSelect}
+          toggleAll={onSelectAllChannels}
+        />
+      </Accordion>
       <FieldAccordion
         className={classes.accordion}
         title={intl.formatMessage({
@@ -382,13 +437,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           description: "informations about product prices etc, header"
         })}
         data={data}
-        fields={[
-          ProductFieldEnum.CHARGE_TAXES,
-          ProductFieldEnum.COST_PRICE,
-          ProductFieldEnum.VARIANT_PRICE,
-          ProductFieldEnum.VISIBLE,
-          ProductFieldEnum.AVAILABLE_FOR_PURCHASE
-        ]}
+        fields={[ProductFieldEnum.CHARGE_TAXES]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
         data-test="financial"

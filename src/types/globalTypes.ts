@@ -109,6 +109,27 @@ export enum CategorySortField {
   SUBCATEGORY_COUNT = "SUBCATEGORY_COUNT",
 }
 
+export enum ChannelErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
+  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum CollectionErrorCode {
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum CollectionPublished {
   HIDDEN = "HIDDEN",
   PUBLISHED = "PUBLISHED",
@@ -384,6 +405,8 @@ export enum CountryCode {
 
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -536,11 +559,13 @@ export enum OrderErrorCode {
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
+  CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
+  NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
@@ -604,7 +629,6 @@ export enum OrderSortField {
   FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
   NUMBER = "NUMBER",
   PAYMENT = "PAYMENT",
-  TOTAL = "TOTAL",
 }
 
 export enum OrderStatus {
@@ -653,6 +677,7 @@ export enum PaymentChargeStatusEnum {
 
 export enum PermissionEnum {
   MANAGE_APPS = "MANAGE_APPS",
+  MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
   MANAGE_DISCOUNTS = "MANAGE_DISCOUNTS",
   MANAGE_GIFT_CARD = "MANAGE_GIFT_CARD",
@@ -703,43 +728,44 @@ export enum ProductErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
   ATTRIBUTE_CANNOT_BE_ASSIGNED = "ATTRIBUTE_CANNOT_BE_ASSIGNED",
   ATTRIBUTE_VARIANTS_DISABLED = "ATTRIBUTE_VARIANTS_DISABLED",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
   NOT_PRODUCTS_VARIANT = "NOT_PRODUCTS_VARIANT",
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL = "PRODUCT_NOT_ASSIGNED_TO_CHANNEL",
+  PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
 }
 
 export enum ProductFieldEnum {
-  AVAILABLE_FOR_PURCHASE = "AVAILABLE_FOR_PURCHASE",
   CATEGORY = "CATEGORY",
   CHARGE_TAXES = "CHARGE_TAXES",
   COLLECTIONS = "COLLECTIONS",
-  COST_PRICE = "COST_PRICE",
   DESCRIPTION = "DESCRIPTION",
   NAME = "NAME",
   PRODUCT_IMAGES = "PRODUCT_IMAGES",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
-  SEARCHABLE = "SEARCHABLE",
   VARIANT_IMAGES = "VARIANT_IMAGES",
-  VARIANT_PRICE = "VARIANT_PRICE",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
 }
 
 export enum ProductOrderField {
+  COLLECTION = "COLLECTION",
   DATE = "DATE",
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  RATING = "RATING",
   TYPE = "TYPE",
 }
 
@@ -994,6 +1020,7 @@ export interface AttributeFilterInput {
   ids?: (string | null)[] | null;
   inCollection?: string | null;
   inCategory?: string | null;
+  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1058,7 +1085,30 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
+}
+
+export interface ChannelCreateInput {
+  isActive?: boolean | null;
+  name: string;
+  slug: string;
+  currencyCode: string;
+}
+
+export interface ChannelDeleteInput {
+  targetChannel: string;
+}
+
+export interface ChannelUpdateInput {
+  isActive?: boolean | null;
+  name?: string | null;
+  slug?: string | null;
+}
+
+export interface CollectionChannelListingUpdateInput {
+  addChannels?: PublishableChannelListingInput[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface CollectionCreateInput {
@@ -1078,6 +1128,7 @@ export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1094,6 +1145,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1104,7 +1156,6 @@ export interface ConfigurationItemInput {
 
 export interface CustomerFilterInput {
   dateJoined?: DateRangeInput | null;
-  moneySpent?: PriceRangeInput | null;
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;
@@ -1130,6 +1181,19 @@ export interface DateTimeRangeInput {
   lte?: any | null;
 }
 
+export interface DraftOrderCreateInput {
+  billingAddress?: AddressInput | null;
+  user?: string | null;
+  userEmail?: string | null;
+  discount?: any | null;
+  shippingAddress?: AddressInput | null;
+  shippingMethod?: string | null;
+  voucher?: string | null;
+  customerNote?: string | null;
+  channel?: string | null;
+  lines?: (OrderLineCreateInput | null)[] | null;
+}
+
 export interface DraftOrderInput {
   billingAddress?: AddressInput | null;
   user?: string | null;
@@ -1139,11 +1203,13 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+  channel?: string | null;
 }
 
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
+  channels?: string[] | null;
   fields?: ProductFieldEnum[] | null;
 }
 
@@ -1270,10 +1336,6 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
-export interface PageFilterInput {
-  search?: string | null;
-}
-
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -1340,26 +1402,34 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
+export interface ProductChannelListingAddInput {
+  channelId: string;
+  isPublished?: boolean | null;
+  publicationDate?: any | null;
+  visibleInListings?: boolean | null;
+  isAvailableForPurchase?: boolean | null;
+  availableForPurchaseDate?: any | null;
+}
+
+export interface ProductChannelListingUpdateInput {
+  addChannels?: ProductChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface ProductCreateInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
   description?: string | null;
   descriptionJson?: any | null;
-  isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
+  rating?: number | null;
   productType: string;
-  stocks?: StockInput[] | null;
 }
 
 export interface ProductFilterInput {
@@ -1376,30 +1446,27 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface ProductInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
   description?: string | null;
   descriptionJson?: any | null;
-  isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
   seo?: SeoInput | null;
   weight?: any | null;
-  sku?: string | null;
-  trackInventory?: boolean | null;
-  basePrice?: any | null;
-  visibleInListings?: boolean | null;
+  rating?: number | null;
 }
 
 export interface ProductOrder {
   direction: OrderDirection;
+  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1435,18 +1502,21 @@ export interface ProductTypeSortingInput {
 
 export interface ProductVariantBulkCreateInput {
   attributes: (AttributeValueInput | null)[];
-  costPrice?: any | null;
-  price?: any | null;
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;
+  channelListings?: ProductVariantChannelListingAddInput[] | null;
+}
+
+export interface ProductVariantChannelListingAddInput {
+  channelId: string;
+  price: any;
+  costPrice?: any | null;
 }
 
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
-  costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1456,16 +1526,30 @@ export interface ProductVariantCreateInput {
 
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
-  costPrice?: any | null;
-  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
 }
 
+export interface PublishableChannelListingInput {
+  channelId: string;
+  isPublished?: boolean | null;
+  publicationDate?: any | null;
+}
+
 export interface ReorderInput {
   id: string;
   sortOrder?: number | null;
+}
+
+export interface SaleChannelListingAddInput {
+  channelId: string;
+  discountValue: any;
+}
+
+export interface SaleChannelListingInput {
+  addChannels?: SaleChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface SaleFilterInput {
@@ -1488,6 +1572,7 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1496,11 +1581,20 @@ export interface SeoInput {
   description?: string | null;
 }
 
-export interface ShippingPriceInput {
-  name?: string | null;
+export interface ShippingMethodChannelListingAddInput {
+  channelId: string;
   price?: any | null;
   minimumOrderPrice?: any | null;
   maximumOrderPrice?: any | null;
+}
+
+export interface ShippingMethodChannelListingInput {
+  addChannels?: ShippingMethodChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
+export interface ShippingPriceInput {
+  name?: string | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
   type?: ShippingMethodTypeEnum | null;
@@ -1597,6 +1691,17 @@ export interface UserSortingInput {
   field: UserSortField;
 }
 
+export interface VoucherChannelListingAddInput {
+  channelId: string;
+  discountValue?: any | null;
+  minAmountSpent?: any | null;
+}
+
+export interface VoucherChannelListingInput {
+  addChannels?: VoucherChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
+}
+
 export interface VoucherFilterInput {
   status?: (DiscountStatusEnum | null)[] | null;
   timesUsed?: IntRangeInput | null;
@@ -1612,11 +1717,9 @@ export interface VoucherInput {
   startDate?: any | null;
   endDate?: any | null;
   discountValueType?: DiscountValueTypeEnum | null;
-  discountValue?: any | null;
   products?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
-  minAmountSpent?: any | null;
   minCheckoutItemsQuantity?: number | null;
   countries?: (string | null)[] | null;
   applyOncePerOrder?: boolean | null;
@@ -1626,6 +1729,7 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: VoucherSortField;
 }
 

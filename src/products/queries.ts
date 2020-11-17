@@ -1,6 +1,5 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
-  fragmentMoney,
   fragmentVariant,
   productFragment,
   productFragmentDetails,
@@ -94,7 +93,6 @@ export const useInitialProductFilterDataQuery = makeQuery<
 >(initialProductFilterDataQuery);
 
 const productListQuery = gql`
-  ${fragmentMoney}
   ${productFragment}
   query ProductList(
     $first: Int
@@ -122,20 +120,6 @@ const productListQuery = gql`
             values {
               id
               name
-            }
-          }
-          pricing {
-            priceRangeUndiscounted {
-              start {
-                gross {
-                  ...Money
-                }
-              }
-              stop {
-                gross {
-                  ...Money
-                }
-              }
             }
           }
         }
@@ -168,8 +152,8 @@ export const useCountAllProducts = makeQuery<CountAllProducts, null>(
 const productDetailsQuery = gql`
   ${productFragmentDetails}
   ${taxTypeFragment}
-  query ProductDetails($id: ID!) {
-    product(id: $id) {
+  query ProductDetails($id: ID!, $channel: String) {
+    product(id: $id, channel: $channel) {
       ...Product
     }
     taxTypes {
@@ -178,6 +162,11 @@ const productDetailsQuery = gql`
   }
 `;
 export const useProductDetails = makeQuery<
+  ProductDetails,
+  ProductDetailsVariables
+>(productDetailsQuery);
+
+export const useProductDetailsQuery = makeQuery<
   ProductDetails,
   ProductDetailsVariables
 >(productDetailsQuery);
@@ -203,6 +192,13 @@ const productVariantCreateQuery = gql`
         id
         sortOrder
         url
+      }
+      channelListings {
+        channel {
+          id
+          name
+          currencyCode
+        }
       }
       name
       productType {

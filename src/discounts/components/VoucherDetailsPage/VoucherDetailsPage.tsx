@@ -1,6 +1,8 @@
 import Typography from "@material-ui/core/Typography";
+import { ChannelVoucherData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
@@ -9,9 +11,11 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
+import { createChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -50,20 +54,19 @@ export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
 export interface VoucherDetailsPageFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
+  channelListings: ChannelVoucherData[];
   code: string;
   discountType: DiscountValueTypeEnum;
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
   hasUsageLimit: boolean;
-  minSpent: string;
   minCheckoutItemsQuantity: string;
   requirementsPicker: RequirementsPicker;
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
   usageLimit: string;
-  value: number;
 }
 
 export interface VoucherDetailsPageProps
@@ -72,10 +75,13 @@ export interface VoucherDetailsPageProps
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
     > {
   activeTab: VoucherDetailsPageTab;
-  defaultCurrency: string;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetails_voucher;
+  selectedChannel: string;
+  allChannelsCount: number;
+  channelListings: ChannelVoucherData[];
+  hasChannelChanged: boolean;
   onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
@@ -91,6 +97,8 @@ export interface VoucherDetailsPageProps
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
+  onChannelsChange: (data: ChannelVoucherData[]) => void;
+  openChannelsModal: () => void;
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -99,7 +107,8 @@ const ProductsTab = Tab(VoucherDetailsPageTab.products);
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
-  defaultCurrency,
+  allChannelsCount,
+  channelListings = [],
   disabled,
   errors,
   pageInfo,
@@ -109,6 +118,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onCategoryAssign,
   onCategoryClick,
   onCategoryUnassign,
+  onChannelsChange,
   onCountryAssign,
   onCountryUnassign,
   onCollectionAssign,
@@ -120,31 +130,37 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onProductClick,
   onProductUnassign,
   onTabClick,
+  hasChannelChanged,
+  openChannelsModal,
   onRemove,
   onSubmit,
   toggle,
   toggleAll,
   selected,
+  selectedChannel,
   isChecked,
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar
 }) => {
   const intl = useIntl();
-
+  const channel = voucher?.channelListings?.find(
+    listing => listing.channel.id === selectedChannel
+  );
   let requirementsPickerInitValue;
-  if (maybe(() => voucher.minSpent.amount) > 0) {
-    requirementsPickerInitValue = RequirementsPicker.ORDER;
-  } else if (maybe(() => voucher.minCheckoutItemsQuantity) > 0) {
+  if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
+  } else if (channel?.minSpent?.amount > 0) {
+    requirementsPickerInitValue = RequirementsPicker.ORDER;
   } else {
     requirementsPickerInitValue = RequirementsPicker.NONE;
   }
 
   const initialForm: VoucherDetailsPageFormData = {
-    applyOncePerCustomer: maybe(() => voucher.applyOncePerCustomer, false),
-    applyOncePerOrder: maybe(() => voucher.applyOncePerOrder, false),
-    code: maybe(() => voucher.code, ""),
+    applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
+    applyOncePerOrder: voucher?.applyOncePerOrder || false,
+    channelListings,
+    code: voucher?.code || "",
     discountType: maybe(
       () => voucher.discountValueType,
       DiscountValueTypeEnum.FIXED
@@ -157,223 +173,251 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       () => voucher.minCheckoutItemsQuantity.toString(),
       "0"
     ),
-    minSpent: maybe(() => voucher.minSpent.amount.toString(), "0"),
     requirementsPicker: requirementsPickerInitValue,
     startDate: splitDateTime(maybe(() => voucher.startDate, "")).date,
     startTime: splitDateTime(maybe(() => voucher.startDate, "")).time,
     type: maybe(() => voucher.type, VoucherTypeEnum.ENTIRE_ORDER),
-    usageLimit: maybe(() => voucher.usageLimit.toString(), "0"),
-    value: maybe(() => voucher.discountValue, 0)
+    usageLimit: maybe(() => voucher.usageLimit.toString(), "0")
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.vouchers)}
-          </AppHeader>
-          <PageHeader title={maybe(() => voucher.code)} />
-          <Grid>
-            <div>
-              <VoucherInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-                variant="update"
-              />
-              <CardSpacer />
-              <VoucherTypes
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              {data.discountType.toString() !== "SHIPPING" ? (
-                <VoucherValue
+      {({ change, data, hasChanged, submit, triggerChange }) => {
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListings,
+          onChannelsChange,
+          triggerChange
+        );
+        const formDisabled = data.channelListings?.some(
+          channel =>
+            validatePrice(channel.discountValue) ||
+            (data.requirementsPicker === RequirementsPicker.ORDER &&
+              validatePrice(channel.minSpent))
+        );
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.vouchers)}
+            </AppHeader>
+            <PageHeader title={voucher?.code} />
+            <Grid>
+              <div>
+                <VoucherInfo
                   data={data}
                   disabled={disabled}
-                  defaultCurrency={defaultCurrency}
                   errors={errors}
                   onChange={change}
                   variant="update"
                 />
-              ) : null}
-              <CardSpacer />
-              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
-              data.discountType.toString() !== "SHIPPING" ? (
-                <>
-                  <TabContainer>
-                    <CategoriesTab
-                      isActive={activeTab === VoucherDetailsPageTab.categories}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(
-                        {
-                          defaultMessage: "Categories ({quantity})",
-                          description: "number of categories"
-                        },
-                        {
-                          quantity: maybe(
-                            () => voucher.categories.totalCount.toString(),
-                            "…"
-                          )
-                        }
-                      )}
-                    </CategoriesTab>
-                    <CollectionsTab
-                      isActive={activeTab === VoucherDetailsPageTab.collections}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(
-                        {
-                          defaultMessage: "Collections ({quantity})",
-                          description: "number of collections"
-                        },
-                        {
-                          quantity: maybe(
-                            () => voucher.collections.totalCount.toString(),
-                            "…"
-                          )
-                        }
-                      )}
-                    </CollectionsTab>
-                    <ProductsTab
-                      isActive={activeTab === VoucherDetailsPageTab.products}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(
-                        {
-                          defaultMessage: "Products ({quantity})",
-                          description: "number of products"
-                        },
-                        {
-                          quantity: maybe(
-                            () => voucher.products.totalCount.toString(),
-                            "…"
-                          )
-                        }
-                      )}
-                    </ProductsTab>
-                  </TabContainer>
-                  <CardSpacer />
-                  {activeTab === VoucherDetailsPageTab.categories ? (
-                    <DiscountCategories
-                      disabled={disabled}
-                      onCategoryAssign={onCategoryAssign}
-                      onCategoryUnassign={onCategoryUnassign}
-                      onNextPage={onNextPage}
-                      onPreviousPage={onPreviousPage}
-                      onRowClick={onCategoryClick}
-                      pageInfo={pageInfo}
-                      discount={voucher}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={categoryListToolbar}
-                    />
-                  ) : activeTab === VoucherDetailsPageTab.collections ? (
-                    <DiscountCollections
-                      disabled={disabled}
-                      onCollectionAssign={onCollectionAssign}
-                      onCollectionUnassign={onCollectionUnassign}
-                      onNextPage={onNextPage}
-                      onPreviousPage={onPreviousPage}
-                      onRowClick={onCollectionClick}
-                      pageInfo={pageInfo}
-                      discount={voucher}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={collectionListToolbar}
-                    />
-                  ) : (
-                    <DiscountProducts
-                      disabled={disabled}
-                      onNextPage={onNextPage}
-                      onPreviousPage={onPreviousPage}
-                      onProductAssign={onProductAssign}
-                      onProductUnassign={onProductUnassign}
-                      onRowClick={onProductClick}
-                      pageInfo={pageInfo}
-                      discount={voucher}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={productListToolbar}
-                    />
-                  )}
-                </>
-              ) : null}
-              <CardSpacer />
-              {data.discountType.toString() === "SHIPPING" ? (
-                <CountryList
-                  countries={maybe(() => voucher.countries)}
+                <CardSpacer />
+                <VoucherTypes
+                  data={data}
                   disabled={disabled}
-                  emptyText={intl.formatMessage({
-                    defaultMessage: "Voucher applies to all countries"
-                  })}
-                  title={
-                    <>
-                      {intl.formatMessage({
-                        defaultMessage: "Countries",
-                        description: "voucher country range"
-                      })}
-                      <Typography variant="caption">
-                        <FormattedMessage defaultMessage="Voucher is limited to these countries" />
-                      </Typography>
-                    </>
-                  }
-                  onCountryAssign={onCountryAssign}
-                  onCountryUnassign={onCountryUnassign}
+                  errors={errors}
+                  onChange={change}
                 />
-              ) : null}
-              <CardSpacer />
-              <VoucherRequirements
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <VoucherLimits
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <DiscountDates
-                data={data}
-                disabled={disabled}
-                defaultCurrency={defaultCurrency}
-                errors={errors}
-                onChange={change}
-              />
-            </div>
-            <div>
-              <VoucherSummary
-                defaultCurrency={defaultCurrency}
-                voucher={voucher}
-              />
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled || !hasChanged}
-            onCancel={onBack}
-            onDelete={onRemove}
-            onSave={submit}
-            state={saveButtonBarState}
-          />
-        </Container>
-      )}
+                <CardSpacer />
+                {data.discountType.toString() !== "SHIPPING" ? (
+                  <VoucherValue
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                    onChannelChange={handleChannelChange}
+                    variant="update"
+                  />
+                ) : null}
+                <CardSpacer />
+                {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+                data.discountType.toString() !== "SHIPPING" ? (
+                  <>
+                    <TabContainer>
+                      <CategoriesTab
+                        isActive={
+                          activeTab === VoucherDetailsPageTab.categories
+                        }
+                        changeTab={onTabClick}
+                      >
+                        {intl.formatMessage(
+                          {
+                            defaultMessage: "Categories ({quantity})",
+                            description: "number of categories"
+                          },
+                          {
+                            quantity: maybe(
+                              () => voucher.categories.totalCount.toString(),
+                              "…"
+                            )
+                          }
+                        )}
+                      </CategoriesTab>
+                      <CollectionsTab
+                        isActive={
+                          activeTab === VoucherDetailsPageTab.collections
+                        }
+                        changeTab={onTabClick}
+                      >
+                        {intl.formatMessage(
+                          {
+                            defaultMessage: "Collections ({quantity})",
+                            description: "number of collections"
+                          },
+                          {
+                            quantity: maybe(
+                              () => voucher.collections.totalCount.toString(),
+                              "…"
+                            )
+                          }
+                        )}
+                      </CollectionsTab>
+                      <ProductsTab
+                        isActive={activeTab === VoucherDetailsPageTab.products}
+                        changeTab={onTabClick}
+                      >
+                        {intl.formatMessage(
+                          {
+                            defaultMessage: "Products ({quantity})",
+                            description: "number of products"
+                          },
+                          {
+                            quantity: maybe(
+                              () => voucher.products.totalCount.toString(),
+                              "…"
+                            )
+                          }
+                        )}
+                      </ProductsTab>
+                    </TabContainer>
+                    <CardSpacer />
+                    {activeTab === VoucherDetailsPageTab.categories ? (
+                      <DiscountCategories
+                        disabled={disabled}
+                        onCategoryAssign={onCategoryAssign}
+                        onCategoryUnassign={onCategoryUnassign}
+                        onNextPage={onNextPage}
+                        onPreviousPage={onPreviousPage}
+                        onRowClick={onCategoryClick}
+                        pageInfo={pageInfo}
+                        discount={voucher}
+                        isChecked={isChecked}
+                        selected={selected}
+                        toggle={toggle}
+                        toggleAll={toggleAll}
+                        toolbar={categoryListToolbar}
+                      />
+                    ) : activeTab === VoucherDetailsPageTab.collections ? (
+                      <DiscountCollections
+                        disabled={disabled}
+                        onCollectionAssign={onCollectionAssign}
+                        onCollectionUnassign={onCollectionUnassign}
+                        onNextPage={onNextPage}
+                        onPreviousPage={onPreviousPage}
+                        onRowClick={onCollectionClick}
+                        pageInfo={pageInfo}
+                        discount={voucher}
+                        isChecked={isChecked}
+                        selected={selected}
+                        toggle={toggle}
+                        toggleAll={toggleAll}
+                        toolbar={collectionListToolbar}
+                      />
+                    ) : (
+                      <DiscountProducts
+                        disabled={disabled}
+                        onNextPage={onNextPage}
+                        onPreviousPage={onPreviousPage}
+                        onProductAssign={onProductAssign}
+                        onProductUnassign={onProductUnassign}
+                        onRowClick={onProductClick}
+                        pageInfo={pageInfo}
+                        discount={voucher}
+                        selectedChannel={selectedChannel}
+                        channelsCount={allChannelsCount}
+                        isChecked={isChecked}
+                        selected={selected}
+                        toggle={toggle}
+                        toggleAll={toggleAll}
+                        toolbar={productListToolbar}
+                      />
+                    )}
+                  </>
+                ) : null}
+                <CardSpacer />
+                {data.discountType.toString() === "SHIPPING" ? (
+                  <CountryList
+                    countries={maybe(() => voucher.countries)}
+                    disabled={disabled}
+                    emptyText={intl.formatMessage({
+                      defaultMessage: "Voucher applies to all countries"
+                    })}
+                    title={
+                      <>
+                        {intl.formatMessage({
+                          defaultMessage: "Countries",
+                          description: "voucher country range"
+                        })}
+                        <Typography variant="caption">
+                          <FormattedMessage defaultMessage="Voucher is limited to these countries" />
+                        </Typography>
+                      </>
+                    }
+                    onCountryAssign={onCountryAssign}
+                    onCountryUnassign={onCountryUnassign}
+                  />
+                ) : null}
+                <CardSpacer />
+                <VoucherRequirements
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                  onChannelChange={handleChannelChange}
+                />
+                <CardSpacer />
+                <VoucherLimits
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <DiscountDates
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+              </div>
+              <div>
+                <VoucherSummary
+                  voucher={voucher}
+                  selectedChannel={selectedChannel}
+                />
+                <CardSpacer />
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListings.length}
+                  allChannelsCount={allChannelsCount}
+                  channelsList={data.channelListings.map(channel => ({
+                    id: channel.id,
+                    name: channel.name
+                  }))}
+                  disabled={disabled}
+                  openModal={openChannelsModal}
+                />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={
+                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+              }
+              onCancel={onBack}
+              onDelete={onRemove}
+              onSave={submit}
+              state={saveButtonBarState}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };

@@ -2,10 +2,7 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { categories } from "@saleor/categories/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
-import {
-  ProductListFilterOpts,
-  ProductStatus
-} from "@saleor/products/components/ProductListPage";
+import { ProductListFilterOpts } from "@saleor/products/components/ProductListPage";
 import { productTypes } from "@saleor/productTypes/fixtures";
 import { StockAvailability } from "@saleor/types/globalTypes";
 
@@ -74,10 +71,6 @@ export const productListFilterOpts: ProductListFilterOpts = {
       }
     ],
     value: [productTypes[4].id]
-  },
-  status: {
-    active: false,
-    value: ProductStatus.PUBLISHED
   },
   stockStatus: {
     active: false,

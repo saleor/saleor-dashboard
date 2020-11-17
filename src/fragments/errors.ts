@@ -15,6 +15,24 @@ export const productErrorWithAttributesFragment = gql`
   }
 `;
 
+export const productChannelListingErrorFragment = gql`
+  fragment ProductChannelListingErrorFragment on ProductChannelListingError {
+    code
+    field
+    message
+    channels
+  }
+`;
+
+export const collectionChannelListingErrorFragment = gql`
+  fragment CollectionChannelListingErrorFragment on CollectionChannelListingError {
+    code
+    field
+    message
+    channels
+  }
+`;
+
 export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code
@@ -26,6 +44,7 @@ export const discountErrorFragment = gql`
   fragment DiscountErrorFragment on DiscountError {
     code
     field
+    channels
   }
 `;
 
@@ -62,6 +81,7 @@ export const bulkProductErrorFragment = gql`
     field
     code
     index
+    channels
   }
 `;
 export const bulkStockErrorFragment = gql`
@@ -75,6 +95,14 @@ export const stockErrorFragment = gql`
   fragment StockErrorFragment on StockError {
     code
     field
+  }
+`;
+
+export const shippingChannelsErrorFragment = gql`
+  fragment ShippingChannelsErrorFragment on ShippingError {
+    code
+    field
+    channels
   }
 `;
 
@@ -145,6 +173,13 @@ export const pluginErrorFragment = gql`
 
 export const metadataErrorFragment = gql`
   fragment MetadataErrorFragment on MetadataError {
+    code
+    field
+  }
+`;
+
+export const collectionsErrorFragment = gql`
+  fragment CollectionErrorFragment on CollectionError {
     code
     field
   }

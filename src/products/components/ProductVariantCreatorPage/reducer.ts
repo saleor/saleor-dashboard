@@ -25,34 +25,38 @@ export enum ProductVariantCreateReducerActionType {
   changeApplyStockToAttributeId,
   changeAttributeValuePrice,
   changeAttributeValueStock,
-  changeVariantData,
+  changeVariantSku,
+  changeVariantPriceData,
   changeVariantStockData,
   changeWarehouses,
   deleteVariant,
   reload,
   selectValue
 }
-export type VariantField = "price" | "sku";
 export interface ProductVariantCreateReducerAction {
   applyPriceOrStockToAll?: {
     mode: VariantCreatorPricesAndSkuMode;
   };
   changeApplyPriceToAllValue?: {
+    channelId: string;
     price: string;
   };
   changeApplyPriceOrStockToAttributeId?: {
     attributeId: string;
   };
   changeApplyStockToAllValue?: Record<"quantity" | "warehouseIndex", number>;
-  changeAttributeValuePrice?: Record<"valueId" | "price", string>;
+  changeAttributeValuePrice?: Record<"valueId" | "price" | "channelId", string>;
   changeAttributeValueStock?: {
     valueId: string;
     quantity: number;
     warehouseIndex: number;
   };
-  changeVariantData?: {
-    field: VariantField;
+  changeVariantSku?: {
     value: string;
+    variantIndex: number;
+  };
+  changeVariantPriceData?: {
+    value: { channelId: string; price: string };
     variantIndex: number;
   };
   changeVariantStockData?: {
@@ -94,7 +98,7 @@ function selectValue(
       ? toggle(
           {
             slug: valueSlug,
-            value: ""
+            value: []
           },
           prevState.price.values,
           (a, b) => a.slug === b.slug
@@ -156,7 +160,8 @@ function applyStockToAll(
 function changeAttributeValuePrice(
   state: ProductVariantCreateFormData,
   attributeValueSlug: string,
-  price: string
+  price: string,
+  channelId: string
 ): ProductVariantCreateFormData {
   const index = state.price.values.findIndex(
     value => value.slug === attributeValueSlug
@@ -166,10 +171,15 @@ function changeAttributeValuePrice(
     throw new Error(`Value with id ${attributeValueSlug} not found`);
   }
 
+  const channels = state.price.values[index].value;
+  const channelIndex = channels.findIndex(
+    channel => channel.channelId === channelId
+  );
+
   const values = updateAtIndex(
     {
       slug: attributeValueSlug,
-      value: price
+      value: updateAtIndex({ channelId, price }, channels, channelIndex)
     },
     state.price.values,
     index
@@ -229,7 +239,7 @@ function changeApplyPriceToAttributeId(
   );
   const values = attribute.values.map(slug => ({
     slug,
-    value: ""
+    value: []
   }));
 
   return {
@@ -266,13 +276,19 @@ function changeApplyStockToAttributeId(
 
 function changeApplyPriceToAllValue(
   state: ProductVariantCreateFormData,
-  value: string
+  channelId: string,
+  price: string
 ): ProductVariantCreateFormData {
+  const prevChannels = [...state.price.channels];
+  const channelIndex = prevChannels?.findIndex(
+    channel => channelId === channel.channelId
+  );
+  prevChannels[channelIndex] = { channelId, price };
   return {
     ...state,
     price: {
       ...state.price,
-      value
+      channels: prevChannels
     }
   };
 }
@@ -291,20 +307,15 @@ function changeApplyStockToAllValue(
   };
 }
 
-function changeVariantData(
+function changeVariantSku(
   state: ProductVariantCreateFormData,
-  field: VariantField,
   value: string,
   variantIndex: number
 ): ProductVariantCreateFormData {
   const variant = {
     ...state.variants[variantIndex]
   };
-  if (field === "price") {
-    variant.price = value;
-  } else if (field === "sku") {
-    variant.sku = value;
-  }
+  variant.sku = value;
 
   return {
     ...state,
@@ -329,6 +340,32 @@ function changeVariantStockData(
   return {
     ...state,
     variants: updateAtIndex(variant, state.variants, variantIndex)
+  };
+}
+
+function changeVariantPriceData(
+  state: ProductVariantCreateFormData,
+  value: { channelId: string; price: string },
+  variantIndex: number
+): ProductVariantCreateFormData {
+  const { channelId, price } = value;
+  const variant = {
+    ...state.variants[variantIndex]
+  };
+  const channelIndex = variant.channelListings.findIndex(
+    listing => listing.channelId === channelId
+  );
+  const updatedVariant = {
+    ...variant,
+    channelListings: updateAtIndex(
+      { channelId, price },
+      [...variant.channelListings],
+      channelIndex
+    )
+  };
+  return {
+    ...state,
+    variants: updateAtIndex(updatedVariant, [...state.variants], variantIndex)
   };
 }
 
@@ -408,7 +445,8 @@ function reduceProductVariantCreateFormData(
       return changeAttributeValuePrice(
         prevState,
         action.changeAttributeValuePrice.valueId,
-        action.changeAttributeValuePrice.price
+        action.changeAttributeValuePrice.price,
+        action.changeAttributeValuePrice.channelId
       );
     case ProductVariantCreateReducerActionType.changeAttributeValueStock:
       return changeAttributeValueStock(
@@ -430,6 +468,7 @@ function reduceProductVariantCreateFormData(
     case ProductVariantCreateReducerActionType.changeApplyPriceToAllValue:
       return changeApplyPriceToAllValue(
         prevState,
+        action.changeApplyPriceToAllValue.channelId,
         action.changeApplyPriceToAllValue.price
       );
     case ProductVariantCreateReducerActionType.changeApplyStockToAllValue:
@@ -438,12 +477,17 @@ function reduceProductVariantCreateFormData(
         action.changeApplyStockToAllValue.warehouseIndex,
         action.changeApplyStockToAllValue.quantity
       );
-    case ProductVariantCreateReducerActionType.changeVariantData:
-      return changeVariantData(
+    case ProductVariantCreateReducerActionType.changeVariantSku:
+      return changeVariantSku(
         prevState,
-        action.changeVariantData.field,
-        action.changeVariantData.value,
-        action.changeVariantData.variantIndex
+        action.changeVariantSku.value,
+        action.changeVariantSku.variantIndex
+      );
+    case ProductVariantCreateReducerActionType.changeVariantPriceData:
+      return changeVariantPriceData(
+        prevState,
+        action.changeVariantPriceData.value,
+        action.changeVariantPriceData.variantIndex
       );
     case ProductVariantCreateReducerActionType.changeVariantStockData:
       return changeVariantStockData(

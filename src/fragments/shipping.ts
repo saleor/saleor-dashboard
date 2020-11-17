@@ -1,3 +1,4 @@
+import { fragmentMoney } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 export const shippingZoneFragment = gql`
@@ -11,30 +12,36 @@ export const shippingZoneFragment = gql`
   }
 `;
 export const shippingMethodFragment = gql`
+  ${fragmentMoney}
   fragment ShippingMethodFragment on ShippingMethod {
     id
-    minimumOrderPrice {
-      amount
-      currency
-    }
     minimumOrderWeight {
       unit
       value
-    }
-    maximumOrderPrice {
-      amount
-      currency
     }
     maximumOrderWeight {
       unit
       value
     }
     name
-    price {
-      amount
-      currency
-    }
     type
+    channelListings {
+      id
+      channel {
+        id
+        name
+        currencyCode
+      }
+      price {
+        ...Money
+      }
+      minimumOrderPrice {
+        ...Money
+      }
+      maximumOrderPrice {
+        ...Money
+      }
+    }
   }
 `;
 export const shippingZoneDetailsFragment = gql`

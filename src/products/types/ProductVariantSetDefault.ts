@@ -73,37 +73,28 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_produ
   taxType: ProductVariantSetDefault_productVariantSetDefault_product_productType_taxType | null;
 }
 
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_start_gross {
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductVariantSetDefault_productVariantSetDefault_product_pricing_priceRangeUndiscounted | null;
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings {
+  __typename: "ProductChannelListing";
+  channel: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_channel;
+  discountedPrice: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_metadata {
@@ -135,42 +126,12 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_colle
   name: string;
 }
 
-export interface ProductVariantSetDefault_productVariantSetDefault_product_margin {
-  __typename: "Margin";
-  start: number | null;
-  stop: number | null;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost_start {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost_stop {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost {
-  __typename: "MoneyRange";
-  start: ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost_start | null;
-  stop: ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost_stop | null;
-}
-
 export interface ProductVariantSetDefault_productVariantSetDefault_product_images {
   __typename: "ProductImage";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
-}
-
-export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks_warehouse {
@@ -187,15 +148,41 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   warehouse: ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks_warehouse;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_channel;
+  price: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_price | null;
+  costPrice: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings_costPrice | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants {
   __typename: "ProductVariant";
   id: string;
   sku: string;
   name: string;
-  price: ProductVariantSetDefault_productVariantSetDefault_product_variants_price | null;
   margin: number | null;
   stocks: (ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  channelListings: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings[] | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_weight {
@@ -215,7 +202,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   id: string;
   attributes: ProductVariantSetDefault_productVariantSetDefault_product_attributes[];
   productType: ProductVariantSetDefault_productVariantSetDefault_product_productType;
-  pricing: ProductVariantSetDefault_productVariantSetDefault_product_pricing | null;
+  channelListings: ProductVariantSetDefault_productVariantSetDefault_product_channelListings[] | null;
   metadata: (ProductVariantSetDefault_productVariantSetDefault_product_metadata | null)[];
   privateMetadata: (ProductVariantSetDefault_productVariantSetDefault_product_privateMetadata | null)[];
   name: string;
@@ -226,19 +213,12 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   defaultVariant: ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant | null;
   category: ProductVariantSetDefault_productVariantSetDefault_product_category | null;
   collections: (ProductVariantSetDefault_productVariantSetDefault_product_collections | null)[] | null;
-  margin: ProductVariantSetDefault_productVariantSetDefault_product_margin | null;
-  purchaseCost: ProductVariantSetDefault_productVariantSetDefault_product_purchaseCost | null;
-  isAvailableForPurchase: boolean | null;
-  isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
   images: (ProductVariantSetDefault_productVariantSetDefault_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductVariantSetDefault_productVariantSetDefault_product_variants | null)[] | null;
   weight: ProductVariantSetDefault_productVariantSetDefault_product_weight | null;
   taxType: ProductVariantSetDefault_productVariantSetDefault_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault {

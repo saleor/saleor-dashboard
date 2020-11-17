@@ -27,11 +27,6 @@ export const fragmentOrderLine = gql`
     isShippingRequired
     variant {
       id
-      product {
-        id
-        isAvailableForPurchase
-        isPublished
-      }
       quantityAvailable
     }
     productName
@@ -169,6 +164,12 @@ export const fragmentOrderDetails = gql`
     }
     invoices {
       ...InvoiceFragment
+    }
+    channel {
+      isActive
+      id
+      name
+      currencyCode
     }
   }
 `;

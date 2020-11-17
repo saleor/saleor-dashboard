@@ -8,70 +8,46 @@ import { LanguageCodeEnum } from "./../../types/globalTypes";
 // GraphQL query operation: ProductTypeTranslationDetails
 // ====================================================
 
-export interface ProductTypeTranslationDetails_productType_productAttributes_translation {
+export interface ProductTypeTranslationDetails_translation_ProductTranslatableContent {
+  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "ShippingMethodTranslatableContent" | "SaleTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
+}
+
+export interface ProductTypeTranslationDetails_translation_AttributeTranslatableContent_translation {
   __typename: "AttributeTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslationDetails_productType_productAttributes_values_translation {
+export interface ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute_values_translation {
   __typename: "AttributeValueTranslation";
   id: string;
   name: string;
 }
 
-export interface ProductTypeTranslationDetails_productType_productAttributes_values {
+export interface ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslationDetails_productType_productAttributes_values_translation | null;
+  translation: ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute_values_translation | null;
 }
 
-export interface ProductTypeTranslationDetails_productType_productAttributes {
+export interface ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  translation: ProductTypeTranslationDetails_productType_productAttributes_translation | null;
-  values: (ProductTypeTranslationDetails_productType_productAttributes_values | null)[] | null;
+  values: (ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute_values | null)[] | null;
 }
 
-export interface ProductTypeTranslationDetails_productType_variantAttributes_translation {
-  __typename: "AttributeTranslation";
-  id: string;
-  name: string;
+export interface ProductTypeTranslationDetails_translation_AttributeTranslatableContent {
+  __typename: "AttributeTranslatableContent";
+  translation: ProductTypeTranslationDetails_translation_AttributeTranslatableContent_translation | null;
+  attribute: ProductTypeTranslationDetails_translation_AttributeTranslatableContent_attribute | null;
 }
 
-export interface ProductTypeTranslationDetails_productType_variantAttributes_values_translation {
-  __typename: "AttributeValueTranslation";
-  id: string;
-  name: string;
-}
-
-export interface ProductTypeTranslationDetails_productType_variantAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslationDetails_productType_variantAttributes_values_translation | null;
-}
-
-export interface ProductTypeTranslationDetails_productType_variantAttributes {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  translation: ProductTypeTranslationDetails_productType_variantAttributes_translation | null;
-  values: (ProductTypeTranslationDetails_productType_variantAttributes_values | null)[] | null;
-}
-
-export interface ProductTypeTranslationDetails_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-  productAttributes: (ProductTypeTranslationDetails_productType_productAttributes | null)[] | null;
-  variantAttributes: (ProductTypeTranslationDetails_productType_variantAttributes | null)[] | null;
-}
+export type ProductTypeTranslationDetails_translation = ProductTypeTranslationDetails_translation_ProductTranslatableContent | ProductTypeTranslationDetails_translation_AttributeTranslatableContent;
 
 export interface ProductTypeTranslationDetails {
-  productType: ProductTypeTranslationDetails_productType | null;
+  translation: ProductTypeTranslationDetails_translation | null;
 }
 
 export interface ProductTypeTranslationDetailsVariables {

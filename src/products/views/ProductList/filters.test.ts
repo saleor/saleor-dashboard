@@ -13,7 +13,7 @@ import { productListFilterOpts } from "./fixtures";
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {
     const params: ProductListUrlFilters = {};
-    const filterVariables = getFilterVariables(params);
+    const filterVariables = getFilterVariables(params, undefined);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
@@ -25,7 +25,7 @@ describe("Filtering query params", () => {
       status: true.toString(),
       stockStatus: StockAvailability.IN_STOCK
     };
-    const filterVariables = getFilterVariables(params);
+    const filterVariables = getFilterVariables(params, "default-channel");
 
     expect(getExistingKeys(filterVariables)).toHaveLength(3);
   });

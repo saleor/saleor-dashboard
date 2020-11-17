@@ -14,22 +14,10 @@ export interface ShippingZone_shippingZone_countries {
   country: string;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_minimumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ShippingZone_shippingZone_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_maximumOrderPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ShippingZone_shippingZone_shippingMethods_maximumOrderWeight {
@@ -38,22 +26,48 @@ export interface ShippingZone_shippingZone_shippingMethods_maximumOrderWeight {
   value: number;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_price {
+export interface ShippingZone_shippingZone_shippingMethods_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ShippingZone_shippingZone_shippingMethods_channelListings_minimumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListings_maximumOrderPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_channelListings {
+  __typename: "ShippingMethodChannelListing";
+  id: string;
+  channel: ShippingZone_shippingZone_shippingMethods_channelListings_channel;
+  price: ShippingZone_shippingZone_shippingMethods_channelListings_price | null;
+  minimumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
+}
+
 export interface ShippingZone_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  minimumOrderPrice: ShippingZone_shippingZone_shippingMethods_minimumOrderPrice | null;
   minimumOrderWeight: ShippingZone_shippingZone_shippingMethods_minimumOrderWeight | null;
-  maximumOrderPrice: ShippingZone_shippingZone_shippingMethods_maximumOrderPrice | null;
   maximumOrderWeight: ShippingZone_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
-  price: ShippingZone_shippingZone_shippingMethods_price | null;
   type: ShippingMethodTypeEnum | null;
+  channelListings: ShippingZone_shippingZone_shippingMethods_channelListings[] | null;
 }
 
 export interface ShippingZone_shippingZone_warehouses {

@@ -26,8 +26,8 @@ export interface SaleListProps
   extends ListProps,
     ListActions,
     SortPage<SaleListUrlSortField> {
-  defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
+  selectedChannel: string;
 }
 
 const useStyles = makeStyles(
@@ -68,7 +68,6 @@ const numberOfColumns = 5;
 const SaleList: React.FC<SaleListProps> = props => {
   const {
     settings,
-    defaultCurrency,
     disabled,
     onNextPage,
     onPreviousPage,
@@ -77,6 +76,7 @@ const SaleList: React.FC<SaleListProps> = props => {
     onSort,
     pageInfo,
     sales,
+    selectedChannel,
     isChecked,
     selected,
     sort,
@@ -169,7 +169,9 @@ const SaleList: React.FC<SaleListProps> = props => {
           sales,
           sale => {
             const isSelected = sale ? isChecked(sale.id) : false;
-
+            const channel = sale?.channelListings?.find(
+              lisiting => lisiting.channel.id === selectedChannel
+            );
             return (
               <TableRow
                 className={!!sale ? classes.tableRow : undefined}
@@ -209,17 +211,21 @@ const SaleList: React.FC<SaleListProps> = props => {
                   className={classes.colValue}
                   onClick={sale ? onRowClick(sale.id) : undefined}
                 >
-                  {sale && sale.type && sale.value ? (
+                  {sale?.type && channel?.discountValue ? (
                     sale.type === SaleType.FIXED ? (
                       <Money
                         money={{
-                          amount: sale.value,
-                          currency: defaultCurrency
+                          amount: channel.discountValue,
+                          currency: channel.currency
                         }}
                       />
+                    ) : channel?.discountValue ? (
+                      <Percent amount={channel.discountValue} />
                     ) : (
-                      <Percent amount={sale.value} />
+                      "-"
                     )
+                  ) : sale && !channel ? (
+                    "_"
                   ) : (
                     <Skeleton />
                   )}

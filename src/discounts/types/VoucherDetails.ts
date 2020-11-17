@@ -14,10 +14,26 @@ export interface VoucherDetails_voucher_countries {
   country: string;
 }
 
-export interface VoucherDetails_voucher_minSpent {
+export interface VoucherDetails_voucher_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VoucherDetails_voucher_channelListings_minSpent {
   __typename: "Money";
-  currency: string;
   amount: number;
+  currency: string;
+}
+
+export interface VoucherDetails_voucher_channelListings {
+  __typename: "VoucherChannelListing";
+  id: string;
+  channel: VoucherDetails_voucher_channelListings_channel;
+  discountValue: number;
+  currency: string;
+  minSpent: VoucherDetails_voucher_channelListings_minSpent | null;
 }
 
 export interface VoucherDetails_voucher_products_edges_node_productType {
@@ -31,13 +47,37 @@ export interface VoucherDetails_voucher_products_edges_node_thumbnail {
   url: string;
 }
 
+export interface VoucherDetails_voucher_products_edges_node_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VoucherDetails_voucher_products_edges_node_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VoucherDetails_voucher_products_edges_node_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: VoucherDetails_voucher_products_edges_node_channelListings_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: VoucherDetails_voucher_products_edges_node_channelListings_channel;
+}
+
 export interface VoucherDetails_voucher_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
   productType: VoucherDetails_voucher_products_edges_node_productType;
-  isPublished: boolean;
   thumbnail: VoucherDetails_voucher_products_edges_node_thumbnail | null;
+  channelListings: VoucherDetails_voucher_products_edges_node_channelListings[] | null;
 }
 
 export interface VoucherDetails_voucher_products_edges {
@@ -132,10 +172,9 @@ export interface VoucherDetails_voucher {
   endDate: any | null;
   usageLimit: number | null;
   discountValueType: DiscountValueTypeEnum;
-  discountValue: number;
   countries: (VoucherDetails_voucher_countries | null)[] | null;
-  minSpent: VoucherDetails_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
+  channelListings: VoucherDetails_voucher_channelListings[] | null;
   type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;

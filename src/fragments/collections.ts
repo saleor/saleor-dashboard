@@ -1,3 +1,4 @@
+import { channelListingProductFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 import { metadataFragment } from "./metadata";
@@ -5,8 +6,15 @@ import { metadataFragment } from "./metadata";
 export const collectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
-    isPublished
     name
+    channelListings {
+      isPublished
+      publicationDate
+      channel {
+        id
+        name
+      }
+    }
   }
 `;
 
@@ -22,10 +30,8 @@ export const collectionDetailsFragment = gql`
     }
     slug
     descriptionJson
-    publicationDate
     seoDescription
     seoTitle
-    isPublished
   }
 `;
 
@@ -34,9 +40,9 @@ export const collectionDetailsFragment = gql`
 // https://github.com/apollographql/apollo-client/issues/2496
 // https://github.com/apollographql/apollo-client/issues/3468
 export const collectionProductFragment = gql`
+  ${channelListingProductFragment}
   fragment CollectionProductFragment on Product {
     id
-    isPublished
     name
     productType {
       id
@@ -44,6 +50,9 @@ export const collectionProductFragment = gql`
     }
     thumbnail {
       url
+    }
+    channelListings {
+      ...ChannelListingProductFragment
     }
   }
 `;

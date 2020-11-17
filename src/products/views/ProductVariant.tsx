@@ -1,4 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -6,6 +7,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -17,11 +20,10 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, weight } from "../../misc";
+import { weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
-import ProductVariantPage, {
-  ProductVariantPageSubmitData
-} from "../components/ProductVariantPage";
+import ProductVariantPage from "../components/ProductVariantPage";
+import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import {
   useProductVariantReorderMutation,
   useVariantDeleteMutation,
@@ -79,6 +81,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductVariantChannelListingUpdate({});
+
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
@@ -117,7 +124,35 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
+  const handleSubmitChannels = (
+    data: ProductVariantUpdateSubmitData,
+    variant: ProductVariantDetails_productVariant
+  ) => {
+    const isChannelPriceChange = data.channelListings.some(channel => {
+      const variantChannel = variant.channelListings.find(
+        variantChannel => variantChannel.channel.id === channel.id
+      );
+      return (
+        channel.value.price !== variantChannel?.price?.amount.toString() ||
+        channel.value.costPrice !== variantChannel?.costPrice?.amount.toString()
+      );
+    });
+    if (isChannelPriceChange) {
+      updateChannels({
+        variables: {
+          id: variant.id,
+          input: data.channelListings.map(listing => ({
+            channelId: listing.id,
+            costPrice: listing.value.costPrice || null,
+            price: listing.value.price
+          }))
+        }
+      });
+    }
+  };
+
   const variant = data?.productVariant;
+  const channels = createVariantChannels(variant);
 
   if (variant === null) {
     return <NotFoundPage onBack={handleBack} />;
@@ -163,7 +198,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   };
 
-  const handleUpdate = async (data: ProductVariantPageSubmitData) => {
+  const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
@@ -171,9 +206,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           id: attribute.id,
           values: [attribute.value]
         })),
-        costPrice: decimal(data.costPrice),
         id: variantId,
-        price: decimal(data.price),
         removeStocks: data.removeStocks,
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
@@ -181,6 +214,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         weight: weight(data.weight)
       }
     });
+    handleSubmitChannels(data, variant);
 
     return [
       ...result.data?.productVariantStocksCreate.errors,
@@ -203,6 +237,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
+        channels={channels}
+        channelErrors={
+          updateChannelsOpts?.data?.productVariantChannelListingUpdate
+            ?.errors || []
+        }
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}
         loading={disableFormSave}
@@ -216,7 +255,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={handleSubmit}
+        onSubmit={data => {
+          handleSubmit(data);
+          handleSubmitChannels(data, variant);
+        }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));

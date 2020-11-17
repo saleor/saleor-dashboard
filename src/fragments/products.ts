@@ -32,19 +32,57 @@ export const fragmentProductImage = gql`
   }
 `;
 
+export const channelListingProductFragment = gql`
+  ${fragmentMoney}
+  fragment ChannelListingProductFragment on ProductChannelListing {
+    isPublished
+    publicationDate
+    discountedPrice {
+      ...Money
+    }
+    isAvailableForPurchase
+    availableForPurchase
+    visibleInListings
+    channel {
+      id
+      name
+      currencyCode
+    }
+  }
+`;
+
+export const channelListingProductVariantFragment = gql`
+  ${fragmentMoney}
+  fragment ChannelListingProductVariantFragment on ProductVariantChannelListing {
+    channel {
+      id
+      name
+      currencyCode
+    }
+    price {
+      ...Money
+    }
+    costPrice {
+      ...Money
+    }
+  }
+`;
+
 export const productFragment = gql`
+  ${channelListingProductFragment}
   fragment ProductFragment on Product {
     id
     name
     thumbnail {
       url
     }
-    isAvailable
-    isPublished
     productType {
       id
       name
       hasVariants
+    }
+    channelListings {
+      ...ChannelListingProductFragment
     }
   }
 `;
@@ -84,18 +122,14 @@ export const productVariantAttributesFragment = gql`
         }
       }
     }
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
+    channelListings {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      discountedPrice {
+        ...Money
       }
     }
   }
@@ -103,12 +137,13 @@ export const productVariantAttributesFragment = gql`
 
 export const productFragmentDetails = gql`
   ${fragmentProductImage}
-  ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${weightFragment}
   ${metadataFragment}
   ${taxTypeFragment}
+  ${channelListingProductFragment}
+  ${channelListingProductVariantFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     ...MetadataFragment
@@ -128,52 +163,26 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    margin {
-      start
-      stop
-    }
-    purchaseCost {
-      start {
-        ...Money
-      }
-      stop {
-        ...Money
-      }
-    }
-    isAvailableForPurchase
-    isAvailable
-    isPublished
     chargeTaxes
-    publicationDate
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
-      }
+    channelListings {
+      ...ChannelListingProductFragment
     }
     images {
       ...ProductImageFragment
     }
+    isAvailable
     variants {
       id
       sku
       name
-      price {
-        ...Money
-      }
       margin
       stocks {
         ...StockFragment
       }
       trackInventory
+      channelListings {
+        ...ChannelListingProductVariantFragment
+      }
     }
     productType {
       id
@@ -189,8 +198,6 @@ export const productFragmentDetails = gql`
     taxType {
       ...TaxTypeFragment
     }
-    availableForPurchase
-    visibleInListings
   }
 `;
 
@@ -200,6 +207,7 @@ export const fragmentVariant = gql`
   ${stockFragment}
   ${weightFragment}
   ${metadataFragment}
+  ${channelListingProductVariantFragment}
   fragment ProductVariant on ProductVariant {
     id
     ...MetadataFragment
@@ -221,17 +229,11 @@ export const fragmentVariant = gql`
         slug
       }
     }
-    costPrice {
-      ...Money
-    }
     images {
       id
       url
     }
     name
-    price {
-      ...Money
-    }
     product {
       id
       defaultVariant {
@@ -243,6 +245,16 @@ export const fragmentVariant = gql`
       name
       thumbnail {
         url
+      }
+      channelListings {
+        channel {
+          id
+          name
+          currencyCode
+        }
+        discountedPrice {
+          ...Money
+        }
       }
       variants {
         id
@@ -256,6 +268,9 @@ export const fragmentVariant = gql`
       defaultVariant {
         id
       }
+    }
+    channelListings {
+      ...ChannelListingProductVariantFragment
     }
     sku
     stocks {

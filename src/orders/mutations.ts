@@ -360,8 +360,8 @@ export const TypedOrderShippingMethodUpdateMutation = TypedMutation<
 
 const orderDraftCreateMutation = gql`
   ${orderErrorFragment}
-  mutation OrderDraftCreate {
-    draftOrderCreate(input: {}) {
+  mutation OrderDraftCreate($input: DraftOrderCreateInput!) {
+    draftOrderCreate(input: $input) {
       errors: orderErrors {
         ...OrderErrorFragment
       }

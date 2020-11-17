@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -16,8 +17,14 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
+  createAttributeMultiChangeHandler,
+  createChannelsChangeHandler,
+  createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -32,24 +39,20 @@ import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   slug: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
@@ -78,6 +81,14 @@ interface ProductUpdateHandlers
       "changeStock" | "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
     >,
+    Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
+    Record<
+      "changeChannels",
+      (
+        id: string,
+        data: Omit<ChannelData, "name" | "price" | "currency" | "id">
+      ) => void
+    >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
 }
@@ -85,6 +96,7 @@ export interface UseProductUpdateFormResult {
   change: FormChange;
 
   data: ProductUpdateData;
+  disabled: boolean;
   handlers: ProductUpdateHandlers;
   hasChanged: boolean;
   submit: () => Promise<boolean>;
@@ -100,8 +112,11 @@ export interface UseProductUpdateFormOpts
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelData[];
+  hasVariants: boolean;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -109,16 +124,6 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   product: ProductDetails_product;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
 }
-
-const getAvailabilityData = ({
-  availableForPurchase,
-  isAvailableForPurchase,
-  isPublished,
-  publicationDate
-}: ProductUpdateFormData) => ({
-  isAvailableForPurchase: isAvailableForPurchase || !!availableForPurchase,
-  isPublished: isPublished || !!publicationDate
-});
 
 const getStocksData = (
   product: ProductDetails_product,
@@ -153,7 +158,11 @@ function useProductUpdateForm(
   const triggerChange = () => setChanged(true);
 
   const form = useForm(
-    getProductUpdatePageFormData(product, product?.variants)
+    getProductUpdatePageFormData(
+      product,
+      product?.variants,
+      opts.currentChannels
+    )
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
@@ -215,6 +224,16 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const handleChannelsChange = createChannelsChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
+  const handleChannelPriceChange = createChannelsPriceChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
 
   const data: ProductUpdateData = {
     ...form.data,
@@ -225,7 +244,6 @@ function useProductUpdateForm(
   // Need to make it function to always have description.current up to date
   const getSubmitData = (): ProductUpdateSubmitData => ({
     ...data,
-    ...getAvailabilityData(data),
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     addStocks: [],
@@ -235,11 +253,22 @@ function useProductUpdateForm(
 
   const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
+  const disabled =
+    !opts.hasVariants &&
+    (!data.sku ||
+      data.channelListings.some(
+        channel =>
+          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+      ));
+
   return {
     change: handleChange,
     data,
+    disabled,
     handlers: {
       addStock: handleStockAdd,
+      changeChannelPrice: handleChannelPriceChange,
+      changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,

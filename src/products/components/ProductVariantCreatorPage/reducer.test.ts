@@ -1,14 +1,13 @@
 import {
   attributes,
+  channels,
   fourthStep,
   secondStep,
   thirdStep,
   warehouses
 } from "./fixtures";
-import reducer, {
-  ProductVariantCreateReducerActionType,
-  VariantField
-} from "./reducer";
+import { ChannelPrice } from "./form";
+import reducer, { ProductVariantCreateReducerActionType } from "./reducer";
 
 function execActions<TState, TAction>(
   initialState: TState,
@@ -73,7 +72,7 @@ describe("Reducer is able to", () => {
   });
 
   it("select price for all variants", () => {
-    const price = "45.99";
+    const price = "22.99";
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
@@ -83,6 +82,7 @@ describe("Reducer is able to", () => {
       },
       {
         changeApplyPriceToAllValue: {
+          channelId: channels[0].id,
           price
         },
         type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
@@ -91,9 +91,8 @@ describe("Reducer is able to", () => {
         type: ProductVariantCreateReducerActionType.reload
       }
     ]);
-
     expect(state.price.mode).toBe("all");
-    expect(state.price.value).toBe(price);
+    expect(state.price.channels[0].price).toBe(price);
     expect(state).toMatchSnapshot();
   });
 
@@ -163,6 +162,7 @@ describe("Reducer is able to", () => {
       },
       {
         changeAttributeValuePrice: {
+          channelId: channels[0].id,
           price: value.toString(),
           valueId: attribute.values[0]
         },
@@ -170,6 +170,7 @@ describe("Reducer is able to", () => {
       },
       {
         changeAttributeValuePrice: {
+          channelId: channels[1].id,
           price: (value + 6).toString(),
           valueId: attribute.values[1]
         },
@@ -235,24 +236,24 @@ describe("Reducer is able to", () => {
   });
 
   it("modify individual variant price", () => {
-    const field: VariantField = "price";
-    const value = "49.99";
+    const value: ChannelPrice = { channelId: channels[0].id, price: "7" };
     const variantIndex = 3;
 
     const state = execActions(fourthStep, reducer, [
       {
-        changeVariantData: {
-          field,
+        changeVariantPriceData: {
           value,
           variantIndex
         },
-        type: ProductVariantCreateReducerActionType.changeVariantData
+        type: ProductVariantCreateReducerActionType.changeVariantPriceData
       }
     ]);
 
-    expect(state.variants[variantIndex].price).toBe(value);
-    expect(state.variants[variantIndex - 1].price).toBe(
-      fourthStep.variants[variantIndex - 1].price
+    expect(state.variants[variantIndex].channelListings[0].price).toBe(
+      value.price
+    );
+    expect(state.variants[variantIndex - 1].channelListings).toBe(
+      fourthStep.variants[variantIndex - 1].channelListings
     );
     expect(state).toMatchSnapshot();
   });

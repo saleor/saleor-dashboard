@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -13,8 +14,15 @@ import {
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createChannelsChangeHandler,
+  createChannelsPriceChangeHandler,
   createProductTypeSelectHandler
 } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
+import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -22,7 +30,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
-import { SearchProductTypes_search_edges_node } from "../../../searches/types/SearchProductTypes";
 import {
   ProductAttributeInput,
   ProductAttributeInputData
@@ -30,19 +37,16 @@ import {
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string;
   changeTaxCode: boolean;
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   description: OutputData;
   isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   productType: ProductType;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
@@ -50,7 +54,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   stockQuantity: number;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
@@ -71,12 +74,21 @@ interface ProductCreateHandlers
       "changeStock" | "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
     >,
+    Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
+    Record<
+      "changeChannels",
+      (
+        id: string,
+        data: Omit<ChannelData, "name" | "price" | "currency" | "id">
+      ) => void
+    >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
 }
 export interface UseProductCreateFormResult {
   change: FormChange;
   data: ProductCreateData;
+  disabled: boolean;
   handlers: ProductCreateHandlers;
   hasChanged: boolean;
   submit: () => Promise<boolean>;
@@ -92,9 +104,12 @@ export interface UseProductCreateFormOpts
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   productTypes: SearchProductTypes_search_edges_node[];
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelData[];
+  productTypeChoiceList: SearchProductTypes_search_edges_node[];
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
@@ -103,39 +118,35 @@ export interface ProductCreateFormProps extends UseProductCreateFormOpts {
   onSubmit: (data: ProductCreateData) => Promise<boolean>;
 }
 
-const defaultInitialFormData: ProductCreateFormData &
-  Record<"productType", string> = {
-  availableForPurchase: "",
-  basePrice: 0,
-  category: "",
-  changeTaxCode: false,
-  chargeTaxes: false,
-  collections: [],
-  description: null,
-  isAvailable: false,
-  isAvailableForPurchase: false,
-  isPublished: false,
-  metadata: [],
-  name: "",
-  privateMetadata: [],
-  productType: null,
-  publicationDate: "",
-  seoDescription: "",
-  seoTitle: "",
-  sku: "",
-  slug: "",
-  stockQuantity: null,
-  taxCode: null,
-  trackInventory: false,
-  visibleInListings: false,
-  weight: ""
-};
-
 function useProductCreateForm(
   initial: Partial<ProductCreateFormData>,
   onSubmit: (data: ProductCreateData) => Promise<boolean>,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
+  const defaultInitialFormData: ProductCreateFormData &
+    Record<"productType", string> = {
+    basePrice: 0,
+    category: "",
+    changeTaxCode: false,
+    channelListings: opts.currentChannels,
+    chargeTaxes: false,
+    collections: [],
+    description: null,
+    isAvailable: false,
+    metadata: [],
+    name: "",
+    privateMetadata: [],
+    productType: null,
+    seoDescription: "",
+    seoTitle: "",
+    sku: "",
+    slug: "",
+    stockQuantity: null,
+    taxCode: null,
+    trackInventory: false,
+    weight: ""
+  };
+
   const initialProductType =
     opts.productTypes?.find(
       productType => initial?.productType?.id === productType.id
@@ -219,6 +230,16 @@ function useProductCreateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const handleChannelsChange = createChannelsChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
+  const handleChannelPriceChange = createChannelsPriceChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange
+  );
 
   const getData = (): ProductCreateData => ({
     ...form.data,
@@ -227,13 +248,29 @@ function useProductCreateForm(
     productType,
     stocks: stocks.data
   });
-  const submit = () => onSubmit(getData());
+  const data = getData();
+  const submit = () => onSubmit(data);
+
+  const productTypeChoice = opts.productTypeChoiceList?.find(
+    choice => choice.id === data.productType?.id
+  );
+
+  const disabled =
+    !productTypeChoice?.hasVariants &&
+    (!data.sku ||
+      data.channelListings.some(
+        channel =>
+          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+      ));
 
   return {
     change: handleChange,
-    data: getData(),
+    data,
+    disabled,
     handlers: {
       addStock: handleStockAdd,
+      changeChannelPrice: handleChannelPriceChange,
+      changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,

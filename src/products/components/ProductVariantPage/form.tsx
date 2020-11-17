@@ -1,3 +1,4 @@
+import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
@@ -9,6 +10,11 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -21,32 +27,37 @@ import { ProductStockInput } from "../ProductStocks";
 import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
-  costPrice: string;
-  price: string;
   sku: string;
   trackInventory: boolean;
   weight: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
+  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   stocks: ProductStockInput[];
 }
 export interface ProductVariantUpdateSubmitData
   extends ProductVariantUpdateFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
   addStocks: ProductStockInput[];
+  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
 
 export interface UseProductVariantUpdateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelPriceData[];
 }
 
 export interface UseProductVariantUpdateFormResult {
   change: FormChange;
   data: ProductVariantUpdateData;
-  handlers: Record<"changeStock" | "selectAttribute", FormsetChange> &
+  disabled: boolean;
+  handlers: Record<
+    "changeStock" | "selectAttribute" | "changeChannels",
+    FormsetChange
+  > &
     Record<"addStock" | "deleteStock", (id: string) => void> & {
       changeMetadata: FormChange;
     };
@@ -71,11 +82,10 @@ function useProductVariantUpdateForm(
 
   const attributeInput = getAttributeInputFromVariant(variant);
   const stockInput = getStockInputFromVariant(variant);
+  const channelsInput = getChannelsInput(opts.currentChannels);
 
   const initial: ProductVariantUpdateFormData = {
-    costPrice: variant?.costPrice?.amount.toString() || "",
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
-    price: variant?.price?.amount.toString() || "",
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory,
@@ -85,6 +95,7 @@ function useProductVariantUpdateForm(
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
   const stocks = useFormset(stockInput);
+  const channels = useFormset(channelsInput);
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -117,6 +128,10 @@ function useProductVariantUpdateForm(
     triggerChange();
     stocks.remove(id);
   };
+  const handleChannelChange: FormsetChange = (id, value) => {
+    channels.change(id, value);
+    triggerChange();
+  };
 
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
@@ -129,9 +144,15 @@ function useProductVariantUpdateForm(
     stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
   );
 
+  const disabled = channels?.data.some(
+    channelData =>
+      validatePrice(channelData.value.price) ||
+      validateCostPrice(channelData.value.costPrice)
+  );
   const data: ProductVariantUpdateData = {
     ...form.data,
     attributes: attributes.data,
+    channelListings: channels.data,
     stocks: stocks.data
   };
   const submitData: ProductVariantUpdateSubmitData = {
@@ -139,6 +160,7 @@ function useProductVariantUpdateForm(
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     addStocks,
     attributes: attributes.data,
+    channelListings: channels.data,
     removeStocks: stockDiff.removed,
     updateStocks
   };
@@ -148,8 +170,10 @@ function useProductVariantUpdateForm(
   return {
     change: handleChange,
     data,
+    disabled,
     handlers: {
       addStock: handleStockAdd,
+      changeChannels: handleChannelChange,
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,

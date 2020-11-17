@@ -3,11 +3,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
+import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -16,12 +16,9 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-import {
-  CategoryDetails_category_products_edges_node,
-  CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
-} from "../../types/CategoryDetails";
+import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -74,11 +71,14 @@ const useStyles = makeStyles(
 );
 
 interface CategoryProductListProps extends ListProps, ListActions {
+  channelsCount: number;
+  selectedChannel: string;
   products: CategoryDetails_category_products_edges_node[];
 }
 
 export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
   const {
+    channelsCount,
     disabled,
     isChecked,
     pageInfo,
@@ -89,58 +89,13 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     toolbar,
     onNextPage,
     onPreviousPage,
-    onRowClick
+    onRowClick,
+    selectedChannel
   } = props;
 
   const classes = useStyles(props);
-  const intl = useIntl();
 
   const numberOfColumns = 5;
-
-  const getProductPrice = (
-    priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
-  ) => {
-    if (!priceRangeUndiscounted) {
-      return null;
-    }
-
-    const { start, stop } = priceRangeUndiscounted;
-    const {
-      gross: { amount: startAmount }
-    } = start;
-    const {
-      gross: { amount: stopAmount }
-    } = stop;
-
-    if (startAmount === stopAmount) {
-      return (
-        <Money
-          money={{
-            amount: startAmount,
-            currency: start.gross.currency
-          }}
-        />
-      );
-    } else {
-      return (
-        <>
-          <Money
-            money={{
-              amount: startAmount,
-              currency: start.gross.currency
-            }}
-          />
-          {" - "}
-          <Money
-            money={{
-              amount: stopAmount,
-              currency: stop.gross.currency
-            }}
-          />
-        </>
-      );
-    }
-  };
 
   return (
     <div className={classes.tableContainer}>
@@ -173,8 +128,8 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
-              defaultMessage="Published"
-              description="product status"
+              defaultMessage="Availability"
+              description="availability status"
             />
           </TableCell>
           <TableCell className={classes.colPrice}>
@@ -202,6 +157,9 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
+              const channel = product?.channelListings.find(
+                listing => listing.channel.id === selectedChannel
+              );
 
               return (
                 <TableRow
@@ -233,30 +191,21 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPublished}>
-                    {product &&
-                    maybe(() => product.isAvailable !== undefined) ? (
-                      <StatusLabel
-                        label={
-                          product.isAvailable
-                            ? intl.formatMessage({
-                                defaultMessage: "Published",
-                                description: "product",
-                                id: "productStatusLabel"
-                              })
-                            : intl.formatMessage({
-                                defaultMessage: "Not published",
-                                description: "product"
-                              })
-                        }
-                        status={product.isAvailable ? "success" : "error"}
+                    {product && !product?.channelListings?.length ? (
+                      "-"
+                    ) : product?.channelListings !== undefined ? (
+                      <ChannelsAvailabilityDropdown
+                        allChannelsCount={channelsCount}
+                        currentChannel={channel || product?.channelListings[0]}
+                        channels={product?.channelListings}
                       />
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {product?.pricing?.priceRangeUndiscounted ? (
-                      getProductPrice(product?.pricing?.priceRangeUndiscounted)
+                    {product?.channelListings ? (
+                      <Money money={channel?.discountedPrice} />
                     ) : (
                       <Skeleton />
                     )}

@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createSaleChannels } from "@saleor/channels/utils";
 import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -10,17 +12,22 @@ import { sale } from "../../../discounts/fixtures";
 import { listActionsProps } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
+const channels = createSaleChannels(channelsList);
+
 const props: SaleDetailsPageProps = {
   activeTab: SaleDetailsPageTab.categories,
+  allChannelsCount: channels.length,
   categoryListToolbar: null,
+  channelListings: channels,
   collectionListToolbar: null,
-  defaultCurrency: "USD",
   disabled: false,
   errors: [],
+  hasChannelChanged: false,
   onBack: () => undefined,
   onCategoryAssign: () => undefined,
   onCategoryClick: () => undefined,
   onCategoryUnassign: () => undefined,
+  onChannelsChange: () => undefined,
   onCollectionAssign: () => undefined,
   onCollectionClick: () => undefined,
   onCollectionUnassign: () => undefined,
@@ -32,6 +39,7 @@ const props: SaleDetailsPageProps = {
   onRemove: () => undefined,
   onSubmit: () => undefined,
   onTabClick: () => undefined,
+  openChannelsModal: () => undefined,
   pageInfo: {
     hasNextPage: true,
     hasPreviousPage: false
@@ -39,6 +47,7 @@ const props: SaleDetailsPageProps = {
   productListToolbar: null,
   sale,
   saveButtonBarState: "default",
+  selectedChannel: "123",
   ...listActionsProps
 };
 
@@ -53,6 +62,7 @@ storiesOf("Views / Discounts / Sale details", module)
       {...props}
       errors={["name", "startDate", "endDate", "value"].map(field => ({
         __typename: "DiscountError",
+        channels: [],
         code: DiscountErrorCode.INVALID,
         field
       }))}

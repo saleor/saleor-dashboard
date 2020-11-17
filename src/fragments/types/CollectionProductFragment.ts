@@ -17,11 +17,35 @@ export interface CollectionProductFragment_thumbnail {
   url: string;
 }
 
+export interface CollectionProductFragment_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CollectionProductFragment_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CollectionProductFragment_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: CollectionProductFragment_channelListings_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: CollectionProductFragment_channelListings_channel;
+}
+
 export interface CollectionProductFragment {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionProductFragment_productType;
   thumbnail: CollectionProductFragment_thumbnail | null;
+  channelListings: CollectionProductFragment_channelListings[] | null;
 }

@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createSaleChannels } from "@saleor/channels/utils";
 import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -7,12 +9,16 @@ import SaleCreatePage, {
 } from "../../../discounts/components/SaleCreatePage";
 import Decorator from "../../Decorator";
 
+const channels = createSaleChannels(channelsList);
+
 const props: SaleCreatePageProps = {
-  defaultCurrency: "USD",
+  allChannelsCount: channels.length,
+  channelListings: channels,
   disabled: false,
   errors: [],
   onBack: () => undefined,
   onSubmit: () => undefined,
+  openChannelsModal: () => undefined,
   saveButtonBarState: "default"
 };
 
@@ -25,6 +31,7 @@ storiesOf("Views / Discounts / Sale create", module)
       {...props}
       errors={["name", "startDate", "endDate", "value"].map(field => ({
         __typename: "DiscountError",
+        channels: [],
         code: DiscountErrorCode.INVALID,
         field
       }))}

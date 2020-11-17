@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -16,13 +16,13 @@ import {
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
@@ -30,7 +30,21 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
+import {
+  useAvailableInGridAttributesQuery,
+  useCountAllProducts,
+  useInitialProductFilterDataQuery,
+  useProductListQuery
+} from "@saleor/products/queries";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
+import {
+  productAddUrl,
+  productListUrl,
+  ProductListUrlDialog,
+  ProductListUrlQueryParams,
+  ProductListUrlSortField,
+  productUrl
+} from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -46,23 +60,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductListPage from "../../components/ProductListPage";
 import {
   useProductBulkDeleteMutation,
-  useProductBulkPublishMutation,
   useProductExport
 } from "../../mutations";
-import {
-  useAvailableInGridAttributesQuery,
-  useCountAllProducts,
-  useInitialProductFilterDataQuery,
-  useProductListQuery
-} from "../../queries";
-import {
-  productAddUrl,
-  productListUrl,
-  ProductListUrlDialog,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
-} from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
@@ -84,7 +83,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const paginate = usePaginator();
   const { queue } = useBackgroundTask();
-  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -129,17 +127,32 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   });
 
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
+
+  const {
+    channel,
+    channels,
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel,
+    slug
+  } = useChannelsSettings("productsListChannel", { closeModal, openModal });
+
+  React.useEffect(() => {
+    const action = selectedChannel
+      ? {}
+      : { action: "settings" as ProductListUrlDialog };
+    navigate(
+      productListUrl({
+        ...{ ...params, ...action },
+        ...DEFAULT_INITIAL_PAGINATION_DATA
+      }),
+      true
+    );
+  }, [settings.rowNumber]);
 
   const tabs = getFilterTabs();
 
@@ -150,10 +163,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductListUrlDialog,
-    ProductListUrlQueryParams
-  >(navigate, productListUrl, params);
   const countAllProducts = useCountAllProducts({});
 
   const [exportProducts, exportProductsOpts] = useProductExport({
@@ -222,14 +231,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
-  const filter = getFilterVariables(params);
-  const sort = getSortQueryVariables(params);
+  const filter = getFilterVariables(params, slug);
+  const sort = getSortQueryVariables(params, slug);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
-      sort
+      ...(slug ? { sort } : {})
     }),
     [params, settings.rowNumber]
   );
@@ -264,51 +272,28 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   });
 
-  const [
-    productBulkPublish,
-    productBulkPublishOpts
-  ] = useProductBulkPublishMutation({
-    onCompleted: data => {
-      if (data.productBulkPublish.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        reset();
-        refetch();
-      }
-    }
-  });
-
   const filterOpts = getFilterOpts(
     params,
-    maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    initialFilterData?.attributes?.edges?.map(edge => edge.node) || [],
     {
-      initial: maybe(
-        () => initialFilterData.categories.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.categories?.edges?.map(edge => edge.node) || [],
       search: searchCategories
     },
     {
-      initial: maybe(
-        () => initialFilterData.collections.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.collections?.edges?.map(edge => edge.node) || [],
       search: searchCollections
     },
     {
-      initial: maybe(
-        () => initialFilterData.productTypes.edges.map(edge => edge.node),
-        []
-      ),
+      initial:
+        initialFilterData?.productTypes?.edges?.map(edge => edge.node) || [],
       search: searchProductTypes
     }
   );
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.products.pageInfo),
+    data?.products?.pageInfo,
     paginationState,
     params
   );
@@ -326,7 +311,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           () => attributes.data.availableInGrid.edges.map(edge => edge.node),
           []
         )}
-        currencySymbol={currencySymbol}
+        currencySymbol={channel?.currencyCode}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
@@ -380,44 +365,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onRowClick={id => () => navigate(productUrl(id))}
         onAll={resetFilters}
         toolbar={
-          <>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("unpublish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Unpublish"
-                description="unpublish product, button"
-              />
-            </Button>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("publish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Publish"
-                description="publish product, button"
-              />
-            </Button>
-            <IconButton
-              color="primary"
-              onClick={() =>
-                openModal("delete", {
-                  ids: listElements
-                })
-              }
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("delete", {
+                ids: listElements
+              })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
         }
         isChecked={isSelected}
         selected={listElements.length}
@@ -431,7 +388,22 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
+        channelsCount={channelChoices?.length}
+        selectedChannel={selectedChannel}
+        onSettingsOpen={
+          !!channelChoices?.length ? () => openModal("settings") : undefined
+        }
       />
+      {!!channelChoices?.length && (
+        <ChannelSettingsDialog
+          channelsChoices={channelChoices}
+          defaultChoice={selectedChannel}
+          open={params.action === "settings"}
+          confirmButtonState="default"
+          onClose={closeModal}
+          onConfirm={handleChannelSelectConfirm}
+        />
+      )}
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
@@ -452,64 +424,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "publish"}
-        confirmButtonState={productBulkPublishOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: true
-            }
-          })
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Publish Products",
-          description: "dialog header"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unpublish"}
-        confirmButtonState={productBulkPublishOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: false
-            }
-          })
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Unpublish Products",
-          description: "dialog header"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              counter: params?.ids?.length,
+              displayQuantity: <strong>{params?.ids?.length}</strong>
             }}
           />
         </DialogContentText>
@@ -533,6 +449,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
+        channels={channels}
         onClose={closeModal}
         onSubmit={data =>
           exportProducts({

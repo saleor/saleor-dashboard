@@ -23,7 +23,8 @@ export function getSortQueryField(
 }
 
 export function getSortQueryVariables(
-  params: ProductListUrlQueryParams
+  params: ProductListUrlQueryParams,
+  channel: string
 ): ProductOrder {
   if (params.sort === ProductListUrlSortField.attribute) {
     return {
@@ -32,6 +33,7 @@ export function getSortQueryVariables(
     };
   }
   return {
+    channel,
     direction: getOrderDirection(params.asc),
     field: getSortQueryField(params.sort)
   };

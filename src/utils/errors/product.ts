@@ -1,4 +1,5 @@
 import { BulkProductErrorFragment } from "@saleor/fragments/types/BulkProductErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
@@ -24,11 +25,17 @@ const messages = defineMessages({
   attributeVariantsDisabled: {
     defaultMessage: "Variants are disabled in this product type"
   },
+  duplicated: {
+    defaultMessage: "The same object cannot be in both lists"
+  },
   duplicatedInputItem: {
     defaultMessage: "Variant with these attributes already exists"
   },
   nameAlreadyTaken: {
     defaultMessage: "This name is already taken. Please provide another."
+  },
+  priceInvalid: {
+    defaultMessage: "Product price cannot be lower than 0."
   },
   skuUnique: {
     defaultMessage: "SKUs must be unique",
@@ -44,7 +51,9 @@ const messages = defineMessages({
 });
 
 function getProductErrorMessage(
-  err: Omit<ProductErrorFragment, "__typename"> | undefined,
+  err:
+    | Omit<ProductErrorFragment | CollectionErrorFragment, "__typename">
+    | undefined,
   intl: IntlShape
 ): string {
   if (err) {
@@ -66,14 +75,18 @@ function getProductErrorMessage(
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.INVALID:
+        if (err.field === "price") {
+          return intl.formatMessage(messages.priceInvalid);
+        }
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.UNIQUE:
-        return intl.formatMessage(messages.nameAlreadyTaken);
+        if (err.field === "sku") {
+          return intl.formatMessage(messages.skuUnique);
+        }
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
-
   return undefined;
 }
 

@@ -7,7 +7,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor, {
   RichTextEditorChange
 } from "@saleor/components/RichTextEditor";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
@@ -19,7 +19,7 @@ export interface CollectionDetailsProps {
     name: string;
   };
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: CollectionErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
   onDescriptionChange: RichTextEditorChange;
 }

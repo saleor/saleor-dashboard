@@ -1,6 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
+import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,14 +10,16 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
@@ -33,7 +36,6 @@ import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -43,6 +45,10 @@ import ProductUpdateForm from "./form";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductChannelListingErrorFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
+  channelChoices: SingleAutocompleteChoiceType[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -51,6 +57,7 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
+  hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -63,6 +70,8 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
+  openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -87,6 +96,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
+  channelChoices,
+  channelsErrors,
+  allChannelsCount,
+  currentChannels = [],
   collections: collectionChoiceList,
   errors,
   fetchCategories,
@@ -94,6 +107,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   images,
+  hasChannelChanged,
   header,
   placeholderImage,
   product,
@@ -107,6 +121,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  onChannelsChange,
+  openChannelsModal,
   onSeoClick,
   onSubmit,
   onVariantAdd,
@@ -122,7 +138,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toolbar
 }) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -138,7 +153,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-  const currency = product?.variants[0]?.price.currency;
   const hasVariants = product?.productType?.hasVariants;
   const taxTypeChoices =
     taxTypes?.map(taxType => ({
@@ -156,10 +170,20 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
+      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
+      currentChannels={currentChannels}
+      hasVariants={hasVariants}
     >
-      {({ change, data, handlers, hasChanged, submit }) => (
+      {({
+        change,
+        data,
+        disabled: formDisabled,
+        handlers,
+        hasChanged,
+        submit
+      }) => (
         <>
           <Container>
             <AppHeader onBack={onBack}>
@@ -197,12 +221,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 <CardSpacer />
                 {!!product?.productType && !hasVariants && (
                   <>
-                    <ProductPricing
-                      currency={currency}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={change}
+                    <ProductVariantPrice
+                      ProductVariantChannelListings={data.channelListings}
+                      errors={channelsErrors}
+                      loading={disabled}
+                      onChange={handlers.changeChannelPrice}
                     />
                     <CardSpacer />
                   </>
@@ -212,11 +235,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     disabled={disabled}
                     variants={variants}
                     product={product}
-                    fallbackPrice={
-                      product?.variants?.length
-                        ? product.variants[0].price
-                        : undefined
-                    }
+                    channelChoices={channelChoices}
                     onRowClick={onVariantShow}
                     onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}
@@ -293,29 +312,24 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
                 <CardSpacer />
                 <AvailabilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
                   messages={{
                     hiddenLabel: intl.formatMessage({
                       defaultMessage: "Not published",
                       description: "product label"
                     }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will become published on {date}",
-                        description: "product publication date label"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
+
                     visibleLabel: intl.formatMessage({
                       defaultMessage: "Published",
                       description: "product label"
                     })
                   }}
-                  onChange={change}
+                  errors={channelsErrors}
+                  selectedChannelsCount={data.channelListings.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListings}
+                  disabled={disabled}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
@@ -333,7 +347,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               onDelete={onDelete}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={
+                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+              }
             />
           </Container>
         </>

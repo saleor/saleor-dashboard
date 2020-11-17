@@ -1,9 +1,11 @@
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 
 import {
-  AllOrAttribute,
   Attribute,
-  ProductVariantCreateFormData
+  ChannelPrice,
+  Price,
+  ProductVariantCreateFormData,
+  Stock
 } from "./form";
 
 interface CreateVariantAttributeValueInput {
@@ -12,31 +14,66 @@ interface CreateVariantAttributeValueInput {
 }
 type CreateVariantInput = CreateVariantAttributeValueInput[];
 
-function getAttributeValuePriceOrStock<T>(
+function findAttribute(
   attributes: CreateVariantInput,
-  priceOrStock: AllOrAttribute<T>
-): T {
-  const attribute = attributes.find(
-    attribute => attribute.attributeId === priceOrStock.attribute
+  stockOrPrice: Stock | Price
+) {
+  return attributes.find(
+    attribute => attribute.attributeId === stockOrPrice.attribute
   );
+}
 
-  const attributeValue = priceOrStock.values.find(
+function getAttributeValueStock(
+  attributes: CreateVariantInput,
+  stock: Stock
+): number[] {
+  const attribute = findAttribute(attributes, stock);
+
+  const attributeValue = stock.values.find(
     attributeValue => attribute.attributeValueSlug === attributeValue.slug
   );
 
   return attributeValue.value;
 }
 
-function getValueFromMode<T>(
+function getAttributeValuePrice(
   attributes: CreateVariantInput,
-  priceOrStock: AllOrAttribute<T>,
-  skipValue: T
-): T {
-  switch (priceOrStock.mode) {
+  price: Price
+): ChannelPrice[] {
+  const attribute = findAttribute(attributes, price);
+
+  const attributeValue = price.values.find(
+    attributeValue => attribute.attributeValueSlug === attributeValue.slug
+  );
+
+  return attributeValue.value;
+}
+
+function getStockFromMode(
+  attributes: CreateVariantInput,
+  stock: Stock,
+  skipValue: number[]
+): number[] {
+  switch (stock.mode) {
     case "all":
-      return priceOrStock.value;
+      return stock.value;
     case "attribute":
-      return getAttributeValuePriceOrStock(attributes, priceOrStock);
+      return getAttributeValueStock(attributes, stock);
+    case "skip":
+      return skipValue;
+  }
+}
+
+function getPriceFromMode(
+  attributes: CreateVariantInput,
+  price: Price,
+  skipValue: ChannelPrice[]
+): ChannelPrice[] {
+  switch (price.mode) {
+    case "all":
+      return price.channels;
+    case "attribute":
+      return getAttributeValuePrice(attributes, price);
     case "skip":
       return skipValue;
   }
@@ -46,8 +83,12 @@ function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantBulkCreateInput {
-  const price = getValueFromMode(attributes, data.price, "0");
-  const stocks = getValueFromMode(
+  const price = getPriceFromMode(
+    attributes,
+    data.price,
+    data.price.channels.map(channel => ({ ...channel, price: "" }))
+  );
+  const stocks = getStockFromMode(
     attributes,
     data.stock,
     data.warehouses.map(() => 0)
@@ -58,7 +99,7 @@ function createVariant(
       id: attribute.attributeId,
       values: [attribute.attributeValueSlug]
     })),
-    price,
+    channelListings: price,
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({
       quantity,

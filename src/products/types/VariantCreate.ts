@@ -56,22 +56,10 @@ export interface VariantCreate_productVariantCreate_productVariant_attributes {
   values: (VariantCreate_productVariantCreate_productVariant_attributes_values | null)[];
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantCreate_productVariantCreate_productVariant_images {
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_defaultVariant {
@@ -90,6 +78,25 @@ export interface VariantCreate_productVariantCreate_productVariant_product_image
 export interface VariantCreate_productVariantCreate_productVariant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
+  __typename: "ProductChannelListing";
+  channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
+  discountedPrice: VariantCreate_productVariantCreate_productVariant_product_channelListings_discountedPrice | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_variants_images {
@@ -113,7 +120,34 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   images: (VariantCreate_productVariantCreate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
+  channelListings: VariantCreate_productVariantCreate_productVariant_product_channelListings[] | null;
   variants: (VariantCreate_productVariantCreate_productVariant_product_variants | null)[] | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: VariantCreate_productVariantCreate_productVariant_channelListings_channel;
+  price: VariantCreate_productVariantCreate_productVariant_channelListings_price | null;
+  costPrice: VariantCreate_productVariantCreate_productVariant_channelListings_costPrice | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_stocks_warehouse {
@@ -142,11 +176,10 @@ export interface VariantCreate_productVariantCreate_productVariant {
   metadata: (VariantCreate_productVariantCreate_productVariant_metadata | null)[];
   privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
   attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
-  costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
-  price: VariantCreate_productVariantCreate_productVariant_price | null;
   product: VariantCreate_productVariantCreate_productVariant_product;
+  channelListings: VariantCreate_productVariantCreate_productVariant_channelListings[] | null;
   sku: string;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;

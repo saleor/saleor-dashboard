@@ -68,17 +68,9 @@ export interface OrderLineDelete_draftOrderLineDelete_order_events {
   user: OrderLineDelete_draftOrderLineDelete_order_events_user | null;
 }
 
-export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments {
   warehouse: OrderLineDelete_draftOrderLineDelete_order_fulfillments_warehouse | null;
 }
 
-export interface OrderLineDelete_draftOrderLineDelete_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderLineDelete_draftOrderLineDelete_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderLineDelete_draftOrderLineDelete_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderLineDelete_draftOrderLineDelete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLineDelete_draftOrderLineDelete_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderLineDelete_draftOrderLineDelete_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order {
   availableShippingMethods: (OrderLineDelete_draftOrderLineDelete_order_availableShippingMethods | null)[] | null;
   discount: OrderLineDelete_draftOrderLineDelete_order_discount | null;
   invoices: (OrderLineDelete_draftOrderLineDelete_order_invoices | null)[] | null;
+  channel: OrderLineDelete_draftOrderLineDelete_order_channel;
 }
 
 export interface OrderLineDelete_draftOrderLineDelete {

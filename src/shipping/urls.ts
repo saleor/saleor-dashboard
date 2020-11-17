@@ -7,7 +7,7 @@ import { ShippingMethodTypeEnum } from "../types/globalTypes";
 export const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
-export type ShippingZonesListUrlDialog = "remove" | "remove-many";
+export type ShippingZonesListUrlDialog = "remove" | "remove-many" | "settings";
 export type ShippingZonesListUrlQueryParams = BulkAction &
   Dialog<ShippingZonesListUrlDialog> &
   Pagination &
@@ -36,5 +36,22 @@ export const shippingZoneUrl = (
   params?: ShippingZoneUrlQueryParams
 ) => shippingZonePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
+export const shippingPriceRatesUrl = (id: string) =>
+  urlJoin(shippingZonePath(id), "price", "add");
+
+export const shippingWeightRatesUrl = (id: string) =>
+  urlJoin(shippingZonePath(id), "weight", "add");
+
+export const shippingWeightRatesEditUrl = (id: string, rateId: string) =>
+  urlJoin(shippingZonePath(id), "weight", rateId);
+
+export const shippingPriceRatesEditUrl = (id: string, rateId: string) =>
+  urlJoin(shippingZonePath(id), "price", rateId);
+
 export const shippingZoneAddPath = urlJoin(shippingZonesListPath, "add");
 export const shippingZoneAddUrl = shippingZoneAddPath;
+export const shippingPriceRatesAddPath = urlJoin(
+  shippingZonesListPath,
+  "price",
+  "add"
+);

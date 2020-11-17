@@ -27,8 +27,8 @@ export interface VoucherListProps
   extends ListProps,
     ListActions,
     SortPage<VoucherListUrlSortField> {
-  defaultCurrency: string;
   vouchers: VoucherList_vouchers_edges_node[];
+  selectedChannel: string;
 }
 
 const useStyles = makeStyles(
@@ -84,7 +84,6 @@ const numberOfColumns = 6;
 const VoucherList: React.FC<VoucherListProps> = props => {
   const {
     settings,
-    defaultCurrency,
     disabled,
     onNextPage,
     onPreviousPage,
@@ -95,6 +94,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     vouchers,
     isChecked,
     selected,
+    selectedChannel,
     sort,
     toggle,
     toggleAll,
@@ -218,7 +218,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           vouchers,
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
-
+            const channel = voucher?.channelListings?.find(
+              listing => listing.channel.id === selectedChannel
+            );
             return (
               <TableRow
                 className={!!voucher ? classes.tableRow : undefined}
@@ -239,23 +241,23 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
-                  {voucher && voucher.minSpent ? (
-                    <Money money={voucher.minSpent} />
-                  ) : voucher && voucher.minSpent === null ? (
+                  {channel?.minSpent ? (
+                    <Money money={channel.minSpent} />
+                  ) : channel && channel.minSpent === null ? (
                     "-"
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colStart}>
-                  {voucher && voucher.startDate ? (
+                  {voucher?.startDate ? (
                     <Date date={voucher.startDate} />
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colEnd}>
-                  {voucher && voucher.endDate ? (
+                  {voucher?.endDate ? (
                     <Date date={voucher.endDate} />
                   ) : voucher && voucher.endDate === null ? (
                     "-"
@@ -269,17 +271,19 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                 >
                   {voucher &&
                   voucher.discountValueType &&
-                  voucher.discountValue ? (
+                  channel?.discountValue ? (
                     voucher.discountValueType ===
                     DiscountValueTypeEnum.FIXED ? (
                       <Money
                         money={{
-                          amount: voucher.discountValue,
-                          currency: defaultCurrency
+                          amount: channel.discountValue,
+                          currency: channel.currency
                         }}
                       />
+                    ) : channel?.discountValue ? (
+                      <Percent amount={channel.discountValue} />
                     ) : (
-                      <Percent amount={voucher.discountValue} />
+                      "-"
                     )
                   ) : (
                     <Skeleton />

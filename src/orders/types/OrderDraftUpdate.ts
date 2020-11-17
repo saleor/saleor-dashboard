@@ -68,17 +68,9 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_events {
   user: OrderDraftUpdate_draftOrderUpdate_order_events_user | null;
 }
 
-export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments {
   warehouse: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_warehouse | null;
 }
 
-export interface OrderDraftUpdate_draftOrderUpdate_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderDraftUpdate_draftOrderUpdate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderDraftUpdate_draftOrderUpdate_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   availableShippingMethods: (OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods | null)[] | null;
   discount: OrderDraftUpdate_draftOrderUpdate_order_discount | null;
   invoices: (OrderDraftUpdate_draftOrderUpdate_order_invoices | null)[] | null;
+  channel: OrderDraftUpdate_draftOrderUpdate_order_channel;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate {

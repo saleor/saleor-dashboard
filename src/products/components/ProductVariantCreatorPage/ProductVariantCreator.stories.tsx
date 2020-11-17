@@ -1,4 +1,5 @@
 import { attributes } from "@saleor/attributes/fixtures";
+import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
@@ -8,7 +9,12 @@ import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
-import { AllOrAttribute, ProductVariantCreateFormData } from "./form";
+import {
+  ChannelPrice,
+  Price,
+  ProductVariantCreateFormData,
+  Stock
+} from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
@@ -18,17 +24,22 @@ import { ProductVariantCreatorStep } from "./types";
 const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
 const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
-const price: AllOrAttribute<string> = {
+const channels: ChannelPrice[] = productChannels.map(channel => ({
+  channelId: channel.channel.id,
+  price: channel.discountedPrice.amount.toString()
+}));
+
+const price: Price = {
   attribute: selectedAttributes[0].id,
+  channels,
   mode: "attribute",
-  value: "2.79",
-  values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
+  values: selectedAttributes[0].values.map(attribute => ({
     slug: attribute.slug,
-    value: (attributeIndex + 4).toFixed(2)
+    value: channels
   }))
 };
 
-const stock: AllOrAttribute<number[]> = {
+const stock: Stock = {
   attribute: selectedAttributes[0].id,
   mode: "attribute",
   value: selectedWarehouses.map(
@@ -53,6 +64,7 @@ const dataAttributes = selectedAttributes.map(attribute => ({
 const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
   {
     __typename: "BulkProductError",
+    channels: [channels[0].channelId],
     code: ProductErrorCode.UNIQUE,
     field: "sku",
     index: 3
@@ -74,7 +86,12 @@ const data: ProductVariantCreateFormData = {
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
-  currencySymbol: "USD",
+  channelListings: productChannels.map(listing => ({
+    currency: listing.discountedPrice.currency,
+    id: listing.channel.id,
+    name: listing.channel.name,
+    price: listing.discountedPrice?.amount.toString() || ""
+  })),
   data: {
     ...data,
     variants: createVariants(data)
@@ -173,9 +190,5 @@ storiesOf("Views / Products / Create multiple variants / summary", module)
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(Decorator)
   .add("interactive", () => (
-    <ProductVariantCreatorPage
-      {...props}
-      defaultPrice="10.99"
-      onSubmit={() => undefined}
-    />
+    <ProductVariantCreatorPage {...props} onSubmit={() => undefined} />
   ));

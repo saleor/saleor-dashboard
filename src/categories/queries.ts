@@ -3,7 +3,7 @@ import {
   categoryFragment
 } from "@saleor/fragments/categories";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import { fragmentMoney } from "@saleor/fragments/products";
+import { channelListingProductFragment } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -49,7 +49,7 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
-  ${fragmentMoney}
+  ${channelListingProductFragment}
   ${categoryFragment}
   ${categoryDetailsFragment}
   ${pageInfoFragment}
@@ -81,7 +81,6 @@ export const categoryDetails = gql`
           node {
             id
             name
-            isAvailable
             thumbnail {
               url
             }
@@ -89,19 +88,8 @@ export const categoryDetails = gql`
               id
               name
             }
-            pricing {
-              priceRangeUndiscounted {
-                start {
-                  gross {
-                    ...Money
-                  }
-                }
-                stop {
-                  gross {
-                    ...Money
-                  }
-                }
-              }
+            channelListings {
+              ...ChannelListingProductFragment
             }
           }
         }

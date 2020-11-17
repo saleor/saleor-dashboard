@@ -12,8 +12,6 @@ export function getSortQueryField(
       return OrderSortField.CREATION_DATE;
     case OrderDraftListUrlSortField.customer:
       return OrderSortField.CUSTOMER;
-    case OrderDraftListUrlSortField.total:
-      return OrderSortField.TOTAL;
     default:
       return undefined;
   }

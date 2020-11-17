@@ -1,39 +1,53 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
+import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import TableHead from "@saleor/components/TableHead";
+import { ChannelInput } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { useStyles } from "./styles";
 
 interface VoucherRequirementsProps {
   data: VoucherDetailsPageFormData;
-  defaultCurrency: string;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
+  onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
+
+const numberOfColumns = 2;
 
 const VoucherRequirements = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
+  onChannelChange
 }: VoucherRequirementsProps) => {
+  const classes = useStyles({});
   const intl = useIntl();
 
   const formErrors = getFormErrors(
     ["minSpent", "minCheckoutItemsQuantity"],
     errors
   );
-
   const minimalOrderValueText = intl.formatMessage({
     defaultMessage: "Minimal order value",
     description: "voucher requirement"
@@ -81,16 +95,89 @@ const VoucherRequirements = ({
           data.requirementsPicker
         ) && <FormSpacer />}
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.minSpent}
-            helperText={getDiscountErrorMessage(formErrors.minSpent, intl)}
-            label={minimalOrderValueText}
-            name={"minSpent" as keyof VoucherDetailsPageFormData}
-            value={data.minSpent}
-            onChange={onChange}
-            fullWidth
-          />
+          <>
+            <Typography variant="caption">
+              <FormattedMessage defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency" />
+            </Typography>
+            <div className={classes.tableContainer}>
+              <ResponsiveTable className={classes.table}>
+                <TableHead
+                  colSpan={numberOfColumns}
+                  disabled={disabled}
+                  items={[]}
+                >
+                  <TableCell className={classes.colName}>
+                    <span>
+                      <FormattedMessage
+                        defaultMessage="Channel name"
+                        description="column title"
+                      />
+                    </span>
+                  </TableCell>
+                  <TableCell className={classes.colType}>
+                    <span>
+                      <FormattedMessage
+                        defaultMessage="Value"
+                        description="column title"
+                      />
+                    </span>
+                  </TableCell>
+                </TableHead>
+                <TableBody>
+                  {renderCollection(
+                    data.channelListings,
+                    (listing, index) => {
+                      const error = formErrors.minSpent?.channels?.find(
+                        id => id === listing.id
+                      );
+                      return (
+                        <TableRow key={listing?.id || `skeleton-${index}`}>
+                          <TableCell>
+                            <Typography>
+                              {listing?.name || <Skeleton />}
+                            </Typography>
+                          </TableCell>
+                          <TableCell className={classes.colPrice}>
+                            {listing ? (
+                              <PriceField
+                                disabled={disabled}
+                                error={!!error?.length}
+                                hint={
+                                  error
+                                    ? getDiscountErrorMessage(
+                                        formErrors.minSpent,
+                                        intl
+                                      )
+                                    : ""
+                                }
+                                label={minimalOrderValueText}
+                                name="minSpent"
+                                value={listing.minSpent || ""}
+                                onChange={e =>
+                                  onChannelChange(listing.id, {
+                                    minSpent: e.target.value
+                                  })
+                                }
+                              />
+                            ) : (
+                              <Skeleton />
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    },
+                    () => (
+                      <TableRow>
+                        <TableCell colSpan={numberOfColumns}>
+                          <FormattedMessage defaultMessage="No channels found" />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </ResponsiveTable>
+            </div>
+          </>
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
           <TextField
             disabled={disabled}

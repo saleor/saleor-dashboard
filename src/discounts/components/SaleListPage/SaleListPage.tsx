@@ -1,5 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
@@ -29,12 +31,20 @@ export interface SaleListPageProps
     FilterPageProps<SaleFilterKeys, SaleListFilterOpts>,
     SortPage<SaleListUrlSortField>,
     TabPageProps {
-  defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
+  selectedChannel: string;
+  onSettingsOpen?: () => void;
 }
+const useStyles = makeStyles(
+  theme => ({
+    settings: {
+      marginRight: theme.spacing(2)
+    }
+  }),
+  { name: "SaleListPage" }
+);
 
 const SaleListPage: React.FC<SaleListPageProps> = ({
-  currencySymbol,
   currentTab,
   filterOpts,
   initialSearch,
@@ -42,6 +52,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   onAll,
   onFilterChange,
   onSearchChange,
+  onSettingsOpen,
   onTabChange,
   onTabDelete,
   onTabSave,
@@ -49,12 +60,26 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-
+  const classes = useStyles({});
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
+        {!!onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Settings",
+                  description: "button"
+                }),
+                onSelect: onSettingsOpen
+              }
+            ]}
+          />
+        )}
         <Button onClick={onAdd} variant="contained" color="primary">
           <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>
@@ -65,7 +90,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
             defaultMessage: "All Sales",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}

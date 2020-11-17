@@ -68,17 +68,9 @@ export interface OrderCapture_orderCapture_order_events {
   user: OrderCapture_orderCapture_order_events_user | null;
 }
 
-export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderCapture_orderCapture_order_fulfillments {
   warehouse: OrderCapture_orderCapture_order_fulfillments_warehouse | null;
 }
 
-export interface OrderCapture_orderCapture_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderCapture_orderCapture_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderCapture_orderCapture_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderCapture_orderCapture_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderCapture_orderCapture_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderCapture_orderCapture_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderCapture_orderCapture_order {
   availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
   discount: OrderCapture_orderCapture_order_discount | null;
   invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
+  channel: OrderCapture_orderCapture_order_channel;
 }
 
 export interface OrderCapture_orderCapture {

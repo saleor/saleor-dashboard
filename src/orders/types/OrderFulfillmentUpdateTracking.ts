@@ -68,17 +68,9 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user | null;
 }
 
-export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   warehouse: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_warehouse | null;
 }
 
-export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   availableShippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discount | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
+  channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking {

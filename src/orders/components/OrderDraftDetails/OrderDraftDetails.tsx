@@ -13,6 +13,7 @@ import OrderDraftDetailsProducts, {
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary/OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
+  disabled?: boolean;
   order: OrderDetails_order;
   onOrderLineAdd: () => void;
   onOrderLineChange: (
@@ -24,6 +25,7 @@ interface OrderDraftDetailsProps {
 }
 
 const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+  disabled,
   order,
   onOrderLineAdd,
   onOrderLineChange,
@@ -40,12 +42,15 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           description: "section header"
         })}
         toolbar={
-          <Button color="primary" variant="text" onClick={onOrderLineAdd}>
-            <FormattedMessage
-              defaultMessage="Add products"
-              description="button"
-            />
-          </Button>
+          !disabled &&
+          order?.channel?.isActive && (
+            <Button color="primary" variant="text" onClick={onOrderLineAdd}>
+              <FormattedMessage
+                defaultMessage="Add products"
+                description="button"
+              />
+            </Button>
+          )
         }
       />
       <OrderDraftDetailsProducts
@@ -56,6 +61,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       {maybe(() => order.lines.length) !== 0 && (
         <CardContent>
           <OrderDraftDetailsSummary
+            disabled={disabled}
             order={order}
             onShippingMethodEdit={onShippingMethodEdit}
           />

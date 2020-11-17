@@ -1,14 +1,15 @@
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -48,7 +49,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const shop = useShop();
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
@@ -93,6 +93,12 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
 
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("ordersListChannel", { closeModal, openModal });
+
   const handleTabChange = (tab: number) =>
     navigate(
       orderListUrl({
@@ -112,7 +118,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   };
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   const queryVariables = React.useMemo(
     () => ({
@@ -137,8 +142,17 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   return (
     <>
+      {!!channelChoices?.length && (
+        <ChannelSettingsDialog
+          channelsChoices={channelChoices}
+          defaultChoice={selectedChannel}
+          open={params.action === "settings"}
+          confirmButtonState="default"
+          onClose={closeModal}
+          onConfirm={handleChannelSelectConfirm}
+        />
+      )}
       <OrderListPage
-        currencySymbol={currencySymbol}
         settings={settings}
         currentTab={currentTab}
         disabled={loading}
@@ -146,7 +160,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         orders={maybe(() => data.orders.edges.map(edge => edge.node))}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        onAdd={createOrder}
+        onAdd={() =>
+          createOrder({
+            variables: {
+              input: { channel: selectedChannel }
+            }
+          })
+        }
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
@@ -160,6 +180,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
+        onSettingsOpen={
+          !!channelChoices?.length ? () => openModal("settings") : undefined
+        }
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

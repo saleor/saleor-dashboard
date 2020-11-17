@@ -1,4 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelCollectionData } from "@saleor/channels/utils";
+import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
@@ -13,10 +15,9 @@ export interface CollectionCreateFormData extends MetadataFormData {
     value: string;
   };
   backgroundImageAlt: string;
+  channelListings: ChannelCollectionData[];
   name: string;
   slug: string;
-  publicationDate: string;
-  isPublished: boolean;
   seoDescription: string;
   seoTitle: string;
 }
@@ -27,6 +28,10 @@ export interface CollectionCreateData extends CollectionCreateFormData {
 interface CollectionCreateHandlers {
   changeMetadata: FormChange;
   changeDescription: RichTextEditorChange;
+  changeChannels: (
+    id: string,
+    data: Omit<ChannelCollectionData, "name" | "id">
+  ) => void;
 }
 export interface UseCollectionCreateFormResult {
   change: FormChange;
@@ -37,11 +42,15 @@ export interface UseCollectionCreateFormResult {
 }
 
 export interface CollectionCreateFormProps {
+  currentChannels: ChannelCollectionData[];
+  setChannels: (data: ChannelCollectionData[]) => void;
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
   onSubmit: (data: CollectionCreateData) => SubmitPromise;
 }
 
 function useCollectionCreateForm(
+  currentChannels: ChannelCollectionData[],
+  setChannels: (data: ChannelCollectionData[]) => void,
   onSubmit: (data: CollectionCreateData) => SubmitPromise
 ): UseCollectionCreateFormResult {
   const [changed, setChanged] = React.useState(false);
@@ -53,11 +62,10 @@ function useCollectionCreateForm(
       value: null
     },
     backgroundImageAlt: "",
-    isPublished: false,
+    channelListings: currentChannels,
     metadata: [],
     name: "",
     privateMetadata: [],
-    publicationDate: "",
     seoDescription: "",
     seoTitle: "",
     slug: ""
@@ -83,12 +91,19 @@ function useCollectionCreateForm(
     description: description.current
   });
 
+  const handleChannelChange = createChannelsChangeHandler(
+    currentChannels,
+    setChannels,
+    triggerChange
+  );
+
   const submit = () => handleFormSubmit(getData(), onSubmit, setChanged);
 
   return {
     change: handleChange,
     data: getData(),
     handlers: {
+      changeChannels: handleChannelChange,
       changeDescription,
       changeMetadata
     },
@@ -98,10 +113,12 @@ function useCollectionCreateForm(
 }
 
 const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
+  currentChannels,
+  setChannels,
   children,
   onSubmit
 }) => {
-  const props = useCollectionCreateForm(onSubmit);
+  const props = useCollectionCreateForm(currentChannels, setChannels, onSubmit);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

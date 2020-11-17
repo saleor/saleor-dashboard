@@ -1,7 +1,6 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
 import { useCreateMultipleVariantsData } from "@saleor/products/queries";
 import { productUrl } from "@saleor/products/urls";
@@ -41,7 +40,6 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
       }
     }
   });
-  const shop = useShop();
 
   return (
     <>
@@ -52,13 +50,17 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         })}
       />
       <ProductVariantCreatorPage
-        defaultPrice={data?.product?.pricing?.priceRangeUndiscounted?.start?.gross.amount.toString()}
         errors={
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []
         }
+        channelListings={data?.product?.channelListings?.map(listing => ({
+          currency: listing.channel.currencyCode,
+          id: listing.channel.id,
+          name: listing.channel.name,
+          price: ""
+        }))}
         attributes={data?.product?.productType?.variantAttributes || []}
-        currencySymbol={shop?.defaultCurrency}
         onSubmit={inputs =>
           bulkProductVariantCreate({
             variables: { id, inputs }

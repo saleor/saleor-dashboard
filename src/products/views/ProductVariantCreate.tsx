@@ -1,9 +1,12 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -14,7 +17,7 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, weight } from "../../misc";
+import { weight } from "../../misc";
 import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
@@ -42,32 +45,64 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
+  const handleCreateSuccess = (data: ProductVariantChannelListingUpdate) => {
+    if (data.productVariantChannelListingUpdate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(
+        productVariantEditUrl(
+          productId,
+          data.productVariantChannelListingUpdate.variant.id
+        )
+      );
+    }
+  };
 
   const { data, loading: productLoading } = useProductVariantCreateQuery({
     displayLoader: true,
     variables: { id: productId }
   });
 
-  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
-    onCompleted: data => {
-      if (data.productVariantCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        navigate(
-          productVariantEditUrl(
-            productId,
-            data.productVariantCreate.productVariant.id
-          )
-        );
-      }
-    }
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductVariantChannelListingUpdate({
+    onCompleted: handleCreateSuccess
   });
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const product = data?.product;
+
+  const channels: ChannelPriceData[] = product?.channelListings.map(
+    listing => ({
+      costPrice: null,
+      currency: listing.channel.currencyCode,
+      id: listing.channel.id,
+      name: listing.channel.name,
+      price: null
+    })
+  );
+
+  const handleSubmitChannels = (
+    data: ProductVariantCreateData,
+    variantId: string
+  ) =>
+    updateChannels({
+      variables: {
+        id: variantId,
+        input: data.channelListings.map(listing => ({
+          channelId: listing.id,
+          costPrice: listing.value.costPrice || null,
+          price: listing.value.price
+        }))
+      }
+    });
+
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
+
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
@@ -93,8 +128,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
               id: attribute.id,
               values: [attribute.value]
             })),
-          costPrice: decimal(formData.costPrice),
-          price: decimal(formData.price),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
@@ -106,8 +139,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         }
       }
     });
+    const id = result.data?.productVariantCreate?.productVariant?.id;
+    if (id) {
+      handleSubmitChannels(formData, id);
+    }
 
-    return result.data.productVariantCreate?.productVariant?.id || null;
+    return id || null;
   };
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
@@ -131,7 +168,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
       />
       <ProductVariantCreatePage
-        currencySymbol={shop?.defaultCurrency}
+        channels={channels}
+        channelErrors={
+          updateChannelsOpts?.data?.productVariantChannelListingUpdate?.errors
+        }
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

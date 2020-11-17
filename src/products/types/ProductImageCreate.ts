@@ -73,37 +73,28 @@ export interface ProductImageCreate_productImageCreate_product_productType {
   taxType: ProductImageCreate_productImageCreate_product_productType_taxType | null;
 }
 
-export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start_gross {
+export interface ProductImageCreate_productImageCreate_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_channelListings_discountedPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start {
-  __typename: "TaxedMoney";
-  gross: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start_gross;
-}
-
-export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_stop_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_stop {
-  __typename: "TaxedMoney";
-  gross: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_stop_gross;
-}
-
-export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted {
-  __typename: "TaxedMoneyRange";
-  start: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start | null;
-  stop: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_stop | null;
-}
-
-export interface ProductImageCreate_productImageCreate_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRangeUndiscounted: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted | null;
+export interface ProductImageCreate_productImageCreate_product_channelListings {
+  __typename: "ProductChannelListing";
+  channel: ProductImageCreate_productImageCreate_product_channelListings_channel;
+  discountedPrice: ProductImageCreate_productImageCreate_product_channelListings_discountedPrice | null;
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductImageCreate_productImageCreate_product_metadata {
@@ -135,42 +126,12 @@ export interface ProductImageCreate_productImageCreate_product_collections {
   name: string;
 }
 
-export interface ProductImageCreate_productImageCreate_product_margin {
-  __typename: "Margin";
-  start: number | null;
-  stop: number | null;
-}
-
-export interface ProductImageCreate_productImageCreate_product_purchaseCost_start {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_purchaseCost_stop {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_purchaseCost {
-  __typename: "MoneyRange";
-  start: ProductImageCreate_productImageCreate_product_purchaseCost_start | null;
-  stop: ProductImageCreate_productImageCreate_product_purchaseCost_stop | null;
-}
-
 export interface ProductImageCreate_productImageCreate_product_images {
   __typename: "ProductImage";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
-}
-
-export interface ProductImageCreate_productImageCreate_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductImageCreate_productImageCreate_product_variants_stocks_warehouse {
@@ -187,15 +148,41 @@ export interface ProductImageCreate_productImageCreate_product_variants_stocks {
   warehouse: ProductImageCreate_productImageCreate_product_variants_stocks_warehouse;
 }
 
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_variants_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductImageCreate_productImageCreate_product_variants_channelListings_channel;
+  price: ProductImageCreate_productImageCreate_product_variants_channelListings_price | null;
+  costPrice: ProductImageCreate_productImageCreate_product_variants_channelListings_costPrice | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product_variants {
   __typename: "ProductVariant";
   id: string;
   sku: string;
   name: string;
-  price: ProductImageCreate_productImageCreate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductImageCreate_productImageCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  channelListings: ProductImageCreate_productImageCreate_product_variants_channelListings[] | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_weight {
@@ -215,7 +202,7 @@ export interface ProductImageCreate_productImageCreate_product {
   id: string;
   attributes: ProductImageCreate_productImageCreate_product_attributes[];
   productType: ProductImageCreate_productImageCreate_product_productType;
-  pricing: ProductImageCreate_productImageCreate_product_pricing | null;
+  channelListings: ProductImageCreate_productImageCreate_product_channelListings[] | null;
   metadata: (ProductImageCreate_productImageCreate_product_metadata | null)[];
   privateMetadata: (ProductImageCreate_productImageCreate_product_privateMetadata | null)[];
   name: string;
@@ -226,19 +213,12 @@ export interface ProductImageCreate_productImageCreate_product {
   defaultVariant: ProductImageCreate_productImageCreate_product_defaultVariant | null;
   category: ProductImageCreate_productImageCreate_product_category | null;
   collections: (ProductImageCreate_productImageCreate_product_collections | null)[] | null;
-  margin: ProductImageCreate_productImageCreate_product_margin | null;
-  purchaseCost: ProductImageCreate_productImageCreate_product_purchaseCost | null;
-  isAvailableForPurchase: boolean | null;
-  isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
+  isAvailable: boolean | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
   weight: ProductImageCreate_productImageCreate_product_weight | null;
   taxType: ProductImageCreate_productImageCreate_product_taxType | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
 }
 
 export interface ProductImageCreate_productImageCreate {

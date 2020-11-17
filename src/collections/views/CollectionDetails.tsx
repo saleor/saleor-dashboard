@@ -1,11 +1,19 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import { useChannelsList } from "@saleor/channels/queries";
+import {
+  createCollectionChannels,
+  createCollectionChannelsData
+} from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannels from "@saleor/hooks/useChannels";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -19,6 +27,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
+import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,9 +38,9 @@ import CollectionDetailsPage from "../components/CollectionDetailsPage/Collectio
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
   useCollectionAssignProductMutation,
+  useCollectionChannelListingUpdate,
   useCollectionRemoveMutation,
   useCollectionUpdateMutation,
-  useCollectionUpdateWithHomepageMutation,
   useUnassignCollectionProductMutation
 } from "../mutations";
 import { TypedCollectionDetailsQuery } from "../queries";
@@ -65,6 +74,12 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useCollectionChannelListingUpdate({});
+  const { data: channelsData } = useChannelsList({});
+
   const handleCollectionUpdate = (data: CollectionUpdate) => {
     if (data.collectionUpdate.errors.length === 0) {
       notify({
@@ -86,17 +101,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   };
   const [updateCollection, updateCollectionOpts] = useCollectionUpdateMutation({
     onCompleted: handleCollectionUpdate
-  });
-
-  const [
-    updateCollectionWithHomepage,
-    updateCollectionWithHomepageOpts
-  ] = useCollectionUpdateWithHomepageMutation({
-    onCompleted: data => {
-      if (data.homepageCollectionUpdate.errors.length === 0) {
-        handleCollectionUpdate(data);
-      }
-    }
   });
 
   const [assignProduct, assignProductOpts] = useCollectionAssignProductMutation(
@@ -155,6 +159,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const handleBack = () => navigate(collectionListUrl());
 
+  const [selectedChannel] = useLocalStorage("collectionListChannel", "");
+
   return (
     <TypedCollectionDetailsQuery
       displayLoader
@@ -162,50 +168,72 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     >
       {({ data, loading }) => {
         const collection = data?.collection;
-
         if (collection === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
+        const allChannels = createCollectionChannels(
+          channelsData?.channels
+        )?.sort((channel, nextChannel) =>
+          channel.name.localeCompare(nextChannel.name)
+        );
+        const collectionChannelsChoices = createCollectionChannelsData(
+          collection
+        );
+        const {
+          channelListElements,
+          channelsToggle,
+          currentChannels,
+          handleChannelsConfirm,
+          handleChannelsModalClose,
+          handleChannelsModalOpen,
+          isChannelSelected,
+          isChannelsModalOpen,
+          setCurrentChannels,
+          toggleAllChannels
+        } = useChannels(collectionChannelsChoices);
 
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
             descriptionJson: JSON.stringify(formData.description),
-            isPublished: formData.isPublished,
             name: formData.name,
-            publicationDate: formData.publicationDate,
             seo: {
               description: formData.seoDescription,
               title: formData.seoTitle
             },
             slug: formData.slug
           };
-          const isFeatured = data.shop.homepageCollection
-            ? data.shop.homepageCollection.id === data.collection.id
-            : false;
 
-          if (formData.isFeatured !== isFeatured) {
-            const result = await updateCollectionWithHomepage({
-              variables: {
-                homepageId: formData.isFeatured ? id : null,
-                id,
-                input
-              }
-            });
-            return [
-              ...result.data.collectionUpdate.errors,
-              ...result.data.homepageCollectionUpdate.errors
-            ];
-          } else {
-            const result = await updateCollection({
-              variables: {
-                id,
-                input
-              }
-            });
+          const result = await updateCollection({
+            variables: {
+              id,
+              input
+            }
+          });
+          const diffChannels = diff(
+            collectionChannelsChoices,
+            formData.channelListings,
+            (a, b) => a.id === b.id
+          );
 
-            return result.data.collectionUpdate.errors;
-          }
+          updateChannels({
+            variables: {
+              id: collection.id,
+              input: {
+                addChannels: formData.channelListings.map(channel => ({
+                  channelId: channel.id,
+                  isPublished: channel.isPublished,
+                  publicationDate: channel.publicationDate
+                })),
+                removeChannels:
+                  diffChannels.removed?.map(
+                    removedChannel => removedChannel.id
+                  ) || []
+              }
+            }
+          });
+
+          return result.data.collectionUpdate.errors;
         };
         const handleSubmit = createMetadataUpdateHandler(
           data?.collection,
@@ -215,13 +243,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         );
 
         const formTransitionState = getMutationState(
-          updateCollectionOpts.called ||
-            updateCollectionWithHomepageOpts.called,
-          updateCollectionOpts.loading ||
-            updateCollectionWithHomepageOpts.loading,
-          updateCollectionOpts.data?.collectionUpdate.errors,
-          updateCollectionWithHomepageOpts.data?.collectionUpdate.errors,
-          updateCollectionWithHomepageOpts.data?.homepageCollectionUpdate.errors
+          updateCollectionOpts.called,
+          updateCollectionOpts.loading,
+          updateCollectionOpts.data?.collectionUpdate.errors
         );
 
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -232,17 +256,34 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
         return (
           <>
-            <WindowTitle title={maybe(() => data.collection.name)} />
+            <WindowTitle title={data?.collection?.name} />
+            {!!allChannels?.length && (
+              <ChannelsAvailabilityDialog
+                isSelected={isChannelSelected}
+                disabled={!channelListElements.length}
+                channels={allChannels}
+                onChange={channelsToggle}
+                onClose={handleChannelsModalClose}
+                open={isChannelsModalOpen}
+                title={intl.formatMessage({
+                  defaultMessage: "Manage Collection Channel Availability"
+                })}
+                confirmButtonState="default"
+                selected={channelListElements.length}
+                onConfirm={handleChannelsConfirm}
+                toggleAll={toggleAllChannels}
+              />
+            )}
             <CollectionDetailsPage
               onAdd={() => openModal("assign")}
               onBack={handleBack}
-              disabled={loading}
+              disabled={loading || updateChannelsOpts.loading}
               collection={data?.collection}
+              channelsErrors={
+                updateChannelsOpts?.data?.collectionChannelListingUpdate
+                  .errors || []
+              }
               errors={updateCollectionOpts?.data?.collectionUpdate.errors || []}
-              isFeatured={maybe(
-                () => data.shop.homepageCollection.id === data.collection.id,
-                false
-              )}
               onCollectionRemove={() => openModal("remove")}
               onImageDelete={() => openModal("removeImage")}
               onImageUpload={file =>
@@ -290,6 +331,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               selected={listElements.length}
               toggle={toggle}
               toggleAll={toggleAll}
+              currentChannels={currentChannels}
+              hasChannelChanged={
+                collectionChannelsChoices?.length !== currentChannels?.length
+              }
+              channelsCount={channelsData?.channels?.length}
+              selectedChannel={selectedChannel}
+              openChannelsModal={handleChannelsModalOpen}
+              onChannelsChange={setCurrentChannels}
             />
             <AssignProductDialog
               confirmButtonState={assignProductOpts.status}

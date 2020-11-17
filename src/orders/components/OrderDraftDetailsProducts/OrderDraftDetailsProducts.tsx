@@ -128,32 +128,14 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
               >
                 {maybe(() => line.productName && line.productSku) ? (
                   <>
-                    <Typography variant="body2">{line.productName}</Typography>
-                    <Typography variant="caption">{line.productSku}</Typography>
-                    {!line.variant.quantityAvailable ? (
-                      <Typography
-                        variant="caption"
-                        className={classes.errorInfo}
-                      >
-                        <FormattedMessage defaultMessage="Product is out of stock" />
+                    <>
+                      <Typography variant="body2">
+                        {line.productName}
                       </Typography>
-                    ) : !line.variant.product.isAvailableForPurchase ? (
-                      <Typography
-                        variant="caption"
-                        className={classes.errorInfo}
-                      >
-                        <FormattedMessage defaultMessage="Product is unavailable to purchase" />
+                      <Typography variant="caption">
+                        {line.productSku}
                       </Typography>
-                    ) : (
-                      !line.variant.product.isPublished && (
-                        <Typography
-                          variant="caption"
-                          className={classes.errorInfo}
-                        >
-                          <FormattedMessage defaultMessage="Product is hidden" />
-                        </Typography>
-                      )
-                    )}
+                    </>
                   </>
                 ) : (
                   <Skeleton />

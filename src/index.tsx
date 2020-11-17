@@ -23,6 +23,8 @@ import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
 import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
+import ChannelsSection from "./channels";
+import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
@@ -191,9 +193,7 @@ const Routes: React.FC = () => {
                 component={ProductSection}
               />
               <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
-                ]}
+                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path="/product-types"
                 component={ProductTypesSection}
               />
@@ -233,9 +233,7 @@ const Routes: React.FC = () => {
                 component={NavigationSection}
               />
               <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
-                ]}
+                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path={attributeSection}
                 component={AttributeSection}
               />
@@ -248,6 +246,11 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path={warehouseSection}
                 component={WarehouseSection}
+              />
+              <SectionRoute
+                permissions={[PermissionEnum.MANAGE_CHANNELS]}
+                path={channelsSection}
+                component={ChannelsSection}
               />
               {createConfigurationMenu(intl).filter(menu =>
                 menu.menuItems.map(item => hasPermission(item.permission, user))

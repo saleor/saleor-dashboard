@@ -1,5 +1,4 @@
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import { CollectionPublished } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -8,7 +7,6 @@ import CollectionListPage, {
 } from "../../../collections/components/CollectionListPage";
 import { collections } from "../../../collections/fixtures";
 import {
-  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
@@ -22,19 +20,14 @@ const props: CollectionListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...filterPageProps,
-  filterOpts: {
-    status: {
-      active: false,
-      value: CollectionPublished.PUBLISHED
-    }
-  },
+  channelsCount: 2,
   sort: {
     ...sortPageProps.sort,
     sort: CollectionListUrlSortField.name
   },
   ...tabPageProps,
-  collections
+  collections,
+  selectedChannel: "123"
 };
 
 storiesOf("Views / Collections / Collection list", module)

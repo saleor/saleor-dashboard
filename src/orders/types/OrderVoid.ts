@@ -68,17 +68,9 @@ export interface OrderVoid_orderVoid_order_events {
   user: OrderVoid_orderVoid_order_events_user | null;
 }
 
-export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant_product;
   quantityAvailable: number;
 }
 
@@ -141,17 +133,9 @@ export interface OrderVoid_orderVoid_order_fulfillments {
   warehouse: OrderVoid_orderVoid_order_fulfillments_warehouse | null;
 }
 
-export interface OrderVoid_orderVoid_order_lines_variant_product {
-  __typename: "Product";
-  id: string;
-  isAvailableForPurchase: boolean | null;
-  isPublished: boolean;
-}
-
 export interface OrderVoid_orderVoid_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  product: OrderVoid_orderVoid_order_lines_variant_product;
   quantityAvailable: number;
 }
 
@@ -304,6 +288,14 @@ export interface OrderVoid_orderVoid_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderVoid_orderVoid_order_channel {
+  __typename: "Channel";
+  isActive: boolean;
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
@@ -333,6 +325,7 @@ export interface OrderVoid_orderVoid_order {
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   discount: OrderVoid_orderVoid_order_discount | null;
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
+  channel: OrderVoid_orderVoid_order_channel;
 }
 
 export interface OrderVoid_orderVoid {

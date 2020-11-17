@@ -12,6 +12,22 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_errors {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
+  channels: string[] | null;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings {
+  __typename: "SaleChannelListing";
+  id: string;
+  channel: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings_channel;
+  discountValue: number;
+  currency: string;
 }
 
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_productType {
@@ -25,13 +41,37 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_n
   url: string;
 }
 
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_channel;
+}
+
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
-  isPublished: boolean;
   productType: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_productType;
   thumbnail: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_thumbnail | null;
+  channelListings: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings[] | null;
 }
 
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges {
@@ -125,7 +165,7 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale {
   type: SaleType;
   startDate: any;
   endDate: any | null;
-  value: number;
+  channelListings: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings[] | null;
   products: SaleCataloguesRemove_saleCataloguesRemove_sale_products | null;
   categories: SaleCataloguesRemove_saleCataloguesRemove_sale_categories | null;
   collections: SaleCataloguesRemove_saleCataloguesRemove_sale_collections | null;

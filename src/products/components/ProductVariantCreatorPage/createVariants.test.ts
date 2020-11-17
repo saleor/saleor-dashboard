@@ -2,8 +2,8 @@ import {
   createVariantFlatMatrixDimension,
   createVariants
 } from "./createVariants";
-import { attributes, thirdStep } from "./fixtures";
-import { ProductVariantCreateFormData } from "./form";
+import { attributes, channels, thirdStep } from "./fixtures";
+import { ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 describe("Creates variant matrix", () => {
   it("with proper size", () => {
@@ -17,15 +17,15 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant price and stock", () => {
-    const price = "49.99";
+    const channels: ChannelPrice[] = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
 
     const data: ProductVariantCreateFormData = {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        mode: "all",
-        value: price
+        channels,
+        mode: "all"
       },
       stock: {
         ...thirdStep.stock,
@@ -43,7 +43,7 @@ describe("Creates variant matrix", () => {
     );
 
     variants.forEach(variant => {
-      expect(variant.price).toBe(price);
+      expect(variant.channelListings[0].price).toBe(channels[0].price);
       variant.stocks.forEach((_, stockIndex) => {
         expect(variant.stocks[stockIndex].quantity).toBe(stock[stockIndex]);
       });
@@ -51,7 +51,6 @@ describe("Creates variant matrix", () => {
   });
 
   it("with constant stock and attribute dependent price", () => {
-    const price = 49.99;
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -63,9 +62,12 @@ describe("Creates variant matrix", () => {
         ...thirdStep.price,
         attribute: attribute.id,
         mode: "attribute",
-        values: attribute.values.map((attributeValue, attributeValueIndex) => ({
+        values: attribute.values.map((attributeValue, index) => ({
           slug: attributeValue,
-          value: (price * (attributeValueIndex + 1)).toString()
+          value: channels.map(channel => ({
+            channelId: channel.id,
+            price: (channel.price + index).toString()
+          }))
         }))
       },
       stock: {
@@ -98,15 +100,17 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.price).toBe(
-            (price * (attributeValueIndex + 1)).toString()
-          );
+          variant.channelListings.map((channel, index) => {
+            expect(channel.price).toBe(
+              (channels[index].price + attributeValueIndex).toString()
+            );
+          });
         });
     });
   });
 
   it("with constant price and attribute dependent stock", () => {
-    const price = "49.99";
+    const price: ChannelPrice[] = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -116,8 +120,8 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        mode: "all",
-        value: price
+        channels: price,
+        mode: "all"
       },
       stock: {
         ...thirdStep.stock,
@@ -141,7 +145,7 @@ describe("Creates variant matrix", () => {
     );
 
     variants.forEach(variant => {
-      expect(variant.price).toBe(price);
+      expect(variant.channelListings).toBe(price);
     });
 
     attribute.values.forEach((attributeValue, attributeValueIndex) => {
@@ -163,7 +167,6 @@ describe("Creates variant matrix", () => {
   });
 
   it("with attribute dependent price and stock", () => {
-    const price = 49.99;
     const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
@@ -175,9 +178,12 @@ describe("Creates variant matrix", () => {
         ...thirdStep.price,
         attribute: attribute.id,
         mode: "attribute",
-        values: attribute.values.map((attributeValue, attributeValueIndex) => ({
+        values: attribute.values.map((attributeValue, index) => ({
           slug: attributeValue,
-          value: (price * (attributeValueIndex + 1)).toString()
+          value: channels.map(channel => ({
+            channelId: channel.id,
+            price: (channel.price + index).toString()
+          }))
         }))
       },
       stock: {
@@ -210,9 +216,11 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.price).toBe(
-            (price * (attributeValueIndex + 1)).toString()
-          );
+          variant.channelListings.map((channel, index) => {
+            expect(channel.price).toBe(
+              (channels[index].price + attributeValueIndex).toString()
+            );
+          });
         });
     });
 

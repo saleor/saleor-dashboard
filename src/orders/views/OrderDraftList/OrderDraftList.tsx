@@ -1,19 +1,20 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -64,7 +65,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     ListViews.DRAFT_LIST
   );
   const intl = useIntl();
-  const shop = useShop();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
@@ -105,6 +105,12 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     OrderDraftListUrlDialog,
     OrderDraftListUrlQueryParams
   >(navigate, orderDraftListUrl, params);
+
+  const {
+    channelChoices,
+    handleChannelSelectConfirm,
+    selectedChannel
+  } = useChannelsSettings("ordersDraftListChannel", { closeModal, openModal });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -162,103 +168,126 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
-  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
-    <TypedOrderDraftBulkCancelMutation onCompleted={handleOrderDraftBulkCancel}>
-      {(orderDraftBulkDelete, orderDraftBulkDeleteOpts) => {
-        const onOrderDraftBulkDelete = () =>
-          orderDraftBulkDelete({
-            variables: {
-              ids: params.ids
-            }
-          });
-
-        return (
-          <>
-            <OrderDraftListPage
-              currencySymbol={currencySymbol}
-              currentTab={currentTab}
-              filterOpts={getFilterOpts(params)}
-              initialSearch={params.query || ""}
-              onSearchChange={handleSearchChange}
-              onFilterChange={changeFilters}
-              onAll={resetFilters}
-              onTabChange={handleTabChange}
-              onTabDelete={() => openModal("delete-search")}
-              onTabSave={() => openModal("save-search")}
-              tabs={tabs.map(tab => tab.name)}
-              disabled={loading}
-              settings={settings}
-              orders={maybe(() =>
-                data.draftOrders.edges.map(edge => edge.node)
-              )}
-              pageInfo={pageInfo}
-              onAdd={createOrder}
-              onNextPage={loadNextPage}
-              onPreviousPage={loadPreviousPage}
-              onRowClick={id => () => navigate(orderUrl(id))}
-              onSort={handleSort}
-              onUpdateListSettings={updateListSettings}
-              isChecked={isSelected}
-              selected={listElements.length}
-              sort={getSortParams(params)}
-              toggle={toggle}
-              toggleAll={toggleAll}
-              toolbar={
-                <IconButton
-                  color="primary"
-                  onClick={() =>
-                    openModal("remove", {
-                      ids: listElements
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
+    <>
+      {!!channelChoices?.length && (
+        <ChannelSettingsDialog
+          channelsChoices={channelChoices}
+          defaultChoice={selectedChannel}
+          open={params.action === "settings"}
+          confirmButtonState="default"
+          onClose={closeModal}
+          onConfirm={handleChannelSelectConfirm}
+        />
+      )}
+      <TypedOrderDraftBulkCancelMutation
+        onCompleted={handleOrderDraftBulkCancel}
+      >
+        {(orderDraftBulkDelete, orderDraftBulkDeleteOpts) => {
+          const onOrderDraftBulkDelete = () =>
+            orderDraftBulkDelete({
+              variables: {
+                ids: params.ids
               }
-            />
-            <ActionDialog
-              confirmButtonState={orderDraftBulkDeleteOpts.status}
-              onClose={closeModal}
-              onConfirm={onOrderDraftBulkDelete}
-              open={params.action === "remove"}
-              title={intl.formatMessage({
-                defaultMessage: "Delete Order Drafts",
-                description: "dialog header"
-              })}
-              variant="delete"
-            >
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
-                  description="dialog content"
-                  values={{
-                    counter: maybe(() => params.ids.length),
-                    displayQuantity: (
-                      <strong>{maybe(() => params.ids.length)}</strong>
-                    )
-                  }}
-                />
-              </DialogContentText>
-            </ActionDialog>
-            <SaveFilterTabDialog
-              open={params.action === "save-search"}
-              confirmButtonState="default"
-              onClose={closeModal}
-              onSubmit={handleTabSave}
-            />
-            <DeleteFilterTabDialog
-              open={params.action === "delete-search"}
-              confirmButtonState="default"
-              onClose={closeModal}
-              onSubmit={handleTabDelete}
-              tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-            />
-          </>
-        );
-      }}
-    </TypedOrderDraftBulkCancelMutation>
+            });
+
+          return (
+            <>
+              <OrderDraftListPage
+                currentTab={currentTab}
+                filterOpts={getFilterOpts(params)}
+                initialSearch={params.query || ""}
+                onSearchChange={handleSearchChange}
+                onFilterChange={changeFilters}
+                onAll={resetFilters}
+                onTabChange={handleTabChange}
+                onTabDelete={() => openModal("delete-search")}
+                onTabSave={() => openModal("save-search")}
+                tabs={tabs.map(tab => tab.name)}
+                disabled={loading}
+                settings={settings}
+                orders={maybe(() =>
+                  data.draftOrders.edges.map(edge => edge.node)
+                )}
+                pageInfo={pageInfo}
+                onAdd={() =>
+                  createOrder({
+                    variables: {
+                      input: { channel: selectedChannel }
+                    }
+                  })
+                }
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                onRowClick={id => () => navigate(orderUrl(id))}
+                onSort={handleSort}
+                onUpdateListSettings={updateListSettings}
+                isChecked={isSelected}
+                selected={listElements.length}
+                sort={getSortParams(params)}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                toolbar={
+                  <IconButton
+                    color="primary"
+                    onClick={() =>
+                      openModal("remove", {
+                        ids: listElements
+                      })
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+                onSettingsOpen={
+                  !!channelChoices?.length
+                    ? () => openModal("settings")
+                    : undefined
+                }
+              />
+              <ActionDialog
+                confirmButtonState={orderDraftBulkDeleteOpts.status}
+                onClose={closeModal}
+                onConfirm={onOrderDraftBulkDelete}
+                open={params.action === "remove"}
+                title={intl.formatMessage({
+                  defaultMessage: "Delete Order Drafts",
+                  description: "dialog header"
+                })}
+                variant="delete"
+              >
+                <DialogContentText>
+                  <FormattedMessage
+                    defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
+                    description="dialog content"
+                    values={{
+                      counter: maybe(() => params.ids.length),
+                      displayQuantity: (
+                        <strong>{maybe(() => params.ids.length)}</strong>
+                      )
+                    }}
+                  />
+                </DialogContentText>
+              </ActionDialog>
+              <SaveFilterTabDialog
+                open={params.action === "save-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabSave}
+              />
+              <DeleteFilterTabDialog
+                open={params.action === "delete-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabDelete}
+                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+              />
+            </>
+          );
+        }}
+      </TypedOrderDraftBulkCancelMutation>
+    </>
   );
 };
 

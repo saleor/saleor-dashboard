@@ -55,22 +55,10 @@ export interface VariantImageAssign_variantImageAssign_productVariant_attributes
   values: (VariantImageAssign_variantImageAssign_productVariant_attributes_values | null)[];
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VariantImageAssign_variantImageAssign_productVariant_images {
   __typename: "ProductImage";
   id: string;
   url: string;
-}
-
-export interface VariantImageAssign_variantImageAssign_productVariant_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_product_defaultVariant {
@@ -89,6 +77,25 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product_im
 export interface VariantImageAssign_variantImageAssign_productVariant_product_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_product_channelListings {
+  __typename: "ProductChannelListing";
+  channel: VariantImageAssign_variantImageAssign_productVariant_product_channelListings_channel;
+  discountedPrice: VariantImageAssign_variantImageAssign_productVariant_product_channelListings_discountedPrice | null;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_product_variants_images {
@@ -112,7 +119,34 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product {
   images: (VariantImageAssign_variantImageAssign_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantImageAssign_variantImageAssign_productVariant_product_thumbnail | null;
+  channelListings: VariantImageAssign_variantImageAssign_productVariant_product_channelListings[] | null;
   variants: (VariantImageAssign_variantImageAssign_productVariant_product_variants | null)[] | null;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: VariantImageAssign_variantImageAssign_productVariant_channelListings_channel;
+  price: VariantImageAssign_variantImageAssign_productVariant_channelListings_price | null;
+  costPrice: VariantImageAssign_variantImageAssign_productVariant_channelListings_costPrice | null;
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse {
@@ -141,11 +175,10 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   metadata: (VariantImageAssign_variantImageAssign_productVariant_metadata | null)[];
   privateMetadata: (VariantImageAssign_variantImageAssign_productVariant_privateMetadata | null)[];
   attributes: VariantImageAssign_variantImageAssign_productVariant_attributes[];
-  costPrice: VariantImageAssign_variantImageAssign_productVariant_costPrice | null;
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
-  price: VariantImageAssign_variantImageAssign_productVariant_price | null;
   product: VariantImageAssign_variantImageAssign_productVariant_product;
+  channelListings: VariantImageAssign_variantImageAssign_productVariant_channelListings[] | null;
   sku: string;
   stocks: (VariantImageAssign_variantImageAssign_productVariant_stocks | null)[] | null;
   trackInventory: boolean;

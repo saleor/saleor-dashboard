@@ -27,7 +27,6 @@ const props: VoucherListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   ...filterPageProps,
-  defaultCurrency: "USD",
   filterOpts: {
     saleType: {
       active: false,
@@ -52,6 +51,8 @@ const props: VoucherListPageProps = {
       }
     }
   },
+  onSettingsOpen: () => undefined,
+  selectedChannel: "123",
   sort: {
     ...sortPageProps.sort,
     sort: VoucherListUrlSortField.code
@@ -63,4 +64,15 @@ storiesOf("Views / Discounts / Voucher list", module)
   .addDecorator(Decorator)
   .add("default", () => <VoucherListPage {...props} />)
   .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
-  .add("no data", () => <VoucherListPage {...props} vouchers={[]} />);
+  .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
+  .add("no channels", () => (
+    <VoucherListPage
+      {...props}
+      selectedChannel=""
+      onSettingsOpen={undefined}
+      vouchers={voucherList.map(voucher => ({
+        ...voucher,
+        channelListings: []
+      }))}
+    />
+  ));

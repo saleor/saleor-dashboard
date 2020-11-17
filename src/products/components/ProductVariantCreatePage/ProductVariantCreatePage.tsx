@@ -1,3 +1,4 @@
+import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -6,6 +7,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { ReorderAction } from "@saleor/types";
@@ -21,7 +23,8 @@ import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
 
 interface ProductVariantCreatePageProps {
-  currencySymbol: string;
+  channels: ChannelPriceData[];
+  channelErrors: ProductChannelListingErrorFragment[] | undefined;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -37,7 +40,8 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
-  currencySymbol,
+  channels,
+  channelErrors = [],
   disabled,
   errors,
   header,
@@ -58,8 +62,16 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       product={product}
       onSubmit={onSubmit}
       warehouses={warehouses}
+      currentChannels={channels}
     >
-      {({ change, data, handlers, hasChanged, submit }) => (
+      {({
+        change,
+        data,
+        disabled: formDisabled,
+        handlers,
+        hasChanged,
+        submit
+      }) => (
         <Container>
           <AppHeader onBack={onBack}>{product?.name}</AppHeader>
           <PageHeader title={header} />
@@ -84,20 +96,24 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={handlers.selectAttribute}
               />
               <CardSpacer />
-              <ProductVariantPrice
-                data={data}
-                errors={errors}
-                currencySymbol={currencySymbol}
-                loading={disabled}
-                onChange={change}
-              />
-              <CardSpacer />
               <ProductShipping
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 weightUnit={weightUnit}
                 onChange={change}
+              />
+              <CardSpacer />
+              <ProductVariantPrice
+                ProductVariantChannelListings={data.channelListings.map(
+                  channel => ({
+                    ...channel.data,
+                    ...channel.value
+                  })
+                )}
+                errors={channelErrors}
+                loading={disabled}
+                onChange={handlers.changeChannels}
               />
               <CardSpacer />
               <ProductStocks
@@ -118,7 +134,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             </div>
           </Grid>
           <SaveButtonBar
-            disabled={disabled || !onSubmit || !hasChanged}
+            disabled={disabled || formDisabled || !onSubmit || !hasChanged}
             labels={{
               delete: intl.formatMessage({
                 defaultMessage: "Delete Variant",

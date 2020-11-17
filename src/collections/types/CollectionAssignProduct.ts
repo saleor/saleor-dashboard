@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
+import { CollectionErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionAssignProduct
@@ -19,13 +19,37 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   url: string;
 }
 
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_channel;
+}
+
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_productType;
   thumbnail: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_thumbnail | null;
+  channelListings: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings[] | null;
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges {
@@ -54,8 +78,8 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "CollectionError";
+  code: CollectionErrorCode;
   field: string | null;
 }
 

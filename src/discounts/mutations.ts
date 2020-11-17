@@ -5,6 +5,7 @@ import {
   voucherFragment
 } from "@saleor/fragments/discounts";
 import { discountErrorFragment } from "@saleor/fragments/errors";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -20,6 +21,10 @@ import {
   SaleCataloguesRemove,
   SaleCataloguesRemoveVariables
 } from "./types/SaleCataloguesRemove";
+import {
+  SaleChannelListingUpdate,
+  SaleChannelListingUpdateVariables
+} from "./types/SaleChannelListingUpdate";
 import { SaleCreate, SaleCreateVariables } from "./types/SaleCreate";
 import { SaleDelete, SaleDeleteVariables } from "./types/SaleDelete";
 import { SaleUpdate, SaleUpdateVariables } from "./types/SaleUpdate";
@@ -35,6 +40,10 @@ import {
   VoucherCataloguesRemove,
   VoucherCataloguesRemoveVariables
 } from "./types/VoucherCataloguesRemove";
+import {
+  VoucherChannelListingUpdate,
+  VoucherChannelListingUpdateVariables
+} from "./types/VoucherChannelListingUpdate";
 import { VoucherCreate, VoucherCreateVariables } from "./types/VoucherCreate";
 import { VoucherDelete, VoucherDeleteVariables } from "./types/VoucherDelete";
 import { VoucherUpdate, VoucherUpdateVariables } from "./types/VoucherUpdate";
@@ -155,6 +164,50 @@ export const TypedSaleBulkDelete = TypedMutation<
   SaleBulkDelete,
   SaleBulkDeleteVariables
 >(saleBulkDelete);
+
+const saleChannelListingUpdate = gql`
+  ${discountErrorFragment}
+  ${saleFragment}
+  mutation SaleChannelListingUpdate(
+    $id: ID!
+    $input: SaleChannelListingInput!
+  ) {
+    saleChannelListingUpdate(id: $id, input: $input) {
+      errors: discountErrors {
+        ...DiscountErrorFragment
+      }
+      sale {
+        ...SaleFragment
+      }
+    }
+  }
+`;
+export const useSaleChannelListingUpdate = makeMutation<
+  SaleChannelListingUpdate,
+  SaleChannelListingUpdateVariables
+>(saleChannelListingUpdate);
+
+const voucherChannelListingUpdate = gql`
+  ${discountErrorFragment}
+  ${voucherFragment}
+  mutation VoucherChannelListingUpdate(
+    $id: ID!
+    $input: VoucherChannelListingInput!
+  ) {
+    voucherChannelListingUpdate(id: $id, input: $input) {
+      errors: discountErrors {
+        ...DiscountErrorFragment
+      }
+      voucher {
+        ...VoucherFragment
+      }
+    }
+  }
+`;
+export const useVoucherChannelListingUpdate = makeMutation<
+  VoucherChannelListingUpdate,
+  VoucherChannelListingUpdateVariables
+>(voucherChannelListingUpdate);
 
 const voucherUpdate = gql`
   ${discountErrorFragment}

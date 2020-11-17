@@ -62,6 +62,7 @@ interface OrderDetailsProps {
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { user } = useUser();
+
   const {
     loadMore: loadMoreCustomers,
     search: searchUsers,
@@ -102,7 +103,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     <TypedOrderDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading }) => {
         const order = data?.order;
-
         if (order === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
@@ -561,6 +561,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           products={variantSearchOpts.data?.search.edges.map(
                             edge => edge.node
                           )}
+                          selectedChannel={order?.channel?.id}
                           onClose={closeModal}
                           onFetch={variantSearch}
                           onFetchMore={loadMore}

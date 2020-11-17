@@ -6,6 +6,19 @@
 // GraphQL query operation: CollectionDetails
 // ====================================================
 
+export interface CollectionDetails_collection_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface CollectionDetails_collection_channelListings {
+  __typename: "CollectionChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  channel: CollectionDetails_collection_channelListings_channel;
+}
+
 export interface CollectionDetails_collection_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -35,13 +48,37 @@ export interface CollectionDetails_collection_products_edges_node_thumbnail {
   url: string;
 }
 
+export interface CollectionDetails_collection_products_edges_node_channelListings_discountedPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CollectionDetails_collection_products_edges_node_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface CollectionDetails_collection_products_edges_node_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  discountedPrice: CollectionDetails_collection_products_edges_node_channelListings_discountedPrice | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: CollectionDetails_collection_products_edges_node_channelListings_channel;
+}
+
 export interface CollectionDetails_collection_products_edges_node {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionDetails_collection_products_edges_node_productType;
   thumbnail: CollectionDetails_collection_products_edges_node_thumbnail | null;
+  channelListings: CollectionDetails_collection_products_edges_node_channelListings[] | null;
 }
 
 export interface CollectionDetails_collection_products_edges {
@@ -66,32 +103,20 @@ export interface CollectionDetails_collection_products {
 export interface CollectionDetails_collection {
   __typename: "Collection";
   id: string;
-  isPublished: boolean;
   name: string;
+  channelListings: CollectionDetails_collection_channelListings[] | null;
   metadata: (CollectionDetails_collection_metadata | null)[];
   privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;
   slug: string;
   descriptionJson: any;
-  publicationDate: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   products: CollectionDetails_collection_products | null;
 }
 
-export interface CollectionDetails_shop_homepageCollection {
-  __typename: "Collection";
-  id: string;
-}
-
-export interface CollectionDetails_shop {
-  __typename: "Shop";
-  homepageCollection: CollectionDetails_shop_homepageCollection | null;
-}
-
 export interface CollectionDetails {
   collection: CollectionDetails_collection | null;
-  shop: CollectionDetails_shop;
 }
 
 export interface CollectionDetailsVariables {

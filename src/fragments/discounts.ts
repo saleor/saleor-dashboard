@@ -1,3 +1,4 @@
+import { channelListingProductFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 import { pageInfoFragment } from "./pageInfo";
@@ -9,11 +10,21 @@ export const saleFragment = gql`
     type
     startDate
     endDate
-    value
+    channelListings {
+      id
+      channel {
+        id
+        name
+        currencyCode
+      }
+      discountValue
+      currency
+    }
   }
 `;
 
 export const saleDetailsFragment = gql`
+  ${channelListingProductFragment}
   ${pageInfoFragment}
   ${saleFragment}
   fragment SaleDetailsFragment on Sale {
@@ -23,13 +34,15 @@ export const saleDetailsFragment = gql`
         node {
           id
           name
-          isPublished
           productType {
             id
             name
           }
           thumbnail {
             url
+          }
+          channelListings {
+            ...ChannelListingProductFragment
           }
         }
       }
@@ -79,22 +92,32 @@ export const voucherFragment = gql`
     endDate
     usageLimit
     discountValueType
-    discountValue
     countries {
       code
       country
     }
-    minSpent {
-      currency
-      amount
-    }
     minCheckoutItemsQuantity
+    channelListings {
+      id
+      channel {
+        id
+        name
+        currencyCode
+      }
+      discountValue
+      currency
+      minSpent {
+        amount
+        currency
+      }
+    }
   }
 `;
 
 export const voucherDetailsFragment = gql`
   ${pageInfoFragment}
   ${voucherFragment}
+  ${channelListingProductFragment}
   fragment VoucherDetailsFragment on Voucher {
     ...VoucherFragment
     type
@@ -112,9 +135,11 @@ export const voucherDetailsFragment = gql`
             id
             name
           }
-          isPublished
           thumbnail {
             url
+          }
+          channelListings {
+            ...ChannelListingProductFragment
           }
         }
       }

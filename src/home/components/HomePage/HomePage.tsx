@@ -4,6 +4,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
+import { Choices } from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -53,6 +54,9 @@ export interface HomePageProps extends UserPermissionProps {
   sales: Home_salesToday_gross;
   topProducts: Home_productTopToday_edges_node[];
   userName: string;
+  channelChoices: Choices;
+  channelValue: string;
+  onChannelChange: (value: string) => void;
   onOrdersToCaptureClick: () => void;
   onOrdersToFulfillClick: () => void;
   onProductClick: (productId: string, variantId: string) => void;
@@ -61,6 +65,8 @@ export interface HomePageProps extends UserPermissionProps {
 
 const HomePage: React.FC<HomePageProps> = props => {
   const {
+    channelChoices,
+    channelValue,
     userName,
     orders,
     sales,
@@ -72,6 +78,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     onProductsOutOfStockClick,
     ordersToCapture,
     ordersToFulfill,
+    onChannelChange,
     productsOutOfStock,
     userPermissions
   } = props;
@@ -80,7 +87,12 @@ const HomePage: React.FC<HomePageProps> = props => {
 
   return (
     <Container>
-      <HomeHeader userName={userName} />
+      <HomeHeader
+        userName={userName}
+        channelValue={channelValue}
+        channelChoices={channelChoices}
+        onChannelChange={onChannelChange}
+      />
       <CardSpacer />
       <Grid>
         <div>

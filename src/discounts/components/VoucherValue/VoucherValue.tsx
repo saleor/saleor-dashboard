@@ -1,14 +1,21 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import TableHead from "@saleor/components/TableHead";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
+import { ChannelInput } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
@@ -17,14 +24,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { useStyles } from "./styles";
 
 interface VoucherValueProps {
   data: VoucherDetailsPageFormData;
-  defaultCurrency: string;
   errors: DiscountErrorFragment[];
   disabled: boolean;
   variant: string;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
 
 export enum VoucherType {
@@ -32,19 +40,10 @@ export enum VoucherType {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT"
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      margin: theme.spacing(2, 0)
-    }
-  }),
-  {
-    name: "VoucherValue"
-  }
-);
+const numberOfColumns = 2;
 
 const VoucherValue: React.FC<VoucherValueProps> = props => {
-  const { data, defaultCurrency, disabled, errors, variant, onChange } = props;
+  const { data, disabled, errors, variant, onChange, onChannelChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -66,30 +65,98 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         })}
       />
       <CardContent>
-        <TextFieldWithChoice
-          disabled={disabled}
-          error={!!formErrors.discountValue}
-          ChoiceProps={{
-            label:
-              data.discountType === DiscountValueTypeEnum.FIXED
-                ? defaultCurrency
-                : "%",
-            name: "discountType" as keyof VoucherDetailsPageFormData,
-            values: null
-          }}
-          helperText={getDiscountErrorMessage(formErrors.discountValue, intl)}
-          name={"value" as keyof VoucherDetailsPageFormData}
-          onChange={onChange}
-          label={intl.formatMessage({
-            defaultMessage: "Discount Value"
-          })}
-          value={data.value}
-          type="number"
-          fullWidth
-          inputProps={{
-            min: 0
-          }}
-        />
+        <Typography variant="caption">
+          <FormattedMessage defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency" />
+        </Typography>
+        <div className={classes.tableContainer}>
+          <ResponsiveTable className={classes.table}>
+            <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
+              <TableCell className={classes.colName}>
+                <span>
+                  <FormattedMessage
+                    defaultMessage="Channel name"
+                    description="column title"
+                  />
+                </span>
+              </TableCell>
+              <TableCell className={classes.colType}>
+                <span>
+                  <FormattedMessage
+                    defaultMessage="Price"
+                    description="column title"
+                  />
+                </span>
+              </TableCell>
+            </TableHead>
+            <TableBody>
+              {renderCollection(
+                data.channelListings,
+                (listing, index) => {
+                  const error = formErrors.discountValue?.channels?.find(
+                    id => id === listing.id
+                  );
+                  return (
+                    <TableRow key={listing?.id || `skeleton-${index}`}>
+                      <TableCell>
+                        <Typography>{listing?.name || <Skeleton />}</Typography>
+                      </TableCell>
+                      <TableCell className={classes.colPrice}>
+                        {listing ? (
+                          <TextFieldWithChoice
+                            disabled={disabled}
+                            error={!!error?.length}
+                            ChoiceProps={{
+                              label:
+                                data.discountType ===
+                                DiscountValueTypeEnum.FIXED
+                                  ? listing.currency
+                                  : "%",
+                              name: "discountType" as keyof FormData,
+                              values: null
+                            }}
+                            helperText={
+                              error
+                                ? getDiscountErrorMessage(
+                                    formErrors.discountValue,
+                                    intl
+                                  )
+                                : ""
+                            }
+                            name={"value"}
+                            onChange={e =>
+                              onChannelChange(listing.id, {
+                                discountValue: e.target.value
+                              })
+                            }
+                            label={intl.formatMessage({
+                              defaultMessage: "Discount Value"
+                            })}
+                            value={listing.discountValue || ""}
+                            type="number"
+                            fullWidth
+                            inputProps={{
+                              min: 0
+                            }}
+                          />
+                        ) : (
+                          <Skeleton />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                },
+                () => (
+                  <TableRow>
+                    <TableCell colSpan={numberOfColumns}>
+                      <FormattedMessage defaultMessage="No channels found" />
+                    </TableCell>
+                  </TableRow>
+                )
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </div>
+
         <FormSpacer />
         {variant === "update" && (
           <>
@@ -108,7 +175,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             />
           </>
         )}
-        <Hr className={classes.hr} />
         <FormSpacer />
         <ControlledCheckbox
           name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}
