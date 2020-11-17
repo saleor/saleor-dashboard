@@ -39,7 +39,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      handleBack();
     }
   };
 
