@@ -144,7 +144,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                   const handleSubmit = async (
                     submitData: MenuDetailsSubmitData
                   ) => {
-                    // console.log(111, getMoves(data));
                     const result = await menuUpdate({
                       variables: {
                         id,
