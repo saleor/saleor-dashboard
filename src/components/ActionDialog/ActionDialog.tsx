@@ -60,7 +60,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
+        <Button data-test="back" onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         {variant !== "info" && (
@@ -73,6 +73,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
             className={classNames({
               [classes.deleteButton]: variant === "delete"
             })}
+            data-test="submit"
           >
             {confirmButtonLabel ||
               (variant === "delete"
