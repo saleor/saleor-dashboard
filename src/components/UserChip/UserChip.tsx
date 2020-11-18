@@ -1,6 +1,7 @@
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -8,12 +9,13 @@ import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Switch from "@material-ui/core/Switch";
 import { User } from "@saleor/fragments/types/User";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -46,10 +48,15 @@ const useStyles = makeStyles(
     },
     popover: {
       marginTop: theme.spacing(2),
-      zIndex: 1
+      zIndex: 10
     },
     rotate: {
       transform: "rotate(180deg)"
+    },
+    switch: {
+      "&&:hover": {
+        background: "transparent"
+      }
     },
     userChip: {
       [theme.breakpoints.down("sm")]: {
@@ -74,19 +81,24 @@ const useStyles = makeStyles(
 );
 
 export interface UserChipProps {
+  isDarkThemeEnabled: boolean;
   user: User;
   onLogout: () => void;
   onProfileClick: () => void;
+  onThemeToggle: () => void;
 }
 
 const UserChip: React.FC<UserChipProps> = ({
+  isDarkThemeEnabled,
   user,
   onLogout,
-  onProfileClick
+  onProfileClick,
+  onThemeToggle
 }) => {
   const classes = useStyles({});
   const [isMenuOpened, setMenuState] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>();
+  const intl = useIntl();
 
   const handleLogout = () => {
     setMenuState(false);
@@ -168,6 +180,29 @@ const UserChip: React.FC<UserChipProps> = ({
                     <FormattedMessage
                       defaultMessage="Log out"
                       description="button"
+                    />
+                  </MenuItem>
+                  <MenuItem
+                    className={classes.userMenuItem}
+                    data-test="themeSwitch"
+                    data-test-is-dark={isDarkThemeEnabled}
+                  >
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          classes={{
+                            switchBase: classes.switch
+                          }}
+                          checked={isDarkThemeEnabled}
+                          color="primary"
+                          disableRipple
+                        />
+                      }
+                      label={intl.formatMessage({
+                        defaultMessage: "Enable Dark Mode",
+                        description: "button"
+                      })}
+                      onChange={onThemeToggle}
                     />
                   </MenuItem>
                 </Menu>

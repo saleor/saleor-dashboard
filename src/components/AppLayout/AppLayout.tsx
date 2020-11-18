@@ -202,11 +202,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         )}
                         <div className={classes.spacer} />
                         <div className={classes.userBar}>
-                          <ThemeSwitch
-                            className={classes.darkThemeSwitch}
-                            checked={isDark}
-                            onClick={toggleTheme}
-                          />
                           <NavigatorButton
                             isMac={navigator.platform
                               .toLowerCase()
@@ -214,11 +209,13 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             onClick={() => setNavigatorVisibility(true)}
                           />
                           <UserChip
+                            isDarkThemeEnabled={isDark}
+                            user={user}
                             onLogout={logout}
                             onProfileClick={() =>
                               navigate(staffMemberDetailsUrl(user.id))
                             }
-                            user={user}
+                            onThemeToggle={toggleTheme}
                           />
                         </div>
                       </div>
