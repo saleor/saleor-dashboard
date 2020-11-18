@@ -60,8 +60,8 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
         {!!toggleAll && (
           <>
             <ControlledCheckbox
-              checked={selected !== 0}
-              name="allchannels"
+              checked={selected === channels?.length}
+              name="allChannels"
               label={
                 toggleAllText || (
                   <Typography className={classes.label}>
