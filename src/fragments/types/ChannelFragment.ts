@@ -3,14 +3,11 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ChannelDetailsFragment
+// GraphQL fragment: ChannelFragment
 // ====================================================
 
-export interface ChannelDetailsFragment {
+export interface ChannelFragment {
   __typename: "Channel";
   id: string;
   name: string;
-  isActive: boolean;
-  slug: string;
-  currencyCode: string;
 }

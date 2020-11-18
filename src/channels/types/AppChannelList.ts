@@ -3,14 +3,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ChannelDetailsFragment
+// GraphQL query operation: AppChannelList
 // ====================================================
 
-export interface ChannelDetailsFragment {
+export interface AppChannelList_channels {
   __typename: "Channel";
   id: string;
   name: string;
-  isActive: boolean;
-  slug: string;
-  currencyCode: string;
+}
+
+export interface AppChannelList {
+  channels: AppChannelList_channels[] | null;
 }

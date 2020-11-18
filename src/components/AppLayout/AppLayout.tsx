@@ -3,6 +3,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
@@ -12,6 +13,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
+import { useAppChannelList } from "../../channels/queries";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
@@ -20,10 +22,10 @@ import SideBar from "../SideBar";
 import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import AppActionContext from "./AppActionContext";
+import AppChannelSelect from "./AppChannelSelect";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
-import ThemeSwitch from "./ThemeSwitch";
 
 const useStyles = makeStyles(
   theme => ({
@@ -128,6 +130,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const [docked, setDocked] = React.useState(true);
+  const { data: channelData } = useAppChannelList({});
+  const [selectedChannel, setSelectedChannel] = useLocalStorage(
+    "channelId",
+    undefined
+  );
+  React.useEffect(() => {
+    if (!selectedChannel) {
+      setSelectedChannel(channelData?.channels[0].id);
+    }
+  }, [channelData]);
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -207,6 +219,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                               .toLowerCase()
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
+                          />
+                          <AppChannelSelect
+                            channels={channelData?.channels || []}
+                            selectedChannel={selectedChannel}
+                            onChannelSelect={setSelectedChannel}
                           />
                           <UserChip
                             isDarkThemeEnabled={isDark}

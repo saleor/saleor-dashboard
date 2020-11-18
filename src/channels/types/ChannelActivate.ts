@@ -11,8 +11,8 @@ import { ChannelErrorCode } from "./../../types/globalTypes";
 export interface ChannelActivate_channelActivate_channel {
   __typename: "Channel";
   id: string;
-  isActive: boolean;
   name: string;
+  isActive: boolean;
   slug: string;
   currencyCode: string;
 }

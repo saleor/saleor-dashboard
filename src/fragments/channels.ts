@@ -8,11 +8,17 @@ export const channelErrorFragment = gql`
   }
 `;
 
-export const channelDetailsFragment = gql`
-  fragment ChannelDetailsFragment on Channel {
+export const channelFragment = gql`
+  fragment ChannelFragment on Channel {
     id
-    isActive
     name
+  }
+`;
+export const channelDetailsFragment = gql`
+  ${channelFragment}
+  fragment ChannelDetailsFragment on Channel {
+    ...ChannelFragment
+    isActive
     slug
     currencyCode
   }
