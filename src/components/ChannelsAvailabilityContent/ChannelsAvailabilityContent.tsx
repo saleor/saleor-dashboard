@@ -65,7 +65,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
               label={
                 toggleAllText || (
                   <Typography className={classes.label}>
-                    <FormattedMessage defaultMessage="Available at all channels" />
+                    <FormattedMessage defaultMessage="Select all channels" />
                   </Typography>
                 )
               }
