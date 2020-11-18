@@ -47,7 +47,7 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
-  selectedChannel: string;
+  selectedChannelId: string;
   onSettingsOpen?: () => void;
 }
 
@@ -84,12 +84,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onFetchMore,
     onFilterChange,
     onSearchChange,
-    onSettingsOpen,
     onTabChange,
     onTabDelete,
     onTabSave,
     onUpdateListSettings,
-    selectedChannel,
+    selectedChannelId,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -134,13 +133,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
-            },
-            onSettingsOpen && {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
             }
           ]}
           data-test="menu"
@@ -199,7 +191,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           gridAttributes={gridAttributes}
           settings={settings}
           channelsCount={channelsCount}
-          selectedChannel={selectedChannel}
+          selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>

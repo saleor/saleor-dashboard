@@ -10,10 +10,10 @@ import { ChannelUpdateInput, ChannelErrorCode } from "./../../types/globalTypes"
 
 export interface ChannelUpdate_channelUpdate_channel {
   __typename: "Channel";
-  id: string;
   name: string;
-  isActive: boolean;
   slug: string;
+  id: string;
+  isActive: boolean;
   currencyCode: string;
 }
 

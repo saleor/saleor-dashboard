@@ -27,7 +27,7 @@ export interface SaleListProps
     ListActions,
     SortPage<SaleListUrlSortField> {
   sales: SaleList_sales_edges_node[];
-  selectedChannel: string;
+  selectedChannelId: string;
 }
 
 const useStyles = makeStyles(
@@ -76,7 +76,7 @@ const SaleList: React.FC<SaleListProps> = props => {
     onSort,
     pageInfo,
     sales,
-    selectedChannel,
+    selectedChannelId,
     isChecked,
     selected,
     sort,
@@ -170,7 +170,7 @@ const SaleList: React.FC<SaleListProps> = props => {
           sale => {
             const isSelected = sale ? isChecked(sale.id) : false;
             const channel = sale?.channelListings?.find(
-              lisiting => lisiting.channel.id === selectedChannel
+              lisiting => lisiting.channel.id === selectedChannelId
             );
             return (
               <TableRow

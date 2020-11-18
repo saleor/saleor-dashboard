@@ -1,8 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import CardMenu from "@saleor/components/CardMenu";
 import { Container } from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
@@ -29,17 +27,7 @@ export interface CollectionListPageProps
   collections: CollectionList_collections_edges_node[];
   channelsCount: number;
   selectedChannel: string;
-  onSettingsOpen?: () => void;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      marginRight: theme.spacing(2)
-    }
-  }),
-  { name: "CollectionListPage" }
-);
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
   channelsCount,
@@ -49,7 +37,6 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onAdd,
   onAll,
   onSearchChange,
-  onSettingsOpen,
   onTabChange,
   onTabDelete,
   onTabSave,
@@ -58,25 +45,10 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.collections)}>
-        {!!onSettingsOpen && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Settings",
-                  description: "button"
-                }),
-                onSelect: onSettingsOpen
-              }
-            ]}
-          />
-        )}
         <Button
           color="primary"
           disabled={disabled}

@@ -104,7 +104,7 @@ interface ProductListProps
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
   loading: boolean;
-  selectedChannel: string;
+  selectedChannelId: string;
   channelsCount: number;
 }
 
@@ -128,7 +128,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onUpdateListSettings,
     onRowClick,
     onSort,
-    selectedChannel
+    selectedChannelId
   } = props;
 
   const classes = useStyles(props);
@@ -286,7 +286,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel = product?.channelListings.find(
-                listing => listing.channel.id === selectedChannel
+                listing => listing.channel.id === selectedChannelId
               );
 
               return (
@@ -362,9 +362,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       ) : product?.channelListings !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={
-                            channel || product?.channelListings[0]
-                          }
+                          currentChannel={channel}
                           channels={product?.channelListings}
                         />
                       ) : (

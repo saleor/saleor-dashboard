@@ -1,7 +1,5 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
@@ -24,17 +22,7 @@ export interface OrderListPageProps
     FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
   orders: OrderList_orders_edges_node[];
-  onSettingsOpen?: () => void;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      marginRight: theme.spacing(2)
-    }
-  }),
-  { name: "OrderListPage" }
-);
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
   currentTab,
@@ -44,7 +32,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAdd,
   onAll,
   onSearchChange,
-  onSettingsOpen,
   onFilterChange,
   onTabChange,
   onTabDelete,
@@ -52,26 +39,11 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.orders)}>
-        {!!onSettingsOpen && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Settings",
-                  description: "button"
-                }),
-                onSelect: onSettingsOpen
-              }
-            ]}
-          />
-        )}
         <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
             defaultMessage="Create order"

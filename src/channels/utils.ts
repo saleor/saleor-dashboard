@@ -6,7 +6,7 @@ import { RequireOnlyOne } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListings } from "@saleor/shipping/types/ShippingZone";
-import { uniqBy } from "lodash";
+import uniqBy from "lodash-es/uniqBy";
 
 export interface Channel {
   id: string;

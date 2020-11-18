@@ -3,7 +3,6 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
@@ -13,7 +12,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
-import { useAppChannelList } from "../../channels/queries";
+import useAppChannel from "../ChannelsSelect/ChannelContext";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
@@ -130,16 +129,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const [docked, setDocked] = React.useState(true);
-  const { data: channelData } = useAppChannelList({});
-  const [selectedChannel, setSelectedChannel] = useLocalStorage(
-    "channelId",
-    undefined
-  );
-  React.useEffect(() => {
-    if (!selectedChannel) {
-      setSelectedChannel(channelData?.channels[0].id);
-    }
-  }, [channelData]);
+  const { availableChannels, channel, setChannel } = useAppChannel();
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -221,9 +211,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             onClick={() => setNavigatorVisibility(true)}
                           />
                           <AppChannelSelect
-                            channels={channelData?.channels || []}
-                            selectedChannel={selectedChannel}
-                            onChannelSelect={setSelectedChannel}
+                            channels={availableChannels}
+                            selectedChannel={channel.id}
+                            onChannelSelect={setChannel}
                           />
                           <UserChip
                             isDarkThemeEnabled={isDark}

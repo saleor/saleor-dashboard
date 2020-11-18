@@ -1,5 +1,5 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
+import { ChannelDetailsFragment } from "@saleor/fragments/types/ChannelDetailsFragment";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
 );
 
 export interface AppChannelSelectProps {
-  channels: ChannelFragment[];
+  channels: ChannelDetailsFragment[];
   selectedChannel: string;
   onChannelSelect: (id: string) => void;
 }
