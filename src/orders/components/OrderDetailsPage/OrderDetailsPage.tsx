@@ -31,6 +31,7 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
+import Title from "./Title";
 
 const useStyles = makeStyles(
   theme => ({
@@ -39,6 +40,7 @@ const useStyles = makeStyles(
     },
     header: {
       display: "flex",
+      justifyContent: "space-between",
       marginBottom: 0
     }
   }),
@@ -149,7 +151,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={maybe(() => order.number) ? "#" + order.number : undefined}
+              title={<Title order={order} />}
             >
               {canCancel && (
                 <CardMenu

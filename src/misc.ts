@@ -16,6 +16,7 @@ import {
   AuthorizationKeyType,
   CountryCode,
   OrderStatus,
+  OrderStatusType,
   PaymentChargeStatusEnum
 } from "./types/globalTypes";
 
@@ -144,43 +145,55 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Ready to fulfill",
     description: "order status"
   },
+  unconfirmed: {
+    defaultMessage: "Unconfirmed",
+    description: "order status"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "order status"
   }
 });
 
-export const transformOrderStatus = (status: string, intl: IntlShape) => {
+export const transformOrderStatus = (
+  status: string,
+  intl: IntlShape
+): { localized: string; status: OrderStatusType } => {
   switch (status) {
     case OrderStatus.FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.fulfilled),
-        status: "success"
+        status: OrderStatusType.success
       };
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: "neutral"
+        status: OrderStatusType.neutral
       };
     case OrderStatus.UNFULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
-        status: "error"
+        status: OrderStatusType.error
       };
     case OrderStatus.CANCELED:
       return {
         localized: intl.formatMessage(orderStatusMessages.cancelled),
-        status: "error"
+        status: OrderStatusType.error
       };
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: "error"
+        status: OrderStatusType.error
+      };
+    case OrderStatus.UNCONFIRMED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.unconfirmed),
+        status: OrderStatusType.neutral
       };
   }
   return {
     localized: status,
-    status: "error"
+    status: OrderStatusType.error
   };
 };
 

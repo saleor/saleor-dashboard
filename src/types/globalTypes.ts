@@ -649,6 +649,13 @@ export enum OrderStatus {
   UNFULFILLED = "UNFULFILLED",
 }
 
+export enum OrderStatusType {
+  error = "error",
+  neutral = "neutral",
+  alert = "alert",
+  success = "success"
+}
+
 export enum OrderStatusFilter {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
