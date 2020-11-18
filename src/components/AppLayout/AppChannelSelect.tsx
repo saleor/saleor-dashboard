@@ -8,6 +8,9 @@ import SingleSelectField from "../SingleSelectField";
 const useStyles = makeStyles(
   theme => ({
     root: {
+      "&& fieldset": {
+        borderColor: theme.palette.divider
+      },
       marginRight: theme.spacing(2),
       width: 192
     }
