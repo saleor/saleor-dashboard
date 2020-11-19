@@ -44,9 +44,7 @@ describe("Products", () => {
       .click()
       .get(PRODUCTS_SELECTORS.saveBtn)
       .click()
-      .get(PRODUCTS_SELECTORS.confirmationMsg, {
-        timeout: 1000
-      })
+      .get(PRODUCTS_SELECTORS.confirmationMsg)
       .contains("Product created");
   });
 });
