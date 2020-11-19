@@ -28,8 +28,8 @@ import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, {
-  ChannelProvider
-} from "./components/ChannelsSelect/ChannelContext";
+  AppChannelProvider
+} from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
@@ -114,9 +114,9 @@ const App: React.FC = () => {
                   <AppStateProvider>
                     <ShopProvider>
                       <AuthProvider>
-                        <ChannelProvider>
+                        <AppChannelProvider>
                           <Routes />
-                        </ChannelProvider>
+                        </AppChannelProvider>
                       </AuthProvider>
                     </ShopProvider>
                   </AppStateProvider>

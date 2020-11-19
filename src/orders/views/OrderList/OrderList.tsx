@@ -1,4 +1,4 @@
-import useAppChannel from "@saleor/components/ChannelsSelect/ChannelContext";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData

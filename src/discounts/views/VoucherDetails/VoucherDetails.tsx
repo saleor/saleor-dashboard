@@ -7,11 +7,11 @@ import {
   createSortedChannelsDataFromVoucher
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import useAppChannel from "@saleor/components/ChannelsSelect/ChannelContext";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import DiscountCountrySelectDialog from "@saleor/discounts/components/DiscountCountrySelectDialog";

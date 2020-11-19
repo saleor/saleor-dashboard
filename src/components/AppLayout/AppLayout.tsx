@@ -12,7 +12,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
-import useAppChannel from "../ChannelsSelect/ChannelContext";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
@@ -21,6 +20,7 @@ import SideBar from "../SideBar";
 import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import AppActionContext from "./AppActionContext";
+import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight } from "./consts";

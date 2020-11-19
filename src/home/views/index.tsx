@@ -1,4 +1,4 @@
-import useAppChannel from "@saleor/components/ChannelsSelect/ChannelContext";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import React from "react";

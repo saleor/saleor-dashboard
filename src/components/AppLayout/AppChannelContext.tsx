@@ -11,11 +11,11 @@ interface UseAppChannel {
   refreshChannels: () => void;
   setChannel: (id: string) => void;
 }
-export interface ChannelContextData extends UseAppChannel {
+export interface AppChannelContextData extends UseAppChannel {
   setPickerActive: (isActive: boolean) => void;
 }
 
-const ChannelContext = React.createContext<ChannelContextData>({
+const AppChannelContext = React.createContext<AppChannelContextData>({
   availableChannels: [],
   channel: undefined,
   isPickerActive: false,
@@ -24,7 +24,7 @@ const ChannelContext = React.createContext<ChannelContextData>({
   setPickerActive: () => undefined
 });
 
-export const ChannelProvider: React.FC = ({ children }) => {
+export const AppChannelProvider: React.FC = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const { data: channelData, refetch } = useChannelsList({
     skip: !isAuthenticated
@@ -46,7 +46,7 @@ export const ChannelProvider: React.FC = ({ children }) => {
   );
 
   return (
-    <ChannelContext.Provider
+    <AppChannelContext.Provider
       value={{
         availableChannels,
         channel,
@@ -57,12 +57,13 @@ export const ChannelProvider: React.FC = ({ children }) => {
       }}
     >
       {children}
-    </ChannelContext.Provider>
+    </AppChannelContext.Provider>
   );
 };
+AppChannelProvider.displayName = "AppChannelProvider";
 
 function useAppChannel(enablePicker = true): UseAppChannel {
-  const { setPickerActive, ...data } = React.useContext(ChannelContext);
+  const { setPickerActive, ...data } = React.useContext(AppChannelContext);
   React.useEffect(() => {
     if (enablePicker) {
       setPickerActive(true);

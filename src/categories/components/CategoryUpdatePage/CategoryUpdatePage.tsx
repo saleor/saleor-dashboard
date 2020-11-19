@@ -18,7 +18,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { TabListActions } from "../../../types";
+import { ChannelProps, TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryList from "../../components/CategoryList";
 import {
@@ -36,7 +36,8 @@ export enum CategoryPageTab {
 }
 
 export interface CategoryUpdatePageProps
-  extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
+  extends TabListActions<"productListToolbar" | "subcategoryListToolbar">,
+    ChannelProps {
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
   errors: ProductErrorFragment[];
@@ -93,6 +94,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   isChecked,
   productListToolbar,
   selected,
+  selectedChannelId,
   subcategoryListToolbar,
   toggle,
   toggleAll
@@ -216,6 +218,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}
+              selectedChannelId={selectedChannelId}
               isChecked={isChecked}
               toolbar={productListToolbar}
             />

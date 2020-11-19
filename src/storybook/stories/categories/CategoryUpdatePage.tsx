@@ -47,6 +47,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   productListToolbar: null,
   products: category.products.edges.map(edge => edge.node),
   saveButtonBarState: "default",
+  selectedChannelId: "123",
   subcategories: category.children.edges.map(edge => edge.node),
   subcategoryListToolbar: null,
   ...listActionsProps

@@ -1,8 +1,8 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -14,6 +14,7 @@ import usePaginator, {
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -79,12 +80,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables: { ...paginationState, id }
   });
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels, channel } = useAppChannel();
 
-  const channelChoices = channelsData?.channels?.map(channel => ({
-    label: channel.name,
-    value: channel.id
-  }));
+  const channelChoices = mapNodeToChoice(availableChannels);
 
   const category = data?.category;
 
@@ -213,7 +211,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
-        channelsCount={channelsData?.channels?.length}
+        channelsCount={availableChannels.length}
         channelChoices={channelChoices}
         changeTab={changeTab}
         currentTab={params.activeTab}
@@ -258,6 +256,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           data.category.products.edges.map(edge => edge.node)
         )}
         saveButtonBarState={updateResult.status}
+        selectedChannelId={channel.id}
         subcategories={maybe(() =>
           data.category.children.edges.map(edge => edge.node)
         )}
