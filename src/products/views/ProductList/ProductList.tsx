@@ -381,7 +381,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onExport={() => openModal("export")}
         channelsCount={availableChannels?.length}
         selectedChannelId={channel.id}
-        onSettingsOpen={() => openModal("settings")}
       />
       <ActionDialog
         open={params.action === "delete"}

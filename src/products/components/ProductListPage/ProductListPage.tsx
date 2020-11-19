@@ -49,7 +49,6 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
-  onSettingsOpen?: () => void;
 }
 
 const useStyles = makeStyles(

@@ -7,7 +7,7 @@ import { ShippingMethodTypeEnum } from "../types/globalTypes";
 export const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
-export type ShippingZonesListUrlDialog = "remove" | "remove-many" | "settings";
+export type ShippingZonesListUrlDialog = "remove" | "remove-many";
 export type ShippingZonesListUrlQueryParams = BulkAction &
   Dialog<ShippingZonesListUrlDialog> &
   Pagination &
