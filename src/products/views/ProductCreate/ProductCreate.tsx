@@ -7,7 +7,6 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import { getMutationStatus } from "@saleor/misc";
 import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
@@ -135,41 +134,29 @@ export const ProductCreateView: React.FC = () => {
   });
 
   const handleSubmit = async data => {
-    await createMetadataCreateHandler(
+    const result = await createMetadataCreateHandler(
       createHandler(
         productTypes,
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),
         updateChannels,
-        updateVariantChannels
+        updateVariantChannels,
+        deleteProduct
       ),
       updateMetadata,
       updatePrivateMetadata
     )(data);
 
-    setProductCreateComplete(true);
+    if (result) {
+      setProductCreateComplete(true);
+    }
   };
 
   React.useEffect(() => {
     const productId = productCreateOpts.data?.productCreate?.product?.id;
-    // INFO: All these mutations contain required fields in Product Create UI
-    const statuses = [
-      getMutationStatus(productCreateOpts),
-      getMutationStatus(productVariantCreateOpts),
-      getMutationStatus(updateChannelsOpts)
-    ];
 
-    if (productId && productCreateComplete) {
-      if (statuses.every(s => s === "success")) {
-        handleSuccess(productId);
-      } else {
-        /*
-          INFO: This is a stop-gap solution, where we delete products that didn't meet all required data in the create form
-          A more robust solution would require merging create and update form into one to persist form state across redirects
-        */
-        setProductCreateComplete(false);
-        deleteProduct({ variables: { id: productId } });
-      }
+    if (productCreateComplete && productId) {
+      handleSuccess(productId);
     }
   }, [productCreateComplete]);
 
