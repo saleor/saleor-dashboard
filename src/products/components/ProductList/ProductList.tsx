@@ -24,7 +24,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
@@ -99,12 +99,12 @@ const DisplayColumn = TDisplayColumn as React.FunctionComponent<
 interface ProductListProps
   extends ListProps<ProductListColumns>,
     ListActions,
-    SortPage<ProductListUrlSortField> {
+    SortPage<ProductListUrlSortField>,
+    ChannelProps {
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
   loading: boolean;
-  selectedChannelId: string;
   channelsCount: number;
 }
 

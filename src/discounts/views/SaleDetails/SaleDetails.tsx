@@ -279,7 +279,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               ...(updateChannelsOpts.data
                                 ?.saleChannelListingUpdate.errors || [])
                             ]}
-                            selectedChannel={selectedChannel}
+                            selectedChannelId={selectedChannel}
                             pageInfo={pageInfo}
                             openChannelsModal={handleChannelsModalOpen}
                             onChannelsChange={setCurrentChannels}

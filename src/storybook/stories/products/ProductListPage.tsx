@@ -44,7 +44,7 @@ const props: ProductListPageProps = {
   onExport: () => undefined,
   onSettingsOpen: () => undefined,
   products,
-  selectedChannel: "123",
+  selectedChannelId: "123",
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"]
@@ -70,7 +70,7 @@ storiesOf("Views / Products / Product list", module)
       {...props}
       channelsCount={0}
       onSettingsOpen={undefined}
-      selectedChannel={""}
+      selectedChannelId={""}
       products={products.map(product => ({ ...product, channelListings: [] }))}
     />
   ));

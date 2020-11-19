@@ -20,9 +20,7 @@ const props: ShippingZonesListPageProps = {
   onAdd: () => undefined,
   onBack: () => undefined,
   onRemove: () => undefined,
-  onSettingsOpen: () => undefined,
   onSubmit: () => undefined,
-  selectedChannel: "123",
   shippingZones,
   userPermissions: adminUserPermissions
 };

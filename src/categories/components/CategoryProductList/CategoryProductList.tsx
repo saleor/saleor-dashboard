@@ -14,7 +14,7 @@ import TableCellAvatar, {
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -70,9 +70,11 @@ const useStyles = makeStyles(
   }
 );
 
-interface CategoryProductListProps extends ListProps, ListActions {
+interface CategoryProductListProps
+  extends ListProps,
+    ListActions,
+    ChannelProps {
   channelsCount: number;
-  selectedChannel: string;
   products: CategoryDetails_category_products_edges_node[];
 }
 
@@ -90,7 +92,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     onNextPage,
     onPreviousPage,
     onRowClick,
-    selectedChannel
+    selectedChannelId
   } = props;
 
   const classes = useStyles(props);
@@ -158,7 +160,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel = product?.channelListings.find(
-                listing => listing.channel.id === selectedChannel
+                listing => listing.channel.id === selectedChannelId
               );
 
               return (

@@ -81,7 +81,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       </CardContent>
       <CategoryProductList
         channelsCount={channelsCount}
-        selectedChannel={channelChoice}
+        selectedChannelId={channelChoice}
         products={products}
         disabled={disabled}
         pageInfo={pageInfo}

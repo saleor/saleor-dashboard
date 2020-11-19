@@ -20,7 +20,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, splitDateTime } from "../../../misc";
-import { ListProps, TabListActions } from "../../../types";
+import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -73,12 +73,12 @@ export interface VoucherDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
-    > {
+    >,
+    ChannelProps {
   activeTab: VoucherDetailsPageTab;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetails_voucher;
-  selectedChannel: string;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;
@@ -137,7 +137,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   toggle,
   toggleAll,
   selected,
-  selectedChannel,
+  selectedChannelId,
   isChecked,
   categoryListToolbar,
   collectionListToolbar,
@@ -145,7 +145,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannel
+    listing => listing.channel.id === selectedChannelId
   );
   let requirementsPickerInitValue;
   if (voucher?.minCheckoutItemsQuantity > 0) {
@@ -331,7 +331,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onRowClick={onProductClick}
                         pageInfo={pageInfo}
                         discount={voucher}
-                        selectedChannel={selectedChannel}
+                        selectedChannelId={selectedChannelId}
                         channelsCount={allChannelsCount}
                         isChecked={isChecked}
                         selected={selected}
@@ -391,7 +391,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               <div>
                 <VoucherSummary
                   voucher={voucher}
-                  selectedChannel={selectedChannel}
+                  selectedChannelId={selectedChannelId}
                 />
                 <CardSpacer />
                 <ChannelsAvailability

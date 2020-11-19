@@ -47,7 +47,7 @@ const props: VoucherDetailsPageProps = {
   openChannelsModal: () => undefined,
   productListToolbar: null,
   saveButtonBarState: "default",
-  selectedChannel: "123",
+  selectedChannelId: "123",
   voucher: voucherDetails
 };
 

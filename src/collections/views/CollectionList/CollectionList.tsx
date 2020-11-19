@@ -184,7 +184,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         channelsCount={availableChannels?.length}
-        selectedChannel={channel.id}
+        selectedChannelId={channel.id}
       />
       <ActionDialog
         open={params.action === "remove" && maybe(() => params.ids.length > 0)}

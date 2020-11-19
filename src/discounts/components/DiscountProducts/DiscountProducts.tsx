@@ -21,14 +21,16 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
+import { ChannelProps, ListActions, ListProps } from "../../../types";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 
-export interface SaleProductsProps extends ListProps, ListActions {
+export interface SaleProductsProps
+  extends ListProps,
+    ListActions,
+    ChannelProps {
   discount: SaleDetails_sale | VoucherDetails_voucher;
   channelsCount: number;
-  selectedChannel: string;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -79,7 +81,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     onNextPage,
     isChecked,
     selected,
-    selectedChannel,
+    selectedChannelId,
     toggle,
     toggleAll,
     toolbar
@@ -156,7 +158,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel =
                 product?.channelListings.find(
-                  listing => listing.channel.id === selectedChannel
+                  listing => listing.channel.id === selectedChannelId
                 ) || product?.channelListings[0];
               return (
                 <TableRow

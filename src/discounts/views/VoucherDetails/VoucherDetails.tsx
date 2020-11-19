@@ -11,6 +11,7 @@ import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
+import useAppChannel from "@saleor/components/ChannelsSelect/ChannelContext";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import DiscountCountrySelectDialog from "@saleor/discounts/components/DiscountCountrySelectDialog";
@@ -37,7 +38,6 @@ import {
 } from "@saleor/discounts/urls";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -145,8 +145,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
   );
-
-  const [selectedChannel] = useLocalStorage("vouchersListChannel", "");
+  const { channel } = useAppChannel();
 
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
@@ -295,7 +294,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               ...(updateChannelsOpts.data
                                 ?.voucherChannelListingUpdate.errors || [])
                             ]}
-                            selectedChannel={selectedChannel}
+                            selectedChannelId={channel.id}
                             pageInfo={pageInfo}
                             onNextPage={loadNextPage}
                             onPreviousPage={loadPreviousPage}

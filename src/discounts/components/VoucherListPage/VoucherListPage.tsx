@@ -6,6 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { sectionNames } from "@saleor/intl";
 import {
+  ChannelProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -28,9 +29,9 @@ export interface VoucherListPageProps
     ListActions,
     FilterPageProps<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
-    TabPageProps {
+    TabPageProps,
+    ChannelProps {
   vouchers: VoucherList_vouchers_edges_node[];
-  selectedChannel: string;
 }
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,

@@ -12,7 +12,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -47,10 +47,10 @@ const useStyles = makeStyles(
 interface CollectionListProps
   extends ListProps,
     ListActions,
-    SortPage<CollectionListUrlSortField> {
+    SortPage<CollectionListUrlSortField>,
+    ChannelProps {
   collections: CollectionList_collections_edges_node[];
   channelsCount: number;
-  selectedChannel: string;
 }
 
 const numberOfColumns = 4;
@@ -70,7 +70,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     pageInfo,
     isChecked,
     selected,
-    selectedChannel,
+    selectedChannelId,
     toggle,
     toggleAll,
     toolbar
@@ -147,7 +147,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           collection => {
             const isSelected = collection ? isChecked(collection.id) : false;
             const channel = collection?.channelListings.find(
-              listing => listing.channel.id === selectedChannel
+              listing => listing.channel.id === selectedChannelId
             );
             return (
               <TableRow

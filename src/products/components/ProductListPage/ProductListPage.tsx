@@ -16,6 +16,7 @@ import {
 } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
+  ChannelProps,
   FetchMoreProps,
   FilterPageProps,
   ListActions,
@@ -38,7 +39,8 @@ export interface ProductListPageProps
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
-    SortPage<ProductListUrlSortField> {
+    SortPage<ProductListUrlSortField>,
+    ChannelProps {
   activeAttributeSortId: string;
   availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
   channelsCount: number;
@@ -47,7 +49,6 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
-  selectedChannelId: string;
   onSettingsOpen?: () => void;
 }
 

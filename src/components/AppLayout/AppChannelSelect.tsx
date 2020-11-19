@@ -1,5 +1,6 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { ChannelDetailsFragment } from "@saleor/fragments/types/ChannelDetailsFragment";
+import { ChannelProps } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 
@@ -20,16 +21,15 @@ const useStyles = makeStyles(
   }
 );
 
-export interface AppChannelSelectProps {
+export interface AppChannelSelectProps extends ChannelProps {
   channels: ChannelDetailsFragment[];
-  selectedChannel: string;
   onChannelSelect: (id: string) => void;
 }
 
 const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   channels,
   onChannelSelect,
-  selectedChannel
+  selectedChannelId
 }) => {
   const classes = useStyles({});
 
@@ -37,7 +37,7 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
     <div className={classes.root}>
       <SingleSelectField
         choices={mapNodeToChoice(channels)}
-        value={selectedChannel}
+        value={selectedChannelId}
         onChange={event => onChannelSelect(event.target.value)}
       />
     </div>

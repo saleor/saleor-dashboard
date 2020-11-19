@@ -6,6 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
 import {
+  ChannelProps,
   ListActions,
   PageListProps,
   SearchPageProps,
@@ -23,10 +24,10 @@ export interface CollectionListPageProps
     ListActions,
     SearchPageProps,
     SortPage<CollectionListUrlSortField>,
-    TabPageProps {
+    TabPageProps,
+    ChannelProps {
   collections: CollectionList_collections_edges_node[];
   channelsCount: number;
-  selectedChannel: string;
 }
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
@@ -40,7 +41,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
-  selectedChannel,
+  selectedChannelId,
   tabs,
   ...listProps
 }) => {
@@ -82,7 +83,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         <CollectionList
           disabled={disabled}
           channelsCount={channelsCount}
-          selectedChannel={selectedChannel}
+          selectedChannelId={selectedChannelId}
           {...listProps}
         />
       </Card>

@@ -14,7 +14,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { SaleType } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -25,9 +25,9 @@ import { SaleList_sales_edges_node } from "../../types/SaleList";
 export interface SaleListProps
   extends ListProps,
     ListActions,
-    SortPage<SaleListUrlSortField> {
+    SortPage<SaleListUrlSortField>,
+    ChannelProps {
   sales: SaleList_sales_edges_node[];
-  selectedChannelId: string;
 }
 
 const useStyles = makeStyles(

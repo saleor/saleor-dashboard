@@ -6,6 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { sectionNames } from "@saleor/intl";
 import {
+  ChannelProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -28,9 +29,9 @@ export interface SaleListPageProps
     ListActions,
     FilterPageProps<SaleFilterKeys, SaleListFilterOpts>,
     SortPage<SaleListUrlSortField>,
-    TabPageProps {
+    TabPageProps,
+    ChannelProps {
   sales: SaleList_sales_edges_node[];
-  selectedChannelId: string;
 }
 
 const SaleListPage: React.FC<SaleListPageProps> = ({

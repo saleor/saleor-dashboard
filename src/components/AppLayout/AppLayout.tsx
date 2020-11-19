@@ -212,7 +212,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                           />
                           <AppChannelSelect
                             channels={availableChannels}
-                            selectedChannel={channel.id}
+                            selectedChannelId={channel.id}
                             onChannelSelect={setChannel}
                           />
                           <UserChip

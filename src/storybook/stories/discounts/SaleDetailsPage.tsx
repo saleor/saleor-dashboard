@@ -47,7 +47,7 @@ const props: SaleDetailsPageProps = {
   productListToolbar: null,
   sale,
   saveButtonBarState: "default",
-  selectedChannel: "123",
+  selectedChannelId: "123",
   ...listActionsProps
 };
 
