@@ -7,9 +7,11 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { getMutationStatus } from "@saleor/misc";
 import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
+  useProductDeleteMutation,
   useProductVariantChannelListingUpdate,
   useVariantCreateMutation
 } from "@saleor/products/mutations";
@@ -37,6 +39,9 @@ export const ProductCreateView: React.FC = () => {
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
+  const [productCreateComplete, setProductCreateComplete] = React.useState(
+    false
+  );
   const {
     loadMore: loadMoreCategories,
     search: searchCategory,
@@ -100,14 +105,9 @@ export const ProductCreateView: React.FC = () => {
     navigate(productUrl(productId));
   };
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
-    onCompleted: data => {
-      const productId = data.productChannelListingUpdate.product.id;
-      if (productId) {
-        handleSuccess(productId);
-      }
-    }
-  });
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
+    {}
+  );
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
@@ -116,6 +116,7 @@ export const ProductCreateView: React.FC = () => {
   const handleBack = () => navigate(productListUrl());
 
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
+  const [deleteProduct] = useProductDeleteMutation({});
   const [
     productVariantCreate,
     productVariantCreateOpts
@@ -133,17 +134,44 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleSubmit = createMetadataCreateHandler(
-    createHandler(
-      productTypes,
-      variables => productCreate({ variables }),
-      variables => productVariantCreate({ variables }),
-      updateChannels,
-      updateVariantChannels
-    ),
-    updateMetadata,
-    updatePrivateMetadata
-  );
+  const handleSubmit = async data => {
+    await createMetadataCreateHandler(
+      createHandler(
+        productTypes,
+        variables => productCreate({ variables }),
+        variables => productVariantCreate({ variables }),
+        updateChannels,
+        updateVariantChannels
+      ),
+      updateMetadata,
+      updatePrivateMetadata
+    )(data);
+
+    setProductCreateComplete(true);
+  };
+
+  React.useEffect(() => {
+    const productId = productCreateOpts.data?.productCreate?.product?.id;
+    // INFO: All these mutations contain required fields in Product Create UI
+    const statuses = [
+      getMutationStatus(productCreateOpts),
+      getMutationStatus(productVariantCreateOpts),
+      getMutationStatus(updateChannelsOpts)
+    ];
+
+    if (productId && productCreateComplete) {
+      if (statuses.every(s => s === "success")) {
+        handleSuccess(productId);
+      } else {
+        /*
+          INFO: This is a stop-gap solution, where we delete products that didn't meet all required data in the create form
+          A more robust solution would require merging create and update form into one to persist form state across redirects
+        */
+        setProductCreateComplete(false);
+        deleteProduct({ variables: { id: productId } });
+      }
+    }
+  }, [productCreateComplete]);
 
   return (
     <>
