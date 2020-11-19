@@ -1,3 +1,4 @@
+import { useAuth } from "@saleor/auth/AuthProvider";
 import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelDetailsFragment } from "@saleor/fragments/types/ChannelDetailsFragment";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
@@ -24,7 +25,10 @@ const ChannelContext = React.createContext<ChannelContextData>({
 });
 
 export const ChannelProvider: React.FC = ({ children }) => {
-  const { data: channelData, refetch } = useChannelsList({});
+  const { isAuthenticated } = useAuth();
+  const { data: channelData, refetch } = useChannelsList({
+    skip: !isAuthenticated
+  });
   const [selectedChannel, setSelectedChannel] = useLocalStorage(
     "channel",
     undefined
