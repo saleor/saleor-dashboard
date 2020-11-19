@@ -26,13 +26,10 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
 
 export const AppChannelProvider: React.FC = ({ children }) => {
   const { isAuthenticated } = useAuth();
+  const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useChannelsList({
     skip: !isAuthenticated
   });
-  const [selectedChannel, setSelectedChannel] = useLocalStorage(
-    "channel",
-    undefined
-  );
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
     if (!selectedChannel) {

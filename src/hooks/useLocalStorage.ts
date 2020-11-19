@@ -7,14 +7,26 @@ export default function useLocalStorage<T>(
   initialValue: T
 ): [T, SetLocalStorage<T>] {
   const [storedValue, setStoredValue] = useState<T>(() => {
-    const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
+    let result: T;
+    try {
+      const item = window.localStorage.getItem(key);
+      result = item ? JSON.parse(item) : initialValue;
+    } catch {
+      result = initialValue;
+    }
+
+    return result;
   });
 
   const setValue = (value: SetLocalStorageValue<T>) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;
     setStoredValue(valueToStore);
-    window.localStorage.setItem(key, JSON.stringify(valueToStore));
+
+    try {
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch {
+      console.warn(`Could not save ${key} to localStorage`);
+    }
   };
 
   return [storedValue, setValue];

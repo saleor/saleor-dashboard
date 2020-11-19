@@ -63,7 +63,7 @@ import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
-if (process.env.GTM_ID !== undefined) {
+if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
