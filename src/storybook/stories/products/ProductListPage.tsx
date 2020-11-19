@@ -42,7 +42,6 @@ const props: ProductListPageProps = {
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
   onExport: () => undefined,
-  onSettingsOpen: () => undefined,
   products,
   selectedChannelId: "123",
   settings: {
@@ -69,7 +68,6 @@ storiesOf("Views / Products / Product list", module)
     <ProductListPage
       {...props}
       channelsCount={0}
-      onSettingsOpen={undefined}
       selectedChannelId={""}
       products={products.map(product => ({ ...product, channelListings: [] }))}
     />
