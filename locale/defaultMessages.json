@@ -12,6 +12,9 @@
   "configurationMenuNavigation": {
     "string": "Define how users can navigate through your store"
   },
+  "configurationMenuPageTypes": {
+    "string": "Define types of content pages used in your store"
+  },
   "configurationMenuPages": {
     "string": "Manage and add additional pages"
   },
@@ -207,6 +210,13 @@
   "orderPaymentVATDoesNotApply": {
     "context": "vat not included in order price",
     "string": "does not apply"
+  },
+  "pageTypeCreateHeader": {
+    "context": "window title",
+    "string": "Create Page Type"
+  },
+  "pageTypeInputLabel": {
+    "string": "Select content type"
   },
   "productExportFieldCategory": {
     "context": "product field",
@@ -808,6 +818,24 @@
     "context": "attribute's label'",
     "string": "Default Label"
   },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_205334083": {
+    "string": "Define where this attribute should be used in Saleor system"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3829816432": {
+    "context": "section header",
+    "string": "Organization"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3835822980": {
+    "string": "Attribute Class"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_contentAttribute": {
+    "context": "attribute type",
+    "string": "Content Attribute"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_productAttribute": {
+    "context": "attribute type",
+    "string": "Product Attribute"
+  },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
     "string": "Create New Attribute"
@@ -824,13 +852,16 @@
     "context": "attribute properties regarding dashboard",
     "string": "Dashboard Properties"
   },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3135366329": {
+    "context": "attribute visibility in storefront",
+    "string": "Public"
+  },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3876764312": {
-    "context": "attribute",
-    "string": "Visible on Product Page in Storefront"
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3758203740": {
+    "string": "If enabled, attribute will be accessible to customers."
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
     "string": "If enabled this attribute can be used as a column in product table."
@@ -1451,6 +1482,23 @@
     "context": "section header",
     "string": "App Status"
   },
+  "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
+    "context": "button",
+    "string": "Assign attributes"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
+    "context": "dialog header",
+    "string": "Assign Attribute"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
+    "string": "No results found"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_524117994": {
+    "string": "Search by attribute name"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
+    "string": "Search Attributes"
+  },
   "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
     "string": "Assign Category"
@@ -1488,6 +1536,9 @@
   "src_dot_components_dot_AssignProductDialog_dot_649693468": {
     "context": "dialog header",
     "string": "Assign Product"
+  },
+  "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
+    "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
@@ -1527,6 +1578,10 @@
   "src_dot_components_dot_AvailabilityCard_dot_825317195": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_3177750460": {
+    "context": "unassign multiple attributes from item",
+    "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
   "src_dot_components_dot_ChannelsAvailabilityContent_dot_1528830621": {
     "string": "Select channels you want for {contentType} to be available on"
@@ -2075,6 +2130,9 @@
   },
   "src_dot_configuration_dot_3140151600": {
     "string": "Staff Settings"
+  },
+  "src_dot_configuration_dot_3351299924": {
+    "string": "Content Management"
   },
   "src_dot_configuration_dot_3655543906": {
     "string": "Product Settings"
@@ -3699,9 +3757,135 @@
   "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
     "string": "Order draft successfully created"
   },
+  "src_dot_pageTypes": {
+    "context": "page types section name",
+    "string": "Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1192828581": {
+    "string": "No attributes found"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1228425832": {
+    "string": "Attribute name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1656462109": {
+    "context": "button",
+    "string": "Assign attribute"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_3478065224": {
+    "context": "attribute internal name",
+    "string": "Slug"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_4266703515": {
+    "context": "delete page types with its pages",
+    "string": "{counter,plural,one{Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_69987032": {
+    "context": "dialog header",
+    "string": "Delete Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_8271141": {
+    "context": "delete page types",
+    "string": "{counter,plural,one{Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_4047854353": {
+    "context": "header",
+    "string": "Create Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_2364900868": {
+    "context": "delete page type with its pages",
+    "string": "Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3120835055": {
+    "context": "dialog header",
+    "string": "Delete Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3734861990": {
+    "context": "delete page type",
+    "string": "Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_3466659718": {
+    "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetails_dot_1631499902": {
+    "string": "Content Type Name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
+    "context": "button",
+    "string": "create page type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793828289": {
+    "string": "Search Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_464566131": {
+    "context": "tab name",
+    "string": "All Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_1631499902": {
+    "context": "page type name",
+    "string": "Content Type Name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
+    "string": "No page types found"
+  },
+  "src_dot_pageTypes_dot_views_dot_2634056946": {
+    "context": "dialog header",
+    "string": "Unassign Attribute from Page Type"
+  },
+  "src_dot_pageTypes_dot_views_dot_3442954831": {
+    "string": "Page type deleted"
+  },
+  "src_dot_pageTypes_dot_views_dot_870815507": {
+    "context": "unassign attribute from page type, button",
+    "string": "Unassign"
+  },
+  "src_dot_pageTypes_dot_views_dot_891131033": {
+    "context": "dialog header",
+    "string": "Unassign Attribute From Page Type"
+  },
+  "src_dot_pageTypes_dot_views_dot_98187848": {
+    "string": "Successfully created page type"
+  },
   "src_dot_pages": {
     "context": "pages section name",
     "string": "Pages"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1071548120": {
+    "context": "number of page attributes",
+    "string": "{number} Attributes"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1148029984": {
+    "context": "attribute value",
+    "string": "Value"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_1207761269": {
+    "context": "attribute values",
+    "string": "Values"
+  },
+  "src_dot_pages_dot_components_dot_PageAttributes_dot_4153345096": {
+    "context": "page attributes, section header",
+    "string": "Attributes"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
@@ -3756,6 +3940,13 @@
   "src_dot_pages_dot_components_dot_PageList_dot_3767550649": {
     "context": "page status",
     "string": "Not Published"
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_2959504520": {
+    "string": "Content type"
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_590187004": {
+    "context": "section header",
+    "string": "Organize Content"
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
@@ -4061,30 +4252,6 @@
     "context": "product types section name",
     "string": "Product Types"
   },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
-    "context": "button",
-    "string": "Assign attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
-    "context": "dialog header",
-    "string": "Assign Attribute"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
-    "string": "No results found"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_524117994": {
-    "string": "Search by attribute name"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_902296540": {
-    "string": "Search Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_404238501": {
-    "context": "dialog header",
-    "string": "Unassign Attribute From Product Type"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_722498450": {
-    "string": "Are you sure you want to unassign {attributeName} from {productTypeName}?"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1192828581": {
     "string": "No attributes found"
   },
@@ -4106,14 +4273,6 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
     "context": "section header",
     "string": "Variant Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_2646729060": {
-    "context": "unassign multiple attributes from product type",
-    "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {productTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {productTypeName}?}}"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_766918870": {
-    "context": "dialog header",
-    "string": "Unassign Attribute from Product Type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
     "context": "delete product type",
@@ -4215,6 +4374,14 @@
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Product type deleted"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_404238501": {
+    "context": "dialog header",
+    "string": "Unassign Attribute From Product Type"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_766918870": {
+    "context": "dialog header",
+    "string": "Unassign Attribute from Product Type"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",
@@ -5901,7 +6068,7 @@
   },
   "src_dot_utils_dot_errors_dot_notFound": {
     "context": "error message",
-    "string": "Invoice not found"
+    "string": "Page not found."
   },
   "src_dot_utils_dot_errors_dot_notReady": {
     "context": "error message",

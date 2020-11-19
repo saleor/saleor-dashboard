@@ -7,6 +7,7 @@ export const attributeFragment = gql`
     id
     name
     slug
+    type
     visibleInStorefront
     filterableInDashboard
     filterableInStorefront
@@ -29,5 +30,13 @@ export const attributeDetailsFragment = gql`
       slug
       type
     }
+  }
+`;
+
+export const availableAttributeFragment = gql`
+  fragment AvailableAttributeFragment on Attribute {
+    id
+    name
+    slug
   }
 `;

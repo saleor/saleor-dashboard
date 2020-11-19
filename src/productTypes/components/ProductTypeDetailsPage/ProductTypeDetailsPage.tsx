@@ -14,7 +14,10 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
-import { AttributeTypeEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
+import {
+  ProductAttributeType,
+  WeightUnitsEnum
+} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -54,9 +57,9 @@ export interface ProductTypeDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   taxTypes: ProductTypeDetails_taxTypes[];
   variantAttributeList: ListActions;
-  onAttributeAdd: (type: AttributeTypeEnum) => void;
+  onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeClick: (id: string) => void;
-  onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
+  onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
   onAttributeUnassign: (id: string) => void;
   onBack: () => void;
   onDelete: () => void;
@@ -186,11 +189,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 <ProductTypeAttributes
                   attributes={maybe(() => productType.productAttributes)}
                   disabled={disabled}
-                  type={AttributeTypeEnum.PRODUCT}
+                  type={ProductAttributeType.PRODUCT}
                   onAttributeAssign={onAttributeAdd}
                   onAttributeClick={onAttributeClick}
                   onAttributeReorder={(event: ReorderEvent) =>
-                    onAttributeReorder(event, AttributeTypeEnum.PRODUCT)
+                    onAttributeReorder(event, ProductAttributeType.PRODUCT)
                   }
                   onAttributeUnassign={onAttributeUnassign}
                   {...productAttributeList}
@@ -212,11 +215,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                     <ProductTypeAttributes
                       attributes={maybe(() => productType.variantAttributes)}
                       disabled={disabled}
-                      type={AttributeTypeEnum.VARIANT}
+                      type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
                       onAttributeClick={onAttributeClick}
                       onAttributeReorder={(event: ReorderEvent) =>
-                        onAttributeReorder(event, AttributeTypeEnum.VARIANT)
+                        onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }
                       onAttributeUnassign={onAttributeUnassign}
                       {...variantAttributeList}
