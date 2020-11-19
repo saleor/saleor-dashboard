@@ -175,3 +175,9 @@ export const fragmentOrderDetails = gql`
     isPaid
   }
 `;
+
+export const fragmentOrderSettings = gql`
+  fragment OrderSettingsFragment on OrderSettings {
+    automaticallyConfirmAllNewOrders
+  }
+`;
