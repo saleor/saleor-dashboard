@@ -129,7 +129,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const [docked, setDocked] = React.useState(true);
-  const { availableChannels, channel, setChannel } = useAppChannel();
+  const {
+    availableChannels,
+    channel,
+    isPickerActive,
+    setChannel
+  } = useAppChannel(false);
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -212,6 +217,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                           />
                           <AppChannelSelect
                             channels={availableChannels}
+                            disabled={!isPickerActive}
                             selectedChannelId={channel.id}
                             onChannelSelect={setChannel}
                           />

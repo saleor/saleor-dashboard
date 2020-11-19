@@ -3,18 +3,24 @@ import { ChannelDetailsFragment } from "@saleor/fragments/types/ChannelDetailsFr
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import React from "react";
 
-export interface ChannelContextData {
+interface UseAppChannel {
   availableChannels: ChannelDetailsFragment[];
   channel: ChannelDetailsFragment;
+  isPickerActive: boolean;
   refreshChannels: () => void;
   setChannel: (id: string) => void;
+}
+export interface ChannelContextData extends UseAppChannel {
+  setPickerActive: (isActive: boolean) => void;
 }
 
 const ChannelContext = React.createContext<ChannelContextData>({
   availableChannels: [],
   channel: undefined,
+  isPickerActive: false,
   refreshChannels: () => undefined,
-  setChannel: () => undefined
+  setChannel: () => undefined,
+  setPickerActive: () => undefined
 });
 
 export const ChannelProvider: React.FC = ({ children }) => {
@@ -23,6 +29,7 @@ export const ChannelProvider: React.FC = ({ children }) => {
     "channel",
     undefined
   );
+  const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
     if (!selectedChannel) {
       setSelectedChannel(channelData?.channels[0].id);
@@ -39,8 +46,10 @@ export const ChannelProvider: React.FC = ({ children }) => {
       value={{
         availableChannels,
         channel,
+        isPickerActive,
         refreshChannels: refetch,
-        setChannel: setSelectedChannel
+        setChannel: setSelectedChannel,
+        setPickerActive
       }}
     >
       {children}
@@ -48,6 +57,17 @@ export const ChannelProvider: React.FC = ({ children }) => {
   );
 };
 
-const useAppChannel = () => React.useContext(ChannelContext);
+function useAppChannel(enablePicker = true): UseAppChannel {
+  const { setPickerActive, ...data } = React.useContext(ChannelContext);
+  React.useEffect(() => {
+    if (enablePicker) {
+      setPickerActive(true);
+    }
+
+    return () => setPickerActive(false);
+  }, [enablePicker]);
+
+  return data;
+}
 
 export default useAppChannel;
