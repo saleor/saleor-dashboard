@@ -4428,6 +4428,10 @@
     "context": "product label",
     "string": "Published"
   },
+  "src_dot_products_dot_components_dot_ProductDetailsForm_dot_3416636340": {
+    "context": "product rating",
+    "string": "Product Rating"
+  },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
     "string": "Name"

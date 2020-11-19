@@ -210,6 +210,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: ProductVariantReorder_productVariantReorder_product_defaultVariant | null;
   category: ProductVariantReorder_productVariantReorder_product_category | null;
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;

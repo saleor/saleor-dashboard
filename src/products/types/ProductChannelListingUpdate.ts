@@ -204,6 +204,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  rating: number | null;
   defaultVariant: ProductChannelListingUpdate_productChannelListingUpdate_product_defaultVariant | null;
   category: ProductChannelListingUpdate_productChannelListingUpdate_product_category | null;
   collections: (ProductChannelListingUpdate_productChannelListingUpdate_product_collections | null)[] | null;

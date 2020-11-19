@@ -35,6 +35,7 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
       className={classes.snackbarContainer}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      data-test={`notification-${status}`}
     >
       <SnackbarContent
         id={id}

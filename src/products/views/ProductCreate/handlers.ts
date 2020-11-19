@@ -81,6 +81,7 @@ export function createHandler(
         descriptionJson: JSON.stringify(formData.description),
         name: formData.name,
         productType: formData.productType?.id,
+        rating: formData.rating,
         seo: {
           description: formData.seoDescription,
           title: formData.seoTitle
