@@ -1,4 +1,5 @@
 import EditorJS, {
+  LogLevels,
   OutputData,
   ToolConstructable,
   ToolSettings
@@ -54,6 +55,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
         editor.current = new EditorJS({
           data,
           holder: editorContainer.current,
+          logLevel: "ERROR" as LogLevels,
           onReady,
           readOnly: true,
           tools
@@ -65,7 +67,6 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
     // Rerender editor only if changed from undefined to defined state
     [data === undefined]
   );
-  React.useEffect(() => editor.current?.destroy, []);
 
   return (
     <div

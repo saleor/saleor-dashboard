@@ -1,4 +1,4 @@
-import EditorJS, { OutputData } from "@editorjs/editorjs";
+import EditorJS, { LogLevels, OutputData } from "@editorjs/editorjs";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -40,6 +40,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         editor.current = new EditorJS({
           data,
           holder: editorContainer.current,
+          logLevel: "ERROR" as LogLevels,
           onChange: async api => {
             const savedData = await api.saver.save();
             onChange(savedData);
@@ -61,7 +62,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     // Rerender editor only if changed from undefined to defined state
     [data === undefined]
   );
-  React.useEffect(() => editor.current?.destroy, []);
   React.useEffect(() => {
     if (editor.current?.readOnly) {
       editor.current.readOnly.toggle(disabled);
