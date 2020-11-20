@@ -632,6 +632,7 @@ export enum OrderEventsEnum {
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
+  CONFIRMED = 'CONFIRMED'
 }
 
 export enum OrderSettingsErrorCode {
@@ -653,6 +654,7 @@ export enum OrderStatus {
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
+  UNCONFIRMED = 'UNCONFIRMED'
 }
 
 export enum OrderStatusFilter {
