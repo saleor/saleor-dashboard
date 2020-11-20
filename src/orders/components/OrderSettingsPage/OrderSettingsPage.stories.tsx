@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
-import OrderSettings, { OrderSettingsPageProps } from "./";
+import OrderSettings, { OrderSettingsPageProps } from ".";
 
 const props: OrderSettingsPageProps = {
   data: orderSettingsFixture,
@@ -15,4 +15,7 @@ const props: OrderSettingsPageProps = {
 
 storiesOf("Views / Orders / Order settings", module)
   .addDecorator(Decorator)
-  .add("default", () => <OrderSettings {...props} />);
+  .add("default", () => <OrderSettings {...props} />)
+  .add("loading", () => (
+    <OrderSettings {...props} disabled={true} data={undefined} />
+  ));
