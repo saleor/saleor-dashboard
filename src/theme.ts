@@ -261,9 +261,6 @@ export default (colors: IThemeColors): Theme =>
             boxShadow: `0 0 0px 1000px rgba(19, 190, 187, 0.1) inset`,
             zIndex: 0
           },
-          "&::placeholder": {
-            opacity: [[0], "!important"] as any
-          },
           color: colors.input.text,
           padding: "23px 12px 10px 12px"
         },
