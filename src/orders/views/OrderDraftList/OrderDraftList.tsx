@@ -36,6 +36,7 @@ import {
   orderDraftListUrl,
   OrderDraftListUrlDialog,
   OrderDraftListUrlQueryParams,
+  orderSettingsPath,
   orderUrl
 } from "../../urls";
 import {

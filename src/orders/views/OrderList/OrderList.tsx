@@ -27,6 +27,7 @@ import {
   orderListUrl,
   OrderListUrlDialog,
   OrderListUrlQueryParams,
+  orderSettingsPath,
   orderUrl
 } from "../../urls";
 import {
