@@ -2,39 +2,37 @@ import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderSettings from "../OrderSettings/OrderSettings";
+import OrderSettingsForm, { OrderSettingsFormData } from "./form";
 
 export interface OrderSettingsForm {
-  autoConfirmOrders: boolean;
+  automaticallyConfirmAllNewOrders: boolean;
 }
 
 export interface OrderSettingsPageProps {
-  data: OrderSettingsForm;
+  data: OrderSettingsFragment;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: OrderSettingsForm) => void;
+  onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
-const formInitialData: OrderSettingsForm = {
-  autoConfirmOrders: false
-};
-
 const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
-  const { disabled, saveButtonBarState, onBack, onSubmit } = props;
+  const { data, disabled, saveButtonBarState, onBack, onSubmit } = props;
   const intl = useIntl();
 
   return (
-    <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit }) => (
+    <OrderSettingsForm orderSettings={data} onSubmit={onSubmit}>
+      {({ data, submit, hasChanged, change }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.orders)}
@@ -61,7 +59,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           />
         </Container>
       )}
-    </Form>
+    </OrderSettingsForm>
   );
 };
 OrderSettingsPage.displayName = "OrderSettingsPage";

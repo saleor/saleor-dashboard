@@ -1,4 +1,5 @@
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
+import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -1628,3 +1629,8 @@ export const invoices: InvoiceFragment[] = [
       "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-0e449e10-ef4b-4066-bebe-361f670b6820.pdf"
   }
 ];
+
+export const orderSettings: OrderSettingsFragment = {
+  __typename: "OrderSettings",
+  automaticallyConfirmAllNewOrders: true
+};
