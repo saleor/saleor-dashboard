@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Add Page Types - #807 by @orzechdev
+
 # 2.11.1
 
 - Support multiline text in plugin configuration secret field - #829 by @karolinakuzniewicz

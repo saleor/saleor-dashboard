@@ -1,7 +1,7 @@
 import { attribute } from "@saleor/attributes/fixtures";
 import {
-  AttributeValueType,
-  ProductErrorCode
+  AttributeErrorCode,
+  AttributeValueType
 } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -32,8 +32,8 @@ storiesOf("Attributes / Attribute value edit", module)
       {...props}
       errors={[
         {
-          __typename: "ProductError",
-          code: ProductErrorCode.INVALID,
+          __typename: "AttributeError",
+          code: AttributeErrorCode.INVALID,
           field: "name"
         }
       ]}

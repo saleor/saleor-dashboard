@@ -10,6 +10,7 @@ import useShop from "@saleor/hooks/useShop";
 import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
+  useProductDeleteMutation,
   useProductVariantChannelListingUpdate,
   useVariantCreateMutation
 } from "@saleor/products/mutations";
@@ -37,6 +38,9 @@ export const ProductCreateView: React.FC = () => {
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
+  const [productCreateComplete, setProductCreateComplete] = React.useState(
+    false
+  );
   const {
     loadMore: loadMoreCategories,
     search: searchCategory,
@@ -100,14 +104,9 @@ export const ProductCreateView: React.FC = () => {
     navigate(productUrl(productId));
   };
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
-    onCompleted: data => {
-      const productId = data.productChannelListingUpdate.product.id;
-      if (productId) {
-        handleSuccess(productId);
-      }
-    }
-  });
+  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
+    {}
+  );
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
@@ -116,6 +115,7 @@ export const ProductCreateView: React.FC = () => {
   const handleBack = () => navigate(productListUrl());
 
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
+  const [deleteProduct] = useProductDeleteMutation({});
   const [
     productVariantCreate,
     productVariantCreateOpts
@@ -133,17 +133,32 @@ export const ProductCreateView: React.FC = () => {
     }
   });
 
-  const handleSubmit = createMetadataCreateHandler(
-    createHandler(
-      productTypes,
-      variables => productCreate({ variables }),
-      variables => productVariantCreate({ variables }),
-      updateChannels,
-      updateVariantChannels
-    ),
-    updateMetadata,
-    updatePrivateMetadata
-  );
+  const handleSubmit = async data => {
+    const result = await createMetadataCreateHandler(
+      createHandler(
+        productTypes,
+        variables => productCreate({ variables }),
+        variables => productVariantCreate({ variables }),
+        updateChannels,
+        updateVariantChannels,
+        deleteProduct
+      ),
+      updateMetadata,
+      updatePrivateMetadata
+    )(data);
+
+    if (result) {
+      setProductCreateComplete(true);
+    }
+  };
+
+  React.useEffect(() => {
+    const productId = productCreateOpts.data?.productCreate?.product?.id;
+
+    if (productCreateComplete && productId) {
+      handleSuccess(productId);
+    }
+  }, [productCreateComplete]);
 
   return (
     <>

@@ -38,6 +38,7 @@ storiesOf("Views / Pages / Page details", module)
         "seoTitle"
       ] as Array<keyof PageData>).map(field => ({
         __typename: "PageError",
+        attributes: [],
         code: PageErrorCode.INVALID,
         field
       }))}

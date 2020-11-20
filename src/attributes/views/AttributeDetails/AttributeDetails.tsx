@@ -3,7 +3,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
-import { getProductErrorMessage } from "@saleor/utils/errors";
+import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { move } from "@saleor/utils/lists";
@@ -140,7 +140,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       if (data.attributeReorderValues.errors.length !== 0) {
         notify({
           status: "error",
-          text: getProductErrorMessage(
+          text: getAttributeErrorMessage(
             data.attributeReorderValues.errors[0],
             intl
           )

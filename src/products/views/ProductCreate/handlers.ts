@@ -10,6 +10,10 @@ import {
   ProductCreateVariables
 } from "@saleor/products/types/ProductCreate";
 import {
+  ProductDelete,
+  ProductDeleteVariables
+} from "@saleor/products/types/ProductDelete";
+import {
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateVariables
 } from "@saleor/products/types/ProductVariantChannelListingUpdate";
@@ -59,7 +63,10 @@ export function createHandler(
   }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
   updateVariantChannels: (options: {
     variables: ProductVariantChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>
+  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
+  productDelete: (options: {
+    variables: ProductDeleteVariables;
+  }) => Promise<MutationFetchResult<ProductDelete>>
 ) {
   return async (formData: ProductCreateData) => {
     const productVariables: ProductCreateVariables = {
@@ -85,6 +92,7 @@ export function createHandler(
     };
 
     const result = await productCreate(productVariables);
+    let hasErrors = false;
 
     const hasVariants = productTypes.find(
       product => product.id === formData.productType.id
@@ -98,7 +106,13 @@ export function createHandler(
         ),
         productVariantCreate(getSimpleProductVariables(formData, productId))
       ]);
-      const variantErrors = result[1].data.productVariantCreate.errors;
+      const channelErrors = result[0].data?.productChannelListingUpdate?.errors;
+      const variantErrors = result[1].data?.productVariantCreate?.errors;
+
+      if ([...(channelErrors || []), ...(variantErrors || [])].length > 0) {
+        hasErrors = true;
+      }
+
       const variantId = result[1].data.productVariantCreate.productVariant?.id;
       if (variantErrors.length === 0 && variantId) {
         updateVariantChannels({
@@ -113,7 +127,23 @@ export function createHandler(
         });
       }
     } else {
-      updateChannels(getChannelsVariables(productId, formData.channelListings));
+      const result = await updateChannels(
+        getChannelsVariables(productId, formData.channelListings)
+      );
+
+      if (result.data?.productChannelListingUpdate?.errors.length > 0) {
+        hasErrors = true;
+      }
+    }
+
+    /*
+     INFO: This is a stop-gap solution, where we delete products that didn't meet all required data in the create form
+     A more robust solution would require merging create and update form into one to persist form state across redirects
+    */
+    if (productId && hasErrors) {
+      productDelete({ variables: { id: productId } });
+
+      return null;
     }
     return productId || null;
   };

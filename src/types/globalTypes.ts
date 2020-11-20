@@ -69,6 +69,15 @@ export enum AppTypeEnum {
   THIRDPARTY = "THIRDPARTY",
 }
 
+export enum AttributeErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   MULTISELECT = "MULTISELECT",
@@ -87,8 +96,8 @@ export enum AttributeSortField {
 }
 
 export enum AttributeTypeEnum {
-  PRODUCT = "PRODUCT",
-  VARIANT = "VARIANT",
+  PAGE_TYPE = "PAGE_TYPE",
+  PRODUCT_TYPE = "PRODUCT_TYPE",
 }
 
 export enum AttributeValueType {
@@ -637,6 +646,7 @@ export enum OrderStatus {
   DRAFT = "DRAFT",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
+  UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
   UNCONFIRMED = 'UNCONFIRMED'
 }
@@ -651,6 +661,8 @@ export enum OrderStatusFilter {
 }
 
 export enum PageErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -664,6 +676,11 @@ export enum PageSortField {
   SLUG = "SLUG",
   TITLE = "TITLE",
   VISIBILITY = "VISIBILITY",
+}
+
+export enum PageTypeSortField {
+  NAME = "NAME",
+  SLUG = "SLUG",
 }
 
 export enum PaymentChargeStatusEnum {
@@ -686,6 +703,7 @@ export enum PermissionEnum {
   MANAGE_MENUS = "MANAGE_MENUS",
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
+  MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
@@ -723,6 +741,11 @@ export enum PluginErrorCode {
 export enum PluginSortField {
   IS_ACTIVE = "IS_ACTIVE",
   NAME = "NAME",
+}
+
+export enum ProductAttributeType {
+  PRODUCT = "PRODUCT",
+  VARIANT = "VARIANT",
 }
 
 export enum ProductErrorCode {
@@ -934,6 +957,7 @@ export enum WebhookEventTypeEnum {
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
   ORDER_CANCELLED = "ORDER_CANCELLED",
+  ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
@@ -992,15 +1016,11 @@ export interface AppTokenInput {
   app: string;
 }
 
-export interface AttributeAssignInput {
-  id: string;
-  type: AttributeTypeEnum;
-}
-
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
   name: string;
   slug?: string | null;
+  type: AttributeTypeEnum;
   values?: (AttributeValueCreateInput | null)[] | null;
   valueRequired?: boolean | null;
   isVariantOnly?: boolean | null;
@@ -1020,6 +1040,7 @@ export interface AttributeFilterInput {
   availableInGrid?: boolean | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
   channel?: string | null;
@@ -1338,11 +1359,28 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
+export interface PageCreateInput {
+  slug?: string | null;
+  title?: string | null;
+  content?: string | null;
+  contentJson?: any | null;
+  attributes?: AttributeValueInput[] | null;
+  isPublished?: boolean | null;
+  publicationDate?: string | null;
+  seo?: SeoInput | null;
+  pageType: string;
+}
+
+export interface PageFilterInput {
+  search?: string | null;
+}
+
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+  attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
   seo?: SeoInput | null;
@@ -1359,6 +1397,28 @@ export interface PageTranslationInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PageTypeCreateInput {
+  name?: string | null;
+  slug?: string | null;
+  addAttributes?: string[] | null;
+}
+
+export interface PageTypeFilterInput {
+  search?: string | null;
+}
+
+export interface PageTypeSortingInput {
+  direction: OrderDirection;
+  field: PageTypeSortField;
+}
+
+export interface PageTypeUpdateInput {
+  name?: string | null;
+  slug?: string | null;
+  addAttributes?: string[] | null;
+  removeAttributes?: string[] | null;
 }
 
 export interface PermissionGroupCreateInput {
@@ -1416,6 +1476,11 @@ export interface ProductChannelListingAddInput {
 export interface ProductChannelListingUpdateInput {
   addChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
+}
+
+export interface ProductAttributeAssignInput {
+  id: string;
+  type: ProductAttributeType;
 }
 
 export interface ProductCreateInput {

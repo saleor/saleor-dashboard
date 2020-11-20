@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ProductTypeDetailsFragment
@@ -31,6 +31,7 @@ export interface ProductTypeDetailsFragment_productAttributes {
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
@@ -41,6 +42,7 @@ export interface ProductTypeDetailsFragment_variantAttributes {
   id: string;
   name: string | null;
   slug: string | null;
+  type: AttributeTypeEnum | null;
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;

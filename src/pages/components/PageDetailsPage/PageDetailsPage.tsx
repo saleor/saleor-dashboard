@@ -8,36 +8,46 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
+import PageAttributes from "../PageAttributes";
 import PageInfo from "../PageInfo";
+import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData } from "./form";
 
 export interface PageDetailsPageProps {
   disabled: boolean;
-  errors: PageErrorFragment[];
+  errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
+  pageTypes?: SearchPageTypes_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
+  fetchPageTypes?: (data: string) => void;
+  fetchMorePageTypes?: FetchMoreProps;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   disabled,
   errors,
   page,
+  pageTypes,
   saveButtonBarState,
   onBack,
   onRemove,
-  onSubmit
+  onSubmit,
+  fetchPageTypes,
+  fetchMorePageTypes
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -45,8 +55,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const pageExists = page !== null;
 
   return (
-    <PageForm page={page} onSubmit={onSubmit}>
-      {({ change, data, handlers, hasChanged, submit }) => (
+    <PageForm page={page} pageTypes={pageTypes} onSubmit={onSubmit}>
+      {({ change, data, pageType, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -88,6 +98,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 })}
               />
               <CardSpacer />
+              {data.attributes.length > 0 && (
+                <PageAttributes
+                  attributes={data.attributes}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={handlers.changeAttribute}
+                  onMultiChange={handlers.changeAttributeMulti}
+                />
+              )}
+              <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>
             <div>
@@ -116,6 +136,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   })
                 }}
                 onChange={change}
+              />
+              <CardSpacer />
+              <PageOrganizeContent
+                data={data}
+                errors={errors}
+                disabled={disabled}
+                pageTypes={pageTypes}
+                pageType={pageType}
+                pageTypeInputDisplayValue={pageType?.name || ""}
+                onPageTypeChange={handlers.selectPageType}
+                fetchPageTypes={fetchPageTypes}
+                fetchMorePageTypes={fetchMorePageTypes}
+                canChangeType={!page?.pageType}
               />
             </div>
           </Grid>
