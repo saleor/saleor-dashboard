@@ -31,7 +31,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name={"autoConfirmOrders" as keyof OrderSettingsForm}
+          name={"automaticallyConfirmAllNewOrders" as keyof OrderSettingsForm}
           label={
             <>
               <FormattedMessage
@@ -46,7 +46,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
               </Typography>
             </>
           }
-          checked={data.autoConfirmOrders}
+          checked={data.automaticallyConfirmAllNewOrders}
           onChange={onChange}
           disabled={disabled}
         />

@@ -1,3 +1,4 @@
+import { orderSettings as orderSettingsFixture } from "@saleor/orders/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -5,7 +6,7 @@ import Decorator from "../../../storybook/Decorator";
 import OrderSettings, { OrderSettingsPageProps } from "./";
 
 const props: OrderSettingsPageProps = {
-  data: { autoConfirmOrders: false },
+  data: orderSettingsFixture,
   disabled: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
