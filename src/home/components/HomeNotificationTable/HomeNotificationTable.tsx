@@ -18,6 +18,9 @@ const useStyles = makeStyles(
     arrowIcon: {
       width: theme.spacing(4)
     },
+    tableCard: {
+      overflow: "hidden"
+    },
     tableRow: {
       cursor: "pointer"
     }
@@ -48,7 +51,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Card>
+    <Card className={classes.tableCard}>
       <ResponsiveTable>
         <TableBody className={classes.tableRow}>
           <RequirePermissions
