@@ -30,7 +30,11 @@ export const OrderSettings: React.FC = () => {
     });
 
     const errors = result.data?.orderSettingsUpdate.errors;
-    if (errors.length !== 0) {
+    if (errors.length) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
       return errors;
     }
 
