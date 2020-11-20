@@ -14,9 +14,10 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     arrowIcon: {
-      width: theme.spacing(4)
+      textAlign: "right",
+      width: "auto"
     },
     tableCard: {
       overflow: "hidden"
