@@ -140,11 +140,11 @@
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.8",
+    "husky": "^4.3.0",
     "jest": "^24.8.0",
     "jest-file": "^1.0.0",
     "jest-localstorage-mock": "^2.4.3",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^10.5.1",
     "mock-apollo-client": "^0.4.0",
     "node-fetch": "^2.6.1",
     "prettier": "^1.19.1",
@@ -198,13 +198,11 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.{js,jsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "scripts": {
