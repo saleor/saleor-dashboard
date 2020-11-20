@@ -74,16 +74,43 @@ export interface Product_channelListings_channel {
   currencyCode: string;
 }
 
-export interface Product_channelListings_discountedPrice {
+export interface Product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface Product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: Product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface Product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface Product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: Product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface Product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: Product_channelListings_pricing_priceRange_start | null;
+  stop: Product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface Product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: Product_channelListings_pricing_priceRange | null;
+}
+
 export interface Product_channelListings {
   __typename: "ProductChannelListing";
   channel: Product_channelListings_channel;
-  discountedPrice: Product_channelListings_discountedPrice | null;
+  pricing: Product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

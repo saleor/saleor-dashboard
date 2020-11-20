@@ -278,11 +278,6 @@ export const sale: SaleDetails_sale = {
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -315,11 +310,6 @@ export const sale: SaleDetails_sale = {
                 currencyCode: "USD",
                 id: "123",
                 name: "Channel1"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -354,11 +344,6 @@ export const sale: SaleDetails_sale = {
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -391,11 +376,6 @@ export const sale: SaleDetails_sale = {
                 currencyCode: "USD",
                 id: "123",
                 name: "Channel1"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: true,

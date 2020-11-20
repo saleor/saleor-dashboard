@@ -1,4 +1,3 @@
-import { AppErrorFragment } from "@saleor/apps/types/AppErrorFragment";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AppHeader from "@saleor/components/AppHeader";
 import AppStatus from "@saleor/components/AppStatus";
@@ -10,6 +9,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";

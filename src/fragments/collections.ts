@@ -1,4 +1,4 @@
-import { channelListingProductFragment } from "@saleor/fragments/products";
+import { channelListingProductWithoutPricingFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 import { metadataFragment } from "./metadata";
@@ -40,7 +40,7 @@ export const collectionDetailsFragment = gql`
 // https://github.com/apollographql/apollo-client/issues/2496
 // https://github.com/apollographql/apollo-client/issues/3468
 export const collectionProductFragment = gql`
-  ${channelListingProductFragment}
+  ${channelListingProductWithoutPricingFragment}
   fragment CollectionProductFragment on Product {
     id
     name
@@ -52,7 +52,7 @@ export const collectionProductFragment = gql`
       url
     }
     channelListings {
-      ...ChannelListingProductFragment
+      ...ChannelListingProductWithoutPricingFragment
     }
   }
 `;

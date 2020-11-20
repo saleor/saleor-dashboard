@@ -185,11 +185,6 @@ export const collection: (
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -203,11 +198,6 @@ export const collection: (
                 currencyCode: "USD",
                 id: "124",
                 name: "Channel2"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: false,
@@ -239,11 +229,6 @@ export const collection: (
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -257,11 +242,6 @@ export const collection: (
                 currencyCode: "USD",
                 id: "124",
                 name: "Channel2"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: false,
@@ -293,11 +273,6 @@ export const collection: (
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -311,11 +286,6 @@ export const collection: (
                 currencyCode: "USD",
                 id: "124",
                 name: "Channel2"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: false,
@@ -347,11 +317,6 @@ export const collection: (
                 id: "123",
                 name: "Channel1"
               },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
@@ -365,11 +330,6 @@ export const collection: (
                 currencyCode: "USD",
                 id: "124",
                 name: "Channel2"
-              },
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
               },
               isAvailableForPurchase: false,
               isPublished: false,

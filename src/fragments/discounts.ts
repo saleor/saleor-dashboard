@@ -1,4 +1,4 @@
-import { channelListingProductFragment } from "@saleor/fragments/products";
+import { channelListingProductWithoutPricingFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 import { pageInfoFragment } from "./pageInfo";
@@ -24,7 +24,7 @@ export const saleFragment = gql`
 `;
 
 export const saleDetailsFragment = gql`
-  ${channelListingProductFragment}
+  ${channelListingProductWithoutPricingFragment}
   ${pageInfoFragment}
   ${saleFragment}
   fragment SaleDetailsFragment on Sale {
@@ -42,7 +42,7 @@ export const saleDetailsFragment = gql`
             url
           }
           channelListings {
-            ...ChannelListingProductFragment
+            ...ChannelListingProductWithoutPricingFragment
           }
         }
       }
@@ -117,7 +117,7 @@ export const voucherFragment = gql`
 export const voucherDetailsFragment = gql`
   ${pageInfoFragment}
   ${voucherFragment}
-  ${channelListingProductFragment}
+  ${channelListingProductWithoutPricingFragment}
   fragment VoucherDetailsFragment on Voucher {
     ...VoucherFragment
     type
@@ -139,7 +139,7 @@ export const voucherDetailsFragment = gql`
             url
           }
           channelListings {
-            ...ChannelListingProductFragment
+            ...ChannelListingProductWithoutPricingFragment
           }
         }
       }

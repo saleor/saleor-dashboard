@@ -86,16 +86,43 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_produc
   currencyCode: string;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_discountedPrice {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_start | null;
+  stop: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing_priceRange | null;
+}
+
 export interface VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   channel: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_channel;
-  discountedPrice: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_discountedPrice | null;
+  pricing: VariantImageUnassign_variantImageUnassign_productVariant_product_channelListings_pricing | null;
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_product_variants_images {

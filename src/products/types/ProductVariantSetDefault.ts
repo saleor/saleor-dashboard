@@ -80,16 +80,43 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_chann
   currencyCode: string;
 }
 
-export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_discountedPrice {
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_start | null;
+  stop: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_channel;
-  discountedPrice: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_discountedPrice | null;
+  pricing: ProductVariantSetDefault_productVariantSetDefault_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

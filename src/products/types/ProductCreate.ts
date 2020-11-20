@@ -81,16 +81,43 @@ export interface ProductCreate_productCreate_product_channelListings_channel {
   currencyCode: string;
 }
 
-export interface ProductCreate_productCreate_product_channelListings_discountedPrice {
+export interface ProductCreate_productCreate_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductCreate_productCreate_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductCreate_productCreate_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductCreate_productCreate_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductCreate_productCreate_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductCreate_productCreate_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductCreate_productCreate_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductCreate_productCreate_product_channelListings_pricing_priceRange_start | null;
+  stop: ProductCreate_productCreate_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductCreate_productCreate_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductCreate_productCreate_product_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductCreate_productCreate_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductCreate_productCreate_product_channelListings_channel;
-  discountedPrice: ProductCreate_productCreate_product_channelListings_discountedPrice | null;
+  pricing: ProductCreate_productCreate_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

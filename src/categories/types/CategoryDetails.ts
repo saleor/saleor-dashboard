@@ -85,12 +85,6 @@ export interface CategoryDetails_category_products_edges_node_productType {
   name: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_channelListings_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CategoryDetails_category_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -98,15 +92,48 @@ export interface CategoryDetails_category_products_edges_node_channelListings_ch
   currencyCode: string;
 }
 
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start_net;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start | null;
+  stop: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface CategoryDetails_category_products_edges_node_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange | null;
+}
+
 export interface CategoryDetails_category_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: CategoryDetails_category_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
   channel: CategoryDetails_category_products_edges_node_channelListings_channel;
+  pricing: CategoryDetails_category_products_edges_node_channelListings_pricing | null;
 }
 
 export interface CategoryDetails_category_products_edges_node {

@@ -23,6 +23,22 @@ export const fragmentMoney = gql`
   }
 `;
 
+export const priceRangeFragment = gql`
+  ${fragmentMoney}
+  fragment PriceRangeFragment on TaxedMoneyRange {
+    start {
+      net {
+        ...Money
+      }
+    }
+    stop {
+      net {
+        ...Money
+      }
+    }
+  }
+`;
+
 export const fragmentProductImage = gql`
   fragment ProductImageFragment on ProductImage {
     id
@@ -32,14 +48,10 @@ export const fragmentProductImage = gql`
   }
 `;
 
-export const channelListingProductFragment = gql`
-  ${fragmentMoney}
-  fragment ChannelListingProductFragment on ProductChannelListing {
+export const channelListingProductWithoutPricingFragment = gql`
+  fragment ChannelListingProductWithoutPricingFragment on ProductChannelListing {
     isPublished
     publicationDate
-    discountedPrice {
-      ...Money
-    }
     isAvailableForPurchase
     availableForPurchase
     visibleInListings
@@ -47,6 +59,18 @@ export const channelListingProductFragment = gql`
       id
       name
       currencyCode
+    }
+  }
+`;
+export const channelListingProductFragment = gql`
+  ${priceRangeFragment}
+  ${channelListingProductWithoutPricingFragment}
+  fragment ChannelListingProductFragment on ProductChannelListing {
+    ...ChannelListingProductWithoutPricingFragment
+    pricing {
+      priceRange {
+        ...PriceRangeFragment
+      }
     }
   }
 `;
@@ -128,8 +152,10 @@ export const productVariantAttributesFragment = gql`
         name
         currencyCode
       }
-      discountedPrice {
-        ...Money
+      pricing {
+        priceRange {
+          ...PriceRangeFragment
+        }
       }
     }
   }
@@ -253,8 +279,10 @@ export const fragmentVariant = gql`
           name
           currencyCode
         }
-        discountedPrice {
-          ...Money
+        pricing {
+          priceRange {
+            ...PriceRangeFragment
+          }
         }
       }
       variants {

@@ -80,16 +80,43 @@ export interface ProductVariantReorder_productVariantReorder_product_channelList
   currencyCode: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_channelListings_discountedPrice {
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_start | null;
+  stop: ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductVariantReorder_productVariantReorder_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductVariantReorder_productVariantReorder_product_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductVariantReorder_productVariantReorder_product_channelListings_channel;
-  discountedPrice: ProductVariantReorder_productVariantReorder_product_channelListings_discountedPrice | null;
+  pricing: ProductVariantReorder_productVariantReorder_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

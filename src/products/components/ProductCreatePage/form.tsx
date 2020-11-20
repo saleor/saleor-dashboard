@@ -37,7 +37,6 @@ import {
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
-  basePrice: number;
   category: string;
   changeTaxCode: boolean;
   channelListings: ChannelData[];
@@ -126,7 +125,6 @@ function useProductCreateForm(
 ): UseProductCreateFormResult {
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
-    basePrice: 0,
     category: "",
     changeTaxCode: false,
     channelListings: opts.currentChannels,

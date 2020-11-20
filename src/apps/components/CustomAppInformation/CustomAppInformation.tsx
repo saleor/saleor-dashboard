@@ -1,8 +1,8 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import { AppErrorFragment } from "@saleor/apps/types/AppErrorFragment";
 import CardTitle from "@saleor/components/CardTitle";
+import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";

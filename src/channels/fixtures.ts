@@ -92,13 +92,30 @@ export const productChannels: ProductDetails_product_channelListings[] = [
       id: "123",
       name: "Channel1"
     },
-    discountedPrice: {
-      __typename: "Money",
-      amount: 5,
-      currency: "USD"
-    },
     isAvailableForPurchase: false,
     isPublished: true,
+    pricing: {
+      __typename: "ProductPricingInfo",
+      priceRange: {
+        __typename: "TaxedMoneyRange",
+        start: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 1.2,
+            currency: "USD"
+          }
+        },
+        stop: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 3.5,
+            currency: "USD"
+          }
+        }
+      }
+    },
     publicationDate: "2020-07-14",
     visibleInListings: true
   },
@@ -111,13 +128,30 @@ export const productChannels: ProductDetails_product_channelListings[] = [
       id: "124",
       name: "Channel2"
     },
-    discountedPrice: {
-      __typename: "Money",
-      amount: 0,
-      currency: "USD"
-    },
     isAvailableForPurchase: false,
     isPublished: false,
+    pricing: {
+      __typename: "ProductPricingInfo",
+      priceRange: {
+        __typename: "TaxedMoneyRange",
+        start: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 2.2,
+            currency: "USD"
+          }
+        },
+        stop: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 7.1,
+            currency: "USD"
+          }
+        }
+      }
+    },
     publicationDate: "2020-07-30",
     visibleInListings: true
   },
@@ -130,13 +164,30 @@ export const productChannels: ProductDetails_product_channelListings[] = [
       id: "125",
       name: "Channel3"
     },
-    discountedPrice: {
-      __typename: "Money",
-      amount: 8,
-      currency: "USD"
-    },
     isAvailableForPurchase: false,
     isPublished: false,
+    pricing: {
+      __typename: "ProductPricingInfo",
+      priceRange: {
+        __typename: "TaxedMoneyRange",
+        start: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 30.1,
+            currency: "USD"
+          }
+        },
+        stop: {
+          __typename: "TaxedMoney",
+          net: {
+            __typename: "Money",
+            amount: 44.9,
+            currency: "USD"
+          }
+        }
+      }
+    },
     publicationDate: null,
     visibleInListings: true
   }

@@ -65,16 +65,43 @@ export interface ProductVariantAttributesFragment_channelListings_channel {
   currencyCode: string;
 }
 
-export interface ProductVariantAttributesFragment_channelListings_discountedPrice {
+export interface ProductVariantAttributesFragment_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductVariantAttributesFragment_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductVariantAttributesFragment_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductVariantAttributesFragment_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantAttributesFragment_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductVariantAttributesFragment_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductVariantAttributesFragment_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductVariantAttributesFragment_channelListings_pricing_priceRange_start | null;
+  stop: ProductVariantAttributesFragment_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductVariantAttributesFragment_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductVariantAttributesFragment_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductVariantAttributesFragment_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductVariantAttributesFragment_channelListings_channel;
-  discountedPrice: ProductVariantAttributesFragment_channelListings_discountedPrice | null;
+  pricing: ProductVariantAttributesFragment_channelListings_pricing | null;
 }
 
 export interface ProductVariantAttributesFragment {

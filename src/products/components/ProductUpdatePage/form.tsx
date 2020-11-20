@@ -39,7 +39,6 @@ import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
-  basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
   channelListings: ChannelData[];
