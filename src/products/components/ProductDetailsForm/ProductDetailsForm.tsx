@@ -4,6 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
+import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import RichTextEditor, {
   RichTextEditorChange
@@ -72,19 +73,21 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         />
         <Hr />
         <FormSpacer />
-        <TextField
-          type="number"
-          error={!!formErrors.rating}
-          helperText={getProductErrorMessage(formErrors.rating, intl)}
-          disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "Product Rating",
-            description: "product rating"
-          })}
-          name="rating"
-          value={data.rating || ""}
-          onChange={onChange}
-        />
+        <Grid variant="uniform">
+          <TextField
+            type="number"
+            error={!!formErrors.rating}
+            helperText={getProductErrorMessage(formErrors.rating, intl)}
+            disabled={disabled}
+            label={intl.formatMessage({
+              defaultMessage: "Product Rating",
+              description: "product rating"
+            })}
+            name="rating"
+            value={data.rating || ""}
+            onChange={onChange}
+          />
+        </Grid>
       </CardContent>
     </Card>
   );
