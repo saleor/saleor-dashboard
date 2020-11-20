@@ -138,8 +138,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const getSaveLabel = () =>
     order?.status === OrderStatus.UNCONFIRMED
-      ? intl.formatMessage("confirm order")
+      ? intl.formatMessage({ defaultMessage: "confirm order" })
       : undefined;
+
+  const allowSave = (hasChanged: boolean) => {
+    if (order?.status !== OrderStatus.UNCONFIRMED) {
+      return disabled || !hasChanged;
+    }
+
+    return disabled;
+  };
 
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
@@ -254,7 +262,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={allowSave(hasChanged)}
             />
           </Container>
         );
