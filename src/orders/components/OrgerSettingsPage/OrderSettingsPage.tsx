@@ -14,10 +14,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import OrderSettings from "../OrderSettings/OrderSettings";
 import OrderSettingsForm, { OrderSettingsFormData } from "./form";
 
-export interface OrderSettingsForm {
-  automaticallyConfirmAllNewOrders: boolean;
-}
-
 export interface OrderSettingsPageProps {
   data: OrderSettingsFragment;
   disabled: boolean;

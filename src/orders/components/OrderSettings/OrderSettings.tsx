@@ -6,10 +6,10 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderSettingsForm } from "../OrgerSettingsPage";
+import { OrderSettingsFormData } from "../OrgerSettingsPage/form";
 
 export interface OrderSettingsProps {
-  data: OrderSettingsForm;
+  data: OrderSettingsFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -31,7 +31,9 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name={"automaticallyConfirmAllNewOrders" as keyof OrderSettingsForm}
+          name={
+            "automaticallyConfirmAllNewOrders" as keyof OrderSettingsFormData
+          }
           label={
             <>
               <FormattedMessage
