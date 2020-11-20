@@ -69,9 +69,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           )
         }
       />
-      <CardContent
-        className={generatedInvoices?.length && classes.cardContentTable}
-      >
+      <CardContent className={classes.cardContentTable}>
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (
