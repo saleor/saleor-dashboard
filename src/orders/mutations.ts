@@ -23,6 +23,7 @@ import {
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
+import { OrderConfirm, OrderConfirmVariables } from "./types/OrderConfirm";
 import {
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
@@ -117,6 +118,27 @@ const orderDraftBulkCancelMutation = gql`
     }
   }
 `;
+
+export const orderConfirmMutation = gql`
+  ${fragmentOrderDetails}
+  ${orderErrorFragment}
+  mutation OrderConfirm($id: ID!) {
+    orderConfirm(id: $id) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderConfirmMutation = makeMutation<
+  OrderConfirm,
+  OrderConfirmVariables
+>(orderConfirmMutation);
+
 export const TypedOrderDraftBulkCancelMutation = TypedMutation<
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
