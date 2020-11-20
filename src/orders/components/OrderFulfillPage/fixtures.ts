@@ -67,7 +67,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage
+        url: placeholderImage.default
       }
     },
     {
@@ -122,7 +122,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage
+        url: placeholderImage.default
       }
     },
     {
@@ -170,7 +170,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage
+        url: placeholderImage.default
       }
     }
   ],
