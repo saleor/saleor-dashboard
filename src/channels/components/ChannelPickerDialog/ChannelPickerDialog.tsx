@@ -1,4 +1,3 @@
-import Typography from "@material-ui/core/Typography";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import {
@@ -6,11 +5,11 @@ import {
   SingleSelectField
 } from "@saleor/components/SingleSelectField";
 import React, { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 
-export interface ChannelSettingsDialogProps {
+export interface ChannelPickerDialogProps {
   channelsChoices: Choices;
   confirmButtonState: ConfirmButtonTransitionState;
   defaultChoice: string;
@@ -19,7 +18,7 @@ export interface ChannelSettingsDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ChannelSettingsDialog: React.FC<ChannelSettingsDialogProps> = ({
+const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
   channelsChoices = [],
   confirmButtonState,
   defaultChoice,
@@ -40,23 +39,17 @@ const ChannelSettingsDialog: React.FC<ChannelSettingsDialogProps> = ({
       onClose={onClose}
       onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage({
-        defaultMessage: "Settings",
+        defaultMessage: "Select a channel",
         description: "dialog header"
       })}
     >
       <div>
-        <Typography>
-          <FormattedMessage
-            defaultMessage="Configure the way information are presented in catalog section of Dashboard."
-            description="channel settings"
-          />
-        </Typography>
         <div className={classes.select}>
           <SingleSelectField
             choices={channelsChoices}
             name="channels"
             label={intl.formatMessage({
-              defaultMessage: "Show prices for",
+              defaultMessage: "Channel name",
               description: "select label"
             })}
             value={choice}
@@ -67,5 +60,5 @@ const ChannelSettingsDialog: React.FC<ChannelSettingsDialogProps> = ({
     </ActionDialog>
   );
 };
-ChannelSettingsDialog.displayName = "ChannelSettingsDialog";
-export default ChannelSettingsDialog;
+ChannelPickerDialog.displayName = "ChannelPickerDialog";
+export default ChannelPickerDialog;
