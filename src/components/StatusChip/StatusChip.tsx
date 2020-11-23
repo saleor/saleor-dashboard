@@ -45,7 +45,7 @@ const useStyles = makeStyles(
     },
     root: {
       borderRadius: 22,
-      display: "flex",
+      display: "inline-block",
       padding: "8px 24px"
     },
     ...StatusChipStyles

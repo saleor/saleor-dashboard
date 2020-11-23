@@ -70,6 +70,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+
   const {
     loadMore,
     search: variantSearch,
