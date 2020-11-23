@@ -15,6 +15,8 @@ import {
 
 const orderSectionUrl = "/orders";
 
+type CreateOrderDialog = "create-order";
+
 export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
   createdFrom = "createdFrom",
@@ -28,7 +30,7 @@ export enum OrderListUrlFiltersWithMultipleValuesEnum {
 }
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
-export type OrderListUrlDialog = "cancel" | TabActionDialog;
+export type OrderListUrlDialog = "cancel" | CreateOrderDialog | TabActionDialog;
 export enum OrderListUrlSortField {
   number = "number",
   customer = "customer",
@@ -61,7 +63,10 @@ export enum OrderDraftListUrlFiltersEnum {
   query = "query"
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
-export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export type OrderDraftListUrlDialog =
+  | "remove"
+  | CreateOrderDialog
+  | TabActionDialog;
 export enum OrderDraftListUrlSortField {
   number = "number",
   customer = "customer",

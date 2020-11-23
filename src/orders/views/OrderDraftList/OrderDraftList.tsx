@@ -81,9 +81,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   });
 
   const { channel, availableChannels } = useAppChannel();
-  const [channelPickerDialogOpen, setChannelPickerDialogOpen] = React.useState(
-    false
-  );
 
   const tabs = getFilterTabs();
 
@@ -200,7 +197,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                   data.draftOrders.edges.map(edge => edge.node)
                 )}
                 pageInfo={pageInfo}
-                onAdd={() => setChannelPickerDialogOpen(true)}
+                onAdd={() => openModal("create-order")}
                 onNextPage={loadNextPage}
                 onPreviousPage={loadPreviousPage}
                 onRowClick={id => () => navigate(orderUrl(id))}
@@ -268,8 +265,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 }))}
                 confirmButtonState="success"
                 defaultChoice={channel.id}
-                open={channelPickerDialogOpen}
-                onClose={() => setChannelPickerDialogOpen(false)}
+                open={params.action === "create-order"}
+                onClose={closeModal}
                 onConfirm={channel =>
                   createOrder({
                     variables: {
