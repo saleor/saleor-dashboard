@@ -21,7 +21,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
-import { FetchMoreProps, SearchProps } from "../../../types";
+import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
@@ -34,11 +34,11 @@ export interface FormData {
 
 export interface ShippingZoneDetailsPageProps
   extends FetchMoreProps,
-    SearchProps {
+    SearchProps,
+    ChannelProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedChannel: string;
   shippingZone: ShippingZoneDetailsFragment;
   warehouses: ShippingZoneDetailsFragment_warehouses[];
   onBack: () => void;
@@ -82,7 +82,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   onWeightRateAdd,
   onWeightRateEdit,
   saveButtonBarState,
-  selectedChannel,
+  selectedChannelId,
   shippingZone,
   warehouses
 }) => {
@@ -160,7 +160,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     method => method.type === ShippingMethodTypeEnum.PRICE
                   )}
                   variant="price"
-                  selectedChannel={selectedChannel}
+                  selectedChannelId={selectedChannelId}
                 />
                 <CardSpacer />
                 <ShippingZoneRates
@@ -172,7 +172,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     method => method.type === ShippingMethodTypeEnum.WEIGHT
                   )}
                   variant="weight"
-                  selectedChannel={selectedChannel}
+                  selectedChannelId={selectedChannelId}
                 />
               </div>
               <div>

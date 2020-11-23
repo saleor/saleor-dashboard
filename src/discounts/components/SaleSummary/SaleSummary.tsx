@@ -10,6 +10,7 @@ import Money from "@saleor/components/Money";
 import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,16 +18,18 @@ import { maybe } from "../../../misc";
 import { SaleType } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 
-export interface SaleSummaryProps {
-  selectedChannel: string;
+export interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetails_sale;
 }
 
-const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannel, sale }) => {
+const SaleSummary: React.FC<SaleSummaryProps> = ({
+  selectedChannelId,
+  sale
+}) => {
   const intl = useIntl();
 
   const channel = sale?.channelListings?.find(
-    listing => listing.channel.id === selectedChannel
+    listing => listing.channel.id === selectedChannelId
   );
   return (
     <Card>

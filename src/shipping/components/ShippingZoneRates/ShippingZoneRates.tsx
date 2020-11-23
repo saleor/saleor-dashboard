@@ -15,16 +15,16 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment_shippingMethods } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ICONBUTTON_SIZE } from "../../../theme";
 
-export interface ShippingZoneRatesProps {
+export interface ShippingZoneRatesProps extends ChannelProps {
   disabled: boolean;
   rates: ShippingZoneDetailsFragment_shippingMethods[];
-  selectedChannel: string;
   variant: "price" | "weight";
   onRateAdd: () => void;
   onRateEdit: (id: string) => void;
@@ -56,7 +56,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     onRateEdit,
     onRateRemove,
     rates,
-    selectedChannel,
+    selectedChannelId,
     variant
   } = props;
 
@@ -122,7 +122,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             rates,
             rate => {
               const channel = rate?.channelListings?.find(
-                listing => listing.channel.id === selectedChannel
+                listing => listing.channel.id === selectedChannelId
               );
               return (
                 <TableRow

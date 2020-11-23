@@ -1,14 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -80,6 +79,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
+  const { channel } = useAppChannel();
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -105,12 +106,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     OrderDraftListUrlDialog,
     OrderDraftListUrlQueryParams
   >(navigate, orderDraftListUrl, params);
-
-  const {
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel
-  } = useChannelsSettings("ordersDraftListChannel", { closeModal, openModal });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -171,16 +166,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   return (
     <>
-      {!!channelChoices?.length && (
-        <ChannelSettingsDialog
-          channelsChoices={channelChoices}
-          defaultChoice={selectedChannel}
-          open={params.action === "settings"}
-          confirmButtonState="default"
-          onClose={closeModal}
-          onConfirm={handleChannelSelectConfirm}
-        />
-      )}
       <TypedOrderDraftBulkCancelMutation
         onCompleted={handleOrderDraftBulkCancel}
       >
@@ -214,7 +199,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 onAdd={() =>
                   createOrder({
                     variables: {
-                      input: { channel: selectedChannel }
+                      input: { channel: channel.id }
                     }
                   })
                 }
@@ -239,11 +224,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                   >
                     <DeleteIcon />
                   </IconButton>
-                }
-                onSettingsOpen={
-                  !!channelChoices?.length
-                    ? () => openModal("settings")
-                    : undefined
                 }
               />
               <ActionDialog

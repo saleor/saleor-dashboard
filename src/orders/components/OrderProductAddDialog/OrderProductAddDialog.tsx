@@ -24,7 +24,7 @@ import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { FetchMoreProps } from "@saleor/types";
+import { ChannelProps, FetchMoreProps } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
@@ -87,12 +87,13 @@ type SetVariantsAction = (
   data: SearchOrderVariant_search_edges_node_variants[]
 ) => void;
 
-export interface OrderProductAddDialogProps extends FetchMoreProps {
+export interface OrderProductAddDialogProps
+  extends FetchMoreProps,
+    ChannelProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
   products: SearchOrderVariant_search_edges_node[];
-  selectedChannel: string;
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (data: SearchOrderVariant_search_edges_node_variants[]) => void;
@@ -169,7 +170,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     loading,
     hasMore,
     products,
-    selectedChannel,
+    selectedChannelId,
     onFetch,
     onFetchMore,
     onClose,
@@ -257,7 +258,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 (product, productIndex) =>
                   product.variants.some(variant =>
                     variant.channelListings.some(
-                      listing => listing.channel.id === selectedChannel
+                      listing => listing.channel.id === selectedChannelId
                     )
                   ) ? (
                     <React.Fragment key={product ? product.id : "skeleton"}>
@@ -293,7 +294,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                       {maybe(() => product.variants, []).map(
                         (variant, variantIndex) =>
                           variant.channelListings.some(
-                            listing => listing.channel.id === selectedChannel
+                            listing => listing.channel.id === selectedChannelId
                           ) ? (
                             <TableRow key={variant.id}>
                               <TableCell />

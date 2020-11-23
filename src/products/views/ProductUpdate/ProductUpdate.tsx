@@ -9,6 +9,7 @@ import {
   createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -114,6 +115,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     displayLoader: true,
     variables: { id }
   });
+  const { channel } = useAppChannel();
 
   const handleUpdate = (data: ProductUpdateMutationResult) => {
     if (data.productUpdate.errors.length === 0) {
@@ -404,6 +406,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
+        selectedChannelId={channel.id}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />

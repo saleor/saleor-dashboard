@@ -1,6 +1,5 @@
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 
 // <reference types="cypress" />
 describe("Products", () => {
@@ -13,8 +12,6 @@ describe("Products", () => {
       .get(LEFT_MENU_SELECTORS.catalog)
       .click()
       .get(PRODUCTS_SELECTORS.products)
-      .click()
-      .get(BUTTON_SELECTORS.submit)
       .click()
       .get(PRODUCTS_SELECTORS.createProductBtn)
       .click()

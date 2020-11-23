@@ -1,14 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -90,6 +89,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       }
     }
   });
+
+  const { availableChannels, channel } = useAppChannel();
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -113,12 +115,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     CollectionListUrlDialog,
     CollectionListUrlQueryParams
   >(navigate, collectionListUrl, params);
-
-  const {
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel
-  } = useChannelsSettings("collectionListChannel", { closeModal, openModal });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -151,16 +147,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
   return (
     <>
-      {!!channelChoices?.length && (
-        <ChannelSettingsDialog
-          channelsChoices={channelChoices}
-          defaultChoice={selectedChannel}
-          open={params.action === "settings"}
-          confirmButtonState="default"
-          onClose={closeModal}
-          onConfirm={handleChannelSelectConfirm}
-        />
-      )}
       <CollectionListPage
         currentTab={currentTab}
         initialSearch={params.query || ""}
@@ -197,11 +183,8 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        channelsCount={channelChoices?.length}
-        selectedChannel={selectedChannel}
-        onSettingsOpen={
-          !!channelChoices?.length ? () => openModal("settings") : undefined
-        }
+        channelsCount={availableChannels?.length}
+        selectedChannelId={channel.id}
       />
       <ActionDialog
         open={params.action === "remove" && maybe(() => params.ids.length > 0)}

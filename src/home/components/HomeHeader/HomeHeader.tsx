@@ -1,11 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import SingleSelectField, {
-  Choices
-} from "@saleor/components/SingleSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -27,16 +24,12 @@ const useStyles = makeStyles(
 
 interface HomeOrdersCardProps {
   userName: string;
-  channelChoices: Choices;
-  channelValue: string;
-  onChannelChange: (value: string) => void;
 }
 
 const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
-  const { userName, channelChoices, channelValue, onChannelChange } = props;
+  const { userName } = props;
 
   const classes = useStyles(props);
-  const intl = useIntl();
 
   return (
     <div className={classes.headerContainer} data-test="home-header">
@@ -70,20 +63,6 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
             <Skeleton style={{ width: "10em" }} />
           )}
         </Typography>
-      </div>
-      <div>
-        {!!channelChoices?.length && (
-          <SingleSelectField
-            name="channel"
-            label={intl.formatMessage({
-              defaultMessage: "Channel"
-            })}
-            choices={channelChoices}
-            value={channelValue}
-            onChange={e => onChannelChange(e.target.value)}
-            data-test="channel-select"
-          />
-        )}
       </div>
     </div>
   );

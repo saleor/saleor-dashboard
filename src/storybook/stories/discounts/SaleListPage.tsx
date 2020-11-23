@@ -42,9 +42,8 @@ const props: SaleListPageProps = {
       value: [DiscountStatusEnum.ACTIVE]
     }
   },
-  onSettingsOpen: () => undefined,
   sales: saleList,
-  selectedChannel: "123",
+  selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
     sort: SaleListUrlSortField.name
@@ -60,7 +59,6 @@ storiesOf("Views / Discounts / Sale list", module)
     <SaleListPage
       {...props}
       sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
-      selectedChannel=""
-      onSettingsOpen={undefined}
+      selectedChannelId=""
     />
   ));

@@ -1,13 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { sectionNames } from "@saleor/intl";
 import {
+  ChannelProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -30,20 +29,10 @@ export interface VoucherListPageProps
     ListActions,
     FilterPageProps<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
-    TabPageProps {
+    TabPageProps,
+    ChannelProps {
   vouchers: VoucherList_vouchers_edges_node[];
-  selectedChannel: string;
-  onSettingsOpen?: () => void;
 }
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      marginRight: theme.spacing(2)
-    }
-  }),
-  { name: "VoucherListPage" }
-);
-
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,
   filterOpts,
@@ -52,7 +41,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   onAll,
   onFilterChange,
   onSearchChange,
-  onSettingsOpen,
   onTabChange,
   onTabDelete,
   onTabSave,
@@ -60,26 +48,11 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        {onSettingsOpen && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Settings",
-                  description: "button"
-                }),
-                onSelect: onSettingsOpen
-              }
-            ]}
-          />
-        )}
         <Button onClick={onAdd} variant="contained" color="primary">
           <FormattedMessage
             defaultMessage="Create voucher"

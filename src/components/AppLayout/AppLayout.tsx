@@ -20,10 +20,11 @@ import SideBar from "../SideBar";
 import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import AppActionContext from "./AppActionContext";
+import useAppChannel from "./AppChannelContext";
+import AppChannelSelect from "./AppChannelSelect";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
-import ThemeSwitch from "./ThemeSwitch";
 
 const useStyles = makeStyles(
   theme => ({
@@ -128,6 +129,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const [docked, setDocked] = React.useState(true);
+  const {
+    availableChannels,
+    channel,
+    isPickerActive,
+    setChannel
+  } = useAppChannel(false);
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
@@ -202,23 +209,26 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         )}
                         <div className={classes.spacer} />
                         <div className={classes.userBar}>
-                          <ThemeSwitch
-                            className={classes.darkThemeSwitch}
-                            checked={isDark}
-                            onClick={toggleTheme}
-                          />
                           <NavigatorButton
                             isMac={navigator.platform
                               .toLowerCase()
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
                           />
+                          <AppChannelSelect
+                            channels={availableChannels}
+                            disabled={!isPickerActive}
+                            selectedChannelId={channel.id}
+                            onChannelSelect={setChannel}
+                          />
                           <UserChip
+                            isDarkThemeEnabled={isDark}
+                            user={user}
                             onLogout={logout}
                             onProfileClick={() =>
                               navigate(staffMemberDetailsUrl(user.id))
                             }
-                            user={user}
+                            onThemeToggle={toggleTheme}
                           />
                         </div>
                       </div>

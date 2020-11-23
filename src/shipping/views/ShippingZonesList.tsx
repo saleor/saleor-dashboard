@@ -1,11 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -63,12 +61,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     ShippingZonesListUrlQueryParams
   >(navigate, shippingZonesListUrl, params);
 
-  const {
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel
-  } = useChannelsSettings("shippingListChannel", { closeModal, openModal });
-
   const { data, loading, refetch } = useShippingZoneList({
     displayLoader: true,
     variables: paginationState
@@ -125,14 +117,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   );
   return (
     <>
-      <ChannelSettingsDialog
-        channelsChoices={channelChoices}
-        defaultChoice={selectedChannel}
-        open={params.action === "settings"}
-        confirmButtonState="default"
-        onClose={closeModal}
-        onConfirm={handleChannelSelectConfirm}
-      />
       <ShippingZonesListPage
         defaultWeightUnit={shop?.defaultWeightUnit}
         settings={settings}
@@ -178,8 +162,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           </IconButton>
         }
         userPermissions={user?.userPermissions || []}
-        selectedChannel={selectedChannel}
-        onSettingsOpen={() => openModal("settings")}
       />
 
       <ActionDialog

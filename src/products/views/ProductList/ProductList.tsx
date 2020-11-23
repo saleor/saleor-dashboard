@@ -1,8 +1,8 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -16,7 +16,6 @@ import {
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -126,33 +125,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 100
     }
   });
+  const { availableChannels, channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  const {
-    channel,
-    channels,
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel,
-    slug
-  } = useChannelsSettings("productsListChannel", { closeModal, openModal });
-
-  React.useEffect(() => {
-    const action = selectedChannel
-      ? {}
-      : { action: "settings" as ProductListUrlDialog };
-    navigate(
-      productListUrl({
-        ...{ ...params, ...action },
-        ...DEFAULT_INITIAL_PAGINATION_DATA
-      }),
-      true
-    );
-  }, [settings.rowNumber]);
+  // Reset pagination
+  React.useEffect(
+    () =>
+      navigate(
+        productListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   const tabs = getFilterTabs();
 
@@ -231,13 +222,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const filter = getFilterVariables(params, slug);
-  const sort = getSortQueryVariables(params, slug);
+  const filter = getFilterVariables(params, channel.slug);
+  const sort = getSortQueryVariables(params, channel.slug);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
-      ...(slug ? { sort } : {})
+      sort
     }),
     [params, settings.rowNumber]
   );
@@ -388,22 +379,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
-        channelsCount={channelChoices?.length}
-        selectedChannel={selectedChannel}
-        onSettingsOpen={
-          !!channelChoices?.length ? () => openModal("settings") : undefined
-        }
+        channelsCount={availableChannels?.length}
+        selectedChannelId={channel.id}
       />
-      {!!channelChoices?.length && (
-        <ChannelSettingsDialog
-          channelsChoices={channelChoices}
-          defaultChoice={selectedChannel}
-          open={params.action === "settings"}
-          confirmButtonState="default"
-          onClose={closeModal}
-          onConfirm={handleChannelSelectConfirm}
-        />
-      )}
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
@@ -449,7 +427,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
-        channels={channels}
+        channels={availableChannels}
         onClose={closeModal}
         onSubmit={data =>
           exportProducts({

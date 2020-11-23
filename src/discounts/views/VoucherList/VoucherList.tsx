@@ -1,15 +1,14 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -65,16 +64,12 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
+  const { channel } = useAppChannel();
+
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,
     VoucherListUrlQueryParams
   >(navigate, voucherListUrl, params);
-
-  const {
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel
-  } = useChannelsSettings("vouchersListChannel", { closeModal, openModal });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -167,16 +162,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         return (
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
-            {!!channelChoices?.length && (
-              <ChannelSettingsDialog
-                channelsChoices={channelChoices}
-                defaultChoice={selectedChannel}
-                open={params.action === "settings"}
-                confirmButtonState="default"
-                onClose={closeModal}
-                onConfirm={handleChannelSelectConfirm}
-              />
-            )}
             <VoucherListPage
               currentTab={currentTab}
               filterOpts={getFilterOpts(params)}
@@ -215,12 +200,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
-              selectedChannel={selectedChannel}
-              onSettingsOpen={
-                !!channelChoices?.length
-                  ? () => openModal("settings")
-                  : undefined
-              }
+              selectedChannelId={channel.id}
             />
             <ActionDialog
               confirmButtonState={voucherBulkDeleteOpts.status}

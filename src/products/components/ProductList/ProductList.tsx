@@ -24,7 +24,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
@@ -99,12 +99,12 @@ const DisplayColumn = TDisplayColumn as React.FunctionComponent<
 interface ProductListProps
   extends ListProps<ProductListColumns>,
     ListActions,
-    SortPage<ProductListUrlSortField> {
+    SortPage<ProductListUrlSortField>,
+    ChannelProps {
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
   loading: boolean;
-  selectedChannel: string;
   channelsCount: number;
 }
 
@@ -128,7 +128,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onUpdateListSettings,
     onRowClick,
     onSort,
-    selectedChannel
+    selectedChannelId
   } = props;
 
   const classes = useStyles(props);
@@ -286,7 +286,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel = product?.channelListings.find(
-                listing => listing.channel.id === selectedChannel
+                listing => listing.channel.id === selectedChannelId
               );
 
               return (
@@ -362,9 +362,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       ) : product?.channelListings !== undefined ? (
                         <ChannelsAvailabilityDropdown
                           allChannelsCount={channelsCount}
-                          currentChannel={
-                            channel || product?.channelListings[0]
-                          }
+                          currentChannel={channel}
                           channels={product?.channelListings}
                         />
                       ) : (

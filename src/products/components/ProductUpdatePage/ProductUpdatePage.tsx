@@ -22,7 +22,12 @@ import { maybe } from "@saleor/misc";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
+import {
+  ChannelProps,
+  FetchMoreProps,
+  ListActions,
+  ReorderAction
+} from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -42,7 +47,7 @@ import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
 
-export interface ProductUpdatePageProps extends ListActions {
+export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
   channelsErrors: ProductChannelListingErrorFragment[];
@@ -83,7 +88,9 @@ export interface ProductUpdatePageProps extends ListActions {
   onWarehouseConfigure();
 }
 
-export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
+export interface ProductUpdatePageSubmitData
+  extends ProductUpdatePageFormData,
+    ChannelProps {
   addStocks: ProductStockInput[];
   attributes: ProductAttributeInput[];
   collections: string[];
@@ -96,7 +103,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
-  channelChoices,
   channelsErrors,
   allChannelsCount,
   currentChannels = [],
@@ -133,6 +139,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onWarehouseConfigure,
   isChecked,
   selected,
+  selectedChannelId,
   toggle,
   toggleAll,
   toolbar
@@ -235,7 +242,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     disabled={disabled}
                     variants={variants}
                     product={product}
-                    channelChoices={channelChoices}
                     onRowClick={onVariantShow}
                     onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}
@@ -244,6 +250,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     toolbar={toolbar}
                     isChecked={isChecked}
                     selected={selected}
+                    selectedChannelId={selectedChannelId}
                     toggle={toggle}
                     toggleAll={toggleAll}
                   />

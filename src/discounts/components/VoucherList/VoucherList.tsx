@@ -14,7 +14,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
 import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
@@ -26,9 +26,9 @@ import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 export interface VoucherListProps
   extends ListProps,
     ListActions,
-    SortPage<VoucherListUrlSortField> {
+    SortPage<VoucherListUrlSortField>,
+    ChannelProps {
   vouchers: VoucherList_vouchers_edges_node[];
-  selectedChannel: string;
 }
 
 const useStyles = makeStyles(
@@ -94,7 +94,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     vouchers,
     isChecked,
     selected,
-    selectedChannel,
+    selectedChannelId,
     sort,
     toggle,
     toggleAll,
@@ -219,7 +219,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
             const channel = voucher?.channelListings?.find(
-              listing => listing.channel.id === selectedChannel
+              listing => listing.channel.id === selectedChannelId
             );
             const hasChannelsLoaded = voucher?.channelListings?.length;
 

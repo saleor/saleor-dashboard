@@ -17,7 +17,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe, splitDateTime } from "../../../misc";
-import { ListProps, TabListActions } from "../../../types";
+import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import DiscountCategories from "../DiscountCategories";
@@ -57,11 +57,11 @@ export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
-    > {
+    >,
+    ChannelProps {
   activeTab: SaleDetailsPageTab;
   errors: DiscountErrorFragment[];
   sale: SaleDetails_sale;
-  selectedChannel: string;
   allChannelsCount: number;
   channelListings: ChannelSaleData[];
   hasChannelChanged: boolean;
@@ -119,7 +119,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   productListToolbar,
   isChecked,
   selected,
-  selectedChannel,
+  selectedChannelId,
   toggle,
   toggleAll
 }) => {
@@ -270,7 +270,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     pageInfo={pageInfo}
                     discount={sale}
                     channelsCount={allChannelsCount}
-                    selectedChannel={selectedChannel}
+                    selectedChannelId={selectedChannelId}
                     isChecked={isChecked}
                     selected={selected}
                     toggle={toggle}
@@ -287,7 +287,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 />
               </div>
               <div>
-                <SaleSummary selectedChannel={selectedChannel} sale={sale} />
+                <SaleSummary
+                  selectedChannelId={selectedChannelId}
+                  sale={sale}
+                />
                 <CardSpacer />
                 <ChannelsAvailability
                   selectedChannelsCount={data.channelListings.length}

@@ -10,6 +10,7 @@ import Money from "@saleor/components/Money";
 import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,20 +19,19 @@ import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 
-export interface VoucherSummaryProps {
+export interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetails_voucher;
-  selectedChannel: string;
 }
 
 const VoucherSummary: React.FC<VoucherSummaryProps> = ({
-  selectedChannel,
+  selectedChannelId,
   voucher
 }) => {
   const intl = useIntl();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannel
+    listing => listing.channel.id === selectedChannelId
   );
 
   return (

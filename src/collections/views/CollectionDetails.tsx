@@ -336,7 +336,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                 collectionChannelsChoices?.length !== currentChannels?.length
               }
               channelsCount={channelsData?.channels?.length}
-              selectedChannel={selectedChannel}
+              selectedChannelId={selectedChannel}
               openChannelsModal={handleChannelsModalOpen}
               onChannelsChange={setCurrentChannels}
             />

@@ -21,7 +21,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, PageListProps } from "../../../types";
+import { ChannelProps, ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(
@@ -55,10 +55,12 @@ const useStyles = makeStyles(
   { name: "CollectionProducts" }
 );
 
-export interface CollectionProductsProps extends PageListProps, ListActions {
+export interface CollectionProductsProps
+  extends PageListProps,
+    ListActions,
+    ChannelProps {
   collection: CollectionDetails_collection;
   channelsCount: number;
-  selectedChannel: string;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
@@ -75,7 +77,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     onProductUnassign,
     onRowClick,
     pageInfo,
-    selectedChannel,
+    selectedChannelId,
     isChecked,
     selected,
     toggle,
@@ -167,7 +169,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel =
                 product?.channelListings.find(
-                  listing => listing.channel.id === selectedChannel
+                  listing => listing.channel.id === selectedChannelId
                 ) || product?.channelListings[0];
 
               return (

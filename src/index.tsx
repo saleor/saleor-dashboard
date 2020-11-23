@@ -27,6 +27,9 @@ import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
+import useAppChannel, {
+  AppChannelProvider
+} from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
@@ -60,7 +63,7 @@ import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
-if (process.env.GTM_ID !== undefined) {
+if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
@@ -111,7 +114,9 @@ const App: React.FC = () => {
                   <AppStateProvider>
                     <ShopProvider>
                       <AuthProvider>
-                        <Routes />
+                        <AppChannelProvider>
+                          <Routes />
+                        </AppChannelProvider>
                       </AuthProvider>
                     </ShopProvider>
                   </AppStateProvider>
@@ -135,11 +140,15 @@ const Routes: React.FC = () => {
     tokenVerifyLoading,
     user
   } = useAuth();
+  const { channel } = useAppChannel(false);
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {isAuthenticated && !tokenAuthLoading && !tokenVerifyLoading ? (
+      {channel &&
+      isAuthenticated &&
+      !tokenAuthLoading &&
+      !tokenVerifyLoading ? (
         <AppLayout>
           <ErrorBoundary
             onError={() =>
@@ -271,7 +280,7 @@ const Routes: React.FC = () => {
             </Switch>
           </ErrorBoundary>
         </AppLayout>
-      ) : hasToken && tokenVerifyLoading ? (
+      ) : (isAuthenticated && !channel) || (hasToken && tokenVerifyLoading) ? (
         <LoginLoading />
       ) : (
         <Auth />

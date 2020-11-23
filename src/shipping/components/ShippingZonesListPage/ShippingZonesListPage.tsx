@@ -1,5 +1,4 @@
 import AppHeader from "@saleor/components/AppHeader";
-import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -23,8 +22,6 @@ export interface ShippingZonesListPageProps
   onBack: () => void;
   onRemove: (id: string) => void;
   onSubmit: (unit: WeightUnitsEnum) => void;
-  selectedChannel: string;
-  onSettingsOpen: () => void;
 }
 
 const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
@@ -32,7 +29,6 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   disabled,
   userPermissions,
   onBack,
-  onSettingsOpen,
   onSubmit,
   ...listProps
 }) => {
@@ -48,19 +44,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
           defaultMessage: "Shipping",
           description: "header"
         })}
-      >
-        <CardMenu
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
-            }
-          ]}
-        />
-      </PageHeader>
+      />
       <Grid>
         <div>
           <ShippingZonesList disabled={disabled} {...listProps} />

@@ -51,8 +51,7 @@ const props: VoucherListPageProps = {
       }
     }
   },
-  onSettingsOpen: () => undefined,
-  selectedChannel: "123",
+  selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
     sort: VoucherListUrlSortField.code
@@ -68,8 +67,7 @@ storiesOf("Views / Discounts / Voucher list", module)
   .add("no channels", () => (
     <VoucherListPage
       {...props}
-      selectedChannel=""
-      onSettingsOpen={undefined}
+      selectedChannelId=""
       vouchers={voucherList.map(voucher => ({
         ...voucher,
         channelListings: []

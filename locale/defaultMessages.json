@@ -1325,10 +1325,6 @@
     "context": "field is optional",
     "string": "(Optional)"
   },
-  "src_dot_collections_dot_components_dot_CollectionListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
-  },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_1631917001": {
     "context": "tab name",
     "string": "All Collections"
@@ -1650,10 +1646,6 @@
   "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
     "context": "section header button",
     "string": "Manage"
-  },
-  "src_dot_components_dot_ChannelsSelect_dot_4183335632": {
-    "context": "channel select label",
-    "string": "Channel:"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -2061,6 +2053,10 @@
   "src_dot_components_dot_UserChip_dot_248888005": {
     "context": "button",
     "string": "Account Settings"
+  },
+  "src_dot_components_dot_UserChip_dot_85001470": {
+    "context": "button",
+    "string": "Enable Dark Mode"
   },
   "src_dot_components_dot_VisibilityCard_dot_1311467573": {
     "string": "Show in product listings"
@@ -2496,10 +2492,6 @@
     "context": "sale name",
     "string": "Name"
   },
-  "src_dot_discounts_dot_components_dot_SaleListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
-  },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_1866913828": {
     "string": "Search Sale"
   },
@@ -2659,10 +2651,6 @@
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
     "string": "All Vouchers"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1930485532": {
     "string": "Search Voucher"
@@ -3004,9 +2992,6 @@
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_placed": {
     "string": "Order #{orderId} was placed"
   },
-  "src_dot_home_dot_components_dot_HomeHeader_dot_4019698341": {
-    "string": "Channel"
-  },
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
@@ -3162,10 +3147,6 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
     "string": "Add products"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -3490,10 +3471,6 @@
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
     "context": "generate invoice button",
     "string": "Generate"
-  },
-  "src_dot_orders_dot_components_dot_OrderListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
@@ -4561,10 +4538,6 @@
     "context": "product price",
     "string": "Price"
   },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
     "string": "Create Product"
@@ -5295,10 +5268,6 @@
   "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1325966144": {
     "context": "header",
     "string": "Shipping"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1391686013": {
-    "context": "button",
-    "string": "Settings"
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_120574110": {
     "context": "sort shipping methods by zone, section header",

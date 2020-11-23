@@ -1,9 +1,8 @@
-import ChannelSettingsDialog from "@saleor/channels/components/ChannelSettingsDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import useChannelsSettings from "@saleor/hooks/useChannelsSettings";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -68,6 +67,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
+  const { channel } = useAppChannel();
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -92,12 +93,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     OrderListUrlDialog,
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
-
-  const {
-    channelChoices,
-    handleChannelSelectConfirm,
-    selectedChannel
-  } = useChannelsSettings("ordersListChannel", { closeModal, openModal });
 
   const handleTabChange = (tab: number) =>
     navigate(
@@ -142,16 +137,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   return (
     <>
-      {!!channelChoices?.length && (
-        <ChannelSettingsDialog
-          channelsChoices={channelChoices}
-          defaultChoice={selectedChannel}
-          open={params.action === "settings"}
-          confirmButtonState="default"
-          onClose={closeModal}
-          onConfirm={handleChannelSelectConfirm}
-        />
-      )}
       <OrderListPage
         settings={settings}
         currentTab={currentTab}
@@ -163,7 +148,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onAdd={() =>
           createOrder({
             variables: {
-              input: { channel: selectedChannel }
+              input: { channel: channel.id }
             }
           })
         }
@@ -180,9 +165,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
-        onSettingsOpen={
-          !!channelChoices?.length ? () => openModal("settings") : undefined
-        }
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

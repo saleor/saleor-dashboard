@@ -16,14 +16,17 @@ import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ListActions, PageListProps } from "../../../types";
+import { ChannelProps, ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
-export interface CollectionDetailsPageProps extends PageListProps, ListActions {
+export interface CollectionDetailsPageProps
+  extends PageListProps,
+    ListActions,
+    ChannelProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetails_collection;
@@ -31,7 +34,6 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   errors: CollectionErrorFragment[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedChannel: string;
   onBack: () => void;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
@@ -51,7 +53,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   errors,
   hasChannelChanged,
   saveButtonBarState,
-  selectedChannel,
+  selectedChannelId,
   onBack,
   onCollectionRemove,
   onImageDelete,
@@ -99,7 +101,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <CollectionProducts
                 disabled={disabled}
                 channelsCount={channelsCount}
-                selectedChannel={selectedChannel}
+                selectedChannelId={selectedChannelId}
                 collection={collection}
                 {...collectionProductsProps}
               />

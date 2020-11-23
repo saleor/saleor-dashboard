@@ -561,7 +561,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           products={variantSearchOpts.data?.search.edges.map(
                             edge => edge.node
                           )}
-                          selectedChannel={order?.channel?.id}
+                          selectedChannelId={order?.channel?.id}
                           onClose={closeModal}
                           onFetch={variantSearch}
                           onFetchMore={loadMore}

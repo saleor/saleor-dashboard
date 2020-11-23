@@ -1,8 +1,7 @@
-import { useChannelsList } from "@saleor/channels/queries";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 
 import { getUserName, maybe } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
@@ -14,29 +13,10 @@ import { HomePageQuery } from "../queries";
 const HomeSection = () => {
   const navigate = useNavigator();
   const { user } = useUser();
-  const { data: channelsData } = useChannelsList({});
-
-  const channelChoices =
-    channelsData?.channels?.map(channel => ({
-      label: channel.name,
-      value: channel.slug
-    })) || [];
-
-  const [channelChoice, setChannelChoice] = useLocalStorage(
-    "homepageChannelChoice",
-    channelChoices?.length ? channelChoices[0]?.value : ""
-  );
-
-  useEffect(() => {
-    if (!channelChoice && channelChoices[0]) {
-      setChannelChoice(channelChoices[0].value);
-    }
-  }, [channelChoices]);
-
-  const handleChannelChange = useCallback(value => setChannelChoice(value), []);
+  const { channel } = useAppChannel();
 
   return (
-    <HomePageQuery displayLoader variables={{ channel: channelChoice }}>
+    <HomePageQuery displayLoader variables={{ channel: channel.slug }}>
       {({ data }) => (
         <HomePage
           activities={maybe(() =>
@@ -47,9 +27,6 @@ const HomeSection = () => {
           topProducts={maybe(() =>
             data.productTopToday.edges.map(edge => edge.node)
           )}
-          channelChoices={channelChoices}
-          channelValue={channelChoice}
-          onChannelChange={handleChannelChange}
           onProductClick={(productId, variantId) =>
             navigate(productVariantEditUrl(productId, variantId))
           }

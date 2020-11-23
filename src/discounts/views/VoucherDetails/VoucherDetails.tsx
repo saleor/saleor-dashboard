@@ -7,6 +7,7 @@ import {
   createSortedChannelsDataFromVoucher
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
@@ -37,7 +38,6 @@ import {
 } from "@saleor/discounts/urls";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -145,8 +145,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
   );
-
-  const [selectedChannel] = useLocalStorage("vouchersListChannel", "");
+  const { channel } = useAppChannel();
 
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
@@ -295,7 +294,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               ...(updateChannelsOpts.data
                                 ?.voucherChannelListingUpdate.errors || [])
                             ]}
-                            selectedChannel={selectedChannel}
+                            selectedChannelId={channel.id}
                             pageInfo={pageInfo}
                             onNextPage={loadNextPage}
                             onPreviousPage={loadPreviousPage}

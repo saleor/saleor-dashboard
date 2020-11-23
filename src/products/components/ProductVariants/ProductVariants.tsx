@@ -7,7 +7,6 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
-import { ChannelsSelect } from "@saleor/components/ChannelsSelect";
 import Checkbox from "@saleor/components/Checkbox";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
@@ -19,12 +18,11 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ReorderAction } from "../../../types";
+import { ChannelProps, ListActions, ReorderAction } from "../../../types";
 import {
   ProductDetails_product,
   ProductDetails_product_variants,
@@ -83,9 +81,6 @@ const useStyles = makeStyles(
       colSku: {
         width: 200
       }
-    },
-    channelSelect: {
-      marginRight: theme.spacing(1)
     },
     colGrab: {
       width: 60
@@ -183,12 +178,11 @@ function getAvailabilityLabel(
   }
 }
 
-interface ProductVariantsProps extends ListActions {
+interface ProductVariantsProps extends ListActions, ChannelProps {
   disabled: boolean;
   product: ProductDetails_product;
   variants: ProductDetails_product_variants[];
   onVariantReorder: ReorderAction;
-  channelChoices: SingleAutocompleteChoiceType[];
   onRowClick: (id: string) => () => void;
   onSetDefaultVariant(variant: ProductDetails_product_variants);
   onVariantAdd?();
@@ -199,7 +193,6 @@ const numberOfColumns = 7;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
-    channelChoices,
     disabled,
     variants,
     product,
@@ -210,6 +203,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     onSetDefaultVariant,
     isChecked,
     selected,
+    selectedChannelId,
     toggle,
     toggleAll,
     toolbar
@@ -218,9 +212,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
   const intl = useIntl();
   const [warehouse, setWarehouse] = React.useState<string>(null);
-  const [channelChoice, setChannelChoice] = useStateFromProps(
-    channelChoices[0]?.value
-  );
   const hasVariants = maybe(() => variants.length > 0, true);
 
   return (
@@ -261,11 +252,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
       {variants.length > 0 ? (
         <CardContent className={classes.warehouseSelectContainer}>
-          <ChannelsSelect
-            channelChoice={channelChoice}
-            channelChoices={channelChoices}
-            setChannelChoice={setChannelChoice}
-          />
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
               defaultMessage="Available inventory at:"
@@ -345,7 +331,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     )
                   : null;
               const channel = variant.channelListings.find(
-                listing => listing.channel.id === channelChoice
+                listing => listing.channel.id === selectedChannelId
               );
 
               return (

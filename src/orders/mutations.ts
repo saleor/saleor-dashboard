@@ -31,7 +31,10 @@ import {
   OrderDraftCancel,
   OrderDraftCancelVariables
 } from "./types/OrderDraftCancel";
-import { OrderDraftCreate } from "./types/OrderDraftCreate";
+import {
+  OrderDraftCreate,
+  OrderDraftCreateVariables
+} from "./types/OrderDraftCreate";
 import {
   OrderDraftFinalize,
   OrderDraftFinalizeVariables
@@ -371,9 +374,10 @@ const orderDraftCreateMutation = gql`
     }
   }
 `;
-export const useOrderDraftCreateMutation = makeMutation<OrderDraftCreate, {}>(
-  orderDraftCreateMutation
-);
+export const useOrderDraftCreateMutation = makeMutation<
+  OrderDraftCreate,
+  OrderDraftCreateVariables
+>(orderDraftCreateMutation);
 
 const orderLineDeleteMutation = gql`
   ${fragmentOrderDetails}

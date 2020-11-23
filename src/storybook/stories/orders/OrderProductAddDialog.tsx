@@ -21,7 +21,7 @@ const props: OrderProductAddDialogProps = {
   onSubmit: () => undefined,
   open: true,
   products,
-  selectedChannel: products[0].variants[0].channelListings[0].channel.id
+  selectedChannelId: products[0].variants[0].channelListings[0].channel.id
 };
 
 storiesOf("Orders / OrderProductAddDialog", module)

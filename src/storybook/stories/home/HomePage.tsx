@@ -1,6 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
-import { channelsList } from "@saleor/channels/fixtures";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
@@ -11,16 +10,9 @@ import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
 
 const shop = shopFixture(placeholderImage);
-const channelChoices = channelsList.map(channel => ({
-  label: channel.name,
-  value: channel.slug
-}));
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
   activities: shop.activities.edges.map(edge => edge.node),
-  channelChoices,
-  channelValue: channelChoices[0].value,
-  onChannelChange: () => undefined,
   onOrdersToCaptureClick: () => undefined,
   onOrdersToFulfillClick: () => undefined,
   onProductClick: () => undefined,

@@ -27,7 +27,7 @@ const props: CollectionListPageProps = {
   },
   ...tabPageProps,
   collections,
-  selectedChannel: "123"
+  selectedChannelId: "123"
 };
 
 storiesOf("Views / Collections / Collection list", module)

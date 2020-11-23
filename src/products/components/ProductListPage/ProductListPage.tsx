@@ -16,6 +16,7 @@ import {
 } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
+  ChannelProps,
   FetchMoreProps,
   FilterPageProps,
   ListActions,
@@ -38,7 +39,8 @@ export interface ProductListPageProps
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
-    SortPage<ProductListUrlSortField> {
+    SortPage<ProductListUrlSortField>,
+    ChannelProps {
   activeAttributeSortId: string;
   availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
   channelsCount: number;
@@ -47,8 +49,6 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
-  selectedChannel: string;
-  onSettingsOpen?: () => void;
 }
 
 const useStyles = makeStyles(
@@ -84,12 +84,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onFetchMore,
     onFilterChange,
     onSearchChange,
-    onSettingsOpen,
     onTabChange,
     onTabDelete,
     onTabSave,
     onUpdateListSettings,
-    selectedChannel,
+    selectedChannelId,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -134,13 +133,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
-            },
-            onSettingsOpen && {
-              label: intl.formatMessage({
-                defaultMessage: "Settings",
-                description: "button"
-              }),
-              onSelect: onSettingsOpen
             }
           ]}
           data-test="menu"
@@ -199,7 +191,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           gridAttributes={gridAttributes}
           settings={settings}
           channelsCount={channelsCount}
-          selectedChannel={selectedChannel}
+          selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>
