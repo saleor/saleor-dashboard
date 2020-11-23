@@ -1245,7 +1245,6 @@ type CollectionTranslation implements Node {
 type CollectionUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collectionErrors: [CollectionError!]!
-  productErrors: [ProductError!]!
   collection: Collection
 }
 
@@ -1799,6 +1798,7 @@ input DraftOrderCreateInput {
   voucher: ID
   customerNote: String
   channel: ID
+  redirectUrl: String
   lines: [OrderLineCreateInput]
 }
 
@@ -1818,6 +1818,7 @@ input DraftOrderInput {
   voucher: ID
   customerNote: String
   channel: ID
+  redirectUrl: String
 }
 
 type DraftOrderLineDelete {
@@ -2585,7 +2586,6 @@ type Mutation {
   productUpdate(id: ID!, input: ProductInput!): ProductUpdate
   productTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): ProductTranslate
   productChannelListingUpdate(id: ID!, input: ProductChannelListingUpdateInput!): ProductChannelListingUpdate
-  productSetAvailabilityForPurchase(isAvailable: Boolean!, productId: ID!, startDate: Date): ProductSetAvailabilityForPurchase
   productImageCreate(input: ProductImageCreateInput!): ProductImageCreate
   productVariantReorder(moves: [ReorderInput]!, productId: ID!): ProductVariantReorder
   productImageDelete(id: ID!): ProductImageDelete
@@ -2596,11 +2596,7 @@ type Mutation {
   productTypeDelete(id: ID!): ProductTypeDelete
   productTypeBulkDelete(ids: [ID]!): ProductTypeBulkDelete
   productTypeUpdate(id: ID!, input: ProductTypeInput!): ProductTypeUpdate
-  productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: AttributeTypeEnum!): ProductTypeReorderAttributes
-  productTypeUpdateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeClearMetadata(id: ID!, input: MetaPath!): ProductTypeClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductTypeUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
-  productTypeClearPrivateMetadata(id: ID!, input: MetaPath!): ProductTypeClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
+  productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: ProductAttributeType!): ProductTypeReorderAttributes
   digitalContentCreate(input: DigitalContentUploadInput!, variantId: ID!): DigitalContentCreate
   digitalContentDelete(variantId: ID!): DigitalContentDelete
   digitalContentUpdate(input: DigitalContentInput!, variantId: ID!): DigitalContentUpdate
@@ -2775,11 +2771,6 @@ type Mutation {
   userAvatarUpdate(image: Upload!): UserAvatarUpdate
   userAvatarDelete: UserAvatarDelete
   userBulkSetActive(ids: [ID]!, isActive: Boolean!): UserBulkSetActive
-  serviceAccountCreate(input: ServiceAccountInput!): ServiceAccountCreate @deprecated(reason: "Use the `appCreate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountUpdate(id: ID!, input: ServiceAccountInput!): ServiceAccountUpdate @deprecated(reason: "Use the `appUpdate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountDelete(id: ID!): ServiceAccountDelete @deprecated(reason: "Use the `appDelete` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountTokenCreate(input: ServiceAccountTokenInput!): ServiceAccountTokenCreate @deprecated(reason: "Use the `appTokenCreate` mutation instead. This field will be removed after 2020-07-31.")
-  serviceAccountTokenDelete(id: ID!): ServiceAccountTokenDelete @deprecated(reason: "Use the `appTokenDelete` mutation instead. This field will be removed after 2020-07-31.")
   permissionGroupCreate(input: PermissionGroupCreateInput!): PermissionGroupCreate
   permissionGroupUpdate(id: ID!, input: PermissionGroupUpdateInput!): PermissionGroupUpdate
   permissionGroupDelete(id: ID!): PermissionGroupDelete
@@ -2830,6 +2821,7 @@ type Order implements Node & ObjectWithMetadata {
   displayGrossPrices: Boolean!
   customerNote: String!
   weight: Weight
+  redirectUrl: String
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   fulfillments: [Fulfillment]!
@@ -3754,6 +3746,7 @@ type ProductChannelListing implements Node {
   purchaseCost: MoneyRange
   margin: Margin
   isAvailableForPurchase: Boolean
+  pricing: ProductPricingInfo
 }
 
 input ProductChannelListingAddInput {
@@ -4339,7 +4332,7 @@ type Query {
   exportFile(id: ID!): ExportFile
   exportFiles(filter: ExportFileFilterInput, sortBy: ExportFileSortingInput, before: String, after: String, first: Int, last: Int): ExportFileCountableConnection
   taxTypes: [TaxType]
-  checkout(token: UUID, channel: String): Checkout
+  checkout(token: UUID): Checkout
   checkouts(channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
   checkoutLine(id: ID): CheckoutLine
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
@@ -4544,92 +4537,6 @@ type SelectedAttribute {
 input SeoInput {
   title: String
   description: String
-}
-
-type ServiceAccount implements Node & ObjectWithMetadata {
-  id: ID!
-  name: String
-  created: DateTime
-  isActive: Boolean
-  permissions: [Permission]
-  tokens: [ServiceAccountToken]
-  privateMetadata: [MetadataItem]!
-  metadata: [MetadataItem]!
-}
-
-type ServiceAccountCountableConnection {
-  pageInfo: PageInfo!
-  edges: [ServiceAccountCountableEdge!]!
-  totalCount: Int
-}
-
-type ServiceAccountCountableEdge {
-  node: ServiceAccount!
-  cursor: String!
-}
-
-type ServiceAccountCreate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  authToken: String
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-type ServiceAccountDelete {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
-}
-
-input ServiceAccountFilterInput {
-  search: String
-  isActive: Boolean
-}
-
-input ServiceAccountInput {
-  name: String
-  isActive: Boolean
-  permissions: [PermissionEnum]
-}
-
-enum ServiceAccountSortField {
-  NAME
-  CREATION_DATE
-}
-
-input ServiceAccountSortingInput {
-  direction: OrderDirection!
-  field: ServiceAccountSortField!
-}
-
-type ServiceAccountToken implements Node {
-  name: String
-  authToken: String
-  id: ID!
-}
-
-type ServiceAccountTokenCreate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  authToken: String
-  accountErrors: [AccountError!]!
-  serviceAccountToken: ServiceAccountToken
-}
-
-type ServiceAccountTokenDelete {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccountToken: ServiceAccountToken
-}
-
-input ServiceAccountTokenInput {
-  name: String
-  serviceAccount: ID!
-}
-
-type ServiceAccountUpdate {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
-  serviceAccount: ServiceAccount
 }
 
 type SetPassword {
@@ -5255,7 +5162,8 @@ type User implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   addresses: [Address]
-  checkout: Checkout
+  checkout: Checkout @deprecated(reason: "Use the `checkout_tokens` field to fetch the user checkouts.")
+  checkoutTokens(channel: String): [UUID!]
   giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   orders(before: String, after: String, first: Int, last: Int): OrderCountableConnection
   permissions: [Permission] @deprecated(reason: "Will be removed in Saleor 2.11.Use the `userPermissions` instead.")
@@ -5756,7 +5664,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | ServiceAccount | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage | PageType
+union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductImage | PageType
 
 type _Service {
   sdl: String

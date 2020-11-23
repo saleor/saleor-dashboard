@@ -1210,6 +1210,7 @@ export interface DraftOrderCreateInput {
   voucher?: string | null;
   customerNote?: string | null;
   channel?: string | null;
+  redirectUrl?: string | null;
   lines?: (OrderLineCreateInput | null)[] | null;
 }
 
@@ -1223,6 +1224,7 @@ export interface DraftOrderInput {
   voucher?: string | null;
   customerNote?: string | null;
   channel?: string | null;
+  redirectUrl?: string | null;
 }
 
 export interface ExportInfoInput {
@@ -1367,10 +1369,6 @@ export interface PageCreateInput {
   pageType: string;
 }
 
-export interface PageFilterInput {
-  search?: string | null;
-}
-
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -1460,6 +1458,11 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
+export interface ProductAttributeAssignInput {
+  id: string;
+  type: ProductAttributeType;
+}
+
 export interface ProductChannelListingAddInput {
   channelId: string;
   isPublished?: boolean | null;
@@ -1472,11 +1475,6 @@ export interface ProductChannelListingAddInput {
 export interface ProductChannelListingUpdateInput {
   addChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
-}
-
-export interface ProductAttributeAssignInput {
-  id: string;
-  type: ProductAttributeType;
 }
 
 export interface ProductCreateInput {
