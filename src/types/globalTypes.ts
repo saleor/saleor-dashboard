@@ -630,6 +630,7 @@ export enum OrderEventsEnum {
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
+  CONFIRMED = 'CONFIRMED'
 }
 
 export enum OrderSettingsErrorCode {
