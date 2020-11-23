@@ -26,7 +26,6 @@ import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutation
 import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -113,13 +112,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           shippingChannels
         )
       });
-    } else {
-      errors.map(err =>
-        notify({
-          status: "error",
-          text: getShippingErrorMessage(err, intl)
-        })
-      );
     }
   };
 

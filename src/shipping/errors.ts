@@ -4,6 +4,10 @@ import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
+  invalid: {
+    defaultMessage: "Value is invalid",
+    description: "error message"
+  },
   price: {
     defaultMessage: "Maximum price cannot be lower than minimum",
     description: "error message"
@@ -33,6 +37,8 @@ export function getShippingWeightRateErrorMessage(
   switch (err?.code) {
     case ShippingErrorCode.MAX_LESS_THAN_MIN:
       return intl.formatMessage(messages.weight);
+    case ShippingErrorCode.INVALID:
+      return intl.formatMessage(messages.invalid);
     default:
       getShippingErrorMessage(err, intl);
   }

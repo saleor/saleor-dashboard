@@ -7,7 +7,6 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
@@ -22,7 +21,6 @@ import {
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -32,7 +30,6 @@ export interface WeightRatesCreateProps {
 
 export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
   const intl = useIntl();
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
@@ -87,13 +84,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
           data.channelListings
         )
       });
-    } else {
-      errors.map(err =>
-        notify({
-          status: "error",
-          text: getShippingErrorMessage(err, intl)
-        })
-      );
     }
   };
 

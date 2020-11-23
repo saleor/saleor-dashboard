@@ -10,7 +10,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { validatePrice } from "@saleor/products/utils/validation";
+import {
+  validateCostPrice as validateValueRange,
+  validatePrice
+} from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
@@ -64,6 +67,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   variant
 }) => {
   const intl = useIntl();
+  const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
@@ -83,8 +87,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         );
         const formDisabled = data.channelListings?.some(
           channel =>
-            validatePrice(channel.minValue) ||
-            validatePrice(channel.maxValue) ||
+            (isPriceVariant &&
+              (validateValueRange(channel.minValue) ||
+                validateValueRange(channel.maxValue))) ||
             validatePrice(channel.price)
         );
 
@@ -96,7 +101,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             <PageHeader
               title={
                 rate?.name ||
-                (variant === ShippingMethodTypeEnum.PRICE
+                (isPriceVariant
                   ? intl.formatMessage({
                       defaultMessage: "Price Rate Create",
                       description: "page title"
@@ -116,7 +121,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                {variant === ShippingMethodTypeEnum.PRICE ? (
+                {isPriceVariant ? (
                   <OrderValue
                     channels={data.channelListings}
                     errors={channelErrors}
