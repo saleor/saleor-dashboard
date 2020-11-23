@@ -138,9 +138,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const getSaveLabel = () =>
+  const saveLabel =
     order?.status === OrderStatus.UNCONFIRMED
-      ? intl.formatMessage({ defaultMessage: "confirm order" })
+      ? intl.formatMessage({
+          defaultMessage: "confirm order",
+          description: "save button"
+        })
       : undefined;
 
   const allowSave = (hasChanged: boolean) => {
@@ -258,7 +261,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               </div>
             </Grid>
             <SaveButtonBar
-              labels={{ save: getSaveLabel() }}
+              labels={{ save: saveLabel }}
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}

@@ -124,12 +124,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           return <NotFoundPage onBack={handleBack} />;
         }
 
-        const handleConfirmationSubmit = async (formData: MetadataFormData) => {
-          await orderConfirm({ variables: { id: order?.id } });
-          return handleSubmit(formData);
-        };
-
         const handleSubmit = async (data: MetadataFormData) => {
+          if (order?.status === OrderStatus.UNCONFIRMED) {
+            await orderConfirm({ variables: { id: order?.id } });
+          }
+
           const update = createMetadataUpdateHandler(
             order,
             () => Promise.resolve([]),
@@ -309,11 +308,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onInvoiceSend={id =>
                             openModal("invoice-send", { id })
                           }
-                          onSubmit={
-                            order?.status === OrderStatus.UNCONFIRMED
-                              ? handleConfirmationSubmit
-                              : handleSubmit
-                          }
+                          onSubmit={handleSubmit}
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
