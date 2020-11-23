@@ -221,6 +221,8 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             const channel = voucher?.channelListings?.find(
               listing => listing.channel.id === selectedChannel
             );
+            const hasChannelsLoaded = voucher?.channelListings?.length;
+
             return (
               <TableRow
                 className={!!voucher ? classes.tableRow : undefined}
@@ -241,10 +243,8 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
-                  {channel?.minSpent ? (
-                    <Money money={channel.minSpent} />
-                  ) : channel && channel.minSpent === null ? (
-                    "-"
+                  {hasChannelsLoaded ? (
+                    <Money money={channel?.minSpent} />
                   ) : (
                     <Skeleton />
                   )}
@@ -269,21 +269,19 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   className={classes.colValue}
                   onClick={voucher ? onRowClick(voucher.id) : undefined}
                 >
-                  {voucher &&
-                  voucher.discountValueType &&
-                  channel?.discountValue ? (
+                  {hasChannelsLoaded ? (
                     voucher.discountValueType ===
                     DiscountValueTypeEnum.FIXED ? (
                       <Money
-                        money={{
-                          amount: channel.discountValue,
-                          currency: channel.currency
-                        }}
+                        money={
+                          channel?.discountValue && {
+                            amount: channel?.discountValue,
+                            currency: channel?.currency
+                          }
+                        }
                       />
-                    ) : channel?.discountValue ? (
-                      <Percent amount={channel.discountValue} />
                     ) : (
-                      "-"
+                      <Percent amount={channel?.discountValue} />
                     )
                   ) : (
                     <Skeleton />
