@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ChannelPickerDialog from "@saleor/channels/components/ChannelPickerDialog";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -79,7 +80,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel();
 
   const tabs = getFilterTabs();
 
@@ -196,13 +197,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                   data.draftOrders.edges.map(edge => edge.node)
                 )}
                 pageInfo={pageInfo}
-                onAdd={() =>
-                  createOrder({
-                    variables: {
-                      input: { channel: channel.id }
-                    }
-                  })
-                }
+                onAdd={() => openModal("create-order")}
                 onNextPage={loadNextPage}
                 onPreviousPage={loadPreviousPage}
                 onRowClick={id => () => navigate(orderUrl(id))}
@@ -262,6 +257,23 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 onClose={closeModal}
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+              />
+              <ChannelPickerDialog
+                channelsChoices={availableChannels.map(channel => ({
+                  label: channel.name,
+                  value: channel.id
+                }))}
+                confirmButtonState="success"
+                defaultChoice={channel.id}
+                open={params.action === "create-order"}
+                onClose={closeModal}
+                onConfirm={channel =>
+                  createOrder({
+                    variables: {
+                      input: { channel }
+                    }
+                  })
+                }
               />
             </>
           );

@@ -3,16 +3,16 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channelsList } from "../../fixtures";
-import ChannelSettingsDialog, {
-  ChannelSettingsDialogProps
-} from "./ChannelSettingsDialog";
+import ChannelPickerDialog, {
+  ChannelPickerDialogProps
+} from "./ChannelPickerDialog";
 
 const channelsChoices = channelsList.map(channel => ({
   label: channel.name,
   value: channel.id
 }));
 
-const props: ChannelSettingsDialogProps = {
+const props: ChannelPickerDialogProps = {
   channelsChoices,
   confirmButtonState: "default",
   defaultChoice: channelsChoices[0]?.value,
@@ -23,4 +23,4 @@ const props: ChannelSettingsDialogProps = {
 
 storiesOf("Views / Channels / Settings dialog", module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelSettingsDialog {...props} />);
+  .add("default", () => <ChannelPickerDialog {...props} />);

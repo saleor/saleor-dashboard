@@ -1209,17 +1209,13 @@
     "context": "channel currency",
     "string": "Currency"
   },
-  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_1391686013": {
+  "src_dot_channels_dot_components_dot_ChannelPickerDialog_dot_2423186459": {
     "context": "dialog header",
-    "string": "Settings"
+    "string": "Select a channel"
   },
-  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_2721512922": {
-    "context": "channel settings",
-    "string": "Configure the way information are presented in catalog section of Dashboard."
-  },
-  "src_dot_channels_dot_components_dot_ChannelSettingsDialog_dot_645871430": {
+  "src_dot_channels_dot_components_dot_ChannelPickerDialog_dot_507892781": {
     "context": "select label",
-    "string": "Show prices for"
+    "string": "Channel name"
   },
   "src_dot_channels_dot_components_dot_ChannelStatus_dot_1004218338": {
     "context": "inactive",

@@ -1,3 +1,4 @@
+import ChannelPickerDialog from "@saleor/channels/components/ChannelPickerDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -67,7 +68,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel();
 
   const tabs = getFilterTabs();
 
@@ -145,13 +146,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         orders={maybe(() => data.orders.edges.map(edge => edge.node))}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        onAdd={() =>
-          createOrder({
-            variables: {
-              input: { channel: channel.id }
-            }
-          })
-        }
+        onAdd={() => openModal("create-order")}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
@@ -178,6 +173,23 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+      />
+      <ChannelPickerDialog
+        channelsChoices={availableChannels.map(channel => ({
+          label: channel.name,
+          value: channel.id
+        }))}
+        confirmButtonState="success"
+        defaultChoice={channel.id}
+        open={params.action === "create-order"}
+        onClose={closeModal}
+        onConfirm={channel =>
+          createOrder({
+            variables: {
+              input: { channel }
+            }
+          })
+        }
       />
     </>
   );
