@@ -10,10 +10,10 @@ import { ChannelDeleteInput, ChannelErrorCode } from "./../../types/globalTypes"
 
 export interface ChannelDelete_channelDelete_channel {
   __typename: "Channel";
-  name: string;
-  slug: string;
   id: string;
   isActive: boolean;
+  name: string;
+  slug: string;
   currencyCode: string;
 }
 
