@@ -401,8 +401,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell className={classes.colPrice}>
                       {product?.channelListings ? (
                         <MoneyRange
-                          from={channel?.pricing.priceRange.start.net}
-                          to={channel?.pricing.priceRange.stop.net}
+                          from={channel?.pricing?.priceRange?.start?.net}
+                          to={channel?.pricing?.priceRange?.stop?.net}
                         />
                       ) : (
                         <Skeleton />
