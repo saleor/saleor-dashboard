@@ -632,6 +632,10 @@ export enum OrderEventsEnum {
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
 
+export enum OrderSettingsErrorCode {
+  INVALID = "INVALID",
+}
+
 export enum OrderSortField {
   CREATION_DATE = "CREATION_DATE",
   CUSTOMER = "CUSTOMER",
@@ -1340,6 +1344,10 @@ export interface OrderLineCreateInput {
 
 export interface OrderLineInput {
   quantity: number;
+}
+
+export interface OrderSettingsUpdateInput {
+  automaticallyConfirmAllNewOrders: boolean;
 }
 
 export interface OrderSortingInput {

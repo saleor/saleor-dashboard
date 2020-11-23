@@ -27,6 +27,7 @@ import {
   orderListUrl,
   OrderListUrlDialog,
   OrderListUrlQueryParams,
+  orderSettingsPath,
   orderUrl
 } from "../../urls";
 import {
@@ -180,9 +181,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
-        onSettingsOpen={
-          !!channelChoices?.length ? () => openModal("settings") : undefined
-        }
+        onSettingsOpen={() => navigate(orderSettingsPath)}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

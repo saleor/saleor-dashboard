@@ -3637,6 +3637,25 @@
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
   },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
+    "context": "header",
+    "string": "Order settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_3782847217": {
+    "string": "General Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_1391686013": {
+    "context": "section header",
+    "string": "Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_3281882935": {
+    "context": "checkbox label description",
+    "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_513393066": {
+    "context": "checkbox label",
+    "string": "Automatically confirm all orders"
+  },
   "src_dot_orders_dot_components_dot_OrderShippingMethodEditDialog_dot_3369240294": {
     "context": "dialog header",
     "string": "Edit Shipping Method"

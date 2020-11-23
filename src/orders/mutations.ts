@@ -1,10 +1,12 @@
 import {
   invoiceErrorFragment,
-  orderErrorFragment
+  orderErrorFragment,
+  orderSettingsErrorFragment
 } from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
+  fragmentOrderSettings,
   invoiceFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
@@ -62,6 +64,10 @@ import {
   OrderMarkAsPaidVariables
 } from "./types/OrderMarkAsPaid";
 import { OrderRefund, OrderRefundVariables } from "./types/OrderRefund";
+import {
+  OrderSettingsUpdate,
+  OrderSettingsUpdateVariables
+} from "./types/OrderSettingsUpdate";
 import {
   OrderShippingMethodUpdate,
   OrderShippingMethodUpdateVariables
@@ -496,3 +502,22 @@ export const TypedInvoiceEmailSendMutation = TypedMutation<
   InvoiceEmailSend,
   InvoiceEmailSendVariables
 >(invoiceEmailSendMutation);
+
+const orderSettingsUpdateMutation = gql`
+  ${fragmentOrderSettings}
+  ${orderSettingsErrorFragment}
+  mutation OrderSettingsUpdate($input: OrderSettingsUpdateInput!) {
+    orderSettingsUpdate(input: $input) {
+      errors: orderSettingsErrors {
+        ...OrderSettingsErrorFragment
+      }
+      orderSettings {
+        ...OrderSettingsFragment
+      }
+    }
+  }
+`;
+export const useOrderSettingsUpdateMutation = makeMutation<
+  OrderSettingsUpdate,
+  OrderSettingsUpdateVariables
+>(orderSettingsUpdateMutation);

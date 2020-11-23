@@ -36,6 +36,7 @@ import {
   orderDraftListUrl,
   OrderDraftListUrlDialog,
   OrderDraftListUrlQueryParams,
+  orderSettingsPath,
   orderUrl
 } from "../../urls";
 import {
@@ -240,11 +241,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     <DeleteIcon />
                   </IconButton>
                 }
-                onSettingsOpen={
-                  !!channelChoices?.length
-                    ? () => openModal("settings")
-                    : undefined
-                }
+                onSettingsOpen={() => navigate(orderSettingsPath)}
               />
               <ActionDialog
                 confirmButtonState={orderDraftBulkDeleteOpts.status}
