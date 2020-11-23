@@ -41,12 +41,6 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_n
   url: string;
 }
 
-export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -58,7 +52,6 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_n
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;

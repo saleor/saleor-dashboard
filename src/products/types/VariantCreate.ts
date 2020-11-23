@@ -87,16 +87,43 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
   currencyCode: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_discountedPrice {
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start | null;
+  stop: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange | null;
+}
+
 export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
-  discountedPrice: VariantCreate_productVariantCreate_productVariant_product_channelListings_discountedPrice | null;
+  pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_variants_images {

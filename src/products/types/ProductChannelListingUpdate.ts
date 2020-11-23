@@ -74,16 +74,43 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   currencyCode: string;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_discountedPrice {
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_start | null;
+  stop: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_channel;
-  discountedPrice: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_discountedPrice | null;
+  pricing: ProductChannelListingUpdate_productChannelListingUpdate_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

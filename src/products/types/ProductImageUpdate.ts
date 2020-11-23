@@ -80,16 +80,43 @@ export interface ProductImageUpdate_productImageUpdate_product_channelListings_c
   currencyCode: string;
 }
 
-export interface ProductImageUpdate_productImageUpdate_product_channelListings_discountedPrice {
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_start_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_start | null;
+  stop: ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductImageUpdate_productImageUpdate_product_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductImageUpdate_productImageUpdate_product_channelListings_channel;
-  discountedPrice: ProductImageUpdate_productImageUpdate_product_channelListings_discountedPrice | null;
+  pricing: ProductImageUpdate_productImageUpdate_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

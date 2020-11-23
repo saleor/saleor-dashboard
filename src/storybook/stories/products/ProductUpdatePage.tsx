@@ -155,7 +155,6 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       errors={([
         "attributes",
-        "basePrice",
         "category",
         "chargeTaxes",
         "collections",

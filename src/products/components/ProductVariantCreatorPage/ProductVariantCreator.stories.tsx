@@ -26,7 +26,7 @@ const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
 const channels: ChannelPrice[] = productChannels.map(channel => ({
   channelId: channel.channel.id,
-  price: channel.discountedPrice.amount.toString()
+  price: channel.pricing?.priceRange?.start?.net.amount.toString()
 }));
 
 const price: Price = {
@@ -87,10 +87,10 @@ const data: ProductVariantCreateFormData = {
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
   channelListings: productChannels.map(listing => ({
-    currency: listing.discountedPrice.currency,
+    currency: listing.pricing?.priceRange?.start?.net.currency,
     id: listing.channel.id,
     name: listing.channel.name,
-    price: listing.discountedPrice?.amount.toString() || ""
+    price: listing.pricing?.priceRange?.start?.net?.amount.toString() || ""
   })),
   data: {
     ...data,

@@ -5,15 +5,15 @@ import { CollectionList_collections_edges_node_channelListings } from "@saleor/c
 import Hr from "@saleor/components/Hr";
 import StatusLabel from "@saleor/components/StatusLabel";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { ProductList_products_edges_node_channelListings } from "@saleor/products/types/ProductList";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-type Channels =
-  | ProductList_products_edges_node_channelListings
-  | CollectionList_collections_edges_node_channelListings;
+type Channels = Pick<
+  CollectionList_collections_edges_node_channelListings,
+  "isPublished" | "publicationDate" | "channel"
+>;
 
 export interface ChannelsAvailabilityDropdownProps {
   allChannelsCount: number;

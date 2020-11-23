@@ -19,12 +19,6 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   url: string;
 }
 
-export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -36,7 +30,6 @@ export interface CollectionAssignProduct_collectionAddProducts_collection_produc
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;

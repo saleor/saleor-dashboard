@@ -20,12 +20,6 @@ export interface ProductList_products_edges_node_productType {
   hasVariants: boolean;
 }
 
-export interface ProductList_products_edges_node_channelListings_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductList_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -33,15 +27,48 @@ export interface ProductList_products_edges_node_channelListings_channel {
   currencyCode: string;
 }
 
+export interface ProductList_products_edges_node_channelListings_pricing_priceRange_start_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductList_products_edges_node_channelListings_pricing_priceRange_start {
+  __typename: "TaxedMoney";
+  net: ProductList_products_edges_node_channelListings_pricing_priceRange_start_net;
+}
+
+export interface ProductList_products_edges_node_channelListings_pricing_priceRange_stop_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductList_products_edges_node_channelListings_pricing_priceRange_stop {
+  __typename: "TaxedMoney";
+  net: ProductList_products_edges_node_channelListings_pricing_priceRange_stop_net;
+}
+
+export interface ProductList_products_edges_node_channelListings_pricing_priceRange {
+  __typename: "TaxedMoneyRange";
+  start: ProductList_products_edges_node_channelListings_pricing_priceRange_start | null;
+  stop: ProductList_products_edges_node_channelListings_pricing_priceRange_stop | null;
+}
+
+export interface ProductList_products_edges_node_channelListings_pricing {
+  __typename: "ProductPricingInfo";
+  priceRange: ProductList_products_edges_node_channelListings_pricing_priceRange | null;
+}
+
 export interface ProductList_products_edges_node_channelListings {
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: ProductList_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
   channel: ProductList_products_edges_node_channelListings_channel;
+  pricing: ProductList_products_edges_node_channelListings_pricing | null;
 }
 
 export interface ProductList_products_edges_node_attributes_attribute {

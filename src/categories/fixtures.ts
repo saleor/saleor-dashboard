@@ -139,13 +139,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             },
@@ -159,13 +176,30 @@ export const category: (
                 name: "Channel2"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -196,13 +230,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -233,13 +284,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -270,13 +338,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -307,13 +392,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -344,13 +446,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -381,13 +500,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -418,13 +554,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -455,13 +608,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }
@@ -492,13 +662,30 @@ export const category: (
                 name: "Channel1"
               },
               currency: "USD",
-              discountedPrice: {
-                __typename: "Money",
-                amount: 1,
-                currency: "USD"
-              },
               isAvailableForPurchase: false,
               isPublished: false,
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 30.1,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 44.9,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
               publicationDate: null,
               visibleInListings: false
             }

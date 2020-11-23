@@ -98,12 +98,6 @@ export const product: (
     }
   ],
   availableForPurchase: null,
-  basePrice: {
-    __typename: "Money" as "Money",
-    amount: 339.39,
-    currency: "NZD",
-    localized: "339.39 NZD"
-  },
   category: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6MQ==",
@@ -119,13 +113,30 @@ export const product: (
         id: "123",
         name: "Channel1"
       },
-      discountedPrice: {
-        __typename: "Money",
-        amount: 1,
-        currency: "USD"
-      },
       isAvailableForPurchase: false,
       isPublished: true,
+      pricing: {
+        __typename: "ProductPricingInfo",
+        priceRange: {
+          __typename: "TaxedMoneyRange",
+          start: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 1.2,
+              currency: "USD"
+            }
+          },
+          stop: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 3.5,
+              currency: "USD"
+            }
+          }
+        }
+      },
       publicationDate: "2020-07-14",
       visibleInListings: true
     },
@@ -138,13 +149,30 @@ export const product: (
         id: "124",
         name: "Channel2"
       },
-      discountedPrice: {
-        __typename: "Money",
-        amount: 1,
-        currency: "USD"
-      },
       isAvailableForPurchase: false,
       isPublished: false,
+      pricing: {
+        __typename: "ProductPricingInfo",
+        priceRange: {
+          __typename: "TaxedMoneyRange",
+          start: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 1.2,
+              currency: "USD"
+            }
+          },
+          stop: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 3.5,
+              currency: "USD"
+            }
+          }
+        }
+      },
       publicationDate: "2020-07-30",
       visibleInListings: true
     }
@@ -416,13 +444,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -435,13 +480,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -472,13 +534,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -491,13 +570,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -528,13 +624,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -547,13 +660,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -599,13 +729,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -618,13 +765,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -670,13 +834,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -689,13 +870,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -741,13 +939,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -761,13 +976,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -813,13 +1045,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -832,13 +1081,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -884,13 +1150,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -903,13 +1186,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -955,13 +1255,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -974,13 +1291,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1026,13 +1360,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -1045,13 +1396,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -1097,13 +1465,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1116,13 +1501,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1168,13 +1570,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1187,13 +1606,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1239,13 +1675,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1258,13 +1711,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1310,13 +1780,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -1329,13 +1816,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -1381,13 +1885,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -1400,13 +1921,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -1452,13 +1990,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1471,13 +2026,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1523,13 +2095,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: false
       },
@@ -1542,13 +2131,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: false
       }
@@ -1594,13 +2200,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1613,13 +2236,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 3.99,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1665,13 +2305,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1684,13 +2341,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1736,13 +2410,30 @@ export const products = (
           id: "123",
           name: "Channel1"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: true,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-14",
         visibleInListings: true
       },
@@ -1755,13 +2446,30 @@ export const products = (
           id: "124",
           name: "Channel2"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 1,
-          currency: "USD"
-        },
         isAvailableForPurchase: false,
         isPublished: false,
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
+        },
         publicationDate: "2020-07-30",
         visibleInListings: true
       }
@@ -1944,10 +2652,27 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           id: "test1",
           name: "Test channel"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 10,
-          currency: "USD"
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
         }
       },
       {
@@ -1958,10 +2683,27 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           id: "test2",
           name: "Test channel other"
         },
-        discountedPrice: {
-          __typename: "Money",
-          amount: 20,
-          currency: "USD"
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 1.2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 3.5,
+                currency: "USD"
+              }
+            }
+          }
         }
       }
     ],

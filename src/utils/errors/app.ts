@@ -1,4 +1,4 @@
-import { AppErrorFragment } from "@saleor/apps/types/AppErrorFragment";
+import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { AppErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";

@@ -5,7 +5,7 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
-import Money from "@saleor/components/Money";
+import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
@@ -207,7 +207,10 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   </TableCell>
                   <TableCell className={classes.colPrice}>
                     {product?.channelListings ? (
-                      <Money money={channel?.discountedPrice} />
+                      <MoneyRange
+                        from={channel?.pricing?.priceRange?.start?.net}
+                        to={channel?.pricing?.priceRange?.stop?.net}
+                      />
                     ) : (
                       <Skeleton />
                     )}

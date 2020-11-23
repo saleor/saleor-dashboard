@@ -54,12 +54,6 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edge
   url: string;
 }
 
-export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_discountedPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -71,7 +65,6 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edge
   __typename: "ProductChannelListing";
   isPublished: boolean;
   publicationDate: any | null;
-  discountedPrice: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_channelListings_discountedPrice | null;
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
