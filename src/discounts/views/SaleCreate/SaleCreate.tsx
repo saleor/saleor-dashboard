@@ -46,6 +46,7 @@ export const SaleDetails: React.FC = () => {
   const handleSaleCreate = (data: SaleCreate) => {
     if (data.saleCreate.errors.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully created sale"
         })
