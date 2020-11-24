@@ -67,7 +67,6 @@ export interface PageCreate_pageCreate_page_pageType {
   id: string;
   name: string;
   attributes: (PageCreate_pageCreate_page_pageType_attributes | null)[] | null;
-  message: string | null;
 }
 
 export interface PageCreate_pageCreate_page_metadata {

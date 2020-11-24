@@ -4,6 +4,7 @@ import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
+import { StatusType } from "./components/StatusChip/types";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -16,7 +17,6 @@ import {
   AuthorizationKeyType,
   CountryCode,
   OrderStatus,
-  OrderStatusType,
   PaymentChargeStatusEnum
 } from "./types/globalTypes";
 
@@ -158,42 +158,42 @@ export const orderStatusMessages = defineMessages({
 export const transformOrderStatus = (
   status: string,
   intl: IntlShape
-): { localized: string; status: OrderStatusType } => {
+): { localized: string; status: StatusType } => {
   switch (status) {
     case OrderStatus.FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.fulfilled),
-        status: OrderStatusType.success
+        status: StatusType.SUCCESS
       };
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: OrderStatusType.neutral
+        status: StatusType.NEUTRAL
       };
     case OrderStatus.UNFULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
-        status: OrderStatusType.error
+        status: StatusType.ERROR
       };
     case OrderStatus.CANCELED:
       return {
         localized: intl.formatMessage(orderStatusMessages.cancelled),
-        status: OrderStatusType.error
+        status: StatusType.ERROR
       };
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: OrderStatusType.error
+        status: StatusType.ERROR
       };
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: OrderStatusType.neutral
+        status: StatusType.NEUTRAL
       };
   }
   return {
     localized: status,
-    status: OrderStatusType.error
+    status: StatusType.ERROR
   };
 };
 

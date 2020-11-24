@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { OrderStatusType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 
+import { StatusType } from "./types";
+
 export interface StatusChipProps {
-  type?: OrderStatusType;
+  type?: StatusType;
   label?: string;
 }
 
@@ -54,7 +55,7 @@ const useStyles = makeStyles(
 );
 
 const StatusChip: React.FC<StatusChipProps> = props => {
-  const { type = OrderStatusType.neutral, label } = props;
+  const { type = StatusType.NEUTRAL, label } = props;
   const classes = useStyles(props);
 
   if (!label) {

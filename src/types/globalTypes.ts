@@ -592,6 +592,7 @@ export enum OrderErrorCode {
 }
 
 export enum OrderEventsEmailsEnum {
+  CONFIRMED = "CONFIRMED",
   DIGITAL_LINKS = "DIGITAL_LINKS",
   FULFILLMENT_CONFIRMATION = "FULFILLMENT_CONFIRMATION",
   ORDER_CANCEL = "ORDER_CANCEL",
@@ -604,6 +605,7 @@ export enum OrderEventsEmailsEnum {
 
 export enum OrderEventsEnum {
   CANCELED = "CANCELED",
+  CONFIRMED = "CONFIRMED",
   DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
@@ -649,19 +651,13 @@ export enum OrderStatus {
   UNFULFILLED = "UNFULFILLED",
 }
 
-export enum OrderStatusType {
-  error = "error",
-  neutral = "neutral",
-  alert = "alert",
-  success = "success"
-}
-
 export enum OrderStatusFilter {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
+  UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
 
