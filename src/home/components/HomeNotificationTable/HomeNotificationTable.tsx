@@ -14,9 +14,13 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     arrowIcon: {
-      width: theme.spacing(4)
+      textAlign: "right",
+      width: "auto"
+    },
+    tableCard: {
+      overflow: "hidden"
     },
     tableRow: {
       cursor: "pointer"
@@ -48,7 +52,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Card>
+    <Card className={classes.tableCard}>
       <ResponsiveTable>
         <TableBody className={classes.tableRow}>
           <RequirePermissions
