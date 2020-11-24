@@ -72,7 +72,7 @@
     "react-sortable-tree": "^2.6.2",
     "semver-compare": "^1.0.0",
     "slugify": "^1.4.6",
-    "typescript": "^3.6.4",
+    "typescript": "^3.9.7",
     "url-join": "^4.0.1",
     "use-react-router": "^1.0.7"
   },

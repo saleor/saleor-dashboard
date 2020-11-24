@@ -58,7 +58,7 @@ export function asSortParams<
     ),
     sort: params.sort
       ? findValueInEnum(params.sort, fields)
-      : defaultField || "name"
+      : defaultField?.toString() || "name"
   };
 }
 
