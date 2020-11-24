@@ -402,17 +402,6 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
     }
   );
 
-  const renderChannelLine = (id: string, name: string) => (
-    <React.Fragment key={id}>
-      <div className={classes.channelItem}>
-        <div className={classes.channelName}>
-          <Typography>{name}</Typography>
-        </div>
-      </div>
-      <Hr className={classes.hr} />
-    </React.Fragment>
-  );
-
   return (
     <>
       <Card>
@@ -457,7 +446,16 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
                 );
               })
             : channelsList
-            ? channelsList.map(data => renderChannelLine(data.id, data.name))
+            ? channelsList.map(data => (
+                <React.Fragment key={data.id}>
+                  <div className={classes.channelItem}>
+                    <div className={classes.channelName}>
+                      <Typography>{data.name}</Typography>
+                    </div>
+                  </div>
+                  <Hr className={classes.hr} />
+                </React.Fragment>
+              ))
             : null}
         </CardContent>
       </Card>
