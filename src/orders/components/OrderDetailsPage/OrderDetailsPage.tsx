@@ -213,6 +213,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onRefund={onPaymentRefund}
                   onVoid={onPaymentVoid}
                 />
+                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory history={order?.events} onNoteAdd={onNoteAdd} />
               </div>
