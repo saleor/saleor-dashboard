@@ -64,6 +64,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   variant
 }) => {
   const intl = useIntl();
+  const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
@@ -81,11 +82,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListings?.some(
-          channel =>
-            validatePrice(channel.minValue) ||
-            validatePrice(channel.maxValue) ||
-            validatePrice(channel.price)
+        const formDisabled = data.channelListings?.some(channel =>
+          validatePrice(channel.price)
         );
 
         return (
@@ -96,7 +94,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             <PageHeader
               title={
                 rate?.name ||
-                (variant === ShippingMethodTypeEnum.PRICE
+                (isPriceVariant
                   ? intl.formatMessage({
                       defaultMessage: "Price Rate Create",
                       description: "page title"
@@ -116,7 +114,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                {variant === ShippingMethodTypeEnum.PRICE ? (
+                {isPriceVariant ? (
                   <OrderValue
                     channels={data.channelListings}
                     errors={channelErrors}

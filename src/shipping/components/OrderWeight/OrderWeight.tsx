@@ -74,13 +74,18 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 formErrors.minimumOrderWeight,
                 intl
               )}
-              error={!!formErrors.maximumOrderWeight}
+              error={!!formErrors.minimumOrderWeight}
               fullWidth
               label={intl.formatMessage({
                 defaultMessage: "Min. Order Weight"
               })}
               name="minValue"
               type="number"
+              inputProps={{
+                min: 0,
+                type: "number"
+              }}
+              InputProps={{ inputProps: { min: 0 } }}
               value={minValue}
               onChange={onChange}
             />
@@ -97,6 +102,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
               })}
               name="maxValue"
               type="number"
+              InputProps={{ inputProps: { min: minValue } }}
               value={maxValue}
               onChange={onChange}
             />

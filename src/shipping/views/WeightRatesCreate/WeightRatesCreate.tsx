@@ -8,7 +8,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import {
@@ -22,7 +22,6 @@ import {
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -44,6 +43,10 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     onCompleted: data => {
       const errors = data.shippingMethodChannelListingUpdate.errors;
       if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
         navigate(
           shippingWeightRatesEditUrl(
             id,
@@ -87,13 +90,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
           data.channelListings
         )
       });
-    } else {
-      errors.map(err =>
-        notify({
-          status: "error",
-          text: getShippingErrorMessage(err, intl)
-        })
-      );
     }
   };
 

@@ -5283,6 +5283,10 @@
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_655374584": {
     "string": "No shipping zones found"
   },
+  "src_dot_shipping_dot_invalid": {
+    "context": "error message",
+    "string": "Value is invalid"
+  },
   "src_dot_shipping_dot_price": {
     "context": "error message",
     "string": "Maximum price cannot be lower than minimum"
