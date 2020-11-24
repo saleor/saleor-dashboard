@@ -5201,8 +5201,8 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_4270729636": {
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1109610983": {
-    "string": "Shipping Zone Name"
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_579967655": {
+    "string": "Shipping rate name"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1161979494": {
     "context": "page title",
