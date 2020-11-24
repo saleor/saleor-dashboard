@@ -5,6 +5,7 @@ import React from "react";
 
 // TODO: This type probably need to be replaced with generated GraphQL type!
 export enum OrderRefundType {
+  PRODUCTS,
   MISCELLANEOUS
 }
 
