@@ -592,6 +592,7 @@ export enum OrderErrorCode {
 }
 
 export enum OrderEventsEmailsEnum {
+  CONFIRMED = "CONFIRMED",
   DIGITAL_LINKS = "DIGITAL_LINKS",
   FULFILLMENT_CONFIRMATION = "FULFILLMENT_CONFIRMATION",
   ORDER_CANCEL = "ORDER_CANCEL",
@@ -604,6 +605,7 @@ export enum OrderEventsEmailsEnum {
 
 export enum OrderEventsEnum {
   CANCELED = "CANCELED",
+  CONFIRMED = "CONFIRMED",
   DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
@@ -649,19 +651,13 @@ export enum OrderStatus {
   UNFULFILLED = "UNFULFILLED",
 }
 
-export enum OrderStatusType {
-  error = "error",
-  neutral = "neutral",
-  alert = "alert",
-  success = "success"
-}
-
 export enum OrderStatusFilter {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
+  UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
 
@@ -1219,6 +1215,7 @@ export interface DraftOrderCreateInput {
   voucher?: string | null;
   customerNote?: string | null;
   channel?: string | null;
+  redirectUrl?: string | null;
   lines?: (OrderLineCreateInput | null)[] | null;
 }
 
@@ -1232,6 +1229,7 @@ export interface DraftOrderInput {
   voucher?: string | null;
   customerNote?: string | null;
   channel?: string | null;
+  redirectUrl?: string | null;
 }
 
 export interface ExportInfoInput {
@@ -1376,10 +1374,6 @@ export interface PageCreateInput {
   pageType: string;
 }
 
-export interface PageFilterInput {
-  search?: string | null;
-}
-
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -1469,6 +1463,11 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
+export interface ProductAttributeAssignInput {
+  id: string;
+  type: ProductAttributeType;
+}
+
 export interface ProductChannelListingAddInput {
   channelId: string;
   isPublished?: boolean | null;
@@ -1481,11 +1480,6 @@ export interface ProductChannelListingAddInput {
 export interface ProductChannelListingUpdateInput {
   addChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
-}
-
-export interface ProductAttributeAssignInput {
-  id: string;
-  type: ProductAttributeType;
 }
 
 export interface ProductCreateInput {
