@@ -13,7 +13,7 @@ interface AvailabilityCardProps {
 export const AvailabilityCard: React.FC<AvailabilityCardProps &
   Omit<
     ChannelsAvailabilityProps,
-    "channelsMessages" | "hasManageChannelPermission"
+    "channelsMessages" | "hasManageChannelsPermission"
   >> = props => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();

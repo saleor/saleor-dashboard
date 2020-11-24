@@ -8,16 +8,16 @@ import React from "react";
 
 export const ChannelsAvailabilityWithPermission: React.FC<Omit<
   ChannelsAvailabilityProps,
-  "hasManageChannelPermission"
+  "hasManageChannelsPermission"
 >> = props => {
   const { user } = useUser();
-  const hasManageChannelPermission =
+  const hasManageChannelsPermission =
     !!user && hasPermission(PermissionEnum.MANAGE_CHANNELS, user);
 
   return (
     <ChannelsAvailability
       {...props}
-      hasManageChannelPermission={hasManageChannelPermission}
+      hasManageChannelsPermission={hasManageChannelsPermission}
     />
   );
 };

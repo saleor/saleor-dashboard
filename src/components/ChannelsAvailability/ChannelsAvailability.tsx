@@ -62,7 +62,7 @@ interface ChannelsAvailability {
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
-  hasManageChannelPermission: boolean;
+  hasManageChannelsPermission: boolean;
   onChange?: (id: string, data: Value) => void;
   openModal: () => void;
 }
@@ -383,7 +383,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
     allChannelsCount,
     channels,
     channelsMessages,
-    hasManageChannelPermission,
+    hasManageChannelsPermission,
     openModal,
     onChange
   } = props;
@@ -411,7 +411,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             description: "section header"
           })}
           toolbar={
-            hasManageChannelPermission && (
+            hasManageChannelsPermission && (
               <Button color="primary" onClick={openModal}>
                 {intl.formatMessage({
                   defaultMessage: "Manage",
