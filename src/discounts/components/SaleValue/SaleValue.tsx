@@ -89,7 +89,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
                       <TableCell>
                         <Typography>{listing?.name || <Skeleton />}</Typography>
                       </TableCell>
-                      <TableCell className={classes.colPrice}>
+                      <TableCell>
                         {listing ? (
                           <TextField
                             disabled={disabled}

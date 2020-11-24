@@ -12,13 +12,10 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
       width: "auto"
     },
-    colPrice: {
-      minWidth: 240
-    },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 200
+      width: 235
     },
     info: {
       fontSize: 14
