@@ -37,6 +37,7 @@ export const SaleDetails: React.FC = () => {
     handleChannelsModalOpen,
     isChannelSelected,
     isChannelsModalOpen,
+    setCurrentChannels,
     toggleAllChannels
   } = useChannels(allChannels);
 
@@ -94,6 +95,7 @@ export const SaleDetails: React.FC = () => {
                 onSubmit={handleSubmit}
                 saveButtonBarState={saleCreateOpts.status}
                 openChannelsModal={handleChannelsModalOpen}
+                onChannelsChange={setCurrentChannels}
               />
             </>
           );
