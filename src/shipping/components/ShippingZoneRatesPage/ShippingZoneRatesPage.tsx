@@ -10,10 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import {
-  validateCostPrice as validateValueRange,
-  validatePrice
-} from "@saleor/products/utils/validation";
+import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
@@ -85,12 +82,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListings?.some(
-          channel =>
-            (isPriceVariant &&
-              (validateValueRange(channel.minValue) ||
-                validateValueRange(channel.maxValue))) ||
-            validatePrice(channel.price)
+        const formDisabled = data.channelListings?.some(channel =>
+          validatePrice(channel.price)
         );
 
         return (

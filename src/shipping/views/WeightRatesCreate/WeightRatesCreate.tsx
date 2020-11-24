@@ -7,7 +7,8 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import {
@@ -30,6 +31,7 @@ export interface WeightRatesCreateProps {
 
 export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
   const intl = useIntl();
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
@@ -41,6 +43,10 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     onCompleted: data => {
       const errors = data.shippingMethodChannelListingUpdate.errors;
       if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
         navigate(
           shippingWeightRatesEditUrl(
             id,
