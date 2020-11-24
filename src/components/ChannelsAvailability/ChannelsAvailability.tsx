@@ -58,10 +58,11 @@ interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
   channelsMessages?: { [id: string]: Message };
-  errors: Error[];
+  errors?: Error[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
+  hasManageChannelPermission: boolean;
   onChange?: (id: string, data: Value) => void;
   openModal: () => void;
 }
@@ -377,11 +378,12 @@ const Channel: React.FC<ChannelProps> = ({
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
   const {
     channelsList,
-    errors,
+    errors = [],
     selectedChannelsCount,
     allChannelsCount,
     channels,
     channelsMessages,
+    hasManageChannelPermission,
     openModal,
     onChange
   } = props;
@@ -399,6 +401,18 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
       selectedChannelsCount
     }
   );
+
+  const renderChannelLine = (id: string, name: string) => (
+    <React.Fragment key={id}>
+      <div className={classes.channelItem}>
+        <div className={classes.channelName}>
+          <Typography>{name}</Typography>
+        </div>
+      </div>
+      <Hr className={classes.hr} />
+    </React.Fragment>
+  );
+
   return (
     <>
       <Card>
@@ -408,12 +422,14 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             description: "section header"
           })}
           toolbar={
-            <Button color="primary" onClick={openModal}>
-              {intl.formatMessage({
-                defaultMessage: "Manage",
-                description: "section header button"
-              })}
-            </Button>
+            hasManageChannelPermission && (
+              <Button color="primary" onClick={openModal}>
+                {intl.formatMessage({
+                  defaultMessage: "Manage",
+                  description: "section header button"
+                })}
+              </Button>
+            )
           }
         />
         <CardContent className={classes.card}>
@@ -441,16 +457,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
                 );
               })
             : channelsList
-            ? channelsList.map(data => (
-                <React.Fragment key={data.id}>
-                  <div className={classes.channelItem}>
-                    <div className={classes.channelName}>
-                      <Typography>{data.name}</Typography>
-                    </div>
-                  </div>
-                  <Hr className={classes.hr} />
-                </React.Fragment>
-              ))
+            ? channelsList.map(data => renderChannelLine(data.id, data.name))
             : null}
         </CardContent>
       </Card>

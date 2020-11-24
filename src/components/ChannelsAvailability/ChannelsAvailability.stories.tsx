@@ -17,6 +17,7 @@ const props: ChannelsAvailabilityProps = {
     name: channel.name
   })),
   errors: [],
+  hasManageChannelPermission: true,
   onChange: () => undefined,
   openModal: () => undefined,
   selectedChannelsCount: 3
@@ -42,4 +43,7 @@ storiesOf("Generics / ChannelsAvailability", module)
         {}
       )}
     />
+  ))
+  .add("without manage permission", () => (
+    <ChannelsAvailability {...props} hasManageChannelPermission={false} />
   ));

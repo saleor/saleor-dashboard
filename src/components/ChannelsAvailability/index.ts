@@ -1,2 +1,3 @@
 export * from "./ChannelsAvailability";
-export { default } from "./ChannelsAvailability";
+export * from "./ChannelsAvailabilityWithPermission";
+export { default } from "./ChannelsAvailabilityWithPermission";
