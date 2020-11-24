@@ -39,7 +39,6 @@ const useStyles = makeStyles(
         textAlign: "center"
       },
       emptyImage: {
-        display: "block",
         marginBottom: theme.spacing(2)
       },
       input: {
