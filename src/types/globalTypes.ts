@@ -632,6 +632,11 @@ export enum OrderEventsEnum {
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
+  CONFIRMED = 'CONFIRMED'
+}
+
+export enum OrderSettingsErrorCode {
+  INVALID = "INVALID",
 }
 
 export enum OrderSortField {
@@ -1345,6 +1350,10 @@ export interface OrderLineCreateInput {
 
 export interface OrderLineInput {
   quantity: number;
+}
+
+export interface OrderSettingsUpdateInput {
+  automaticallyConfirmAllNewOrders: boolean;
 }
 
 export interface OrderSortingInput {

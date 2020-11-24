@@ -109,3 +109,5 @@ export const orderFulfillPath = (id: string) =>
   urlJoin(orderPath(id), "fulfill");
 export const orderFulfillUrl = (id: string) =>
   orderFulfillPath(encodeURIComponent(id));
+
+export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");

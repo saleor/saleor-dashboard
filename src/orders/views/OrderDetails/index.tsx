@@ -10,8 +10,10 @@ import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { useOrderConfirmMutation } from "@saleor/orders/mutations";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -100,6 +102,19 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const handleBack = () => navigate(orderListUrl());
 
+  const [orderConfirm] = useOrderConfirmMutation({
+    onCompleted: ({ orderConfirm: { errors } }) => {
+      const isError = !!errors.length;
+
+      notify({
+        status: isError ? "error" : "success",
+        text: isError
+          ? getOrderErrorMessage(errors[0], intl)
+          : "Confirmed Order"
+      });
+    }
+  });
+
   return (
     <TypedOrderDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading }) => {
@@ -109,6 +124,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         }
 
         const handleSubmit = async (data: MetadataFormData) => {
+          if (order?.status === OrderStatus.UNCONFIRMED) {
+            await orderConfirm({ variables: { id: order?.id } });
+          }
+
           const update = createMetadataUpdateHandler(
             order,
             () => Promise.resolve([]),

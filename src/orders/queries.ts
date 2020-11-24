@@ -1,5 +1,8 @@
 import { fragmentAddress } from "@saleor/fragments/address";
-import { fragmentOrderDetails } from "@saleor/fragments/orders";
+import {
+  fragmentOrderDetails,
+  fragmentOrderSettings
+} from "@saleor/fragments/orders";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
@@ -15,6 +18,7 @@ import {
   OrderFulfillDataVariables
 } from "./types/OrderFulfillData";
 import { OrderList, OrderListVariables } from "./types/OrderList";
+import { OrderSettings } from "./types/OrderSettings";
 import {
   SearchOrderVariant as SearchOrderVariantType,
   SearchOrderVariantVariables
@@ -238,3 +242,15 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillData,
   OrderFulfillDataVariables
 >(orderFulfillData);
+
+export const orderSettingsQuery = gql`
+  ${fragmentOrderSettings}
+  query OrderSettings {
+    orderSettings {
+      ...OrderSettingsFragment
+    }
+  }
+`;
+export const useOrderSettingsQuery = makeQuery<OrderSettings, never>(
+  orderSettingsQuery
+);
