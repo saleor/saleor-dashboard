@@ -185,8 +185,8 @@ export const TypedOrderVoidMutation = TypedMutation<
 const orderMarkAsPaidMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderMarkAsPaid($id: ID!) {
-    orderMarkAsPaid(id: $id) {
+  mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
+    orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
       errors: orderErrors {
         ...OrderErrorFragment
       }

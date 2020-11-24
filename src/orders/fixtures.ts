@@ -832,6 +832,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: null,
       quantity: 1,
+      transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
       user: {
         __typename: "User",
@@ -849,6 +850,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: "This is note",
       quantity: null,
+      transactionReference: "124",
       type: OrderEventsEnum.NOTE_ADDED,
       user: null
     },
@@ -862,6 +864,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: "This is note",
       quantity: null,
+      transactionReference: "125",
       type: OrderEventsEnum.NOTE_ADDED,
       user: null
     },
@@ -875,6 +878,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: "Note from external service",
       quantity: null,
+      transactionReference: "126",
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
       user: null
     },
@@ -888,6 +892,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: null,
       quantity: null,
+      transactionReference: "127",
       type: OrderEventsEnum.EMAIL_SENT,
       user: null
     },
@@ -901,6 +906,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: null,
       quantity: null,
+      transactionReference: "128",
       type: OrderEventsEnum.EMAIL_SENT,
       user: null
     },
@@ -914,6 +920,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       invoiceNumber: null,
       message: null,
       quantity: null,
+      transactionReference: "129",
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,
       user: null
     }
@@ -1023,6 +1030,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       url: "invoice1"
     }
   ],
+  isPaid: true,
   lines: [
     {
       __typename: "OrderLine",
@@ -1190,6 +1198,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       url: "invoice1"
     }
   ],
+  isPaid: false,
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",

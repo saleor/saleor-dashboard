@@ -24,6 +24,7 @@ export interface OrderEventFragment {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderEventFragment_user | null;
 }

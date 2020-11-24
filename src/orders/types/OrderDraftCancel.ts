@@ -64,6 +64,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDraftCancel_draftOrderDelete_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderDraftCancel_draftOrderDelete_order {
   discount: OrderDraftCancel_draftOrderDelete_order_discount | null;
   invoices: (OrderDraftCancel_draftOrderDelete_order_invoices | null)[] | null;
   channel: OrderDraftCancel_draftOrderDelete_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderDraftCancel_draftOrderDelete {

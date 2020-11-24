@@ -3311,9 +3311,17 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
+    "context": "transaction reference",
+    "string": "Transaction Reference {transactionReference}"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1230178536": {
     "context": "order history message",
     "string": "Order address was updated"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1463685940": {
+    "context": "order history message",
+    "string": "Order was marked as paid"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1521936480": {
     "context": "order history message",
@@ -3378,10 +3386,6 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3237374063": {
     "context": "order history message",
     "string": "Payment was authorized"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
-    "context": "order history message",
-    "string": "Marked order as paid"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3453124210": {
     "context": "order history message",
@@ -3512,8 +3516,15 @@
   "src_dot_orders_dot_components_dot_OrderList_dot_898333473": {
     "string": "No orders found"
   },
-  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_2823153104": {
-    "string": "Are you sure you want to mark this order as paid?"
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_1739834732": {
+    "context": "transaction reference",
+    "string": "Transaction reference"
+  },
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_1758712563": {
+    "string": "Please provide a transaction reference using the input below:"
+  },
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_2105685861": {
+    "string": "You're going to mark this order as paid."
   },
   "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_4196844912": {
     "context": "dialog header",

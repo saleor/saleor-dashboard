@@ -91,6 +91,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     updatePrivateMetadataOpts
   ] = usePrivateMetadataUpdate({});
   const notify = useNotifier();
+  const [transactionReference, setTransactionReference] = React.useState("");
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
@@ -325,10 +326,15 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onClose={closeModal}
                           onConfirm={() =>
                             orderPaymentMarkAsPaid.mutate({
-                              id
+                              id,
+                              transactionReference
                             })
                           }
                           open={params.action === "mark-paid"}
+                          transactionReference={transactionReference}
+                          handleTransactionReference={({ target }) =>
+                            setTransactionReference(target.value)
+                          }
                         />
                         <OrderPaymentVoidDialog
                           confirmButtonState={orderVoid.opts.status}

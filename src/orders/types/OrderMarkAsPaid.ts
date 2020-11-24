@@ -64,6 +64,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderMarkAsPaid_orderMarkAsPaid_order_events_user | null;
 }
@@ -326,6 +327,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
   channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {
@@ -340,4 +342,5 @@ export interface OrderMarkAsPaid {
 
 export interface OrderMarkAsPaidVariables {
   id: string;
+  transactionReference?: string | null;
 }

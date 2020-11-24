@@ -58,6 +58,7 @@ export interface OrderDetails_order_events {
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDetails_order_events_user | null;
 }
@@ -320,6 +321,7 @@ export interface OrderDetails_order {
   discount: OrderDetails_order_discount | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderDetails_shop_countries {

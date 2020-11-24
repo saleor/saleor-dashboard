@@ -10,9 +10,11 @@ import Decorator from "../../Decorator";
 const props: OrderMarkAsPaidDialogProps = {
   confirmButtonState: "default",
   errors: [],
+  handleTransactionReference: () => undefined,
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
+  transactionReference: ""
 };
 
 storiesOf("Orders / OrderMarkAsPaidDialog", module)

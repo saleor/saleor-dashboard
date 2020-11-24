@@ -13,6 +13,7 @@ export const fragmentOrderEvent = gql`
     invoiceNumber
     message
     quantity
+    transactionReference
     type
     user {
       id
@@ -171,5 +172,6 @@ export const fragmentOrderDetails = gql`
       name
       currencyCode
     }
+    isPaid
   }
 `;
