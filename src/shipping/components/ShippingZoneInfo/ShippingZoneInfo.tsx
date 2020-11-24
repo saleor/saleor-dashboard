@@ -38,7 +38,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           fullWidth
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
-            defaultMessage: "Shipping Zone Name"
+            defaultMessage: "Shipping rate name"
           })}
           name="name"
           value={data.name}
