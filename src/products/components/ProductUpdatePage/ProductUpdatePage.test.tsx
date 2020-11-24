@@ -58,7 +58,6 @@ const props: ProductUpdatePageProps = {
   placeholderImage,
   product,
   saveButtonBarState: "default",
-  selectedChannelId: "123",
   taxTypes,
   variants: product.variants,
   warehouses: warehouseList
