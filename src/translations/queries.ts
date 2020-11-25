@@ -66,6 +66,10 @@ import {
   ShippingMethodTranslationDetailsVariables
 } from "./types/ShippingMethodTranslationDetails";
 import {
+  ShippingMethodTranslations,
+  ShippingMethodTranslationsVariables
+} from "./types/ShippingMethodTranslations";
+import {
   VoucherTranslationDetails,
   VoucherTranslationDetailsVariables
 } from "./types/VoucherTranslationDetails";
@@ -304,6 +308,39 @@ export const TypedAttributeTranslations = TypedQuery<
   AttributeTranslations,
   AttributeTranslationsVariables
 >(attributeTranslations);
+
+const shippingMethodTranslations = gql`
+  ${pageInfoFragment}
+  ${shippingMethodTranslationFragment}
+  query ShippingMethodTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    translations(
+      kind: SHIPPING_METHOD
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      edges {
+        node {
+          ...ShippingMethodTranslationFragment
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+  }
+`;
+export const TypedShippingMethodTranslations = TypedQuery<
+  ShippingMethodTranslations,
+  ShippingMethodTranslationsVariables
+>(shippingMethodTranslations);
 
 const productTranslationDetails = gql`
   ${productTranslationFragment}

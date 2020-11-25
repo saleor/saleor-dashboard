@@ -17,6 +17,7 @@ import {
   TypedPageTranslations,
   TypedProductTranslations,
   TypedSaleTranslations,
+  TypedShippingMethodTranslations,
   TypedVoucherTranslations
 } from "../queries";
 import {
@@ -461,7 +462,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedAttributeTranslations>
       ) : params.tab === "shippingMethods" ? (
-        <TypedAttributeTranslations variables={queryVariables}>
+        <TypedShippingMethodTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               data?.translations?.pageInfo,
@@ -475,22 +476,16 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                   .map(edge => edge.node)
                   .map(
                     node =>
-                      node.__typename === "AttributeTranslatableContent" && {
+                      node.__typename ===
+                        "ShippingMethodTranslatableContent" && {
                         completion: {
                           current: node.translation
-                            ? +!!node.translation.name +
-                              node.attribute.values.reduce(
-                                (acc, attr) =>
-                                  acc + (!!attr.translation?.name ? 1 : 0),
-                                0
-                              )
+                            ? +!!node.translation.name
                             : 0,
-                          max: node.attribute
-                            ? node.attribute.values.length + 1
-                            : 0
+                          max: 1
                         },
-                        id: node?.attribute.id,
-                        name: node?.attribute.name
+                        id: node?.id,
+                        name: node?.name
                       }
                   )}
                 onRowClick={id =>
@@ -508,7 +503,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
               />
             );
           }}
-        </TypedAttributeTranslations>
+        </TypedShippingMethodTranslations>
       ) : null}
     </TranslationsEntitiesListPage>
   );
