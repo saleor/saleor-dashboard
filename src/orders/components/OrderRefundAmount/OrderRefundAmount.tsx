@@ -14,7 +14,7 @@ import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderRefundData } from "../OrderRefundPage/form";
+import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => ({
@@ -43,7 +43,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderRefundAmountProps {
-  data: OrderRefundData;
+  data: OrderRefundFormData;
   order: OrderRefundData_order;
   disabled: boolean;
   errors: OrderErrorFragment[];

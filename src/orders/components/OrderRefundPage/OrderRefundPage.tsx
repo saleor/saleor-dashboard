@@ -10,10 +10,14 @@ import { useIntl } from "react-intl";
 
 import OrderRefund from "../OrderRefund";
 import OrderRefundAmount from "../OrderRefundAmount";
-import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import OrderRefundForm, {
+  OrderRefundSubmitData,
+  OrderRefundType
+} from "./form";
 
 export interface OrderRefundPageProps {
   order: OrderRefundData_order;
+  defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
   onBack: () => void;
@@ -21,13 +25,24 @@ export interface OrderRefundPageProps {
 }
 
 const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
-  const { order, disabled, errors = [], onBack, onSubmit } = props;
+  const {
+    order,
+    defaultType = OrderRefundType.PRODUCTS,
+    disabled,
+    errors = [],
+    onBack,
+    onSubmit
+  } = props;
 
   const intl = useIntl();
 
   return (
-    <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, change, submit }) => (
+    <OrderRefundForm
+      order={order}
+      defaultType={defaultType}
+      onSubmit={onSubmit}
+    >
+      {({ data, handlers, change, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {order?.number
@@ -58,7 +73,18 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
           />
           <Grid>
             <div>
-              <OrderRefund data={data} disabled={disabled} onChange={change} />
+              <OrderRefund
+                order={order}
+                data={data}
+                disabled={disabled}
+                onChange={change}
+                onRefundedProductQuantityChange={
+                  handlers.changeRefundedProductQuantity
+                }
+                onSetMaximalQuantities={
+                  handlers.setMaximalRefundedProductQuantities
+                }
+              />
             </div>
             <div>
               <OrderRefundAmount

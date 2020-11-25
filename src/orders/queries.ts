@@ -258,6 +258,20 @@ const orderRefundData = gql`
         amount
         currency
       }
+      lines {
+        id
+        productName
+        quantity
+        totalPrice {
+          gross {
+            amount
+            currency
+          }
+        }
+        thumbnail(size: 64) {
+          url
+        }
+      }
     }
   }
 `;
