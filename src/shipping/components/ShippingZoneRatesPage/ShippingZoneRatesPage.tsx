@@ -35,7 +35,7 @@ export interface ShippingZoneRatesPageProps {
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
-  rate?: ShippingZone_shippingZone_shippingMethods;
+  rate: ShippingZone_shippingZone_shippingMethods | null;
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
