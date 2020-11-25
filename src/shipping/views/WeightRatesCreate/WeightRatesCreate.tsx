@@ -127,7 +127,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         errors={errors}
         channelErrors={channelErrors}
         rate={null}
-        zipCodes={zipCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onZipCodeAssign={() => openModal("add-range")}
