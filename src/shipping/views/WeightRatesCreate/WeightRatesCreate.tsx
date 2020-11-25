@@ -131,6 +131,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
           updateShippingMethodChannelListingOpts?.data
             ?.shippingMethodChannelListingUpdate?.errors || []
         }
+        rate={null}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.WEIGHT}
