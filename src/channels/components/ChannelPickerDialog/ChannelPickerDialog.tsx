@@ -4,7 +4,8 @@ import {
   Choices,
   SingleSelectField
 } from "@saleor/components/SingleSelectField";
-import React, { useState } from "react";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
@@ -28,7 +29,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const [choice, setChoice] = useState(
+  const [choice, setChoice] = useStateFromProps(
     defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : "")
   );
 
