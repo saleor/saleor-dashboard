@@ -145,7 +145,10 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           })}
           className={classes.priceField}
           InputProps={{ inputProps: { max: maxRefund?.amount } }}
-          inputProps={{ max: maxRefund?.amount }}
+          inputProps={{
+            "data-test": "amountInput",
+            max: maxRefund?.amount
+          }}
           error={!!formErrors.amount || isAmountTooSmall || isAmountTooBig}
           hint={
             getOrderErrorMessage(formErrors.amount, intl) ||
@@ -168,6 +171,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           onClick={onRefund}
           className={classes.refundButton}
           disabled={disabled || disableRefundButton}
+          data-test="submit"
         >
           {!disableRefundButton ? (
             <FormattedMessage
