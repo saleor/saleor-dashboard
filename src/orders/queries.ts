@@ -16,6 +16,10 @@ import {
 } from "./types/OrderFulfillData";
 import { OrderList, OrderListVariables } from "./types/OrderList";
 import {
+  OrderRefundData,
+  OrderRefundDataVariables
+} from "./types/OrderRefundData";
+import {
   SearchOrderVariant as SearchOrderVariantType,
   SearchOrderVariantVariables
 } from "./types/SearchOrderVariant";
@@ -238,3 +242,26 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillData,
   OrderFulfillDataVariables
 >(orderFulfillData);
+
+const orderRefundData = gql`
+  query OrderRefundData($orderId: ID!) {
+    order(id: $orderId) {
+      id
+      number
+      total {
+        gross {
+          amount
+          currency
+        }
+      }
+      totalCaptured {
+        amount
+        currency
+      }
+    }
+  }
+`;
+export const useOrderRefundData = makeQuery<
+  OrderRefundData,
+  OrderRefundDataVariables
+>(orderRefundData);

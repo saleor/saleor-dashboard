@@ -158,7 +158,7 @@ const orderRefundMutation = gql`
     }
   }
 `;
-export const TypedOrderRefundMutation = TypedMutation<
+export const useOrderRefundMutation = makeMutation<
   OrderRefund,
   OrderRefundVariables
 >(orderRefundMutation);

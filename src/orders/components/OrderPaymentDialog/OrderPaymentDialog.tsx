@@ -26,7 +26,6 @@ export interface OrderPaymentDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   initial: number;
-  variant: "capture" | "refund";
   onClose: () => void;
   onSubmit: (data: FormData) => void;
 }
@@ -36,7 +35,6 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   errors,
   open,
   initial,
-  variant,
   onClose,
   onSubmit
 }) => {
@@ -56,15 +54,10 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
         {({ data, change, submit }) => (
           <>
             <DialogTitle>
-              {variant === "capture"
-                ? intl.formatMessage({
-                    defaultMessage: "Capture Payment",
-                    description: "dialog header"
-                  })
-                : intl.formatMessage({
-                    defaultMessage: "Refund Payment",
-                    description: "dialog header"
-                  })}
+              {intl.formatMessage({
+                defaultMessage: "Capture Payment",
+                description: "dialog header"
+              })}
             </DialogTitle>
             <DialogContent>
               <TextField

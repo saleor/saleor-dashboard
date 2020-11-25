@@ -4,7 +4,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,7 +13,7 @@ import OrderRefundAmount from "../OrderRefundAmount";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 
 export interface OrderRefundPageProps {
-  order: OrderDetails_order;
+  order: OrderRefundData_order;
   disabled: boolean;
   errors: OrderErrorFragment[];
   onBack: () => void;
@@ -21,7 +21,7 @@ export interface OrderRefundPageProps {
 }
 
 const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
-  const { order, disabled, errors, onBack, onSubmit } = props;
+  const { order, disabled, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
 

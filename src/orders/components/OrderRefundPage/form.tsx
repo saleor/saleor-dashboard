@@ -1,16 +1,15 @@
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
-// TODO: This type need to be replaced with generated GraphQL type before merge to master!
+// TODO: This type probably need to be replaced with generated GraphQL type!
 export enum OrderRefundType {
-  PRODUCTS,
   MISCELLANEOUS
 }
 
 export interface OrderRefundData {
-  amount?: number | string;
+  amount: number | string;
   type: OrderRefundType;
 }
 
@@ -31,7 +30,7 @@ export interface UseOrderRefundFormResult {
 
 interface OrderRefundFormProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderDetails_order;
+  order: OrderRefundData_order;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -43,7 +42,7 @@ function getOrderRefundPageFormData() {
 }
 
 function useOrderRefundForm(
-  order: OrderDetails_order,
+  order: OrderRefundData_order,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const [changed, setChanged] = React.useState(false);

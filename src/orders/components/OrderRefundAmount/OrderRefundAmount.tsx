@@ -4,11 +4,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
-import Money from "@saleor/components/Money";
+import Money, { addMoney, subtractMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -44,7 +44,7 @@ const useStyles = makeStyles(
 
 interface OrderRefundAmountProps {
   data: OrderRefundData;
-  order: OrderDetails_order;
+  order: OrderRefundData_order;
   disabled: boolean;
   errors: OrderErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -56,17 +56,23 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  // TODO: change below values...
-  const authorizedAmount = order?.totalAuthorized;
-  const previouslyRefunded = order?.totalAuthorized;
-  const maxRefund = order?.totalAuthorized;
-  const amountCurrency = order?.totalAuthorized.currency;
+  // TODO: change below values to appropriate!...
+  const authorizedAmount = order?.total.gross;
+  const previouslyRefunded =
+    order?.totalCaptured &&
+    authorizedAmount &&
+    subtractMoney(order?.totalCaptured, authorizedAmount);
+  const maxRefund =
+    authorizedAmount &&
+    previouslyRefunded &&
+    addMoney(authorizedAmount, previouslyRefunded);
+  const amountCurrency = authorizedAmount?.currency;
   // ...end of values requiring change
 
   const formErrors = getFormErrors(["amount"], errors);
 
   const isAmountTooSmall = data.amount && data.amount <= 0;
-  const isAmountTooBig = data.amount > maxRefund.amount;
+  const isAmountTooBig = data.amount > maxRefund?.amount;
 
   const disableRefundButton =
     !data.amount || isAmountTooSmall || isAmountTooBig;
@@ -90,7 +96,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 />
               </td>
               <td className={classes.textRight}>
-                {authorizedAmount.amount ? (
+                {authorizedAmount ? (
                   <Money money={authorizedAmount} />
                 ) : (
                   <Skeleton />
@@ -105,9 +111,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 />
               </td>
               <td className={classes.textRight}>
-                {previouslyRefunded.amount ? (
+                {previouslyRefunded ? (
                   <>
-                    {"- "}
                     <Money money={previouslyRefunded} />
                   </>
                 ) : (
@@ -123,7 +128,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 />
               </td>
               <td className={classes.textRight}>
-                {maxRefund.amount ? <Money money={maxRefund} /> : <Skeleton />}
+                {maxRefund ? <Money money={maxRefund} /> : <Skeleton />}
               </td>
             </tr>
           </tbody>
@@ -139,8 +144,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
             description: "order refund amount, input label"
           })}
           className={classes.priceField}
-          InputProps={{ inputProps: { max: maxRefund.amount } }}
-          inputProps={{ max: maxRefund.amount }}
+          InputProps={{ inputProps: { max: maxRefund?.amount } }}
+          inputProps={{ max: maxRefund?.amount }}
           error={!!formErrors.amount || isAmountTooSmall || isAmountTooBig}
           hint={
             getOrderErrorMessage(formErrors.amount, intl) ||
