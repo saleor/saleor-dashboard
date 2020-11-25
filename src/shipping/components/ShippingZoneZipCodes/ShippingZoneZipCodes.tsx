@@ -14,7 +14,9 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { FormChange } from "@saleor/hooks/useForm";
+import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,6 +38,12 @@ export interface ShippingZoneZipCodesProps {
 
 const useStyles = makeStyles(
   theme => ({
+    arrow: {
+      transition: theme.transitions.create("transform")
+    },
+    arrowRotate: {
+      transform: "scale(-1)"
+    },
     colAction: {
       width: 80
     },
@@ -134,7 +142,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           (zipCodes.length > 0 && (
             <TableHead>
               <TableRow>
-                <TableCell colSpan={2}>
+                <TableCell>
                   {zipCodes === undefined ? (
                     <Skeleton className={classes.skeleton} />
                   ) : (
@@ -149,37 +157,48 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                     </Typography>
                   )}
                 </TableCell>
-              </TableRow>
-            </TableHead>
-          ))}
-        <TableBody>
-          {renderCollection(
-            zipCodes,
-            zipCode => (
-              <TableRow key={zipCode}>
-                <TableCell>{zipCode || <Skeleton />}</TableCell>
                 <TableCell>
-                  <IconButton
-                    disabled={disabled}
-                    color="primary"
-                    onClick={() => onZipCodeDelete(zipCode)}
-                  >
-                    <DeleteIcon />
+                  <IconButton onClick={() => setExpanded(!expanded)}>
+                    <ArrowDropdown
+                      className={classNames(classes.arrow, {
+                        [classes.arrowRotate]: expanded
+                      })}
+                    />
                   </IconButton>
                 </TableCell>
               </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell colSpan={2}>
-                  <Typography color="textSecondary">
-                    <FormattedMessage defaultMessage="This shipping rate has no ZIP-codes assigned" />
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
+            </TableHead>
+          ))}
+        {expanded && (
+          <TableBody>
+            {renderCollection(
+              zipCodes,
+              zipCode => (
+                <TableRow key={zipCode}>
+                  <TableCell>{zipCode || <Skeleton />}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      disabled={disabled}
+                      color="primary"
+                      onClick={() => onZipCodeDelete(zipCode)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ),
+              () => (
+                <TableRow>
+                  <TableCell colSpan={2}>
+                    <Typography color="textSecondary">
+                      <FormattedMessage defaultMessage="This shipping rate has no ZIP-codes assigned" />
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        )}
       </ResponsiveTable>
     </Card>
   );
