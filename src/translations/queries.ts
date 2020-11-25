@@ -6,6 +6,7 @@ import {
   pageTranslationFragment,
   productTranslationFragment,
   saleTranslationFragment,
+  shippingMethodTranslationFragment,
   voucherTranslationFragment
 } from "@saleor/fragments/translations";
 import makeQuery from "@saleor/hooks/makeQuery";
@@ -60,6 +61,10 @@ import {
   SaleTranslations,
   SaleTranslationsVariables
 } from "./types/SaleTranslations";
+import {
+  ShippingMethodTranslationDetails,
+  ShippingMethodTranslationDetailsVariables
+} from "./types/ShippingMethodTranslationDetails";
 import {
   VoucherTranslationDetails,
   VoucherTranslationDetailsVariables
@@ -390,3 +395,19 @@ export const useAttributeTranslationDetails = makeQuery<
   AttributeTranslationDetails,
   AttributeTranslationDetailsVariables
 >(attributeTranslationDetails);
+
+const shippingMethodTranslationDetails = gql`
+  ${shippingMethodTranslationFragment}
+  query ShippingMethodTranslationDetails(
+    $id: ID!
+    $language: LanguageCodeEnum!
+  ) {
+    translation(kind: ATTRIBUTE, id: $id) {
+      ...ShippingMethodTranslationFragment
+    }
+  }
+`;
+export const useShippingMethodTranslationDetails = makeQuery<
+  ShippingMethodTranslationDetails,
+  ShippingMethodTranslationDetailsVariables
+>(shippingMethodTranslationDetails);

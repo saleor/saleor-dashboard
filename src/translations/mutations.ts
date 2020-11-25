@@ -313,7 +313,7 @@ const updateShippingMethodTranslations = gql`
   }
 `;
 
-export const TypedUpdateShippingMethodValueTranslations = TypedMutation<
+export const TypedUpdateShippingMethodTranslations = TypedMutation<
   UpdateShippingMethodTranslations,
   UpdateShippingMethodTranslationsVariables
 >(updateShippingMethodTranslations);

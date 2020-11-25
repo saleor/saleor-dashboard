@@ -92,6 +92,13 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             tab: TranslatableEntities.sales
           })
       ),
+    onShippingMethodsTabClick: () =>
+      navigate(
+        "?" +
+          stringifyQs({
+            tab: TranslatableEntities.shippingMethods
+          })
+      ),
     onVouchersTabClick: () =>
       navigate(
         "?" +
@@ -442,6 +449,55 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     languageEntityUrl(
                       language,
                       TranslatableEntities.productTypes,
+                      id
+                    )
+                  )
+                }
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                pageInfo={pageInfo}
+              />
+            );
+          }}
+        </TypedAttributeTranslations>
+      ) : params.tab === "shippingMethods" ? (
+        <TypedAttributeTranslations variables={queryVariables}>
+          {({ data, loading }) => {
+            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+              data?.translations?.pageInfo,
+              paginationState,
+              params
+            );
+            return (
+              <TranslationsEntitiesList
+                disabled={loading}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename === "AttributeTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? +!!node.translation.name +
+                              node.attribute.values.reduce(
+                                (acc, attr) =>
+                                  acc + (!!attr.translation?.name ? 1 : 0),
+                                0
+                              )
+                            : 0,
+                          max: node.attribute
+                            ? node.attribute.values.length + 1
+                            : 0
+                        },
+                        id: node?.attribute.id,
+                        name: node?.attribute.name
+                      }
+                  )}
+                onRowClick={id =>
+                  navigate(
+                    languageEntityUrl(
+                      language,
+                      TranslatableEntities.shippingMethods,
                       id
                     )
                   )
