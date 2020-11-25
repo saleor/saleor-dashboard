@@ -56,7 +56,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Order value",
+          defaultMessage: "Order Value",
           description: "card title"
         })}
       />

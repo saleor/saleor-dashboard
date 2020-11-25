@@ -48,14 +48,18 @@ const props: ShippingZoneRatesPageProps = {
   onDelete: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
+  rate: null,
   saveButtonBarState: "default",
   shippingChannels: defaultChannels,
   variant: ShippingMethodTypeEnum.PRICE
 };
 
-storiesOf("Shipping / ShippingZoneRates page", module)
+storiesOf("Views / Shipping / Shipping rate", module)
   .addDecorator(Decorator)
-  .add("default price", () => <ShippingZoneRatesPage {...props} />)
+  .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
+  .add("create weight rate", () => (
+    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
+  ))
   .add("loading", () => (
     <ShippingZoneRatesPage
       {...props}
@@ -63,17 +67,14 @@ storiesOf("Shipping / ShippingZoneRates page", module)
       saveButtonBarState={"loading"}
     />
   ))
-  .add("update price", () => (
+  .add("update price rate", () => (
     <ShippingZoneRatesPage
       {...props}
       shippingChannels={channels}
       rate={shippingZone.shippingMethods[2]}
     />
   ))
-  .add("default weight", () => (
-    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
-  ))
-  .add("update weight", () => (
+  .add("update weight rate", () => (
     <ShippingZoneRatesPage
       {...props}
       shippingChannels={channels}
