@@ -40,7 +40,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Order weight",
+          defaultMessage: "Order Weight",
           description: "card title"
         })}
       />
