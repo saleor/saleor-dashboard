@@ -62,4 +62,5 @@ export interface ShippingMethodFragment {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodFragment_channelListings[] | null;
+  zipCodes: string[]
 }

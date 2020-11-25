@@ -68,6 +68,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZoneDetailsFragment_shippingMethods_channelListings[] | null;
+  zipCodes: string[]
 }
 
 export interface ShippingZoneDetailsFragment_warehouses {

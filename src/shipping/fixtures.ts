@@ -1589,7 +1589,16 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "DB Schenker",
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      zipCodes: [
+        "51-100",
+        "51-101",
+        "51-102",
+        "51-103",
+        "51-104",
+        "51-105",
+        "51-106"
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1602,7 +1611,16 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "Registred priority",
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      zipCodes: [
+        "51-100",
+        "51-101",
+        "51-102",
+        "51-103",
+        "51-104",
+        "51-105",
+        "51-106"
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1614,9 +1632,17 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         unit: WeightUnitsEnum.KG,
         value: 0
       },
-
       name: "UPS",
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      zipCodes: [
+        "51-100",
+        "51-101",
+        "51-102",
+        "51-103",
+        "51-104",
+        "51-105",
+        "51-106"
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1629,7 +1655,16 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "DHL",
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      zipCodes: [
+        "51-100",
+        "51-101",
+        "51-102",
+        "51-103",
+        "51-104",
+        "51-105",
+        "51-106"
+      ]
     }
   ],
   warehouses: [
