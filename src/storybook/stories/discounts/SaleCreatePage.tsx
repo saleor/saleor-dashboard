@@ -17,6 +17,7 @@ const props: SaleCreatePageProps = {
   disabled: false,
   errors: [],
   onBack: () => undefined,
+  onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
   saveButtonBarState: "default"
