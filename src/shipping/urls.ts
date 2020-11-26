@@ -55,7 +55,7 @@ export const shippingPriceRatesEditPath = (id: string, rateId: string) =>
 export const shippingPriceRatesEditUrl = (
   id: string,
   rateId: string,
-  params: ShippingRateUrlQueryParams
+  params?: ShippingRateUrlQueryParams
 ) =>
   shippingPriceRatesEditPath(
     encodeURIComponent(id),
@@ -69,7 +69,7 @@ export const shippingWeightRatesEditPath = (id: string, rateId: string) =>
 export const shippingWeightRatesEditUrl = (
   id: string,
   rateId: string,
-  params: ShippingRateUrlQueryParams
+  params?: ShippingRateUrlQueryParams
 ) =>
   shippingWeightRatesEditPath(
     encodeURIComponent(id),
