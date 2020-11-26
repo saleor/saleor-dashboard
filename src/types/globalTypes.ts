@@ -1689,6 +1689,12 @@ export interface ShippingMethodChannelListingInput {
   removeChannels?: string[] | null;
 }
 
+export interface ShippingPriceExcludeProductsInput {
+  products?: (string | null)[] | null;
+  collections?: (string | null)[] | null;
+  categories?: (string | null)[] | null;
+}
+
 export interface ShippingPriceInput {
   name?: string | null;
   minimumOrderWeight?: any | null;

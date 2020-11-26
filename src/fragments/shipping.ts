@@ -56,6 +56,75 @@ export const shippingMethodFragment = gql`
     }
   }
 `;
+export const shippingMethodWithExcludedProductsFragment = gql`
+  ${fragmentMoney}
+  fragment ShippingMethodWithExcludedProductsFragment on ShippingMethod {
+    id
+    minimumOrderWeight {
+      unit
+      value
+    }
+    maximumOrderWeight {
+      unit
+      value
+    }
+    name
+    type
+    channelListings {
+      id
+      channel {
+        id
+        name
+        currencyCode
+      }
+      price {
+        ...Money
+      }
+      minimumOrderPrice {
+        ...Money
+      }
+      maximumOrderPrice {
+        ...Money
+      }
+    }
+    excludedProducts(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+        startCursor
+      }
+      edges {
+        node {
+          id
+          name
+          thumbnail {
+            url
+          }
+          pricing {
+            priceRange {
+              start {
+                net {
+                  ...Money
+                }
+              }
+              stop {
+                net {
+                  ...Money
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const shippingZoneDetailsFragment = gql`
   ${shippingZoneFragment}
   ${shippingMethodFragment}

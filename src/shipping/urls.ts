@@ -26,11 +26,19 @@ export type ShippingZoneUrlDialog =
   | "remove"
   | "remove-rate"
   | "unassign-country";
+
+export type ShippingMethodDialog = "assign-product" | "remove";
+
+export type ShippingMethodUrlQueryParams = Dialog<ShippingMethodDialog> &
+  BulkAction &
+  Pagination;
+
 export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   SingleAction &
   Partial<{
     type: ShippingMethodTypeEnum;
-  }>;
+  }> &
+  Pagination;
 export const shippingZoneUrl = (
   id: string,
   params?: ShippingZoneUrlQueryParams
@@ -39,7 +47,8 @@ export const shippingZoneUrl = (
 type ZipCodeRangeActions = "add-range" | "remove-range";
 export type ShippingRateUrlDialog = ZipCodeRangeActions | "remove";
 export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
-  SingleAction;
+  SingleAction &
+  ShippingMethodUrlQueryParams;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions;
 export type ShippingRateCreateUrlQueryParams = Dialog<
   ShippingRateCreateUrlDialog

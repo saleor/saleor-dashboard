@@ -1,5 +1,6 @@
-import { ShippingZoneDetailsFragment } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
+import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
+import { ShippingZoneWithExcludedProducts_shippingZone } from "@saleor/shipping/types/ShippingZoneWithExcludedProducts";
 
 import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 
@@ -1285,7 +1286,7 @@ export const shippingZones: ShippingZoneFragment[] = [
   }
 ];
 
-export const shippingZone: ShippingZoneDetailsFragment = {
+export const shippingZone: ShippingZoneWithExcludedProducts_shippingZone = {
   __typename: "ShippingZone",
   countries: [
     {
@@ -1577,6 +1578,52 @@ export const shippingZone: ShippingZoneDetailsFragment = {
           }
         }
       ],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumOrderWeight: {
         __typename: "Weight",
@@ -1614,6 +1661,52 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1647,6 +1740,52 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              pricing: {
+                __typename: "ProductPricingInfo",
+                priceRange: {
+                  __typename: "TaxedMoneyRange",
+                  start: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  },
+                  stop: {
+                    __typename: "TaxedMoney",
+                    net: {
+                      __typename: "Money",
+                      amount: 2,
+                      currency: "USD"
+                    }
+                  }
+                }
+              },
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1680,6 +1819,17 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1724,3 +1874,86 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     }
   ]
 };
+
+export const products: SearchShippingProducts_search_edges_node[] = [
+  {
+    __typename: "Product",
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "Q2hhbm5lbDo5"
+        },
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 2,
+                currency: "USD"
+              }
+            }
+          }
+        }
+      }
+    ],
+    id: "1",
+    name: "Apple Juice",
+    thumbnail: {
+      __typename: "Image",
+      url: ""
+    }
+  },
+  {
+    __typename: "Product",
+    channelListings: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "Q2hhbm5lbDo5"
+        },
+        pricing: {
+          __typename: "ProductPricingInfo",
+          priceRange: {
+            __typename: "TaxedMoneyRange",
+            start: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 2,
+                currency: "USD"
+              }
+            },
+            stop: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 2,
+                currency: "USD"
+              }
+            }
+          }
+        }
+      }
+    ],
+    id: "2",
+    name: "Banana Juice",
+    thumbnail: {
+      __typename: "Image",
+      url: ""
+    }
+  }
+];

@@ -14,6 +14,7 @@ import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
+import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
@@ -21,6 +22,7 @@ import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ListActions, ListProps } from "../../../types";
 import ShippingZoneZipCodes, {
   ZipCodeInclusion
 } from "../ShippingZoneZipCodes";
@@ -35,7 +37,9 @@ export interface FormData {
   type: ShippingMethodTypeEnum;
 }
 
-export interface ShippingZoneRatesPageProps {
+export interface ShippingZoneRatesPageProps
+  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+    ListActions {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
@@ -51,6 +55,8 @@ export interface ShippingZoneRatesPageProps {
   onZipCodeUnassign: (id: string) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
+  onProductAssign: () => void;
+  onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
 }
 
@@ -67,10 +73,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onChannelsChange,
   onZipCodeAssign,
   onZipCodeUnassign,
+  onProductAssign,
+  onProductUnassign,
   openChannelsModal,
   rate,
   saveButtonBarState,
   variant,
+  ...listProps
 }) => {
   const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
@@ -158,6 +167,16 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onZipCodeInclusionChange={() => undefined}
                   onZipCodeRangeAdd={onZipCodeAssign}
                   zipCodes={rate?.zipCodeRules}
+                />
+                <CardSpacer />
+                <ShippingMethodProducts
+                  products={rate?.excludedProducts?.edges.map(
+                    edge => edge.node
+                  )}
+                  onProductAssign={onProductAssign}
+                  onProductRemove={onProductUnassign}
+                  disabled={disabled}
+                  {...listProps}
                 />
               </div>
               <div>
