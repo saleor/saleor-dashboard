@@ -229,7 +229,7 @@ export const productFragmentDetails = gql`
 `;
 
 export const fragmentVariant = gql`
-  ${fragmentMoney}
+  ${priceRangeFragment}
   ${fragmentProductImage}
   ${stockFragment}
   ${weightFragment}
