@@ -6,10 +6,10 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  shippingPriceRatesEditUrl,
-  shippingPriceRatesUrl,
-  shippingWeightRatesEditUrl,
-  shippingWeightRatesUrl,
+  shippingPriceRatesEditPath,
+  shippingPriceRatesPath,
+  shippingWeightRatesEditPath,
+  shippingWeightRatesPath,
   shippingZoneAddPath,
   shippingZonePath,
   shippingZonesListPath,
@@ -97,19 +97,19 @@ export const ShippingRouter: React.FC = () => {
           component={ShippingZoneDetails}
         />
         <Route
-          path={shippingPriceRatesUrl(":id")}
+          path={shippingPriceRatesPath(":id")}
           component={PriceRatesCreate}
         />
         <Route
-          path={shippingWeightRatesUrl(":id")}
+          path={shippingWeightRatesPath(":id")}
           component={WeightRatesCreate}
         />
         <Route
-          path={shippingWeightRatesEditUrl(":id", ":rateId")}
+          path={shippingWeightRatesEditPath(":id", ":rateId")}
           component={WeightRatesUpdate}
         />
         <Route
-          path={shippingPriceRatesEditUrl(":id", ":rateId")}
+          path={shippingPriceRatesEditPath(":id", ":rateId")}
           component={PriceRatesUpdate}
         />
       </Switch>
