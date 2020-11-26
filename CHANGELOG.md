@@ -4,6 +4,7 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Add Order Confirmation settings - #840 by @orzechdev and @mmarkusik
 - Add Page Types - #807 by @orzechdev
 
 # 2.11.1
