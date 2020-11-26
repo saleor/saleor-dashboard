@@ -1,8 +1,12 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderRefundPage from "@saleor/orders/components/OrderRefundPage";
-import { OrderRefundData } from "@saleor/orders/components/OrderRefundPage/form";
-import { useOrderRefundMutation } from "@saleor/orders/mutations";
+import {
+  OrderRefundAmountCalculationMode,
+  OrderRefundSubmitData,
+  OrderRefundType
+} from "@saleor/orders/components/OrderRefundPage/form";
+import { useOrderFulfillmentRefundProductsMutation } from "@saleor/orders/mutations";
 import { useOrderRefundData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -23,9 +27,12 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       orderId
     }
   });
-  const [refundOrder, refundOrderOpts] = useOrderRefundMutation({
+  const [
+    refundOrderFulfillmentProducts,
+    refundOrderFulfillmentProductsOpts
+  ] = useOrderFulfillmentRefundProductsMutation({
     onCompleted: data => {
-      if (data.orderRefund.errors.length === 0) {
+      if (data.orderFulfillmentRefundProducts.errors.length === 0) {
         navigate(orderUrl(orderId), true);
         notify({
           status: "success",
@@ -38,11 +45,45 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
     }
   });
 
-  const handleSubmit = async (formData: OrderRefundData) => {
-    const response = await refundOrder({
+  const handleSubmit = async (formData: OrderRefundSubmitData) => {
+    const input = OrderRefundType.MISCELLANEOUS
+      ? {
+          amountToRefund: formData.amount,
+          includeShippingCosts: true
+        }
+      : OrderRefundAmountCalculationMode.AUTOMATIC
+      ? {
+          fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
+            line => ({
+              orderLineId: line.id,
+              quantity: Number(line.value)
+            })
+          ),
+          includeShippingCosts: formData.refundShipmentCosts,
+          orderLines: formData.refundedProductQuantities.map(line => ({
+            orderLineId: line.id,
+            quantity: Number(line.value)
+          }))
+        }
+      : {
+          amountToRefund: formData.amount,
+          fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
+            line => ({
+              orderLineId: line.id,
+              quantity: Number(line.value)
+            })
+          ),
+          includeShippingCosts: formData.refundShipmentCosts,
+          orderLines: formData.refundedProductQuantities.map(line => ({
+            orderLineId: line.id,
+            quantity: Number(line.value)
+          }))
+        };
+
+    const response = await refundOrderFulfillmentProducts({
       variables: {
-        amount: formData.amount,
-        id: orderId
+        input,
+        order: orderId
       }
     });
 
@@ -52,8 +93,11 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   return (
     <OrderRefundPage
       order={data?.order}
-      disabled={loading || refundOrderOpts.loading}
-      errors={refundOrderOpts.data?.orderRefund.errors}
+      disabled={loading || refundOrderFulfillmentProductsOpts.loading}
+      errors={
+        refundOrderFulfillmentProductsOpts.data?.orderFulfillmentRefundProducts
+          .errors
+      }
       onSubmit={handleSubmit}
       onBack={() => navigate(orderUrl(orderId))}
     />

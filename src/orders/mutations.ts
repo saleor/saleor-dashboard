@@ -5,6 +5,7 @@ import {
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
+  fulfillmentFragment,
   invoiceFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
@@ -48,6 +49,10 @@ import {
   OrderFulfillmentCancelVariables
 } from "./types/OrderFulfillmentCancel";
 import {
+  OrderFulfillmentRefundProducts,
+  OrderFulfillmentRefundProductsVariables
+} from "./types/OrderFulfillmentRefundProducts";
+import {
   OrderFulfillmentUpdateTracking,
   OrderFulfillmentUpdateTrackingVariables
 } from "./types/OrderFulfillmentUpdateTracking";
@@ -64,7 +69,6 @@ import {
   OrderMarkAsPaid,
   OrderMarkAsPaidVariables
 } from "./types/OrderMarkAsPaid";
-import { OrderRefund, OrderRefundVariables } from "./types/OrderRefund";
 import {
   OrderShippingMethodUpdate,
   OrderShippingMethodUpdateVariables
@@ -144,13 +148,20 @@ export const TypedOrderDraftFinalizeMutation = TypedMutation<
   OrderDraftFinalizeVariables
 >(orderDraftFinalizeMutation);
 
-const orderRefundMutation = gql`
+const orderFulfillmentRefundProductsMutation = gql`
   ${fragmentOrderDetails}
+  ${fulfillmentFragment}
   ${orderErrorFragment}
-  mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
-    orderRefund(id: $id, amount: $amount) {
+  mutation OrderFulfillmentRefundProducts(
+    $input: OrderRefundProductsInput!
+    $order: ID!
+  ) {
+    orderFulfillmentRefundProducts(input: $input, order: $order) {
       errors: orderErrors {
         ...OrderErrorFragment
+      }
+      fulfillment {
+        ...FulfillmentFragment
       }
       order {
         ...OrderDetailsFragment
@@ -158,10 +169,10 @@ const orderRefundMutation = gql`
     }
   }
 `;
-export const useOrderRefundMutation = makeMutation<
-  OrderRefund,
-  OrderRefundVariables
->(orderRefundMutation);
+export const useOrderFulfillmentRefundProductsMutation = makeMutation<
+  OrderFulfillmentRefundProducts,
+  OrderFulfillmentRefundProductsVariables
+>(orderFulfillmentRefundProductsMutation);
 
 const orderVoidMutation = gql`
   ${fragmentOrderDetails}

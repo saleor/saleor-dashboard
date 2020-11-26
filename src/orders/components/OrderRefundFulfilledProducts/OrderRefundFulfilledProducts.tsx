@@ -90,7 +90,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           color="primary"
           onClick={onSetMaximalQuantities}
           data-test="setMaximalQuantityFulFilledButton"
-          data-test-id={fulfillemnt.id}
+          data-test-id={fulfillemnt?.id}
         >
           <FormattedMessage
             defaultMessage="Set maximal quantities"
@@ -129,7 +129,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
         </TableHead>
         <TableBody>
           {renderCollection(
-            fulfillemnt.lines,
+            fulfillemnt?.lines,
             line => {
               const selectedLineQuantity = data.refundedFulfilledProductQuantities.find(
                 refundedLine => refundedLine.id === line.id

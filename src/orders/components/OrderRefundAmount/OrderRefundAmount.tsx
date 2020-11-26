@@ -56,7 +56,7 @@ const getProductsAmountValues = (
   const authorizedAmount = order?.total?.gross;
   const shipmentCost = order?.shippingPrice?.gross || {
     amount: 0,
-    currency: authorizedAmount.currency
+    currency: authorizedAmount?.currency
   };
   const previouslyRefunded =
     order?.totalCaptured &&
@@ -71,15 +71,15 @@ const getProductsAmountValues = (
           addMoney(authorizedAmount, previouslyRefunded),
           shipmentCost
         ));
-  const orderLinesSum = order.lines.reduce((sum, line) => {
+  const orderLinesSum = order?.lines?.reduce((sum, line) => {
     const refundedLine = data.refundedProductQuantities.find(
       refundedLine => refundedLine.id === line.id
     );
     return sum + line.totalPrice.gross.amount * Number(refundedLine.value);
   }, 0);
-  const allFulfillmentLinesSum = order.fulfillments.reduce(
+  const allFulfillmentLinesSum = order?.fulfillments?.reduce(
     (sum, fulfillment) => {
-      const fulfilmentLinesSum = fulfillment.lines.reduce((sum, line) => {
+      const fulfilmentLinesSum = fulfillment?.lines.reduce((sum, line) => {
         const refundedLine = data.refundedFulfilledProductQuantities.find(
           refundedLine => refundedLine.id === line.id
         );
@@ -96,15 +96,15 @@ const getProductsAmountValues = (
   const calculatedTotalAmount = data.refundShipmentCosts
     ? allLinesSum + shipmentCost.amount
     : allLinesSum;
-  const selectedProductsValue = {
+  const selectedProductsValue = authorizedAmount && {
     amount: allLinesSum,
     currency: authorizedAmount.currency
   };
-  const proposedRefundAmount = {
+  const proposedRefundAmount = authorizedAmount && {
     amount: calculatedTotalAmount,
     currency: authorizedAmount.currency
   };
-  const refundTotalAmount = {
+  const refundTotalAmount = authorizedAmount && {
     amount: calculatedTotalAmount,
     currency: authorizedAmount.currency
   };
