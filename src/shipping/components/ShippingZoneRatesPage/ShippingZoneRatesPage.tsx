@@ -20,7 +20,7 @@ import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { ListActions, ListProps } from "../../../types";
 import ShippingZoneZipCodes, {
@@ -81,7 +81,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   variant,
   ...listProps
 }) => {
-  const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
@@ -110,20 +109,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             <AppHeader onBack={onBack}>
               <FormattedMessage defaultMessage="Shipping" />
             </AppHeader>
-            <PageHeader
-              title={
-                rate?.name ||
-                (isPriceVariant
-                  ? intl.formatMessage({
-                      defaultMessage: "Price Rate Create",
-                      description: "page title"
-                    })
-                  : intl.formatMessage({
-                      defaultMessage: "Weight Rate Create",
-                      description: "page title"
-                    }))
-              }
-            />
+            <PageHeader title={rate?.name} />
             <Grid>
               <div>
                 <ShippingZoneInfo
@@ -174,7 +160,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                     edge => edge.node
                   )}
                   onProductAssign={onProductAssign}
-                  onProductRemove={onProductUnassign}
+                  onProductUnassign={onProductUnassign}
                   disabled={disabled}
                   {...listProps}
                 />

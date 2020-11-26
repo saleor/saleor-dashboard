@@ -51,7 +51,7 @@ export interface ShippingMethodProductsProps
     ListActions {
   products: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node[];
   onProductAssign: () => void;
-  onProductRemove: (ids: string[]) => void;
+  onProductUnassign: (ids: string[]) => void;
 }
 
 const numberOfColumns = 3;
@@ -64,7 +64,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     onNextPage,
     onPreviousPage,
     onProductAssign,
-    onProductRemove,
+    onProductUnassign,
     isChecked,
     selected,
     toggle,
@@ -156,7 +156,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                   </TableCellAvatar>
 
                   <TableCell className={classes.colAction}>
-                    <IconButton onClick={() => onProductRemove([product.id])}>
+                    <IconButton onClick={() => onProductUnassign([product.id])}>
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>

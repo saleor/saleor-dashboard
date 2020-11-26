@@ -25,6 +25,7 @@ import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
+import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingWeightRateVariables
@@ -114,6 +115,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
         handleSuccess();
         refetch();
+        closeModal();
       }
     }
   });
@@ -268,6 +270,13 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         open={params.action === "remove"}
         name={rate?.name}
       />
+      <UnassignDialog
+        open={params.action === "unassign-product" && !!listElements.length}
+        idsLength={listElements.length}
+        confirmButtonState={unassignProductOpts.status}
+        closeModal={closeModal}
+        onConfirm={() => handleProductUnassign(listElements)}
+      />
       <ShippingMethodProductsAddDialog
         confirmButtonState={assignProductOpts.status}
         loading={productsSearchOpts.loading}
@@ -314,10 +323,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
         toolbar={
-          <Button
-            color="primary"
-            onClick={() => handleProductUnassign(listElements)}
-          >
+          <Button color="primary" onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"

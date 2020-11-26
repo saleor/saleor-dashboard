@@ -17,7 +17,7 @@ const props: ShippingMethodProductsProps = {
   onNextPage: () => undefined,
   onPreviousPage: () => undefined,
   onProductAssign: () => undefined,
-  onProductRemove: () => undefined,
+  onProductUnassign: () => undefined,
   pageInfo: {
     hasNextPage: false,
     hasPreviousPage: false

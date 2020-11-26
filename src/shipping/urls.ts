@@ -27,11 +27,9 @@ export type ShippingZoneUrlDialog =
   | "remove-rate"
   | "unassign-country";
 
-export type ShippingMethodDialog = "assign-product" | "remove";
-
-export type ShippingMethodUrlQueryParams = Dialog<ShippingMethodDialog> &
-  BulkAction &
-  Pagination;
+export type ShippingMethodActions =
+  | "assign-product"
+  | "unassign-product"
 
 export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   SingleAction &
@@ -45,10 +43,17 @@ export const shippingZoneUrl = (
 ) => shippingZonePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 type ZipCodeRangeActions = "add-range" | "remove-range";
-export type ShippingRateUrlDialog = ZipCodeRangeActions | "remove";
-export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
+export type ShippingRateUrlDialog =
+  | ZipCodeRangeActions
+  | "remove"
+  | ShippingMethodActions;
+  
+export type ShippingRateUrlQueryParams = Dialog<
+  ShippingRateUrlDialog
+> &
   SingleAction &
-  ShippingMethodUrlQueryParams;
+  BulkAction &
+  Pagination;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions;
 export type ShippingRateCreateUrlQueryParams = Dialog<
   ShippingRateCreateUrlDialog
