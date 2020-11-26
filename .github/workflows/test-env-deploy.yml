@@ -1,11 +1,7 @@
 name: TEST-ENV-DEPLOYMENT
 # Build and deploy test instance for every pull request
 
-on:
-  pull_request:
-    # trigger on "edited" to update instance when configuration changes in PR description
-    types: [opened, reopened, synchronize]
-    branches: ["*"]
+on: [pull_request]
 
 jobs:
   deploy:
