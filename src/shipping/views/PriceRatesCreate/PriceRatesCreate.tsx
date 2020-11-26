@@ -130,6 +130,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
         rate={null}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        rate={null}
         variant={ShippingMethodTypeEnum.PRICE}
       />
     </>
