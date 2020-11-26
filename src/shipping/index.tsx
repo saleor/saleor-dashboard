@@ -8,6 +8,7 @@ import { WindowTitle } from "../components/WindowTitle";
 import {
   shippingPriceRatesEditPath,
   shippingPriceRatesPath,
+  ShippingRateUrlQueryParams,
   shippingWeightRatesEditPath,
   shippingWeightRatesPath,
   shippingZoneAddPath,
@@ -57,22 +58,34 @@ const WeightRatesCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
 const WeightRatesUpdate: React.FC<RouteComponentProps<{
   id: string;
   rateId: string;
-}>> = ({ match }) => (
-  <WeightRatesUpdateComponent
-    id={decodeURIComponent(match.params.id)}
-    rateId={decodeURIComponent(match.params.rateId)}
-  />
-);
+}>> = ({ match }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ShippingRateUrlQueryParams = qs;
+
+  return (
+    <WeightRatesUpdateComponent
+      id={decodeURIComponent(match.params.id)}
+      rateId={decodeURIComponent(match.params.rateId)}
+      params={params}
+    />
+  );
+};
 
 const PriceRatesUpdate: React.FC<RouteComponentProps<{
   id: string;
   rateId: string;
-}>> = ({ match }) => (
-  <PriceRatesUpdateComponent
-    id={decodeURIComponent(match.params.id)}
-    rateId={decodeURIComponent(match.params.rateId)}
-  />
-);
+}>> = ({ match }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ShippingRateUrlQueryParams = qs;
+
+  return (
+    <PriceRatesUpdateComponent
+      id={decodeURIComponent(match.params.id)}
+      rateId={decodeURIComponent(match.params.rateId)}
+      params={params}
+    />
+  );
+};
 
 export const ShippingRouter: React.FC = () => {
   const intl = useIntl();
