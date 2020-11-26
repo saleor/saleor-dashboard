@@ -484,7 +484,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                             : 0,
                           max: 1
                         },
-                        id: node?.id,
+                        id: node?.shippingMethod.id,
                         name: node?.name
                       }
                   )}

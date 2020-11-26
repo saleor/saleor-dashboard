@@ -439,7 +439,7 @@ const shippingMethodTranslationDetails = gql`
     $id: ID!
     $language: LanguageCodeEnum!
   ) {
-    translation(kind: ATTRIBUTE, id: $id) {
+    translation(kind: SHIPPING_METHOD, id: $id) {
       ...ShippingMethodTranslationFragment
     }
   }

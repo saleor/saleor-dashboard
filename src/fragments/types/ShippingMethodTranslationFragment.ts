@@ -8,6 +8,11 @@ import { LanguageCodeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: ShippingMethodTranslationFragment
 // ====================================================
 
+export interface ShippingMethodTranslationFragment_shippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
 export interface ShippingMethodTranslationFragment_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -23,6 +28,7 @@ export interface ShippingMethodTranslationFragment_translation {
 
 export interface ShippingMethodTranslationFragment {
   __typename: "ShippingMethodTranslatableContent";
+  shippingMethod: ShippingMethodTranslationFragment_shippingMethod | null;
   id: string;
   name: string;
   translation: ShippingMethodTranslationFragment_translation | null;

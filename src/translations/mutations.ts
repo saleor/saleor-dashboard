@@ -301,7 +301,7 @@ const updateShippingMethodTranslations = gql`
       shippingMethod {
         id
         name
-        translation(languageCode: PL) {
+        translation(languageCode: $language) {
           id
           language {
             language

@@ -12,6 +12,11 @@ export interface ShippingMethodTranslations_translations_edges_node_ProductTrans
   __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "SaleTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
 }
 
+export interface ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_shippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
 export interface ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -27,6 +32,7 @@ export interface ShippingMethodTranslations_translations_edges_node_ShippingMeth
 
 export interface ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent {
   __typename: "ShippingMethodTranslatableContent";
+  shippingMethod: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_shippingMethod | null;
   id: string;
   name: string;
   translation: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_translation | null;

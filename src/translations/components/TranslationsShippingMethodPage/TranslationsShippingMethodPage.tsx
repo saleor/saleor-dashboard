@@ -44,12 +44,12 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
         title={intl.formatMessage(
           {
             defaultMessage:
-              'Translation ShippingMethod "{saleName}" - {languageCode}',
+              'Translation ShippingMethod "{shippingMethodName}" - {languageCode}',
             description: "header"
           },
           {
             languageCode,
-            saleName: data?.name || "..."
+            shippingMethodName: data?.name || "..."
           }
         )}
       >
