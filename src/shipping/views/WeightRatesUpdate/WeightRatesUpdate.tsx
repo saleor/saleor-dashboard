@@ -262,6 +262,22 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         }
         open={params.action === "remove-range"}
       />
+      <ShippingZoneZipCodeRangeDialog
+        confirmButtonState={assignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onSubmit={data =>
+          assignZipCodeRange({
+            variables: {
+              input: {
+                end: data.max,
+                shippingMethod: rateId,
+                start: data.min
+              }
+            }
+          })
+        }
+        open={params.action === "add-range"}
+      />
     </>
   );
 };
