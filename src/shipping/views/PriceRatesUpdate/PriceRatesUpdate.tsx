@@ -24,19 +24,27 @@ import {
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
 import { useShippingZone } from "@saleor/shipping/queries";
-import { shippingZoneUrl } from "@saleor/shipping/urls";
+import {
+  ShippingRateUrlDialog,
+  ShippingRateUrlQueryParams,
+  shippingWeightRatesEditUrl,
+  shippingZoneUrl
+} from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface PriceRatesUpdateProps {
   id: string;
   rateId: string;
+  params: ShippingRateUrlQueryParams;
 }
 
 export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   id,
-  rateId
+  rateId,
+  params
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -46,6 +54,11 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     displayLoader: true,
     variables: { id }
   });
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ShippingRateUrlDialog,
+    ShippingRateUrlQueryParams
+  >(navigate, params => shippingWeightRatesEditUrl(id, rateId, params), params);
 
   const rate = data?.shippingZone?.shippingMethods.find(
     rate => rate.id === rateId
@@ -75,8 +88,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     toggleAllChannels
   } = useChannels(shippingChannels);
 
-  const [openModal, setOpenModal] = React.useState(false);
-
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
   );
@@ -96,7 +107,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
   });
 
-  const handleDelete = () => setOpenModal(true);
   const handleSubmit = async (formData: FormData) => {
     const response = await updateShippingRate({
       variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
@@ -139,7 +149,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       )}
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
-        onClose={() => setOpenModal(false)}
+        onClose={closeModal}
         handleConfirm={() =>
           deleteShippingRate({
             variables: {
@@ -147,7 +157,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
             }
           })
         }
-        open={openModal}
+        open={params.action === "remove"}
         name={rate?.name}
       />
       <ShippingZoneRatesPage
@@ -160,7 +170,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         }
         hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         saveButtonBarState={updateShippingRateOpts.status}
-        onDelete={handleDelete}
+        onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onBack={handleBack}
         rate={rate}
@@ -173,6 +183,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.PRICE}
       />
+      {}
     </>
   );
 };
