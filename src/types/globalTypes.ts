@@ -1676,6 +1676,12 @@ export interface ShippingPriceInput {
   shippingZone?: string | null;
 }
 
+export interface ShippingZipCodeCreateInput {
+  shippingMethod: string;
+  start: string;
+  end: string;
+}
+
 export interface ShippingZoneCreateInput {
   name?: string | null;
   countries?: (string | null)[] | null;
