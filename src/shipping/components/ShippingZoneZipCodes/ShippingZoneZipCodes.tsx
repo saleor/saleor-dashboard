@@ -13,6 +13,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { ShippingMethodFragment_zipCodes } from "@saleor/fragments/types/ShippingMethodFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
@@ -24,15 +25,14 @@ export enum ZipCodeInclusion {
   Include,
   Exclude
 }
-type ZipCode = string;
 
 export interface ShippingZoneZipCodesProps {
   data: Record<"includeZipCodes", ZipCodeInclusion>;
   disabled: boolean;
   initialExpanded?: boolean;
-  zipCodes: ZipCode[];
+  zipCodes: ShippingMethodFragment_zipCodes[];
   onZipCodeInclusionChange: FormChange;
-  onZipCodeDelete: (code: string) => void;
+  onZipCodeDelete: (id: string) => void;
   onZipCodeRangeAdd: () => void;
 }
 
@@ -51,6 +51,9 @@ const useStyles = makeStyles(
     option: {
       marginBottom: theme.spacing(2),
       width: 400
+    },
+    radioContainer: {
+      paddingBottom: 0
     },
     skeleton: {
       width: 80
@@ -90,7 +93,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           </Button>
         }
       />
-      <CardContent>
+      <CardContent className={classes.radioContainer}>
         <RadioGroupField
           alignTop
           choices={[
@@ -148,8 +151,8 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                   ) : (
                     <Typography variant="caption">
                       <FormattedMessage
-                        defaultMessage="{number} ZIP-Codes"
-                        description="number of zip codes"
+                        defaultMessage="{number} ZIP-Code ranges"
+                        description="number of zip code ranges"
                         values={{
                           number: zipCodes.length
                         }}
@@ -173,14 +176,24 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           <TableBody>
             {renderCollection(
               zipCodes,
-              zipCode => (
-                <TableRow key={zipCode}>
-                  <TableCell>{zipCode || <Skeleton />}</TableCell>
+              zipCodeRange => (
+                <TableRow key={zipCodeRange?.id}>
+                  <TableCell>
+                    {zipCodeRange?.start ? (
+                      zipCodeRange?.end ? (
+                        `${zipCodeRange.start} - ${zipCodeRange.end}`
+                      ) : (
+                        zipCodeRange.start
+                      )
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
                   <TableCell>
                     <IconButton
                       disabled={disabled}
                       color="primary"
-                      onClick={() => onZipCodeDelete(zipCode)}
+                      onClick={() => onZipCodeDelete(zipCodeRange.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
