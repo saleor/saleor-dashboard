@@ -5,6 +5,7 @@ All notable, unreleased changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Add Page Types - #807 by @orzechdev
+- Add shipping methods to translation section - #864 by @marekchoinski
 
 # 2.11.1
 
