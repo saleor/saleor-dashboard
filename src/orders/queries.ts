@@ -258,6 +258,12 @@ const orderRefundData = gql`
         amount
         currency
       }
+      shippingPrice {
+        gross {
+          amount
+          currency
+        }
+      }
       lines {
         id
         productName
@@ -270,6 +276,31 @@ const orderRefundData = gql`
         }
         thumbnail(size: 64) {
           url
+        }
+      }
+      fulfillments {
+        id
+        warehouse {
+          id
+          name
+        }
+        lines {
+          id
+          quantity
+          orderLine {
+            id
+            productName
+            quantity
+            totalPrice {
+              gross {
+                amount
+                currency
+              }
+            }
+            thumbnail(size: 64) {
+              url
+            }
+          }
         }
       }
     }

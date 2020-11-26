@@ -12,19 +12,28 @@ export enum OrderRefundType {
   MISCELLANEOUS = "miscellaneous",
   PRODUCTS = "products"
 }
+export enum OrderRefundAmountCalculationMode {
+  AUTOMATIC = "automatic",
+  MANUAL = "manual"
+}
 
 export interface OrderRefundData {
   amount: number | string;
   type: OrderRefundType;
+  refundShipmentCosts: boolean;
+  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
 export interface OrderRefundHandlers {
   changeRefundedProductQuantity: FormsetChange<string>;
   setMaximalRefundedProductQuantities: () => void;
+  changeRefundedFulfilledProductQuantity: FormsetChange<string>;
+  setMaximalRefundedFulfilledProductQuantities: (fulfillmentId: string) => void;
 }
 
 export interface OrderRefundFormData extends OrderRefundData {
   refundedProductQuantities: FormsetData<null, string>;
+  refundedFulfilledProductQuantities: FormsetData<null, string>;
 }
 
 export type OrderRefundSubmitData = OrderRefundFormData;
@@ -50,6 +59,8 @@ function getOrderRefundPageFormData(
 ): OrderRefundData {
   return {
     amount: undefined,
+    amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
+    refundShipmentCosts: false,
     type: defaultType
   };
 }
@@ -71,6 +82,20 @@ function useOrderRefundForm(
       value: "0"
     }))
   );
+  const refundedFulfilledProductQuantities = useFormset<null, string>(
+    order?.fulfillments.reduce(
+      (linesQty, fulfillemnt) =>
+        linesQty.concat(
+          fulfillemnt.lines.map(fulfillmentLine => ({
+            data: null,
+            id: fulfillmentLine.id,
+            label: null,
+            value: "0"
+          }))
+        ),
+      []
+    )
+  );
 
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);
@@ -83,10 +108,59 @@ function useOrderRefundForm(
     triggerChange();
     refundedProductQuantities.change(id, value);
   };
-  const handleMaximalRefundedProductQuantitiesSet = () => undefined;
+  const handleRefundedFulFilledProductQuantityChange = (
+    id: string,
+    value: string
+  ) => {
+    triggerChange();
+    refundedFulfilledProductQuantities.change(id, value);
+  };
+  const handleMaximalRefundedProductQuantitiesSet = () => {
+    const newQuantities: FormsetData<
+      null,
+      string
+    > = refundedProductQuantities.data.map(selectedLine => {
+      const line = order.lines.find(line => line.id === selectedLine.id);
+
+      return {
+        data: null,
+        id: line.id,
+        label: null,
+        value: line.quantity.toString()
+      };
+    });
+    refundedProductQuantities.set(newQuantities);
+    triggerChange();
+  };
+  const handleMaximalRefundedFulfilledProductQuantitiesSet = (
+    fulfillmentId: string
+  ) => {
+    const fulfillment = order.fulfillments.find(
+      fulfillment => fulfillment.id === fulfillmentId
+    );
+    const newQuantities: FormsetData<
+      null,
+      string
+    > = refundedFulfilledProductQuantities.data.map(selectedLine => {
+      const line = fulfillment.lines.find(line => line.id === selectedLine.id);
+
+      if (line) {
+        return {
+          data: null,
+          id: line.id,
+          label: null,
+          value: line.quantity.toString()
+        };
+      }
+      return selectedLine;
+    });
+    refundedFulfilledProductQuantities.set(newQuantities);
+    triggerChange();
+  };
 
   const data: OrderRefundFormData = {
     ...form.data,
+    refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
     refundedProductQuantities: refundedProductQuantities.data
   };
 
@@ -99,7 +173,9 @@ function useOrderRefundForm(
     data,
     disabled,
     handlers: {
+      changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
+      setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
       setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
     },
     hasChanged: changed,
