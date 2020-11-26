@@ -30,7 +30,7 @@ export interface ShippingZoneZipCodesProps {
   data: Record<"includeZipCodes", ZipCodeInclusion>;
   disabled: boolean;
   initialExpanded?: boolean;
-  zipCodes: ShippingMethodFragment_zipCodes[];
+  zipCodes: ShippingMethodFragment_zipCodes[] | undefined;
   onZipCodeInclusionChange: FormChange;
   onZipCodeDelete: (id: string) => void;
   onZipCodeRangeAdd: () => void;
