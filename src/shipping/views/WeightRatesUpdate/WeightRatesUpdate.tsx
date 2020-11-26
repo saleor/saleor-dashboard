@@ -14,11 +14,13 @@ import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShipping
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingWeightRateVariables
 } from "@saleor/shipping/handlers";
 import {
+  useShippingMethodZipCodeRangeAssign,
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
@@ -107,6 +109,21 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
   });
 
+  const [
+    assignZipCodeRange,
+    assignZipCodeRangeOpts
+  ] = useShippingMethodZipCodeRangeAssign({
+    onCompleted: data => {
+      if (data.shippingMethodZipCodeCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
+    }
+  });
+
   const handleSubmit = async (data: FormData) => {
     const response = await updateShippingRate({
       variables: getUpdateShippingWeightRateVariables(data, id, rateId)
@@ -182,6 +199,22 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.WEIGHT}
+      />
+      <ShippingZoneZipCodeRangeDialog
+        confirmButtonState={assignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onSubmit={data =>
+          assignZipCodeRange({
+            variables: {
+              input: {
+                end: data.max,
+                shippingMethod: rateId,
+                start: data.min
+              }
+            }
+          })
+        }
+        open={params.action === "add-range"}
       />
     </>
   );
