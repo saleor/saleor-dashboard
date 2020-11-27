@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { FulfillmentStatus } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: OrderRefundData
 // ====================================================
@@ -60,12 +62,6 @@ export interface OrderRefundData_order_lines {
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
 }
 
-export interface OrderRefundData_order_fulfillments_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
-}
-
 export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -101,7 +97,8 @@ export interface OrderRefundData_order_fulfillments_lines {
 export interface OrderRefundData_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
-  warehouse: OrderRefundData_order_fulfillments_warehouse | null;
+  status: FulfillmentStatus;
+  fulfillmentOrder: number;
   lines: (OrderRefundData_order_fulfillments_lines | null)[] | null;
 }
 

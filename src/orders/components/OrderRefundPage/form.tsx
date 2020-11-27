@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
@@ -85,18 +86,20 @@ function useOrderRefundForm(
       }))
   );
   const refundedFulfilledProductQuantities = useFormset<null, string>(
-    order?.fulfillments.reduce(
-      (linesQty, fulfillemnt) =>
-        linesQty.concat(
-          fulfillemnt.lines.map(fulfillmentLine => ({
-            data: null,
-            id: fulfillmentLine.id,
-            label: null,
-            value: "0"
-          }))
-        ),
-      []
-    )
+    order?.fulfillments
+      .filter(fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED)
+      .reduce(
+        (linesQty, fulfillemnt) =>
+          linesQty.concat(
+            fulfillemnt.lines.map(fulfillmentLine => ({
+              data: null,
+              id: fulfillmentLine.id,
+              label: null,
+              value: "0"
+            }))
+          ),
+        []
+      )
   );
 
   const handleChange: FormChange = (event, cb) => {

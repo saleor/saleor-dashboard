@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import { CSSProperties } from "@material-ui/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
@@ -47,6 +48,10 @@ const useStyles = makeStyles(
       quantityInnerInputNoRemaining: {
         paddingRight: 0
       },
+      orderNumber: {
+        display: "inline",
+        marginLeft: theme.spacing(1)
+      },
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
@@ -61,20 +66,20 @@ const useStyles = makeStyles(
 );
 
 interface OrderRefundFulfilledProductsProps {
-  fulfillemnt: OrderRefundData_order_fulfillments;
+  fulfillment: OrderRefundData_order_fulfillments;
   data: OrderRefundFormData;
   disabled: boolean;
-  title: React.ReactNode;
+  orderNumber: string;
   onRefundedProductQuantityChange: FormsetChange<string>;
   onSetMaximalQuantities: () => void;
 }
 
 const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> = props => {
   const {
-    fulfillemnt,
+    fulfillment,
     data,
     disabled,
-    title,
+    orderNumber,
     onRefundedProductQuantityChange,
     onSetMaximalQuantities
   } = props;
@@ -83,14 +88,26 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
 
   return (
     <Card>
-      <CardTitle title={title} />
+      <CardTitle
+        title={
+          <>
+            {intl.formatMessage({
+              defaultMessage: "Fulfillment",
+              description: "section header"
+            })}
+            <Typography className={classes.orderNumber} variant="body1">
+              {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}
+            </Typography>
+          </>
+        }
+      />
       <CardContent className={classes.cartContent}>
         <Button
           className={classes.setMaximalQuantityButton}
           color="primary"
           onClick={onSetMaximalQuantities}
           data-test="setMaximalQuantityFulFilledButton"
-          data-test-id={fulfillemnt?.id}
+          data-test-id={fulfillment?.id}
         >
           <FormattedMessage
             defaultMessage="Set maximal quantities"
@@ -129,7 +146,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
         </TableHead>
         <TableBody>
           {renderCollection(
-            fulfillemnt?.lines,
+            fulfillment?.lines,
             line => {
               const selectedLineQuantity = data.refundedFulfilledProductQuantities.find(
                 refundedLine => refundedLine.id === line.id

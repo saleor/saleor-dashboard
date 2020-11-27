@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys */
 
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
 export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
   __typename: "Order",
@@ -71,11 +72,8 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
     {
       __typename: "Fulfillment",
       id: "f12345qwertyu",
-      warehouse: {
-        __typename: "Warehouse",
-        id: "w12wdfgb",
-        name: "WR-23"
-      },
+      status: FulfillmentStatus.FULFILLED,
+      fulfillmentOrder: 22,
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -128,11 +126,8 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
     {
       __typename: "Fulfillment",
       id: "876543jhgfdfd",
-      warehouse: {
-        __typename: "Warehouse",
-        id: "09iuhgf",
-        name: "WR-24"
-      },
+      status: FulfillmentStatus.FULFILLED,
+      fulfillmentOrder: 22,
       lines: [
         {
           __typename: "FulfillmentLine",

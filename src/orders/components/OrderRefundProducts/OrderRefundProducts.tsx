@@ -65,7 +65,6 @@ interface OrderRefundProductsProps {
   unfulfilledLines: OrderRefundData_order_lines[];
   data: OrderRefundFormData;
   disabled: boolean;
-  title: React.ReactNode;
   onRefundedProductQuantityChange: FormsetChange<string>;
   onSetMaximalQuantities: () => void;
 }
@@ -75,7 +74,6 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
     unfulfilledLines,
     data,
     disabled,
-    title,
     onRefundedProductQuantityChange,
     onSetMaximalQuantities
   } = props;
@@ -84,7 +82,12 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
 
   return (
     <Card>
-      <CardTitle title={title} />
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Unfulfilled Products",
+          description: "section header"
+        })}
+      />
       <CardContent className={classes.cartContent}>
         <Typography
           variant="caption"

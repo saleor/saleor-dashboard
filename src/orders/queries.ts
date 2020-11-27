@@ -281,10 +281,8 @@ const orderRefundData = gql`
       }
       fulfillments {
         id
-        warehouse {
-          id
-          name
-        }
+        status
+        fulfillmentOrder
         lines {
           id
           quantity

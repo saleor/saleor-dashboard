@@ -7,6 +7,7 @@ import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -42,6 +43,9 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
   const unfulfilledLines = order?.lines.filter(
     line => line.quantity !== line.quantityFulfilled
+  );
+  const fulfilledFulfillemnts = order?.fulfillments.filter(
+    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
   );
 
   return (
@@ -88,10 +92,6 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                     <>
                       <CardSpacer />
                       <OrderRefundProducts
-                        title={intl.formatMessage({
-                          defaultMessage: "Unfulfilled Products",
-                          description: "section header"
-                        })}
                         unfulfilledLines={unfulfilledLines}
                         data={data}
                         disabled={disabled}
@@ -104,22 +104,14 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                       />
                     </>
                   )}
-                  {renderCollection(order?.fulfillments, fulfillment => (
+                  {renderCollection(fulfilledFulfillemnts, fulfillment => (
                     <React.Fragment key={fulfillment?.id}>
                       <CardSpacer />
                       <OrderRefundFulfilledProducts
-                        title={intl.formatMessage(
-                          {
-                            defaultMessage: "Fulfillment {warehouse}",
-                            description: "section header"
-                          },
-                          {
-                            warehouse: fulfillment?.warehouse?.name
-                          }
-                        )}
-                        fulfillemnt={fulfillment}
+                        fulfillment={fulfillment}
                         data={data}
                         disabled={disabled}
+                        orderNumber={order?.number}
                         onRefundedProductQuantityChange={
                           handlers.changeRefundedFulfilledProductQuantity
                         }
