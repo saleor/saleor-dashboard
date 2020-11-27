@@ -64,6 +64,7 @@ storiesOf("Views / Shipping / Shipping rate", module)
     <ShippingZoneRatesPage
       {...props}
       disabled={true}
+      rate={undefined}
       saveButtonBarState={"loading"}
     />
   ))
