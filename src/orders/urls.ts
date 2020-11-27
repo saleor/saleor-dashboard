@@ -103,7 +103,6 @@ export type OrderUrlDialog =
   | "edit-shipping-address"
   | "finalize"
   | "mark-paid"
-  | "refund"
   | "void"
   | "invoice-send";
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
@@ -114,3 +113,7 @@ export const orderFulfillPath = (id: string) =>
   urlJoin(orderPath(id), "fulfill");
 export const orderFulfillUrl = (id: string) =>
   orderFulfillPath(encodeURIComponent(id));
+
+export const orderRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
+export const orderRefundUrl = (id: string) =>
+  orderRefundPath(encodeURIComponent(id));

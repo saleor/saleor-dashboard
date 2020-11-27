@@ -3534,10 +3534,6 @@
     "context": "dialog header",
     "string": "Capture Payment"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_250371749": {
-    "context": "dialog header",
-    "string": "Refund Payment"
-  },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_75546233": {
     "context": "amount of refunded money",
     "string": "Amount"
@@ -3620,6 +3616,64 @@
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_120912052": {
+    "context": "order refund amount",
+    "string": "Refunded items can’t be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_159210811": {
+    "string": "Amount must be bigger than 0"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_1705174606": {
+    "context": "order refund amount",
+    "string": "Max Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2045860028": {
+    "context": "order refund amount",
+    "string": "Authorized Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2256869831": {
+    "context": "section header",
+    "string": "Refunded Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2845258362": {
+    "context": "order refund amount, input button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2854815744": {
+    "context": "order refund amount",
+    "string": "Previously refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4033685232": {
+    "string": "Amount cannot be bigger than max refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_40513382": {
+    "context": "order refund amount, input button",
+    "string": "Refund {currency} {amount}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_75546233": {
+    "context": "order refund amount, input label",
+    "string": "Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_194531545": {
+    "context": "page header",
+    "string": "Order no. {orderNumber} - Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_3620521256": {
+    "context": "page header",
+    "string": "Order"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_580490159": {
+    "context": "page header with order number",
+    "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_1275363773": {
+    "context": "section header",
+    "string": "Refund Order"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_refundMiscellaneous": {
+    "context": "refund type",
+    "string": "Miscellaneous Refund"
   },
   "src_dot_orders_dot_components_dot_OrderShippingMethodEditDialog_dot_3369240294": {
     "context": "dialog header",
@@ -3740,6 +3794,10 @@
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
     "string": "Order draft successfully created"
+  },
+  "src_dot_orders_dot_views_dot_OrderRefund_dot_1366101924": {
+    "context": "order refunded success message",
+    "string": "Refunded Items"
   },
   "src_dot_pageTypes": {
     "context": "page types section name",
