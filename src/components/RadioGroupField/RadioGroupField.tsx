@@ -12,6 +12,11 @@ import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
+    alignTop: {
+      alignSelf: "baseline",
+      position: "relative",
+      top: -6
+    },
     formLabel: {
       marginBottom: theme.spacing(1)
     },
@@ -45,6 +50,7 @@ export interface RadioGroupFieldChoice<
 }
 
 interface RadioGroupFieldProps {
+  alignTop?: boolean;
   choices: RadioGroupFieldChoice[];
   className?: string;
   disabled?: boolean;
@@ -58,6 +64,7 @@ interface RadioGroupFieldProps {
 
 export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
   const {
+    alignTop,
     className,
     disabled,
     error,
@@ -93,7 +100,14 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
               disabled={choice.disabled}
               value={choice.value}
               className={classes.radioLabel}
-              control={<Radio color="primary" />}
+              control={
+                <Radio
+                  className={classNames({
+                    [classes.alignTop]: alignTop
+                  })}
+                  color="primary"
+                />
+              }
               label={choice.label}
               key={choice.value}
             />
