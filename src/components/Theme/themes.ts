@@ -82,7 +82,7 @@ export const light: IThemeColors = {
     button: "#FFFFFF",
     default: "#3D3D3D",
     gray: "#616161",
-    textButton: "#06847B",
+    textButton: "#0D233F",
     textDisabled: "#616161"
   },
   gray: {
@@ -100,7 +100,7 @@ export const light: IThemeColors = {
     textHover: "#616161"
   },
   paperBorder: "#EAEAEA",
-  primary: "#06847B",
+  primary: "#0D233F",
   secondary: "#21125E",
   theme: "light"
 };
