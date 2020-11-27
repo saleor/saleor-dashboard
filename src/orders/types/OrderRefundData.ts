@@ -34,15 +34,15 @@ export interface OrderRefundData_order_shippingPrice {
   gross: OrderRefundData_order_shippingPrice_gross;
 }
 
-export interface OrderRefundData_order_lines_totalPrice_gross {
+export interface OrderRefundData_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderRefundData_order_lines_totalPrice {
+export interface OrderRefundData_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  gross: OrderRefundData_order_lines_totalPrice_gross;
+  gross: OrderRefundData_order_lines_unitPrice_gross;
 }
 
 export interface OrderRefundData_order_lines_thumbnail {
@@ -55,7 +55,8 @@ export interface OrderRefundData_order_lines {
   id: string;
   productName: string;
   quantity: number;
-  totalPrice: OrderRefundData_order_lines_totalPrice | null;
+  quantityFulfilled: number;
+  unitPrice: OrderRefundData_order_lines_unitPrice | null;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
 }
 
@@ -65,15 +66,15 @@ export interface OrderRefundData_order_fulfillments_warehouse {
   name: string;
 }
 
-export interface OrderRefundData_order_fulfillments_lines_orderLine_totalPrice_gross {
+export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderRefundData_order_fulfillments_lines_orderLine_totalPrice {
+export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  gross: OrderRefundData_order_fulfillments_lines_orderLine_totalPrice_gross;
+  gross: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross;
 }
 
 export interface OrderRefundData_order_fulfillments_lines_orderLine_thumbnail {
@@ -86,7 +87,7 @@ export interface OrderRefundData_order_fulfillments_lines_orderLine {
   id: string;
   productName: string;
   quantity: number;
-  totalPrice: OrderRefundData_order_fulfillments_lines_orderLine_totalPrice | null;
+  unitPrice: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice | null;
   thumbnail: OrderRefundData_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 

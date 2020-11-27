@@ -40,6 +40,10 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
   const intl = useIntl();
 
+  const unfulfilledLines = order?.lines.filter(
+    line => line.quantity !== line.quantityFulfilled
+  );
+
   return (
     <OrderRefundForm
       order={order}
@@ -80,7 +84,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
               <OrderRefund data={data} disabled={disabled} onChange={change} />
               {data.type === OrderRefundType.PRODUCTS && (
                 <>
-                  {order?.lines?.length > 0 && (
+                  {unfulfilledLines?.length > 0 && (
                     <>
                       <CardSpacer />
                       <OrderRefundProducts
@@ -88,7 +92,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                           defaultMessage: "Unfulfilled Products",
                           description: "section header"
                         })}
-                        order={order}
+                        unfulfilledLines={unfulfilledLines}
                         data={data}
                         disabled={disabled}
                         onRefundedProductQuantityChange={

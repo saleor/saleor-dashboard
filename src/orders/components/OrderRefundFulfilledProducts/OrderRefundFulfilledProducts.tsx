@@ -148,8 +148,8 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                     )}
                   </TableCellAvatar>
                   <TableCell>
-                    {line?.orderLine?.totalPrice ? (
-                      <Money money={line?.orderLine?.totalPrice.gross} />
+                    {line?.orderLine?.unitPrice ? (
+                      <Money money={line?.orderLine?.unitPrice.gross} />
                     ) : (
                       <Skeleton />
                     )}
@@ -196,12 +196,12 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                     )}
                   </TableCell>
                   <TableCell>
-                    {(line?.quantity && line?.orderLine?.totalPrice.gross && (
+                    {(line?.quantity && line?.orderLine?.unitPrice.gross && (
                       <Money
                         money={{
-                          ...line?.orderLine.totalPrice.gross,
+                          ...line?.orderLine.unitPrice.gross,
                           amount:
-                            (line?.orderLine.totalPrice.gross.amount || 0) *
+                            (line?.orderLine.unitPrice.gross.amount || 0) *
                             Number(selectedLineQuantity?.value)
                         }}
                       />

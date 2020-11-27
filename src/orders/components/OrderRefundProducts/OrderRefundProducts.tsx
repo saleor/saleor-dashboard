@@ -16,7 +16,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { OrderRefundData_order_lines } from "@saleor/orders/types/OrderRefundData";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -62,7 +62,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderRefundProductsProps {
-  order: OrderRefundData_order;
+  unfulfilledLines: OrderRefundData_order_lines[];
   data: OrderRefundFormData;
   disabled: boolean;
   title: React.ReactNode;
@@ -72,7 +72,7 @@ interface OrderRefundProductsProps {
 
 const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
   const {
-    order,
+    unfulfilledLines,
     data,
     disabled,
     title,
@@ -139,13 +139,14 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
         </TableHead>
         <TableBody>
           {renderCollection(
-            order.lines,
+            unfulfilledLines,
             line => {
               const selectedLineQuantity = data.refundedProductQuantities.find(
                 refundedLine => refundedLine.id === line.id
               );
+              const lineQuantity = line?.quantity - line?.quantityFulfilled;
               const isError =
-                Number(selectedLineQuantity?.value) > line?.quantity ||
+                Number(selectedLineQuantity?.value) > lineQuantity ||
                 Number(selectedLineQuantity?.value) < 0;
 
               return (
@@ -154,14 +155,14 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
                     {line?.productName ? line?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>
-                    {line?.totalPrice ? (
-                      <Money money={line?.totalPrice.gross} />
+                    {line?.unitPrice ? (
+                      <Money money={line?.unitPrice.gross} />
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
-                    {line?.quantity ? (
+                    {lineQuantity ? (
                       <TextField
                         disabled={disabled}
                         type="number"
@@ -169,7 +170,7 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
                           className: classes.quantityInnerInput,
                           "data-test": "quantityInput",
                           "data-test-id": line?.id,
-                          max: (line?.quantity).toString(),
+                          max: lineQuantity.toString(),
                           min: 0,
                           style: { textAlign: "right" }
                         }}
@@ -182,9 +183,9 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
                           )
                         }
                         InputProps={{
-                          endAdornment: line?.quantity && (
+                          endAdornment: lineQuantity && (
                             <div className={classes.remainingQuantity}>
-                              / {line?.quantity}
+                              / {lineQuantity}
                             </div>
                           )
                         }}
@@ -202,12 +203,12 @@ const OrderRefundProducts: React.FC<OrderRefundProductsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {(line?.quantity && line?.totalPrice.gross && (
+                    {(lineQuantity && line?.unitPrice.gross && (
                       <Money
                         money={{
-                          ...line.totalPrice.gross,
+                          ...line.unitPrice.gross,
                           amount:
-                            (line.totalPrice.gross.amount || 0) *
+                            (line.unitPrice.gross.amount || 0) *
                             Number(selectedLineQuantity?.value)
                         }}
                       />

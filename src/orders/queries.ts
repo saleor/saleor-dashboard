@@ -268,7 +268,8 @@ const orderRefundData = gql`
         id
         productName
         quantity
-        totalPrice {
+        quantityFulfilled
+        unitPrice {
           gross {
             amount
             currency
@@ -291,7 +292,7 @@ const orderRefundData = gql`
             id
             productName
             quantity
-            totalPrice {
+            unitPrice {
               gross {
                 amount
                 currency

@@ -32,12 +32,13 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       __typename: "OrderLine",
       id: "diufhdsif",
       productName: "Milk",
-      quantity: 16,
+      quantity: 19,
+      quantityFulfilled: 3,
       thumbnail: {
         __typename: "Image",
         url: placeholder
       },
-      totalPrice: {
+      unitPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
@@ -50,12 +51,13 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       __typename: "OrderLine",
       id: "fdsfdfdsf",
       productName: "Coffee",
-      quantity: 8,
+      quantity: 13,
+      quantityFulfilled: 5,
       thumbnail: {
         __typename: "Image",
         url: placeholder
       },
-      totalPrice: {
+      unitPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
@@ -88,7 +90,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
               __typename: "Image",
               url: placeholder
             },
-            totalPrice: {
+            unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
@@ -111,7 +113,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
               __typename: "Image",
               url: placeholder
             },
-            totalPrice: {
+            unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
@@ -145,7 +147,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
               __typename: "Image",
               url: placeholder
             },
-            totalPrice: {
+            unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
@@ -168,7 +170,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
               __typename: "Image",
               url: placeholder
             },
-            totalPrice: {
+            unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",

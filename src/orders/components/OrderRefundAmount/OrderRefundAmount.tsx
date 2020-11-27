@@ -75,7 +75,7 @@ const getProductsAmountValues = (
     const refundedLine = data.refundedProductQuantities.find(
       refundedLine => refundedLine.id === line.id
     );
-    return sum + line.totalPrice.gross.amount * Number(refundedLine.value);
+    return sum + line.unitPrice.gross.amount * Number(refundedLine?.value || 0);
   }, 0);
   const allFulfillmentLinesSum = order?.fulfillments?.reduce(
     (sum, fulfillment) => {
@@ -85,7 +85,8 @@ const getProductsAmountValues = (
         );
         return (
           sum +
-          line.orderLine.totalPrice.gross.amount * Number(refundedLine.value)
+          line.orderLine.unitPrice.gross.amount *
+            Number(refundedLine?.value || 0)
         );
       }, 0);
       return sum + fulfilmentLinesSum;
