@@ -22,7 +22,10 @@ import AttributeListComponent from "./views/AttributeList";
 const AttributeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AttributeListUrlQueryParams = asSortParams(
-    qs,
+    {
+      sort: "slug",
+      ...qs
+    },
     AttributeListUrlSortField
   );
 
