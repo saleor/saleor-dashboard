@@ -1,5 +1,4 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import { priceRangeFragment } from "@saleor/fragments/products";
 import {
   shippingMethodWithExcludedProductsFragment,
   shippingZoneFragment
@@ -69,7 +68,6 @@ export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
 );
 
 export const searchProducts = gql`
-  ${priceRangeFragment}
   query SearchShippingProducts($first: Int!, $query: String!, $after: String) {
     search: products(first: $first, after: $after, filter: { search: $query }) {
       edges {
@@ -82,11 +80,6 @@ export const searchProducts = gql`
           channelListings {
             channel {
               id
-            }
-            pricing {
-              priceRange {
-                ...PriceRangeFragment
-              }
             }
           }
         }

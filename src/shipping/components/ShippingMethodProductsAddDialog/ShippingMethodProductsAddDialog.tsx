@@ -13,7 +13,6 @@ import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -52,10 +51,6 @@ const useStyles = makeStyles(
         paddingLeft: 0,
         paddingRight: 0
       }
-    },
-    textRight: {
-      textAlign: "right",
-      width: 170
     }
   }),
   { name: "ShippingMethodProductsAddDialog" }
@@ -71,21 +66,6 @@ export interface ShippingMethodProductsAddDialogProps
   onFetch: (query: string) => void;
   onSubmit: (ids: string[]) => void;
 }
-
-const renderPrice = (
-  product: SearchShippingProducts_search_edges_node,
-  selectedChannelId: string
-) => {
-  const channel = product.channelListings.find(
-    listing => listing.channel.id === selectedChannelId
-  );
-  return (
-    <MoneyRange
-      from={channel.pricing.priceRange.start.net}
-      to={channel.pricing.priceRange.stop.net}
-    />
-  );
-};
 
 const handleProductAssign = (
   product: SearchShippingProducts_search_edges_node,
@@ -213,9 +193,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                         />
                         <TableCell className={classes.colName} colSpan={2}>
                           {product?.name}
-                        </TableCell>
-                        <TableCell className={classes.textRight}>
-                          {renderPrice(product, selectedChannelId)}
                         </TableCell>
                       </TableRow>
                     </React.Fragment>

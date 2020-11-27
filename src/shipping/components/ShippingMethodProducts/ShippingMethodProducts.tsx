@@ -12,17 +12,14 @@ import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { renderCollection } from "@saleor/misc";
 import { ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node } from "@saleor/shipping/types/ShippingZone";
+import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { ListActions, ListProps } from "../../../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -36,8 +33,8 @@ const useStyles = makeStyles(
     colName: {
       width: "auto"
     },
-    colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+    colProductName: {
+      paddingLeft: 0
     },
     table: {
       tableLayout: "fixed"
@@ -98,10 +95,8 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
               toggleAll={toggleAll}
               toolbar={toolbar}
             >
-              <TableCell className={classes.colName}>
-                <span className={classes.colNameLabel}>
-                  <FormattedMessage defaultMessage="Product Name" />
-                </span>
+              <TableCell className={classes.colProductName}>
+                <FormattedMessage defaultMessage="Product Name" />
               </TableCell>
               <TableCell className={classes.colAction}>
                 <FormattedMessage defaultMessage="Actions" />
@@ -154,7 +149,6 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                       <Skeleton />
                     )}
                   </TableCellAvatar>
-
                   <TableCell className={classes.colAction}>
                     <IconButton onClick={() => onProductUnassign([product.id])}>
                       <DeleteIcon color="primary" />

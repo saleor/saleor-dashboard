@@ -16,43 +16,9 @@ export interface SearchShippingProducts_search_edges_node_channelListings_channe
   id: string;
 }
 
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_start_net;
-}
-
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_start | null;
-  stop: SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface SearchShippingProducts_search_edges_node_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: SearchShippingProducts_search_edges_node_channelListings_pricing_priceRange | null;
-}
-
 export interface SearchShippingProducts_search_edges_node_channelListings {
   __typename: "ProductChannelListing";
   channel: SearchShippingProducts_search_edges_node_channelListings_channel;
-  pricing: SearchShippingProducts_search_edges_node_channelListings_pricing | null;
 }
 
 export interface SearchShippingProducts_search_edges_node {

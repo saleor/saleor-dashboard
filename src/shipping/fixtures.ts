@@ -1,6 +1,6 @@
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
-import { ShippingZoneWithExcludedProducts_shippingZone } from "@saleor/shipping/types/ShippingZoneWithExcludedProducts";
+import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
 import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 
@@ -1286,7 +1286,7 @@ export const shippingZones: ShippingZoneFragment[] = [
   }
 ];
 
-export const shippingZone: ShippingZoneWithExcludedProducts_shippingZone = {
+export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
   countries: [
     {
@@ -1587,28 +1587,6 @@ export const shippingZone: ShippingZoneWithExcludedProducts_shippingZone = {
               __typename: "Product",
               id: "1",
               name: "Apple Juice",
-              pricing: {
-                __typename: "ProductPricingInfo",
-                priceRange: {
-                  __typename: "TaxedMoneyRange",
-                  start: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  },
-                  stop: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  }
-                }
-              },
               thumbnail: {
                 __typename: "Image",
                 url: ""
@@ -1670,28 +1648,6 @@ export const shippingZone: ShippingZoneWithExcludedProducts_shippingZone = {
               __typename: "Product",
               id: "1",
               name: "Apple Juice",
-              pricing: {
-                __typename: "ProductPricingInfo",
-                priceRange: {
-                  __typename: "TaxedMoneyRange",
-                  start: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  },
-                  stop: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  }
-                }
-              },
               thumbnail: {
                 __typename: "Image",
                 url: ""
@@ -1749,28 +1705,6 @@ export const shippingZone: ShippingZoneWithExcludedProducts_shippingZone = {
               __typename: "Product",
               id: "1",
               name: "Apple Juice",
-              pricing: {
-                __typename: "ProductPricingInfo",
-                priceRange: {
-                  __typename: "TaxedMoneyRange",
-                  start: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  },
-                  stop: {
-                    __typename: "TaxedMoney",
-                    net: {
-                      __typename: "Money",
-                      amount: 2,
-                      currency: "USD"
-                    }
-                  }
-                }
-              },
               thumbnail: {
                 __typename: "Image",
                 url: ""
@@ -1884,28 +1818,6 @@ export const products: SearchShippingProducts_search_edges_node[] = [
         channel: {
           __typename: "Channel",
           id: "Q2hhbm5lbDo5"
-        },
-        pricing: {
-          __typename: "ProductPricingInfo",
-          priceRange: {
-            __typename: "TaxedMoneyRange",
-            start: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 2,
-                currency: "USD"
-              }
-            },
-            stop: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 2,
-                currency: "USD"
-              }
-            }
-          }
         }
       }
     ],
@@ -1924,28 +1836,6 @@ export const products: SearchShippingProducts_search_edges_node[] = [
         channel: {
           __typename: "Channel",
           id: "Q2hhbm5lbDo5"
-        },
-        pricing: {
-          __typename: "ProductPricingInfo",
-          priceRange: {
-            __typename: "TaxedMoneyRange",
-            start: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 2,
-                currency: "USD"
-              }
-            },
-            stop: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 2,
-                currency: "USD"
-              }
-            }
-          }
         }
       }
     ],

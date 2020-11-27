@@ -67,45 +67,11 @@ export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edg
   url: string;
 }
 
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_start_net;
-}
-
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_stop_net;
-}
-
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_start | null;
-  stop: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange_stop | null;
-}
-
-export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing_priceRange | null;
-}
-
 export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node {
   __typename: "Product";
   id: string;
   name: string;
   thumbnail: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_thumbnail | null;
-  pricing: ShippingMethodWithExcludedProductsFragment_excludedProducts_edges_node_pricing | null;
 }
 
 export interface ShippingMethodWithExcludedProductsFragment_excludedProducts_edges {

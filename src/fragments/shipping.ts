@@ -1,4 +1,4 @@
-import { fragmentMoney, priceRangeFragment } from "@saleor/fragments/products";
+import { fragmentMoney } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
 export const shippingZoneFragment = gql`
@@ -58,7 +58,6 @@ export const shippingMethodFragment = gql`
 `;
 export const shippingMethodWithExcludedProductsFragment = gql`
   ${fragmentMoney}
-  ${priceRangeFragment}
   fragment ShippingMethodWithExcludedProductsFragment on ShippingMethod {
     id
     minimumOrderWeight {
@@ -106,11 +105,6 @@ export const shippingMethodWithExcludedProductsFragment = gql`
           name
           thumbnail {
             url
-          }
-          pricing {
-            priceRange {
-              ...PriceRangeFragment
-            }
           }
         }
       }

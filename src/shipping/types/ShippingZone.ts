@@ -80,45 +80,11 @@ export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edge
   url: string;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_start_net;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_stop_net;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_start | null;
-  stop: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange_stop | null;
-}
-
-export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing_priceRange | null;
-}
-
 export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node {
   __typename: "Product";
   id: string;
   name: string;
   thumbnail: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_thumbnail | null;
-  pricing: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_pricing | null;
 }
 
 export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges {
