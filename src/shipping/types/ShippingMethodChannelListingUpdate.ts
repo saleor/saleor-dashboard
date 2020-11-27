@@ -61,6 +61,13 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   maximumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodes {
+  __typename: "ShippingMethodZipCode";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -70,6 +77,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings[] | null;
+  zipCodes: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodes | null)[] | null;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_errors {
