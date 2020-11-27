@@ -49,6 +49,7 @@ import {
   orderDraftListUrl,
   orderFulfillUrl,
   orderListUrl,
+  orderRefundUrl,
   orderUrl,
   OrderUrlDialog,
   OrderUrlQueryParams
@@ -156,7 +157,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}
                 onPaymentCapture={orderMessages.handlePaymentCapture}
-                onPaymentRefund={orderMessages.handlePaymentRefund}
                 onUpdate={orderMessages.handleUpdate}
                 onDraftUpdate={orderMessages.handleDraftUpdate}
                 onShippingMethodUpdate={
@@ -199,7 +199,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderLineDelete,
                   orderLineUpdate,
                   orderPaymentCapture,
-                  orderPaymentRefund,
                   orderVoid,
                   orderShippingMethodUpdate,
                   orderUpdate,
@@ -281,7 +280,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           onPaymentCapture={() => openModal("capture")}
                           onPaymentVoid={() => openModal("void")}
-                          onPaymentRefund={() => openModal("refund")}
+                          onPaymentRefund={() => navigate(orderRefundUrl(id))}
                           onProductClick={id => () => navigate(productUrl(id))}
                           onBillingAddressEdit={() =>
                             openModal("edit-billing-address")
@@ -371,27 +370,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           initial={order?.total.gross.amount}
                           open={params.action === "capture"}
-                          variant="capture"
                           onClose={closeModal}
                           onSubmit={variables =>
                             orderPaymentCapture.mutate({
-                              ...variables,
-                              id
-                            })
-                          }
-                        />
-                        <OrderPaymentDialog
-                          confirmButtonState={orderPaymentRefund.opts.status}
-                          errors={
-                            orderPaymentRefund.opts.data?.orderRefund.errors ||
-                            []
-                          }
-                          initial={order?.total.gross.amount}
-                          open={params.action === "refund"}
-                          variant="refund"
-                          onClose={closeModal}
-                          onSubmit={variables =>
-                            orderPaymentRefund.mutate({
                               ...variables,
                               id
                             })
