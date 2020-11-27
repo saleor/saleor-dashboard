@@ -6,6 +6,7 @@ import {
   pageTranslationFragment,
   productTranslationFragment,
   saleTranslationFragment,
+  shippingMethodTranslationFragment,
   voucherTranslationFragment
 } from "@saleor/fragments/translations";
 import makeQuery from "@saleor/hooks/makeQuery";
@@ -60,6 +61,14 @@ import {
   SaleTranslations,
   SaleTranslationsVariables
 } from "./types/SaleTranslations";
+import {
+  ShippingMethodTranslationDetails,
+  ShippingMethodTranslationDetailsVariables
+} from "./types/ShippingMethodTranslationDetails";
+import {
+  ShippingMethodTranslations,
+  ShippingMethodTranslationsVariables
+} from "./types/ShippingMethodTranslations";
 import {
   VoucherTranslationDetails,
   VoucherTranslationDetailsVariables
@@ -300,6 +309,39 @@ export const TypedAttributeTranslations = TypedQuery<
   AttributeTranslationsVariables
 >(attributeTranslations);
 
+const shippingMethodTranslations = gql`
+  ${pageInfoFragment}
+  ${shippingMethodTranslationFragment}
+  query ShippingMethodTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    translations(
+      kind: SHIPPING_METHOD
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      edges {
+        node {
+          ...ShippingMethodTranslationFragment
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+  }
+`;
+export const TypedShippingMethodTranslations = TypedQuery<
+  ShippingMethodTranslations,
+  ShippingMethodTranslationsVariables
+>(shippingMethodTranslations);
+
 const productTranslationDetails = gql`
   ${productTranslationFragment}
   query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
@@ -390,3 +432,19 @@ export const useAttributeTranslationDetails = makeQuery<
   AttributeTranslationDetails,
   AttributeTranslationDetailsVariables
 >(attributeTranslationDetails);
+
+const shippingMethodTranslationDetails = gql`
+  ${shippingMethodTranslationFragment}
+  query ShippingMethodTranslationDetails(
+    $id: ID!
+    $language: LanguageCodeEnum!
+  ) {
+    translation(kind: SHIPPING_METHOD, id: $id) {
+      ...ShippingMethodTranslationFragment
+    }
+  }
+`;
+export const useShippingMethodTranslationDetails = makeQuery<
+  ShippingMethodTranslationDetails,
+  ShippingMethodTranslationDetailsVariables
+>(shippingMethodTranslationDetails);

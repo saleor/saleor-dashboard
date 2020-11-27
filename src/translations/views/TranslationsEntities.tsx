@@ -17,6 +17,7 @@ import {
   TypedPageTranslations,
   TypedProductTranslations,
   TypedSaleTranslations,
+  TypedShippingMethodTranslations,
   TypedVoucherTranslations
 } from "../queries";
 import {
@@ -90,6 +91,13 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         "?" +
           stringifyQs({
             tab: TranslatableEntities.sales
+          })
+      ),
+    onShippingMethodsTabClick: () =>
+      navigate(
+        "?" +
+          stringifyQs({
+            tab: TranslatableEntities.shippingMethods
           })
       ),
     onVouchersTabClick: () =>
@@ -453,6 +461,49 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             );
           }}
         </TypedAttributeTranslations>
+      ) : params.tab === "shippingMethods" ? (
+        <TypedShippingMethodTranslations variables={queryVariables}>
+          {({ data, loading }) => {
+            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+              data?.translations?.pageInfo,
+              paginationState,
+              params
+            );
+            return (
+              <TranslationsEntitiesList
+                disabled={loading}
+                entities={data?.translations?.edges
+                  .map(edge => edge.node)
+                  .map(
+                    node =>
+                      node.__typename ===
+                        "ShippingMethodTranslatableContent" && {
+                        completion: {
+                          current: node.translation
+                            ? +!!node.translation.name
+                            : 0,
+                          max: 1
+                        },
+                        id: node?.shippingMethod.id,
+                        name: node?.name
+                      }
+                  )}
+                onRowClick={id =>
+                  navigate(
+                    languageEntityUrl(
+                      language,
+                      TranslatableEntities.shippingMethods,
+                      id
+                    )
+                  )
+                }
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                pageInfo={pageInfo}
+              />
+            );
+          }}
+        </TypedShippingMethodTranslations>
       ) : null}
     </TranslationsEntitiesListPage>
   );

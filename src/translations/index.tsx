@@ -32,6 +32,9 @@ import TranslationsProductTypesComponent, {
 import TranslationsSaleComponent, {
   TranslationsSalesQueryParams
 } from "./views/TranslationsSales";
+import TranslationsShippingMethodComponent, {
+  TranslationsShippingMethodQueryParams
+} from "./views/TranslationsShippingMethod";
 import TranslationsVouchersComponent, {
   TranslationsVouchersQueryParams
 } from "./views/TranslationsVouchers";
@@ -168,6 +171,22 @@ const TranslationsProductTypes: React.FC<TranslationsEntityRouteProps> = ({
     />
   );
 };
+const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
+  location,
+  match
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: TranslationsShippingMethodQueryParams = {
+    activeField: qs.activeField
+  };
+  return (
+    <TranslationsShippingMethodComponent
+      id={decodeURIComponent(match.params.id)}
+      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      params={params}
+    />
+  );
+};
 
 const TranslationsRouter: React.FC = () => {
   const intl = useIntl();
@@ -248,6 +267,15 @@ const TranslationsRouter: React.FC = () => {
             ":id"
           )}
           component={TranslationsProductTypes}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.shippingMethods,
+            ":id"
+          )}
+          component={TranslationsShippingMethod}
         />
       </Switch>
     </>

@@ -31,6 +31,10 @@ import {
   UpdateSaleTranslationsVariables
 } from "./types/UpdateSaleTranslations";
 import {
+  UpdateShippingMethodTranslations,
+  UpdateShippingMethodTranslationsVariables
+} from "./types/UpdateShippingMethodTranslations";
+import {
   UpdateVoucherTranslations,
   UpdateVoucherTranslationsVariables
 } from "./types/UpdateVoucherTranslations";
@@ -282,3 +286,34 @@ export const TypedUpdateAttributeValueTranslations = TypedMutation<
   UpdateAttributeValueTranslations,
   UpdateAttributeValueTranslationsVariables
 >(updateAttributeValueTranslations);
+
+const updateShippingMethodTranslations = gql`
+  mutation UpdateShippingMethodTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
+    shippingPriceTranslate(id: $id, input: $input, languageCode: $language) {
+      errors {
+        field
+        message
+      }
+      shippingMethod {
+        id
+        name
+        translation(languageCode: $language) {
+          id
+          language {
+            language
+          }
+          name
+        }
+      }
+    }
+  }
+`;
+
+export const TypedUpdateShippingMethodTranslations = TypedMutation<
+  UpdateShippingMethodTranslations,
+  UpdateShippingMethodTranslationsVariables
+>(updateShippingMethodTranslations);

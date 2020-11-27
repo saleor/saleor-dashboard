@@ -5828,6 +5828,9 @@
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3583204912": {
     "string": "Categories"
   },
+  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3731925413": {
+    "string": "Shipping methods"
+  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_4153345096": {
     "string": "Attributes"
   },
@@ -5916,6 +5919,13 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_898281424": {
     "string": "Sale Name"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_3498202636": {
+    "context": "header",
+    "string": "Translation ShippingMethod \"{shippingMethodName}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_99732714": {
+    "string": "ShippingMethod Name"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2447510181": {
     "context": "header",
