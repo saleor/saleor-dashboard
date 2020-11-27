@@ -11,6 +11,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
+import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
@@ -21,6 +22,7 @@ import {
 } from "@saleor/shipping/handlers";
 import {
   useShippingMethodZipCodeRangeAssign,
+  useShippingMethodZipCodeRangeUnassign,
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
@@ -123,6 +125,20 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       }
     }
   });
+  const [
+    unassignZipCodeRange,
+    unassignZipCodeRangeOpts
+  ] = useShippingMethodZipCodeRangeUnassign({
+    onCompleted: data => {
+      if (data.shippingMethodZipCodeDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
+    }
+  });
 
   const handleSubmit = async (data: FormData) => {
     const response = await updateShippingRate({
@@ -199,6 +215,12 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.WEIGHT}
+        onZipCodeAssign={() => openModal("add-range")}
+        onZipCodeUnassign={id =>
+          openModal("remove-range", {
+            id
+          })
+        }
       />
       <ShippingZoneZipCodeRangeDialog
         confirmButtonState={assignZipCodeRangeOpts.status}
@@ -215,6 +237,18 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           })
         }
         open={params.action === "add-range"}
+      />
+      <ShippingRateZipCodeRangeRemoveDialog
+        confirmButtonState={unassignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          unassignZipCodeRange({
+            variables: {
+              id: params.id
+            }
+          })
+        }
+        open={params.action === "remove-range"}
       />
     </>
   );

@@ -10,7 +10,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingMethodFragment } from "@saleor/fragments/types/ShippingMethodFragment";
+import {
+  ShippingMethodFragment,
+  ShippingMethodFragment_zipCodes
+} from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -41,12 +44,15 @@ export interface ShippingZoneRatesPageProps {
   disabled: boolean;
   hasChannelChanged?: boolean;
   rate: ShippingMethodFragment | null;
+  zipCodes?: ShippingMethodFragment_zipCodes[];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
+  onZipCodeAssign: () => void;
+  onZipCodeUnassign: (id: string) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
@@ -63,10 +69,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onDelete,
   onSubmit,
   onChannelsChange,
+  onZipCodeAssign,
+  onZipCodeUnassign,
   openChannelsModal,
   rate,
   saveButtonBarState,
-  variant
+  variant,
+  zipCodes
 }) => {
   const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
@@ -152,10 +161,10 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <ShippingZoneZipCodes
                   data={data}
                   disabled={disabled}
-                  onZipCodeDelete={() => undefined}
+                  onZipCodeDelete={onZipCodeUnassign}
                   onZipCodeInclusionChange={() => undefined}
-                  onZipCodeRangeAdd={() => undefined}
-                  zipCodes={rateExists ? rate?.zipCodes : []}
+                  onZipCodeRangeAdd={onZipCodeAssign}
+                  zipCodes={rateExists ? rate?.zipCodes : zipCodes}
                 />
               </div>
               <div>

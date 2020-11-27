@@ -43,6 +43,10 @@ import {
   ShippingMethodZipCodeRangeAssignVariables
 } from "./types/ShippingMethodZipCodeRangeAssign";
 import {
+  ShippingMethodZipCodeRangeUnassign,
+  ShippingMethodZipCodeRangeUnassignVariables
+} from "./types/ShippingMethodZipCodeRangeUnassign";
+import {
   UpdateDefaultWeightUnit,
   UpdateDefaultWeightUnitVariables
 } from "./types/UpdateDefaultWeightUnit";
@@ -267,3 +271,19 @@ export const useShippingMethodZipCodeRangeAssign = makeMutation<
   ShippingMethodZipCodeRangeAssign,
   ShippingMethodZipCodeRangeAssignVariables
 >(shippingMethodZipCodeRangeAssign);
+
+export const shippingMethodZipCodeDelete = gql`
+  ${shippingChannelsErrorFragment}
+  mutation ShippingMethodZipCodeRangeUnassign($id: ID!) {
+    shippingMethodZipCodeDelete(id: $id) {
+      errors: shippingErrors {
+        ...ShippingChannelsErrorFragment
+      }
+    }
+  }
+`;
+
+export const useShippingMethodZipCodeRangeUnassign = makeMutation<
+  ShippingMethodZipCodeRangeUnassign,
+  ShippingMethodZipCodeRangeUnassignVariables
+>(shippingMethodZipCodeDelete);
