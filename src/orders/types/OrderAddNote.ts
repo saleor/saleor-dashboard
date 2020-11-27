@@ -20,6 +20,20 @@ export interface OrderAddNote_orderAddNote_order_events_user {
   email: string;
 }
 
+export interface OrderAddNote_orderAddNote_order_events_fulfilledItems_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_fulfilledItems {
+  __typename: "FulfillmentLine";
+  id: string;
+  quantity: number;
+  orderLine: OrderAddNote_orderAddNote_order_events_fulfilledItems_orderLine | null;
+}
+
 export interface OrderAddNote_orderAddNote_order_events {
   __typename: "OrderEvent";
   id: string;
@@ -33,6 +47,7 @@ export interface OrderAddNote_orderAddNote_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderAddNote_orderAddNote_order_events_user | null;
+  fulfilledItems: (OrderAddNote_orderAddNote_order_events_fulfilledItems | null)[] | null;
 }
 
 export interface OrderAddNote_orderAddNote_order {

@@ -93,7 +93,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
         <ExpansionPanel className={classes.panel} elevation={0}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{title}</Typography>
-            <Typography className={classes.dateExpander}>{title}</Typography>
+            <Typography className={classes.dateExpander} />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>{children}</Typography>

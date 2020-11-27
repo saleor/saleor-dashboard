@@ -54,6 +54,20 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order_events_user {
   email: string;
 }
 
+export interface OrderLineUpdate_draftOrderLineUpdate_order_events_fulfilledItems_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderLineUpdate_draftOrderLineUpdate_order_events_fulfilledItems {
+  __typename: "FulfillmentLine";
+  id: string;
+  quantity: number;
+  orderLine: OrderLineUpdate_draftOrderLineUpdate_order_events_fulfilledItems_orderLine | null;
+}
+
 export interface OrderLineUpdate_draftOrderLineUpdate_order_events {
   __typename: "OrderEvent";
   id: string;
@@ -67,6 +81,7 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLineUpdate_draftOrderLineUpdate_order_events_user | null;
+  fulfilledItems: (OrderLineUpdate_draftOrderLineUpdate_order_events_fulfilledItems | null)[] | null;
 }
 
 export interface OrderLineUpdate_draftOrderLineUpdate_order_fulfillments_lines_orderLine_variant {

@@ -828,6 +828,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2018-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDoyMQ==",
       invoiceNumber: null,
       message: null,
@@ -843,9 +844,52 @@ export const order = (placeholder: string): OrderDetails_order => ({
     {
       __typename: "OrderEvent",
       amount: null,
+      date: "2018-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      fulfilledItems: [
+        {
+          __typename: "FulfillmentLine",
+          id: "fsdufgdifsvddfgdf",
+          orderLine: {
+            __typename: "OrderLine",
+            id: "7846f857t4t84y8fgh",
+            productName: "Milk",
+            variantName: "Cow's milk"
+          },
+          quantity: 4
+        },
+        {
+          __typename: "FulfillmentLine",
+          id: "fsdufgdifsvddfgdf",
+          orderLine: {
+            __typename: "OrderLine",
+            id: "7846f857t4t84y8fgh",
+            productName: "Milk",
+            variantName: "Goat's milk"
+          },
+          quantity: 4
+        }
+      ],
+      id: "T3JkZXJFdmVudDoyMQ==",
+      invoiceNumber: null,
+      message: null,
+      quantity: 1,
+      transactionReference: "123",
+      type: OrderEventsEnum.FULFILLMENT_REFUNDED,
+      user: {
+        __typename: "User",
+        email: "admin@example.com",
+        id: "QWRkcmVzczoxNQ=="
+      }
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo0",
       invoiceNumber: null,
       message: "This is note",
@@ -860,6 +904,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo1",
       invoiceNumber: null,
       message: "This is note",
@@ -874,6 +919,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo2",
       invoiceNumber: null,
       message: "Note from external service",
@@ -888,6 +934,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: OrderEventsEmailsEnum.ORDER_CANCEL,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo3",
       invoiceNumber: null,
       message: null,
@@ -902,6 +949,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: OrderEventsEmailsEnum.ORDER_REFUND,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo4",
       invoiceNumber: null,
       message: null,
@@ -916,6 +964,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2019-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      fulfilledItems: [],
       id: "T3JkZXJFdmVudDo5",
       invoiceNumber: null,
       message: null,

@@ -54,6 +54,20 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   email: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_fulfilledItems_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_fulfilledItems {
+  __typename: "FulfillmentLine";
+  id: string;
+  quantity: number;
+  orderLine: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_fulfilledItems_orderLine | null;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events {
   __typename: "OrderEvent";
   id: string;
@@ -67,6 +81,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user | null;
+  fulfilledItems: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_fulfilledItems | null)[] | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant {

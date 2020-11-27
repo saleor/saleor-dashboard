@@ -56,6 +56,20 @@ export interface FulfillOrder_orderFulfill_order_events_user {
   email: string;
 }
 
+export interface FulfillOrder_orderFulfill_order_events_fulfilledItems_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_events_fulfilledItems {
+  __typename: "FulfillmentLine";
+  id: string;
+  quantity: number;
+  orderLine: FulfillOrder_orderFulfill_order_events_fulfilledItems_orderLine | null;
+}
+
 export interface FulfillOrder_orderFulfill_order_events {
   __typename: "OrderEvent";
   id: string;
@@ -69,6 +83,7 @@ export interface FulfillOrder_orderFulfill_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: FulfillOrder_orderFulfill_order_events_user | null;
+  fulfilledItems: (FulfillOrder_orderFulfill_order_events_fulfilledItems | null)[] | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant {
