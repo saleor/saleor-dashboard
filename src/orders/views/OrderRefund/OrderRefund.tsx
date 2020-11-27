@@ -9,6 +9,7 @@ import {
 import { useOrderFulfillmentRefundProductsMutation } from "@saleor/orders/mutations";
 import { useOrderRefundData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
+import { OrderRefundProductsInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -46,7 +47,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   });
 
   const handleSubmit = async (formData: OrderRefundSubmitData) => {
-    const input =
+    const input: OrderRefundProductsInput =
       formData.type === OrderRefundType.MISCELLANEOUS
         ? {
             amountToRefund: formData.amount,
@@ -57,7 +58,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         ? {
             fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
               line => ({
-                orderLineId: line.id,
+                fulfillmentLineId: line.id,
                 quantity: Number(line.value)
               })
             ),
@@ -71,7 +72,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
             amountToRefund: formData.amount,
             fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
               line => ({
-                orderLineId: line.id,
+                fulfillmentLineId: line.id,
                 quantity: Number(line.value)
               })
             ),
