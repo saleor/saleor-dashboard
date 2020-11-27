@@ -27,7 +27,6 @@ import {
   OrderRefundType
 } from "../OrderRefundPage/form";
 
-// TODO: Befor merge to master, please double check if these function calculations are ok!
 const getMiscellaneousAmountValues = (
   order: OrderRefundData_order
 ): OrderRefundAmountValuesProps => {
@@ -48,16 +47,17 @@ const getMiscellaneousAmountValues = (
   };
 };
 
-// TODO: Befor merge to master, please double check if these function calculations are ok!
 const getProductsAmountValues = (
   order: OrderRefundData_order,
   data: OrderRefundFormData
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
-  const shipmentCost = order?.shippingPrice?.gross || {
-    amount: 0,
-    currency: authorizedAmount?.currency
-  };
+  const shipmentCost =
+    authorizedAmount?.currency &&
+    (order?.shippingPrice?.gross || {
+      amount: 0,
+      currency: authorizedAmount?.currency
+    });
   const previouslyRefunded =
     order?.totalCaptured &&
     authorizedAmount &&
@@ -95,17 +95,17 @@ const getProductsAmountValues = (
   );
   const allLinesSum = orderLinesSum + allFulfillmentLinesSum;
   const calculatedTotalAmount = data.refundShipmentCosts
-    ? allLinesSum + shipmentCost.amount
+    ? allLinesSum + shipmentCost?.amount
     : allLinesSum;
-  const selectedProductsValue = authorizedAmount && {
+  const selectedProductsValue = authorizedAmount?.currency && {
     amount: allLinesSum,
     currency: authorizedAmount.currency
   };
-  const proposedRefundAmount = authorizedAmount && {
+  const proposedRefundAmount = authorizedAmount?.currency && {
     amount: calculatedTotalAmount,
     currency: authorizedAmount.currency
   };
-  const refundTotalAmount = authorizedAmount && {
+  const refundTotalAmount = authorizedAmount?.currency && {
     amount: calculatedTotalAmount,
     currency: authorizedAmount.currency
   };
@@ -267,6 +267,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
             name="amountCalculationMode"
           >
             <FormControlLabel
+              disabled={disabled}
               value={OrderRefundAmountCalculationMode.AUTOMATIC}
               control={<Radio color="primary" />}
               label={intl.formatMessage({
@@ -299,6 +300,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
             )}
             <Hr className={classes.hr} />
             <FormControlLabel
+              disabled={disabled}
               value={OrderRefundAmountCalculationMode.MANUAL}
               control={<Radio color="primary" />}
               label={intl.formatMessage({
@@ -310,6 +312,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
               OrderRefundAmountCalculationMode.MANUAL && (
               <>
                 <ControlledCheckbox
+                  disabled={disabled}
                   checked={data.refundShipmentCosts}
                   label={intl.formatMessage({
                     defaultMessage: "Refund shipment costs",

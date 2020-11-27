@@ -15,6 +15,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     textRight: {
+      minWidth: 30,
       textAlign: "right"
     }
   }),
@@ -53,14 +54,14 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = ({
             />
           </td>
           <td className={classes.textRight}>
-            {authorizedAmount ? (
+            {authorizedAmount?.amount !== undefined ? (
               <Money money={authorizedAmount} />
             ) : (
               <Skeleton />
             )}
           </td>
         </tr>
-        {shipmentCost && (
+        {shipmentCost?.amount !== undefined && (
           <tr>
             <td>
               <FormattedMessage
@@ -73,7 +74,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = ({
             </td>
           </tr>
         )}
-        {selectedProductsValue && (
+        {selectedProductsValue?.amount !== undefined && (
           <tr>
             <td>
               <FormattedMessage
@@ -94,7 +95,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = ({
             />
           </td>
           <td className={classes.textRight}>
-            {previouslyRefunded ? (
+            {previouslyRefunded?.amount !== undefined ? (
               <>
                 <Money money={previouslyRefunded} />
               </>
@@ -111,10 +112,14 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = ({
             />
           </td>
           <td className={classes.textRight}>
-            {maxRefund ? <Money money={maxRefund} /> : <Skeleton />}
+            {maxRefund?.amount !== undefined ? (
+              <Money money={maxRefund} />
+            ) : (
+              <Skeleton />
+            )}
           </td>
         </tr>
-        {proposedRefundAmount && (
+        {proposedRefundAmount?.amount !== undefined && (
           <tr className={classes.highlightedRow}>
             <td>
               <FormattedMessage
@@ -127,7 +132,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = ({
             </td>
           </tr>
         )}
-        {refundTotalAmount && (
+        {refundTotalAmount?.amount !== undefined && (
           <tr className={classes.highlightedRow}>
             <td>
               <FormattedMessage

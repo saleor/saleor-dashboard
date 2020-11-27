@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import OrderRefund from "../OrderRefund";
 import OrderRefundAmount from "../OrderRefundAmount";
 import OrderRefundFulfilledProducts from "../OrderRefundFulfilledProducts";
-import OrderRefundProducts from "../OrderRefundProducts";
+import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
 import OrderRefundForm, {
   OrderRefundSubmitData,
   OrderRefundType
@@ -44,9 +44,10 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
   const unfulfilledLines = order?.lines.filter(
     line => line.quantity !== line.quantityFulfilled
   );
-  const fulfilledFulfillemnts = order?.fulfillments.filter(
-    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
-  );
+  const fulfilledFulfillemnts =
+    order?.fulfillments.filter(
+      fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
+    ) || [];
 
   return (
     <OrderRefundForm
@@ -91,7 +92,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   {unfulfilledLines?.length > 0 && (
                     <>
                       <CardSpacer />
-                      <OrderRefundProducts
+                      <OrderRefundUnfulfilledProducts
                         unfulfilledLines={unfulfilledLines}
                         data={data}
                         disabled={disabled}

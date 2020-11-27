@@ -8,7 +8,6 @@ import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
-// TODO: This type probably need to be replaced with generated GraphQL type!
 export enum OrderRefundType {
   MISCELLANEOUS = "miscellaneous",
   PRODUCTS = "products"

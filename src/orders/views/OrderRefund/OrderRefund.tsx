@@ -13,6 +13,38 @@ import { OrderRefundProductsInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
+const getMiscellaneousRefundInput = (formData: OrderRefundSubmitData) => ({
+  amountToRefund: formData.amount,
+  includeShippingCosts: true
+});
+const getAutomaticallyCalculatedProductsRefundInput = (
+  formData: OrderRefundSubmitData
+) => ({
+  fulfillmentLines: formData.refundedFulfilledProductQuantities.map(line => ({
+    fulfillmentLineId: line.id,
+    quantity: Number(line.value)
+  })),
+  includeShippingCosts: formData.refundShipmentCosts,
+  orderLines: formData.refundedProductQuantities.map(line => ({
+    orderLineId: line.id,
+    quantity: Number(line.value)
+  }))
+});
+const getManuallySetProductsRefundInput = (
+  formData: OrderRefundSubmitData
+) => ({
+  amountToRefund: formData.amount,
+  fulfillmentLines: formData.refundedFulfilledProductQuantities.map(line => ({
+    fulfillmentLineId: line.id,
+    quantity: Number(line.value)
+  })),
+  includeShippingCosts: formData.refundShipmentCosts,
+  orderLines: formData.refundedProductQuantities.map(line => ({
+    orderLineId: line.id,
+    quantity: Number(line.value)
+  }))
+});
+
 interface OrderRefundProps {
   orderId: string;
 }
@@ -49,39 +81,11 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const handleSubmit = async (formData: OrderRefundSubmitData) => {
     const input: OrderRefundProductsInput =
       formData.type === OrderRefundType.MISCELLANEOUS
-        ? {
-            amountToRefund: formData.amount,
-            includeShippingCosts: true
-          }
+        ? getMiscellaneousRefundInput(formData)
         : formData.amountCalculationMode ===
           OrderRefundAmountCalculationMode.AUTOMATIC
-        ? {
-            fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
-              line => ({
-                fulfillmentLineId: line.id,
-                quantity: Number(line.value)
-              })
-            ),
-            includeShippingCosts: formData.refundShipmentCosts,
-            orderLines: formData.refundedProductQuantities.map(line => ({
-              orderLineId: line.id,
-              quantity: Number(line.value)
-            }))
-          }
-        : {
-            amountToRefund: formData.amount,
-            fulfillmentLines: formData.refundedFulfilledProductQuantities.map(
-              line => ({
-                fulfillmentLineId: line.id,
-                quantity: Number(line.value)
-              })
-            ),
-            includeShippingCosts: formData.refundShipmentCosts,
-            orderLines: formData.refundedProductQuantities.map(line => ({
-              orderLineId: line.id,
-              quantity: Number(line.value)
-            }))
-          };
+        ? getAutomaticallyCalculatedProductsRefundInput(formData)
+        : getManuallySetProductsRefundInput(formData);
 
     const response = await refundOrderFulfillmentProducts({
       variables: {

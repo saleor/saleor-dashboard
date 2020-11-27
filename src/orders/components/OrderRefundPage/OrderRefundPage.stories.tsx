@@ -22,4 +22,7 @@ storiesOf("Views / Orders / Refund order", module)
   ))
   .add("miscellaneous", () => (
     <OrderRefundPage {...props} defaultType={OrderRefundType.MISCELLANEOUS} />
+  ))
+  .add("loading", () => (
+    <OrderRefundPage {...props} disabled={true} order={undefined} />
   ));

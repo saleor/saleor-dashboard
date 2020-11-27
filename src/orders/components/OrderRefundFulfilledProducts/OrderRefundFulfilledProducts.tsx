@@ -42,15 +42,15 @@ const useStyles = makeStyles(
         marginBottom: theme.spacing(1),
         marginTop: theme.spacing(2)
       },
+      orderNumber: {
+        display: "inline",
+        marginLeft: theme.spacing(1)
+      },
       quantityInnerInput: {
         ...inputPadding
       },
       quantityInnerInputNoRemaining: {
         paddingRight: 0
-      },
-      orderNumber: {
-        display: "inline",
-        marginLeft: theme.spacing(1)
       },
       remainingQuantity: {
         ...inputPadding,
@@ -106,7 +106,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           className={classes.setMaximalQuantityButton}
           color="primary"
           onClick={onSetMaximalQuantities}
-          data-test="setMaximalQuantityFulFilledButton"
+          data-test="setMaximalQuantityFulfilledButton"
           data-test-id={fulfillment?.id}
         >
           <FormattedMessage
