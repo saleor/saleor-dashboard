@@ -4,7 +4,6 @@ name: TEST-ENV-CLEANUP
 on:
   pull_request:
     types: [closed]
-    branches: ["*"]
 
 jobs:
   cleanup:
