@@ -46,7 +46,8 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
   const { filters, language, onBack, children } = props;
 
   const intl = useIntl();
-  const currentTab = tabs.indexOf(filters.current);
+  const queryTab = tabs.indexOf(filters.current);
+  const currentTab = queryTab >= 0 ? queryTab : 0;
 
   return (
     <Container>

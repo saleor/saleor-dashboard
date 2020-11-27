@@ -17,7 +17,6 @@
 !.prettierrc
 !.pylintrc
 !.travis*
-!.testcafe
 !.tx
 *.css
 *.log

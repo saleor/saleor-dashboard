@@ -9,11 +9,9 @@ import SVG from "react-inlinesvg";
 const useStyles = makeStyles(
   theme => ({
     logo: {
-      "& svg": {
-        display: "block",
-        height: 40,
-        marginBottom: theme.spacing(4)
-      }
+      display: "block",
+      height: 40,
+      marginBottom: theme.spacing(4)
     },
     mainPanel: {
       [theme.breakpoints.down("sm")]: {
