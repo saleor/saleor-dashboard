@@ -19,8 +19,7 @@ export const fragmentOrderEvent = gql`
       id
       email
     }
-    fulfilledItems {
-      id
+    lines {
       quantity
       orderLine {
         id

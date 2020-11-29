@@ -325,28 +325,40 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     title={getEventMessage(event, intl)}
                     key={event.id}
                   >
-                    <Typography variant="caption" color="textSecondary">
-                      <FormattedMessage defaultMessage="Products refunded" />
-                    </Typography>
-                    <table>
-                      {event.fulfilledItems.map(item => (
-                        <tr>
-                          <td className={classes.linesTableCell}>
-                            {item.orderLine.productName}
-                          </td>
-                          <td className={classes.linesTableCell}>
-                            <Typography variant="caption" color="textSecondary">
-                              {item.orderLine.variantName}
-                            </Typography>
-                          </td>
-                          <td className={classes.linesTableCell}>
-                            <Typography variant="caption" color="textSecondary">
-                              {`qty: ${item.quantity}`}
-                            </Typography>
-                          </td>
-                        </tr>
-                      ))}
-                    </table>
+                    {event.lines && (
+                      <>
+                        <Typography variant="caption" color="textSecondary">
+                          <FormattedMessage defaultMessage="Products refunded" />
+                        </Typography>
+                        <table>
+                          <tbody>
+                            {event.lines.map(line => (
+                              <tr key={line.orderLine.id}>
+                                <td className={classes.linesTableCell}>
+                                  {line.orderLine.productName}
+                                </td>
+                                <td className={classes.linesTableCell}>
+                                  <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                  >
+                                    {line.orderLine.variantName}
+                                  </Typography>
+                                </td>
+                                <td className={classes.linesTableCell}>
+                                  <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                  >
+                                    {`qty: ${line.quantity}`}
+                                  </Typography>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </>
+                    )}
                   </TimelineEvent>
                 );
               }
