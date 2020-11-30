@@ -280,10 +280,14 @@ export const useShippingMethodZipCodeRangeAssign = makeMutation<
 
 export const shippingMethodZipCodeRulesDelete = gql`
   ${shippingChannelsErrorFragment}
+  ${shippingMethodWithZipCodesFragment}
   mutation ShippingMethodZipCodeRangeUnassign($id: ID!) {
     shippingMethodZipCodeRulesDelete(id: $id) {
       errors: shippingErrors {
         ...ShippingChannelsErrorFragment
+      }
+      shippingMethod {
+        ...ShippingMethodWithZipCodesFragment
       }
     }
   }
