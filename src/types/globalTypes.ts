@@ -1690,9 +1690,7 @@ export interface ShippingMethodChannelListingInput {
 }
 
 export interface ShippingPriceExcludeProductsInput {
-  products?: (string | null)[] | null;
-  collections?: (string | null)[] | null;
-  categories?: (string | null)[] | null;
+  products: (string | null)[];
 }
 
 export interface ShippingPriceInput {

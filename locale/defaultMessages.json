@@ -5349,6 +5349,33 @@
     "context": "column title",
     "string": "Channel name"
   },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_2850255786": {
+    "string": "Search Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_353369701": {
+    "string": "No products matching given query"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_3756118423": {
+    "context": "dialog header",
+    "string": "Assign Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1737533260": {
+    "string": "No Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1781179817": {
+    "context": "section header",
+    "string": "Excluded Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2100305525": {
+    "context": "button",
+    "string": "Assign products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2697405188": {
+    "string": "Product Name"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
+    "string": "Actions"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
     "string": "Are you sure you want to remove this ZIP-code rule?"
   },

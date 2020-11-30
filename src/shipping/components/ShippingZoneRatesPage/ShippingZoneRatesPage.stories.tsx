@@ -59,6 +59,9 @@ const props: ShippingZoneRatesPageProps = {
   saveButtonBarState: "default",
   selected: 0,
   shippingChannels: defaultChannels,
+  toggle: () => undefined,
+  toggleAll: () => undefined,
+  toolbar: () => undefined,
   variant: ShippingMethodTypeEnum.PRICE
 };
 

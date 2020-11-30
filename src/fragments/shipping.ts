@@ -58,35 +58,9 @@ export const shippingMethodFragment = gql`
 `;
 export const shippingMethodWithExcludedProductsFragment = gql`
   ${fragmentMoney}
+  ${shippingMethodFragment}
   fragment ShippingMethodWithExcludedProductsFragment on ShippingMethod {
-    id
-    minimumOrderWeight {
-      unit
-      value
-    }
-    maximumOrderWeight {
-      unit
-      value
-    }
-    name
-    type
-    channelListings {
-      id
-      channel {
-        id
-        name
-        currencyCode
-      }
-      price {
-        ...Money
-      }
-      minimumOrderPrice {
-        ...Money
-      }
-      maximumOrderPrice {
-        ...Money
-      }
-    }
+    ...ShippingMethodFragment
     excludedProducts(
       before: $before
       after: $after
@@ -111,6 +85,7 @@ export const shippingMethodWithExcludedProductsFragment = gql`
     }
   }
 `;
+
 export const shippingZoneDetailsFragment = gql`
   ${shippingZoneFragment}
   ${shippingMethodFragment}

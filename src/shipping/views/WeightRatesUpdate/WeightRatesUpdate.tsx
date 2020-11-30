@@ -368,24 +368,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           })
         }
         open={params.action === "remove-range"}
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        pageInfo={pageInfo}
-        toolbar={
-          <Button
-            color="primary"
-            onClick={() => handleProductUnassign(listElements)}
-          >
-            <FormattedMessage
-              defaultMessage="Unassign"
-              description="unassign products from shipping method, button"
-            />
-          </Button>
-        }
       />
       <ShippingZoneZipCodeRangeDialog
         confirmButtonState={assignZipCodeRangeOpts.status}

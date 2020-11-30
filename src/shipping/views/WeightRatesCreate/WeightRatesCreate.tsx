@@ -126,7 +126,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        rate={null}
         zipCodes={zipCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

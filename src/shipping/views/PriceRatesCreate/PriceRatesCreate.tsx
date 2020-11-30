@@ -123,7 +123,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        rate={null}
+        zipCodes={zipCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onZipCodeAssign={() => openModal("add-range")}
