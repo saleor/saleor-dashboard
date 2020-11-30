@@ -54,6 +54,19 @@ export interface OrderCapture_orderCapture_order_events_user {
   email: string;
 }
 
+export interface OrderCapture_orderCapture_order_events_lines_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderCapture_orderCapture_order_events_lines {
+  __typename: "OrderEventOrderLineObject";
+  quantity: number | null;
+  orderLine: OrderCapture_orderCapture_order_events_lines_orderLine | null;
+}
+
 export interface OrderCapture_orderCapture_order_events {
   __typename: "OrderEvent";
   id: string;
@@ -67,6 +80,7 @@ export interface OrderCapture_orderCapture_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderCapture_orderCapture_order_events_user | null;
+  lines: (OrderCapture_orderCapture_order_events_lines | null)[] | null;
 }
 
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant {

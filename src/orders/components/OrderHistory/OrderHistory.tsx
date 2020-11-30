@@ -144,6 +144,16 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
           quantity: event.quantity
         }
       );
+    case OrderEventsEnum.FULFILLMENT_REFUNDED:
+      return intl.formatMessage(
+        {
+          defaultMessage: "Order was refunded by {refundedBy}",
+          description: "order history message"
+        },
+        {
+          refundedBy: event.user ? event.user.email : null
+        }
+      );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
       return intl.formatMessage(
         {
@@ -242,6 +252,9 @@ const useStyles = makeStyles(
       fontWeight: 500,
       marginBottom: theme.spacing(1)
     },
+    linesTableCell: {
+      paddingRight: theme.spacing(3)
+    },
     root: { marginTop: theme.spacing(4) },
     user: {
       marginBottom: theme.spacing(1)
@@ -308,6 +321,50 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     )}
                     key={event.id}
                   />
+                );
+              }
+              if (event.type === OrderEventsEnum.FULFILLMENT_REFUNDED) {
+                return (
+                  <TimelineEvent
+                    date={event.date}
+                    title={getEventMessage(event, intl)}
+                    key={event.id}
+                  >
+                    {event.lines && (
+                      <>
+                        <Typography variant="caption" color="textSecondary">
+                          <FormattedMessage defaultMessage="Products refunded" />
+                        </Typography>
+                        <table>
+                          <tbody>
+                            {event.lines.map(line => (
+                              <tr key={line.orderLine.id}>
+                                <td className={classes.linesTableCell}>
+                                  {line.orderLine.productName}
+                                </td>
+                                <td className={classes.linesTableCell}>
+                                  <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                  >
+                                    {line.orderLine.variantName}
+                                  </Typography>
+                                </td>
+                                <td className={classes.linesTableCell}>
+                                  <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                  >
+                                    {`qty: ${line.quantity}`}
+                                  </Typography>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </>
+                    )}
+                  </TimelineEvent>
                 );
               }
               return (

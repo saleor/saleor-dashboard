@@ -19,6 +19,14 @@ export const fragmentOrderEvent = gql`
       id
       email
     }
+    lines {
+      quantity
+      orderLine {
+        id
+        productName
+        variantName
+      }
+    }
   }
 `;
 
