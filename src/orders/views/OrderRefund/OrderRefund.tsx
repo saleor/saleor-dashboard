@@ -18,29 +18,37 @@ import { useIntl } from "react-intl";
 const getAutomaticallyCalculatedProductsRefundInput = (
   formData: OrderRefundSubmitData
 ) => ({
-  fulfillmentLines: formData.refundedFulfilledProductQuantities.map(line => ({
-    fulfillmentLineId: line.id,
-    quantity: Number(line.value)
-  })),
+  fulfillmentLines: formData.refundedFulfilledProductQuantities
+    .filter(line => line.value !== "0")
+    .map(line => ({
+      fulfillmentLineId: line.id,
+      quantity: Number(line.value)
+    })),
   includeShippingCosts: formData.refundShipmentCosts,
-  orderLines: formData.refundedProductQuantities.map(line => ({
-    orderLineId: line.id,
-    quantity: Number(line.value)
-  }))
+  orderLines: formData.refundedProductQuantities
+    .filter(line => line.value !== "0")
+    .map(line => ({
+      orderLineId: line.id,
+      quantity: Number(line.value)
+    }))
 });
 const getManuallySetProductsRefundInput = (
   formData: OrderRefundSubmitData
 ) => ({
   amountToRefund: formData.amount,
-  fulfillmentLines: formData.refundedFulfilledProductQuantities.map(line => ({
-    fulfillmentLineId: line.id,
-    quantity: Number(line.value)
-  })),
+  fulfillmentLines: formData.refundedFulfilledProductQuantities
+    .filter(line => line.value !== "0")
+    .map(line => ({
+      fulfillmentLineId: line.id,
+      quantity: Number(line.value)
+    })),
   includeShippingCosts: formData.refundShipmentCosts,
-  orderLines: formData.refundedProductQuantities.map(line => ({
-    orderLineId: line.id,
-    quantity: Number(line.value)
-  }))
+  orderLines: formData.refundedProductQuantities
+    .filter(line => line.value !== "0")
+    .map(line => ({
+      orderLineId: line.id,
+      quantity: Number(line.value)
+    }))
 });
 
 interface OrderRefundProps {
