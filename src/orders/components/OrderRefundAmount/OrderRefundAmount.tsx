@@ -9,10 +9,15 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
-import { addMoney, IMoney, subtractMoney } from "@saleor/components/Money";
+import { IMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import {
+  getAllFulfillmentLinesPriceSum,
+  getPreviouslyRefundedPrice,
+  getRefundedLinesPriceSum
+} from "@saleor/orders/utils/data";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -31,14 +36,8 @@ const getMiscellaneousAmountValues = (
   order: OrderRefundData_order
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
-  const previouslyRefunded =
-    order?.totalCaptured &&
-    authorizedAmount &&
-    subtractMoney(order?.totalCaptured, authorizedAmount);
-  const maxRefund =
-    authorizedAmount &&
-    previouslyRefunded &&
-    addMoney(authorizedAmount, previouslyRefunded);
+  const previouslyRefunded = getPreviouslyRefundedPrice(order);
+  const maxRefund = order?.totalCaptured;
 
   return {
     authorizedAmount,
@@ -58,34 +57,17 @@ const getProductsAmountValues = (
       amount: 0,
       currency: authorizedAmount?.currency
     });
-  const previouslyRefunded =
-    order?.totalCaptured &&
-    authorizedAmount &&
-    subtractMoney(order?.totalCaptured, authorizedAmount);
+  const previouslyRefunded = getPreviouslyRefundedPrice(order);
   const maxRefund = order?.totalCaptured;
-  const orderLinesSum = order?.lines?.reduce((sum, line) => {
-    const refundedLine = data.refundedProductQuantities.find(
-      refundedLine => refundedLine.id === line.id
-    );
-    return sum + line.unitPrice.gross.amount * Number(refundedLine?.value || 0);
-  }, 0);
-  const allFulfillmentLinesSum = order?.fulfillments?.reduce(
-    (sum, fulfillment) => {
-      const fulfilmentLinesSum = fulfillment?.lines.reduce((sum, line) => {
-        const refundedLine = data.refundedFulfilledProductQuantities.find(
-          refundedLine => refundedLine.id === line.id
-        );
-        return (
-          sum +
-          line.orderLine.unitPrice.gross.amount *
-            Number(refundedLine?.value || 0)
-        );
-      }, 0);
-      return sum + fulfilmentLinesSum;
-    },
-    0
+  const refundedLinesSum = getRefundedLinesPriceSum(
+    order?.lines,
+    data.refundedProductQuantities
   );
-  const allLinesSum = orderLinesSum + allFulfillmentLinesSum;
+  const allFulfillmentLinesSum = getAllFulfillmentLinesPriceSum(
+    order?.fulfillments,
+    data.refundedFulfilledProductQuantities
+  );
+  const allLinesSum = refundedLinesSum + allFulfillmentLinesSum;
   const calculatedTotalAmount = data.refundShipmentCosts
     ? allLinesSum + shipmentCost?.amount
     : allLinesSum;
