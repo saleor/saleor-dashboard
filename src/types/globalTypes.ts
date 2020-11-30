@@ -592,6 +592,7 @@ export enum OrderErrorCode {
 }
 
 export enum OrderEventsEmailsEnum {
+  CONFIRMED = "CONFIRMED",
   DIGITAL_LINKS = "DIGITAL_LINKS",
   FULFILLMENT_CONFIRMATION = "FULFILLMENT_CONFIRMATION",
   ORDER_CANCEL = "ORDER_CANCEL",
@@ -604,6 +605,7 @@ export enum OrderEventsEmailsEnum {
 
 export enum OrderEventsEnum {
   CANCELED = "CANCELED",
+  CONFIRMED = "CONFIRMED",
   DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
@@ -632,6 +634,10 @@ export enum OrderEventsEnum {
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
 
+export enum OrderSettingsErrorCode {
+  INVALID = "INVALID",
+}
+
 export enum OrderSortField {
   CREATION_DATE = "CREATION_DATE",
   CUSTOMER = "CUSTOMER",
@@ -645,6 +651,7 @@ export enum OrderStatus {
   DRAFT = "DRAFT",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
+  UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
 
@@ -654,6 +661,7 @@ export enum OrderStatusFilter {
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
+  UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
 
@@ -954,6 +962,7 @@ export enum WebhookEventTypeEnum {
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
   ORDER_CANCELLED = "ORDER_CANCELLED",
+  ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
@@ -1340,6 +1349,10 @@ export interface OrderLineCreateInput {
 
 export interface OrderLineInput {
   quantity: number;
+}
+
+export interface OrderSettingsUpdateInput {
+  automaticallyConfirmAllNewOrders: boolean;
 }
 
 export interface OrderSortingInput {

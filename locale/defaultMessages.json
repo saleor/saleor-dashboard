@@ -3093,6 +3093,10 @@
     "context": "button",
     "string": "Cancel order"
   },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_3086420445": {
+    "context": "save button",
+    "string": "confirm order"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
     "string": "Delete Daft Order"
@@ -3371,6 +3375,10 @@
     "context": "order history message",
     "string": "Order was fully paid"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_276183305": {
+    "context": "order history message",
+    "string": "Order was confirmed"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2770854455": {
     "context": "order history message",
     "string": "Payment was captured"
@@ -3471,6 +3479,10 @@
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
     "context": "generate invoice button",
     "string": "Generate"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_2225897825": {
+    "context": "button",
+    "string": "Order Settings"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
@@ -3620,6 +3632,25 @@
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
+    "context": "header",
+    "string": "Order settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_3782847217": {
+    "string": "General Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_1391686013": {
+    "context": "section header",
+    "string": "Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_3281882935": {
+    "context": "checkbox label description",
+    "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_513393066": {
+    "context": "checkbox label",
+    "string": "Automatically confirm all orders"
   },
   "src_dot_orders_dot_components_dot_OrderShippingMethodEditDialog_dot_3369240294": {
     "context": "dialog header",
@@ -5934,6 +5965,10 @@
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2599922713": {
     "string": "Voucher Name"
   },
+  "src_dot_unconfirmed": {
+    "context": "order status",
+    "string": "Unconfirmed"
+  },
   "src_dot_undo": {
     "context": "button",
     "string": "Undo"
@@ -6228,6 +6263,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
     "context": "event",
     "string": "Checkout updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1366770851": {
+    "context": "event",
+    "string": "Order confirmed"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
     "context": "event",

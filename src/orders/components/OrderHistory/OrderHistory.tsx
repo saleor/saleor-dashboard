@@ -226,6 +226,11 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
         defaultMessage: "Payment was authorized",
         description: "order history message"
       });
+    case OrderEventsEnum.CONFIRMED:
+      return intl.formatMessage({
+        defaultMessage: "Order was confirmed",
+        description: "order history message"
+      });
     case OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION:
       return event.message;
   }

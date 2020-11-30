@@ -4,6 +4,7 @@ import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
+import { StatusType } from "./components/StatusChip/types";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -144,43 +145,55 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Ready to fulfill",
     description: "order status"
   },
+  unconfirmed: {
+    defaultMessage: "Unconfirmed",
+    description: "order status"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "order status"
   }
 });
 
-export const transformOrderStatus = (status: string, intl: IntlShape) => {
+export const transformOrderStatus = (
+  status: string,
+  intl: IntlShape
+): { localized: string; status: StatusType } => {
   switch (status) {
     case OrderStatus.FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.fulfilled),
-        status: "success"
+        status: StatusType.SUCCESS
       };
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: "neutral"
+        status: StatusType.NEUTRAL
       };
     case OrderStatus.UNFULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
-        status: "error"
+        status: StatusType.ERROR
       };
     case OrderStatus.CANCELED:
       return {
         localized: intl.formatMessage(orderStatusMessages.cancelled),
-        status: "error"
+        status: StatusType.ERROR
       };
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: "error"
+        status: StatusType.ERROR
+      };
+    case OrderStatus.UNCONFIRMED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.unconfirmed),
+        status: StatusType.NEUTRAL
       };
   }
   return {
     localized: status,
-    status: "error"
+    status: StatusType.ERROR
   };
 };
 
