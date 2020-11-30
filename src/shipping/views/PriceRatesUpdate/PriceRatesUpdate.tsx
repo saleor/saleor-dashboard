@@ -81,7 +81,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     assignZipCodeRangeOpts
   ] = useShippingMethodZipCodeRangeAssign({
     onCompleted: data => {
-      if (data.shippingMethodZipCodeCreate.errors.length === 0) {
+      if (data.shippingMethodZipCodeRulesCreate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -95,7 +95,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     unassignZipCodeRangeOpts
   ] = useShippingMethodZipCodeRangeUnassign({
     onCompleted: data => {
-      if (data.shippingMethodZipCodeDelete.errors.length === 0) {
+      if (data.shippingMethodZipCodeRulesDelete.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -230,10 +230,14 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onSubmit={data =>
           assignZipCodeRange({
             variables: {
+              id: rateId,
               input: {
-                end: data.max,
-                shippingMethod: rateId,
-                start: data.min
+                zipCodeRules: [
+                  {
+                    end: data.max || null,
+                    start: data.min
+                  }
+                ]
               }
             }
           })

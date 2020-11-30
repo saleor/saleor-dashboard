@@ -66,8 +66,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   maximumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodes {
-  __typename: "ShippingMethodZipCode";
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -81,7 +81,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings[] | null;
-  zipCodes: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodes | null)[] | null;
+  zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses {

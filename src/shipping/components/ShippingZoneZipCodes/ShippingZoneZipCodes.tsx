@@ -13,7 +13,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { ShippingMethodFragment_zipCodes } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
@@ -30,7 +30,7 @@ export interface ShippingZoneZipCodesProps {
   data: Record<"includeZipCodes", ZipCodeInclusion>;
   disabled: boolean;
   initialExpanded?: boolean;
-  zipCodes: ShippingMethodFragment_zipCodes[] | undefined;
+  zipCodes: ShippingMethodFragment_zipCodeRules[] | undefined;
   onZipCodeInclusionChange: FormChange;
   onZipCodeDelete: (id: string) => void;
   onZipCodeRangeAdd: () => void;

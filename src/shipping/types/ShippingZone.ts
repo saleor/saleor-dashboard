@@ -60,8 +60,8 @@ export interface ShippingZone_shippingZone_shippingMethods_channelListings {
   maximumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
-export interface ShippingZone_shippingZone_shippingMethods_zipCodes {
-  __typename: "ShippingMethodZipCode";
+export interface ShippingZone_shippingZone_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -75,7 +75,7 @@ export interface ShippingZone_shippingZone_shippingMethods {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZone_shippingZone_shippingMethods_channelListings[] | null;
-  zipCodes: (ShippingZone_shippingZone_shippingMethods_zipCodes | null)[] | null;
+  zipCodeRules: (ShippingZone_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
 }
 
 export interface ShippingZone_shippingZone_warehouses {
