@@ -23,7 +23,10 @@ function useChannels<T extends Channel>(channels: T[]) {
   const handleChannelsModalOpen = () => setChannelsModalOpen(true);
 
   const handleChannelsConfirm = () => {
-    setCurrentChannels(channelListElements);
+    const sortedChannelListElements = channelListElements.sort(
+      (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
+    );
+    setCurrentChannels(sortedChannelListElements);
     setChannelsModalOpen(false);
   };
 

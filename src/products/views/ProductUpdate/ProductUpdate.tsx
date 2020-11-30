@@ -215,10 +215,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     toggleAllChannels
   } = useChannels(productChannelsChoices);
 
-  const sortedCurrentChannels: ChannelData[] = currentChannels.sort(
-    (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
-  );
-
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (data.productChannelListingUpdate.errors.length === 0) {
@@ -352,7 +348,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         }
         categories={categories}
         collections={collections}
-        currentChannels={sortedCurrentChannels}
+        currentChannels={currentChannels}
         defaultWeightUnit={shop?.defaultWeightUnit}
         channelChoices={channelChoices}
         disabled={disableFormSave}
