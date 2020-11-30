@@ -69,6 +69,7 @@ import {
   OrderMarkAsPaid,
   OrderMarkAsPaidVariables
 } from "./types/OrderMarkAsPaid";
+import { OrderRefund, OrderRefundVariables } from "./types/OrderRefund";
 import {
   OrderShippingMethodUpdate,
   OrderShippingMethodUpdateVariables
@@ -147,6 +148,25 @@ export const TypedOrderDraftFinalizeMutation = TypedMutation<
   OrderDraftFinalize,
   OrderDraftFinalizeVariables
 >(orderDraftFinalizeMutation);
+
+const orderRefundMutation = gql`
+  ${fragmentOrderDetails}
+  ${orderErrorFragment}
+  mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
+    orderRefund(id: $id, amount: $amount) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+export const useOrderRefundMutation = makeMutation<
+  OrderRefund,
+  OrderRefundVariables
+>(orderRefundMutation);
 
 const orderFulfillmentRefundProductsMutation = gql`
   ${fragmentOrderDetails}
