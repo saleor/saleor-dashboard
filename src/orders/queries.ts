@@ -1,5 +1,8 @@
 import { fragmentAddress } from "@saleor/fragments/address";
-import { fragmentOrderDetails } from "@saleor/fragments/orders";
+import {
+  fragmentOrderDetails,
+  fragmentRefundOrderLine
+} from "@saleor/fragments/orders";
 import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
@@ -246,6 +249,7 @@ export const useOrderFulfillData = makeQuery<
 
 const orderRefundData = gql`
   ${fragmentMoney}
+  ${fragmentRefundOrderLine}
   query OrderRefundData($orderId: ID!) {
     order(id: $orderId) {
       id
@@ -264,18 +268,8 @@ const orderRefundData = gql`
         }
       }
       lines {
-        id
-        productName
-        quantity
+        ...RefundOrderLineFragment
         quantityFulfilled
-        unitPrice {
-          gross {
-            ...Money
-          }
-        }
-        thumbnail(size: 64) {
-          url
-        }
       }
       fulfillments {
         id
@@ -285,17 +279,7 @@ const orderRefundData = gql`
           id
           quantity
           orderLine {
-            id
-            productName
-            quantity
-            unitPrice {
-              gross {
-                ...Money
-              }
-            }
-            thumbnail(size: 64) {
-              url
-            }
+            ...RefundOrderLineFragment
           }
         }
       }

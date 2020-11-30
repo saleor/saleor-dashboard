@@ -57,9 +57,9 @@ export interface OrderRefundData_order_lines {
   id: string;
   productName: string;
   quantity: number;
-  quantityFulfilled: number;
   unitPrice: OrderRefundData_order_lines_unitPrice | null;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
+  quantityFulfilled: number;
 }
 
 export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross {
