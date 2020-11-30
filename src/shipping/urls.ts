@@ -27,9 +27,7 @@ export type ShippingZoneUrlDialog =
   | "remove-rate"
   | "unassign-country";
 
-export type ShippingMethodActions =
-  | "assign-product"
-  | "unassign-product"
+export type ShippingMethodActions = "assign-product" | "unassign-product";
 
 export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   SingleAction &
@@ -47,10 +45,8 @@ export type ShippingRateUrlDialog =
   | ZipCodeRangeActions
   | "remove"
   | ShippingMethodActions;
-  
-export type ShippingRateUrlQueryParams = Dialog<
-  ShippingRateUrlDialog
-> &
+
+export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
   SingleAction &
   BulkAction &
   Pagination;
