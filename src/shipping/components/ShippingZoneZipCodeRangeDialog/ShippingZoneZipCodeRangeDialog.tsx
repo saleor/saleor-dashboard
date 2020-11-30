@@ -11,7 +11,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import { buttonMessages } from "@saleor/intl";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { DialogProps, MinMax } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -77,6 +77,7 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
                     description: "range input label"
                   })}
                   name="max"
+                  helperText={intl.formatMessage(commonMessages.optionalField)}
                   value={data.max}
                   onChange={change}
                 />
@@ -87,7 +88,7 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <ConfirmButton
-                disabled={!hasChanged}
+                disabled={!hasChanged || !data.min}
                 transitionState={confirmButtonState}
                 type="submit"
               >
