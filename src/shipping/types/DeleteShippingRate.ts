@@ -20,6 +20,13 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   country: string;
 }
 
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -66,22 +73,15 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   maximumOrderPrice: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
-  id: string;
-  start: string | null;
-  end: string | null;
-}
-
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings[] | null;
-  zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses {

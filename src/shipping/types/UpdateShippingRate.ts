@@ -14,6 +14,13 @@ export interface UpdateShippingRate_shippingPriceUpdate_errors {
   field: string | null;
 }
 
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -60,22 +67,15 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelLi
   maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
-  id: string;
-  start: string | null;
-  end: string | null;
-}
-
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules | null)[] | null;
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;
-  zipCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules | null)[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {
