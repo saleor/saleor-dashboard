@@ -269,9 +269,12 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           assignZipCodeRange({
             variables: {
               input: {
-                end: data.max,
-                shippingMethod: rateId,
-                start: data.min
+                zipCodeRules: [
+                  {
+                    end: data.max || null,
+                    start: data.min
+                  }
+                ]
               }
             }
           })

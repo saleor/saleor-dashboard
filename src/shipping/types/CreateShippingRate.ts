@@ -73,8 +73,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodes {
-  __typename: "ShippingMethodZipCode";
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -89,7 +89,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings[] | null;
-  zipCodes: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodes | null)[] | null;
+  zipCodeRules: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses {
@@ -161,8 +161,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod_channelLi
   maximumOrderPrice: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodes {
-  __typename: "ShippingMethodZipCode";
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -177,7 +177,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings[] | null;
-  zipCodes: (CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodes | null)[] | null;
+  zipCodeRules: (CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodeRules | null)[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate {

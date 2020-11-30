@@ -98,26 +98,13 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       }
     }
   });
+
   const [
     unassignZipCodeRange,
     unassignZipCodeRangeOpts
   ] = useShippingMethodZipCodeRangeUnassign({
     onCompleted: data => {
       if (data.shippingMethodZipCodeRulesDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      }
-    }
-  });
-  const [
-    unassignZipCodeRange,
-    unassignZipCodeRangeOpts
-  ] = useShippingMethodZipCodeRangeUnassign({
-    onCompleted: data => {
-      if (data.shippingMethodZipCodeDelete.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
