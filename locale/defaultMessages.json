@@ -3280,6 +3280,10 @@
     "context": "fulfillment group tracking number",
     "string": "Edit tracking"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2567258278": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
     "context": "ordered product quantity",
     "string": "Quantity"
@@ -3544,6 +3548,10 @@
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_3089049828": {
     "context": "dialog header",
     "string": "Void Payment"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_1322321687": {
+    "context": "order payment",
+    "string": "Refunded amount"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_1325966144": {
     "context": "order shipping method name",

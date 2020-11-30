@@ -119,6 +119,16 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                           quantity
                         }
                       )
+                    : status === FulfillmentStatus.REFUNDED
+                    ? intl.formatMessage(
+                        {
+                          defaultMessage: "Refunded ({quantity})",
+                          description: "refunded fulfillment, section header"
+                        },
+                        {
+                          quantity
+                        }
+                      )
                     : intl.formatMessage(
                         {
                           defaultMessage: "Cancelled ({quantity})",
@@ -136,7 +146,11 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                 </>
               }
               status={
-                status === FulfillmentStatus.FULFILLED ? "success" : "error"
+                status === FulfillmentStatus.FULFILLED
+                  ? "success"
+                  : status === FulfillmentStatus.REFUNDED
+                  ? "unspecified"
+                  : "error"
               }
             />
           ) : (
