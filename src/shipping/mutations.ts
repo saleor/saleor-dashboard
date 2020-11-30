@@ -4,6 +4,7 @@ import {
 } from "@saleor/fragments/errors";
 import {
   shippingMethodFragment,
+  shippingMethodWithZipCodesFragment,
   shippingZoneDetailsFragment
 } from "@saleor/fragments/shipping";
 import { countryFragment } from "@saleor/fragments/taxes";
@@ -256,6 +257,7 @@ export const useShippingMethodChannelListingUpdate = makeMutation<
 
 export const shippingMethodZipCodeRangeAssign = gql`
   ${shippingChannelsErrorFragment}
+  ${shippingMethodWithZipCodesFragment}
   mutation ShippingMethodZipCodeRangeAssign(
     $id: ID!
     $input: ShippingZipCodeRulesCreateInput!
@@ -263,6 +265,9 @@ export const shippingMethodZipCodeRangeAssign = gql`
     shippingMethodZipCodeRulesCreate(shippingMethodId: $id, input: $input) {
       errors: shippingErrors {
         ...ShippingChannelsErrorFragment
+      }
+      shippingMethod {
+        ...ShippingMethodWithZipCodesFragment
       }
     }
   }

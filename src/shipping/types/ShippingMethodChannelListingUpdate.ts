@@ -8,6 +8,13 @@ import { ShippingMethodChannelListingInput, WeightUnitsEnum, ShippingMethodTypeE
 // GraphQL mutation operation: ShippingMethodChannelListingUpdate
 // ====================================================
 
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -54,22 +61,15 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   maximumOrderPrice: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
-  id: string;
-  start: string | null;
-  end: string | null;
-}
-
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules | null)[] | null;
   minimumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings[] | null;
-  zipCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules | null)[] | null;
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_errors {
