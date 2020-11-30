@@ -215,8 +215,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     toggleAllChannels
   } = useChannels(productChannelsChoices);
 
-  const sortedCurrentChannels: ChannelData[] = currentChannels.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name)
+  const sortedCurrentChannels: ChannelData[] = currentChannels.sort(
+    (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
   );
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
