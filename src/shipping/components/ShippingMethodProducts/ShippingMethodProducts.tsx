@@ -19,7 +19,7 @@ import { renderCollection } from "@saleor/misc";
 import { ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -70,11 +70,15 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const intl = useIntl();
 
   return (
     <Card>
       <CardTitle
-        title={<FormattedMessage defaultMessage="Excluded Products" />}
+        title={intl.formatMessage({
+          defaultMessage: "Excluded Products",
+          description: "section header"
+        })}
         toolbar={
           <Button color="primary" variant="text" onClick={onProductAssign}>
             <FormattedMessage
