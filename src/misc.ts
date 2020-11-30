@@ -264,15 +264,18 @@ export function getMutationState(
 interface SaleorMutationResult {
   errors?: UserError[];
 }
+export function getMutationErrors<
+  TData extends Record<string, SaleorMutationResult>
+>(data: TData): UserError[] {
+  return Object.values(data).reduce(
+    (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
+    []
+  );
+}
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
-  const errors = opts.data
-    ? Object.values(opts.data).reduce(
-        (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
-        []
-      )
-    : [];
+  const errors = opts.data ? getMutationErrors(opts.data) : [];
 
   return getMutationState(opts.called, opts.loading, errors);
 }
