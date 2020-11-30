@@ -278,6 +278,18 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         }
         open={params.action === "add-range"}
       />
+      <ShippingRateZipCodeRangeRemoveDialog
+        confirmButtonState={unassignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          unassignZipCodeRange({
+            variables: {
+              id: params.id
+            }
+          })
+        }
+        open={params.action === "remove-range"}
+      />
     </>
   );
 };

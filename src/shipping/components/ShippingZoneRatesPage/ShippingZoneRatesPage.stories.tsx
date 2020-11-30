@@ -53,21 +53,7 @@ const props: ShippingZoneRatesPageProps = {
   rate: null,
   saveButtonBarState: "default",
   shippingChannels: defaultChannels,
-  variant: ShippingMethodTypeEnum.PRICE,
-  zipCodes: [
-    {
-      __typename: "ShippingMethodZipCodeRule",
-      end: "51-200",
-      id: "1",
-      start: "51-220"
-    },
-    {
-      __typename: "ShippingMethodZipCodeRule",
-      end: "31-101",
-      id: "1",
-      start: "44-205"
-    }
-  ]
+  variant: ShippingMethodTypeEnum.PRICE
 };
 
 storiesOf("Views / Shipping / Shipping rate", module)
@@ -98,7 +84,4 @@ storiesOf("Views / Shipping / Shipping rate", module)
       rate={shippingZone.shippingMethods[0]}
       variant={ShippingMethodTypeEnum.WEIGHT}
     />
-  ))
-  .add("no zip codes", () => (
-    <ShippingZoneRatesPage {...props} zipCodes={[]} />
   ));
