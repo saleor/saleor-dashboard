@@ -85,7 +85,11 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           description: "postal codes, header"
         })}
         toolbar={
-          <Button color="primary" onClick={onZipCodeRangeAdd}>
+          <Button
+            color="primary"
+            onClick={onZipCodeRangeAdd}
+            data-test="add-zip-code-range"
+          >
             <FormattedMessage
               defaultMessage="Add ZIP-Code range"
               description="button"
@@ -194,6 +198,8 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                       disabled={disabled}
                       color="primary"
                       onClick={() => onZipCodeDelete(zipCodeRange.id)}
+                      data-test="delete-zip-code"
+                      data-test-id={zipCodeRange.id}
                     >
                       <DeleteIcon />
                     </IconButton>

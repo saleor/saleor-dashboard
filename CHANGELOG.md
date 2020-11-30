@@ -8,6 +8,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add Page Types - #807 by @orzechdev
 - Add shipping methods to translation section - #864 by @marekchoinski
 - New Miscellaneous and Product refunds - #870 by @orzechdev
+- Add zip code exclusion - #877 by @dominik-zeglen
 
 # 2.11.1
 
