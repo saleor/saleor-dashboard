@@ -5349,6 +5349,13 @@
     "context": "column title",
     "string": "Channel name"
   },
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
+    "string": "Are you sure you want to remove this ZIP-code rule?"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_2944856644": {
+    "context": "header",
+    "string": "Remove ZIP-codes from Shipping Rate"
+  },
   "src_dot_shipping_dot_components_dot_ShippingWeightUnitForm_dot_2863708228": {
     "string": "This unit will be used as default shipping weight"
   },
@@ -5476,6 +5483,25 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_46197273": {
     "context": "input placeholder",
     "string": "Select Warehouse"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_1938537617": {
+    "string": "Please provide range of ZIP codes you want to add to the include/exclude list."
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3099331554": {
+    "context": "add zip code range, button",
+    "string": "Add"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3529644799": {
+    "context": "range input label",
+    "string": "Zip Codes (Start)"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_4196919717": {
+    "context": "dialog header",
+    "string": "Add ZIP-Codes"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_551327109": {
+    "context": "range input label",
+    "string": "Zip Codes (End)"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1462092303": {
     "string": "Added ZIP-codes will be excluded from using this delivery methods. If none are added all ZIP-Codes will be able to use that shipping rate"

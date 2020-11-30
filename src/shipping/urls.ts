@@ -36,19 +36,30 @@ export const shippingZoneUrl = (
   params?: ShippingZoneUrlQueryParams
 ) => shippingZonePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export type ShippingRateUrlDialog = "add-range" | "remove" | "remove-range";
+type ZipCodeRangeActions = "add-range" | "remove-range";
+export type ShippingRateUrlDialog = ZipCodeRangeActions | "remove";
 export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
+  SingleAction;
+export type ShippingRateCreateUrlDialog = ZipCodeRangeActions;
+export type ShippingRateCreateUrlQueryParams = Dialog<
+  ShippingRateCreateUrlDialog
+> &
   SingleAction;
 
 export const shippingPriceRatesPath = (id: string) =>
   urlJoin(shippingZonePath(id), "price", "add");
-export const shippingPriceRatesUrl = (id: string) =>
-  shippingPriceRatesPath(encodeURIComponent(id));
+export const shippingPriceRatesUrl = (
+  id: string,
+  params?: ShippingRateCreateUrlQueryParams
+) => shippingPriceRatesPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const shippingWeightRatesPath = (id: string) =>
   urlJoin(shippingZonePath(id), "weight", "add");
-export const shippingWeightRatesUrl = (id: string) =>
-  shippingWeightRatesPath(encodeURIComponent(id));
+export const shippingWeightRatesUrl = (
+  id: string,
+  params?: ShippingRateCreateUrlQueryParams
+) =>
+  shippingWeightRatesPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const shippingPriceRatesEditPath = (id: string, rateId: string) =>
   urlJoin(shippingZonePath(id), "price", rateId);
@@ -79,9 +90,4 @@ export const shippingWeightRatesEditUrl = (
   stringifyQs(params);
 
 export const shippingZoneAddPath = urlJoin(shippingZonesListPath, "add");
-export const shippingZoneAddUrl = shippingZoneAddPath;
-export const shippingPriceRatesAddPath = urlJoin(
-  shippingZonesListPath,
-  "price",
-  "add"
-);
+export const shippingZoneAddUrl = shippingZoneAddPath + "?";
