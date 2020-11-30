@@ -8,6 +8,7 @@ import { WindowTitle } from "../components/WindowTitle";
 import {
   shippingPriceRatesEditPath,
   shippingPriceRatesPath,
+  ShippingRateCreateUrlQueryParams,
   ShippingRateUrlQueryParams,
   shippingWeightRatesEditPath,
   shippingWeightRatesPath,
@@ -49,11 +50,31 @@ const ShippingZoneDetails: React.FC<RouteComponentProps<
 
 const PriceRatesCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
-}) => <PriceRatesCreateComponent id={decodeURIComponent(match.params.id)} />;
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ShippingRateCreateUrlQueryParams = qs;
+
+  return (
+    <PriceRatesCreateComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const WeightRatesCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
-}) => <WeightRatesCreateComponent id={decodeURIComponent(match.params.id)} />;
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ShippingRateCreateUrlQueryParams = qs;
+
+  return (
+    <WeightRatesCreateComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const WeightRatesUpdate: React.FC<RouteComponentProps<{
   id: string;
