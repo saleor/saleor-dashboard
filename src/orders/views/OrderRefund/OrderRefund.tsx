@@ -144,9 +144,9 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         refundOrderFulfillmentProductsOpts.loading
       }
       errors={[
-        ...refundOrderOpts.data?.orderRefund.errors,
-        ...refundOrderFulfillmentProductsOpts.data
-          ?.orderFulfillmentRefundProducts.errors
+        ...(refundOrderOpts.data?.orderRefund.errors || []),
+        ...(refundOrderFulfillmentProductsOpts.data
+          ?.orderFulfillmentRefundProducts.errors || [])
       ]}
       onSubmit={handleSubmit}
       onBack={() => navigate(orderUrl(orderId))}
