@@ -5,20 +5,12 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import { sectionNames } from "@saleor/intl";
 import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
-import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
+import { useShippingRateCreator } from "@saleor/shipping/handlers";
 import {
-  getCreateShippingPriceRateVariables,
-  getShippingMethodChannelVariables
-} from "@saleor/shipping/handlers";
-import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutations";
-import { useShippingRateCreate } from "@saleor/shipping/mutations";
-import {
-  shippingPriceRatesEditUrl,
   shippingPriceRatesUrl,
   ShippingRateCreateUrlDialog,
   ShippingRateCreateUrlQueryParams,
@@ -41,7 +33,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
   params
 }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
   const intl = useIntl();
 
   const [zipCodes, setZipCodes] = React.useState<
@@ -54,27 +45,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     ShippingRateCreateUrlDialog,
     ShippingRateCreateUrlQueryParams
   >(navigate, params => shippingPriceRatesUrl(id, params), params);
-
-  const [
-    updateShippingMethodChannelListing,
-    updateShippingMethodChannelListingOpts
-  ] = useShippingMethodChannelListingUpdate({
-    onCompleted: data => {
-      const errors = data.shippingMethodChannelListingUpdate.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        navigate(
-          shippingPriceRatesEditUrl(
-            id,
-            data.shippingMethodChannelListingUpdate.shippingMethod.id
-          )
-        );
-      }
-    }
-  });
 
   const allChannels = createSortedShippingChannels(channelsData?.channels);
 
@@ -91,25 +61,13 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     toggleAllChannels
   } = useChannels(allChannels);
 
-  const [createShippingRate, createShippingRateOpts] = useShippingRateCreate(
-    {}
-  );
+  const {
+    channelErrors,
+    createShippingRate,
+    errors,
+    status
+  } = useShippingRateCreator(id, ShippingMethodTypeEnum.WEIGHT, zipCodes);
 
-  const handleSubmit = async (data: FormData) => {
-    const response = await createShippingRate({
-      variables: getCreateShippingPriceRateVariables(data, id)
-    });
-    const errors = response.data.shippingPriceCreate.errors;
-    if (errors.length === 0) {
-      updateShippingMethodChannelListing({
-        variables: getShippingMethodChannelVariables(
-          response.data.shippingPriceCreate.shippingMethod.id,
-          data.noLimits,
-          data.channelListings
-        )
-      });
-    }
-  };
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   const handleZipCodeRangeAdd = (data: MinMax) => {
@@ -159,19 +117,12 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        disabled={
-          channelsLoading ||
-          createShippingRateOpts?.status === "loading" ||
-          updateShippingMethodChannelListingOpts?.status === "loading"
-        }
-        saveButtonBarState={createShippingRateOpts?.status}
-        onSubmit={handleSubmit}
+        disabled={channelsLoading || status === "loading"}
+        saveButtonBarState={status}
+        onSubmit={createShippingRate}
         onBack={handleBack}
-        errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
-        channelErrors={
-          updateShippingMethodChannelListingOpts?.data
-            ?.shippingMethodChannelListingUpdate?.errors || []
-        }
+        errors={errors}
+        channelErrors={channelErrors}
         rate={null}
         zipCodes={zipCodes}
         openChannelsModal={handleChannelsModalOpen}

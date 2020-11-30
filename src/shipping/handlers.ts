@@ -1,10 +1,24 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
+import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
+import { getMutationErrors, getMutationState } from "@saleor/misc";
 import { FormData as ShippingZoneRatesPageFormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
+import { useIntl } from "react-intl";
+
+import {
+  useShippingMethodChannelListingUpdate,
+  useShippingMethodZipCodeRangeAssign,
+  useShippingRateCreate,
+  useShippingRateDelete
+} from "./mutations";
+import { shippingPriceRatesEditUrl, shippingWeightRatesEditUrl } from "./urls";
 
 export const createChannelsChangeHandler = (
   selectedChannels: ChannelShippingData[],
@@ -120,5 +134,111 @@ export function getShippingMethodChannelVariables(
         })) || [],
       removeChannels
     }
+  };
+}
+
+export function useShippingRateCreator(
+  shippingZoneId: string,
+  type: ShippingMethodTypeEnum,
+  zipCodes: ShippingMethodFragment_zipCodeRules[]
+) {
+  const intl = useIntl();
+  const notify = useNotifier();
+  const navigate = useNavigator();
+  const [
+    createBaseShippingRate,
+    createBaseShippingRateOpts
+  ] = useShippingRateCreate({});
+  const [
+    assignZipCodeRules,
+    assignZipCodeRulesOpts
+  ] = useShippingMethodZipCodeRangeAssign({});
+  const [
+    updateShippingMethodChannelListing,
+    updateShippingMethodChannelListingOpts
+  ] = useShippingMethodChannelListingUpdate({});
+  const [deleteShippingRate] = useShippingRateDelete({});
+
+  const getVariables =
+    type === ShippingMethodTypeEnum.PRICE
+      ? getCreateShippingPriceRateVariables
+      : getCreateShippingWeightRateVariables;
+  const getUrl =
+    type === ShippingMethodTypeEnum.PRICE
+      ? shippingPriceRatesEditUrl
+      : shippingWeightRatesEditUrl;
+
+  const createShippingRate = async (data: ShippingZoneRatesPageFormData) => {
+    const response = await createBaseShippingRate({
+      variables: getVariables(data, shippingZoneId)
+    });
+
+    const createErrors = response.data.shippingPriceCreate.errors;
+    if (createErrors.length === 0) {
+      const rateId = response.data.shippingPriceCreate.shippingMethod.id;
+
+      const mutationResults = await Promise.all([
+        updateShippingMethodChannelListing({
+          variables: getShippingMethodChannelVariables(
+            rateId,
+            data.noLimits,
+            data.channelListings
+          )
+        }),
+        assignZipCodeRules({
+          variables: {
+            id: rateId,
+            input: {
+              zipCodeRules: zipCodes.map(zipCodeRule => ({
+                end: zipCodeRule.end || null,
+                start: zipCodeRule.start
+              }))
+            }
+          }
+        })
+      ]);
+
+      if (
+        mutationResults.find(
+          result => getMutationErrors(result.data as any).length > 0
+        )
+      ) {
+        deleteShippingRate({
+          variables: {
+            id: rateId
+          }
+        });
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate(getUrl(shippingZoneId, rateId));
+      }
+    }
+  };
+
+  const called =
+    createBaseShippingRateOpts.called ||
+    updateShippingMethodChannelListingOpts.called ||
+    assignZipCodeRulesOpts.called;
+  const loading =
+    createBaseShippingRateOpts.loading ||
+    updateShippingMethodChannelListingOpts.loading ||
+    assignZipCodeRulesOpts.loading;
+  const errors = [
+    ...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || []),
+    ...(assignZipCodeRulesOpts.data?.shippingMethodZipCodeRulesCreate.errors ||
+      [])
+  ];
+  const channelErrors =
+    updateShippingMethodChannelListingOpts.data
+      ?.shippingMethodChannelListingUpdate.errors || [];
+
+  return {
+    channelErrors,
+    createShippingRate,
+    errors,
+    status: getMutationState(called, loading, [...errors, ...channelErrors])
   };
 }
