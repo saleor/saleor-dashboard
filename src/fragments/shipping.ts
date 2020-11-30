@@ -54,11 +54,6 @@ export const shippingMethodFragment = gql`
         ...Money
       }
     }
-    zipCodeRules {
-      id
-      start
-      end
-    }
   }
 `;
 export const shippingZoneDetailsFragment = gql`

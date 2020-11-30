@@ -61,13 +61,6 @@ export interface ShippingMethodFragment_channelListings {
   maximumOrderPrice: ShippingMethodFragment_channelListings_maximumOrderPrice | null;
 }
 
-export interface ShippingMethodFragment_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
-  id: string;
-  start: string | null;
-  end: string | null;
-}
-
 export interface ShippingMethodFragment {
   __typename: "ShippingMethod";
   id: string;
@@ -77,5 +70,4 @@ export interface ShippingMethodFragment {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodFragment_channelListings[] | null;
-  zipCodeRules: (ShippingMethodFragment_zipCodeRules | null)[] | null;
 }
