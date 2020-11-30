@@ -58,6 +58,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     maybe(() => order.paymentStatus),
     intl
   );
+  const refundedAmount =
+    order?.totalCaptured &&
+    order?.total?.gross &&
+    subtractMoney(order.totalCaptured, order.total.gross);
   return (
     <Card>
       <CardTitle
@@ -223,6 +227,21 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   <Skeleton />
                 ) : (
                   <Money money={order.totalCaptured} />
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <FormattedMessage
+                  defaultMessage="Refunded amount"
+                  description="order payment"
+                />
+              </td>
+              <td className={classes.textRight}>
+                {refundedAmount?.amount === undefined ? (
+                  <Skeleton />
+                ) : (
+                  <Money money={refundedAmount} />
                 )}
               </td>
             </tr>
