@@ -2,7 +2,7 @@ import { useChannelsList } from "@saleor/channels/queries";
 import { createSortedShippingChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { ShippingMethodFragment_zipCodes } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -45,7 +45,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
   const intl = useIntl();
 
   const [zipCodes, setZipCodes] = React.useState<
-    ShippingMethodFragment_zipCodes[]
+    ShippingMethodFragment_zipCodeRules[]
   >([]);
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
@@ -116,7 +116,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     setZipCodes(zipCodes => [
       ...zipCodes,
       {
-        __typename: "ShippingMethodZipCode",
+        __typename: "ShippingMethodZipCodeRule",
         end: data.max,
         id: zipCodes.length.toString(),
         start: data.min

@@ -257,9 +257,10 @@ export const useShippingMethodChannelListingUpdate = makeMutation<
 export const shippingMethodZipCodeRangeAssign = gql`
   ${shippingChannelsErrorFragment}
   mutation ShippingMethodZipCodeRangeAssign(
-    $input: ShippingZipCodeCreateInput!
+    $id: ID!
+    $input: ShippingZipCodeRulesCreateInput!
   ) {
-    shippingMethodZipCodeCreate(input: $input) {
+    shippingMethodZipCodeRulesCreate(shippingMethodId: $id, input: $input) {
       errors: shippingErrors {
         ...ShippingChannelsErrorFragment
       }
@@ -272,10 +273,10 @@ export const useShippingMethodZipCodeRangeAssign = makeMutation<
   ShippingMethodZipCodeRangeAssignVariables
 >(shippingMethodZipCodeRangeAssign);
 
-export const shippingMethodZipCodeDelete = gql`
+export const shippingMethodZipCodeRulesDelete = gql`
   ${shippingChannelsErrorFragment}
   mutation ShippingMethodZipCodeRangeUnassign($id: ID!) {
-    shippingMethodZipCodeDelete(id: $id) {
+    shippingMethodZipCodeRulesDelete(id: $id) {
       errors: shippingErrors {
         ...ShippingChannelsErrorFragment
       }
@@ -286,4 +287,4 @@ export const shippingMethodZipCodeDelete = gql`
 export const useShippingMethodZipCodeRangeUnassign = makeMutation<
   ShippingMethodZipCodeRangeUnassign,
   ShippingMethodZipCodeRangeUnassignVariables
->(shippingMethodZipCodeDelete);
+>(shippingMethodZipCodeRulesDelete);

@@ -1590,21 +1590,21 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       name: "DB Schenker",
       type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodes: [
+      zipCodeRules: [
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1623,21 +1623,21 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       name: "Registred priority",
       type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodes: [
+      zipCodeRules: [
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1656,21 +1656,21 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       name: "UPS",
       type: ShippingMethodTypeEnum.PRICE,
-      zipCodes: [
+      zipCodeRules: [
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1689,21 +1689,21 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       name: "DHL",
       type: ShippingMethodTypeEnum.PRICE,
-      zipCodes: [
+      zipCodeRules: [
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCode",
+          __typename: "ShippingMethodZipCodeRule",
           end: null,
           id: "2",
           start: "51-274"

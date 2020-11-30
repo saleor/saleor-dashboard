@@ -56,13 +56,13 @@ const props: ShippingZoneRatesPageProps = {
   variant: ShippingMethodTypeEnum.PRICE,
   zipCodes: [
     {
-      __typename: "ShippingMethodZipCode",
+      __typename: "ShippingMethodZipCodeRule",
       end: "51-200",
       id: "1",
       start: "51-220"
     },
     {
-      __typename: "ShippingMethodZipCode",
+      __typename: "ShippingMethodZipCodeRule",
       end: "31-101",
       id: "1",
       start: "44-205"

@@ -60,8 +60,8 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelLi
   maximumOrderPrice: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings_maximumOrderPrice | null;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodes {
-  __typename: "ShippingMethodZipCode";
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -75,7 +75,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;
-  zipCodes: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodes | null)[] | null;
+  zipCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules | null)[] | null;
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate {
