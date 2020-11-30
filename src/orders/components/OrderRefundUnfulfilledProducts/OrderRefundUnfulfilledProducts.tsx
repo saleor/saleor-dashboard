@@ -165,7 +165,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                     )}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
-                    {lineQuantity ? (
+                    {lineQuantity || lineQuantity === 0 ? (
                       <TextField
                         disabled={disabled}
                         type="number"
@@ -206,12 +206,12 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                     )}
                   </TableCell>
                   <TableCell>
-                    {(lineQuantity && line?.unitPrice.gross && (
+                    {(line?.unitPrice.gross && (
                       <Money
                         money={{
                           ...line.unitPrice.gross,
                           amount:
-                            (line.unitPrice.gross.amount || 0) *
+                            (line.unitPrice.gross.amount ?? 0) *
                             Number(selectedLineQuantity?.value)
                         }}
                       />
