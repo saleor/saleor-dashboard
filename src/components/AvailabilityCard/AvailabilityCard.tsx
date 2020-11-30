@@ -11,10 +11,7 @@ interface AvailabilityCardProps {
 }
 
 export const AvailabilityCard: React.FC<AvailabilityCardProps &
-  Omit<
-    ChannelsAvailabilityProps,
-    "channelsMessages" | "hasManageChannelsPermission"
-  >> = props => {
+  Omit<ChannelsAvailabilityProps, "channelsMessages">> = props => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
