@@ -1663,10 +1663,13 @@ export interface ShippingPriceInput {
   shippingZone?: string | null;
 }
 
-export interface ShippingZipCodeCreateInput {
-  shippingMethod: string;
+export interface ShippingZipCodeRulesCreateInput {
+  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
+}
+
+export interface ShippingZipCodeRulesCreateInputRange {
   start: string;
-  end: string;
+  end?: string | null;
 }
 
 export interface ShippingZoneCreateInput {

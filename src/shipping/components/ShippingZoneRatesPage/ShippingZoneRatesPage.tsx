@@ -12,7 +12,7 @@ import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingC
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import {
   ShippingMethodFragment,
-  ShippingMethodFragment_zipCodes
+  ShippingMethodFragment_zipCodeRules
 } from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
@@ -44,7 +44,7 @@ export interface ShippingZoneRatesPageProps {
   disabled: boolean;
   hasChannelChanged?: boolean;
   rate: ShippingMethodFragment | null;
-  zipCodes?: ShippingMethodFragment_zipCodes[];
+  zipCodes?: ShippingMethodFragment_zipCodeRules[];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -164,7 +164,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onZipCodeDelete={onZipCodeUnassign}
                   onZipCodeInclusionChange={() => undefined}
                   onZipCodeRangeAdd={onZipCodeAssign}
-                  zipCodes={rateExists ? rate?.zipCodes : zipCodes}
+                  zipCodes={rateExists ? rate?.zipCodeRules : zipCodes}
                 />
               </div>
               <div>
