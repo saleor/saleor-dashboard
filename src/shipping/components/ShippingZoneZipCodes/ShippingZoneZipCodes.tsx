@@ -199,7 +199,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                       color="primary"
                       onClick={() => onZipCodeDelete(zipCodeRange.id)}
                       data-test="delete-zip-code"
-                      data-test-id={zipCodeRange.id}
+                      data-test-id={zipCodeRange?.id}
                     >
                       <DeleteIcon />
                     </IconButton>
