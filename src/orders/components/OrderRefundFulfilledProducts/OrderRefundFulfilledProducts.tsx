@@ -95,9 +95,11 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
               defaultMessage: "Fulfillment",
               description: "section header"
             })}
-            <Typography className={classes.orderNumber} variant="body1">
-              {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}
-            </Typography>
+            {fulfillment && (
+              <Typography className={classes.orderNumber} variant="body1">
+                {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}
+              </Typography>
+            )}
           </>
         }
       />
