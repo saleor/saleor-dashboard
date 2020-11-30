@@ -62,15 +62,7 @@ const getProductsAmountValues = (
     order?.totalCaptured &&
     authorizedAmount &&
     subtractMoney(order?.totalCaptured, authorizedAmount);
-  const maxRefund =
-    authorizedAmount &&
-    previouslyRefunded &&
-    (data.refundShipmentCosts
-      ? addMoney(authorizedAmount, previouslyRefunded)
-      : subtractMoney(
-          addMoney(authorizedAmount, previouslyRefunded),
-          shipmentCost
-        ));
+  const maxRefund = order?.totalCaptured;
   const orderLinesSum = order?.lines?.reduce((sum, line) => {
     const refundedLine = data.refundedProductQuantities.find(
       refundedLine => refundedLine.id === line.id
