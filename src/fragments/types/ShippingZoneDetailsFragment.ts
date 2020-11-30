@@ -14,6 +14,13 @@ export interface ShippingZoneDetailsFragment_countries {
   country: string;
 }
 
+export interface ShippingZoneDetailsFragment_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -60,22 +67,15 @@ export interface ShippingZoneDetailsFragment_shippingMethods_channelListings {
   maximumOrderPrice: ShippingZoneDetailsFragment_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
-  id: string;
-  start: string | null;
-  end: string | null;
-}
-
 export interface ShippingZoneDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (ShippingZoneDetailsFragment_shippingMethods_zipCodeRules | null)[] | null;
   minimumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_maximumOrderWeight | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZoneDetailsFragment_shippingMethods_channelListings[] | null;
-  zipCodeRules: (ShippingZoneDetailsFragment_shippingMethods_zipCodeRules | null)[] | null;
 }
 
 export interface ShippingZoneDetailsFragment_warehouses {
