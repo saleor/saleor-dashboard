@@ -8,11 +8,14 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import useUser from "@saleor/hooks/useUser";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { RequireOnlyOne } from "@saleor/misc";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import classNames from "classnames";
 import React, { useState } from "react";
@@ -58,7 +61,7 @@ interface ChannelsAvailability {
   channels: ChannelData[];
   channelsList: ChannelList[];
   channelsMessages?: { [id: string]: Message };
-  errors: Error[];
+  errors?: Error[];
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -377,7 +380,7 @@ const Channel: React.FC<ChannelProps> = ({
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
   const {
     channelsList,
-    errors,
+    errors = [],
     selectedChannelsCount,
     allChannelsCount,
     channels,
@@ -387,6 +390,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
+  const { user } = useUser();
   const channelsAvailabilityText = intl.formatMessage(
     {
       defaultMessage:
@@ -399,6 +403,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
       selectedChannelsCount
     }
   );
+
   return (
     <>
       <Card>
@@ -408,12 +413,17 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             description: "section header"
           })}
           toolbar={
-            <Button color="primary" onClick={openModal}>
-              {intl.formatMessage({
-                defaultMessage: "Manage",
-                description: "section header button"
-              })}
-            </Button>
+            <RequirePermissions
+              userPermissions={user?.userPermissions || []}
+              requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+            >
+              <Button color="primary" onClick={openModal}>
+                {intl.formatMessage({
+                  defaultMessage: "Manage",
+                  description: "section header button"
+                })}
+              </Button>
+            </RequirePermissions>
           }
         />
         <CardContent className={classes.card}>
