@@ -19,7 +19,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
 import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
-import { ChannelProps, FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -56,9 +56,7 @@ const useStyles = makeStyles(
   { name: "ShippingMethodProductsAddDialog" }
 );
 
-export interface ShippingMethodProductsAddDialogProps
-  extends FetchMoreProps,
-    ChannelProps {
+export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   products: SearchShippingProducts_search_edges_node[];
@@ -93,7 +91,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
     loading,
     hasMore,
     products,
-    selectedChannelId,
     onFetch,
     onFetchMore,
     onClose,
@@ -149,7 +146,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           hasMore={hasMore}
           useWindow={false}
           loader={
-            <div className={classes.loadMoreLoaderContainer}>
+            <div key="loader" className={classes.loadMoreLoaderContainer}>
               <CircularProgress size={16} />
             </div>
           }
@@ -163,9 +160,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                   const isSelected = selectedProducts.some(
                     selectedProduct => selectedProduct.id === product.id
                   );
-                  return product?.channelListings.some(
-                    listing => listing.channel.id === selectedChannelId
-                  ) ? (
+                  return (
                     <React.Fragment
                       key={product ? product.id : `skeleton-${productIndex}`}
                     >
@@ -189,14 +184,14 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                         </TableCell>
                         <TableCellAvatar
                           className={classes.avatar}
-                          thumbnail={product?.thumbnail.url}
+                          thumbnail={product?.thumbnail?.url}
                         />
                         <TableCell className={classes.colName} colSpan={2}>
                           {product?.name}
                         </TableCell>
                       </TableRow>
                     </React.Fragment>
-                  ) : null;
+                  );
                 },
                 () => (
                   <TableRow>

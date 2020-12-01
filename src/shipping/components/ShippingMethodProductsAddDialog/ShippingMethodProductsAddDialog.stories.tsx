@@ -16,8 +16,7 @@ const props: ShippingMethodProductsAddDialogProps = {
   onFetchMore: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  products,
-  selectedChannelId: "Q2hhbm5lbDo5"
+  products
 };
 
 storiesOf("Shipping / ShippingMethodProductsAddDialog", module)

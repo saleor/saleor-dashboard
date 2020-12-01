@@ -4,7 +4,6 @@ import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
 } from "@saleor/channels/utils";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -78,8 +77,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     search: productsSearch,
     result: productsSearchOpts
   } = useProductsSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
-
-  const { channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,
@@ -281,7 +278,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search.pageInfo.hasNextPage}
         products={productsSearchOpts.data?.search.edges.map(edge => edge.node)}
-        selectedChannelId={channel?.id}
         onClose={closeModal}
         onFetch={productsSearch}
         onFetchMore={loadMore}
