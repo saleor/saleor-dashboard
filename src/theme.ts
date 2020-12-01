@@ -22,7 +22,7 @@ export const ICONBUTTON_SIZE = 48;
 
 const fontFamily = '"Inter", "roboto", "sans-serif"';
 
-export default (colors: IThemeColors): Theme =>
+const createTheme = (colors: IThemeColors): Theme =>
   createMuiTheme({
     overrides: {
       MuiButton: {
@@ -72,8 +72,7 @@ export default (colors: IThemeColors): Theme =>
           borderColor: colors.paperBorder,
           borderRadius: 8,
           borderStyle: "solid",
-          borderWidth: 1,
-          overflow: "visible"
+          borderWidth: 1
         }
       },
       MuiCardActions: {
@@ -572,3 +571,5 @@ Checkbox.defaultProps = {
   icon: createElement(CheckboxIcon),
   indeterminateIcon: createElement(CheckboxIndeterminateIcon)
 };
+
+export default createTheme;
