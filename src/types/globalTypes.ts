@@ -842,7 +842,6 @@ export enum ShippingErrorCode {
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
-  ZIP_CODE_RULE_EXISTS = "ZIP_CODE_RULE_EXISTS",
 }
 
 export enum ShippingMethodTypeEnum {
