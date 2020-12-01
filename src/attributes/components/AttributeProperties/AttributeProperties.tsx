@@ -93,26 +93,28 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
                 onChange={onChange}
                 disabled={disabled}
               />
-              <FormSpacer />
               {data.filterableInStorefront && (
-                <TextField
-                  disabled={disabled}
-                  error={!!formErrors.storefrontSearchPosition}
-                  fullWidth
-                  helperText={getAttributeErrorMessage(
-                    formErrors.storefrontSearchPosition,
-                    intl
-                  )}
-                  name={
-                    "storefrontSearchPosition" as keyof AttributePageFormData
-                  }
-                  label={intl.formatMessage({
-                    defaultMessage: "Position in faceted navigation",
-                    description: "attribute position in storefront filters"
-                  })}
-                  value={data.storefrontSearchPosition}
-                  onChange={onChange}
-                />
+                <>
+                  <FormSpacer />
+                  <TextField
+                    disabled={disabled}
+                    error={!!formErrors.storefrontSearchPosition}
+                    fullWidth
+                    helperText={getAttributeErrorMessage(
+                      formErrors.storefrontSearchPosition,
+                      intl
+                    )}
+                    name={
+                      "storefrontSearchPosition" as keyof AttributePageFormData
+                    }
+                    label={intl.formatMessage({
+                      defaultMessage: "Position in faceted navigation",
+                      description: "attribute position in storefront filters"
+                    })}
+                    value={data.storefrontSearchPosition}
+                    onChange={onChange}
+                  />
+                </>
               )}
             </>
           )}
