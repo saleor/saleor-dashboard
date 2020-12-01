@@ -1589,7 +1589,27 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "DB Schenker",
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      zipCodeRules: [
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-220",
+          id: "1",
+          start: "51-210"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-240",
+          id: "2",
+          start: "51-235"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: null,
+          id: "2",
+          start: "51-274"
+        }
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1602,7 +1622,27 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "Registred priority",
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      zipCodeRules: [
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-220",
+          id: "1",
+          start: "51-210"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-240",
+          id: "2",
+          start: "51-235"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: null,
+          id: "2",
+          start: "51-274"
+        }
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1614,9 +1654,28 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         unit: WeightUnitsEnum.KG,
         value: 0
       },
-
       name: "UPS",
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      zipCodeRules: [
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-220",
+          id: "1",
+          start: "51-210"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-240",
+          id: "2",
+          start: "51-235"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: null,
+          id: "2",
+          start: "51-274"
+        }
+      ]
     },
     {
       __typename: "ShippingMethod",
@@ -1629,7 +1688,27 @@ export const shippingZone: ShippingZoneDetailsFragment = {
         value: 0
       },
       name: "DHL",
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      zipCodeRules: [
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-220",
+          id: "1",
+          start: "51-210"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: "51-240",
+          id: "2",
+          start: "51-235"
+        },
+        {
+          __typename: "ShippingMethodZipCodeRule",
+          end: null,
+          id: "2",
+          start: "51-274"
+        }
+      ]
     }
   ],
   warehouses: [

@@ -47,37 +47,58 @@ const props: ShippingZoneRatesPageProps = {
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
+  onZipCodeAssign: () => undefined,
+  onZipCodeUnassign: () => undefined,
   openChannelsModal: () => undefined,
+  rate: null,
   saveButtonBarState: "default",
   shippingChannels: defaultChannels,
-  variant: ShippingMethodTypeEnum.PRICE
+  variant: ShippingMethodTypeEnum.PRICE,
+  zipCodes: [
+    {
+      __typename: "ShippingMethodZipCodeRule",
+      end: "51-200",
+      id: "1",
+      start: "51-220"
+    },
+    {
+      __typename: "ShippingMethodZipCodeRule",
+      end: "31-101",
+      id: "1",
+      start: "44-205"
+    }
+  ]
 };
 
-storiesOf("Shipping / ShippingZoneRates page", module)
+storiesOf("Views / Shipping / Shipping rate", module)
   .addDecorator(Decorator)
-  .add("default price", () => <ShippingZoneRatesPage {...props} />)
+  .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
+  .add("create weight rate", () => (
+    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
+  ))
   .add("loading", () => (
     <ShippingZoneRatesPage
       {...props}
       disabled={true}
+      rate={undefined}
       saveButtonBarState={"loading"}
     />
   ))
-  .add("update price", () => (
+  .add("update price rate", () => (
     <ShippingZoneRatesPage
       {...props}
       shippingChannels={channels}
       rate={shippingZone.shippingMethods[2]}
     />
   ))
-  .add("default weight", () => (
-    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
-  ))
-  .add("update weight", () => (
+  .add("update weight rate", () => (
     <ShippingZoneRatesPage
       {...props}
       shippingChannels={channels}
       rate={shippingZone.shippingMethods[0]}
       variant={ShippingMethodTypeEnum.WEIGHT}
     />
+  ))
+  .add("no zip codes", () => (
+    <ShippingZoneRatesPage {...props} zipCodes={[]} />
   ));

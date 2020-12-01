@@ -11,32 +11,46 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
+import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables
 } from "@saleor/shipping/handlers";
-import { useShippingMethodChannelListingUpdate } from "@saleor/shipping/mutations";
+import {
+  useShippingMethodChannelListingUpdate,
+  useShippingMethodZipCodeRangeAssign,
+  useShippingMethodZipCodeRangeUnassign
+} from "@saleor/shipping/mutations";
 import {
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
 import { useShippingZone } from "@saleor/shipping/queries";
-import { shippingZoneUrl } from "@saleor/shipping/urls";
+import {
+  shippingPriceRatesEditUrl,
+  ShippingRateUrlDialog,
+  ShippingRateUrlQueryParams,
+  shippingZoneUrl
+} from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface PriceRatesUpdateProps {
   id: string;
   rateId: string;
+  params: ShippingRateUrlQueryParams;
 }
 
 export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   id,
-  rateId
+  rateId,
+  params
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -47,6 +61,11 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     variables: { id }
   });
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ShippingRateUrlDialog,
+    ShippingRateUrlQueryParams
+  >(navigate, params => shippingPriceRatesEditUrl(id, rateId, params), params);
+
   const rate = data?.shippingZone?.shippingMethods.find(
     rate => rate.id === rateId
   );
@@ -56,6 +75,43 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
   ] = useShippingMethodChannelListingUpdate({});
+
+  const [
+    assignZipCodeRange,
+    assignZipCodeRangeOpts
+  ] = useShippingMethodZipCodeRangeAssign({
+    onCompleted: data => {
+      if (data.shippingMethodZipCodeRulesCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      } else {
+        notify({
+          status: "error",
+          text: intl.formatMessage({
+            defaultMessage: "Cannot add specified zip codes range.",
+            description: "zip code range add error text"
+          })
+        });
+      }
+    }
+  });
+  const [
+    unassignZipCodeRange,
+    unassignZipCodeRangeOpts
+  ] = useShippingMethodZipCodeRangeUnassign({
+    onCompleted: data => {
+      if (data.shippingMethodZipCodeRulesDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
+    }
+  });
 
   const shippingChannels = createShippingChannelsFromRate(
     rate?.channelListings
@@ -74,8 +130,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     setCurrentChannels,
     toggleAllChannels
   } = useChannels(shippingChannels);
-
-  const [openModal, setOpenModal] = React.useState(false);
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
@@ -96,7 +150,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
   });
 
-  const handleDelete = () => setOpenModal(true);
   const handleSubmit = async (formData: FormData) => {
     const response = await updateShippingRate({
       variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
@@ -139,7 +192,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       )}
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
-        onClose={() => setOpenModal(false)}
+        onClose={closeModal}
         handleConfirm={() =>
           deleteShippingRate({
             variables: {
@@ -147,7 +200,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
             }
           })
         }
-        open={openModal}
+        open={params.action === "remove"}
         name={rate?.name}
       />
       <ShippingZoneRatesPage
@@ -160,7 +213,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         }
         hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         saveButtonBarState={updateShippingRateOpts.status}
-        onDelete={handleDelete}
+        onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onBack={handleBack}
         rate={rate}
@@ -172,6 +225,44 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         variant={ShippingMethodTypeEnum.PRICE}
+        onZipCodeAssign={() => openModal("add-range")}
+        onZipCodeUnassign={id =>
+          openModal("remove-range", {
+            id
+          })
+        }
+      />
+      <ShippingZoneZipCodeRangeDialog
+        confirmButtonState={assignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onSubmit={data =>
+          assignZipCodeRange({
+            variables: {
+              id: rateId,
+              input: {
+                zipCodeRules: [
+                  {
+                    end: data.max || null,
+                    start: data.min
+                  }
+                ]
+              }
+            }
+          })
+        }
+        open={params.action === "add-range"}
+      />
+      <ShippingRateZipCodeRangeRemoveDialog
+        confirmButtonState={unassignZipCodeRangeOpts.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          unassignZipCodeRange({
+            variables: {
+              id: params.id
+            }
+          })
+        }
+        open={params.action === "remove-range"}
       />
     </>
   );

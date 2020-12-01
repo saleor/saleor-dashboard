@@ -11,10 +11,22 @@ export const shippingZoneFragment = gql`
     name
   }
 `;
+
+export const shippingMethodWithZipCodesFragment = gql`
+  fragment ShippingMethodWithZipCodesFragment on ShippingMethod {
+    id
+    zipCodeRules {
+      id
+      start
+      end
+    }
+  }
+`;
 export const shippingMethodFragment = gql`
   ${fragmentMoney}
+  ${shippingMethodWithZipCodesFragment}
   fragment ShippingMethodFragment on ShippingMethod {
-    id
+    ...ShippingMethodWithZipCodesFragment
     minimumOrderWeight {
       unit
       value

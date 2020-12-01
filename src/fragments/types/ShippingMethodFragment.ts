@@ -8,6 +8,13 @@ import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTyp
 // GraphQL fragment: ShippingMethodFragment
 // ====================================================
 
+export interface ShippingMethodFragment_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface ShippingMethodFragment_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -57,6 +64,7 @@ export interface ShippingMethodFragment_channelListings {
 export interface ShippingMethodFragment {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (ShippingMethodFragment_zipCodeRules | null)[] | null;
   minimumOrderWeight: ShippingMethodFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodFragment_maximumOrderWeight | null;
   name: string;

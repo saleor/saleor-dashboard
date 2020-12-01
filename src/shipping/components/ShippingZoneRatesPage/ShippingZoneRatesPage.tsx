@@ -10,19 +10,27 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import {
+  ShippingMethodFragment,
+  ShippingMethodFragment_zipCodeRules
+} from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import ShippingZoneZipCodes, {
+  ZipCodeInclusion
+} from "../ShippingZoneZipCodes";
+
 export interface FormData {
   channelListings: ChannelShippingData[];
+  includeZipCodes: ZipCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -35,13 +43,16 @@ export interface ShippingZoneRatesPageProps {
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
-  rate?: ShippingZone_shippingZone_shippingMethods;
+  rate: ShippingMethodFragment | null;
+  zipCodes?: ShippingMethodFragment_zipCodeRules[];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
+  onZipCodeAssign: () => void;
+  onZipCodeUnassign: (id: string) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
@@ -58,21 +69,27 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onDelete,
   onSubmit,
   onChannelsChange,
+  onZipCodeAssign,
+  onZipCodeUnassign,
   openChannelsModal,
   rate,
   saveButtonBarState,
-  variant
+  variant,
+  zipCodes
 }) => {
   const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
+    includeZipCodes: ZipCodeInclusion.Exclude,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
     noLimits: false,
     type: rate?.type || null
   };
+
+  const rateExists = rate !== null;
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
@@ -141,6 +158,14 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   errors={channelErrors}
                 />
                 <CardSpacer />
+                <ShippingZoneZipCodes
+                  data={data}
+                  disabled={disabled}
+                  onZipCodeDelete={onZipCodeUnassign}
+                  onZipCodeInclusionChange={() => undefined}
+                  onZipCodeRangeAdd={onZipCodeAssign}
+                  zipCodes={rateExists ? rate?.zipCodeRules : zipCodes}
+                />
               </div>
               <div>
                 <ChannelsAvailability

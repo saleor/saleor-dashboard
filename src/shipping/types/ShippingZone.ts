@@ -14,6 +14,13 @@ export interface ShippingZone_shippingZone_countries {
   country: string;
 }
 
+export interface ShippingZone_shippingZone_shippingMethods_zipCodeRules {
+  __typename: "ShippingMethodZipCodeRule";
+  id: string;
+  start: string | null;
+  end: string | null;
+}
+
 export interface ShippingZone_shippingZone_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -63,6 +70,7 @@ export interface ShippingZone_shippingZone_shippingMethods_channelListings {
 export interface ShippingZone_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
+  zipCodeRules: (ShippingZone_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
   minimumOrderWeight: ShippingZone_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: ShippingZone_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;

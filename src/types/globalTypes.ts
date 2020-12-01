@@ -1357,19 +1357,18 @@ export interface OrderLineInput {
 }
 
 export interface OrderRefundFulfillmentLineInput {
-  fulfillmentLineId?: string | null;
+  fulfillmentLineId: string;
   quantity: number;
 }
 
 export interface OrderRefundLineInput {
-  orderLineId?: string | null;
+  orderLineId: string;
   quantity: number;
 }
 
 export interface OrderRefundProductsInput {
   orderLines?: OrderRefundLineInput[] | null;
   fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
-  notifyCustomer?: boolean | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
 }
@@ -1696,6 +1695,15 @@ export interface ShippingPriceInput {
   maximumOrderWeight?: any | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
+}
+
+export interface ShippingZipCodeRulesCreateInput {
+  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
+}
+
+export interface ShippingZipCodeRulesCreateInputRange {
+  start: string;
+  end?: string | null;
 }
 
 export interface ShippingZoneCreateInput {
