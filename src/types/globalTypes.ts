@@ -1356,6 +1356,24 @@ export interface OrderLineInput {
   quantity: number;
 }
 
+export interface OrderRefundFulfillmentLineInput {
+  fulfillmentLineId?: string | null;
+  quantity: number;
+}
+
+export interface OrderRefundLineInput {
+  orderLineId?: string | null;
+  quantity: number;
+}
+
+export interface OrderRefundProductsInput {
+  orderLines?: OrderRefundLineInput[] | null;
+  fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
+  notifyCustomer?: boolean | null;
+  amountToRefund?: any | null;
+  includeShippingCosts?: boolean | null;
+}
+
 export interface OrderSettingsUpdateInput {
   automaticallyConfirmAllNewOrders: boolean;
 }
