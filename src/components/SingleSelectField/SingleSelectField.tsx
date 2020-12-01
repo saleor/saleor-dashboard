@@ -18,6 +18,9 @@ const useStyles = makeStyles(
       },
       width: "100%"
     },
+    label: {
+      zIndex: 3
+    },
     noLabel: {
       padding: theme.spacing(2, 1.5)
     }
@@ -77,7 +80,9 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
       error={error}
       disabled={disabled}
     >
-      <InputLabel shrink={!!value}>{label}</InputLabel>
+      <InputLabel className={classes.label} shrink={!!value}>
+        {label}
+      </InputLabel>
       <Select
         variant="outlined"
         fullWidth

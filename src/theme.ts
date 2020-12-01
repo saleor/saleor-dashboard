@@ -122,6 +122,7 @@ const inputOverrides = (colors: IThemeColors): Overrides => ({
           borderColor: [[colors.input.disabled], "!important"] as any
         },
         "& input": {
+          backgroundColor: colors.input.disabledBackground,
           color: colors.input.disabledText,
           zIndex: 2
         }
@@ -340,6 +341,13 @@ const createTheme = (colors: IThemeColors): Theme =>
             fontWeight: 400
           },
           borderRadius: 4
+        }
+      },
+      MuiSelect: {
+        root: {
+          "&$disabled": {
+            backgroundColor: colors.input.disabledBackground
+          }
         }
       },
       MuiSnackbarContent: {
