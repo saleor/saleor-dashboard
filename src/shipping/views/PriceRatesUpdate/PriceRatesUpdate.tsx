@@ -87,6 +87,14 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
+      } else {
+        notify({
+          status: "error",
+          text: intl.formatMessage({
+            defaultMessage: "Cannot add specified zip codes range.",
+            description: "zip code range add error text"
+          })
+        });
       }
     }
   });

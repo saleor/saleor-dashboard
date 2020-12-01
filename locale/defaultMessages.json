@@ -5580,6 +5580,10 @@
   "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
     "string": "Manage Channel Availability"
   },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_2710215007": {
+    "context": "zip code range add error text",
+    "string": "Cannot add specified zip codes range."
+  },
   "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
     "string": "Manage Channel Availability"
   },
@@ -5597,6 +5601,10 @@
   },
   "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
     "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_2710215007": {
+    "context": "zip code range add error text",
+    "string": "Cannot add specified zip codes range."
   },
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
     "string": "Manage Channels Availability"
