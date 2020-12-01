@@ -145,7 +145,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={product?.thumbnail.url}
+                    thumbnail={product?.thumbnail?.url}
                   >
                     {product?.name ? (
                       <Typography variant="body2">{product.name}</Typography>
