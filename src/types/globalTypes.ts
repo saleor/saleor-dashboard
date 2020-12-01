@@ -842,7 +842,6 @@ export enum ShippingErrorCode {
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
-  ZIP_CODE_RULE_EXISTS = "ZIP_CODE_RULE_EXISTS",
 }
 
 export enum ShippingMethodTypeEnum {
@@ -1358,19 +1357,18 @@ export interface OrderLineInput {
 }
 
 export interface OrderRefundFulfillmentLineInput {
-  fulfillmentLineId?: string | null;
+  fulfillmentLineId: string;
   quantity: number;
 }
 
 export interface OrderRefundLineInput {
-  orderLineId?: string | null;
+  orderLineId: string;
   quantity: number;
 }
 
 export interface OrderRefundProductsInput {
   orderLines?: OrderRefundLineInput[] | null;
   fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
-  notifyCustomer?: boolean | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
 }

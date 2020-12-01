@@ -2860,7 +2860,6 @@ type Order implements Node & ObjectWithMetadata {
   totalBalance: Money!
   userEmail: String
   isShippingRequired: Boolean!
-  linesAvailableForRefund: [OrderLineAvailableForRefund]!
 }
 
 enum OrderAction {
@@ -3101,11 +3100,6 @@ type OrderLine implements Node {
   allocations: [Allocation!]
 }
 
-type OrderLineAvailableForRefund {
-  quantity: Int
-  orderLine: OrderLine
-}
-
 input OrderLineCreateInput {
   quantity: Int!
   variantId: ID!
@@ -3128,19 +3122,18 @@ type OrderRefund {
 }
 
 input OrderRefundFulfillmentLineInput {
-  fulfillmentLineId: ID
+  fulfillmentLineId: ID!
   quantity: Int!
 }
 
 input OrderRefundLineInput {
-  orderLineId: ID
+  orderLineId: ID!
   quantity: Int!
 }
 
 input OrderRefundProductsInput {
   orderLines: [OrderRefundLineInput!]
   fulfillmentLines: [OrderRefundFulfillmentLineInput!]
-  notifyCustomer: Boolean
   amountToRefund: PositiveDecimal
   includeShippingCosts: Boolean = false
 }
@@ -4645,7 +4638,6 @@ enum ShippingErrorCode {
   REQUIRED
   UNIQUE
   DUPLICATED_INPUT_ITEM
-  ZIP_CODE_RULE_EXISTS
 }
 
 type ShippingMethod implements Node & ObjectWithMetadata {
@@ -4859,6 +4851,7 @@ input ShippingZoneUpdateInput {
 
 type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
+  availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
