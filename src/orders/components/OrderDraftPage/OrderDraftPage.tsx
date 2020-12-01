@@ -137,7 +137,11 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onOrderLineRemove={onOrderLineRemove}
             onShippingMethodEdit={onShippingMethodEdit}
           />
-          <OrderHistory history={order?.events} onNoteAdd={onNoteAdd} />
+          <OrderHistory
+            history={order?.events}
+            orderCurrency={order?.total?.gross.currency}
+            onNoteAdd={onNoteAdd}
+          />
         </div>
         <div>
           <OrderCustomer

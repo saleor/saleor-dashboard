@@ -233,7 +233,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
-                <OrderHistory history={order?.events} onNoteAdd={onNoteAdd} />
+                <OrderHistory
+                  history={order?.events}
+                  orderCurrency={order?.total?.gross.currency}
+                  onNoteAdd={onNoteAdd}
+                />
               </div>
               <div>
                 <OrderCustomer

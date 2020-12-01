@@ -3327,6 +3327,12 @@
     "context": "order history message",
     "string": "Order address was updated"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_123236698": {
+    "string": "Shipment was refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1322321687": {
+    "string": "Refunded amount"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1463685940": {
     "context": "order history message",
     "string": "Order was marked as paid"
