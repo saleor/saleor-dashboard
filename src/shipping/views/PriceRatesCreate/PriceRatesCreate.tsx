@@ -66,7 +66,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     createShippingRate,
     errors,
     status
-  } = useShippingRateCreator(id, ShippingMethodTypeEnum.WEIGHT, zipCodes);
+  } = useShippingRateCreator(id, ShippingMethodTypeEnum.PRICE, zipCodes);
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
