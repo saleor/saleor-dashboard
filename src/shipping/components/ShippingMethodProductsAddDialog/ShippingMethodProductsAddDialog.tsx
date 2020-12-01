@@ -19,8 +19,10 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
 import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
+import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
+import { MutationFetchResult } from "react-apollo";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -62,7 +64,9 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   products: SearchShippingProducts_search_edges_node[];
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (ids: string[]) => void;
+  onSubmit: (
+    ids: string[]
+  ) => Promise<MutationFetchResult<ShippingPriceExcludeProduct>>;
 }
 
 const handleProductAssign = (
@@ -104,12 +108,20 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
     SearchShippingProducts_search_edges_node[]
   >([]);
 
-  const handleSubmit = () =>
-    onSubmit(selectedProducts.map(product => product.id));
+  const handleSubmit = () => {
+    onSubmit(selectedProducts.map(product => product.id)).then(() => {
+      setSelectedProducts([]);
+    });
+  };
+
+  const handleClose = () => {
+    onClose();
+    setSelectedProducts([]);
+  };
 
   return (
     <Dialog
-      onClose={onClose}
+      onClose={handleClose}
       open={open}
       classes={{ paper: classes.overflow }}
       fullWidth
@@ -206,7 +218,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
         </InfiniteScroll>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
+        <Button onClick={handleClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
