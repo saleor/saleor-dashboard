@@ -54,10 +54,24 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events_user {
   email: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines {
+  __typename: "OrderEventOrderLineObject";
+  quantity: number | null;
+  orderLine: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine | null;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
+  shippingCostsIncluded: boolean | null;
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
@@ -67,6 +81,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLinesAdd_draftOrderLinesCreate_order_events_user | null;
+  lines: (OrderLinesAdd_draftOrderLinesCreate_order_events_lines | null)[] | null;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_variant {

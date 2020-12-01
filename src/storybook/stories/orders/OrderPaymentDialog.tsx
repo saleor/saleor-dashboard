@@ -13,23 +13,19 @@ const props: OrderPaymentDialogProps = {
   initial: 0,
   onClose: () => undefined,
   onSubmit: () => undefined,
-  open: true,
-  variant: "capture"
+  open: true
 };
 
 storiesOf("Orders / OrderPaymentDialog", module)
   .addDecorator(Decorator)
   .add("capture payment", () => <OrderPaymentDialog {...props} />)
-  .add("refund payment", () => (
-    <OrderPaymentDialog {...props} variant="refund" />
-  ))
   .add("errors", () => (
     <OrderPaymentDialog
       {...props}
       errors={[
         {
           __typename: "OrderError",
-          code: OrderErrorCode.CANNOT_REFUND,
+          code: OrderErrorCode.CAPTURE_INACTIVE_PAYMENT,
           field: null
         },
         {
@@ -38,6 +34,5 @@ storiesOf("Orders / OrderPaymentDialog", module)
           field: "payment"
         }
       ]}
-      variant="refund"
     />
   ));

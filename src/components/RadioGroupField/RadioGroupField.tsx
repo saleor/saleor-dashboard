@@ -15,8 +15,14 @@ const useStyles = makeStyles(
     formLabel: {
       marginBottom: theme.spacing(1)
     },
+    radioGroupInline: {
+      flexDirection: "row"
+    },
     radioLabel: {
       marginBottom: -theme.spacing(0.5)
+    },
+    radioLabelInline: {
+      marginRight: theme.spacing(4)
     },
     root: {
       "& $radioLabel": {
@@ -53,6 +59,7 @@ interface RadioGroupFieldProps {
   label?: React.ReactNode;
   name?: string;
   value: string | number;
+  variant?: "block" | "inline";
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -66,7 +73,8 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
     value,
     onChange,
     name,
-    hint
+    hint,
+    variant = "block"
   } = props;
   const classes = useStyles(props);
 
@@ -86,13 +94,19 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
         name={name}
         value={value}
         onChange={onChange}
+        className={classNames({
+          [classes.radioGroupInline]: variant === "inline"
+        })}
       >
         {choices.length > 0 ? (
           choices.map(choice => (
             <FormControlLabel
               disabled={choice.disabled}
               value={choice.value}
-              className={classes.radioLabel}
+              className={classNames({
+                [classes.radioLabel]: variant !== "inline",
+                [classes.radioLabelInline]: variant === "inline"
+              })}
               control={<Radio color="primary" />}
               label={choice.label}
               key={choice.value}

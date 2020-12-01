@@ -54,18 +54,34 @@ export interface OrderConfirm_orderConfirm_order_events_user {
   email: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_events_lines_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_lines {
+  __typename: "OrderEventOrderLineObject";
+  quantity: number | null;
+  orderLine: OrderConfirm_orderConfirm_order_events_lines_orderLine | null;
+}
+
 export interface OrderConfirm_orderConfirm_order_events {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
+  shippingCostsIncluded: boolean | null;
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
+  transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderConfirm_orderConfirm_order_events_user | null;
+  lines: (OrderConfirm_orderConfirm_order_events_lines | null)[] | null;
 }
 
 export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_variant {
@@ -326,6 +342,7 @@ export interface OrderConfirm_orderConfirm_order {
   discount: OrderConfirm_orderConfirm_order_discount | null;
   invoices: (OrderConfirm_orderConfirm_order_invoices | null)[] | null;
   channel: OrderConfirm_orderConfirm_order_channel;
+  isPaid: boolean | null;
 }
 
 export interface OrderConfirm_orderConfirm {

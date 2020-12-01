@@ -831,10 +831,53 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: null,
       id: "T3JkZXJFdmVudDoyMQ==",
       invoiceNumber: null,
+      lines: [],
       message: null,
       quantity: 1,
+      shippingCostsIncluded: false,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
+      user: {
+        __typename: "User",
+        email: "admin@example.com",
+        id: "QWRkcmVzczoxNQ=="
+      }
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2018-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "UYgDNUnnfyiuyimuhd==",
+      invoiceNumber: null,
+      lines: [
+        {
+          __typename: "OrderEventOrderLineObject",
+          orderLine: {
+            __typename: "OrderLine",
+            id: "h47gfncfgwegfehfhj",
+            productName: "Milk",
+            variantName: "Cow's milk"
+          },
+          quantity: 4
+        },
+        {
+          __typename: "OrderEventOrderLineObject",
+          orderLine: {
+            __typename: "OrderLine",
+            id: "7846f857t4t84y8fgh",
+            productName: "Milk",
+            variantName: "Goat's milk"
+          },
+          quantity: 4
+        }
+      ],
+      message: null,
+      quantity: 1,
+      shippingCostsIncluded: true,
+      transactionReference: "123",
+      type: OrderEventsEnum.FULFILLMENT_REFUNDED,
       user: {
         __typename: "User",
         email: "admin@example.com",
@@ -849,8 +892,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: null,
       id: "T3JkZXJFdmVudDo0",
       invoiceNumber: null,
+      lines: [],
       message: "This is note",
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "124",
       type: OrderEventsEnum.NOTE_ADDED,
       user: null
@@ -863,8 +908,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: null,
       id: "T3JkZXJFdmVudDo1",
       invoiceNumber: null,
+      lines: [],
       message: "This is note",
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "125",
       type: OrderEventsEnum.NOTE_ADDED,
       user: null
@@ -877,8 +924,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: null,
       id: "T3JkZXJFdmVudDo2",
       invoiceNumber: null,
+      lines: [],
       message: "Note from external service",
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "126",
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
       user: null
@@ -891,8 +940,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: OrderEventsEmailsEnum.ORDER_CANCEL,
       id: "T3JkZXJFdmVudDo3",
       invoiceNumber: null,
+      lines: [],
       message: null,
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "127",
       type: OrderEventsEnum.EMAIL_SENT,
       user: null
@@ -905,8 +956,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: OrderEventsEmailsEnum.ORDER_REFUND,
       id: "T3JkZXJFdmVudDo4",
       invoiceNumber: null,
+      lines: [],
       message: null,
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "128",
       type: OrderEventsEnum.EMAIL_SENT,
       user: null
@@ -919,8 +972,10 @@ export const order = (placeholder: string): OrderDetails_order => ({
       emailType: null,
       id: "T3JkZXJFdmVudDo5",
       invoiceNumber: null,
+      lines: [],
       message: null,
       quantity: null,
+      shippingCostsIncluded: false,
       transactionReference: "129",
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,
       user: null

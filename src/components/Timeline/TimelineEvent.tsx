@@ -4,6 +4,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import classNames from "classnames";
 import React from "react";
 
 import { DateTime } from "../Date";
@@ -25,7 +26,7 @@ const useStyles = makeStyles(
     dateExpander: {
       color: theme.typography.caption.color,
       position: "absolute",
-      right: theme.spacing(3)
+      right: 0
     },
     dot: {
       backgroundColor: theme.palette.primary.main,
@@ -36,6 +37,7 @@ const useStyles = makeStyles(
       top: 6,
       width: 8
     },
+    expanded: {},
     noExpander: {
       alignItems: "center",
       display: "flex",
@@ -43,11 +45,29 @@ const useStyles = makeStyles(
       width: "100%"
     },
     panel: {
+      "&$expanded": {
+        margin: 0
+      },
       "&:before": {
         display: "none"
       },
       background: "none",
+      margin: 0,
       width: "100%"
+    },
+    panelExpander: {
+      "&$expanded": {
+        margin: 0,
+        minHeight: 0
+      },
+      "&> .MuiExpansionPanelSummary-content": {
+        margin: 0
+      },
+      "&> .MuiExpansionPanelSummary-expandIcon": {
+        padding: 0,
+        right: theme.spacing(18)
+      },
+      margin: 0
     },
     root: {
       "&:last-child:after": {
@@ -90,10 +110,18 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
     <div className={classes.root}>
       <span className={classes.dot} />
       {children ? (
-        <ExpansionPanel className={classes.panel} elevation={0}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanel
+          className={classNames(classes.panel, classes.expanded)}
+          elevation={0}
+        >
+          <ExpansionPanelSummary
+            className={classNames(classes.panelExpander, classes.expanded)}
+            expandIcon={<ExpandMoreIcon />}
+          >
             <Typography>{title}</Typography>
-            <Typography className={classes.dateExpander}>{title}</Typography>
+            <Typography className={classes.dateExpander}>
+              <DateTime date={date} />
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>{children}</Typography>

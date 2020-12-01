@@ -7,6 +7,7 @@ import {
   fragmentOrderDetails,
   fragmentOrderEvent,
   fragmentOrderSettings,
+  fulfillmentFragment,
   invoiceFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
@@ -50,6 +51,10 @@ import {
   OrderFulfillmentCancel,
   OrderFulfillmentCancelVariables
 } from "./types/OrderFulfillmentCancel";
+import {
+  OrderFulfillmentRefundProducts,
+  OrderFulfillmentRefundProductsVariables
+} from "./types/OrderFulfillmentRefundProducts";
 import {
   OrderFulfillmentUpdateTracking,
   OrderFulfillmentUpdateTrackingVariables
@@ -186,10 +191,36 @@ const orderRefundMutation = gql`
     }
   }
 `;
-export const TypedOrderRefundMutation = TypedMutation<
+export const useOrderRefundMutation = makeMutation<
   OrderRefund,
   OrderRefundVariables
 >(orderRefundMutation);
+
+const orderFulfillmentRefundProductsMutation = gql`
+  ${fragmentOrderDetails}
+  ${fulfillmentFragment}
+  ${orderErrorFragment}
+  mutation OrderFulfillmentRefundProducts(
+    $input: OrderRefundProductsInput!
+    $order: ID!
+  ) {
+    orderFulfillmentRefundProducts(input: $input, order: $order) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      fulfillment {
+        ...FulfillmentFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+export const useOrderFulfillmentRefundProductsMutation = makeMutation<
+  OrderFulfillmentRefundProducts,
+  OrderFulfillmentRefundProductsVariables
+>(orderFulfillmentRefundProductsMutation);
 
 const orderVoidMutation = gql`
   ${fragmentOrderDetails}

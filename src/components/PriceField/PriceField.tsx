@@ -39,6 +39,7 @@ interface PriceFieldProps {
   name?: string;
   value?: string | number;
   InputProps?: InputProps;
+  inputProps?: InputProps["inputProps"];
   required?: boolean;
   onChange(event: any);
 }
@@ -55,7 +56,8 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     onChange,
     required,
     value,
-    InputProps
+    InputProps,
+    inputProps
   } = props;
 
   const classes = useStyles(props);
@@ -93,7 +95,8 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       }}
       inputProps={{
         min: minValue,
-        type: "number"
+        type: "number",
+        ...inputProps
       }}
       name={name}
       disabled={disabled}

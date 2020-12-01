@@ -7,6 +7,7 @@ export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {
     id
     amount
+    shippingCostsIncluded
     date
     email
     emailType
@@ -18,6 +19,14 @@ export const fragmentOrderEvent = gql`
     user {
       id
       email
+    }
+    lines {
+      quantity
+      orderLine {
+        id
+        productName
+        variantName
+      }
     }
   }
 `;
@@ -49,6 +58,23 @@ export const fragmentOrderLine = gql`
     }
   }
 `;
+
+export const fragmentRefundOrderLine = gql`
+  fragment RefundOrderLineFragment on OrderLine {
+    id
+    productName
+    quantity
+    unitPrice {
+      gross {
+        ...Money
+      }
+    }
+    thumbnail(size: 64) {
+      url
+    }
+  }
+`;
+
 export const fulfillmentFragment = gql`
   ${fragmentOrderLine}
   fragment FulfillmentFragment on Fulfillment {

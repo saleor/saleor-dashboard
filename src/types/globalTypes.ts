@@ -17,6 +17,7 @@ export enum AccountErrorCode {
   DELETE_SUPERUSER_ACCOUNT = "DELETE_SUPERUSER_ACCOUNT",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INACTIVE = "INACTIVE",
   INVALID = "INVALID",
   INVALID_CREDENTIALS = "INVALID_CREDENTIALS",
   INVALID_PASSWORD = "INVALID_PASSWORD",
@@ -454,6 +455,7 @@ export enum FileTypesEnum {
 export enum FulfillmentStatus {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
+  REFUNDED = "REFUNDED",
 }
 
 export enum InvoiceErrorCode {
@@ -567,6 +569,7 @@ export enum OrderErrorCode {
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
+  CANNOT_REFUND_FULFILLMENT_LINE = "CANNOT_REFUND_FULFILLMENT_LINE",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
@@ -574,6 +577,7 @@ export enum OrderErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
+  INVALID_REFUND_QUANTITY = "INVALID_REFUND_QUANTITY",
   NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
@@ -613,6 +617,7 @@ export enum OrderEventsEnum {
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
+  FULFILLMENT_REFUNDED = "FULFILLMENT_REFUNDED",
   FULFILLMENT_RESTOCKED_ITEMS = "FULFILLMENT_RESTOCKED_ITEMS",
   INVOICE_GENERATED = "INVOICE_GENERATED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -1349,6 +1354,24 @@ export interface OrderLineCreateInput {
 
 export interface OrderLineInput {
   quantity: number;
+}
+
+export interface OrderRefundFulfillmentLineInput {
+  fulfillmentLineId?: string | null;
+  quantity: number;
+}
+
+export interface OrderRefundLineInput {
+  orderLineId?: string | null;
+  quantity: number;
+}
+
+export interface OrderRefundProductsInput {
+  orderLines?: OrderRefundLineInput[] | null;
+  fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
+  notifyCustomer?: boolean | null;
+  amountToRefund?: any | null;
+  includeShippingCosts?: boolean | null;
 }
 
 export interface OrderSettingsUpdateInput {

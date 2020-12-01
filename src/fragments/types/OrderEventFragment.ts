@@ -14,10 +14,24 @@ export interface OrderEventFragment_user {
   email: string;
 }
 
+export interface OrderEventFragment_lines_orderLine {
+  __typename: "OrderLine";
+  id: string;
+  productName: string;
+  variantName: string;
+}
+
+export interface OrderEventFragment_lines {
+  __typename: "OrderEventOrderLineObject";
+  quantity: number | null;
+  orderLine: OrderEventFragment_lines_orderLine | null;
+}
+
 export interface OrderEventFragment {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
+  shippingCostsIncluded: boolean | null;
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
@@ -27,4 +41,5 @@ export interface OrderEventFragment {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderEventFragment_user | null;
+  lines: (OrderEventFragment_lines | null)[] | null;
 }
