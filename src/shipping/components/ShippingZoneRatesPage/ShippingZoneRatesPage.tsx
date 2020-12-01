@@ -76,7 +76,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includeZipCodes: ZipCodeInclusion.Include,
+    includeZipCodes: ZipCodeInclusion.Exclude,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
