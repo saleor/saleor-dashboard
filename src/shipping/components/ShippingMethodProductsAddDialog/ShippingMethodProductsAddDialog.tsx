@@ -14,11 +14,12 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
-import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
@@ -61,7 +62,7 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  products: SearchShippingProducts_search_edges_node[];
+  products: SearchProducts_search_edges_node[];
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (
@@ -70,12 +71,10 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
 }
 
 const handleProductAssign = (
-  product: SearchShippingProducts_search_edges_node,
+  product: SearchProducts_search_edges_node,
   isSelected: boolean,
-  selectedProducts: SearchShippingProducts_search_edges_node[],
-  setSelectedProducts: (
-    data: SearchShippingProducts_search_edges_node[]
-  ) => void
+  selectedProducts: SearchProducts_search_edges_node[],
+  setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
 ) => {
   if (isSelected) {
     setSelectedProducts(
@@ -105,7 +104,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
-    SearchShippingProducts_search_edges_node[]
+    SearchProducts_search_edges_node[]
   >([]);
 
   const handleSubmit = () => {
@@ -181,25 +180,27 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                           padding="checkbox"
                           className={classes.productCheckboxCell}
                         >
-                          <Checkbox
-                            checked={isSelected}
-                            disabled={loading}
-                            onChange={() =>
-                              handleProductAssign(
-                                product,
-                                isSelected,
-                                selectedProducts,
-                                setSelectedProducts
-                              )
-                            }
-                          />
+                          {product && (
+                            <Checkbox
+                              checked={isSelected}
+                              disabled={loading}
+                              onChange={() =>
+                                handleProductAssign(
+                                  product,
+                                  isSelected,
+                                  selectedProducts,
+                                  setSelectedProducts
+                                )
+                              }
+                            />
+                          )}
                         </TableCell>
                         <TableCellAvatar
                           className={classes.avatar}
                           thumbnail={product?.thumbnail?.url}
                         />
                         <TableCell className={classes.colName} colSpan={2}>
-                          {product?.name}
+                          {product?.name || <Skeleton />}
                         </TableCell>
                       </TableRow>
                     </React.Fragment>
@@ -226,6 +227,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           color="primary"
           variant="contained"
           type="submit"
+          disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}
         >
           <FormattedMessage {...buttonMessages.confirm} />

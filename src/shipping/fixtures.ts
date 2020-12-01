@@ -1,5 +1,5 @@
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { SearchShippingProducts_search_edges_node } from "@saleor/shipping/types/SearchShippingProducts";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
 import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
@@ -1809,18 +1809,9 @@ export const shippingZone: ShippingZone_shippingZone = {
   ]
 };
 
-export const products: SearchShippingProducts_search_edges_node[] = [
+export const products: SearchProducts_search_edges_node[] = [
   {
     __typename: "Product",
-    channelListings: [
-      {
-        __typename: "ProductChannelListing",
-        channel: {
-          __typename: "Channel",
-          id: "Q2hhbm5lbDo5"
-        }
-      }
-    ],
     id: "1",
     name: "Apple Juice",
     thumbnail: {
@@ -1830,15 +1821,6 @@ export const products: SearchShippingProducts_search_edges_node[] = [
   },
   {
     __typename: "Product",
-    channelListings: [
-      {
-        __typename: "ProductChannelListing",
-        channel: {
-          __typename: "Channel",
-          id: "Q2hhbm5lbDo5"
-        }
-      }
-    ],
     id: "2",
     name: "Banana Juice",
     thumbnail: {

@@ -17,6 +17,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
@@ -38,7 +39,7 @@ import {
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
-import { useProductsSearch, useShippingZone } from "@saleor/shipping/queries";
+import { useShippingZone } from "@saleor/shipping/queries";
 import {
   ShippingRateUrlDialog,
   ShippingRateUrlQueryParams,
@@ -82,7 +83,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     loadMore,
     search: productsSearch,
     result: productsSearchOpts
-  } = useProductsSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
+  } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   const rate = data?.shippingZone?.shippingMethods.find(
     rate => rate.id === rateId
@@ -279,7 +280,9 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         loading={productsSearchOpts.loading}
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={productsSearchOpts.data?.search.edges.map(edge => edge.node)}
+        products={productsSearchOpts.data?.search.edges
+          .map(edge => edge.node)
+          .filter(suggestedProduct => suggestedProduct.id)}
         onClose={closeModal}
         onFetch={productsSearch}
         onFetchMore={loadMore}

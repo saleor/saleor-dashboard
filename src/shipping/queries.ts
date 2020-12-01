@@ -4,13 +4,8 @@ import {
   shippingZoneFragment
 } from "@saleor/fragments/shipping";
 import makeQuery from "@saleor/hooks/makeQuery";
-import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
 
-import {
-  SearchShippingProducts,
-  SearchShippingProductsVariables
-} from "./types/SearchShippingProducts";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
@@ -66,34 +61,3 @@ const shippingZone = gql`
 export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
   shippingZone
 );
-
-export const searchProducts = gql`
-  query SearchShippingProducts($first: Int!, $query: String!, $after: String) {
-    search: products(first: $first, after: $after, filter: { search: $query }) {
-      edges {
-        node {
-          id
-          name
-          thumbnail {
-            url
-          }
-          channelListings {
-            channel {
-              id
-            }
-          }
-        }
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        startCursor
-      }
-    }
-  }
-`;
-export const useProductsSearch = makeTopLevelSearch<
-  SearchShippingProducts,
-  SearchShippingProductsVariables
->(searchProducts);
