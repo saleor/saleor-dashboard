@@ -1,10 +1,6 @@
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import React from "react";
-import {
-  IntlProvider,
-  MissingTranslationError,
-  ReactIntlErrorCode
-} from "react-intl";
+import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
   AR = "ar",
