@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
+import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   Timeline,
@@ -248,6 +249,9 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
 
 const useStyles = makeStyles(
   theme => ({
+    eventSubtitle: {
+      marginTop: theme.spacing(1)
+    },
     header: {
       fontWeight: 500,
       marginBottom: theme.spacing(1)
@@ -265,11 +269,12 @@ const useStyles = makeStyles(
 
 interface OrderHistoryProps {
   history: OrderDetails_order_events[];
+  orderCurrency: string;
   onNoteAdd: (data: FormData) => void;
 }
 
 const OrderHistory: React.FC<OrderHistoryProps> = props => {
-  const { history, onNoteAdd } = props;
+  const { history, orderCurrency, onNoteAdd } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -332,7 +337,11 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   >
                     {event.lines && (
                       <>
-                        <Typography variant="caption" color="textSecondary">
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          className={classes.eventSubtitle}
+                        >
                           <FormattedMessage defaultMessage="Products refunded" />
                         </Typography>
                         <table>
@@ -362,6 +371,26 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                             ))}
                           </tbody>
                         </table>
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          className={classes.eventSubtitle}
+                        >
+                          <FormattedMessage defaultMessage="Refunded amount" />
+                        </Typography>
+                        {(event.amount || event.amount === 0) && (
+                          <Money
+                            money={{
+                              amount: event.amount,
+                              currency: orderCurrency
+                            }}
+                          />
+                        )}
+                        {event.shippingCostsIncluded && (
+                          <Typography>
+                            <FormattedMessage defaultMessage="Shipment was refunded" />
+                          </Typography>
+                        )}
                       </>
                     )}
                   </TimelineEvent>

@@ -65,7 +65,7 @@ const useStyles = makeStyles(
       },
       "&> .MuiExpansionPanelSummary-expandIcon": {
         padding: 0,
-        right: theme.spacing(12)
+        right: theme.spacing(18)
       },
       margin: 0
     },

@@ -1,6 +1,8 @@
+/* eslint-disable sort-keys */
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
+import { OrderDetails_order_fulfillments_lines } from "../types/OrderDetails";
 import {
   OrderRefundData_order_fulfillments,
   OrderRefundData_order_lines
@@ -9,6 +11,7 @@ import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
+  mergeRepeatedOrderLines,
   OrderWithTotalAndTotalCaptured
 } from "./data";
 
@@ -391,5 +394,132 @@ describe("Get get all fulfillment lines price sum", () => {
     );
 
     expect(allFulfillmentLinesPriceSum).toBe(72);
+  });
+});
+
+describe("Merge repeated order lines of fulfillment lines", () => {
+  it("is able to merge repeated order lines and sum their quantities", () => {
+    const lines: OrderDetails_order_fulfillments_lines[] = [
+      {
+        id: "RnVsZmlsbG1lbnRMaW5lOjMx",
+        quantity: 1,
+        orderLine: {
+          id: "T3JkZXJMaW5lOjQ1",
+          isShippingRequired: false,
+          variant: {
+            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            quantityAvailable: 50,
+            __typename: "ProductVariant"
+          },
+          productName: "Lake Tunes",
+          productSku: "lake-tunes-mp3",
+          quantity: 2,
+          quantityFulfilled: 2,
+          unitPrice: {
+            gross: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            net: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            __typename: "TaxedMoney"
+          },
+          thumbnail: {
+            url:
+              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            __typename: "Image"
+          },
+          __typename: "OrderLine"
+        },
+        __typename: "FulfillmentLine"
+      },
+      {
+        id: "RnVsZmlsbG1lbnRMaW5lOjMy",
+        quantity: 1,
+        orderLine: {
+          id: "T3JkZXJMaW5lOjQ1",
+          isShippingRequired: false,
+          variant: {
+            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            quantityAvailable: 50,
+            __typename: "ProductVariant"
+          },
+          productName: "Lake Tunes",
+          productSku: "lake-tunes-mp3",
+          quantity: 2,
+          quantityFulfilled: 2,
+          unitPrice: {
+            gross: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            net: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            __typename: "TaxedMoney"
+          },
+          thumbnail: {
+            url:
+              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            __typename: "Image"
+          },
+          __typename: "OrderLine"
+        },
+        __typename: "FulfillmentLine"
+      },
+      {
+        id: "RnVsZmlsbG1lbnRMaW5lOjMz",
+        quantity: 1,
+        orderLine: {
+          id: "T3JkZXJMaW5lOjQ3",
+          isShippingRequired: true,
+          variant: {
+            id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+            quantityAvailable: 50,
+            __typename: "ProductVariant"
+          },
+          productName: "T-shirt",
+          productSku: "29810068",
+          quantity: 3,
+          quantityFulfilled: 1,
+          unitPrice: {
+            gross: {
+              amount: 2.5,
+              currency: "USD",
+              __typename: "Money"
+            },
+            net: {
+              amount: 2.5,
+              currency: "USD",
+              __typename: "Money"
+            },
+            __typename: "TaxedMoney"
+          },
+          thumbnail: {
+            url:
+              "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            __typename: "Image"
+          },
+          __typename: "OrderLine"
+        },
+        __typename: "FulfillmentLine"
+      }
+    ];
+
+    const mergedLines = mergeRepeatedOrderLines(lines);
+
+    expect(mergedLines).toHaveLength(2);
+    expect(
+      mergedLines.find(
+        fulfillmentLine => fulfillmentLine.orderLine.id === "T3JkZXJMaW5lOjQ1"
+      ).quantity
+    ).toBe(2);
   });
 });

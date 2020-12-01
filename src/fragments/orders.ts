@@ -7,6 +7,7 @@ export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {
     id
     amount
+    shippingCostsIncluded
     date
     email
     emailType

@@ -71,6 +71,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_events {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
+  shippingCostsIncluded: boolean | null;
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;

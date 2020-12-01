@@ -1,6 +1,7 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
 
+import { OrderDetails_order_fulfillments_lines } from "../types/OrderDetails";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -50,4 +51,27 @@ export function getAllFulfillmentLinesPriceSum(
     }, 0);
     return sum + fulfilmentLinesSum;
   }, 0);
+}
+
+export function mergeRepeatedOrderLines(
+  fulfillmentLines: OrderDetails_order_fulfillments_lines[]
+) {
+  return fulfillmentLines.reduce((prev, curr) => {
+    const existingOrderLineIndex = prev.findIndex(
+      prevLine => prevLine.orderLine.id === curr.orderLine.id
+    );
+
+    if (existingOrderLineIndex === -1) {
+      prev.push(curr);
+    } else {
+      const existingOrderLine = prev[existingOrderLineIndex];
+
+      prev[existingOrderLineIndex] = {
+        ...existingOrderLine,
+        quantity: existingOrderLine.quantity + curr.quantity
+      };
+    }
+
+    return prev;
+  }, Array<OrderDetails_order_fulfillments_lines>());
 }

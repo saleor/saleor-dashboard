@@ -16,6 +16,7 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -95,7 +96,10 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
 
   const intl = useIntl();
 
-  const lines = maybe(() => fulfillment.lines);
+  const lines =
+    fulfillment?.status === FulfillmentStatus.REFUNDED
+      ? mergeRepeatedOrderLines(fulfillment?.lines)
+      : fulfillment?.lines;
   const status = maybe(() => fulfillment.status);
   const quantity = lines
     ? lines.map(line => line.quantity).reduce((prev, curr) => prev + curr, 0)
@@ -253,47 +257,53 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               </TableCell>
             </TableRow>
           ))}
-          <TableRow>
-            <TableCell className={classes.infoRow} colSpan={numberOfColumns}>
-              <Typography color="textSecondary" variant="body2">
-                <FormattedMessage
-                  defaultMessage="Fulfilled from: {warehouseName}"
-                  description="fulfillment group"
-                  values={{
-                    warehouseName: (
-                      <Typography
-                        className={classNames(classes.infoLabel, {
-                          [classes.infoLabelWithMargin]: !!fulfillment?.trackingNumber
-                        })}
-                        color="textPrimary"
-                        variant="body2"
-                      >
-                        {getStringOrPlaceholder(fulfillment?.warehouse?.name)}
-                      </Typography>
-                    )
-                  }}
-                />
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                {fulfillment?.trackingNumber && (
-                  <FormattedMessage
-                    defaultMessage="Tracking Number: {trackingNumber}"
-                    values={{
-                      trackingNumber: (
-                        <Typography
-                          className={classes.infoLabel}
-                          color="textPrimary"
-                          variant="body2"
-                        >
-                          {fulfillment.trackingNumber}
-                        </Typography>
-                      )
-                    }}
-                  />
-                )}
-              </Typography>
-            </TableCell>
-          </TableRow>
+          {(fulfillment?.warehouse || fulfillment?.trackingNumber) && (
+            <TableRow>
+              <TableCell className={classes.infoRow} colSpan={numberOfColumns}>
+                <Typography color="textSecondary" variant="body2">
+                  {fulfillment?.warehouse && (
+                    <FormattedMessage
+                      defaultMessage="Fulfilled from: {warehouseName}"
+                      description="fulfillment group"
+                      values={{
+                        warehouseName: (
+                          <Typography
+                            className={classNames(classes.infoLabel, {
+                              [classes.infoLabelWithMargin]: !!fulfillment?.trackingNumber
+                            })}
+                            color="textPrimary"
+                            variant="body2"
+                          >
+                            {getStringOrPlaceholder(
+                              fulfillment?.warehouse?.name
+                            )}
+                          </Typography>
+                        )
+                      }}
+                    />
+                  )}
+                </Typography>
+                <Typography color="textSecondary" variant="body2">
+                  {fulfillment?.trackingNumber && (
+                    <FormattedMessage
+                      defaultMessage="Tracking Number: {trackingNumber}"
+                      values={{
+                        trackingNumber: (
+                          <Typography
+                            className={classes.infoLabel}
+                            color="textPrimary"
+                            variant="body2"
+                          >
+                            {fulfillment.trackingNumber}
+                          </Typography>
+                        )
+                      }}
+                    />
+                  )}
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </ResponsiveTable>
       {status === FulfillmentStatus.FULFILLED && !fulfillment.trackingNumber && (
