@@ -75,9 +75,9 @@ function useCategoryUpdateForm(
   // Need to make it function to always have description.current up to date
   const getData = (): CategoryUpdateData => ({
     ...form.data,
-    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     description: description.current
   });
+
   const getSubmitData = (): CategoryUpdateData => ({
     ...getData(),
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified)
