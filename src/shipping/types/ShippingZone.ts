@@ -67,6 +67,37 @@ export interface ShippingZone_shippingZone_shippingMethods_channelListings {
   maximumOrderPrice: ShippingZone_shippingZone_shippingMethods_channelListings_maximumOrderPrice | null;
 }
 
+export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_pageInfo {
+  __typename: "PageInfo";
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  endCursor: string | null;
+  startCursor: string | null;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_thumbnail {
+  __typename: "Image";
+  url: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node {
+  __typename: "Product";
+  id: string;
+  name: string;
+  thumbnail: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node_thumbnail | null;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_excludedProducts_edges {
+  __typename: "ProductCountableEdge";
+  node: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_excludedProducts {
+  __typename: "ProductCountableConnection";
+  pageInfo: ShippingZone_shippingZone_shippingMethods_excludedProducts_pageInfo;
+  edges: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges[];
+}
+
 export interface ShippingZone_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
@@ -76,6 +107,7 @@ export interface ShippingZone_shippingZone_shippingMethods {
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZone_shippingZone_shippingMethods_channelListings[] | null;
+  excludedProducts: ShippingZone_shippingZone_shippingMethods_excludedProducts | null;
 }
 
 export interface ShippingZone_shippingZone_warehouses {
@@ -100,4 +132,8 @@ export interface ShippingZone {
 
 export interface ShippingZoneVariables {
   id: string;
+  before?: string | null;
+  after?: string | null;
+  first?: number | null;
+  last?: number | null;
 }

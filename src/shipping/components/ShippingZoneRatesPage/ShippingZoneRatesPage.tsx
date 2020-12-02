@@ -10,19 +10,18 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import {
-  ShippingMethodFragment,
-  ShippingMethodFragment_zipCodeRules
-} from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
+import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
+import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
+import { ListActions, ListProps } from "@saleor/types";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import ShippingZoneZipCodes, {
   ZipCodeInclusion
@@ -38,13 +37,14 @@ export interface FormData {
   type: ShippingMethodTypeEnum;
 }
 
-export interface ShippingZoneRatesPageProps {
+export interface ShippingZoneRatesPageProps
+  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+    ListActions {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
-  rate: ShippingMethodFragment | null;
-  zipCodes?: ShippingMethodFragment_zipCodeRules[];
+  rate: ShippingZone_shippingZone_shippingMethods;
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -55,6 +55,8 @@ export interface ShippingZoneRatesPageProps {
   onZipCodeUnassign: (id: string) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
+  onProductAssign: () => void;
+  onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
 }
 
@@ -71,13 +73,14 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onChannelsChange,
   onZipCodeAssign,
   onZipCodeUnassign,
+  onProductAssign,
+  onProductUnassign,
   openChannelsModal,
   rate,
   saveButtonBarState,
   variant,
-  zipCodes
+  ...listProps
 }) => {
-  const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
@@ -88,8 +91,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     noLimits: false,
     type: rate?.type || null
   };
-
-  const rateExists = rate !== null;
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
@@ -108,20 +109,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             <AppHeader onBack={onBack}>
               <FormattedMessage defaultMessage="Shipping" />
             </AppHeader>
-            <PageHeader
-              title={
-                rate?.name ||
-                (isPriceVariant
-                  ? intl.formatMessage({
-                      defaultMessage: "Price Rate Create",
-                      description: "page title"
-                    })
-                  : intl.formatMessage({
-                      defaultMessage: "Weight Rate Create",
-                      description: "page title"
-                    }))
-              }
-            />
+            <PageHeader title={rate?.name} />
             <Grid>
               <div>
                 <ShippingZoneInfo
@@ -164,7 +152,17 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onZipCodeDelete={onZipCodeUnassign}
                   onZipCodeInclusionChange={() => undefined}
                   onZipCodeRangeAdd={onZipCodeAssign}
-                  zipCodes={rateExists ? rate?.zipCodeRules : zipCodes}
+                  zipCodes={rate?.zipCodeRules}
+                />
+                <CardSpacer />
+                <ShippingMethodProducts
+                  products={rate?.excludedProducts?.edges.map(
+                    edge => edge.node
+                  )}
+                  onProductAssign={onProductAssign}
+                  onProductUnassign={onProductUnassign}
+                  disabled={disabled}
+                  {...listProps}
                 />
               </div>
               <div>

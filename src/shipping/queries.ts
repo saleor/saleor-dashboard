@@ -1,6 +1,6 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
-  shippingZoneDetailsFragment,
+  shippingMethodWithExcludedProductsFragment,
   shippingZoneFragment
 } from "@saleor/fragments/shipping";
 import makeQuery from "@saleor/hooks/makeQuery";
@@ -36,10 +36,25 @@ export const useShippingZoneList = makeQuery<
 >(shippingZones);
 
 const shippingZone = gql`
-  ${shippingZoneDetailsFragment}
-  query ShippingZone($id: ID!) {
+  ${shippingZoneFragment}
+  ${shippingMethodWithExcludedProductsFragment}
+  query ShippingZone(
+    $id: ID!
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+  ) {
     shippingZone(id: $id) {
-      ...ShippingZoneDetailsFragment
+      ...ShippingZoneFragment
+      default
+      shippingMethods {
+        ...ShippingMethodWithExcludedProductsFragment
+      }
+      warehouses {
+        id
+        name
+      }
     }
   }
 `;

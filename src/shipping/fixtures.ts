@@ -1,5 +1,6 @@
-import { ShippingZoneDetailsFragment } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
 import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 
@@ -1285,7 +1286,7 @@ export const shippingZones: ShippingZoneFragment[] = [
   }
 ];
 
-export const shippingZone: ShippingZoneDetailsFragment = {
+export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
   countries: [
     {
@@ -1577,6 +1578,30 @@ export const shippingZone: ShippingZoneDetailsFragment = {
           }
         }
       ],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumOrderWeight: {
         __typename: "Weight",
@@ -1614,6 +1639,30 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1647,6 +1696,30 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: ""
+              }
+            }
+          }
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1680,6 +1753,17 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     {
       __typename: "ShippingMethod",
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        }
+      },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderWeight: null,
       minimumOrderWeight: {
@@ -1724,3 +1808,24 @@ export const shippingZone: ShippingZoneDetailsFragment = {
     }
   ]
 };
+
+export const products: SearchProducts_search_edges_node[] = [
+  {
+    __typename: "Product",
+    id: "1",
+    name: "Apple Juice",
+    thumbnail: {
+      __typename: "Image",
+      url: ""
+    }
+  },
+  {
+    __typename: "Product",
+    id: "2",
+    name: "Banana Juice",
+    thumbnail: {
+      __typename: "Image",
+      url: ""
+    }
+  }
+];

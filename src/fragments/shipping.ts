@@ -56,6 +56,36 @@ export const shippingMethodFragment = gql`
     }
   }
 `;
+export const shippingMethodWithExcludedProductsFragment = gql`
+  ${fragmentMoney}
+  ${shippingMethodFragment}
+  fragment ShippingMethodWithExcludedProductsFragment on ShippingMethod {
+    ...ShippingMethodFragment
+    excludedProducts(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+        startCursor
+      }
+      edges {
+        node {
+          id
+          name
+          thumbnail {
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const shippingZoneDetailsFragment = gql`
   ${shippingZoneFragment}
   ${shippingMethodFragment}

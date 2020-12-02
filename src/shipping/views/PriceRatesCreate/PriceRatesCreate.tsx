@@ -7,7 +7,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
-import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
 import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
 import {
@@ -114,7 +114,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         />
       )}
 
-      <ShippingZoneRatesPage
+      <ShippingZoneRatesCreatePage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={channelsLoading || status === "loading"}
@@ -123,7 +123,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        rate={null}
         zipCodes={zipCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

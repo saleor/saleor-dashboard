@@ -5349,6 +5349,33 @@
     "context": "column title",
     "string": "Channel name"
   },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_2850255786": {
+    "string": "Search Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_353369701": {
+    "string": "No products matching given query"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_3756118423": {
+    "context": "dialog header",
+    "string": "Assign Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1737533260": {
+    "string": "No Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1781179817": {
+    "context": "section header",
+    "string": "Excluded Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2100305525": {
+    "context": "button",
+    "string": "Assign products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2697405188": {
+    "string": "Product Name"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
+    "string": "Actions"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
     "string": "Are you sure you want to remove this ZIP-code rule?"
   },
@@ -5427,16 +5454,19 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_579967655": {
     "string": "Shipping rate name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1161979494": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1161979494": {
     "context": "page title",
     "string": "Price Rate Create"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1325966144": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1325966144": {
     "string": "Shipping"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_3538551526": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_3538551526": {
     "context": "page title",
     "string": "Weight Rate Create"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1325966144": {
+    "string": "Shipping"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_1134347598": {
     "context": "shipping method price",
@@ -5554,6 +5584,14 @@
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_655374584": {
     "string": "No shipping zones found"
   },
+  "src_dot_shipping_dot_components_dot_UnassignDialog_dot_1203193503": {
+    "context": "dialog header",
+    "string": "Unassign Products From Shipping"
+  },
+  "src_dot_shipping_dot_components_dot_UnassignDialog_dot_3215481647": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
   "src_dot_shipping_dot_invalid": {
     "context": "error message",
     "string": "Value is invalid"
@@ -5587,6 +5625,10 @@
   "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
     "string": "Manage Channel Availability"
   },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_870815507": {
+    "context": "unassign products from shipping method, button",
+    "string": "Unassign"
+  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
     "string": "Delete Shipping Zone"
@@ -5608,6 +5650,10 @@
   },
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
     "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_870815507": {
+    "context": "unassign products from shipping method, button",
+    "string": "Unassign"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",

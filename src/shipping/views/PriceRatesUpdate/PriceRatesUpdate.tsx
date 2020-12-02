@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   createShippingChannelsFromRate,
@@ -5,17 +6,26 @@ import {
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { PAGINATE_BY } from "@saleor/config";
+import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import usePaginator, {
+  createPaginationState
+} from "@saleor/hooks/usePaginator";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
+import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
+import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables
@@ -23,9 +33,9 @@ import {
 import {
   useShippingMethodChannelListingUpdate,
   useShippingMethodZipCodeRangeAssign,
-  useShippingMethodZipCodeRangeUnassign
-} from "@saleor/shipping/mutations";
-import {
+  useShippingMethodZipCodeRangeUnassign,
+  useShippingPriceExcludeProduct,
+  useShippingPriceRemoveProductsFromExclude,
   useShippingRateDelete,
   useShippingRateUpdate
 } from "@saleor/shipping/mutations";
@@ -39,7 +49,7 @@ import {
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PriceRatesUpdateProps {
   id: string;
@@ -55,11 +65,19 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const paginate = usePaginator();
 
-  const { data, loading } = useShippingZone({
+  const paginationState = createPaginationState(PAGINATE_BY, params);
+
+  const { data, loading, refetch } = useShippingZone({
     displayLoader: true,
-    variables: { id }
+    variables: { id, ...paginationState }
   });
+  const {
+    loadMore,
+    search: productsSearch,
+    result: productsSearchOpts
+  } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,
@@ -69,6 +87,17 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const rate = data?.shippingZone?.shippingMethods.find(
     rate => rate.id === rateId
   );
+
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
+    []
+  );
+
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+    rate?.excludedProducts.pageInfo,
+    paginationState,
+    params
+  );
+
   const { data: channelsData } = useChannelsList({});
 
   const [
@@ -98,6 +127,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       }
     }
   });
+
   const [
     unassignZipCodeRange,
     unassignZipCodeRangeOpts
@@ -108,11 +138,32 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
+      }
+    }
+  });
+
+  const [
+    unassignProduct,
+    unassignProductOpts
+  ] = useShippingPriceRemoveProductsFromExclude({
+    onCompleted: data => {
+      if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
+        handleSuccess();
+        refetch();
         closeModal();
       }
     }
   });
 
+  const [assignProduct, assignProductOpts] = useShippingPriceExcludeProduct({
+    onCompleted: data => {
+      if (data.shippingPriceExcludeProducts.errors.length === 0) {
+        handleSuccess();
+        refetch();
+        closeModal();
+      }
+    }
+  });
   const shippingChannels = createShippingChannelsFromRate(
     rate?.channelListings
   );
@@ -168,6 +219,18 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
   };
 
+  const handleProductAssign = (ids: string[]) =>
+    assignProduct({
+      variables: { id: rateId, input: { products: ids } }
+    });
+
+  const handleProductUnassign = (ids: string[]) => {
+    unassignProduct({
+      variables: { id: rateId, products: ids }
+    });
+    reset();
+  };
+
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   return (
@@ -203,13 +266,35 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         open={params.action === "remove"}
         name={rate?.name}
       />
+      <UnassignDialog
+        open={params.action === "unassign-product" && !!listElements.length}
+        idsLength={listElements.length}
+        confirmButtonState={unassignProductOpts.status}
+        closeModal={closeModal}
+        onConfirm={() => handleProductUnassign(listElements)}
+      />
+      <ShippingMethodProductsAddDialog
+        confirmButtonState={assignProductOpts.status}
+        loading={productsSearchOpts.loading}
+        open={params.action === "assign-product"}
+        hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
+        products={productsSearchOpts.data?.search?.edges
+          .map(edge => edge.node)
+          .filter(suggestedProduct => suggestedProduct.id)}
+        onClose={closeModal}
+        onFetch={productsSearch}
+        onFetchMore={loadMore}
+        onSubmit={handleProductAssign}
+      />
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={
           loading ||
           updateShippingRateOpts?.status === "loading" ||
-          updateShippingMethodChannelListingOpts?.status === "loading"
+          updateShippingMethodChannelListingOpts?.status === "loading" ||
+          unassignProductOpts?.status === "loading" ||
+          assignProductOpts?.status === "loading"
         }
         hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         saveButtonBarState={updateShippingRateOpts.status}
@@ -224,7 +309,24 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         }
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        onProductUnassign={handleProductUnassign}
+        onProductAssign={() => openModal("assign-product")}
         variant={ShippingMethodTypeEnum.PRICE}
+        isChecked={isSelected}
+        selected={listElements.length}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
+        pageInfo={pageInfo}
+        toolbar={
+          <Button color="primary" onClick={() => openModal("unassign-product")}>
+            <FormattedMessage
+              defaultMessage="Unassign"
+              description="unassign products from shipping method, button"
+            />
+          </Button>
+        }
         onZipCodeAssign={() => openModal("add-range")}
         onZipCodeUnassign={id =>
           openModal("remove-range", {
