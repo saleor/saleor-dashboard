@@ -71,6 +71,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const { search, loadMore, result } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CollectionUrlDialog,
+    CollectionUrlQueryParams
+  >(navigate, params => collectionUrl(id, params), params);
+
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
@@ -151,11 +156,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     }
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    CollectionUrlDialog,
-    CollectionUrlQueryParams
-  >(navigate, params => collectionUrl(id, params), params);
-
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const handleBack = () => navigate(collectionListUrl());
 
@@ -190,7 +190,10 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           isChannelsModalOpen,
           setCurrentChannels,
           toggleAllChannels
-        } = useChannels(collectionChannelsChoices);
+        } = useChannels(collectionChannelsChoices, params?.action, {
+          closeModal,
+          openModal
+        });
 
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {

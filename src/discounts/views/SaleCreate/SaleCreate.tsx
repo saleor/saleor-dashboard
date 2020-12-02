@@ -1,4 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import { ChannelsAction } from "@saleor/channels/urls";
 import { ChannelSaleData, createSortedSaleData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -8,20 +9,35 @@ import {
   useSaleChannelListingUpdate
 } from "@saleor/discounts/mutations";
 import { SaleCreate } from "@saleor/discounts/types/SaleCreate";
-import { saleListUrl, saleUrl } from "@saleor/discounts/urls";
+import {
+  saleAddUrl,
+  SaleCreateUrlQueryParams,
+  saleListUrl,
+  saleUrl
+} from "@saleor/discounts/urls";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
 
-export const SaleDetails: React.FC = () => {
+interface SaleCreateProps {
+  params: SaleCreateUrlQueryParams;
+}
+
+export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ChannelsAction,
+    SaleCreateUrlQueryParams
+  >(navigate, params => saleAddUrl(params), params);
 
   const { data: channelsData } = useChannelsList({});
   const allChannels: ChannelSaleData[] = createSortedSaleData(
@@ -39,7 +55,7 @@ export const SaleDetails: React.FC = () => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels);
+  } = useChannels(allChannels, params?.action, { closeModal, openModal });
 
   const [updateChannels, updateChannelsOpts] = useSaleChannelListingUpdate({});
 
@@ -105,4 +121,4 @@ export const SaleDetails: React.FC = () => {
     </>
   );
 };
-export default SaleDetails;
+export default SaleCreateView;

@@ -1,3 +1,4 @@
+import { ChannelsAction } from "@saleor/channels/urls";
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
@@ -44,13 +45,14 @@ type ZipCodeRangeActions = "add-range" | "remove-range";
 export type ShippingRateUrlDialog =
   | ZipCodeRangeActions
   | "remove"
-  | ShippingMethodActions;
+  | ShippingMethodActions
+  | ChannelsAction;
 
 export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
   SingleAction &
   BulkAction &
   Pagination;
-export type ShippingRateCreateUrlDialog = ZipCodeRangeActions;
+export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
 export type ShippingRateCreateUrlQueryParams = Dialog<
   ShippingRateCreateUrlDialog
 > &

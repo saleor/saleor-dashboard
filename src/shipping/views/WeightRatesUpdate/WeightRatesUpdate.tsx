@@ -144,7 +144,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels);
+  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}

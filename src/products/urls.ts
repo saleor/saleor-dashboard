@@ -1,3 +1,4 @@
+import { ChannelsAction } from "@saleor/channels/urls";
 import urlJoin from "url-join";
 
 import {
@@ -16,7 +17,8 @@ import { stringifyQs } from "../utils/urls";
 const productSection = "/products/";
 
 export const productAddPath = urlJoin(productSection, "add");
-export const productAddUrl = productAddPath;
+export const productAddUrl = (params?: ProductCreateUrlQueryParams) =>
+  productAddPath + "?" + stringifyQs(params);
 
 export const productListPath = productSection;
 export type ProductListUrlDialog = "delete" | "export" | TabActionDialog;
@@ -61,8 +63,9 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
 
 export const productPath = (id: string) => urlJoin(productSection + id);
-export type ProductUrlDialog = "remove" | "remove-variants";
+export type ProductUrlDialog = "remove" | "remove-variants" | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog>;
+export type ProductCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
   productPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 

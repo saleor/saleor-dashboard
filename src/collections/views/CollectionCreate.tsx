@@ -1,4 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import { ChannelsAction } from "@saleor/channels/urls";
 import { createCollectionChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -6,6 +7,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -21,14 +23,30 @@ import {
   useCollectionChannelListingUpdate,
   useCollectionCreateMutation
 } from "../mutations";
-import { collectionListUrl, collectionUrl } from "../urls";
+import {
+  collectionAddUrl,
+  CollectionCreateUrlQueryParams,
+  collectionListUrl,
+  collectionUrl
+} from "../urls";
 
-export const CollectionCreate: React.FC = () => {
+interface CollectionCreateProps {
+  params: CollectionCreateUrlQueryParams;
+}
+
+export const CollectionCreate: React.FC<CollectionCreateProps> = ({
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ChannelsAction,
+    CollectionCreateUrlQueryParams
+  >(navigate, params => collectionAddUrl(params), params);
 
   const [
     updateChannels,
@@ -53,7 +71,7 @@ export const CollectionCreate: React.FC = () => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels);
+  } = useChannels(allChannels, params?.action, { closeModal, openModal });
 
   const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
     onCompleted: data => {

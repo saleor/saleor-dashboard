@@ -114,6 +114,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       ...paginationState
     }
   });
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    VoucherUrlDialog,
+    VoucherUrlQueryParams
+  >(navigate, params => voucherUrl(id, params), params);
+
   const { data: channelsData } = useChannelsList({});
 
   const allChannels: ChannelVoucherData[] = createChannelsDataWithDiscountPrice(
@@ -134,7 +140,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(voucherChannelsChoices);
+  } = useChannels(voucherChannelsChoices, params?.action, {
+    closeModal,
+    openModal
+  });
 
   React.useEffect(() => {
     if (!currentChannels.length && voucherChannelsChoices.length) {
@@ -168,11 +177,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       });
     }
   };
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    VoucherUrlDialog,
-    VoucherUrlQueryParams
-  >(navigate, params => voucherUrl(id, params), params);
 
   const handleCatalogueAdd = (data: VoucherCataloguesAdd) => {
     if (data.voucherCataloguesAdd.errors.length === 0) {

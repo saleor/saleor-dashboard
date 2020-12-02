@@ -59,7 +59,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels);
+  } = useChannels(allChannels, params?.action, { closeModal, openModal });
 
   const {
     channelErrors,

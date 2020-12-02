@@ -111,6 +111,11 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     }
   });
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    SaleUrlDialog,
+    SaleUrlQueryParams
+  >(navigate, params => saleUrl(id, params), params);
+
   const allChannels: ChannelSaleData[] = createChannelsDataWithSaleDiscountPrice(
     data?.sale,
     channelsData?.channels
@@ -130,7 +135,10 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(saleChannelsChoices);
+  } = useChannels(saleChannelsChoices, params?.action, {
+    closeModal,
+    openModal
+  });
 
   const [updateChannels, updateChannelsOpts] = useSaleChannelListingUpdate({});
 
@@ -156,11 +164,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
       });
     }
   };
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    SaleUrlDialog,
-    SaleUrlQueryParams
-  >(navigate, params => saleUrl(id, params), params);
 
   const handleCatalogueAdd = (data: SaleCataloguesAdd) => {
     if (data.saleCataloguesAdd.errors.length === 0) {

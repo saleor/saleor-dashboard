@@ -1,3 +1,4 @@
+import { ChannelsAction } from "@saleor/channels/urls";
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
@@ -40,12 +41,15 @@ export type CollectionUrlDialog =
   | "remove"
   | "removeImage"
   | "assign"
-  | "unassign";
+  | "unassign"
+  | ChannelsAction;
 export type CollectionUrlQueryParams = BulkAction &
   Pagination &
   Dialog<CollectionUrlDialog>;
+export type CollectionCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const collectionUrl = (id: string, params?: CollectionUrlQueryParams) =>
   collectionPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const collectionAddPath = urlJoin(collectionSectionUrl, "add");
-export const collectionAddUrl = collectionAddPath;
+export const collectionAddUrl = (params?: CollectionCreateUrlQueryParams) =>
+  collectionAddPath + "?" + stringifyQs(params);

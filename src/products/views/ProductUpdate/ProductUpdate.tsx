@@ -190,6 +190,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductUrlDialog,
+    ProductUrlQueryParams
+  >(navigate, params => productUrl(id, params), params);
+
   const product = data?.product;
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
@@ -213,7 +218,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(productChannelsChoices);
+  } = useChannels(productChannelsChoices, params?.action, {
+    closeModal,
+    openModal
+  });
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
@@ -234,11 +242,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     label: listing.channel.name,
     value: listing.channel.id
   }));
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductUrlDialog,
-    ProductUrlQueryParams
-  >(navigate, params => productUrl(id, params), params);
 
   const handleBack = () => navigate(productListUrl());
 

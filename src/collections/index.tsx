@@ -8,13 +8,14 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   collectionAddPath,
+  CollectionCreateUrlQueryParams,
   collectionListPath,
   CollectionListUrlQueryParams,
   CollectionListUrlSortField,
   collectionPath,
   CollectionUrlQueryParams
 } from "./urls";
-import CollectionCreate from "./views/CollectionCreate";
+import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList";
 
@@ -41,6 +42,12 @@ const CollectionDetails: React.FC<RouteComponentProps<
       params={params}
     />
   );
+};
+
+const CollectionCreate: React.FC<RouteComponentProps> = ({ location }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: CollectionCreateUrlQueryParams = qs;
+  return <CollectionCreateView params={params} />;
 };
 
 const Component = () => {

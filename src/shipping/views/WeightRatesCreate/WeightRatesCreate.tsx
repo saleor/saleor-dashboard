@@ -63,7 +63,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels);
+  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
 
   const {
     channelErrors,

@@ -1,11 +1,18 @@
+import { ChannelsAction } from "@saleor/channels/urls";
 import { Channel } from "@saleor/channels/utils";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { useState } from "react";
 
-function useChannels<T extends Channel>(channels: T[]) {
-  const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);
+interface Modal {
+  openModal: (action: ChannelsAction) => void;
+  closeModal: () => void;
+}
 
+function useChannels<T extends Channel, A>(
+  channels: T[],
+  action: A | ChannelsAction,
+  { closeModal, openModal }: Modal
+) {
   const [currentChannels, setCurrentChannels] = useStateFromProps(channels);
 
   const {
@@ -16,18 +23,18 @@ function useChannels<T extends Channel>(channels: T[]) {
   } = useListActions<T>(currentChannels, (a, b) => a.id === b.id);
 
   const handleChannelsModalClose = () => {
-    setChannelsModalOpen(false);
+    closeModal();
     setChannels(currentChannels);
   };
 
-  const handleChannelsModalOpen = () => setChannelsModalOpen(true);
+  const handleChannelsModalOpen = () => openModal("open-channels-picker");
 
   const handleChannelsConfirm = () => {
     const sortedChannelListElements = channelListElements.sort(
       (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
     );
     setCurrentChannels(sortedChannelListElements);
-    setChannelsModalOpen(false);
+    closeModal();
   };
 
   const toggleAllChannels = (items: T[], selected: number) => {
@@ -46,7 +53,7 @@ function useChannels<T extends Channel>(channels: T[]) {
     handleChannelsModalClose,
     handleChannelsModalOpen,
     isChannelSelected,
-    isChannelsModalOpen,
+    isChannelsModalOpen: action === "open-channels-picker",
     setCurrentChannels,
     toggleAllChannels
   };

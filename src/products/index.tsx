@@ -9,6 +9,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
+  ProductCreateUrlQueryParams,
   productImagePath,
   ProductImageUrlQueryParams,
   productListPath,
@@ -21,7 +22,7 @@ import {
   productVariantEditPath,
   ProductVariantEditUrlQueryParams
 } from "./urls";
-import ProductCreate from "./views/ProductCreate";
+import ProductCreateComponent from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
@@ -58,6 +59,13 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
       }}
     />
   );
+};
+
+const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductCreateUrlQueryParams = qs;
+
+  return <ProductCreateComponent params={params} />;
 };
 
 const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {

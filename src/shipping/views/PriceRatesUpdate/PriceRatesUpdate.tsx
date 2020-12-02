@@ -180,7 +180,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels);
+  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}

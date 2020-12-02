@@ -17,6 +17,8 @@ export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
   ChannelsListUrlSort &
   SingleAction;
 
+export type ChannelsAction = "open-channels-picker";
+
 export const channelsSection = "/channels/";
 
 export const channelsListPath = channelsSection;
