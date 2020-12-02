@@ -102,7 +102,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
     SearchProducts_search_edges_node[]
   >([]);
@@ -110,12 +110,14 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   const handleSubmit = () => {
     onSubmit(selectedProducts.map(product => product.id)).then(() => {
       setSelectedProducts([]);
+      resetQuery();
     });
   };
 
   const handleClose = () => {
     onClose();
     setSelectedProducts([]);
+    resetQuery();
   };
 
   return (
