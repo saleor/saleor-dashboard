@@ -229,7 +229,7 @@ const createTheme = (colors: IThemeColors): Theme =>
           borderRadius: 8,
           borderStyle: "solid",
           borderWidth: 1,
-          overflow: "hidden"
+          overflow: "visible"
         }
       },
       MuiCardActions: {
