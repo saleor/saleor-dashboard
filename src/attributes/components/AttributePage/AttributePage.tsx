@@ -172,15 +172,19 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   errors={errors}
                   onChange={change}
                 />
-                <CardSpacer />
-                <AttributeValues
-                  disabled={disabled}
-                  values={values}
-                  onValueAdd={onValueAdd}
-                  onValueDelete={onValueDelete}
-                  onValueReorder={onValueReorder}
-                  onValueUpdate={onValueUpdate}
-                />
+                {data.inputType !== AttributeInputTypeEnum.FILE && (
+                  <>
+                    <CardSpacer />
+                    <AttributeValues
+                      disabled={disabled}
+                      values={values}
+                      onValueAdd={onValueAdd}
+                      onValueDelete={onValueDelete}
+                      onValueReorder={onValueReorder}
+                      onValueUpdate={onValueUpdate}
+                    />
+                  </>
+                )}
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
