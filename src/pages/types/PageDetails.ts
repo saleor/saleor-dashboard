@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL query operation: PageDetails
 // ====================================================
 
+export interface PageDetails_page_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetails_page_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetails_page_attributes_attribute_values_file | null;
 }
 
 export interface PageDetails_page_attributes_attribute {
@@ -25,11 +32,18 @@ export interface PageDetails_page_attributes_attribute {
   values: (PageDetails_page_attributes_attribute_values | null)[] | null;
 }
 
+export interface PageDetails_page_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetails_page_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetails_page_attributes_values_file | null;
 }
 
 export interface PageDetails_page_attributes {
@@ -38,11 +52,18 @@ export interface PageDetails_page_attributes {
   values: (PageDetails_page_attributes_values | null)[];
 }
 
+export interface PageDetails_page_pageType_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetails_page_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetails_page_pageType_attributes_values_file | null;
 }
 
 export interface PageDetails_page_pageType_attributes {

@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { attributeValueFragment } from "./attributes";
 import { metadataFragment } from "./metadata";
 import { taxTypeFragment } from "./taxes";
 import { weightFragment } from "./weight";
@@ -113,6 +114,7 @@ export const productFragment = gql`
 
 export const productVariantAttributesFragment = gql`
   ${fragmentMoney}
+  ${attributeValueFragment}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -123,15 +125,11 @@ export const productVariantAttributesFragment = gql`
         inputType
         valueRequired
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
       values {
-        id
-        name
-        slug
+        ...AttributeValueFragment
       }
     }
     productType {
@@ -140,9 +138,7 @@ export const productVariantAttributesFragment = gql`
         id
         name
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
     }
@@ -229,6 +225,7 @@ export const productFragmentDetails = gql`
 `;
 
 export const fragmentVariant = gql`
+  ${attributeValueFragment}
   ${priceRangeFragment}
   ${fragmentProductImage}
   ${stockFragment}
@@ -246,15 +243,11 @@ export const fragmentVariant = gql`
         inputType
         valueRequired
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
       values {
-        id
-        name
-        slug
+        ...AttributeValueFragment
       }
     }
     images {

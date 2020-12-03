@@ -7,6 +7,10 @@ export const attributeValueFragment = gql`
     id
     name
     slug
+    file {
+      url
+      contentType
+    }
   }
 `;
 

@@ -10,6 +10,7 @@ const props: AttributesProps = {
   disabled: false,
   errors: [],
   onChange: () => undefined,
+  onFileChange: () => undefined,
   onMultiChange: () => undefined
 };
 

@@ -24,12 +24,15 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
+import FileUploadField from "../FileUploadField";
+
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
   isRequired: boolean;
   values: AttributeValueFragment[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
+export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps {
   attributes: AttributeInput[];
   disabled: boolean;
@@ -38,6 +41,7 @@ export interface AttributesProps {
   >;
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
+  onFileChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
 }
 
 const useStyles = makeStyles(
@@ -79,8 +83,19 @@ const useStyles = makeStyles(
       display: "flex",
       flex: 1
     },
+    fileField: {
+      display: "none"
+    },
     rotate: {
       transform: "rotate(180deg)"
+    },
+    uploadFileButton: {
+      float: "right"
+    },
+    uploadFileContent: {
+      color: theme.palette.primary.main,
+      float: "right",
+      fontSize: "1rem"
     }
   }),
   { name: "Attributes" }
@@ -142,7 +157,8 @@ const Attributes: React.FC<AttributesProps> = ({
   disabled,
   errors,
   onChange,
-  onMultiChange
+  onMultiChange,
+  onFileChange
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -202,7 +218,20 @@ const Attributes: React.FC<AttributesProps> = ({
                     </div>
                     <div data-test="attribute-value">
                       {attribute.data.inputType ===
-                      AttributeInputTypeEnum.DROPDOWN ? (
+                      AttributeInputTypeEnum.FILE ? (
+                        <FileUploadField
+                          disabled={disabled}
+                          fileName={attribute.value[0]}
+                          onFileUpload={file =>
+                            onFileChange(attribute.id, file)
+                          }
+                          onFileDelete={() =>
+                            onFileChange(attribute.id, undefined)
+                          }
+                          name={`attribute:${attribute.label}`}
+                        />
+                      ) : attribute.data.inputType ===
+                        AttributeInputTypeEnum.DROPDOWN ? (
                         <SingleAutocompleteSelectField
                           choices={getSingleChoices(attribute.data.values)}
                           disabled={disabled}

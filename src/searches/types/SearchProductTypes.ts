@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL query operation: SearchProductTypes
 // ====================================================
 
+export interface SearchProductTypes_search_edges_node_productAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface SearchProductTypes_search_edges_node_productAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: SearchProductTypes_search_edges_node_productAttributes_values_file | null;
 }
 
 export interface SearchProductTypes_search_edges_node_productAttributes {

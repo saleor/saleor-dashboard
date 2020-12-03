@@ -12,6 +12,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-1",
           name: "Attribute 1 Value 1",
           slug: "attr-1-v-1"
@@ -29,18 +30,21 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-2",
           name: "Attribute 2 Value 1",
           slug: "attr-2-v-1"
         },
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-3",
           name: "Attribute 2 Value 2",
           slug: "attr-2-v-2"
         },
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-4",
           name: "Attribute 2 Value 3",
           slug: "attr-2-v-3"
