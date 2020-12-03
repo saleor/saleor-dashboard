@@ -741,6 +741,10 @@
     "context": "product attribute type",
     "string": "Dropdown"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1376373679": {
+    "context": "file attribute type",
+    "string": "File"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
