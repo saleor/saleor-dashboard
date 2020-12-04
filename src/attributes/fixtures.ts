@@ -2,8 +2,7 @@ import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetai
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
-  AttributeTypeEnum,
-  AttributeValueType
+  AttributeTypeEnum
 } from "@saleor/types/globalTypes";
 
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
@@ -33,15 +32,13 @@ export const attribute: AttributeDetailsFragment = {
       __typename: "AttributeValue" as "AttributeValue",
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
-      slug: "john-doe",
-      type: AttributeValueType.STRING
+      slug: "john-doe"
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
-      slug: "milionare-pirate",
-      type: AttributeValueType.STRING
+      slug: "milionare-pirate"
     }
   ],
   visibleInStorefront: true
@@ -65,7 +62,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "John Doe",
           slug: "john-doe",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -74,7 +70,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Milionare Pirate",
           slug: "milionare-pirate",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -97,7 +92,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "100g",
           slug: "100g",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -106,7 +100,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "250g",
           slug: "250g",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -115,7 +108,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "500g",
           slug: "500g",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -124,7 +116,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "1kg",
           slug: "1kg",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -147,7 +138,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Saleor",
           slug: "saleor",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -170,7 +160,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "100g",
           slug: "100g",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -179,7 +168,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "250g",
           slug: "250g",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -188,7 +176,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "500g",
           slug: "500g",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -211,7 +198,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Arabica",
           slug: "arabica",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -220,7 +206,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Robusta",
           slug: "robusta",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -243,7 +228,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Round",
           slug: "round",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -252,7 +236,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "V-Neck",
           slug: "v-neck",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -261,7 +244,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Polo",
           slug: "polo",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -284,7 +266,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Blue",
           slug: "blue",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -293,7 +274,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "White",
           slug: "white",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -316,7 +296,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Soft",
           slug: "soft",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -325,7 +304,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Hard",
           slug: "hard",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -334,7 +312,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Middle soft",
           slug: "middle-soft",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -343,7 +320,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Middle hard",
           slug: "middle-hard",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -352,7 +328,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Middle",
           slug: "middle",
           sortOrder: 4,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -361,7 +336,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Very hard",
           slug: "very-hard",
           sortOrder: 5,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -384,7 +358,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Sour",
           slug: "sour",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -393,7 +366,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Sweet",
           slug: "sweet",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -416,7 +388,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "English",
           slug: "english",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -425,7 +396,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Pirate",
           slug: "pirate",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -448,7 +418,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Mirumee Press",
           slug: "mirumee-press",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -457,7 +426,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "Saleor Publishing",
           slug: "saleor-publishing",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -480,7 +448,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "XS",
           slug: "xs",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -489,7 +456,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "S",
           slug: "s",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -498,7 +464,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "M",
           slug: "m",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -507,7 +472,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "L",
           slug: "l",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -516,7 +480,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "XL",
           slug: "xl",
           sortOrder: 4,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
@@ -525,7 +488,6 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           name: "XXL",
           slug: "xxl",
           sortOrder: 5,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],

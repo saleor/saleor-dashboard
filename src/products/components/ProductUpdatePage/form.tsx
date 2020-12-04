@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -35,7 +36,6 @@ import useRichText from "@saleor/utils/richText/useRichText";
 import { diff } from "fast-array-diff";
 import React from "react";
 
-import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
@@ -56,12 +56,12 @@ export interface ProductUpdateFormData extends MetadataFormData {
   weight: string;
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
-  attributes: ProductAttributeInput[];
+  attributes: AttributeInput[];
   description: OutputData;
   stocks: ProductStockInput[];
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
-  attributes: ProductAttributeInput[];
+  attributes: AttributeInput[];
   collections: string[];
   description: OutputData;
   addStocks: ProductStockInput[];

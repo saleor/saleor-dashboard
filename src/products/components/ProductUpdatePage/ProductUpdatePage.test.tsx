@@ -67,7 +67,7 @@ const props: ProductUpdatePageProps = {
 const selectors = {
   dropdown: `[data-test="autocomplete-dropdown"]`,
   empty: `[data-test-type="empty"]`,
-  input: `[data-test="product-attribute-value"] input`
+  input: `[data-test="attribute-value"] input`
 };
 
 describe("Product details page", () => {

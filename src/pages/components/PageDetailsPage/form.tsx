@@ -1,4 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
+import {
+  AttributeInput,
+  AttributeInputData
+} from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
@@ -23,8 +27,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
-import { PageAttributeInput, PageAttributeInputData } from "../PageAttributes";
-
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
   publicationDate: string;
@@ -35,7 +37,7 @@ export interface PageFormData extends MetadataFormData {
   pageType: string;
 }
 export interface PageData extends PageFormData {
-  attributes: PageAttributeInput[];
+  attributes: AttributeInput[];
   content: OutputData;
 }
 
@@ -81,7 +83,7 @@ function usePageForm(
     change: changeAttributeData,
     data: attributes,
     set: setAttributeData
-  } = useFormset<PageAttributeInputData>(attributesFromPage || []);
+  } = useFormset<AttributeInputData>(attributesFromPage || []);
 
   const form = useForm<PageFormData>({
     isPublished: page?.isPublished,
