@@ -70,6 +70,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
         id="fileUpload"
         onChange={event => onFileUpload(event.target.files[0])}
         type="file"
+        data-test="upload-file-input"
         ref={fileInputAnchor}
         {...rest}
       />
