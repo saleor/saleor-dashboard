@@ -23,10 +23,22 @@ const useStyles = makeStyles(
       },
       padding: 0
     },
-    colAction: { paddingRight: "0.5rem", width: "auto" },
+    colAction: {
+      padding: "0 0.5rem",
+      width: "auto",
+      button: {
+        padding: "0"
+      }
+    },
     colNumber: { width: "100%" },
     colNumberClickable: {
       cursor: "pointer",
+      width: "100%"
+    },
+    invoicesTable: {
+      display: "flex"
+    },
+    invoicesTableBody: {
       width: "100%"
     }
   }),
@@ -79,8 +91,8 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
             <FormattedMessage defaultMessage="No invoices to be shown" />
           </Typography>
         ) : (
-          <ResponsiveTable>
-            <TableBody>
+          <ResponsiveTable className={classes.invoicesTable}>
+            <TableBody className={classes.invoicesTableBody}>
               {generatedInvoices.map(invoice => (
                 <TableRow key={invoice.id} hover={!!invoice}>
                   <TableCell
