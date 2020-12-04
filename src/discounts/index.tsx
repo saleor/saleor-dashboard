@@ -10,22 +10,24 @@ import { saleDetailsPageTab } from "./components/SaleDetailsPage";
 import { voucherDetailsPageTab } from "./components/VoucherDetailsPage";
 import {
   saleAddPath,
+  SaleCreateUrlQueryParams,
   saleListPath,
   SaleListUrlQueryParams,
   SaleListUrlSortField,
   salePath,
   SaleUrlQueryParams,
   voucherAddPath,
+  VoucherCreateUrlQueryParams,
   voucherListPath,
   VoucherListUrlQueryParams,
   VoucherListUrlSortField,
   voucherPath,
   VoucherUrlQueryParams
 } from "./urls";
-import SaleCreateView from "./views/SaleCreate/SaleCreate";
+import SaleCreateViewComponent from "./views/SaleCreate/SaleCreate";
 import SaleDetailsViewComponent from "./views/SaleDetails";
 import SaleListViewComponent from "./views/SaleList";
-import VoucherCreateView from "./views/VoucherCreate";
+import VoucherCreateViewComponent from "./views/VoucherCreate";
 import VoucherDetailsViewComponent from "./views/VoucherDetails";
 import VoucherListViewComponent from "./views/VoucherList";
 
@@ -53,6 +55,13 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
+const SaleCreateView: React.FC<RouteComponentProps> = ({ location }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: SaleCreateUrlQueryParams = qs;
+
+  return <SaleCreateViewComponent params={params} />;
+};
+
 const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: VoucherListUrlQueryParams = asSortParams(
@@ -78,6 +87,13 @@ const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
       params={params}
     />
   );
+};
+
+const VoucherCreateView: React.FC<RouteComponentProps> = ({ location }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: VoucherCreateUrlQueryParams = qs;
+
+  return <VoucherCreateViewComponent params={params} />;
 };
 
 export const DiscountSection: React.FC<{}> = () => {

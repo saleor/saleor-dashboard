@@ -1,4 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import { ChannelsAction } from "@saleor/channels/urls";
 import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -15,12 +16,18 @@ import {
   useVariantCreateMutation
 } from "@saleor/products/mutations";
 import { useProductCreateMutation } from "@saleor/products/mutations";
-import { productListUrl, productUrl } from "@saleor/products/urls";
+import {
+  productAddUrl,
+  ProductCreateUrlQueryParams,
+  productListUrl,
+  productUrl
+} from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -33,7 +40,11 @@ import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
 
-export const ProductCreateView: React.FC = () => {
+interface ProductCreateProps {
+  params: ProductCreateUrlQueryParams;
+}
+
+export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -41,6 +52,12 @@ export const ProductCreateView: React.FC = () => {
   const [productCreateComplete, setProductCreateComplete] = React.useState(
     false
   );
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ChannelsAction,
+    ProductCreateUrlQueryParams
+  >(navigate, params => productAddUrl(params), params);
+
   const {
     loadMore: loadMoreCategories,
     search: searchCategory,
@@ -92,7 +109,10 @@ export const ProductCreateView: React.FC = () => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels);
+  } = useChannels(allChannels, params?.action, {
+    closeModal,
+    openModal
+  });
 
   const handleSuccess = (productId: string) => {
     notify({

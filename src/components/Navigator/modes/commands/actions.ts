@@ -39,14 +39,14 @@ export function searchInCommands(
     {
       label: intl.formatMessage(messages.createCollection),
       onClick: () => {
-        navigate(collectionAddUrl);
+        navigate(collectionAddUrl());
         return false;
       }
     },
     {
       label: intl.formatMessage(messages.createProduct),
       onClick: () => {
-        navigate(productAddUrl);
+        navigate(productAddUrl());
         return false;
       }
     },
@@ -67,7 +67,7 @@ export function searchInCommands(
     {
       label: intl.formatMessage(messages.createVoucher),
       onClick: () => {
-        navigate(voucherAddUrl);
+        navigate(voucherAddUrl());
         return false;
       }
     },

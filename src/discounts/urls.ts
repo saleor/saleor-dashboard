@@ -1,3 +1,4 @@
+import { ChannelsAction } from "@saleor/channels/urls";
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
@@ -54,15 +55,18 @@ export type SaleUrlDialog =
   | "unassign-category"
   | "unassign-collection"
   | "unassign-product"
-  | "remove";
+  | "remove"
+  | ChannelsAction;
 export type SaleUrlQueryParams = Pagination &
   BulkAction &
   Dialog<SaleUrlDialog> &
   ActiveTab<SaleDetailsPageTab>;
+export type SaleCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const saleUrl = (id: string, params?: SaleUrlQueryParams) =>
   salePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 export const saleAddPath = urlJoin(saleSection, "add");
-export const saleAddUrl = saleAddPath;
+export const saleAddUrl = (params?: SaleCreateUrlQueryParams) =>
+  saleAddPath + "?" + stringifyQs(params);
 
 export const voucherSection = urlJoin(discountSection, "vouchers");
 export const voucherListPath = voucherSection;
@@ -107,12 +111,15 @@ export type VoucherUrlDialog =
   | "unassign-category"
   | "unassign-collection"
   | "unassign-product"
-  | "remove";
+  | "remove"
+  | ChannelsAction;
 export type VoucherUrlQueryParams = Pagination &
   BulkAction &
   Dialog<VoucherUrlDialog> &
   ActiveTab<VoucherDetailsPageTab>;
+export type VoucherCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const voucherUrl = (id: string, params?: VoucherUrlQueryParams) =>
   voucherPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 export const voucherAddPath = urlJoin(voucherSection, "add");
-export const voucherAddUrl = voucherAddPath;
+export const voucherAddUrl = (params?: VoucherCreateUrlQueryParams) =>
+  voucherAddPath + "?" + stringifyQs(params);

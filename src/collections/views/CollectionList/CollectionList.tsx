@@ -151,7 +151,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         currentTab={currentTab}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        onAdd={() => navigate(collectionAddUrl)}
+        onAdd={() => navigate(collectionAddUrl())}
         onAll={() => navigate(collectionListUrl())}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}

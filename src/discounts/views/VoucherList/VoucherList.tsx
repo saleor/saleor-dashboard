@@ -177,7 +177,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
               vouchers={maybe(() => data.vouchers.edges.map(edge => edge.node))}
               disabled={loading}
               pageInfo={pageInfo}
-              onAdd={() => navigate(voucherAddUrl)}
+              onAdd={() => navigate(voucherAddUrl())}
               onNextPage={loadNextPage}
               onPreviousPage={loadPreviousPage}
               onUpdateListSettings={updateListSettings}

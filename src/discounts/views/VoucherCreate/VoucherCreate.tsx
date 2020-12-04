@@ -1,4 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import { ChannelsAction } from "@saleor/channels/urls";
 import {
   ChannelVoucherData,
   createSortedVoucherData
@@ -9,6 +10,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,13 +20,27 @@ import {
   useVoucherChannelListingUpdate
 } from "../../mutations";
 import { VoucherCreate } from "../../types/VoucherCreate";
-import { voucherListUrl, voucherUrl } from "../../urls";
+import {
+  voucherAddUrl,
+  VoucherCreateUrlQueryParams,
+  voucherListUrl,
+  voucherUrl
+} from "../../urls";
 import { createHandler } from "./handlers";
 
-export const VoucherDetails: React.FC = () => {
+interface VoucherCreateProps {
+  params: VoucherCreateUrlQueryParams;
+}
+
+export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ChannelsAction,
+    VoucherCreateUrlQueryParams
+  >(navigate, params => voucherAddUrl(params), params);
 
   const { data: channelsData } = useChannelsList({});
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(
@@ -42,7 +58,7 @@ export const VoucherDetails: React.FC = () => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels);
+  } = useChannels(allChannels, params?.action, { closeModal, openModal });
 
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
@@ -111,4 +127,4 @@ export const VoucherDetails: React.FC = () => {
     </TypedVoucherCreate>
   );
 };
-export default VoucherDetails;
+export default VoucherCreateView;
