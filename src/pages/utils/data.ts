@@ -1,4 +1,5 @@
-import { PageAttributeInput } from "../components/PageAttributes";
+import { AttributeInput } from "@saleor/components/Attributes";
+
 import {
   PageDetails_page,
   PageDetails_page_pageType
@@ -6,7 +7,7 @@ import {
 
 export function getAttributeInputFromPage(
   page: PageDetails_page
-): PageAttributeInput[] {
+): AttributeInput[] {
   return page?.attributes.map(attribute => ({
     data: {
       inputType: attribute.attribute.inputType,
@@ -21,7 +22,7 @@ export function getAttributeInputFromPage(
 
 export function getAttributeInputFromPageType(
   pageType: PageDetails_page_pageType
-): PageAttributeInput[] {
+): AttributeInput[] {
   return pageType?.attributes.map(attribute => ({
     data: {
       inputType: attribute.inputType,

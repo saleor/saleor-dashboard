@@ -1536,6 +1536,22 @@
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
+  "src_dot_components_dot_Attributes_dot_1071548120": {
+    "context": "number of attributes",
+    "string": "{number} Attributes"
+  },
+  "src_dot_components_dot_Attributes_dot_1148029984": {
+    "context": "attribute value",
+    "string": "Value"
+  },
+  "src_dot_components_dot_Attributes_dot_1207761269": {
+    "context": "attribute values",
+    "string": "Values"
+  },
+  "src_dot_components_dot_Attributes_dot_4153345096": {
+    "context": "attributes, section header",
+    "string": "Attributes"
+  },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
@@ -4064,22 +4080,6 @@
     "context": "pages section name",
     "string": "Pages"
   },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1071548120": {
-    "context": "number of page attributes",
-    "string": "{number} Attributes"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1148029984": {
-    "context": "attribute value",
-    "string": "Value"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1207761269": {
-    "context": "attribute values",
-    "string": "Values"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_4153345096": {
-    "context": "page attributes, section header",
-    "string": "Attributes"
-  },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
     "string": "Create Page"
@@ -4583,22 +4583,6 @@
   "src_dot_products": {
     "context": "products section name",
     "string": "Products"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1071548120": {
-    "context": "number of product attributes",
-    "string": "{number} Attributes"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1148029984": {
-    "context": "attribute value",
-    "string": "Value"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1207761269": {
-    "context": "attribute values",
-    "string": "Values"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_4153345096": {
-    "context": "product attributes, section header",
-    "string": "Attributes"
   },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"

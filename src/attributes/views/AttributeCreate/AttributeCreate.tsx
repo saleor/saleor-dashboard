@@ -166,7 +166,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           id: valueIndex.toString(),
           slug: slugify(value.name).toLowerCase(),
           sortOrder: valueIndex,
-          type: null,
           value: null,
           ...value
         }))}

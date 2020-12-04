@@ -102,13 +102,6 @@ export enum AttributeTypeEnum {
   PRODUCT_TYPE = "PRODUCT_TYPE",
 }
 
-export enum AttributeValueType {
-  COLOR = "COLOR",
-  GRADIENT = "GRADIENT",
-  STRING = "STRING",
-  URL = "URL",
-}
-
 export enum AuthorizationKeyType {
   FACEBOOK = "FACEBOOK",
   GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",

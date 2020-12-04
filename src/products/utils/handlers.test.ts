@@ -1,10 +1,10 @@
+import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
-import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { createAttributeMultiChangeHandler } from "./handlers";
 
-const attributes: FormsetData<ProductAttributeInputData, string[]> = [
+const attributes: FormsetData<AttributeInputData, string[]> = [
   {
     data: {
       inputType: AttributeInputTypeEnum.DROPDOWN,

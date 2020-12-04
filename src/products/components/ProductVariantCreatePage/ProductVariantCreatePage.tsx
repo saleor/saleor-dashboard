@@ -1,5 +1,6 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import Attributes from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -17,7 +18,6 @@ import { useIntl } from "react-intl";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
-import ProductVariantAttributes from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
@@ -89,11 +89,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
-              <ProductVariantAttributes
+              <Attributes
                 attributes={data.attributes}
                 disabled={disabled}
                 errors={errors}
                 onChange={handlers.selectAttribute}
+                onMultiChange={handlers.selectAttributeMultiple}
               />
               <CardSpacer />
               <ProductShipping
