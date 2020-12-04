@@ -1,4 +1,5 @@
 import AppHeader from "@saleor/components/AppHeader";
+import Attributes from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -18,7 +19,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
-import PageAttributes from "../PageAttributes";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData } from "./form";
@@ -99,7 +99,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
               <CardSpacer />
               {data.attributes.length > 0 && (
-                <PageAttributes
+                <Attributes
                   attributes={data.attributes}
                   disabled={disabled}
                   errors={errors}

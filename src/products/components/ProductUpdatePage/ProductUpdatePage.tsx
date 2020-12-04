@@ -1,7 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
+import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -37,7 +38,6 @@ import {
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
-import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
@@ -92,7 +92,7 @@ export interface ProductUpdatePageSubmitData
   extends ProductUpdatePageFormData,
     ChannelProps {
   addStocks: ProductStockInput[];
-  attributes: ProductAttributeInput[];
+  attributes: AttributeInput[];
   collections: string[];
   description: OutputData;
   removeStocks: string[];
@@ -217,7 +217,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
-                  <ProductAttributes
+                  <Attributes
                     attributes={data.attributes}
                     errors={errors}
                     disabled={disabled}

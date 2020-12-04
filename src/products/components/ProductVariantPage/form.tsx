@@ -1,4 +1,5 @@
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
@@ -12,6 +13,10 @@ import {
 } from "@saleor/products/utils/data";
 import { getChannelsInput } from "@saleor/products/utils/handlers";
 import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler
+} from "@saleor/products/utils/handlers";
+import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
@@ -24,7 +29,6 @@ import React from "react";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
-import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
@@ -32,13 +36,13 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   weight: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  attributes: AttributeInput[];
   stocks: ProductStockInput[];
 }
 export interface ProductVariantUpdateSubmitData
   extends ProductVariantUpdateFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
+  attributes: AttributeInput[];
   addStocks: ProductStockInput[];
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
@@ -55,7 +59,10 @@ export interface UseProductVariantUpdateFormResult {
   data: ProductVariantUpdateData;
   disabled: boolean;
   handlers: Record<
-    "changeStock" | "selectAttribute" | "changeChannels",
+    | "changeStock"
+    | "selectAttribute"
+    | "selectAttributeMultiple"
+    | "changeChannels",
     FormsetChange
   > &
     Record<"addStock" | "deleteStock", (id: string) => void> & {
@@ -107,10 +114,15 @@ function useProductVariantUpdateForm(
     triggerChange();
   };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleAttributeChange: FormsetChange = (id, value) => {
-    attributes.change(id, value);
-    triggerChange();
-  };
+  const handleAttributeChange = createAttributeChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
@@ -181,7 +193,8 @@ function useProductVariantUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
-      selectAttribute: handleAttributeChange
+      selectAttribute: handleAttributeChange,
+      selectAttributeMultiple: handleAttributeMultiChange
     },
     hasChanged: changed,
     submit
