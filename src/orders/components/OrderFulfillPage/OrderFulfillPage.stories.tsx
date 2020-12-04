@@ -8,8 +8,8 @@ import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
 const props: OrderFulfillPageProps = {
-  disabled: false,
   errors: [],
+  loading: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
   order: orderToFulfill,
@@ -23,7 +23,7 @@ storiesOf("Views / Orders / Fulfill order", module)
   .add("loading", () => (
     <OrderFulfillPage
       {...props}
-      disabled={true}
+      loading={true}
       order={undefined}
       warehouses={undefined}
     />

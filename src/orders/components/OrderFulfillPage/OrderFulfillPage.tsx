@@ -124,7 +124,7 @@ interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
-  disabled: boolean;
+  loading: boolean;
   errors: FulfillOrder_orderFulfill_errors[];
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
@@ -143,7 +143,7 @@ function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
-    disabled,
+    loading,
     errors,
     order,
     saveButtonBar,
@@ -183,6 +183,35 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       ...formData,
       items: formsetData
     });
+
+  const shouldEnableSave = () => {
+    if (!order || loading) {
+      return false;
+    }
+
+    const isAtLeastOneFulfilled = formsetData.some(({ value }) =>
+      value.some(({ quantity }) => quantity > 0)
+    );
+
+    const areProperlyFulfilled = formsetData.every(({ id, value }) => {
+      const { lines } = order;
+
+      const { quantity, quantityFulfilled } = lines.find(
+        ({ id: lineId }) => lineId === id
+      );
+
+      const remainingQuantity = quantity - quantityFulfilled;
+
+      const formQuantityFulfilled = value.reduce(
+        (result, { quantity }) => result + quantity,
+        0
+      );
+
+      return formQuantityFulfilled <= remainingQuantity;
+    });
+
+    return isAtLeastOneFulfilled && areProperlyFulfilled;
+  };
 
   return (
     <Container>
@@ -453,7 +482,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               </CardActions>
             </Card>
             <SaveButtonBar
-              disabled={disabled}
+              disabled={!shouldEnableSave()}
               labels={{
                 save: intl.formatMessage({
                   defaultMessage: "Fulfill",
