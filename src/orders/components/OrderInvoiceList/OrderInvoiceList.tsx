@@ -17,6 +17,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   () => ({
+    card: {
+      overflow: "hidden"
+    },
     cardContentTable: {
       "&:last-child": {
         padding: 0
@@ -64,7 +67,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   );
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Invoices",
