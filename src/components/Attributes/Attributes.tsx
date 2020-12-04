@@ -84,7 +84,7 @@ const useStyles = makeStyles(
       flex: 1
     },
     fileField: {
-      display: "none"
+      float: "right"
     },
     rotate: {
       transform: "rotate(180deg)"
@@ -220,6 +220,7 @@ const Attributes: React.FC<AttributesProps> = ({
                       {attribute.data.inputType ===
                       AttributeInputTypeEnum.FILE ? (
                         <FileUploadField
+                          className={classes.fileField}
                           disabled={disabled}
                           fileName={attribute.value[0]}
                           onFileUpload={file =>
@@ -228,7 +229,9 @@ const Attributes: React.FC<AttributesProps> = ({
                           onFileDelete={() =>
                             onFileChange(attribute.id, undefined)
                           }
-                          name={`attribute:${attribute.label}`}
+                          inputProps={{
+                            name: `attribute:${attribute.label}`
+                          }}
                         />
                       ) : attribute.data.inputType ===
                         AttributeInputTypeEnum.DROPDOWN ? (

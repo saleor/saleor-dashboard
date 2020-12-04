@@ -3,14 +3,16 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { commonMessages } from "@saleor/intl";
+import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface FileUploadFieldProps
-  extends React.DetailedHTMLProps<
+export interface FileUploadFieldProps {
+  inputProps?: React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
-  > {
+  >;
+  className?: string;
   disabled: boolean;
   fileName?: string;
   onFileUpload: (file: File) => void;
@@ -31,7 +33,14 @@ const useStyles = makeStyles(
 );
 
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
-  const { disabled, fileName, onFileUpload, onFileDelete, ...rest } = props;
+  const {
+    disabled,
+    fileName,
+    className,
+    onFileUpload,
+    onFileDelete,
+    inputProps
+  } = props;
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -41,7 +50,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   return (
     <>
       {fileName ? (
-        <div className={classes.uploadFileContent}>
+        <div className={classNames(classes.uploadFileContent, className)}>
           {fileName}
           <IconButton
             color="primary"
@@ -53,7 +62,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
           </IconButton>
         </div>
       ) : (
-        <>
+        <div className={className}>
           <Button
             onClick={clickFileInput}
             disabled={disabled}
@@ -63,7 +72,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
           >
             {intl.formatMessage(commonMessages.chooseFile)}
           </Button>
-        </>
+        </div>
       )}
       <input
         className={classes.fileField}
@@ -72,7 +81,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
         type="file"
         data-test="upload-file-input"
         ref={fileInputAnchor}
-        {...rest}
+        {...inputProps}
       />
     </>
   );

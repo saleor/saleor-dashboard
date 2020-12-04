@@ -7,10 +7,12 @@ import FileUploadField, { FileUploadFieldProps } from "./FileUploadField";
 
 const props: FileUploadFieldProps = {
   disabled: false,
-  name: "country",
+  inputProps: {
+    name: "country",
+    placeholder: "Select country"
+  },
   onFileDelete: () => undefined,
-  onFileUpload: () => undefined,
-  placeholder: "Select country"
+  onFileUpload: () => undefined
 };
 
 const InteractiveStory: React.FC = () => {
