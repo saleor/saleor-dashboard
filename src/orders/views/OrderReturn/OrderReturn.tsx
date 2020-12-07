@@ -58,10 +58,11 @@ interface OrderRefundProps {
   orderId: string;
 }
 
-const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
+const OrderRefund: React.FC<OrderRefundProps> = ({ match: { params } }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { id } = params;
 
   // const { data, loading } = useOrderRefundData({
   //   displayLoader: true,
@@ -145,24 +146,22 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const { data, loading } = useOrderQuery({
     displayLoader: true,
     variables: {
-      orderId
+      id
     }
   });
-
-  console.log(111, data, loading);
 
   return (
     <OrderReturnPage
       order={data?.order}
       loading={
-        false
+        loading
         // loading ||
         // refundOrderOpts.loading ||
         // refundOrderFulfillmentProductsOpts.loading
       }
       //   errors={[}
       onSubmit={handleSubmit}
-      onBack={() => navigate(orderUrl(orderId))}
+      onBack={() => navigate(orderUrl(id))}
     />
   );
 };
