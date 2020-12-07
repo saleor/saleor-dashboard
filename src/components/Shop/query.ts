@@ -1,6 +1,6 @@
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../../queries";
 import { ShopInfo } from "./types/ShopInfo";
 
 const shopInfo = gql`
@@ -34,4 +34,4 @@ const shopInfo = gql`
     }
   }
 `;
-export const TypedShopInfoQuery = TypedQuery<ShopInfo, {}>(shopInfo);
+export const useShopInfoQuery = makeQuery<ShopInfo, {}>(shopInfo);
