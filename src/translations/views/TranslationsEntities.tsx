@@ -348,7 +348,8 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         id: node.voucher?.id,
                         name: node.voucher?.name
                       }
-                  )}
+                  )
+                  .filter(node => node.name)}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
