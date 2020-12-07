@@ -20,11 +20,18 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_privateMeta
   value: string;
 }
 
+export interface AttributeValueDelete_attributeValueDelete_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface AttributeValueDelete_attributeValueDelete_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: AttributeValueDelete_attributeValueDelete_attribute_values_file | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {

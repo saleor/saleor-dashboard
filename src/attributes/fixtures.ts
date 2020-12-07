@@ -30,12 +30,14 @@ export const attribute: AttributeDetailsFragment = {
   values: [
     {
       __typename: "AttributeValue" as "AttributeValue",
+      file: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
       slug: "john-doe"
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
+      file: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
       slug: "milionare-pirate"
@@ -58,6 +60,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
           name: "John Doe",
           slug: "john-doe",
@@ -66,6 +69,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
           name: "Milionare Pirate",
           slug: "milionare-pirate",
@@ -88,6 +92,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE1",
           name: "100g",
           slug: "100g",
@@ -96,6 +101,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE2",
           name: "250g",
           slug: "250g",
@@ -104,6 +110,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE3",
           name: "500g",
           slug: "500g",
@@ -112,6 +119,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE4",
           name: "1kg",
           slug: "1kg",
@@ -134,6 +142,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjY=",
           name: "Saleor",
           slug: "saleor",
@@ -156,6 +165,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIx",
           name: "100g",
           slug: "100g",
@@ -164,6 +174,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIy",
           name: "250g",
           slug: "250g",
@@ -172,6 +183,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIz",
           name: "500g",
           slug: "500g",
@@ -194,6 +206,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEz",
           name: "Arabica",
           slug: "arabica",
@@ -202,6 +215,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE0",
           name: "Robusta",
           slug: "robusta",
@@ -224,6 +238,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM=",
           name: "Round",
           slug: "round",
@@ -232,6 +247,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjQ=",
           name: "V-Neck",
           slug: "v-neck",
@@ -240,6 +256,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjU=",
           name: "Polo",
           slug: "polo",
@@ -262,6 +279,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE=",
           name: "Blue",
           slug: "blue",
@@ -270,6 +288,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI=",
           name: "White",
           slug: "white",
@@ -292,6 +311,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMw",
           name: "Soft",
           slug: "soft",
@@ -300,6 +320,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMx",
           name: "Hard",
           slug: "hard",
@@ -308,6 +329,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMy",
           name: "Middle soft",
           slug: "middle-soft",
@@ -316,6 +338,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMz",
           name: "Middle hard",
           slug: "middle-hard",
@@ -324,6 +347,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM0",
           name: "Middle",
           slug: "middle",
@@ -332,6 +356,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM1",
           name: "Very hard",
           slug: "very-hard",
@@ -354,6 +379,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE5",
           name: "Sour",
           slug: "sour",
@@ -362,6 +388,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIw",
           name: "Sweet",
           slug: "sweet",
@@ -384,6 +411,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI4",
           name: "English",
           slug: "english",
@@ -392,6 +420,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI5",
           name: "Pirate",
           slug: "pirate",
@@ -414,6 +443,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI2",
           name: "Mirumee Press",
           slug: "mirumee-press",
@@ -422,6 +452,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI3",
           name: "Saleor Publishing",
           slug: "saleor-publishing",
@@ -444,6 +475,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjc=",
           name: "XS",
           slug: "xs",
@@ -452,6 +484,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjg=",
           name: "S",
           slug: "s",
@@ -460,6 +493,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjk=",
           name: "M",
           slug: "m",
@@ -468,6 +502,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEw",
           name: "L",
           slug: "l",
@@ -476,6 +511,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEx",
           name: "XL",
           slug: "xl",
@@ -484,6 +520,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEy",
           name: "XXL",
           slug: "xxl",

@@ -27,11 +27,18 @@ export interface VariantUpdate_productVariantUpdate_productVariant_privateMetada
   value: string;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values_file | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute {
@@ -44,11 +51,18 @@ export interface VariantUpdate_productVariantUpdate_productVariant_attributes_at
   values: (VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values | null)[] | null;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_attributes_values_file | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes {
@@ -239,11 +253,18 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_private
   value: string;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values_file | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute {
@@ -256,11 +277,18 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_attribu
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values | null)[] | null;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values_file | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes {

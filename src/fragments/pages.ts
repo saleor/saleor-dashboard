@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { attributeValueFragment } from "./attributes";
 import { metadataFragment } from "./metadata";
 
 export const pageFragment = gql`
@@ -12,6 +13,7 @@ export const pageFragment = gql`
 `;
 
 export const pageAttributesFragment = gql`
+  ${attributeValueFragment}
   fragment PageAttributesFragment on Page {
     attributes {
       attribute {
@@ -21,15 +23,11 @@ export const pageAttributesFragment = gql`
         inputType
         valueRequired
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
       values {
-        id
-        name
-        slug
+        ...AttributeValueFragment
       }
     }
     pageType {
@@ -41,9 +39,7 @@ export const pageAttributesFragment = gql`
         inputType
         valueRequired
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
     }

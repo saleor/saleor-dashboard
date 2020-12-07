@@ -52,19 +52,22 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODc=",
             name: "Suzanne Ellison",
             slug: "suzanne-ellison",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
             name: "Dennis Perkins",
             slug: "dennis-perkins",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
             name: "Dylan Lamb",
             slug: "dylan-lamb",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           }
         ],
         __typename: "Attribute"
@@ -74,7 +77,8 @@ export const page: PageDetails_page = {
           id: "QXR0cmlidXRlVmFsdWU6ODk=",
           name: "Dylan Lamb",
           slug: "dylan-lamb",
-          __typename: "AttributeValue"
+          __typename: "AttributeValue",
+          file: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -91,25 +95,29 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTA=",
             name: "Security",
             slug: "security",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
             name: "Support",
             slug: "support",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
             name: "Medical",
             slug: "medical",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
             name: "General",
             slug: "general",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           }
         ],
         __typename: "Attribute"
@@ -119,7 +127,8 @@ export const page: PageDetails_page = {
           id: "QXR0cmlidXRlVmFsdWU6OTA=",
           name: "Security",
           slug: "security",
-          __typename: "AttributeValue"
+          __typename: "AttributeValue",
+          file: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -150,19 +159,22 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODc=",
             name: "Suzanne Ellison",
             slug: "suzanne-ellison",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
             name: "Dennis Perkins",
             slug: "dennis-perkins",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
             name: "Dylan Lamb",
             slug: "dylan-lamb",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           }
         ],
         __typename: "Attribute"
@@ -177,25 +189,29 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTA=",
             name: "Security",
             slug: "security",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
             name: "Support",
             slug: "support",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
             name: "Medical",
             slug: "medical",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
             name: "General",
             slug: "general",
-            __typename: "AttributeValue"
+            __typename: "AttributeValue",
+            file: null
           }
         ],
         __typename: "Attribute"
