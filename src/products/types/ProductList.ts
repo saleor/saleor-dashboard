@@ -76,10 +76,18 @@ export interface ProductList_products_edges_node_attributes_attribute {
   id: string;
 }
 
+export interface ProductList_products_edges_node_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductList_products_edges_node_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
+  slug: string | null;
+  file: ProductList_products_edges_node_attributes_values_file | null;
 }
 
 export interface ProductList_products_edges_node_attributes {

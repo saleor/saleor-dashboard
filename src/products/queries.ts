@@ -1,3 +1,4 @@
+import { attributeValueFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   fragmentVariant,
@@ -94,6 +95,7 @@ export const useInitialProductFilterDataQuery = makeQuery<
 
 const productListQuery = gql`
   ${productFragment}
+  ${attributeValueFragment}
   query ProductList(
     $first: Int
     $after: String
@@ -118,8 +120,7 @@ const productListQuery = gql`
               id
             }
             values {
-              id
-              name
+              ...AttributeValueFragment
             }
           }
         }
@@ -185,6 +186,7 @@ export const useProductVariantQuery = makeQuery<
 >(productVariantQuery);
 
 const productVariantCreateQuery = gql`
+  ${attributeValueFragment}
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {
       id
@@ -210,9 +212,7 @@ const productVariantCreateQuery = gql`
           inputType
           valueRequired
           values {
-            id
-            name
-            slug
+            ...AttributeValueFragment
           }
         }
       }

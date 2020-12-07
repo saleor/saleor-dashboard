@@ -20,11 +20,18 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_privateMeta
   value: string;
 }
 
+export interface AttributeValueCreate_attributeValueCreate_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: AttributeValueCreate_attributeValueCreate_attribute_values_file | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {

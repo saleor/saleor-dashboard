@@ -7,6 +7,10 @@ export const commonMessages = defineMessages({
   catalog: {
     defaultMessage: "Catalog"
   },
+  chooseFile: {
+    defaultMessage: "Choose file",
+    description: "button"
+  },
   customApps: {
     defaultMessage: "Local Apps"
   },

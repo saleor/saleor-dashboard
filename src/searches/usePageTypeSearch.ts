@@ -1,3 +1,4 @@
+import { attributeValueFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
@@ -8,6 +9,7 @@ import {
 } from "./types/SearchPageTypes";
 
 export const searchPageTypes = gql`
+  ${attributeValueFragment}
   ${pageInfoFragment}
   query SearchPageTypes($after: String, $first: Int!, $query: String!) {
     search: pageTypes(
@@ -26,9 +28,7 @@ export const searchPageTypes = gql`
             name
             valueRequired
             values {
-              id
-              name
-              slug
+              ...AttributeValueFragment
             }
           }
         }

@@ -1279,6 +1279,10 @@
   "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
     "string": "Channel deleted"
   },
+  "src_dot_chooseFile": {
+    "context": "button",
+    "string": "Choose file"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"

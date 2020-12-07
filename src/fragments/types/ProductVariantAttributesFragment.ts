@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: ProductVariantAttributesFragment
 // ====================================================
 
+export interface ProductVariantAttributesFragment_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantAttributesFragment_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantAttributesFragment_attributes_attribute_values_file | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes_attribute {
@@ -25,11 +32,18 @@ export interface ProductVariantAttributesFragment_attributes_attribute {
   values: (ProductVariantAttributesFragment_attributes_attribute_values | null)[] | null;
 }
 
+export interface ProductVariantAttributesFragment_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantAttributesFragment_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantAttributesFragment_attributes_values_file | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes {
@@ -38,11 +52,18 @@ export interface ProductVariantAttributesFragment_attributes {
   values: (ProductVariantAttributesFragment_attributes_values | null)[];
 }
 
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantAttributesFragment_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantAttributesFragment_productType_variantAttributes_values_file | null;
 }
 
 export interface ProductVariantAttributesFragment_productType_variantAttributes {

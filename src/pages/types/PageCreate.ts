@@ -16,11 +16,18 @@ export interface PageCreate_pageCreate_errors {
   message: string | null;
 }
 
+export interface PageCreate_pageCreate_page_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageCreate_pageCreate_page_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageCreate_pageCreate_page_attributes_attribute_values_file | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes_attribute {
@@ -33,11 +40,18 @@ export interface PageCreate_pageCreate_page_attributes_attribute {
   values: (PageCreate_pageCreate_page_attributes_attribute_values | null)[] | null;
 }
 
+export interface PageCreate_pageCreate_page_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageCreate_pageCreate_page_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageCreate_pageCreate_page_attributes_values_file | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes {
@@ -46,11 +60,18 @@ export interface PageCreate_pageCreate_page_attributes {
   values: (PageCreate_pageCreate_page_attributes_values | null)[];
 }
 
+export interface PageCreate_pageCreate_page_pageType_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageCreate_pageCreate_page_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageCreate_pageCreate_page_pageType_attributes_values_file | null;
 }
 
 export interface PageCreate_pageCreate_page_pageType_attributes {
