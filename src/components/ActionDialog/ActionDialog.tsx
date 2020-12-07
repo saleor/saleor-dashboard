@@ -35,7 +35,7 @@ interface ActionDialogProps extends DialogProps {
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   title: string;
   variant?: "default" | "delete" | "info";
-  onConfirm();
+  onConfirm: () => void;
 }
 
 const ActionDialog: React.FC<ActionDialogProps> = props => {

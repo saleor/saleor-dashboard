@@ -12,7 +12,6 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -51,7 +50,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onChangePassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
-  onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
+  onSubmit: (data: StaffDetailsFormData) => void;
   onImageUpload(file: File);
 }
 

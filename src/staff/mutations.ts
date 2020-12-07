@@ -6,7 +6,6 @@ import { staffMemberDetailsFragment } from "@saleor/fragments/staff";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
 import {
   ChangeStaffPassword,
   ChangeStaffPasswordVariables
@@ -62,7 +61,8 @@ const staffMemberUpdateMutation = gql`
     }
   }
 `;
-export const TypedStaffMemberUpdateMutation = TypedMutation<
+
+export const useStaffMemberUpdateMutation = makeMutation<
   StaffMemberUpdate,
   StaffMemberUpdateVariables
 >(staffMemberUpdateMutation);
@@ -77,7 +77,7 @@ const staffMemberDeleteMutation = gql`
     }
   }
 `;
-export const TypedStaffMemberDeleteMutation = TypedMutation<
+export const useStaffMemberDeleteMutation = makeMutation<
   StaffMemberDelete,
   StaffMemberDeleteVariables
 >(staffMemberDeleteMutation);
@@ -98,7 +98,7 @@ const staffAvatarUpdateMutation = gql`
     }
   }
 `;
-export const TypedStaffAvatarUpdateMutation = TypedMutation<
+export const useStaffAvatarUpdateMutation = makeMutation<
   StaffAvatarUpdate,
   StaffAvatarUpdateVariables
 >(staffAvatarUpdateMutation);
@@ -119,7 +119,7 @@ const staffAvatarDeleteMutation = gql`
     }
   }
 `;
-export const TypedStaffAvatarDeleteMutation = TypedMutation<
+export const useStaffAvatarDeleteMutation = makeMutation<
   StaffAvatarDelete,
   StaffMemberDeleteVariables
 >(staffAvatarDeleteMutation);

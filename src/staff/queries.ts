@@ -5,7 +5,6 @@ import {
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { StaffList, StaffListVariables } from "./types/StaffList";
 import {
   StaffMemberDetails,
@@ -60,7 +59,7 @@ export const staffMemberDetails = gql`
     }
   }
 `;
-export const TypedStaffMemberDetailsQuery = TypedQuery<
+export const useStaffMemberDetailsQuery = makeQuery<
   StaffMemberDetails,
   StaffMemberDetailsVariables
 >(staffMemberDetails);
