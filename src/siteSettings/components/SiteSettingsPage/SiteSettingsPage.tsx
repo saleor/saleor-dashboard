@@ -11,7 +11,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -55,7 +54,7 @@ export interface SiteSettingsPageProps {
   onBack: () => void;
   onKeyAdd: () => void;
   onKeyRemove: (keyType: AuthorizationKeyType) => void;
-  onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
+  onSubmit: (data: SiteSettingsPageFormData) => void;
 }
 
 export function areAddressInputFieldsModified(

@@ -1,9 +1,9 @@
 import { fragmentAddress } from "@saleor/fragments/address";
 import { shopErrorFragment } from "@saleor/fragments/errors";
 import { shopFragment } from "@saleor/fragments/shop";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
 import {
   AuthorizationKeyAdd,
   AuthorizationKeyAddVariables
@@ -34,7 +34,7 @@ const authorizationKeyAdd = gql`
     }
   }
 `;
-export const TypedAuthorizationKeyAdd = TypedMutation<
+export const useAuthorizationKeyAdd = makeMutation<
   AuthorizationKeyAdd,
   AuthorizationKeyAddVariables
 >(authorizationKeyAdd);
@@ -53,7 +53,7 @@ const authorizationKeyDelete = gql`
     }
   }
 `;
-export const TypedAuthorizationKeyDelete = TypedMutation<
+export const useAuthorizationKeyDelete = makeMutation<
   AuthorizationKeyDelete,
   AuthorizationKeyDeleteVariables
 >(authorizationKeyDelete);
@@ -98,7 +98,7 @@ const shopSettingsUpdate = gql`
     }
   }
 `;
-export const TypedShopSettingsUpdate = TypedMutation<
+export const useShopSettingsUpdate = makeMutation<
   ShopSettingsUpdate,
   ShopSettingsUpdateVariables
 >(shopSettingsUpdate);

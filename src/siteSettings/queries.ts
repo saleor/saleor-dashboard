@@ -1,7 +1,7 @@
 import { shopFragment } from "@saleor/fragments/shop";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { SiteSettings } from "./types/SiteSettings";
 
 const siteSettings = gql`
@@ -12,6 +12,4 @@ const siteSettings = gql`
     }
   }
 `;
-export const TypedSiteSettingsQuery = TypedQuery<SiteSettings, {}>(
-  siteSettings
-);
+export const useSiteSettingsQuery = makeQuery<SiteSettings, {}>(siteSettings);
