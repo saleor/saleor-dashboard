@@ -30,12 +30,14 @@ export const product: (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav47282",
             name: "portals",
             slug: "portals"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav17253",
             name: "Baht",
             slug: "Baht"
@@ -45,6 +47,7 @@ export const product: (
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "ptav47282",
           name: "portals",
           slug: "portals"
@@ -63,24 +66,28 @@ export const product: (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav31282",
             name: "payment",
             slug: "payment"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav14907",
             name: "Auto Loan Account",
             slug: "Auto-Loan-Account"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav27366",
             name: "Garden",
             slug: "Garden"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav11873",
             name: "override",
             slug: "override"
@@ -90,6 +97,7 @@ export const product: (
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "ptav14907",
           name: "Auto Loan Account",
           slug: "Auto-Loan-Account"
@@ -259,6 +267,7 @@ export const product: (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptvav47282",
             name: "Black",
             slug: "black",
@@ -266,6 +275,7 @@ export const product: (
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptvav17253",
             name: "White",
             slug: "white",
@@ -713,8 +723,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6MQ==",
-            name: "Pineapple"
+            name: "Pineapple",
+            slug: "pineapple"
           }
         ]
       }
@@ -818,8 +830,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6Mg==",
-            name: "Coconut"
+            name: "Coconut",
+            slug: "coconut"
           }
         ]
       }
@@ -923,8 +937,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6Mw==",
-            name: "Apple"
+            name: "Apple",
+            slug: "apple"
           }
         ]
       }
@@ -1029,8 +1045,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NDk=",
-            name: "Orange"
+            name: "Orange",
+            slug: "orange"
           }
         ]
       }
@@ -1134,8 +1152,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NTA=",
-            name: "Banana"
+            name: "Banana",
+            slug: "banana"
           }
         ]
       }
@@ -1239,8 +1259,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NTE=",
-            name: "Bean"
+            name: "Bean",
+            slug: "bean"
           }
         ]
       }
@@ -1344,8 +1366,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NTI=",
-            name: "Carrot"
+            name: "Carrot",
+            slug: "carrot"
           }
         ]
       }
@@ -1449,8 +1473,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NTM=",
-            name: "Sprouty"
+            name: "Sprouty",
+            slug: "sprouty"
           }
         ]
       }
@@ -1554,8 +1580,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -1659,8 +1687,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -1764,8 +1794,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -1869,8 +1901,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -1974,8 +2008,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -2079,8 +2115,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -2184,8 +2222,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -2289,8 +2329,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -2394,8 +2436,10 @@ export const products = (
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "QXR0cmlidXRlVmFsdWU6NzI=",
-            name: "Cotton"
+            name: "Cotton",
+            slug: "cotton"
           }
         ]
       }
@@ -2504,12 +2548,14 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav47282",
             name: "portals",
             slug: "portals"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav17253",
             name: "Baht",
             slug: "Baht"
@@ -2519,6 +2565,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "ptav47282",
           name: "portals",
           slug: "portals"
@@ -2537,24 +2584,28 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         values: [
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav31282",
             name: "payment",
             slug: "payment"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav14907",
             name: "Auto Loan Account",
             slug: "Auto-Loan-Account"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav27366",
             name: "Garden",
             slug: "Garden"
           },
           {
             __typename: "AttributeValue",
+            file: null,
             id: "ptav11873",
             name: "override",
             slug: "override"
@@ -2564,6 +2615,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "ptav14907",
           name: "Auto Loan Account",
           slug: "Auto-Loan-Account"

@@ -20,11 +20,18 @@ export interface ProductVariantDetails_productVariant_privateMetadata {
   value: string;
 }
 
+export interface ProductVariantDetails_productVariant_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantDetails_productVariant_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantDetails_productVariant_attributes_attribute_values_file | null;
 }
 
 export interface ProductVariantDetails_productVariant_attributes_attribute {
@@ -37,11 +44,18 @@ export interface ProductVariantDetails_productVariant_attributes_attribute {
   values: (ProductVariantDetails_productVariant_attributes_attribute_values | null)[] | null;
 }
 
+export interface ProductVariantDetails_productVariant_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantDetails_productVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantDetails_productVariant_attributes_values_file | null;
 }
 
 export interface ProductVariantDetails_productVariant_attributes {

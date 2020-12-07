@@ -81,8 +81,8 @@ export enum AttributeErrorCode {
 
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
+  FILE = "FILE",
   MULTISELECT = "MULTISELECT",
-  FILE = "FILE"
 }
 
 export enum AttributeSortField {
@@ -1081,12 +1081,19 @@ export interface AttributeValueCreateInput {
 
 export interface AttributeValueInput {
   id?: string | null;
-  values: (string | null)[];
+  values?: (string | null)[] | null;
+  file?: string | null;
+  contentType?: string | null;
 }
 
 export interface AuthorizationKeyInput {
   key: string;
   password: string;
+}
+
+export interface BulkAttributeValueInput {
+  id?: string | null;
+  values: (string | null)[];
 }
 
 export interface CatalogueInput {
@@ -1591,7 +1598,7 @@ export interface ProductTypeSortingInput {
 }
 
 export interface ProductVariantBulkCreateInput {
-  attributes: (AttributeValueInput | null)[];
+  attributes: (BulkAttributeValueInput | null)[];
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;

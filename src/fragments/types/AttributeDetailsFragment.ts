@@ -20,11 +20,18 @@ export interface AttributeDetailsFragment_privateMetadata {
   value: string;
 }
 
+export interface AttributeDetailsFragment_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface AttributeDetailsFragment_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: AttributeDetailsFragment_values_file | null;
 }
 
 export interface AttributeDetailsFragment {
