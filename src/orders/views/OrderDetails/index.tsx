@@ -50,6 +50,7 @@ import {
   orderFulfillUrl,
   orderListUrl,
   orderRefundUrl,
+  orderReturnPath,
   orderUrl,
   OrderUrlDialog,
   OrderUrlQueryParams
@@ -227,6 +228,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           )}
                         />
                         <OrderDetailsPage
+                          onOrderReturn={() => navigate(orderReturnPath(id))}
                           disabled={
                             updateMetadataOpts.loading ||
                             updatePrivateMetadataOpts.loading

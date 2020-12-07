@@ -19,7 +19,7 @@ import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
@@ -75,11 +75,27 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onOrderCancel();
   onNoteAdd(data: HistoryFormData);
   onProfileView();
+  onOrderReturn();
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
+
+const messages = defineMessages({
+  cancelOrder: {
+    defaultMessage: "Cancel order",
+    description: "cancel button"
+  },
+  confirmOrder: {
+    defaultMessage: "confirm order",
+    description: "save button"
+  },
+  returnOrder: {
+    defaultMessage: "Return / Replace Order",
+    description: "return button"
+  }
+});
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
@@ -103,6 +119,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onInvoiceClick,
     onInvoiceGenerate,
     onInvoiceSend,
+    onOrderReturn,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -140,10 +157,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const saveLabel =
     order?.status === OrderStatus.UNCONFIRMED
-      ? intl.formatMessage({
-          defaultMessage: "confirm order",
-          description: "save button"
-        })
+      ? intl.formatMessage(messages.confirmOrder)
       : undefined;
 
   const allowSave = (hasChanged: boolean) => {
@@ -169,19 +183,18 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
             >
-              {canCancel && (
-                <CardMenu
-                  menuItems={[
-                    {
-                      label: intl.formatMessage({
-                        defaultMessage: "Cancel order",
-                        description: "button"
-                      }),
-                      onSelect: onOrderCancel
-                    }
-                  ]}
-                />
-              )}
+              <CardMenu
+                menuItems={[
+                  canCancel && {
+                    label: intl.formatMessage(messages.cancelOrder),
+                    onSelect: onOrderCancel
+                  },
+                  {
+                    label: intl.formatMessage(messages.returnOrder),
+                    onSelect: onOrderReturn
+                  }
+                ]}
+              />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (

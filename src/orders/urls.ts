@@ -92,6 +92,7 @@ export const orderDraftListUrl = (
 };
 
 export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
+
 export type OrderUrlDialog =
   | "add-order-line"
   | "cancel"
@@ -105,12 +106,17 @@ export type OrderUrlDialog =
   | "mark-paid"
   | "void"
   | "invoice-send";
+
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
+
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderFulfillPath = (id: string) =>
   urlJoin(orderPath(id), "fulfill");
+
+export const orderReturnPath = (id: string) => urlJoin(orderPath(id), "return");
+
 export const orderFulfillUrl = (id: string) =>
   orderFulfillPath(encodeURIComponent(id));
 
