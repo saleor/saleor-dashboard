@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { commonMessages } from "@saleor/intl";
-import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,12 +15,17 @@ export interface FileUploadFieldProps {
   className?: string;
   disabled: boolean;
   fileName?: string;
+  error?: boolean;
+  helperText?: string;
   onFileUpload: (file: File) => void;
   onFileDelete: () => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
+    errorText: {
+      color: theme.palette.error.light
+    },
     fileField: {
       display: "none"
     },
@@ -37,6 +42,8 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     disabled,
     fileName,
     className,
+    error,
+    helperText,
     onFileUpload,
     onFileDelete,
     inputProps
@@ -49,31 +56,38 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   return (
     <>
-      {fileName ? (
-        <div className={classNames(classes.uploadFileContent, className)}>
-          {fileName}
-          <IconButton
-            color="primary"
-            onClick={onFileDelete}
-            disabled={disabled}
-            data-test="button-delete-file"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      ) : (
-        <div className={className}>
-          <Button
-            onClick={clickFileInput}
-            disabled={disabled}
-            variant="outlined"
-            color="primary"
-            data-test="button-upload-file"
-          >
-            {intl.formatMessage(commonMessages.chooseFile)}
-          </Button>
-        </div>
-      )}
+      <div className={className}>
+        {fileName ? (
+          <div className={classes.uploadFileContent}>
+            {fileName}
+            <IconButton
+              color="primary"
+              onClick={onFileDelete}
+              disabled={disabled}
+              data-test="button-delete-file"
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        ) : (
+          <div>
+            <Button
+              onClick={clickFileInput}
+              disabled={disabled}
+              variant="outlined"
+              color="primary"
+              data-test="button-upload-file"
+            >
+              {intl.formatMessage(commonMessages.chooseFile)}
+            </Button>
+          </div>
+        )}
+        {error && (
+          <Typography variant="caption" className={classes.errorText}>
+            {helperText}
+          </Typography>
+        )}
+      </div>
       <input
         className={classes.fileField}
         id="fileUpload"

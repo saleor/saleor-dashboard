@@ -229,6 +229,8 @@ const Attributes: React.FC<AttributesProps> = ({
                           onFileDelete={() =>
                             onFileChange(attribute.id, undefined)
                           }
+                          error={!!error}
+                          helperText={getErrorMessage(error, intl)}
                           inputProps={{
                             name: `attribute:${attribute.label}`
                           }}

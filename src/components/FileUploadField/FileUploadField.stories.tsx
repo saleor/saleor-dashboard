@@ -35,4 +35,11 @@ storiesOf("Generics / File upload field", module)
   .add("with file", () => (
     <FileUploadField {...props} fileName="some_file.png" />
   ))
+  .add("with error", () => (
+    <FileUploadField
+      {...props}
+      error={true}
+      helperText="Something went wrong"
+    />
+  ))
   .add("interactive", () => <InteractiveStory />);
