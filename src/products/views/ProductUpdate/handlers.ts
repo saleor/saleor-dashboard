@@ -1,8 +1,18 @@
+import {
+  AttributeValueDelete,
+  AttributeValueDeleteVariables
+} from "@saleor/attributes/types/AttributeValueDelete";
 import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
+import {
+  FileUpload,
+  FileUploadVariables
+} from "@saleor/files/types/FileUpload";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
@@ -33,7 +43,12 @@ import {
 } from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
+import { getAttributesVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueInput
+} from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
@@ -96,6 +111,9 @@ const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
 
 export function createUpdateHandler(
   product: ProductDetails_product,
+  uploadFile: (
+    variables: FileUploadVariables
+  ) => Promise<MutationFetchResult<FileUpload>>,
   updateProduct: (
     variables: ProductUpdateVariables
   ) => Promise<MutationFetchResult<ProductUpdate>>,
@@ -110,16 +128,53 @@ export function createUpdateHandler(
   }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
   productVariantCreate: (options: {
     variables: VariantCreateVariables;
-  }) => Promise<MutationFetchResult<VariantCreate>>
+  }) => Promise<MutationFetchResult<VariantCreate>>,
+  deleteAttributeValue: (
+    variables: AttributeValueDeleteVariables
+  ) => Promise<MutationFetchResult<AttributeValueDelete>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
+    let errors: Array<
+      | ProductErrorFragment
+      | StockErrorFragment
+      | BulkStockErrorFragment
+      | AttributeErrorFragment
+      | UploadErrorFragment
+      | ProductChannelListingErrorFragment
+    > = [];
+
+    const uploadFilesResult = await Promise.all(
+      data.attributesWithNewFileValue.map(fileAttribute =>
+        uploadFile({
+          file: fileAttribute.value
+        })
+      )
+    );
+
+    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
+      (attributesWithAddedFiles, uploadFileResult, index) => {
+        const attribute = data.attributesWithNewFileValue[index];
+
+        errors = [...errors, ...uploadFileResult.data.fileUpload.uploadErrors];
+        return [
+          ...attributesWithAddedFiles,
+          {
+            file: uploadFileResult.data.fileUpload.uploadedFile.url,
+            id: attribute.id,
+            values: []
+          }
+        ];
+      },
+      []
+    );
+
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
-        attributes: data.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value[0] === "" ? [] : attribute.value
-        })),
+        attributes: getAttributesVariables({
+          attributes: data.attributes,
+          attributesWithAddedNewFiles
+        }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
@@ -134,13 +189,6 @@ export function createUpdateHandler(
         taxCode: data.changeTaxCode ? data.taxCode : null
       }
     };
-
-    let errors: Array<
-      | ProductErrorFragment
-      | StockErrorFragment
-      | BulkStockErrorFragment
-      | ProductChannelListingErrorFragment
-    >;
 
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
@@ -204,6 +252,34 @@ export function createUpdateHandler(
           }
         });
       }
+    }
+
+    if (errors.length === 0) {
+      const deleteAttributeValuesResult = await Promise.all(
+        product.attributes.map(existingAttribute => {
+          const fileValueUnused =
+            existingAttribute.attribute.inputType ===
+              AttributeInputTypeEnum.FILE &&
+            existingAttribute.values.length > 0 &&
+            data.attributes.find(
+              dataAttribute =>
+                dataAttribute.id === existingAttribute.attribute.id
+            ).value.length === 0;
+
+          if (fileValueUnused) {
+            return deleteAttributeValue({
+              id: existingAttribute.values[0].id
+            });
+          }
+        })
+      );
+
+      deleteAttributeValuesResult.forEach(deleteValueResult => {
+        errors = [
+          ...errors,
+          ...deleteValueResult.data.attributeValueDelete.errors
+        ];
+      });
     }
 
     return errors;
