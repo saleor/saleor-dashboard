@@ -5,7 +5,11 @@ import {
 } from "@saleor/channels/utils";
 import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
+import {
+  FormsetAtomicData,
+  FormsetChange,
+  FormsetData
+} from "@saleor/hooks/useFormset";
 import { toggle } from "@saleor/utils/lists";
 
 import { getAttributeInputFromProductType, ProductType } from "./data";
@@ -117,6 +121,35 @@ export function createAttributeMultiChangeHandler(
 
     triggerChange();
     changeAttributeData(attributeId, newAttributeValues);
+  };
+}
+
+export function createAttributeFileChangeHandler(
+  changeAttributeData: FormsetChange<string[]>,
+  attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
+  addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
+  removeAttributeNewFileValue: (id: string) => void,
+  triggerChange: () => void
+): FormsetChange<File> {
+  return (attributeId: string, value: File) => {
+    triggerChange();
+    if (value) {
+      addAttributeNewFileValue({
+        data: null,
+        id: attributeId,
+        label: null,
+        value
+      });
+    } else {
+      const removeingNewFileValue = attributesWithNewFileValue.find(
+        attribute => attribute.id === attributeId
+      );
+      if (removeingNewFileValue) {
+        removeAttributeNewFileValue(attributeId);
+      } else {
+        changeAttributeData(attributeId, []);
+      }
+    }
   };
 }
 

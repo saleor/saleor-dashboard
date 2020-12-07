@@ -1,4 +1,5 @@
 import { AttributeInput } from "@saleor/components/Attributes";
+import { FormsetData } from "@saleor/hooks/useFormset";
 
 import {
   PageDetails_page,
@@ -34,3 +35,21 @@ export function getAttributeInputFromPageType(
     value: []
   }));
 }
+
+export const getAttributesDisplayData = (
+  attributes: AttributeInput[],
+  attributesWithNewFileValue: FormsetData<null, File>
+) =>
+  attributes.map(attribute => {
+    const attributeWithNewFileValue = attributesWithNewFileValue.find(
+      attributeWithNewFile => attribute.id === attributeWithNewFile.id
+    );
+
+    if (attributeWithNewFileValue) {
+      return {
+        ...attribute,
+        value: [attributeWithNewFileValue.value.name]
+      };
+    }
+    return attribute;
+  });

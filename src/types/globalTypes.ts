@@ -900,6 +900,10 @@ export enum TaxRateType {
   WINE = "WINE",
 }
 
+export enum UploadErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+}
+
 export enum UserSortField {
   EMAIL = "EMAIL",
   FIRST_NAME = "FIRST_NAME",
@@ -1698,6 +1702,8 @@ export interface ShippingPriceInput {
   name?: string | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
+  maximumDeliveryDays?: number | null;
+  minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
 }

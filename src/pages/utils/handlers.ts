@@ -1,6 +1,13 @@
-import { AttributeInputData } from "@saleor/components/Attributes";
+import {
+  AttributeInput,
+  AttributeInputData
+} from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueInput
+} from "@saleor/types/globalTypes";
 import { toggle } from "@saleor/utils/lists";
 
 import { PageDetails_page_pageType } from "../types/PageDetails";
@@ -54,3 +61,33 @@ export function createAttributeMultiChangeHandler(
     changeAttributeData(attributeId, newAttributeValues);
   };
 }
+
+interface PageAttributesArgs {
+  attributes: AttributeInput[];
+  attributesWithAddedNewFiles: AttributeValueInput[];
+}
+
+export const getAttributesVariables = ({
+  attributes,
+  attributesWithAddedNewFiles
+}: PageAttributesArgs): AttributeValueInput[] =>
+  attributes.map(attribute => {
+    if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
+      const attributeWithNewFile = attributesWithAddedNewFiles.find(
+        attributeWithNewFile => attribute.id === attributeWithNewFile.id
+      );
+      if (attributeWithNewFile) {
+        return attributeWithNewFile;
+      }
+      return {
+        file: attribute.value[0],
+        id: attribute.id,
+        values: []
+      };
+    }
+    return {
+      file: undefined,
+      id: attribute.id,
+      values: attribute.value[0] === "" ? [] : attribute.value
+    };
+  });
