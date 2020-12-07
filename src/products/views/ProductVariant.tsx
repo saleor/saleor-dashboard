@@ -1,7 +1,11 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useFileUploadMutation } from "@saleor/files/mutations";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
@@ -9,6 +13,10 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueInput
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -41,6 +49,7 @@ import {
   ProductVariantEditUrlQueryParams
 } from "../urls";
 import { mapFormsetStockToStockInput } from "../utils/data";
+import { getAttributesVariables } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -97,6 +106,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
 
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+
   const [assignImage, assignImageOpts] = useVariantImageAssignMutation({});
   const [unassignImage, unassignImageOpts] = useVariantImageUnassignMutation(
     {}
@@ -123,6 +134,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       setErrors(data.productVariantUpdate.errors);
     }
   });
+
+  const [
+    deleteAttributeValue,
+    deleteAttributeValueOpts
+  ] = useAttributeValueDeleteMutation({});
 
   const handleSubmitChannels = (
     data: ProductVariantUpdateSubmitData,
@@ -172,11 +188,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const disableFormSave =
     loading ||
+    uploadFileOpts.loading ||
     deleteVariantOpts.loading ||
     updateVariantOpts.loading ||
     assignImageOpts.loading ||
     unassignImageOpts.loading ||
-    reorderProductVariantsOpts.loading;
+    reorderProductVariantsOpts.loading ||
+    deleteAttributeValueOpts.loading;
 
   const handleImageSelect = (id: string) => () => {
     if (variant) {
@@ -199,13 +217,47 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   };
 
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
+    let fileAttributeErrors: Array<
+      AttributeErrorFragment | UploadErrorFragment
+    > = [];
+
+    const uploadFilesResult = await Promise.all(
+      data.attributesWithNewFileValue.map(fileAttribute =>
+        uploadFile({
+          variables: {
+            file: fileAttribute.value
+          }
+        })
+      )
+    );
+
+    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
+      (attributesWithAddedFiles, uploadFileResult, index) => {
+        const attribute = data.attributesWithNewFileValue[index];
+
+        fileAttributeErrors = [
+          ...fileAttributeErrors,
+          ...uploadFileResult.data.fileUpload.uploadErrors
+        ];
+        return [
+          ...attributesWithAddedFiles,
+          {
+            file: uploadFileResult.data.fileUpload.uploadedFile.url,
+            id: attribute.id,
+            values: []
+          }
+        ];
+      },
+      []
+    );
+
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        attributes: data.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value
-        })),
+        attributes: getAttributesVariables({
+          attributes: data.attributes,
+          attributesWithAddedNewFiles
+        }),
         id: variantId,
         removeStocks: data.removeStocks,
         sku: data.sku,
@@ -216,7 +268,40 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     });
     handleSubmitChannels(data, variant);
 
+    if (result.data?.productVariantUpdate.errors.length === 0) {
+      const deleteAttributeValuesResult = await Promise.all(
+        variant.notSelectionAttributes.map(existingAttribute => {
+          const fileValueUnused =
+            existingAttribute.attribute.inputType ===
+              AttributeInputTypeEnum.FILE &&
+            existingAttribute.values.length > 0 &&
+            data.attributes.find(
+              dataAttribute =>
+                dataAttribute.id === existingAttribute.attribute.id
+            ).value.length === 0;
+
+          if (fileValueUnused) {
+            return deleteAttributeValue({
+              variables: {
+                id: existingAttribute.values[0].id
+              }
+            });
+          }
+        })
+      );
+
+      deleteAttributeValuesResult.forEach(deleteValueResult => {
+        if (deleteValueResult) {
+          fileAttributeErrors = [
+            ...fileAttributeErrors,
+            ...deleteValueResult.data?.attributeValueDelete.errors
+          ];
+        }
+      });
+    }
+
     return [
+      ...fileAttributeErrors,
       ...result.data?.productVariantStocksCreate.errors,
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,

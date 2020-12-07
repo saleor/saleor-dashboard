@@ -9,9 +9,13 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import {
   getAttributeInputFromVariant,
+  getAttributesDisplayData,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
-import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  createAttributeFileChangeHandler,
+  getChannelsInput
+} from "@saleor/products/utils/handlers";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler
@@ -25,7 +29,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
-import React from "react";
+import React, { useEffect } from "react";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
@@ -43,6 +47,7 @@ export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
 export interface ProductVariantUpdateSubmitData
   extends ProductVariantUpdateFormData {
   attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   addStocks: ProductStockInput[];
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
@@ -54,20 +59,24 @@ export interface UseProductVariantUpdateFormOpts {
   currentChannels: ChannelPriceData[];
 }
 
+interface ProductVariantUpdateHandlers
+  extends Record<
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
+      FormsetChange
+    >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"addStock" | "deleteStock", (id: string) => void> {
+  changeMetadata: FormChange;
+}
+
 export interface UseProductVariantUpdateFormResult {
   change: FormChange;
   data: ProductVariantUpdateData;
   disabled: boolean;
-  handlers: Record<
-    | "changeStock"
-    | "selectAttribute"
-    | "selectAttributeMultiple"
-    | "changeChannels",
-    FormsetChange
-  > &
-    Record<"addStock" | "deleteStock", (id: string) => void> & {
-      changeMetadata: FormChange;
-    };
+  handlers: ProductVariantUpdateHandlers;
   hasChanged: boolean;
   submit: () => void;
 }
@@ -101,6 +110,7 @@ function useProductVariantUpdateForm(
 
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);
   const channels = useFormset(channelsInput);
   const {
@@ -121,6 +131,13 @@ function useProductVariantUpdateForm(
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
+    triggerChange
+  );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.remove,
     triggerChange
   );
   const handleStockAdd = (id: string) => {
@@ -145,6 +162,10 @@ function useProductVariantUpdateForm(
     triggerChange();
   };
 
+  useEffect(() => {
+    attributesWithNewFileValue.set([]);
+  }, [variant]);
+
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = diff(variantStocks, dataStocks);
@@ -163,7 +184,10 @@ function useProductVariantUpdateForm(
   );
   const data: ProductVariantUpdateData = {
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
     channelListings: channels.data,
     stocks: stocks.data
   };
@@ -172,6 +196,7 @@ function useProductVariantUpdateForm(
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     addStocks,
     attributes: attributes.data,
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
     removeStocks: stockDiff.removed,
     updateStocks
@@ -190,6 +215,7 @@ function useProductVariantUpdateForm(
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange
     },
     hasChanged: changed,

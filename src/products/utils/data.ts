@@ -1,10 +1,13 @@
 import { ChannelData } from "@saleor/channels/utils";
-import { AttributeInput } from "@saleor/components/Attributes";
+import {
+  AttributeInput,
+  VariantAttributeScope
+} from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
+import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -92,19 +95,36 @@ export function getAttributeInputFromProductType(
 export function getAttributeInputFromVariant(
   variant: ProductVariant
 ): AttributeInput[] {
-  return maybe(
-    (): AttributeInput[] =>
-      variant.attributes.map(attribute => ({
-        data: {
-          inputType: attribute.attribute.inputType,
-          isRequired: attribute.attribute.valueRequired,
-          values: attribute.attribute.values
-        },
-        id: attribute.attribute.id,
-        label: attribute.attribute.name,
-        value: [(attribute.values.length && attribute.values[0]?.slug) || null]
-      })),
-    []
+  const selectionAttributeInput = variant?.selectionAttributes?.map(
+    attribute => ({
+      data: {
+        inputType: attribute.attribute.inputType,
+        isRequired: attribute.attribute.valueRequired,
+        values: attribute.attribute.values,
+        variantAttributeScope: VariantAttributeScope.VARIANT_SELECTION
+      },
+      id: attribute.attribute.id,
+      label: attribute.attribute.name,
+      value: [(attribute.values.length && attribute.values[0]?.slug) || null]
+    })
+  );
+
+  const notSelectionAttributeInput = variant?.notSelectionAttributes?.map(
+    attribute => ({
+      data: {
+        inputType: attribute.attribute.inputType,
+        isRequired: attribute.attribute.valueRequired,
+        values: attribute.attribute.values,
+        variantAttributeScope: VariantAttributeScope.NOT_VARIANT_SELECTION
+      },
+      id: attribute.attribute.id,
+      label: attribute.attribute.name,
+      value: [(attribute.values.length && attribute.values[0]?.slug) || null]
+    })
+  );
+
+  return (
+    selectionAttributeInput?.concat(notSelectionAttributeInput ?? []) ?? []
   );
 }
 
@@ -124,16 +144,37 @@ export function getStockInputFromVariant(
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateData_product
 ): AttributeInput[] {
-  return product?.productType?.variantAttributes?.map(attribute => ({
-    data: {
-      inputType: attribute.inputType,
-      isRequired: attribute.valueRequired,
-      values: attribute.values
-    },
-    id: attribute.id,
-    label: attribute.name,
-    value: [""]
-  }));
+  const selectionAttributeInput = product?.productType?.selectionVariantAttributes?.map(
+    attribute => ({
+      data: {
+        inputType: attribute.inputType,
+        isRequired: attribute.valueRequired,
+        values: attribute.values,
+        variantAttributeScope: VariantAttributeScope.VARIANT_SELECTION
+      },
+      id: attribute.id,
+      label: attribute.name,
+      value: [""]
+    })
+  );
+
+  const notSelectionAttributeInput = product?.productType?.notSelectionVariantAttributes?.map(
+    attribute => ({
+      data: {
+        inputType: attribute.inputType,
+        isRequired: attribute.valueRequired,
+        values: attribute.values,
+        variantAttributeScope: VariantAttributeScope.NOT_VARIANT_SELECTION
+      },
+      id: attribute.id,
+      label: attribute.name,
+      value: [""]
+    })
+  );
+
+  return (
+    selectionAttributeInput?.concat(notSelectionAttributeInput ?? []) ?? []
+  );
 }
 
 export function getStockInputFromProduct(
@@ -170,6 +211,24 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
     []
   );
 }
+
+export const getAttributesDisplayData = (
+  attributes: AttributeInput[],
+  attributesWithNewFileValue: FormsetData<null, File>
+) =>
+  attributes.map(attribute => {
+    const attributeWithNewFileValue = attributesWithNewFileValue.find(
+      attributeWithNewFile => attribute.id === attributeWithNewFile.id
+    );
+
+    if (attributeWithNewFileValue) {
+      return {
+        ...attribute,
+        value: [attributeWithNewFileValue.value.name]
+      };
+    }
+    return attribute;
+  });
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;

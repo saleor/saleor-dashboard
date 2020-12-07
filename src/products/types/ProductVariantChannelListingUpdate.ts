@@ -20,48 +20,92 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   value: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute_values_file {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute_values {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute_values_file | null;
+  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute_values | null)[] | null;
+  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_values_file {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_values {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_values_file | null;
+  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes {
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_attribute;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes_values | null)[];
+  attribute: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute;
+  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values | null)[];
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute_values_file | null;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute_values | null)[] | null;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_values_file | null;
+}
+
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes {
+  __typename: "SelectedAttribute";
+  attribute: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_attribute;
+  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes_values | null)[];
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images {
@@ -210,7 +254,8 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   id: string;
   metadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_metadata | null)[];
   privateMetadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_privateMetadata | null)[];
-  attributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_attributes[];
+  selectionAttributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes[];
+  notSelectionAttributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_notSelectionAttributes[];
   images: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_images | null)[] | null;
   name: string;
   product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;

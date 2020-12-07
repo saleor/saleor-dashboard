@@ -27,48 +27,92 @@ export interface VariantCreate_productVariantCreate_productVariant_privateMetada
   value: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute_values_file {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute_values {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantCreate_productVariantCreate_productVariant_attributes_attribute_values_file | null;
+  file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values_file | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (VariantCreate_productVariantCreate_productVariant_attributes_attribute_values | null)[] | null;
+  values: (VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes_values_file {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes_values {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantCreate_productVariantCreate_productVariant_attributes_values_file | null;
+  file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_values_file | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_attributes {
+export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: VariantCreate_productVariantCreate_productVariant_attributes_attribute;
-  values: (VariantCreate_productVariantCreate_productVariant_attributes_values | null)[];
+  attribute: VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute;
+  values: (VariantCreate_productVariantCreate_productVariant_selectionAttributes_values | null)[];
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute_values_file | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute_values | null)[] | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_values_file | null;
+}
+
+export interface VariantCreate_productVariantCreate_productVariant_notSelectionAttributes {
+  __typename: "SelectedAttribute";
+  attribute: VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_attribute;
+  values: (VariantCreate_productVariantCreate_productVariant_notSelectionAttributes_values | null)[];
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_images {
@@ -217,7 +261,8 @@ export interface VariantCreate_productVariantCreate_productVariant {
   id: string;
   metadata: (VariantCreate_productVariantCreate_productVariant_metadata | null)[];
   privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
-  attributes: VariantCreate_productVariantCreate_productVariant_attributes[];
+  selectionAttributes: VariantCreate_productVariantCreate_productVariant_selectionAttributes[];
+  notSelectionAttributes: VariantCreate_productVariantCreate_productVariant_notSelectionAttributes[];
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;

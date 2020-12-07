@@ -1,6 +1,8 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import Attributes from "@saleor/components/Attributes";
+import Attributes, {
+  VariantAttributeScope
+} from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -90,11 +92,37 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             </div>
             <div>
               <Attributes
-                attributes={data.attributes}
+                title={intl.formatMessage({
+                  defaultMessage: "Variant Attributes",
+                  description: "attributes, section header"
+                })}
+                attributes={data.attributes.filter(
+                  attribute =>
+                    attribute.data.variantAttributeScope ===
+                    VariantAttributeScope.NOT_VARIANT_SELECTION
+                )}
                 disabled={disabled}
                 errors={errors}
                 onChange={handlers.selectAttribute}
                 onMultiChange={handlers.selectAttributeMultiple}
+                onFileChange={handlers.selectAttributeFile}
+              />
+              <CardSpacer />
+              <Attributes
+                title={intl.formatMessage({
+                  defaultMessage: "Variant Selection Attributes",
+                  description: "attributes, section header"
+                })}
+                attributes={data.attributes.filter(
+                  attribute =>
+                    attribute.data.variantAttributeScope ===
+                    VariantAttributeScope.VARIANT_SELECTION
+                )}
+                disabled={disabled}
+                errors={errors}
+                onChange={handlers.selectAttribute}
+                onMultiChange={handlers.selectAttributeMultiple}
+                onFileChange={handlers.selectAttributeFile}
               />
               <CardSpacer />
               <ProductShipping

@@ -9,7 +9,10 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { ProductVariant_attributes_attribute_values } from "@saleor/fragments/types/ProductVariant";
+import {
+  ProductVariant_notSelectionAttributes_attribute_values,
+  ProductVariant_selectionAttributes_attribute_values
+} from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
@@ -17,7 +20,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
-  values: ProductVariant_attributes_attribute_values[];
+  values: Array<
+    | ProductVariant_selectionAttributes_attribute_values
+    | ProductVariant_notSelectionAttributes_attribute_values
+  >;
 }
 export type VariantAttributeInput = FormsetAtomicData<
   VariantAttributeInputData,

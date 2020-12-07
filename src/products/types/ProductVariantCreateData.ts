@@ -27,34 +27,59 @@ export interface ProductVariantCreateData_product_channelListings {
   channel: ProductVariantCreateData_product_channelListings_channel;
 }
 
-export interface ProductVariantCreateData_product_productType_variantAttributes_values_file {
+export interface ProductVariantCreateData_product_productType_selectionVariantAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantCreateData_product_productType_variantAttributes_values {
+export interface ProductVariantCreateData_product_productType_selectionVariantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantCreateData_product_productType_variantAttributes_values_file | null;
+  file: ProductVariantCreateData_product_productType_selectionVariantAttributes_values_file | null;
 }
 
-export interface ProductVariantCreateData_product_productType_variantAttributes {
+export interface ProductVariantCreateData_product_productType_selectionVariantAttributes {
   __typename: "Attribute";
   id: string;
-  slug: string | null;
   name: string | null;
+  slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (ProductVariantCreateData_product_productType_variantAttributes_values | null)[] | null;
+  values: (ProductVariantCreateData_product_productType_selectionVariantAttributes_values | null)[] | null;
+}
+
+export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values_file | null;
+}
+
+export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values | null)[] | null;
 }
 
 export interface ProductVariantCreateData_product_productType {
   __typename: "ProductType";
   id: string;
-  variantAttributes: (ProductVariantCreateData_product_productType_variantAttributes | null)[] | null;
+  selectionVariantAttributes: (ProductVariantCreateData_product_productType_selectionVariantAttributes | null)[] | null;
+  notSelectionVariantAttributes: (ProductVariantCreateData_product_productType_notSelectionVariantAttributes | null)[] | null;
 }
 
 export interface ProductVariantCreateData_product_thumbnail {

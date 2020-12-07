@@ -26,8 +26,15 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import FileUploadField from "../FileUploadField";
 
+export enum VariantAttributeScope {
+  ALL = "ALL",
+  VARIANT_SELECTION = "VARIANT_SELECTION",
+  NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION"
+}
+
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
+  variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];
 }
@@ -39,6 +46,7 @@ export interface AttributesProps {
   errors: Array<
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
+  title?: React.ReactNode;
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
   onFileChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
@@ -156,6 +164,7 @@ const Attributes: React.FC<AttributesProps> = ({
   attributes,
   disabled,
   errors,
+  title,
   onChange,
   onMultiChange,
   onFileChange
@@ -168,10 +177,14 @@ const Attributes: React.FC<AttributesProps> = ({
   return (
     <Card className={classes.card}>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Attributes",
-          description: "attributes, section header"
-        })}
+        title={
+          title
+            ? title
+            : intl.formatMessage({
+                defaultMessage: "Attributes",
+                description: "attributes, section header"
+              })
+        }
       />
       <CardContent className={classes.cardContent}>
         <div className={classes.expansionBar}>
