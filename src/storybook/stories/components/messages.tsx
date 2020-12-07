@@ -19,14 +19,14 @@ const Story: React.FC<IMessage> = ({
   title,
   text
 }) => {
-  const pushMessage = useNotifier();
+  const notify = useNotifier();
 
   return (
     <Button
       color="primary"
       variant="contained"
       onClick={() =>
-        pushMessage({
+        notify({
           actionBtn,
           expandText,
           onUndo: onUndo ? () => undefined : undefined,

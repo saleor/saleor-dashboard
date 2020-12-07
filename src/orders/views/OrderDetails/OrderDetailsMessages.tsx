@@ -57,7 +57,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   params
 }) => {
   const navigate = useNavigator();
-  const pushMessage = useNotifier();
+  const notify = useNotifier();
   const intl = useIntl();
 
   const [, closeModal] = createDialogActionHandlers(
@@ -69,7 +69,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handlePaymentCapture = (data: OrderCapture) => {
     const errs = data.orderCapture?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Payment successfully captured"
@@ -81,7 +81,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order marked as paid"
@@ -93,7 +93,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderCancel = (data: OrderCancel) => {
     const errs = data.orderCancel?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully cancelled"
@@ -105,7 +105,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftCancel = (data: OrderDraftCancel) => {
     const errs = data.draftOrderDelete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully cancelled"
@@ -117,7 +117,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderVoid = (data: OrderVoid) => {
     const errs = data.orderVoid?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order payment successfully voided"
@@ -129,7 +129,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleNoteAdd = (data: OrderAddNote) => {
     const errs = data.orderAddNote?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Note successfully added"
@@ -140,7 +140,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleUpdate = (data: OrderUpdate) => {
     const errs = data.orderUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
@@ -152,7 +152,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftUpdate = (data: OrderDraftUpdate) => {
     const errs = data.draftOrderUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
@@ -164,7 +164,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Shipping method successfully updated"
@@ -176,7 +176,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLineDelete = (data: OrderLineDelete) => {
     const errs = data.draftOrderLineDelete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line deleted"
@@ -187,7 +187,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
     const errs = data.draftOrderLinesCreate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line added"
@@ -199,7 +199,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
     const errs = data.draftOrderLineUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line updated"
@@ -210,7 +210,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully cancelled"
@@ -224,7 +224,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   ) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully updated"
@@ -236,7 +236,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftFinalize = (data: OrderDraftFinalize) => {
     const errs = data.draftOrderComplete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           defaultMessage: "Draft order successfully finalized"
@@ -247,7 +247,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         text: intl.formatMessage({
           defaultMessage:
             "We’re generating the invoice you requested. Please wait a couple of moments"
@@ -262,7 +262,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceGenerateFinished = (data: InvoiceRequest) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage(messages.invoiceGenerateFinishedText),
         title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
@@ -273,7 +273,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceSend = (data: InvoiceEmailSend) => {
     const errs = data.invoiceSendEmail?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         text: intl.formatMessage({
           defaultMessage: "Invoice email sent"
         })
