@@ -246,7 +246,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {hasChannelsLoaded ? (
                     <Money money={channel?.minSpent} />
                   ) : (
-                    <Skeleton />
+                    "-"
                   )}
                 </TableCell>
                 <TableCell className={classes.colStart}>
@@ -284,7 +284,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                       <Percent amount={channel?.discountValue} />
                     )
                   ) : (
-                    <Skeleton />
+                    "-"
                   )}
                 </TableCell>
                 <TableCell className={classes.colUses}>
