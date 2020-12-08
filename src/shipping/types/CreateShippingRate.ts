@@ -20,6 +20,18 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {
   country: string;
 }
 
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodeRules {
   __typename: "ShippingMethodZipCodeRule";
   id: string;
@@ -95,6 +107,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   id: string;
   countries: (CreateShippingRate_shippingPriceCreate_shippingZone_countries | null)[] | null;
   name: string;
+  metadata: (CreateShippingRate_shippingPriceCreate_shippingZone_metadata | null)[];
+  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods | null)[] | null;
   warehouses: (CreateShippingRate_shippingPriceCreate_shippingZone_warehouses | null)[] | null;

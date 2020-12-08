@@ -14,6 +14,18 @@ export interface ShippingZone_shippingZone_countries {
   country: string;
 }
 
+export interface ShippingZone_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZone_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingZone_shippingZone_shippingMethods_zipCodeRules {
   __typename: "ShippingMethodZipCodeRule";
   id: string;
@@ -121,6 +133,8 @@ export interface ShippingZone_shippingZone {
   id: string;
   countries: (ShippingZone_shippingZone_countries | null)[] | null;
   name: string;
+  metadata: (ShippingZone_shippingZone_metadata | null)[];
+  privateMetadata: (ShippingZone_shippingZone_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
   warehouses: (ShippingZone_shippingZone_warehouses | null)[] | null;

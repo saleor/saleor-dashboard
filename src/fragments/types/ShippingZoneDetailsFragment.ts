@@ -14,6 +14,18 @@ export interface ShippingZoneDetailsFragment_countries {
   country: string;
 }
 
+export interface ShippingZoneDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZoneDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingZoneDetailsFragment_shippingMethods_zipCodeRules {
   __typename: "ShippingMethodZipCodeRule";
   id: string;
@@ -89,6 +101,8 @@ export interface ShippingZoneDetailsFragment {
   id: string;
   countries: (ShippingZoneDetailsFragment_countries | null)[] | null;
   name: string;
+  metadata: (ShippingZoneDetailsFragment_metadata | null)[];
+  privateMetadata: (ShippingZoneDetailsFragment_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (ShippingZoneDetailsFragment_shippingMethods | null)[] | null;
   warehouses: (ShippingZoneDetailsFragment_warehouses | null)[] | null;

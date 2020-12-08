@@ -9,6 +9,18 @@ export const shippingZoneFragment = gql`
       country
     }
     name
+    metadata {
+      key
+      value
+    }
+    metadata {
+      key
+      value
+    }
+    privateMetadata {
+      key
+      value
+    }
   }
 `;
 

@@ -12,11 +12,25 @@ export interface ShippingZones_shippingZones_edges_node_countries {
   country: string;
 }
 
+export interface ShippingZones_shippingZones_edges_node_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZones_shippingZones_edges_node_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingZones_shippingZones_edges_node {
   __typename: "ShippingZone";
   id: string;
   countries: (ShippingZones_shippingZones_edges_node_countries | null)[] | null;
   name: string;
+  metadata: (ShippingZones_shippingZones_edges_node_metadata | null)[];
+  privateMetadata: (ShippingZones_shippingZones_edges_node_privateMetadata | null)[];
 }
 
 export interface ShippingZones_shippingZones_edges {

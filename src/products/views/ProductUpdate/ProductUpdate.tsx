@@ -254,6 +254,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductImage({ variables: { id } });
   const handleImageEdit = (imageId: string) => () =>
     navigate(productImageUrl(id, imageId));
+
   const handleSubmit = createMetadataUpdateHandler(
     product,
     createUpdateHandler(

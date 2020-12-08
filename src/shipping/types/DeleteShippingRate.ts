@@ -20,6 +20,18 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   country: string;
 }
 
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
   __typename: "ShippingMethodZipCodeRule";
   id: string;
@@ -95,6 +107,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   id: string;
   countries: (DeleteShippingRate_shippingPriceDelete_shippingZone_countries | null)[] | null;
   name: string;
+  metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_metadata | null)[];
+  privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods | null)[] | null;
   warehouses: (DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses | null)[] | null;
