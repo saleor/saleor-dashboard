@@ -6,12 +6,6 @@
 // GraphQL query operation: ShippingZones
 // ====================================================
 
-export interface ShippingZones_shippingZones_edges_node_countries {
-  __typename: "CountryDisplay";
-  code: string;
-  country: string;
-}
-
 export interface ShippingZones_shippingZones_edges_node_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -24,13 +18,19 @@ export interface ShippingZones_shippingZones_edges_node_privateMetadata {
   value: string;
 }
 
+export interface ShippingZones_shippingZones_edges_node_countries {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
+}
+
 export interface ShippingZones_shippingZones_edges_node {
   __typename: "ShippingZone";
+  metadata: (ShippingZones_shippingZones_edges_node_metadata | null)[];
+  privateMetadata: (ShippingZones_shippingZones_edges_node_privateMetadata | null)[];
   id: string;
   countries: (ShippingZones_shippingZones_edges_node_countries | null)[] | null;
   name: string;
-  metadata: (ShippingZones_shippingZones_edges_node_metadata | null)[];
-  privateMetadata: (ShippingZones_shippingZones_edges_node_privateMetadata | null)[];
 }
 
 export interface ShippingZones_shippingZones_edges {

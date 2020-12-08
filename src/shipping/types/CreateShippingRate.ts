@@ -14,12 +14,6 @@ export interface CreateShippingRate_shippingPriceCreate_errors {
   field: string | null;
 }
 
-export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {
-  __typename: "CountryDisplay";
-  code: string;
-  country: string;
-}
-
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -30,6 +24,12 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_privateMeta
   __typename: "MetadataItem";
   key: string;
   value: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodeRules {
@@ -104,11 +104,11 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses 
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   __typename: "ShippingZone";
+  metadata: (CreateShippingRate_shippingPriceCreate_shippingZone_metadata | null)[];
+  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata | null)[];
   id: string;
   countries: (CreateShippingRate_shippingPriceCreate_shippingZone_countries | null)[] | null;
   name: string;
-  metadata: (CreateShippingRate_shippingPriceCreate_shippingZone_metadata | null)[];
-  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods | null)[] | null;
   warehouses: (CreateShippingRate_shippingPriceCreate_shippingZone_warehouses | null)[] | null;

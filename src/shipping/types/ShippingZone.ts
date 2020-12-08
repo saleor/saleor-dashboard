@@ -8,12 +8,6 @@ import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTyp
 // GraphQL query operation: ShippingZone
 // ====================================================
 
-export interface ShippingZone_shippingZone_countries {
-  __typename: "CountryDisplay";
-  code: string;
-  country: string;
-}
-
 export interface ShippingZone_shippingZone_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -24,6 +18,12 @@ export interface ShippingZone_shippingZone_privateMetadata {
   __typename: "MetadataItem";
   key: string;
   value: string;
+}
+
+export interface ShippingZone_shippingZone_countries {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
 }
 
 export interface ShippingZone_shippingZone_shippingMethods_zipCodeRules {
@@ -130,11 +130,11 @@ export interface ShippingZone_shippingZone_warehouses {
 
 export interface ShippingZone_shippingZone {
   __typename: "ShippingZone";
+  metadata: (ShippingZone_shippingZone_metadata | null)[];
+  privateMetadata: (ShippingZone_shippingZone_privateMetadata | null)[];
   id: string;
   countries: (ShippingZone_shippingZone_countries | null)[] | null;
   name: string;
-  metadata: (ShippingZone_shippingZone_metadata | null)[];
-  privateMetadata: (ShippingZone_shippingZone_privateMetadata | null)[];
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
   warehouses: (ShippingZone_shippingZone_warehouses | null)[] | null;

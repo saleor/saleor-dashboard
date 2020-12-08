@@ -1,26 +1,18 @@
 import { fragmentMoney } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
+import { metadataFragment } from "./metadata";
+
 export const shippingZoneFragment = gql`
+  ${metadataFragment}
   fragment ShippingZoneFragment on ShippingZone {
+    ...MetadataFragment
     id
     countries {
       code
       country
     }
     name
-    metadata {
-      key
-      value
-    }
-    metadata {
-      key
-      value
-    }
-    privateMetadata {
-      key
-      value
-    }
   }
 `;
 
