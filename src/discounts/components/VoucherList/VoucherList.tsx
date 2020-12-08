@@ -243,10 +243,14 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
-                  {hasChannelsLoaded ? (
-                    <Money money={channel?.minSpent} />
+                  {voucher?.code ? (
+                    hasChannelsLoaded ? (
+                      <Money money={channel?.minSpent} />
+                    ) : (
+                      "-"
+                    )
                   ) : (
-                    "-"
+                    <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colStart}>
@@ -269,22 +273,26 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   className={classes.colValue}
                   onClick={voucher ? onRowClick(voucher.id) : undefined}
                 >
-                  {hasChannelsLoaded ? (
-                    voucher.discountValueType ===
-                    DiscountValueTypeEnum.FIXED ? (
-                      <Money
-                        money={
-                          channel?.discountValue && {
-                            amount: channel?.discountValue,
-                            currency: channel?.currency
+                  {voucher?.code ? (
+                    hasChannelsLoaded ? (
+                      voucher.discountValueType ===
+                      DiscountValueTypeEnum.FIXED ? (
+                        <Money
+                          money={
+                            channel?.discountValue && {
+                              amount: channel?.discountValue,
+                              currency: channel?.currency
+                            }
                           }
-                        }
-                      />
+                        />
+                      ) : (
+                        <Percent amount={channel?.discountValue} />
+                      )
                     ) : (
-                      <Percent amount={channel?.discountValue} />
+                      "-"
                     )
                   ) : (
-                    "-"
+                    <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colUses}>
