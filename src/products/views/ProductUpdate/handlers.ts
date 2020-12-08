@@ -9,7 +9,10 @@ import {
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
 } from "@saleor/products/types/ProductChannelListingUpdate";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
+import {
+  ProductDetails_product,
+  ProductDetails_product_variants
+} from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
 import {
@@ -34,6 +37,7 @@ import {
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
+import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
@@ -236,6 +240,13 @@ export function createImageReorderHandler(
   };
 }
 
+function areVariantsEqual(
+  a: ProductDetails_product_variants,
+  b: ProductDetails_product_variants
+) {
+  return a.id === b.id;
+}
+
 export function createVariantReorderHandler(
   product:
     | ProductDetails_product
@@ -244,9 +255,20 @@ export function createVariantReorderHandler(
   reorderProductVariants: (variables: ProductVariantReorderVariables) => void
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
+    const oldVariantOrder = [...product.variants];
+
+    product.variants = [
+      ...(move(
+        product.variants[oldIndex],
+        product!.variants,
+        areVariantsEqual,
+        newIndex
+      ) as ProductDetails_product_variants[])
+    ];
+
     reorderProductVariants({
       move: {
-        id: product.variants[oldIndex].id,
+        id: oldVariantOrder[oldIndex].id,
         sortOrder: newIndex - oldIndex
       },
       productId: product.id
