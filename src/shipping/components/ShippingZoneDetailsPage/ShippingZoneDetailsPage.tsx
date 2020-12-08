@@ -94,8 +94,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const initialForm: FormData = {
     name: shippingZone?.name || "",
     warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || [],
-    metadata: [],
-    privateMetadata: []
+    metadata: shippingZone?.metadata || [],
+    privateMetadata: shippingZone?.privateMetadata || []
   };
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]
