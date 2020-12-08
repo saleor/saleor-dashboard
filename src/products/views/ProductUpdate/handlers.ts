@@ -244,7 +244,7 @@ function areVariantsEqual(
   a: ProductDetails_product_variants,
   b: ProductDetails_product_variants
 ) {
-  return a.name === b.name;
+  return a.id === b.id;
 }
 
 export function createVariantReorderHandler(
