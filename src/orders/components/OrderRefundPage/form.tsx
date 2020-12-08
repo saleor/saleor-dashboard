@@ -8,8 +8,18 @@ import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
+export enum OrderRefundType {
+  MISCELLANEOUS = "miscellaneous",
+  PRODUCTS = "products"
+}
+export enum OrderRefundAmountCalculationMode {
+  AUTOMATIC = "automatic",
+  MANUAL = "manual"
+}
+
 export interface OrderRefundData {
   amount: number | string;
+  type: OrderRefundType;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
@@ -49,91 +59,130 @@ function getOrderRefundPageFormData(
 ): OrderRefundData {
   return {
     amount: undefined,
-    refundShipmentCosts: false
+    amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
+    refundShipmentCosts: false,
+    type: defaultType
   };
 }
 
 function useOrderRefundForm(
   order: OrderRefundData_order,
+  defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
-  const form = useForm(getOrderRefundPageFormData());
+  const [changed, setChanged] = React.useState(false);
+  const triggerChange = () => setChanged(true);
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-  };
-
-  const getParsedLineData = ({ id }, value = 0) => ({
-    data: null,
-    id,
-    label: null,
-    value
-  });
-
-  const unfulfiledItemsQuantites = useFormset<null, number>(
+  const form = useForm(getOrderRefundPageFormData(defaultType));
+  const refundedProductQuantities = useFormset<null, string>(
     order?.lines
       .filter(line => line.quantityFulfilled !== line.quantity)
-      .map(getParsedLineData)
+      .map(line => ({
+        data: null,
+        id: line.id,
+        label: null,
+        value: "0"
+      }))
   );
-
-  const fulfiledItemsQuatities = useFormset<null, number>(
+  const refundedFulfilledProductQuantities = useFormset<null, string>(
     order?.fulfillments
       .filter(fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED)
       .reduce(
         (linesQty, fulfillemnt) =>
-          linesQty.concat(fulfillemnt.lines.map(getParsedLineData)),
+          linesQty.concat(
+            fulfillemnt.lines.map(fulfillmentLine => ({
+              data: null,
+              id: fulfillmentLine.id,
+              label: null,
+              value: "0"
+            }))
+          ),
         []
       )
   );
 
-  const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetData<
-      null,
-      number
-    > = unfulfiledItemsQuantites.data.map(({ id }) => {
-      const line = order.lines.find(line => line.id === id);
-      const value = line.quantity - line.quantityFulfilled;
-
-      return getParsedLineData(line, value);
-    });
-
-    unfulfiledItemsQuantites.set(newQuantities);
+  const handleChange: FormChange = (event, cb) => {
+    form.change(event, cb);
+    triggerChange();
   };
-
-  const handleSetMaximalFulfiledItemsQuantities = (fulfillmentId: string) => {
-    const fulfillment = order.fulfillments.find(
-      ({ id }) => id === fulfillmentId
-    );
-
+  const handleRefundedProductQuantityChange: FormsetChange<string> = (
+    id,
+    value
+  ) => {
+    triggerChange();
+    refundedProductQuantities.change(id, value);
+  };
+  const handleRefundedFulFilledProductQuantityChange = (
+    id: string,
+    value: string
+  ) => {
+    triggerChange();
+    refundedFulfilledProductQuantities.change(id, value);
+  };
+  const handleMaximalRefundedProductQuantitiesSet = () => {
     const newQuantities: FormsetData<
       null,
-      number
-    > = fulfiledItemsQuatities.data.map(({ id }) => {
-      const line = fulfillment.lines.find(line => line.id === id);
+      string
+    > = refundedProductQuantities.data.map(selectedLine => {
+      const line = order.lines.find(line => line.id === selectedLine.id);
 
-      return getParsedLineData(line, line.quantity);
+      return {
+        data: null,
+        id: line.id,
+        label: null,
+        value: (line.quantity - line.quantityFulfilled).toString()
+      };
     });
+    refundedProductQuantities.set(newQuantities);
+    triggerChange();
+  };
+  const handleMaximalRefundedFulfilledProductQuantitiesSet = (
+    fulfillmentId: string
+  ) => {
+    const fulfillment = order.fulfillments.find(
+      fulfillment => fulfillment.id === fulfillmentId
+    );
+    const newQuantities: FormsetData<
+      null,
+      string
+    > = refundedFulfilledProductQuantities.data.map(selectedLine => {
+      const line = fulfillment.lines.find(line => line.id === selectedLine.id);
 
-    fulfiledItemsQuatities.set(newQuantities);
+      if (line) {
+        return {
+          data: null,
+          id: line.id,
+          label: null,
+          value: line.quantity.toString()
+        };
+      }
+      return selectedLine;
+    });
+    refundedFulfilledProductQuantities.set(newQuantities);
+    triggerChange();
   };
 
   const data: OrderRefundFormData = {
-    fulfiledItemsQuantities: fulfiledItemsQuatities.data,
-    unfulfiledItemsQuantities: unfulfiledItemsQuantites.data,
-    ...form.data
+    ...form.data,
+    refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
+    refundedProductQuantities: refundedProductQuantities.data
   };
 
   const submit = () => handleFormSubmit(data, onSubmit, setChanged);
 
+  const disabled = !order;
+
   return {
     change: handleChange,
     data,
+    disabled,
     handlers: {
-      changeFulfiledItemsQuantity: fulfiledProductsQuatities.change,
-      changeUnfulfiledItemsQuantity: unfulfiledProductsQuantites.change,
-      handleSetMaximalFulfiledItemsQuantities,
-      handleSetMaximalUnfulfiledItemsQuantities
+      changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
+      changeRefundedProductQuantity: handleRefundedProductQuantityChange,
+      setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
+      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
     },
+    hasChanged: changed,
     submit
   };
 }
