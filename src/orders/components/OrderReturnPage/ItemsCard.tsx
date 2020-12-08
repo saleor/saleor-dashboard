@@ -62,8 +62,12 @@ const useStyles = makeStyles(
 );
 
 const messages = defineMessages({
+  improperValue: {
+    defaultMessage: "Improper value",
+    description: "error message"
+  },
   titleFulfilled: {
-    defaultMessage: "Fulfillment - #{fulfillmentId}",
+    defaultMessage: "Fulfillment - #{fulfilmentId}",
     description: "section header"
   },
   titleUnfulfilled: {
@@ -74,9 +78,9 @@ const messages = defineMessages({
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: (id: string, value: string) => void;
-  isFulfilment?: boolean;
+  fulfilmentId?: string;
   canReplace?: boolean;
-  lines: OrderDetails_order_lines;
+  lines: OrderDetails_order_lines[];
   itemsSelections: FormsetData<boolean>;
   itemsQuantities: FormsetData<number>;
   onChangeSelected: FormsetChange<boolean>;
@@ -90,153 +94,142 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   onChangeSelected,
   itemsSelections,
   itemsQuantities,
-  isFulfilment = false
+  fulfilmentId
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
-  if (!lines.length) {
-    return null;
-  }
-
   return (
-    <>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(
-            isFulfilment ? messages.titleFulfilled : messages.titleUnfulfilled
-          )}
-        />
-        <CardContent className={classes.cartContent}>
-          <Button
-            className={classes.setMaximalQuantityButton}
-            color="primary"
-            onClick={onSetMaxQuantity}
-            data-test="setMaximalQuantityUnfulfilledButton"
-          >
-            <FormattedMessage
-              defaultMessage="Set maximal quantities"
-              description="button"
-            />
-          </Button>
-        </CardContent>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <FormattedMessage
-                  defaultMessage="Product"
-                  description="table column header"
-                />
-              </TableCell>
-              <TableCell align="right">
-                <FormattedMessage
-                  defaultMessage="Quantity"
-                  description="table column header"
-                />
-              </TableCell>
-              <TableCell align="right">
-                <FormattedMessage
-                  defaultMessage="Return"
-                  description="table column header"
-                />
-              </TableCell>
-              <TableCell align="center">
-                <FormattedMessage
-                  defaultMessage="Replace"
-                  description="table column header"
-                />
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {lines.map(
-              ({
-                quantity,
-                quantityFulfilled,
-                id,
-                thumbnail,
-                unitPrice,
-                productName
-              }) => {
-                const lineQuantity = quantity - quantityFulfilled;
-                const isError = false;
-                const isSelected = itemsSelections.find(getById(id)).value;
-                const currentQuantity = itemsQuantities.find(getById(id)).value;
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(
+          fulfilmentId ? messages.titleFulfilled : messages.titleUnfulfilled,
+          { fulfilmentId }
+        )}
+      />
+      <CardContent className={classes.cartContent}>
+        <Button
+          className={classes.setMaximalQuantityButton}
+          color="primary"
+          onClick={onSetMaxQuantity}
+          data-test="setMaximalQuantityUnfulfilledButton"
+        >
+          <FormattedMessage
+            defaultMessage="Set maximal quantities"
+            description="button"
+          />
+        </Button>
+      </CardContent>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <FormattedMessage
+                defaultMessage="Product"
+                description="table column header"
+              />
+            </TableCell>
+            <TableCell align="right">
+              <FormattedMessage
+                defaultMessage="Quantity"
+                description="table column header"
+              />
+            </TableCell>
+            <TableCell align="right">
+              <FormattedMessage
+                defaultMessage="Return"
+                description="table column header"
+              />
+            </TableCell>
+            <TableCell align="center">
+              <FormattedMessage
+                defaultMessage="Replace"
+                description="table column header"
+              />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {renderCollection(
+            lines,
+            ({
+              quantity,
+              quantityFulfilled,
+              id,
+              thumbnail,
+              unitPrice,
+              productName
+            }) => {
+              const lineQuantity = quantity - quantityFulfilled;
+              const isError = false;
+              const isSelected = itemsSelections.find(getById(id))?.value;
+              const currentQuantity = itemsQuantities.find(getById(id))?.value;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCellAvatar
-                      thumbnail={thumbnail?.url}
-                      style={{ width: "50%" }}
-                    >
-                      {productName || <Skeleton />}
-                    </TableCellAvatar>
-                    <TableCell align="right">
-                      <Money
-                        money={{
-                          amount: unitPrice.gross.amount,
-                          currency: unitPrice.gross.currency
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      <TextField
-                        type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": id,
-                          max: lineQuantity.toString(),
-                          min: 0,
-                          style: { textAlign: "right" }
-                        }}
-                        fullWidth
-                        value={currentQuantity}
-                        onChange={event =>
-                          onChangeQuantity(id, event.target.value)
-                        }
-                        InputProps={{
-                          endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {lineQuantity}
-                            </div>
-                          )
-                        }}
-                        error={isError}
-                        helperText={
-                          isError &&
-                          intl.formatMessage({
-                            defaultMessage: "Improper value",
-                            description: "error message"
-                          })
-                        }
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={() => onChangeSelected(id, !isSelected)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-                // },
-                // () => (
-                //   <TableRow>
-                //     <TableCell colSpan={4}>
-                //       <FormattedMessage defaultMessage="No products found" />
-                //     </TableCell>
-                //   </TableRow>
-                // )
-                // )
-              }
-            )}
-          </TableBody>
-        </Table>
-      </Card>
-    </>
+              return (
+                <TableRow key={id}>
+                  <TableCellAvatar
+                    thumbnail={thumbnail?.url}
+                    style={{ width: "50%" }}
+                  >
+                    {productName || <Skeleton />}
+                  </TableCellAvatar>
+                  <TableCell align="right">
+                    <Money
+                      money={{
+                        amount: unitPrice.gross.amount,
+                        currency: unitPrice.gross.currency
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <TextField
+                      type="number"
+                      inputProps={{
+                        className: classes.quantityInnerInput,
+                        "data-test": "quantityInput",
+                        "data-test-id": id,
+                        max: lineQuantity.toString(),
+                        min: 0,
+                        style: { textAlign: "right" }
+                      }}
+                      fullWidth
+                      value={currentQuantity}
+                      onChange={event =>
+                        onChangeQuantity(id, event.target.value)
+                      }
+                      InputProps={{
+                        endAdornment: lineQuantity && (
+                          <div className={classes.remainingQuantity}>
+                            / {lineQuantity}
+                          </div>
+                        )
+                      }}
+                      error={isError}
+                      helperText={
+                        isError && intl.formatMessage(messages.improperValue)
+                      }
+                    />
+                  </TableCell>
+                  <TableCell align="center">
+                    <Checkbox
+                      checked={isSelected}
+                      onChange={() => onChangeSelected(id, !isSelected)}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={4}>
+                  <Skeleton />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
+    </Card>
   );
 };
 

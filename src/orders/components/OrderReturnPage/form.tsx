@@ -3,12 +3,15 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
+import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useState } from "react";
 
-import { getById } from "./utils";
+import {
+  getById,
+  getFulfilledFulfillemnts,
+  getParsedFulfiledLines
+} from "./utils";
 
 export interface OrderReturnData {
   amount: number | string;
@@ -41,7 +44,7 @@ export interface UseOrderRefundFormResult {
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderRefundData_order;
+  order: OrderDetails_order;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -53,7 +56,7 @@ function getOrderRefundPageFormData(): OrderReturnData {
 }
 
 function useOrderReturnForm(
-  order: OrderRefundData_order,
+  order: OrderDetails_order,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const form = useForm(getOrderRefundPageFormData());
@@ -83,18 +86,34 @@ function useOrderReturnForm(
   );
 
   const fulfiledItemsQuatities = useFormset<null, number>(
-    order?.fulfillments
-      .filter(fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED)
-      .reduce(
-        (linesQty, fulfillemnt) =>
-          linesQty.concat(fulfillemnt.lines.map(getParsedLineData(0))),
-        []
-      )
+    getFulfilledFulfillemnts(order).reduce(
+      (result, { lines }) => [
+        ...result,
+        getParsedFulfiledLines(lines).map(getParsedLineData(0))
+      ],
+      []
+    )
   );
 
-  const itemsToBeReplaced = useFormset<null, boolean>(
-    order?.lines.map(getParsedLineData(true))
-  );
+  const getItemsToBeReplaced = () => {
+    if (!order) {
+      return [];
+    }
+
+    const orderLinesItems = order.lines.map(getParsedLineData(true));
+
+    const fulfilmentsItems = getFulfilledFulfillemnts(order).reduce(
+      (result, { lines }) => [
+        ...result,
+        ...getParsedFulfiledLines(lines).map(getParsedLineData(true))
+      ],
+      []
+    );
+
+    return [...orderLinesItems, ...fulfilmentsItems];
+  };
+
+  const itemsToBeReplaced = useFormset<null, boolean>(getItemsToBeReplaced());
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
     const newQuantities: FormsetData<
