@@ -6,197 +6,173 @@ import useFormset, {
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React from "react";
+import React, { useState } from "react";
 
-export enum OrderRefundType {
-  MISCELLANEOUS = "miscellaneous",
-  PRODUCTS = "products"
-}
-export enum OrderRefundAmountCalculationMode {
-  AUTOMATIC = "automatic",
-  MANUAL = "manual"
-}
+import { getById } from "./utils";
 
-export interface OrderRefundData {
+export interface OrderReturnData {
   amount: number | string;
-  type: OrderRefundType;
   refundShipmentCosts: boolean;
-  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
-export interface OrderRefundHandlers {
-  changeRefundedProductQuantity: FormsetChange<string>;
-  setMaximalRefundedProductQuantities: () => void;
-  changeRefundedFulfilledProductQuantity: FormsetChange<string>;
-  setMaximalRefundedFulfilledProductQuantities: (fulfillmentId: string) => void;
+export interface OrderReturnHandlers {
+  changeFulfiledItemsQuantity: FormsetChange<number>;
+  changeUnfulfiledItemsQuantity: FormsetChange<number>;
+  changeItemsToBeReplaced: FormsetChange<boolean>;
+  handleSetMaximalFulfiledItemsQuantities;
+  handleSetMaximalUnfulfiledItemsQuantities;
 }
 
-export interface OrderRefundFormData extends OrderRefundData {
-  refundedProductQuantities: FormsetData<null, string>;
-  refundedFulfilledProductQuantities: FormsetData<null, string>;
+export interface OrderReturnFormData extends OrderReturnData {
+  itemsToBeReplaced: FormsetData<null, boolean>;
+  fulfiledItemsQuantities: FormsetData<null, number>;
+  unfulfiledItemsQuantities: FormsetData<null, number>;
 }
 
-export type OrderRefundSubmitData = OrderRefundFormData;
+export type OrderRefundSubmitData = OrderReturnFormData;
 
 export interface UseOrderRefundFormResult {
   change: FormChange;
-  data: OrderRefundFormData;
-  disabled: boolean;
-  handlers: OrderRefundHandlers;
   hasChanged: boolean;
+  data: OrderReturnFormData;
+  handlers: OrderReturnHandlers;
   submit: () => Promise<boolean>;
 }
 
-interface OrderRefundFormProps {
+interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
   order: OrderRefundData_order;
-  defaultType: OrderRefundType;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-function getOrderRefundPageFormData(
-  defaultType: OrderRefundType
-): OrderRefundData {
+function getOrderRefundPageFormData(): OrderReturnData {
   return {
     amount: undefined,
-    amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
-    refundShipmentCosts: false,
-    type: defaultType
+    refundShipmentCosts: false
   };
 }
 
-function useOrderRefundForm(
+function useOrderReturnForm(
   order: OrderRefundData_order,
-  defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const form = useForm(getOrderRefundPageFormData());
+  const [hasChanged, setHasChanged] = useState(false);
 
-  const form = useForm(getOrderRefundPageFormData(defaultType));
-  const refundedProductQuantities = useFormset<null, string>(
+  const handleChange: FormChange = (event, cb) => {
+    form.change(event, cb);
+  };
+
+  function getLineItem<T>({ id }: { id: string }, value: T) {
+    return {
+      data: null,
+      id,
+      label: null,
+      value
+    };
+  }
+
+  function getParsedLineData<T>(initialValue: T) {
+    return (item: { id: string }) => getLineItem(item, initialValue);
+  }
+
+  const unfulfiledItemsQuantites = useFormset<null, number>(
     order?.lines
       .filter(line => line.quantityFulfilled !== line.quantity)
-      .map(line => ({
-        data: null,
-        id: line.id,
-        label: null,
-        value: "0"
-      }))
+      .map(getParsedLineData(0))
   );
-  const refundedFulfilledProductQuantities = useFormset<null, string>(
+
+  const fulfiledItemsQuatities = useFormset<null, number>(
     order?.fulfillments
       .filter(fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED)
       .reduce(
         (linesQty, fulfillemnt) =>
-          linesQty.concat(
-            fulfillemnt.lines.map(fulfillmentLine => ({
-              data: null,
-              id: fulfillmentLine.id,
-              label: null,
-              value: "0"
-            }))
-          ),
+          linesQty.concat(fulfillemnt.lines.map(getParsedLineData(0))),
         []
       )
   );
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
-  const handleRefundedProductQuantityChange: FormsetChange<string> = (
-    id,
-    value
-  ) => {
-    triggerChange();
-    refundedProductQuantities.change(id, value);
-  };
-  const handleRefundedFulFilledProductQuantityChange = (
-    id: string,
-    value: string
-  ) => {
-    triggerChange();
-    refundedFulfilledProductQuantities.change(id, value);
-  };
-  const handleMaximalRefundedProductQuantitiesSet = () => {
+  const itemsToBeReplaced = useFormset<null, boolean>(
+    order?.lines.map(getParsedLineData(true))
+  );
+
+  const handleSetMaximalUnfulfiledItemsQuantities = () => {
     const newQuantities: FormsetData<
       null,
-      string
-    > = refundedProductQuantities.data.map(selectedLine => {
-      const line = order.lines.find(line => line.id === selectedLine.id);
+      number
+    > = unfulfiledItemsQuantites.data.map(({ id }) => {
+      const line = order.lines.find(getById(id));
+      const value = line.quantity - line.quantityFulfilled;
 
-      return {
-        data: null,
-        id: line.id,
-        label: null,
-        value: (line.quantity - line.quantityFulfilled).toString()
-      };
+      return getLineItem(line, value);
     });
-    refundedProductQuantities.set(newQuantities);
-    triggerChange();
+
+    unfulfiledItemsQuantites.set(newQuantities);
   };
-  const handleMaximalRefundedFulfilledProductQuantitiesSet = (
-    fulfillmentId: string
-  ) => {
-    const fulfillment = order.fulfillments.find(
-      fulfillment => fulfillment.id === fulfillmentId
-    );
+
+  const handleSetMaximalFulfiledItemsQuantities = (fulfillmentId: string) => {
+    const fulfillment = order.fulfillments.find(getById(fulfillmentId));
+
     const newQuantities: FormsetData<
       null,
-      string
-    > = refundedFulfilledProductQuantities.data.map(selectedLine => {
-      const line = fulfillment.lines.find(line => line.id === selectedLine.id);
+      number
+    > = fulfiledItemsQuatities.data.map(({ id }) => {
+      const line = fulfillment.lines.find(getById(id));
 
-      if (line) {
-        return {
-          data: null,
-          id: line.id,
-          label: null,
-          value: line.quantity.toString()
-        };
-      }
-      return selectedLine;
+      return getLineItem(line, line.quantity);
     });
-    refundedFulfilledProductQuantities.set(newQuantities);
-    triggerChange();
+
+    fulfiledItemsQuatities.set(newQuantities);
   };
 
-  const data: OrderRefundFormData = {
-    ...form.data,
-    refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
-    refundedProductQuantities: refundedProductQuantities.data
+  const data: OrderReturnFormData = {
+    fulfiledItemsQuantities: fulfiledItemsQuatities.data,
+    itemsToBeReplaced: itemsToBeReplaced.data,
+    unfulfiledItemsQuantities: unfulfiledItemsQuantites.data,
+    ...form.data
   };
 
-  const submit = () => handleFormSubmit(data, onSubmit, setChanged);
+  const submit = () => handleFormSubmit(data, onSubmit, setHasChanged);
 
-  const disabled = !order;
+  function handleHandlerChange<T>(callback: (id: string, value: T) => void) {
+    return (id: string, value: T) => {
+      setHasChanged(true);
+      callback(id, value);
+    };
+  }
 
   return {
     change: handleChange,
     data,
-    disabled,
     handlers: {
-      changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
-      changeRefundedProductQuantity: handleRefundedProductQuantityChange,
-      setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
-      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
+      changeFulfiledItemsQuantity: handleHandlerChange(
+        fulfiledItemsQuatities.change
+      ),
+      changeItemsToBeReplaced: handleHandlerChange(itemsToBeReplaced.change),
+      changeUnfulfiledItemsQuantity: handleHandlerChange(
+        unfulfiledItemsQuantites.change
+      ),
+      handleSetMaximalFulfiledItemsQuantities: handleHandlerChange(
+        handleSetMaximalFulfiledItemsQuantities
+      ),
+      handleSetMaximalUnfulfiledItemsQuantities: handleHandlerChange(
+        handleSetMaximalUnfulfiledItemsQuantities
+      )
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }
 
-const OrderRefundForm: React.FC<OrderRefundFormProps> = ({
+const OrderReturnForm: React.FC<OrderReturnProps> = ({
   children,
   order,
-  defaultType,
   onSubmit
 }) => {
-  const props = useOrderRefundForm(order, defaultType, onSubmit);
+  const props = useOrderReturnForm(order, onSubmit);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-OrderRefundForm.displayName = "OrderRefundForm";
-export default OrderRefundForm;
+OrderReturnForm.displayName = "OrderReturnForm";
+export default OrderReturnForm;

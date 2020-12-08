@@ -4,17 +4,14 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { FormsetChange } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import OrderRefundAmount from "../OrderRefundAmount";
-import OrderRefundFulfilledProducts from "../OrderRefundFulfilledProducts";
-import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
-import OrderRefundForm, {
-  OrderRefundSubmitData,
-  OrderRefundType
-} from "./form";
+import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import UnfulfiledItemsCard from "./UnfulfiledItemsCard";
 
 const messages = defineMessages({
   appTitle: {
@@ -27,36 +24,27 @@ const messages = defineMessages({
   }
 });
 
-export interface OrderRefundPageProps {
+export interface OrderReturnPageProps {
   order: OrderDetails_order;
-  defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
-  const {
-    order,
-    defaultType = OrderRefundType.PRODUCTS,
-    disabled,
-    errors = [],
-    onBack,
-    onSubmit
-  } = props;
+const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
+  const { order, disabled, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
 
+  const handleQuantityChange = (
+    callback: (id: string, value: number) => FormsetChange<number>
+  ) => (id: string, value: string) => callback(id, parseInt(value, 10));
+
   return (
-    <OrderRefundForm
-      order={order}
-      defaultType={defaultType}
-      onSubmit={onSubmit}
-    >
+    <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit }) => (
         <Container>
-          {console.log("DATA", data)}
           <AppHeader onBack={onBack}>
             {intl.formatMessage(messages.appTitle, {
               orderNumber: order?.number
@@ -68,18 +56,20 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
             })}
           />
           <Grid>
-            <OrderRefundUnfulfilledProducts
-              order={order}
-              data={data}
-              onRefundedProductQuantityChange={
-                handlers.changeRefundedProductQuantity
-              }
-              onSetMaximalQuantities={
-                handlers.setMaximalRefundedProductQuantities
-              }
-              // disabled={disabled}
-            />
-            {/* {renderCollection(
+            <>
+              lol
+              <UnfulfiledItemsCard
+                order={order}
+                data={data}
+                onChangeQuantity={handleQuantityChange(
+                  handlers.changeUnfulfiledItemsQuantity
+                )}
+                onSetMaxQuantity={
+                  handlers.handleSetMaximalUnfulfiledItemsQuantities
+                }
+                onChangeSelected={handlers.changeItemsToBeReplaced}
+              />
+              {/* {renderCollection(
                     getFulfilledFulfillemnts(order),
                     fulfillment => (
                       <React.Fragment key={fulfillment?.id}>
@@ -101,6 +91,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                       </React.Fragment>
                     )
                   )} */}
+            </>
             <OrderRefundAmount
               data={data}
               order={order}

@@ -5,3 +5,6 @@ export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
   order?.fulfillments.filter(
     fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
   ) || [];
+
+export const getById = (idToCompare: string) => (obj: { id: string }) =>
+  obj.id === idToCompare;
