@@ -185,7 +185,7 @@ export function createUpdateHandler(
 
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
-      errors = result.data.productUpdate.errors;
+      errors = [...errors, ...result.data.productUpdate.errors];
 
       updateChannels({
         variables: getChannelsVariables(data, product)
@@ -206,7 +206,10 @@ export function createUpdateHandler(
             }
           }
         });
-        errors = productVariantResult.data.productVariantCreate.errors;
+        errors = [
+          ...errors,
+          ...productVariantResult.data.productVariantCreate.errors
+        ];
 
         const variantId =
           productVariantResult.data.productVariantCreate?.productVariant?.id;
@@ -233,7 +236,7 @@ export function createUpdateHandler(
             product.variants[0].id
           )
         );
-        errors = getSimpleProductErrors(result.data);
+        errors = [...errors, ...getSimpleProductErrors(result.data)];
 
         await updateChannels({
           variables: getChannelsVariables(data, product)
@@ -267,12 +270,13 @@ export function createUpdateHandler(
         })
       );
 
-      deleteAttributeValuesResult.forEach(deleteValueResult => {
-        errors = [
+      errors = deleteAttributeValuesResult.reduce(
+        (errors, deleteValueResult) => [
           ...errors,
           ...deleteValueResult.data.attributeValueDelete.errors
-        ];
-      });
+        ],
+        errors
+      );
     }
 
     return errors;
