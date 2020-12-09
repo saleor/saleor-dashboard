@@ -23,14 +23,14 @@ import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderRefundAmountValues, {
-  OrderRefundAmountValuesProps
-} from "../OrderRefundAmountValues";
 import {
   OrderRefundAmountCalculationMode,
   OrderRefundFormData,
   OrderRefundType
 } from "../OrderRefundPage/form";
+import OrderRefundAmountValues, {
+  OrderRefundAmountValuesProps
+} from "./OrderRefundReturnAmountValues";
 
 const getMiscellaneousAmountValues = (
   order: OrderRefundData_order
