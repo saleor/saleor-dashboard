@@ -11,7 +11,7 @@ import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import OrderRefundAmount from "../OrderRefundAmount";
+import OrderRefundAmount from "../OrderRefundReturnAmount";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
