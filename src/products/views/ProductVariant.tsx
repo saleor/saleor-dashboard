@@ -274,14 +274,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         })
       );
 
-      deleteAttributeValuesResult.forEach(deleteValueResult => {
-        if (deleteValueResult) {
-          fileAttributeErrors = [
-            ...fileAttributeErrors,
-            ...deleteValueResult.data?.attributeValueDelete.errors
-          ];
-        }
-      });
+      fileAttributeErrors = deleteAttributeValuesResult.reduce(
+        (errors, deleteValueResult) => [
+          ...errors,
+          ...deleteValueResult.data.attributeValueDelete.errors
+        ],
+        fileAttributeErrors
+      );
     }
 
     return [
