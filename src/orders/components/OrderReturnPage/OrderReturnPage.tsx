@@ -11,7 +11,8 @@ import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import OrderRefundAmount from "../OrderRefundReturnAmount";
+import OrderAmount from "../OrderRefundReturnAmount";
+import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
@@ -102,7 +103,8 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               )}
             </div>
             <div>
-              <OrderRefundAmount
+              <OrderAmount
+                amountData={getReturnProductsAmountValues(order, data)}
                 data={data}
                 order={order}
                 disabled={disabled}
