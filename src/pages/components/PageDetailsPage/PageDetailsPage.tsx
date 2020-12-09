@@ -103,8 +103,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   attributes={data.attributes}
                   disabled={disabled}
                   errors={errors}
-                  onChange={handlers.changeAttribute}
-                  onMultiChange={handlers.changeAttributeMulti}
+                  onChange={handlers.selectAttribute}
+                  onMultiChange={handlers.selectAttributeMulti}
+                  onFileChange={handlers.selectAttributeFile}
                 />
               )}
               <CardSpacer />

@@ -1,5 +1,6 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
@@ -12,10 +13,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
-import { PageData } from "../components/PageDetailsPage/form";
+import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
+import { mergeAttributesWithFileUploadResult } from "../utils/data";
+import { prepareAttributesInput } from "../utils/handlers";
 
 export interface PageCreateProps {
   id: string;
@@ -36,6 +39,8 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+
   const handlePageCreate = (data: PageCreateData) => {
     if (data.pageCreate.errors.length === 0) {
       notify({
@@ -51,14 +56,29 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
       {(pageCreate, pageCreateOpts) => {
-        const handleCreate = async (formData: PageData) => {
+        const handleCreate = async (formData: PageSubmitData) => {
+          const uploadFilesResult = await Promise.all(
+            formData.attributesWithNewFileValue.map(fileAttribute =>
+              uploadFile({
+                variables: {
+                  file: fileAttribute.value
+                }
+              })
+            )
+          );
+
+          const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+            formData.attributesWithNewFileValue,
+            uploadFilesResult
+          );
+
           const result = await pageCreate({
             variables: {
               input: {
-                attributes: formData.attributes.map(attribute => ({
-                  id: attribute.id,
-                  values: attribute.value
-                })),
+                attributes: prepareAttributesInput({
+                  attributes: formData.attributes,
+                  attributesWithAddedNewFiles
+                }),
                 contentJson: JSON.stringify(formData.content),
                 isPublished: formData.isPublished,
                 pageType: formData.pageType,
@@ -90,7 +110,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               })}
             />
             <PageDetailsPage
-              disabled={pageCreateOpts.loading}
+              disabled={pageCreateOpts.loading || uploadFileOpts.loading}
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
               page={null}
