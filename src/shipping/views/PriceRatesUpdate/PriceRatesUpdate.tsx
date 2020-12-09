@@ -230,7 +230,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   };
 
   const handleSubmit = createMetadataUpdateHandler(
-    data?.shippingZone,
+    rate,
     updateData,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })

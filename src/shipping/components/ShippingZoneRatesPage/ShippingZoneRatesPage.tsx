@@ -22,6 +22,7 @@ import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -93,8 +94,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     name: rate?.name || "",
     noLimits: false,
     type: rate?.type || null,
-    metadata: rate?.metadata || [],
-    privateMetadata: rate?.privateMetadata || []
+    metadata: rate?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput)
   };
 
   const {
