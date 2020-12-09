@@ -15,6 +15,7 @@ export interface ChannelUpdate_channelUpdate_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface ChannelUpdate_channelUpdate_errors {

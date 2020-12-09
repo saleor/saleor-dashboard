@@ -15,6 +15,7 @@ export interface ChannelDelete_channelDelete_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface ChannelDelete_channelDelete_errors {
