@@ -206,3 +206,10 @@ export const collectionsErrorFragment = gql`
     field
   }
 `;
+
+export const uploadErrorFragment = gql`
+  fragment UploadErrorFragment on UploadError {
+    code
+    field
+  }
+`;

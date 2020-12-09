@@ -1,15 +1,16 @@
 import gql from "graphql-tag";
 
+import { fileFragment } from "./file";
 import { metadataFragment } from "./metadata";
 
 export const attributeValueFragment = gql`
+  ${fileFragment}
   fragment AttributeValueFragment on AttributeValue {
     id
     name
     slug
     file {
-      url
-      contentType
+      ...FileFragment
     }
   }
 `;
