@@ -346,7 +346,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                           max: 1
                         },
                         id: node.voucher?.id,
-                        name: node.voucher?.name
+                        name: node.voucher?.name || "-"
                       }
                   )}
                 onRowClick={id =>
