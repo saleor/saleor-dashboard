@@ -19,6 +19,7 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -94,8 +95,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const initialForm: FormData = {
     name: shippingZone?.name || "",
     warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || [],
-    metadata: shippingZone?.metadata || [],
-    privateMetadata: shippingZone?.privateMetadata || []
+    metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput)
   };
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]
