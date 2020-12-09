@@ -89,7 +89,7 @@ function useOrderReturnForm(
     getFulfilledFulfillemnts(order).reduce(
       (result, { lines }) => [
         ...result,
-        getParsedFulfiledLines(lines).map(getParsedLineData(0))
+        ...getParsedFulfiledLines(lines).map(getParsedLineData(0))
       ],
       []
     )
@@ -126,21 +126,29 @@ function useOrderReturnForm(
       return getLineItem(line, value);
     });
 
+    triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
   };
 
-  const handleSetMaximalFulfiledItemsQuantities = (fulfillmentId: string) => {
-    const fulfillment = order.fulfillments.find(getById(fulfillmentId));
+  const handleSetMaximalFulfiledItemsQuantities = (
+    fulfillmentId: string
+  ) => () => {
+    const { lines } = order.fulfillments.find(getById(fulfillmentId));
 
     const newQuantities: FormsetData<
       null,
       number
-    > = fulfiledItemsQuatities.data.map(({ id }) => {
-      const line = fulfillment.lines.find(getById(id));
+    > = fulfiledItemsQuatities.data.map(item => {
+      const line = lines.find(getById(item.id));
+
+      if (!line) {
+        return item;
+      }
 
       return getLineItem(line, line.quantity);
     });
 
+    triggerChange();
     fulfiledItemsQuatities.set(newQuantities);
   };
 
@@ -153,9 +161,11 @@ function useOrderReturnForm(
 
   const submit = () => handleFormSubmit(data, onSubmit, setHasChanged);
 
+  const triggerChange = () => setHasChanged(true);
+
   function handleHandlerChange<T>(callback: (id: string, value: T) => void) {
     return (id: string, value: T) => {
-      setHasChanged(true);
+      triggerChange();
       callback(id, value);
     };
   }
@@ -171,12 +181,8 @@ function useOrderReturnForm(
       changeUnfulfiledItemsQuantity: handleHandlerChange(
         unfulfiledItemsQuantites.change
       ),
-      handleSetMaximalFulfiledItemsQuantities: handleHandlerChange(
-        handleSetMaximalFulfiledItemsQuantities
-      ),
-      handleSetMaximalUnfulfiledItemsQuantities: handleHandlerChange(
-        handleSetMaximalUnfulfiledItemsQuantities
-      )
+      handleSetMaximalFulfiledItemsQuantities,
+      handleSetMaximalUnfulfiledItemsQuantities
     },
     hasChanged,
     submit

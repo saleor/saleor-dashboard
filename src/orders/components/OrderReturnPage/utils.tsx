@@ -2,9 +2,14 @@ import { OrderDetailsFragment_fulfillments_lines } from "@saleor/fragments/types
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
+const fulfiledStatuses = [
+  FulfillmentStatus.FULFILLED,
+  FulfillmentStatus.REFUNDED
+];
+
 export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
-  order?.fulfillments.filter(
-    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
+  order?.fulfillments.filter(fulfillment =>
+    fulfiledStatuses.includes(fulfillment.status)
   ) || [];
 
 export const getUnfulfilledLines = (order?: OrderDetails_order) =>

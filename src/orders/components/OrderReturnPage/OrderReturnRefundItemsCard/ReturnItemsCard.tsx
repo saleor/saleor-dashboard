@@ -11,18 +11,21 @@ import {
   TableRow,
   TextField
 } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
-import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
+import {
+  OrderDetails_order,
+  OrderDetails_order_lines
+} from "@saleor/orders/types/OrderDetails";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { getById } from "./utils";
+import { getById } from "../utils";
+import CardTitle from "./CardTitle";
+import MaximalButton from "./MaximalButton";
 
 const useStyles = makeStyles(
   theme => {
@@ -81,6 +84,7 @@ interface OrderReturnRefundLinesCardProps {
   fulfilmentId?: string;
   canReplace?: boolean;
   lines: OrderDetails_order_lines[];
+  order: OrderDetails_order;
   itemsSelections: FormsetData<boolean>;
   itemsQuantities: FormsetData<number>;
   onChangeSelected: FormsetChange<boolean>;
@@ -94,31 +98,17 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   onChangeSelected,
   itemsSelections,
   itemsQuantities,
-  fulfilmentId
+  fulfilmentId,
+  order
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(
-          fulfilmentId ? messages.titleFulfilled : messages.titleUnfulfilled,
-          { fulfilmentId }
-        )}
-      />
+      <CardTitle order={order} fulfilmentId={fulfilmentId} />
       <CardContent className={classes.cartContent}>
-        <Button
-          className={classes.setMaximalQuantityButton}
-          color="primary"
-          onClick={onSetMaxQuantity}
-          data-test="setMaximalQuantityUnfulfilledButton"
-        >
-          <FormattedMessage
-            defaultMessage="Set maximal quantities"
-            description="button"
-          />
-        </Button>
+        <MaximalButton onClick={onSetMaxQuantity} />
       </CardContent>
       <Table>
         <TableHead>
@@ -131,7 +121,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
             </TableCell>
             <TableCell align="right">
               <FormattedMessage
-                defaultMessage="Quantity"
+                defaultMessage="Price"
                 description="table column header"
               />
             </TableCell>
@@ -158,10 +148,14 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               id,
               thumbnail,
               unitPrice,
-              productName
+              productName,
+              variant
             }) => {
-              const lineQuantity = quantity - quantityFulfilled;
               const isError = false;
+              const isReplacable = !!variant;
+              const lineQuantity = fulfilmentId
+                ? quantity
+                : quantity - quantityFulfilled;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
 
@@ -211,10 +205,12 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     />
                   </TableCell>
                   <TableCell align="center">
-                    <Checkbox
-                      checked={isSelected}
-                      onChange={() => onChangeSelected(id, !isSelected)}
-                    />
+                    {isReplacable && (
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={() => onChangeSelected(id, !isSelected)}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               );

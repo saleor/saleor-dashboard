@@ -13,7 +13,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import OrderRefundAmount from "../OrderRefundAmount";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
-import ItemsCard from "./ItemsCard";
+import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
   getParsedFulfiledLines,
@@ -48,6 +48,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
     callback: (id: string, value: number) => FormsetChange<number>
   ) => (id: string, value: string) => callback(id, parseInt(value, 10));
 
+  console.log({ order });
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit }) => (
@@ -65,6 +66,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           <Grid>
             <div>
               <ItemsCard
+                order={order}
                 lines={getUnfulfilledLines(order)}
                 itemsQuantities={data.unfulfiledItemsQuantities}
                 itemsSelections={data.itemsToBeReplaced}
@@ -82,6 +84,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                   <React.Fragment key={id}>
                     <CardSpacer />
                     <ItemsCard
+                      order={order}
                       fulfilmentId={id}
                       lines={getParsedFulfiledLines(lines)}
                       itemsQuantities={data.fulfiledItemsQuantities}
@@ -89,23 +92,25 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                       onChangeQuantity={handleQuantityChange(
                         handlers.changeFulfiledItemsQuantity
                       )}
-                      onSetMaxQuantity={
-                        handlers.handleSetMaximalUnfulfiledItemsQuantities
-                      }
+                      onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(
+                        id
+                      )}
                       onChangeSelected={handlers.changeItemsToBeReplaced}
                     />
                   </React.Fragment>
                 )
               )}
             </div>
-            <OrderRefundAmount
-              data={data}
-              order={order}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-              onRefund={submit}
-            />
+            <div>
+              <OrderRefundAmount
+                data={data}
+                order={order}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                onRefund={submit}
+              />
+            </div>
           </Grid>
         </Container>
       )}
