@@ -28,11 +28,14 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import {
+  mergeAttributesWithFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/products/utils/data";
+import {
   getAttributesVariables,
   getAvailabilityVariables
 } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-import { AttributeValueInput } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
@@ -92,21 +95,11 @@ export function createHandler(
       )
     );
 
-    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
-      (attributesWithAddedFiles, uploadFileResult, index) => {
-        const attribute = formData.attributesWithNewFileValue[index];
+    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
 
-        errors = [...errors, ...uploadFileResult.data.fileUpload.uploadErrors];
-        return [
-          ...attributesWithAddedFiles,
-          {
-            file: uploadFileResult.data.fileUpload.uploadedFile.url,
-            id: attribute.id,
-            values: []
-          }
-        ];
-      },
-      []
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      formData.attributesWithNewFileValue,
+      uploadFilesResult
     );
 
     const productVariables: ProductCreateVariables = {

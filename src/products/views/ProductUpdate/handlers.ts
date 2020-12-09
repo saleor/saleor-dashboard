@@ -41,17 +41,27 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import {
+  mapFormsetStockToStockInput,
+  mergeAttributesWithFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { getAttributesVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
+import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
+
+type SubmitErrors = Array<
+  | ProductErrorFragment
+  | StockErrorFragment
+  | BulkStockErrorFragment
+  | AttributeErrorFragment
+  | UploadErrorFragment
+  | ProductChannelListingErrorFragment
+>;
 
 const getSimpleProductVariables = (
   productVariables: ProductUpdateVariables,
@@ -134,14 +144,7 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<AttributeValueDelete>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
-    let errors: Array<
-      | ProductErrorFragment
-      | StockErrorFragment
-      | BulkStockErrorFragment
-      | AttributeErrorFragment
-      | UploadErrorFragment
-      | ProductChannelListingErrorFragment
-    > = [];
+    let errors: SubmitErrors = [];
 
     const uploadFilesResult = await Promise.all(
       data.attributesWithNewFileValue.map(fileAttribute =>
@@ -151,21 +154,11 @@ export function createUpdateHandler(
       )
     );
 
-    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
-      (attributesWithAddedFiles, uploadFileResult, index) => {
-        const attribute = data.attributesWithNewFileValue[index];
+    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
 
-        errors = [...errors, ...uploadFileResult.data.fileUpload.uploadErrors];
-        return [
-          ...attributesWithAddedFiles,
-          {
-            file: uploadFileResult.data.fileUpload.uploadedFile.url,
-            id: attribute.id,
-            values: []
-          }
-        ];
-      },
-      []
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      data.attributesWithNewFileValue,
+      uploadFilesResult
     );
 
     const productVariables: ProductUpdateVariables = {
