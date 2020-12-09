@@ -251,7 +251,7 @@ export const product: (
     hasVariants: true,
     id: "pt76406",
     name: "Versatile",
-    notSelectionVariantAttributes: [
+    nonSelectionVariantAttributes: [
       {
         __typename: "Attribute",
         id: "isdugfhud",
@@ -2674,7 +2674,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
-  notSelectionAttributes: [
+  nonSelectionAttributes: [
     {
       __typename: "SelectedAttribute",
       attribute: {

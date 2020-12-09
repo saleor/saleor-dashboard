@@ -5,7 +5,7 @@ import {
   productFragment,
   productFragmentDetails,
   productVariantAttributesFragment,
-  selectedProductTypeVariantAttributeFragment
+  variantAttributeFragment
 } from "@saleor/fragments/products";
 import { taxTypeFragment } from "@saleor/fragments/taxes";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
@@ -187,7 +187,7 @@ export const useProductVariantQuery = makeQuery<
 >(productVariantQuery);
 
 const productVariantCreateQuery = gql`
-  ${selectedProductTypeVariantAttributeFragment}
+  ${variantAttributeFragment}
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {
       id
@@ -209,12 +209,12 @@ const productVariantCreateQuery = gql`
         selectionVariantAttributes: variantAttributes(
           variantSelection: VARIANT_SELECTION
         ) {
-          ...SelectedProductTypeVariantAttributeFragment
+          ...VariantAttributeFragment
         }
-        notSelectionVariantAttributes: variantAttributes(
+        nonSelectionVariantAttributes: variantAttributes(
           variantSelection: NOT_VARIANT_SELECTION
         ) {
-          ...SelectedProductTypeVariantAttributeFragment
+          ...VariantAttributeFragment
         }
       }
       thumbnail {

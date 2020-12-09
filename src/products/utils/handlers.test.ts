@@ -67,13 +67,13 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
             contentType: "image/png",
             url: "some-non-existing-url"
           },
-          id: "gdghdgdhkkdae",
+          id: "attrv-5",
           name: "File First Value",
           slug: "file-first-value"
         }
       ]
     },
-    id: "ifudbgidfsb",
+    id: "attr-3",
     label: "File Attribute",
     value: []
   }

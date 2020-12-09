@@ -6,7 +6,11 @@ import {
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { FileUpload } from "@saleor/files/types/FileUpload";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
@@ -15,10 +19,16 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
-import { StockInput } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueInput,
+  StockInput
+} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { MutationFetchResult } from "react-apollo";
 
 import { ProductStockInput } from "../components/ProductStocks";
+import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
@@ -37,6 +47,23 @@ export interface ProductType {
   name: string;
   productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
 }
+
+export const isFileValueUnused = (
+  data: ProductVariantUpdateSubmitData,
+  existingAttribute: SelectedVariantAttributeFragment
+) => {
+  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
+    return false;
+  }
+  if (existingAttribute.values.length === 0) {
+    return false;
+  }
+
+  const modifiedAttribute = data.attributes.find(
+    dataAttribute => dataAttribute.id === existingAttribute.attribute.id
+  );
+  return modifiedAttribute.value.length === 0;
+};
 
 export function getAttributeInputFromProduct(
   product: ProductDetails_product
@@ -92,39 +119,72 @@ export function getAttributeInputFromProductType(
   }));
 }
 
+export function getAttributeInputFromAttributes(
+  variantAttributes: VariantAttributeFragment[],
+  variantAttributeScope: VariantAttributeScope
+): AttributeInput[] {
+  return variantAttributes?.map(attribute => ({
+    data: {
+      inputType: attribute.inputType,
+      isRequired: attribute.valueRequired,
+      values: attribute.values,
+      variantAttributeScope
+    },
+    id: attribute.id,
+    label: attribute.name,
+    value: [""]
+  }));
+}
+
+export function getAttributeInputFromSelectedAttributes(
+  variantAttributes: SelectedVariantAttributeFragment[],
+  variantAttributeScope: VariantAttributeScope
+): AttributeInput[] {
+  return variantAttributes?.map(attribute => ({
+    data: {
+      inputType: attribute.attribute.inputType,
+      isRequired: attribute.attribute.valueRequired,
+      values: attribute.attribute.values,
+      variantAttributeScope
+    },
+    id: attribute.attribute.id,
+    label: attribute.attribute.name,
+    value: [(attribute.values.length && attribute.values[0]?.slug) || null]
+  }));
+}
+
 export function getAttributeInputFromVariant(
   variant: ProductVariant
 ): AttributeInput[] {
-  const selectionAttributeInput = variant?.selectionAttributes?.map(
-    attribute => ({
-      data: {
-        inputType: attribute.attribute.inputType,
-        isRequired: attribute.attribute.valueRequired,
-        values: attribute.attribute.values,
-        variantAttributeScope: VariantAttributeScope.VARIANT_SELECTION
-      },
-      id: attribute.attribute.id,
-      label: attribute.attribute.name,
-      value: [(attribute.values.length && attribute.values[0]?.slug) || null]
-    })
+  const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
+    variant?.selectionAttributes,
+    VariantAttributeScope.VARIANT_SELECTION
   );
-
-  const notSelectionAttributeInput = variant?.notSelectionAttributes?.map(
-    attribute => ({
-      data: {
-        inputType: attribute.attribute.inputType,
-        isRequired: attribute.attribute.valueRequired,
-        values: attribute.attribute.values,
-        variantAttributeScope: VariantAttributeScope.NOT_VARIANT_SELECTION
-      },
-      id: attribute.attribute.id,
-      label: attribute.attribute.name,
-      value: [(attribute.values.length && attribute.values[0]?.slug) || null]
-    })
+  const nonSelectionAttributeInput = getAttributeInputFromSelectedAttributes(
+    variant?.nonSelectionAttributes,
+    VariantAttributeScope.NOT_VARIANT_SELECTION
   );
 
   return (
-    selectionAttributeInput?.concat(notSelectionAttributeInput ?? []) ?? []
+    selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? []
+  );
+}
+
+export function getVariantAttributeInputFromProduct(
+  product: ProductVariantCreateData_product
+): AttributeInput[] {
+  const selectionAttributeInput = getAttributeInputFromAttributes(
+    product?.productType?.selectionVariantAttributes,
+    VariantAttributeScope.VARIANT_SELECTION
+  );
+
+  const nonSelectionAttributeInput = getAttributeInputFromAttributes(
+    product?.productType?.nonSelectionVariantAttributes,
+    VariantAttributeScope.NOT_VARIANT_SELECTION
+  );
+
+  return (
+    selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? []
   );
 }
 
@@ -138,42 +198,6 @@ export function getStockInputFromVariant(
       label: stock.warehouse.name,
       value: stock.quantity.toString()
     })) || []
-  );
-}
-
-export function getVariantAttributeInputFromProduct(
-  product: ProductVariantCreateData_product
-): AttributeInput[] {
-  const selectionAttributeInput = product?.productType?.selectionVariantAttributes?.map(
-    attribute => ({
-      data: {
-        inputType: attribute.inputType,
-        isRequired: attribute.valueRequired,
-        values: attribute.values,
-        variantAttributeScope: VariantAttributeScope.VARIANT_SELECTION
-      },
-      id: attribute.id,
-      label: attribute.name,
-      value: [""]
-    })
-  );
-
-  const notSelectionAttributeInput = product?.productType?.notSelectionVariantAttributes?.map(
-    attribute => ({
-      data: {
-        inputType: attribute.inputType,
-        isRequired: attribute.valueRequired,
-        values: attribute.values,
-        variantAttributeScope: VariantAttributeScope.NOT_VARIANT_SELECTION
-      },
-      id: attribute.id,
-      label: attribute.name,
-      value: [""]
-    })
-  );
-
-  return (
-    selectionAttributeInput?.concat(notSelectionAttributeInput ?? []) ?? []
   );
 }
 
@@ -293,3 +317,27 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
+
+export const mergeFileUploadErrors = (
+  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+): UploadErrorFragment[] =>
+  uploadFilesResult.reduce((errors, uploadFileResult) => {
+    const uploadErrors = uploadFileResult.data.fileUpload.uploadErrors;
+    if (uploadErrors) {
+      return [...errors, ...uploadErrors];
+    }
+  }, []);
+
+export const mergeAttributesWithFileUploadResult = (
+  attributesWithNewFileValue: FormsetData<null, File>,
+  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+): AttributeValueInput[] =>
+  uploadFilesResult.map((uploadFileResult, index) => {
+    const attribute = attributesWithNewFileValue[index];
+
+    return {
+      file: uploadFileResult.data.fileUpload.uploadedFile.url,
+      id: attribute.id,
+      values: []
+    };
+  }, []);

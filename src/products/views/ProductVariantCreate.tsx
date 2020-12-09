@@ -2,15 +2,12 @@ import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useFileUploadMutation } from "@saleor/files/mutations";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
-import { AttributeValueInput } from "@saleor/types/globalTypes";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -30,6 +27,7 @@ import {
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
+import { mergeAttributesWithFileUploadResult } from "../utils/data";
 import { getAttributesVariables } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
@@ -126,10 +124,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
-    let fileAttributeErrors: Array<
-      AttributeErrorFragment | UploadErrorFragment
-    > = [];
-
     const uploadFilesResult = await Promise.all(
       formData.attributesWithNewFileValue.map(fileAttribute =>
         uploadFile({
@@ -140,24 +134,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       )
     );
 
-    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
-      (attributesWithAddedFiles, uploadFileResult, index) => {
-        const attribute = formData.attributesWithNewFileValue[index];
-
-        fileAttributeErrors = [
-          ...fileAttributeErrors,
-          ...uploadFileResult.data.fileUpload.uploadErrors
-        ];
-        return [
-          ...attributesWithAddedFiles,
-          {
-            file: uploadFileResult.data.fileUpload.uploadedFile.url,
-            id: attribute.id,
-            values: []
-          }
-        ];
-      },
-      []
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      formData.attributesWithNewFileValue,
+      uploadFilesResult
     );
 
     const result = await variantCreate({

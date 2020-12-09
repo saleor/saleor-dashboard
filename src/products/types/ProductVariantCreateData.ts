@@ -51,35 +51,35 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   values: (ProductVariantCreateData_product_productType_selectionVariantAttributes_values | null)[] | null;
 }
 
-export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values_file {
+export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values {
+export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values_file | null;
+  file: ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values_file | null;
 }
 
-export interface ProductVariantCreateData_product_productType_notSelectionVariantAttributes {
+export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (ProductVariantCreateData_product_productType_notSelectionVariantAttributes_values | null)[] | null;
+  values: (ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values | null)[] | null;
 }
 
 export interface ProductVariantCreateData_product_productType {
   __typename: "ProductType";
   id: string;
   selectionVariantAttributes: (ProductVariantCreateData_product_productType_selectionVariantAttributes | null)[] | null;
-  notSelectionVariantAttributes: (ProductVariantCreateData_product_productType_notSelectionVariantAttributes | null)[] | null;
+  nonSelectionVariantAttributes: (ProductVariantCreateData_product_productType_nonSelectionVariantAttributes | null)[] | null;
 }
 
 export interface ProductVariantCreateData_product_thumbnail {

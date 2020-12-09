@@ -64,48 +64,48 @@ export interface ProductVariant_selectionAttributes {
   values: (ProductVariant_selectionAttributes_values | null)[];
 }
 
-export interface ProductVariant_notSelectionAttributes_attribute_values_file {
+export interface ProductVariant_nonSelectionAttributes_attribute_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariant_notSelectionAttributes_attribute_values {
+export interface ProductVariant_nonSelectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariant_notSelectionAttributes_attribute_values_file | null;
+  file: ProductVariant_nonSelectionAttributes_attribute_values_file | null;
 }
 
-export interface ProductVariant_notSelectionAttributes_attribute {
+export interface ProductVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (ProductVariant_notSelectionAttributes_attribute_values | null)[] | null;
+  values: (ProductVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface ProductVariant_notSelectionAttributes_values_file {
+export interface ProductVariant_nonSelectionAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariant_notSelectionAttributes_values {
+export interface ProductVariant_nonSelectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariant_notSelectionAttributes_values_file | null;
+  file: ProductVariant_nonSelectionAttributes_values_file | null;
 }
 
-export interface ProductVariant_notSelectionAttributes {
+export interface ProductVariant_nonSelectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: ProductVariant_notSelectionAttributes_attribute;
-  values: (ProductVariant_notSelectionAttributes_values | null)[];
+  attribute: ProductVariant_nonSelectionAttributes_attribute;
+  values: (ProductVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface ProductVariant_images {
@@ -255,7 +255,7 @@ export interface ProductVariant {
   metadata: (ProductVariant_metadata | null)[];
   privateMetadata: (ProductVariant_privateMetadata | null)[];
   selectionAttributes: ProductVariant_selectionAttributes[];
-  notSelectionAttributes: ProductVariant_notSelectionAttributes[];
+  nonSelectionAttributes: ProductVariant_nonSelectionAttributes[];
   images: (ProductVariant_images | null)[] | null;
   name: string;
   product: ProductVariant_product;

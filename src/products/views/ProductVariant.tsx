@@ -13,10 +13,6 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -48,7 +44,12 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import { mapFormsetStockToStockInput } from "../utils/data";
+import {
+  isFileValueUnused,
+  mapFormsetStockToStockInput,
+  mergeAttributesWithFileUploadResult,
+  mergeFileUploadErrors
+} from "../utils/data";
 import { getAttributesVariables } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
@@ -231,24 +232,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       )
     );
 
-    const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
-      (attributesWithAddedFiles, uploadFileResult, index) => {
-        const attribute = data.attributesWithNewFileValue[index];
+    fileAttributeErrors = [
+      ...fileAttributeErrors,
+      ...mergeFileUploadErrors(uploadFilesResult)
+    ];
 
-        fileAttributeErrors = [
-          ...fileAttributeErrors,
-          ...uploadFileResult.data.fileUpload.uploadErrors
-        ];
-        return [
-          ...attributesWithAddedFiles,
-          {
-            file: uploadFileResult.data.fileUpload.uploadedFile.url,
-            id: attribute.id,
-            values: []
-          }
-        ];
-      },
-      []
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      data.attributesWithNewFileValue,
+      uploadFilesResult
     );
 
     const result = await updateVariant({
@@ -270,15 +261,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
     if (result.data?.productVariantUpdate.errors.length === 0) {
       const deleteAttributeValuesResult = await Promise.all(
-        variant.notSelectionAttributes.map(existingAttribute => {
-          const fileValueUnused =
-            existingAttribute.attribute.inputType ===
-              AttributeInputTypeEnum.FILE &&
-            existingAttribute.values.length > 0 &&
-            data.attributes.find(
-              dataAttribute =>
-                dataAttribute.id === existingAttribute.attribute.id
-            ).value.length === 0;
+        variant.nonSelectionAttributes.map(existingAttribute => {
+          const fileValueUnused = isFileValueUnused(data, existingAttribute);
 
           if (fileValueUnused) {
             return deleteAttributeValue({

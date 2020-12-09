@@ -10,7 +10,7 @@ import SingleAutocompleteSelectField, {
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import {
-  ProductVariant_notSelectionAttributes_attribute_values,
+  ProductVariant_nonSelectionAttributes_attribute_values,
   ProductVariant_selectionAttributes_attribute_values
 } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
@@ -22,7 +22,7 @@ import { useIntl } from "react-intl";
 export interface VariantAttributeInputData {
   values: Array<
     | ProductVariant_selectionAttributes_attribute_values
-    | ProductVariant_notSelectionAttributes_attribute_values
+    | ProductVariant_nonSelectionAttributes_attribute_values
   >;
 }
 export type VariantAttributeInput = FormsetAtomicData<

@@ -70,48 +70,48 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_select
   values: (VariantImageUnassign_variantImageUnassign_productVariant_selectionAttributes_values | null)[];
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute_values_file {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute_values {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute_values_file | null;
+  file: VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute_values_file | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute_values | null)[] | null;
+  values: (VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_values_file {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_values {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_values_file | null;
+  file: VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_values_file | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_attribute;
-  values: (VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes_values | null)[];
+  attribute: VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute;
+  values: (VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_images {
@@ -261,7 +261,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant {
   metadata: (VariantImageUnassign_variantImageUnassign_productVariant_metadata | null)[];
   privateMetadata: (VariantImageUnassign_variantImageUnassign_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantImageUnassign_variantImageUnassign_productVariant_selectionAttributes[];
-  notSelectionAttributes: VariantImageUnassign_variantImageUnassign_productVariant_notSelectionAttributes[];
+  nonSelectionAttributes: VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes[];
   images: (VariantImageUnassign_variantImageUnassign_productVariant_images | null)[] | null;
   name: string;
   product: VariantImageUnassign_variantImageUnassign_productVariant_product;

@@ -70,48 +70,48 @@ export interface VariantImageAssign_variantImageAssign_productVariant_selectionA
   values: (VariantImageAssign_variantImageAssign_productVariant_selectionAttributes_values | null)[];
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute_values_file {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute_values {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute_values_file | null;
+  file: VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute_values_file | null;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute_values | null)[] | null;
+  values: (VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_values_file {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_values {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_values_file | null;
+  file: VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_values_file | null;
 }
 
-export interface VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes {
+export interface VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_attribute;
-  values: (VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes_values | null)[];
+  attribute: VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_attribute;
+  values: (VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface VariantImageAssign_variantImageAssign_productVariant_images {
@@ -261,7 +261,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   metadata: (VariantImageAssign_variantImageAssign_productVariant_metadata | null)[];
   privateMetadata: (VariantImageAssign_variantImageAssign_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantImageAssign_variantImageAssign_productVariant_selectionAttributes[];
-  notSelectionAttributes: VariantImageAssign_variantImageAssign_productVariant_notSelectionAttributes[];
+  nonSelectionAttributes: VariantImageAssign_variantImageAssign_productVariant_nonSelectionAttributes[];
   images: (VariantImageAssign_variantImageAssign_productVariant_images | null)[] | null;
   name: string;
   product: VariantImageAssign_variantImageAssign_productVariant_product;
