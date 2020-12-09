@@ -15,6 +15,18 @@ export interface ShippingMethodWithExcludedProductsFragment_zipCodeRules {
   end: string | null;
 }
 
+export interface ShippingMethodWithExcludedProductsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingMethodWithExcludedProductsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingMethodWithExcludedProductsFragment_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -96,6 +108,8 @@ export interface ShippingMethodWithExcludedProductsFragment {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (ShippingMethodWithExcludedProductsFragment_zipCodeRules | null)[] | null;
+  metadata: (ShippingMethodWithExcludedProductsFragment_metadata | null)[];
+  privateMetadata: (ShippingMethodWithExcludedProductsFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodWithExcludedProductsFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodWithExcludedProductsFragment_maximumOrderWeight | null;
   name: string;

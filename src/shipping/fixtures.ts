@@ -265,7 +265,9 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjE=",
-    name: "Europe"
+    name: "Europe",
+    metadata: [],
+    privateMetadata: []
   },
   {
     __typename: "ShippingZone",
@@ -417,7 +419,9 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjI=",
-    name: "Oceania"
+    name: "Oceania",
+    metadata: [],
+    privateMetadata: []
   },
   {
     __typename: "ShippingZone",
@@ -680,7 +684,9 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjM=",
-    name: "Asia"
+    name: "Asia",
+    metadata: [],
+    privateMetadata: []
   },
   {
     __typename: "ShippingZone",
@@ -973,7 +979,9 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjQ=",
-    name: "Americas"
+    name: "Americas",
+    metadata: [],
+    privateMetadata: []
   },
   {
     __typename: "ShippingZone",
@@ -1282,12 +1290,16 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjU=",
-    name: "Africa"
+    name: "Africa",
+    metadata: [],
+    privateMetadata: []
   }
 ];
 
 export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
+  metadata: [],
+  privateMetadata: [],
   countries: [
     {
       __typename: "CountryDisplay",
@@ -1551,6 +1563,8 @@ export const shippingZone: ShippingZone_shippingZone = {
   shippingMethods: [
     {
       __typename: "ShippingMethod",
+      metadata: [],
+      privateMetadata: [],
       channelListings: [
         {
           __typename: "ShippingMethodChannelListing",
@@ -1638,6 +1652,8 @@ export const shippingZone: ShippingZone_shippingZone = {
     },
     {
       __typename: "ShippingMethod",
+      metadata: [],
+      privateMetadata: [],
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1695,6 +1711,8 @@ export const shippingZone: ShippingZone_shippingZone = {
     },
     {
       __typename: "ShippingMethod",
+      metadata: [],
+      privateMetadata: [],
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1773,6 +1791,8 @@ export const shippingZone: ShippingZone_shippingZone = {
       },
       name: "DHL",
       type: ShippingMethodTypeEnum.PRICE,
+      metadata: [],
+      privateMetadata: [],
       zipCodeRules: [
         {
           __typename: "ShippingMethodZipCodeRule",

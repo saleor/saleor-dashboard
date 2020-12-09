@@ -27,10 +27,12 @@ export const shippingMethodWithZipCodesFragment = gql`
   }
 `;
 export const shippingMethodFragment = gql`
+  ${metadataFragment}
   ${fragmentMoney}
   ${shippingMethodWithZipCodesFragment}
   fragment ShippingMethodFragment on ShippingMethod {
     ...ShippingMethodWithZipCodesFragment
+    ...MetadataFragment
     minimumOrderWeight {
       unit
       value

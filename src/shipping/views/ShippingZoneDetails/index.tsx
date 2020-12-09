@@ -133,8 +133,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  // const handleSubmit
-
   const updateData = async (submitData: FormData) => {
     const warehouseDiff = diff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
