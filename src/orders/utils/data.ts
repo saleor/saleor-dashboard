@@ -25,7 +25,7 @@ export function getPreviouslyRefundedPrice(
 
 export function getRefundedLinesPriceSum(
   lines: OrderRefundData_order_lines[],
-  refundedProductQuantities: FormsetData<null, string>
+  refundedProductQuantities: FormsetData<null, string | number>
 ): number {
   return lines?.reduce((sum, line) => {
     const refundedLine = refundedProductQuantities.find(
@@ -37,7 +37,7 @@ export function getRefundedLinesPriceSum(
 
 export function getAllFulfillmentLinesPriceSum(
   fulfillments: OrderRefundData_order_fulfillments[],
-  refundedFulfilledProductQuantities: FormsetData<null, string>
+  refundedFulfilledProductQuantities: FormsetData<null, string | number>
 ): number {
   return fulfillments?.reduce((sum, fulfillment) => {
     const fulfilmentLinesSum = fulfillment?.lines.reduce((sum, line) => {
