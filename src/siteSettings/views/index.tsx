@@ -117,7 +117,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
       : {
           companyName: data.companyName
         };
-    shopSettingsUpdate({
+    const result = await shopSettingsUpdate({
       variables: {
         addressInput,
         shopDomainInput: {
@@ -132,6 +132,11 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
         }
       }
     });
+    return [
+      ...result.data.shopAddressUpdate.errors,
+      ...result.data.shopDomainUpdate.errors,
+      ...result.data.shopSettingsUpdate.errors
+    ];
   };
 
   const errors = [
