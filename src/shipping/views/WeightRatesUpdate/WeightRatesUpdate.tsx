@@ -48,6 +48,11 @@ import {
 } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -203,7 +208,10 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
   });
 
-  const handleSubmit = async (data: FormData) => {
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const updateData = async (data: FormData) => {
     const response = await updateShippingRate({
       variables: getUpdateShippingWeightRateVariables(data, id, rateId)
     });
@@ -219,7 +227,16 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         )
       });
     }
+
+    return errors;
   };
+
+  const handleSubmit = createMetadataUpdateHandler(
+    rate,
+    updateData,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
 
   const handleProductAssign = (ids: string[]) =>
     assignProduct({
