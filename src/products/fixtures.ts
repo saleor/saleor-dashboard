@@ -270,16 +270,14 @@ export const product: (
             file: null,
             id: "ptvav47282",
             name: "Black",
-            slug: "black",
-            sortOrder: 0
+            slug: "black"
           },
           {
             __typename: "AttributeValue",
             file: null,
             id: "ptvav17253",
             name: "White",
-            slug: "white",
-            sortOrder: 1
+            slug: "white"
           }
         ]
       }

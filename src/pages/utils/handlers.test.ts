@@ -54,6 +54,28 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
     id: "attr-2",
     label: "Attribute 2",
     value: ["attr-2-v-3"]
+  },
+  {
+    data: {
+      inputType: AttributeInputTypeEnum.FILE,
+      isRequired: false,
+      values: [
+        {
+          __typename: "AttributeValue",
+          file: {
+            __typename: "File",
+            contentType: "image/png",
+            url: "some-non-existing-url"
+          },
+          id: "gdghdgdhkkdae",
+          name: "File First Value",
+          slug: "file-first-value"
+        }
+      ]
+    },
+    id: "ifudbgidfsb",
+    label: "File Attribute",
+    value: []
   }
 ];
 
