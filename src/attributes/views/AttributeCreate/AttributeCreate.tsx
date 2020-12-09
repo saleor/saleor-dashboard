@@ -77,16 +77,10 @@ function getFileAttributeData(
   values: AttributeValueEditDialogFormData[]
 ) {
   return {
-    ...data,
+    ...getSimpleAttributeData(data, values),
     availableInGrid: undefined,
     filterableInDashboard: undefined,
-    filterableInStorefront: undefined,
-    metadata: undefined,
-    privateMetadata: undefined,
-    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0),
-    values: values.map(value => ({
-      name: value.name
-    }))
+    filterableInStorefront: undefined
   };
 }
 

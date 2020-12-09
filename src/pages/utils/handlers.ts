@@ -67,7 +67,7 @@ interface PageAttributesArgs {
   attributesWithAddedNewFiles: AttributeValueInput[];
 }
 
-export const getAttributesVariables = ({
+export const prepareAttributesInput = ({
   attributes,
   attributesWithAddedNewFiles
 }: PageAttributesArgs): AttributeValueInput[] =>

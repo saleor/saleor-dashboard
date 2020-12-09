@@ -3,6 +3,7 @@ import {
   pageErrorWithAttributesFragment
 } from "@saleor/fragments/errors";
 import { pageDetailsFragment } from "@saleor/fragments/pages";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -51,9 +52,10 @@ const pageUpdate = gql`
     }
   }
 `;
-export const TypedPageUpdate = TypedMutation<PageUpdate, PageUpdateVariables>(
-  pageUpdate
-);
+export const usePageUpdateMutation = makeMutation<
+  PageUpdate,
+  PageUpdateVariables
+>(pageUpdate);
 
 const pageRemove = gql`
   ${pageErrorFragment}
@@ -65,9 +67,10 @@ const pageRemove = gql`
     }
   }
 `;
-export const TypedPageRemove = TypedMutation<PageRemove, PageRemoveVariables>(
-  pageRemove
-);
+export const usePageRemoveMutation = makeMutation<
+  PageRemove,
+  PageRemoveVariables
+>(pageRemove);
 
 const pageBulkPublish = gql`
   mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {

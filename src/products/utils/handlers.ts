@@ -133,6 +133,7 @@ export function createAttributeFileChangeHandler(
 ): FormsetChange<File> {
   return (attributeId: string, value: File) => {
     triggerChange();
+
     if (value) {
       addAttributeNewFileValue({
         data: null,
@@ -140,15 +141,16 @@ export function createAttributeFileChangeHandler(
         label: null,
         value
       });
+      return;
+    }
+
+    const removingNewFileValue = attributesWithNewFileValue.find(
+      attribute => attribute.id === attributeId
+    );
+    if (removingNewFileValue) {
+      removeAttributeNewFileValue(attributeId);
     } else {
-      const removeingNewFileValue = attributesWithNewFileValue.find(
-        attribute => attribute.id === attributeId
-      );
-      if (removeingNewFileValue) {
-        removeAttributeNewFileValue(attributeId);
-      } else {
-        changeAttributeData(attributeId, []);
-      }
+      changeAttributeData(attributeId, []);
     }
   };
 }

@@ -1,8 +1,17 @@
 import { AttributeInput } from "@saleor/components/Attributes";
+import { FileUpload } from "@saleor/files/types/FileUpload";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueInput
+} from "@saleor/types/globalTypes";
+import { MutationFetchResult } from "react-apollo";
 
+import { PageSubmitData } from "../components/PageDetailsPage/form";
 import {
   PageDetails_page,
+  PageDetails_page_attributes,
   PageDetails_page_pageType
 } from "../types/PageDetails";
 
@@ -53,3 +62,44 @@ export const getAttributesDisplayData = (
     }
     return attribute;
   });
+
+export const isFileValueUnused = (
+  data: PageSubmitData,
+  existingAttribute: PageDetails_page_attributes
+) => {
+  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
+    return false;
+  }
+  if (existingAttribute.values.length === 0) {
+    return false;
+  }
+
+  const modifiedAttribute = data.attributes.find(
+    dataAttribute => dataAttribute.id === existingAttribute.attribute.id
+  );
+  return modifiedAttribute.value.length === 0;
+};
+
+export const mergeFileUploadErrors = (
+  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+): UploadErrorFragment[] =>
+  uploadFilesResult.reduce((errors, uploadFileResult) => {
+    const uploadErrors = uploadFileResult.data.fileUpload.uploadErrors;
+    if (uploadErrors) {
+      return [...errors, ...uploadErrors];
+    }
+  }, []);
+
+export const mergeAttributesWithFileUploadResult = (
+  attributesWithNewFileValue: FormsetData<null, File>,
+  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+): AttributeValueInput[] =>
+  uploadFilesResult.map((uploadFileResult, index) => {
+    const attribute = attributesWithNewFileValue[index];
+
+    return {
+      file: uploadFileResult.data.fileUpload.uploadedFile.url,
+      id: attribute.id,
+      values: []
+    };
+  }, []);

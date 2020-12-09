@@ -4,7 +4,6 @@ import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
-import { AttributeValueInput } from "@saleor/types/globalTypes";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -18,7 +17,8 @@ import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
-import { getAttributesVariables } from "../utils/handlers";
+import { mergeAttributesWithFileUploadResult } from "../utils/data";
+import { prepareAttributesInput } from "../utils/handlers";
 
 export interface PageCreateProps {
   id: string;
@@ -67,26 +67,15 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
             )
           );
 
-          const attributesWithAddedNewFiles: AttributeValueInput[] = uploadFilesResult.reduce(
-            (attributesWithAddedFiles, uploadFileResult, index) => {
-              const attribute = formData.attributesWithNewFileValue[index];
-
-              return [
-                ...attributesWithAddedFiles,
-                {
-                  file: uploadFileResult.data.fileUpload.uploadedFile.url,
-                  id: attribute.id,
-                  values: []
-                }
-              ];
-            },
-            []
+          const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+            formData.attributesWithNewFileValue,
+            uploadFilesResult
           );
 
           const result = await pageCreate({
             variables: {
               input: {
-                attributes: getAttributesVariables({
+                attributes: prepareAttributesInput({
                   attributes: formData.attributes,
                   attributesWithAddedNewFiles
                 }),
