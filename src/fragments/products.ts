@@ -134,7 +134,7 @@ export const productVariantAttributesFragment = gql`
     }
     productType {
       id
-      variantAttributes {
+      variantAttributes(variantSelection: VARIANT_SELECTION) {
         id
         name
         values {
@@ -224,8 +224,35 @@ export const productFragmentDetails = gql`
   }
 `;
 
-export const fragmentVariant = gql`
+export const variantAttributeFragment = gql`
   ${attributeValueFragment}
+  fragment VariantAttributeFragment on Attribute {
+    id
+    name
+    slug
+    inputType
+    valueRequired
+    values {
+      ...AttributeValueFragment
+    }
+  }
+`;
+
+export const selectedVariantAttributeFragment = gql`
+  ${attributeValueFragment}
+  ${variantAttributeFragment}
+  fragment SelectedVariantAttributeFragment on SelectedAttribute {
+    attribute {
+      ...VariantAttributeFragment
+    }
+    values {
+      ...AttributeValueFragment
+    }
+  }
+`;
+
+export const fragmentVariant = gql`
+  ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
   ${fragmentProductImage}
   ${stockFragment}
@@ -235,20 +262,13 @@ export const fragmentVariant = gql`
   fragment ProductVariant on ProductVariant {
     id
     ...MetadataFragment
-    attributes {
-      attribute {
-        id
-        name
-        slug
-        inputType
-        valueRequired
-        values {
-          ...AttributeValueFragment
-        }
-      }
-      values {
-        ...AttributeValueFragment
-      }
+    selectionAttributes: attributes(variantSelection: VARIANT_SELECTION) {
+      ...SelectedVariantAttributeFragment
+    }
+    nonSelectionAttributes: attributes(
+      variantSelection: NOT_VARIANT_SELECTION
+    ) {
+      ...SelectedVariantAttributeFragment
     }
     images {
       id
