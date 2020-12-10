@@ -12,6 +12,7 @@ import {
   getAllOrderFulfilledLines,
   getById,
   getFulfilledFulfillemnts,
+  getOrderUnfulfilledLines,
   getParsedFulfiledLines
 } from "./utils";
 
@@ -97,9 +98,7 @@ function useOrderReturnForm(
   }
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
-    order?.lines
-      .filter(line => line.quantityFulfilled !== line.quantity)
-      .map(getParsedLineData(0))
+    getOrderUnfulfilledLines(order).map(getParsedLineData(0))
   );
 
   const fulfiledItemsQuatities = useFormset<LineItemData, number>(
@@ -111,7 +110,9 @@ function useOrderReturnForm(
       return [];
     }
 
-    const orderLinesItems = order.lines.map(getParsedLineData(true));
+    const orderLinesItems = getOrderUnfulfilledLines(order).map(
+      getParsedLineData(true)
+    );
 
     const fulfilmentsItems = getFulfilledFulfillemnts(order).reduce(
       (result, { lines }) => [
