@@ -12,6 +12,7 @@ const props: ChannelDeleteDialogProps = {
     label: channel.name,
     value: channel.id
   })),
+  hasOrders: true,
   confirmButtonState: "default",
   onBack: () => undefined,
   onClose: () => undefined,

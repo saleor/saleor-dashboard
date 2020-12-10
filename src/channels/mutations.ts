@@ -49,12 +49,8 @@ export const channelUpdateMutation = gql`
 
 export const channelDeleteMutation = gql`
   ${channelErrorFragment}
-  ${channelDetailsFragment}
-  mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput!) {
+  mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput) {
     channelDelete(id: $id, input: $input) {
-      channel {
-        ...ChannelDetailsFragment
-      }
       errors: channelErrors {
         ...ChannelErrorFragment
       }

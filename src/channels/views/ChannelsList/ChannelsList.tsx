@@ -86,7 +86,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       });
     } else {
       deleteChannel({
-        variables: { id: params.id, input: {} }
+        variables: { id: params.id }
       });
     }
   };
