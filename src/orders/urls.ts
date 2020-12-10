@@ -123,5 +123,9 @@ export const orderFulfillUrl = (id: string) =>
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
 export const orderRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
+
 export const orderRefundUrl = (id: string) =>
   orderRefundPath(encodeURIComponent(id));
+
+export const orderReturnUrl = (id: string) =>
+  orderReturnPath(encodeURIComponent(id));

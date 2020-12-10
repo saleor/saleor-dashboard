@@ -25,7 +25,7 @@ import OrderDraftListComponent from "./views/OrderDraftList";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderListComponent from "./views/OrderList";
 import OrderRefundComponent from "./views/OrderRefund";
-import OrderReturn from "./views/OrderReturn";
+import OrderReturnComponent from "./views/OrderReturn";
 import OrderSettings from "./views/OrderSettings";
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
@@ -71,6 +71,10 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => (
 
 const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
+const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
 const Component = () => {
