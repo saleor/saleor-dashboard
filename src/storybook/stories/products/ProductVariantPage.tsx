@@ -95,7 +95,7 @@ storiesOf("Views / Products / Product variant details", module)
       saveButtonBarState="default"
       errors={[
         {
-          attributes: [variant.attributes[0].attribute.id],
+          attributes: [variant.selectionAttributes[0].attribute.id],
           code: ProductErrorCode.REQUIRED,
           field: "attributes"
         },

@@ -65,7 +65,7 @@ function getSimpleAttributeData(
     ...data,
     metadata: undefined,
     privateMetadata: undefined,
-    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0),
+    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
     values: values.map(value => ({
       name: value.name
     }))

@@ -22,12 +22,19 @@ import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import {
+  defineMessages,
+  FormattedMessage,
+  IntlShape,
+  useIntl
+} from "react-intl";
 
 import FileUploadField from "../FileUploadField";
+import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
+  variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];
 }
@@ -39,6 +46,7 @@ export interface AttributesProps {
   errors: Array<
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
+  title?: React.ReactNode;
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
   onFileChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
@@ -140,6 +148,25 @@ function getSingleChoices(
   }));
 }
 
+const messages = defineMessages({
+  attributesNumber: {
+    defaultMessage: "{number} Attributes",
+    description: "number of attributes"
+  },
+  header: {
+    defaultMessage: "Attributes",
+    description: "attributes, section header"
+  },
+  multipleValueLable: {
+    defaultMessage: "Values",
+    description: "attribute values"
+  },
+  valueLabel: {
+    defaultMessage: "Value",
+    description: "attribute value"
+  }
+});
+
 function getErrorMessage(
   err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment,
   intl: IntlShape
@@ -156,6 +183,7 @@ const Attributes: React.FC<AttributesProps> = ({
   attributes,
   disabled,
   errors,
+  title,
   onChange,
   onMultiChange,
   onFileChange
@@ -167,19 +195,13 @@ const Attributes: React.FC<AttributesProps> = ({
 
   return (
     <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Attributes",
-          description: "attributes, section header"
-        })}
-      />
+      <CardTitle title={title || intl.formatMessage(messages.header)} />
       <CardContent className={classes.cardContent}>
         <div className={classes.expansionBar}>
           <div className={classes.expansionBarLabelContainer}>
             <Typography className={classes.expansionBarLabel} variant="caption">
               <FormattedMessage
-                defaultMessage="{number} Attributes"
-                description="number of attributes"
+                {...messages.attributesNumber}
                 values={{
                   number: attributes.length
                 }}
@@ -251,10 +273,7 @@ const Attributes: React.FC<AttributesProps> = ({
                           error={!!error}
                           helperText={getErrorMessage(error, intl)}
                           name={`attribute:${attribute.label}`}
-                          label={intl.formatMessage({
-                            defaultMessage: "Value",
-                            description: "attribute value"
-                          })}
+                          label={intl.formatMessage(messages.valueLabel)}
                           value={attribute.value[0]}
                           onChange={event =>
                             onChange(attribute.id, event.target.value)
@@ -268,10 +287,9 @@ const Attributes: React.FC<AttributesProps> = ({
                           disabled={disabled}
                           error={!!error}
                           helperText={getErrorMessage(error, intl)}
-                          label={intl.formatMessage({
-                            defaultMessage: "Values",
-                            description: "attribute values"
-                          })}
+                          label={intl.formatMessage(
+                            messages.multipleValueLable
+                          )}
                           name={`attribute:${attribute.label}`}
                           value={attribute.value}
                           onChange={event =>

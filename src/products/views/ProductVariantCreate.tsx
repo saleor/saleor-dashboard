@@ -1,6 +1,7 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -26,6 +27,8 @@ import {
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
+import { mergeAttributesWithFileUploadResult } from "../utils/data";
+import { getAttributesVariables } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -64,6 +67,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     displayLoader: true,
     variables: { id: productId }
   });
+
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const [
     updateChannels,
@@ -119,17 +124,30 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
+    const uploadFilesResult = await Promise.all(
+      formData.attributesWithNewFileValue.map(fileAttribute =>
+        uploadFile({
+          variables: {
+            file: fileAttribute.value
+          }
+        })
+      )
+    );
+
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      formData.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const result = await variantCreate({
       variables: {
         input: {
-          attributes: formData.attributes
-            .filter(
+          attributes: getAttributesVariables({
+            attributes: formData.attributes.filter(
               attribute => attribute.value?.length && attribute.value[0] !== ""
-            )
-            .map(attribute => ({
-              id: attribute.id,
-              values: attribute.value
-            })),
+            ),
+            attributesWithAddedNewFiles
+          }),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
@@ -158,6 +176,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const disableForm =
     productLoading ||
+    uploadFileOpts.loading ||
     variantCreateResult.loading ||
     reorderProductVariantsOpts.loading;
 

@@ -1,6 +1,9 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import Attributes, {
+  AttributeInput,
+  VariantAttributeScope
+} from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -16,6 +19,7 @@ import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -28,6 +32,17 @@ import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
   ProductVariantUpdateSubmitData
 } from "./form";
+
+const messages = defineMessages({
+  nonSelectionAttributes: {
+    defaultMessage: "Variant Attributes",
+    description: "attributes, section header"
+  },
+  selectionAttributesHeader: {
+    defaultMessage: "Variant Selection Attributes",
+    description: "attributes, section header"
+  }
+});
 
 export interface ProductVariantPageFormData extends MetadataFormData {
   costPrice: string;
@@ -92,6 +107,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onSetDefaultVariant,
   onWarehouseConfigure
 }) => {
+  const intl = useIntl();
+
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
@@ -149,11 +166,33 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 </div>
                 <div>
                   <Attributes
-                    attributes={data.attributes}
+                    title={intl.formatMessage(messages.nonSelectionAttributes)}
+                    attributes={data.attributes.filter(
+                      attribute =>
+                        attribute.data.variantAttributeScope ===
+                        VariantAttributeScope.NOT_VARIANT_SELECTION
+                    )}
                     disabled={loading}
                     errors={errors}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
+                  />
+                  <CardSpacer />
+                  <Attributes
+                    title={intl.formatMessage(
+                      messages.selectionAttributesHeader
+                    )}
+                    attributes={data.attributes.filter(
+                      attribute =>
+                        attribute.data.variantAttributeScope ===
+                        VariantAttributeScope.VARIANT_SELECTION
+                    )}
+                    disabled={loading}
+                    errors={errors}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
                   />
                   <CardSpacer />
                   <ProductVariantImages
