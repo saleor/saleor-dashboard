@@ -45,7 +45,7 @@ const getItemPriceAndQuantity = ({
   id: string;
 }) => {
   const { unitPrice } = orderLines.find(getById(id));
-  const { value: selectedQuantity } = itemsQuantities.find(getById(id));
+  const selectedQuantity = itemsQuantities.find(getById(id))?.value;
 
   return { selectedQuantity, unitPrice };
 };
@@ -77,9 +77,9 @@ export const getReplacedProductsAmount = (
     itemsToBeReplaced,
     unfulfiledItemsQuantities,
     fulfiledItemsQuantities
-  }: OrderReturnFormData
+  }: Partial<OrderReturnFormData>
 ) => {
-  if (!order) {
+  if (!order || !itemsToBeReplaced.length) {
     return 0;
   }
 
@@ -99,7 +99,7 @@ export const getReplacedProductsAmount = (
         isFulfillment
       );
 
-      return resultAmount + unitPrice.gross.amount * selectedQuantity;
+      return resultAmount + unitPrice?.gross?.amount * selectedQuantity;
     },
     0
   );
