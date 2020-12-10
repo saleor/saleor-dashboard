@@ -7,15 +7,25 @@ import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useState } from "react";
 
+import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
+  getAllOrderFulfilledLines,
   getById,
   getFulfilledFulfillemnts,
   getParsedFulfiledLines
 } from "./utils";
 
+export interface LineItemData {
+  isFulfillment: boolean;
+}
+
+export type FormsetQuantityData = FormsetData<LineItemData, number>;
+export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
+
 export interface OrderReturnData {
   amount: number | string;
   refundShipmentCosts: boolean;
+  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
 export interface OrderReturnHandlers {
@@ -27,9 +37,9 @@ export interface OrderReturnHandlers {
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
-  itemsToBeReplaced: FormsetData<null, boolean>;
-  fulfiledItemsQuantities: FormsetData<null, number>;
-  unfulfiledItemsQuantities: FormsetData<null, number>;
+  itemsToBeReplaced: FormsetReplacementData;
+  fulfiledItemsQuantities: FormsetQuantityData;
+  unfulfiledItemsQuantities: FormsetQuantityData;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -48,12 +58,11 @@ interface OrderReturnProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-function getOrderRefundPageFormData(): OrderReturnData {
-  return {
-    amount: undefined,
-    refundShipmentCosts: false
-  };
-}
+const getOrderRefundPageFormData = (): OrderReturnData => ({
+  amount: undefined,
+  amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
+  refundShipmentCosts: false
+});
 
 function useOrderReturnForm(
   order: OrderDetails_order,
@@ -66,33 +75,35 @@ function useOrderReturnForm(
     form.change(event, cb);
   };
 
-  function getLineItem<T>({ id }: { id: string }, value: T) {
+  function getLineItem<T>(
+    { id }: { id: string },
+    value: T,
+    isFulfillment: boolean = false
+  ) {
     return {
-      data: null,
+      data: { isFulfillment },
       id,
       label: null,
       value
     };
   }
 
-  function getParsedLineData<T>(initialValue: T) {
-    return (item: { id: string }) => getLineItem(item, initialValue);
+  function getParsedLineData<T>(
+    initialValue: T,
+    isFulfillment: boolean = false
+  ) {
+    return (item: { id: string }) =>
+      getLineItem(item, initialValue, isFulfillment);
   }
 
-  const unfulfiledItemsQuantites = useFormset<null, number>(
+  const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     order?.lines
       .filter(line => line.quantityFulfilled !== line.quantity)
       .map(getParsedLineData(0))
   );
 
-  const fulfiledItemsQuatities = useFormset<null, number>(
-    getFulfilledFulfillemnts(order).reduce(
-      (result, { lines }) => [
-        ...result,
-        ...getParsedFulfiledLines(lines).map(getParsedLineData(0))
-      ],
-      []
-    )
+  const fulfiledItemsQuatities = useFormset<LineItemData, number>(
+    getAllOrderFulfilledLines(order).map(getParsedLineData(0, true))
   );
 
   const getItemsToBeReplaced = () => {
@@ -105,7 +116,7 @@ function useOrderReturnForm(
     const fulfilmentsItems = getFulfilledFulfillemnts(order).reduce(
       (result, { lines }) => [
         ...result,
-        ...getParsedFulfiledLines(lines).map(getParsedLineData(true))
+        ...getParsedFulfiledLines(lines).map(getParsedLineData(true, true))
       ],
       []
     );
@@ -113,18 +124,19 @@ function useOrderReturnForm(
     return [...orderLinesItems, ...fulfilmentsItems];
   };
 
-  const itemsToBeReplaced = useFormset<null, boolean>(getItemsToBeReplaced());
+  const itemsToBeReplaced = useFormset<LineItemData, boolean>(
+    getItemsToBeReplaced()
+  );
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetData<
-      null,
-      number
-    > = unfulfiledItemsQuantites.data.map(({ id }) => {
-      const line = order.lines.find(getById(id));
-      const value = line.quantity - line.quantityFulfilled;
+    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
+      ({ id }) => {
+        const line = order.lines.find(getById(id));
+        const value = line.quantity - line.quantityFulfilled;
 
-      return getLineItem(line, value);
-    });
+        return getLineItem(line, value);
+      }
+    );
 
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
@@ -135,18 +147,17 @@ function useOrderReturnForm(
   ) => () => {
     const { lines } = order.fulfillments.find(getById(fulfillmentId));
 
-    const newQuantities: FormsetData<
-      null,
-      number
-    > = fulfiledItemsQuatities.data.map(item => {
-      const line = lines.find(getById(item.id));
+    const newQuantities: FormsetQuantityData = fulfiledItemsQuatities.data.map(
+      item => {
+        const line = lines.find(getById(item.id));
 
-      if (!line) {
-        return item;
+        if (!line) {
+          return item;
+        }
+
+        return getLineItem(line, line.quantity);
       }
-
-      return getLineItem(line, line.quantity);
-    });
+    );
 
     triggerChange();
     fulfiledItemsQuatities.set(newQuantities);

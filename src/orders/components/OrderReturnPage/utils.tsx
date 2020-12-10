@@ -7,13 +7,20 @@ const fulfiledStatuses = [
   FulfillmentStatus.REFUNDED
 ];
 
+export const getFulfilledFulfillment = fulfillment =>
+  fulfiledStatuses.includes(fulfillment.status);
+
 export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
-  order?.fulfillments.filter(fulfillment =>
-    fulfiledStatuses.includes(fulfillment.status)
-  ) || [];
+  order?.fulfillments.filter(getFulfilledFulfillment) || [];
 
 export const getUnfulfilledLines = (order?: OrderDetails_order) =>
   order?.lines.filter(line => line.quantity !== line.quantityFulfilled) || [];
+
+export const getAllOrderFulfilledLines = (order?: OrderDetails_order) =>
+  getFulfilledFulfillemnts(order).reduce(
+    (result, { lines }) => [...result, ...getParsedFulfiledLines(lines)],
+    []
+  );
 
 export const getParsedFulfiledLines = (
   lines: OrderDetailsFragment_fulfillments_lines[]

@@ -5,7 +5,6 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
@@ -45,11 +44,6 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
 
   const intl = useIntl();
 
-  const handleQuantityChange = (
-    callback: (id: string, value: number) => FormsetChange<number>
-  ) => (id: string, value: string) => callback(id, parseInt(value, 10));
-
-  console.log({ order });
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit }) => (
@@ -71,9 +65,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 lines={getUnfulfilledLines(order)}
                 itemsQuantities={data.unfulfiledItemsQuantities}
                 itemsSelections={data.itemsToBeReplaced}
-                onChangeQuantity={handleQuantityChange(
-                  handlers.changeUnfulfiledItemsQuantity
-                )}
+                onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
                 onSetMaxQuantity={
                   handlers.handleSetMaximalUnfulfiledItemsQuantities
                 }
@@ -90,9 +82,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                       lines={getParsedFulfiledLines(lines)}
                       itemsQuantities={data.fulfiledItemsQuantities}
                       itemsSelections={data.itemsToBeReplaced}
-                      onChangeQuantity={handleQuantityChange(
-                        handlers.changeFulfiledItemsQuantity
-                      )}
+                      onChangeQuantity={handlers.changeFulfiledItemsQuantity}
                       onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(
                         id
                       )}
@@ -104,6 +94,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             </div>
             <div>
               <OrderAmount
+                isReturn
                 amountData={getReturnProductsAmountValues(order, data)}
                 data={data}
                 order={order}
