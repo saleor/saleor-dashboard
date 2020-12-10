@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   Checkbox,
@@ -14,7 +13,7 @@ import {
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
+import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import {
   OrderDetails_order,
@@ -23,6 +22,7 @@ import {
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getById } from "../utils";
 import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
@@ -80,13 +80,13 @@ const messages = defineMessages({
 });
 
 interface OrderReturnRefundLinesCardProps {
-  onChangeQuantity: (id: string, value: string) => void;
+  onChangeQuantity: FormsetChange<number>;
   fulfilmentId?: string;
   canReplace?: boolean;
   lines: OrderDetails_order_lines[];
   order: OrderDetails_order;
-  itemsSelections: FormsetData<boolean>;
-  itemsQuantities: FormsetData<number>;
+  itemsSelections: FormsetReplacementData;
+  itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
   onSetMaxQuantity();
 }
@@ -103,6 +103,10 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+
+  const handleChangeQuantity = (id: string) => (
+    event: React.ChangeEvent<any>
+  ) => onChangeQuantity(id, parseInt(event.target.value, 10));
 
   return (
     <Card>
@@ -188,9 +192,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                       }}
                       fullWidth
                       value={currentQuantity}
-                      onChange={event =>
-                        onChangeQuantity(id, event.target.value)
-                      }
+                      onChange={handleChangeQuantity(id)}
                       InputProps={{
                         endAdornment: lineQuantity && (
                           <div className={classes.remainingQuantity}>
