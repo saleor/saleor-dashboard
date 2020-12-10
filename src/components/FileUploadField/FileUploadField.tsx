@@ -54,6 +54,11 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const fileInputAnchor = React.createRef<HTMLInputElement>();
   const clickFileInput = () => fileInputAnchor.current.click();
 
+  const handleFileDelete = () => {
+    fileInputAnchor.current.value = "";
+    onFileDelete();
+  };
+
   return (
     <>
       <div className={className}>
@@ -62,7 +67,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
             {fileName}
             <IconButton
               color="primary"
-              onClick={onFileDelete}
+              onClick={handleFileDelete}
               disabled={disabled}
               data-test="button-delete-file"
             >
