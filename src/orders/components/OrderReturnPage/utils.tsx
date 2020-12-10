@@ -7,6 +7,9 @@ const fulfiledStatuses = [
   FulfillmentStatus.REFUNDED
 ];
 
+export const getOrderUnfulfilledLines = (order: OrderDetails_order) =>
+  order?.lines.filter(line => line.quantityFulfilled !== line.quantity) || [];
+
 export const getFulfilledFulfillment = fulfillment =>
   fulfiledStatuses.includes(fulfillment.status);
 
