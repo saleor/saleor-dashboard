@@ -3,9 +3,16 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { FileFragment } from "@saleor/fragments/types/FileFragment";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
+
+export interface FileChoiceType {
+  label: string;
+  value: string;
+  file?: FileFragment;
+}
 
 export interface FileUploadFieldProps {
   inputProps?: React.DetailedHTMLProps<
@@ -14,7 +21,7 @@ export interface FileUploadFieldProps {
   >;
   className?: string;
   disabled: boolean;
-  fileName?: string;
+  file: FileChoiceType;
   error?: boolean;
   helperText?: string;
   onFileUpload: (file: File) => void;
@@ -29,6 +36,10 @@ const useStyles = makeStyles(
     fileField: {
       display: "none"
     },
+    fileUrl: {
+      color: theme.palette.primary.main,
+      textDecoration: "none"
+    },
     uploadFileContent: {
       color: theme.palette.primary.main,
       fontSize: "1rem"
@@ -40,7 +51,7 @@ const useStyles = makeStyles(
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const {
     disabled,
-    fileName,
+    file,
     className,
     error,
     helperText,
@@ -62,9 +73,11 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   return (
     <>
       <div className={className}>
-        {fileName ? (
+        {file.label ? (
           <div className={classes.uploadFileContent}>
-            {fileName}
+            <a href={file.file?.url} target="blank" className={classes.fileUrl}>
+              {file.label}
+            </a>
             <IconButton
               color="primary"
               onClick={handleFileDelete}

@@ -29,7 +29,7 @@ import {
   useIntl
 } from "react-intl";
 
-import FileUploadField from "../FileUploadField";
+import FileUploadField, { FileChoiceType } from "../FileUploadField";
 import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
@@ -148,6 +148,27 @@ function getSingleChoices(
   }));
 }
 
+function getFileChoice(attribute: AttributeInput): FileChoiceType {
+  const attributeValue = attribute.value[0];
+
+  const definedAttributeValue = attribute.data.values.find(
+    definedValue => definedValue.slug === attributeValue
+  );
+
+  if (definedAttributeValue) {
+    return {
+      file: definedAttributeValue.file,
+      label: definedAttributeValue.name,
+      value: definedAttributeValue.slug
+    };
+  }
+
+  return {
+    label: attributeValue,
+    value: attributeValue
+  };
+}
+
 const messages = defineMessages({
   attributesNumber: {
     defaultMessage: "{number} Attributes",
@@ -244,7 +265,7 @@ const Attributes: React.FC<AttributesProps> = ({
                         <FileUploadField
                           className={classes.fileField}
                           disabled={disabled}
-                          fileName={attribute.value[0]}
+                          file={getFileChoice(attribute)}
                           onFileUpload={file =>
                             onFileChange(attribute.id, file)
                           }

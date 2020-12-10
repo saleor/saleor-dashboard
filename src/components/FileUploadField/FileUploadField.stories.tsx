@@ -4,9 +4,11 @@ import { storiesOf } from "@storybook/react";
 import React, { useState } from "react";
 
 import FileUploadField, { FileUploadFieldProps } from "./FileUploadField";
+import * as fixtures from "./fixtures";
 
 const props: FileUploadFieldProps = {
   disabled: false,
+  file: { label: undefined, value: undefined },
   inputProps: {
     name: "country",
     placeholder: "Select country"
@@ -21,7 +23,10 @@ const InteractiveStory: React.FC = () => {
   return (
     <FileUploadField
       disabled={false}
-      fileName={file?.name}
+      file={{
+        label: file?.name,
+        value: file?.name
+      }}
       onFileUpload={file => setFile(file)}
       onFileDelete={() => setFile(null)}
     />
@@ -32,8 +37,24 @@ storiesOf("Generics / File upload field", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <FileUploadField {...props} />)
-  .add("with file", () => (
-    <FileUploadField {...props} fileName="some_file.png" />
+  .add("with ready to upload file", () => (
+    <FileUploadField
+      {...props}
+      file={{
+        label: "some_file.png",
+        value: "some_file.png"
+      }}
+    />
+  ))
+  .add("with uploaded file", () => (
+    <FileUploadField
+      {...props}
+      file={{
+        file: fixtures.UPLOADED_FILE,
+        label: "some_file_with_link.png",
+        value: "some_file_with_link.png"
+      }}
+    />
   ))
   .add("with error", () => (
     <FileUploadField
