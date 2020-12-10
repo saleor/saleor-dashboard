@@ -14,6 +14,18 @@ export interface DeleteShippingRate_shippingPriceDelete_errors {
   field: string | null;
 }
 
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -25,6 +37,18 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   id: string;
   start: string | null;
   end: string | null;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight {
@@ -77,6 +101,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
+  metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_metadata | null)[];
+  privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
@@ -92,6 +118,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses 
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   __typename: "ShippingZone";
+  metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_metadata | null)[];
+  privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_privateMetadata | null)[];
   id: string;
   countries: (DeleteShippingRate_shippingPriceDelete_shippingZone_countries | null)[] | null;
   name: string;

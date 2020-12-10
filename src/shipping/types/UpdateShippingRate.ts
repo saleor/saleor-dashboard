@@ -21,6 +21,18 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRu
   end: string | null;
 }
 
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -71,6 +83,8 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules | null)[] | null;
+  metadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_metadata | null)[];
+  privateMetadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;

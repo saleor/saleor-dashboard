@@ -1,8 +1,12 @@
 import { fragmentMoney } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
+import { metadataFragment } from "./metadata";
+
 export const shippingZoneFragment = gql`
+  ${metadataFragment}
   fragment ShippingZoneFragment on ShippingZone {
+    ...MetadataFragment
     id
     countries {
       code
@@ -23,10 +27,12 @@ export const shippingMethodWithZipCodesFragment = gql`
   }
 `;
 export const shippingMethodFragment = gql`
+  ${metadataFragment}
   ${fragmentMoney}
   ${shippingMethodWithZipCodesFragment}
   fragment ShippingMethodFragment on ShippingMethod {
     ...ShippingMethodWithZipCodesFragment
+    ...MetadataFragment
     minimumOrderWeight {
       unit
       value

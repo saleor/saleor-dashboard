@@ -15,6 +15,18 @@ export interface ShippingMethodFragment_zipCodeRules {
   end: string | null;
 }
 
+export interface ShippingMethodFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingMethodFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingMethodFragment_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -65,6 +77,8 @@ export interface ShippingMethodFragment {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (ShippingMethodFragment_zipCodeRules | null)[] | null;
+  metadata: (ShippingMethodFragment_metadata | null)[];
+  privateMetadata: (ShippingMethodFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodFragment_maximumOrderWeight | null;
   name: string;

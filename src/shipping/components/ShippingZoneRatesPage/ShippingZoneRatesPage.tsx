@@ -6,6 +6,8 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
@@ -20,6 +22,8 @@ import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -27,7 +31,7 @@ import ShippingZoneZipCodes, {
   ZipCodeInclusion
 } from "../ShippingZoneZipCodes";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   channelListings: ChannelShippingData[];
   includeZipCodes: ZipCodeInclusion;
   name: string;
@@ -89,8 +93,14 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
     noLimits: false,
-    type: rate?.type || null
+    type: rate?.type || null,
+    metadata: rate?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput)
   };
+
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
@@ -103,6 +113,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel.price)
         );
+
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -164,6 +176,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   disabled={disabled}
                   {...listProps}
                 />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
                 <ChannelsAvailability

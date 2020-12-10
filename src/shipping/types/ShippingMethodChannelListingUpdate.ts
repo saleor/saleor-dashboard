@@ -15,6 +15,18 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   end: string | null;
 }
 
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -65,6 +77,8 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules | null)[] | null;
+  metadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_metadata | null)[];
+  privateMetadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight | null;
   name: string;

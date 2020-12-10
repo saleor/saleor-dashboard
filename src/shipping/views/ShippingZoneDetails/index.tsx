@@ -19,6 +19,11 @@ import {
   useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseCreate } from "@saleor/warehouses/mutations";
 import { diff } from "fast-array-diff";
 import React from "react";
@@ -125,7 +130,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = async (submitData: FormData) => {
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const updateData = async (submitData: FormData) => {
     const warehouseDiff = diff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
       submitData.warehouses
@@ -144,6 +152,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
 
     return result.data.shippingZoneUpdate.errors;
   };
+
+  const handleSubmit = createMetadataUpdateHandler(
+    data?.shippingZone,
+    updateData,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
 
   if (data?.shippingZone === null) {
     return <NotFoundPage onBack={() => navigate(shippingZonesListUrl())} />;

@@ -48,6 +48,11 @@ import {
 } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -201,7 +206,10 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
   });
 
-  const handleSubmit = async (formData: FormData) => {
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const updateData = async (formData: FormData): Promise<unknown[]> => {
     const response = await updateShippingRate({
       variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
     });
@@ -217,7 +225,16 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         )
       });
     }
+
+    return errors;
   };
+
+  const handleSubmit = createMetadataUpdateHandler(
+    rate,
+    updateData,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
 
   const handleProductAssign = (ids: string[]) =>
     assignProduct({

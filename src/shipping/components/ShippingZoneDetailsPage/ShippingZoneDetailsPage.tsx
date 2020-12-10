@@ -5,6 +5,8 @@ import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -17,6 +19,8 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,7 +31,7 @@ import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
 import ShippingZoneWarehouses from "../ShippingZoneWarehouses";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   name: string;
   warehouses: string[];
 }
@@ -90,7 +94,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
   const initialForm: FormData = {
     name: shippingZone?.name || "",
-    warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || []
+    warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || [],
+    metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput)
   };
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]
@@ -103,6 +109,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
   const warehouseChoices = warehouses.map(warehouseToChoice);
 
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, toggleValue }) => {
@@ -112,6 +122,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           warehouseDisplayValues,
           warehouseChoices
         );
+
+        const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
@@ -174,6 +186,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   variant="weight"
                   selectedChannelId={selectedChannelId}
                 />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
                 <ShippingZoneWarehouses

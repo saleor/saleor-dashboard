@@ -8,6 +8,18 @@ import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTyp
 // GraphQL query operation: ShippingZone
 // ====================================================
 
+export interface ShippingZone_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZone_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingZone_shippingZone_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -19,6 +31,18 @@ export interface ShippingZone_shippingZone_shippingMethods_zipCodeRules {
   id: string;
   start: string | null;
   end: string | null;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZone_shippingZone_shippingMethods_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface ShippingZone_shippingZone_shippingMethods_minimumOrderWeight {
@@ -102,6 +126,8 @@ export interface ShippingZone_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (ShippingZone_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
+  metadata: (ShippingZone_shippingZone_shippingMethods_metadata | null)[];
+  privateMetadata: (ShippingZone_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: ShippingZone_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: ShippingZone_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
@@ -118,6 +144,8 @@ export interface ShippingZone_shippingZone_warehouses {
 
 export interface ShippingZone_shippingZone {
   __typename: "ShippingZone";
+  metadata: (ShippingZone_shippingZone_metadata | null)[];
+  privateMetadata: (ShippingZone_shippingZone_privateMetadata | null)[];
   id: string;
   countries: (ShippingZone_shippingZone_countries | null)[] | null;
   name: string;

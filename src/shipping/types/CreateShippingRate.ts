@@ -14,6 +14,18 @@ export interface CreateShippingRate_shippingPriceCreate_errors {
   field: string | null;
 }
 
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -25,6 +37,18 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   id: string;
   start: string | null;
   end: string | null;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderWeight {
@@ -77,6 +101,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
+  metadata: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_metadata | null)[];
+  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderWeight | null;
   name: string;
@@ -92,6 +118,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses 
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   __typename: "ShippingZone";
+  metadata: (CreateShippingRate_shippingPriceCreate_shippingZone_metadata | null)[];
+  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_privateMetadata | null)[];
   id: string;
   countries: (CreateShippingRate_shippingPriceCreate_shippingZone_countries | null)[] | null;
   name: string;
@@ -105,6 +133,18 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodeRu
   id: string;
   start: string | null;
   end: string | null;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CreateShippingRate_shippingPriceCreate_shippingMethod_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderWeight {
@@ -157,6 +197,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (CreateShippingRate_shippingPriceCreate_shippingMethod_zipCodeRules | null)[] | null;
+  metadata: (CreateShippingRate_shippingPriceCreate_shippingMethod_metadata | null)[];
+  privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderWeight | null;
   name: string;

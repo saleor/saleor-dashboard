@@ -8,6 +8,18 @@ import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTyp
 // GraphQL fragment: ShippingZoneDetailsFragment
 // ====================================================
 
+export interface ShippingZoneDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZoneDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface ShippingZoneDetailsFragment_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -19,6 +31,18 @@ export interface ShippingZoneDetailsFragment_shippingMethods_zipCodeRules {
   id: string;
   start: string | null;
   end: string | null;
+}
+
+export interface ShippingZoneDetailsFragment_shippingMethods_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ShippingZoneDetailsFragment_shippingMethods_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight {
@@ -71,6 +95,8 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   zipCodeRules: (ShippingZoneDetailsFragment_shippingMethods_zipCodeRules | null)[] | null;
+  metadata: (ShippingZoneDetailsFragment_shippingMethods_metadata | null)[];
+  privateMetadata: (ShippingZoneDetailsFragment_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_maximumOrderWeight | null;
   name: string;
@@ -86,6 +112,8 @@ export interface ShippingZoneDetailsFragment_warehouses {
 
 export interface ShippingZoneDetailsFragment {
   __typename: "ShippingZone";
+  metadata: (ShippingZoneDetailsFragment_metadata | null)[];
+  privateMetadata: (ShippingZoneDetailsFragment_privateMetadata | null)[];
   id: string;
   countries: (ShippingZoneDetailsFragment_countries | null)[] | null;
   name: string;
