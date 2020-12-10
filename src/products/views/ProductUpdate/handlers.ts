@@ -268,10 +268,15 @@ export function createUpdateHandler(
       );
 
       errors = deleteAttributeValuesResult.reduce(
-        (errors, deleteValueResult) => [
-          ...errors,
-          ...deleteValueResult.data.attributeValueDelete.errors
-        ],
+        (errors, deleteValueResult) => {
+          if (deleteValueResult?.data?.attributeValueDelete?.errors) {
+            return [
+              ...errors,
+              ...deleteValueResult.data.attributeValueDelete.errors
+            ];
+          }
+          return errors;
+        },
         errors
       );
     }

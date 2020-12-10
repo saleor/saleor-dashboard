@@ -137,10 +137,15 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       );
 
       errors = deleteAttributeValuesResult.reduce(
-        (errors, deleteValueResult) => [
-          ...errors,
-          ...deleteValueResult.data.attributeValueDelete.errors
-        ],
+        (errors, deleteValueResult) => {
+          if (deleteValueResult?.data?.attributeValueDelete?.errors) {
+            return [
+              ...errors,
+              ...deleteValueResult.data.attributeValueDelete.errors
+            ];
+          }
+          return errors;
+        },
         errors
       );
     }
