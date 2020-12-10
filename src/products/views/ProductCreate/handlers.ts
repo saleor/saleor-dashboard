@@ -1,4 +1,10 @@
 import { ChannelData } from "@saleor/channels/utils";
+import {
+  FileUpload,
+  FileUploadVariables
+} from "@saleor/files/types/FileUpload";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { weight } from "@saleor/misc";
 import { ProductCreateData } from "@saleor/products/components/ProductCreatePage/form";
 import {
@@ -21,7 +27,14 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
+import {
+  mergeAttributesWithFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/products/utils/data";
+import {
+  getAttributesVariables,
+  getAvailabilityVariables
+} from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { MutationFetchResult } from "react-apollo";
 
@@ -52,6 +65,9 @@ const getSimpleProductVariables = (
 
 export function createHandler(
   productTypes: SearchProductTypes_search_edges_node[],
+  uploadFile: (
+    variables: FileUploadVariables
+  ) => Promise<MutationFetchResult<FileUpload>>,
   productCreate: (
     variables: ProductCreateVariables
   ) => Promise<MutationFetchResult<ProductCreate>>,
@@ -69,12 +85,29 @@ export function createHandler(
   }) => Promise<MutationFetchResult<ProductDelete>>
 ) {
   return async (formData: ProductCreateData) => {
+    let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];
+
+    const uploadFilesResult = await Promise.all(
+      formData.attributesWithNewFileValue.map(fileAttribute =>
+        uploadFile({
+          file: fileAttribute.value
+        })
+      )
+    );
+
+    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
+
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      formData.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const productVariables: ProductCreateVariables = {
       input: {
-        attributes: formData.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value
-        })),
+        attributes: getAttributesVariables({
+          attributes: formData.attributes,
+          attributesWithAddedNewFiles
+        }),
         category: formData.category,
         chargeTaxes: formData.chargeTaxes,
         collections: formData.collections,
@@ -93,12 +126,16 @@ export function createHandler(
     };
 
     const result = await productCreate(productVariables);
-    let hasErrors = false;
+    let hasErrors = errors.length > 0;
 
     const hasVariants = productTypes.find(
       product => product.id === formData.productType.id
     ).hasVariants;
-    const productId = result.data.productCreate.product.id;
+    const productId = result.data.productCreate.product?.id;
+
+    if (!productId) {
+      return null;
+    }
 
     if (!hasVariants) {
       const result = await Promise.all([
@@ -142,7 +179,7 @@ export function createHandler(
      A more robust solution would require merging create and update form into one to persist form state across redirects
     */
     if (productId && hasErrors) {
-      productDelete({ variables: { id: productId } });
+      await productDelete({ variables: { id: productId } });
 
       return null;
     }

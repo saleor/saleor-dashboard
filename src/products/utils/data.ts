@@ -28,6 +28,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import { MutationFetchResult } from "react-apollo";
 
 import { ProductStockInput } from "../components/ProductStocks";
+import { ProductUpdateSubmitData } from "../components/ProductUpdatePage/form";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
@@ -49,7 +50,7 @@ export interface ProductType {
 }
 
 export const isFileValueUnused = (
-  data: ProductVariantUpdateSubmitData,
+  data: ProductUpdateSubmitData | ProductVariantUpdateSubmitData,
   existingAttribute: SelectedVariantAttributeFragment
 ) => {
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
