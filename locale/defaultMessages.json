@@ -3089,13 +3089,17 @@
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
     "string": "Billing Address"
   },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_1854613983": {
-    "context": "button",
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_cancelOrder": {
+    "context": "cancel button",
     "string": "Cancel order"
   },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_3086420445": {
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_confirmOrder": {
     "context": "save button",
     "string": "confirm order"
+  },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_returnOrder": {
+    "context": "return button",
+    "string": "Return / Replace Order"
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
@@ -3650,72 +3654,6 @@
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1580639738": {
-    "context": "order refund amount",
-    "string": "Proposed refund amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1705174606": {
-    "context": "order refund amount",
-    "string": "Max Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1734445951": {
-    "context": "order refund amount",
-    "string": "Refund total amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2045860028": {
-    "context": "order refund amount",
-    "string": "Authorized Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2854815744": {
-    "context": "order refund amount",
-    "string": "Previously refunded"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2907874606": {
-    "context": "order refund amount",
-    "string": "Selected products value"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_79173946": {
-    "context": "order refund amount",
-    "string": "Shipment cost"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_120912052": {
-    "context": "order refund amount",
-    "string": "Refunded items can’t be fulfilled"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_159210811": {
-    "string": "Amount must be bigger than 0"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2256869831": {
-    "context": "section header",
-    "string": "Refunded Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2845258362": {
-    "context": "order refund amount, input button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4033685232": {
-    "string": "Amount cannot be bigger than max refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_40513382": {
-    "context": "order refund amount, input button",
-    "string": "Refund {currency} {amount}"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4224226791": {
-    "context": "label",
-    "string": "Automatic Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_508357513": {
-    "context": "label",
-    "string": "Manual Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_553737700": {
-    "context": "checkbox",
-    "string": "Refund shipment costs"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_75546233": {
-    "context": "order refund amount, input label",
-    "string": "Amount"
-  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
     "string": "Price"
@@ -3758,6 +3696,86 @@
   "src_dot_orders_dot_components_dot_OrderRefundPage_dot_580490159": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2256869831": {
+    "context": "section header",
+    "string": "Refunded Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_40513382": {
+    "context": "order refund amount, input button",
+    "string": "Refund {currency} {amount}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_4224226791": {
+    "context": "label",
+    "string": "Automatic Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_508357513": {
+    "context": "label",
+    "string": "Manual Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_553737700": {
+    "context": "checkbox",
+    "string": "Refund shipment costs"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooBig": {
+    "context": "Amount error message",
+    "string": "Amount cannot be bigger than max refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooSmall": {
+    "context": "Amount error message",
+    "string": "Amount must be bigger than 0"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_authorizedAmount": {
+    "context": "order refund amount",
+    "string": "Authorized Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_label": {
+    "context": "order refund amount, input label",
+    "string": "Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_maxRefund": {
+    "context": "order refund amount",
+    "string": "Max Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_previouslyRefunded": {
+    "context": "order refund amount",
+    "string": "Previously refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_proposedRefundAmount": {
+    "context": "order refund amount",
+    "string": "Proposed refund amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundButton": {
+    "context": "order refund amount button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundCannotBeFulfilled": {
+    "context": "order refund subtitle",
+    "string": "Refunded items can't be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundTotalAmount": {
+    "context": "order refund amount",
+    "string": "Refund total amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_replacedProductsValue": {
+    "context": "order refund amount",
+    "string": "Replaced Products Value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnButton": {
+    "context": "order return amount button",
+    "string": "Return & Replace products"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnCannotBeFulfilled": {
+    "context": "order return subtitle",
+    "string": "Returned items can't be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_selectedProductsValue": {
+    "context": "order refund amount",
+    "string": "Selected Products Value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_shipmentCost": {
+    "context": "order refund amount",
+    "string": "Shipment Cost"
   },
   "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
@@ -3805,6 +3823,46 @@
   "src_dot_orders_dot_components_dot_OrderRefund_dot_refundProducts": {
     "context": "refund type",
     "string": "Refund Products"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1134347598": {
+    "context": "table column header",
+    "string": "Price"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1784788864": {
+    "context": "table column header",
+    "string": "Return"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1895667608": {
+    "context": "table column header",
+    "string": "Product"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_2049070632": {
+    "context": "table column header",
+    "string": "Replace"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_3988345170": {
+    "context": "button",
+    "string": "Set maximal quantities"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
+    "context": "error message",
+    "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
+    "context": "section header",
+    "string": "Fulfillment - #{fulfilmentId}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled Items"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
+    "context": "page header with order number",
+    "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_pageTitle": {
+    "context": "page header",
+    "string": "Order no. {orderNumber} - Replace/Return"
   },
   "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
     "context": "header",
