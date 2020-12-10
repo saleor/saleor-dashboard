@@ -155,7 +155,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
 
-  console.log({ warehouses });
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
     OrderFulfillStockInput[]
