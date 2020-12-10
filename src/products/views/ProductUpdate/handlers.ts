@@ -42,6 +42,7 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import {
+  isFileValueUnused,
   mapFormsetStockToStockInput,
   mergeAttributesWithFileUploadResult,
   mergeFileUploadErrors
@@ -49,7 +50,6 @@ import {
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { getAttributesVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
@@ -253,14 +253,7 @@ export function createUpdateHandler(
     if (errors.length === 0) {
       const deleteAttributeValuesResult = await Promise.all(
         product.attributes.map(existingAttribute => {
-          const fileValueUnused =
-            existingAttribute.attribute.inputType ===
-              AttributeInputTypeEnum.FILE &&
-            existingAttribute.values.length > 0 &&
-            data.attributes.find(
-              dataAttribute =>
-                dataAttribute.id === existingAttribute.attribute.id
-            ).value.length === 0;
+          const fileValueUnused = isFileValueUnused(data, existingAttribute);
 
           if (fileValueUnused) {
             return deleteAttributeValue({
