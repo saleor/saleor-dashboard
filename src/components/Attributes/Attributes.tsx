@@ -30,12 +30,7 @@ import {
 } from "react-intl";
 
 import FileUploadField from "../FileUploadField";
-
-export enum VariantAttributeScope {
-  ALL = "ALL",
-  VARIANT_SELECTION = "VARIANT_SELECTION",
-  NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION"
-}
+import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;

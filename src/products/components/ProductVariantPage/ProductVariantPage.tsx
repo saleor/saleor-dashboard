@@ -19,7 +19,7 @@ import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -32,6 +32,17 @@ import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
   ProductVariantUpdateSubmitData
 } from "./form";
+
+const messages = defineMessages({
+  nonSelectionAttributes: {
+    defaultMessage: "Variant Attributes",
+    description: "attributes, section header"
+  },
+  selectionAttributesHeader: {
+    defaultMessage: "Variant Selection Attributes",
+    description: "attributes, section header"
+  }
+});
 
 export interface ProductVariantPageFormData extends MetadataFormData {
   costPrice: string;
@@ -155,10 +166,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 </div>
                 <div>
                   <Attributes
-                    title={intl.formatMessage({
-                      defaultMessage: "Variant Attributes",
-                      description: "attributes, section header"
-                    })}
+                    title={intl.formatMessage(messages.nonSelectionAttributes)}
                     attributes={data.attributes.filter(
                       attribute =>
                         attribute.data.variantAttributeScope ===
@@ -172,10 +180,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <Attributes
-                    title={intl.formatMessage({
-                      defaultMessage: "Variant Selection Attributes",
-                      description: "attributes, section header"
-                    })}
+                    title={intl.formatMessage(
+                      messages.selectionAttributesHeader
+                    )}
                     attributes={data.attributes.filter(
                       attribute =>
                         attribute.data.variantAttributeScope ===

@@ -5053,13 +5053,13 @@
     "context": "variant name",
     "string": "New Variant"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPage_dot_3036315668": {
-    "context": "attributes, section header",
-    "string": "Variant Selection Attributes"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantPage_dot_888493112": {
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_nonSelectionAttributes": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_selectionAttributesHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Selection Attributes"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1099355007": {
     "context": "product pricing, section header",
