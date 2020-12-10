@@ -136,12 +136,13 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         })
       );
 
-      deleteAttributeValuesResult.forEach(deleteValueResult => {
-        errors = [
+      errors = deleteAttributeValuesResult.reduce(
+        (errors, deleteValueResult) => [
           ...errors,
           ...deleteValueResult.data.attributeValueDelete.errors
-        ];
-      });
+        ],
+        errors
+      );
     }
 
     return errors;

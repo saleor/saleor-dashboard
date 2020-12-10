@@ -88,6 +88,7 @@ export const mergeFileUploadErrors = (
     if (uploadErrors) {
       return [...errors, ...uploadErrors];
     }
+    return errors;
   }, []);
 
 export const mergeAttributesWithFileUploadResult = (
