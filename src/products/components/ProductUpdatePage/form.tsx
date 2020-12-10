@@ -7,17 +7,20 @@ import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, {
+  FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
+  getAttributesDisplayData,
   getProductUpdatePageFormData,
   getStockInputFromProduct
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler
@@ -34,7 +37,7 @@ import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import { diff } from "fast-array-diff";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ProductStockInput } from "../ProductStocks";
 
@@ -55,6 +58,18 @@ export interface ProductUpdateFormData extends MetadataFormData {
   trackInventory: boolean;
   weight: string;
 }
+export interface FileAttributeInputData {
+  attributeId: string;
+  file: File;
+}
+export type FileAttributeInput = FormsetAtomicData<
+  FileAttributeInputData,
+  string[]
+>;
+
+export interface FileAttributesSubmitData {
+  fileAttributes: FileAttributeInput[];
+}
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   description: OutputData;
@@ -62,6 +77,7 @@ export interface ProductUpdateData extends ProductUpdateFormData {
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   collections: string[];
   description: OutputData;
   addStocks: ProductStockInput[];
@@ -89,6 +105,7 @@ interface ProductUpdateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
 }
@@ -165,6 +182,7 @@ function useProductUpdateForm(
     )
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
   const [description, changeDescription] = useRichText({
     initial: product?.descriptionJson,
@@ -201,6 +219,13 @@ function useProductUpdateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.remove,
+    triggerChange
+  );
   const handleStockChange: FormsetChange<string> = (id, value) => {
     triggerChange();
     stocks.change(id, value);
@@ -235,9 +260,16 @@ function useProductUpdateForm(
     triggerChange
   );
 
+  useEffect(() => {
+    attributesWithNewFileValue.set([]);
+  }, [product]);
+
   const data: ProductUpdateData = {
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
     description: description.current,
     stocks: stocks.data
   };
@@ -248,10 +280,12 @@ function useProductUpdateForm(
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     addStocks: [],
     attributes: attributes.data,
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current
   });
 
-  const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
+  const submit = async () =>
+    handleFormSubmit(getSubmitData(), onSubmit, setChanged);
 
   const disabled =
     !opts.hasVariants &&
@@ -274,6 +308,7 @@ function useProductUpdateForm(
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,

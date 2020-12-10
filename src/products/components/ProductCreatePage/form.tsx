@@ -9,14 +9,19 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
-import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
+import useFormset, {
+  FormsetChange,
+  FormsetData
+} from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getAttributeInputFromProductType,
+  getAttributesDisplayData,
   ProductType
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
@@ -58,6 +63,7 @@ export interface ProductCreateFormData extends MetadataFormData {
 }
 export interface ProductCreateData extends ProductCreateFormData {
   attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
 }
 
@@ -82,6 +88,7 @@ interface ProductCreateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
 }
@@ -164,6 +171,7 @@ function useProductCreateForm(
       ? getAttributeInputFromProductType(initialProductType)
       : []
   );
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<null, string>([]);
   const [productType, setProductType] = useStateFromProps<ProductType>(
     initialProductType || null
@@ -199,6 +207,13 @@ function useProductCreateForm(
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
+    triggerChange
+  );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.remove,
     triggerChange
   );
   const handleProductTypeSelect = createProductTypeSelectHandler(
@@ -243,7 +258,11 @@ function useProductCreateForm(
 
   const getData = (): ProductCreateData => ({
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current,
     productType,
     stocks: stocks.data
@@ -276,6 +295,7 @@ function useProductCreateForm(
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,

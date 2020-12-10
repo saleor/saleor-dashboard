@@ -166,6 +166,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     errors={errors}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
                   />
                 )}
                 <CardSpacer />

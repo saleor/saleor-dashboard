@@ -17,6 +17,7 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -93,6 +94,7 @@ export interface ProductUpdatePageSubmitData
     ChannelProps {
   addStocks: ProductStockInput[];
   attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   collections: string[];
   description: OutputData;
   removeStocks: string[];
@@ -223,6 +225,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     disabled={disabled}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
                   />
                 )}
                 <CardSpacer />

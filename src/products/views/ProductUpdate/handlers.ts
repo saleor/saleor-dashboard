@@ -1,8 +1,18 @@
+import {
+  AttributeValueDelete,
+  AttributeValueDeleteVariables
+} from "@saleor/attributes/types/AttributeValueDelete";
 import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
+import {
+  FileUpload,
+  FileUploadVariables
+} from "@saleor/files/types/FileUpload";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
@@ -34,13 +44,28 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import {
+  isFileValueUnused,
+  mapFormsetStockToStockInput,
+  mergeAttributesWithFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
+import { getAttributesVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
+
+type SubmitErrors = Array<
+  | ProductErrorFragment
+  | StockErrorFragment
+  | BulkStockErrorFragment
+  | AttributeErrorFragment
+  | UploadErrorFragment
+  | ProductChannelListingErrorFragment
+>;
 
 const getSimpleProductVariables = (
   productVariables: ProductUpdateVariables,
@@ -100,6 +125,9 @@ const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
 
 export function createUpdateHandler(
   product: ProductDetails_product,
+  uploadFile: (
+    variables: FileUploadVariables
+  ) => Promise<MutationFetchResult<FileUpload>>,
   updateProduct: (
     variables: ProductUpdateVariables
   ) => Promise<MutationFetchResult<ProductUpdate>>,
@@ -114,16 +142,36 @@ export function createUpdateHandler(
   }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
   productVariantCreate: (options: {
     variables: VariantCreateVariables;
-  }) => Promise<MutationFetchResult<VariantCreate>>
+  }) => Promise<MutationFetchResult<VariantCreate>>,
+  deleteAttributeValue: (
+    variables: AttributeValueDeleteVariables
+  ) => Promise<MutationFetchResult<AttributeValueDelete>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
+    let errors: SubmitErrors = [];
+
+    const uploadFilesResult = await Promise.all(
+      data.attributesWithNewFileValue.map(fileAttribute =>
+        uploadFile({
+          file: fileAttribute.value
+        })
+      )
+    );
+
+    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
+
+    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+      data.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
-        attributes: data.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value[0] === "" ? [] : attribute.value
-        })),
+        attributes: getAttributesVariables({
+          attributes: data.attributes,
+          attributesWithAddedNewFiles
+        }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
@@ -139,16 +187,9 @@ export function createUpdateHandler(
       }
     };
 
-    let errors: Array<
-      | ProductErrorFragment
-      | StockErrorFragment
-      | BulkStockErrorFragment
-      | ProductChannelListingErrorFragment
-    >;
-
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
-      errors = result.data.productUpdate.errors;
+      errors = [...errors, ...result.data.productUpdate.errors];
 
       updateChannels({
         variables: getChannelsVariables(data, product)
@@ -169,7 +210,10 @@ export function createUpdateHandler(
             }
           }
         });
-        errors = productVariantResult.data.productVariantCreate.errors;
+        errors = [
+          ...errors,
+          ...productVariantResult.data.productVariantCreate.errors
+        ];
 
         const variantId =
           productVariantResult.data.productVariantCreate?.productVariant?.id;
@@ -196,7 +240,7 @@ export function createUpdateHandler(
             product.variants[0].id
           )
         );
-        errors = getSimpleProductErrors(result.data);
+        errors = [...errors, ...getSimpleProductErrors(result.data)];
 
         await updateChannels({
           variables: getChannelsVariables(data, product)
@@ -208,6 +252,28 @@ export function createUpdateHandler(
           }
         });
       }
+    }
+
+    if (errors.length === 0) {
+      const deleteAttributeValuesResult = await Promise.all(
+        product.attributes.map(existingAttribute => {
+          const fileValueUnused = isFileValueUnused(data, existingAttribute);
+
+          if (fileValueUnused) {
+            return deleteAttributeValue({
+              id: existingAttribute.values[0].id
+            });
+          }
+        })
+      );
+
+      errors = deleteAttributeValuesResult.reduce(
+        (errors, deleteValueResult) => [
+          ...errors,
+          ...deleteValueResult.data.attributeValueDelete.errors
+        ],
+        errors
+      );
     }
 
     return errors;
