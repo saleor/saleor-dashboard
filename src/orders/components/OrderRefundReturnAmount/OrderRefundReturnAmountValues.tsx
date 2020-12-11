@@ -110,13 +110,15 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
     []
   );
 
-  const selectRowClassnames = (highlighted: boolean) =>
-    highlighted ? classNames(classes.row, classes.highlightedRow) : classes.row;
-
   return (
     <div className={classes.container}>
       {items.map(({ key, data, highlighted }) => (
-        <div className={selectRowClassnames(highlighted)} key={key}>
+        <div
+          className={classNames(classes.row, {
+            [classes.highlightedRow]: highlighted
+          })}
+          key={key}
+        >
           {intl.formatMessage(messages[key])}
           <div>
             {data?.amount !== undefined ? <Money money={data} /> : <Skeleton />}

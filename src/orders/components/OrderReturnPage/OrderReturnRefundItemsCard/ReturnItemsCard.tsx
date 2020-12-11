@@ -105,7 +105,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   const intl = useIntl();
 
   const handleChangeQuantity = (id: string) => (
-    event: React.ChangeEvent<any>
+    event: React.ChangeEvent<HTMLInputElement>
   ) => onChangeQuantity(id, parseInt(event.target.value, 10));
 
   return (

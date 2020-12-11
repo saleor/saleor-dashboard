@@ -88,11 +88,11 @@ const messages = defineMessages({
     description: "cancel button"
   },
   confirmOrder: {
-    defaultMessage: "confirm order",
+    defaultMessage: "Confirm order",
     description: "save button"
   },
   returnOrder: {
-    defaultMessage: "Return / Replace Order",
+    defaultMessage: "Return / Replace order",
     description: "return button"
   }
 });
@@ -168,6 +168,25 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     return disabled;
   };
 
+  const selectCardMenuItems = () => {
+    const returnOrderItem = {
+      label: intl.formatMessage(messages.returnOrder),
+      onSelect: onOrderReturn
+    };
+
+    if (canCancel) {
+      return [
+        {
+          label: intl.formatMessage(messages.cancelOrder),
+          onSelect: onOrderCancel
+        },
+        returnOrderItem
+      ];
+    }
+
+    return [returnOrderItem];
+  };
+
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
@@ -183,18 +202,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
             >
-              <CardMenu
-                menuItems={[
-                  canCancel && {
-                    label: intl.formatMessage(messages.cancelOrder),
-                    onSelect: onOrderCancel
-                  },
-                  {
-                    label: intl.formatMessage(messages.returnOrder),
-                    onSelect: onOrderReturn
-                  }
-                ]}
-              />
+              <CardMenu menuItems={selectCardMenuItems()} />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
