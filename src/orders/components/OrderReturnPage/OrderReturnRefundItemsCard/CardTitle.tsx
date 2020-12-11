@@ -30,7 +30,7 @@ interface CardTitleProps {
 const CardTitle: React.FC<CardTitleProps> = ({ order, fulfilmentId }) => {
   const intl = useIntl();
 
-  if (!order) {
+  if (!order || !fulfilmentId) {
     return null;
   }
 
