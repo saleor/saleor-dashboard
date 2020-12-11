@@ -4,20 +4,28 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useState } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
-  getAllOrderFulfilledLines,
   getById,
-  getFulfilledFulfillemnts,
+  getLineItem,
   getOrderUnfulfilledLines,
-  getParsedFulfiledLines
+  getParsedLineData,
+  getParsedLineDataForFulfillmentStatus
 } from "./utils";
+
+export interface LineItemOptions<T> {
+  initialValue: T;
+  isFulfillment?: boolean;
+  isRefunded?: boolean;
+}
 
 export interface LineItemData {
   isFulfillment: boolean;
+  isRefunded: boolean;
 }
 
 export type FormsetQuantityData = FormsetData<LineItemData, number>;
@@ -76,33 +84,33 @@ function useOrderReturnForm(
     form.change(event, cb);
   };
 
-  function getLineItem<T>(
-    { id }: { id: string },
-    value: T,
-    isFulfillment: boolean = false
-  ) {
-    return {
-      data: { isFulfillment },
-      id,
-      label: null,
-      value
-    };
-  }
-
-  function getParsedLineData<T>(
-    initialValue: T,
-    isFulfillment: boolean = false
-  ) {
-    return (item: { id: string }) =>
-      getLineItem(item, initialValue, isFulfillment);
-  }
-
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
-    getOrderUnfulfilledLines(order).map(getParsedLineData(0))
+    getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))
   );
 
+  const getItemsFulfilled = () => {
+    const commonOptions = {
+      initialValue: 0,
+      isFulfillment: true
+    };
+
+    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.REFUNDED,
+      { ...commonOptions, isRefunded: true }
+    );
+
+    const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.FULFILLED,
+      commonOptions
+    );
+
+    return refundedFulfilmentsItems.concat(fulfilledFulfillmentsItems);
+  };
+
   const fulfiledItemsQuatities = useFormset<LineItemData, number>(
-    getAllOrderFulfilledLines(order).map(getParsedLineData(0, true))
+    getItemsFulfilled()
   );
 
   const getItemsToBeReplaced = () => {
@@ -111,18 +119,26 @@ function useOrderReturnForm(
     }
 
     const orderLinesItems = getOrderUnfulfilledLines(order).map(
-      getParsedLineData(true)
+      getParsedLineData({ initialValue: true })
     );
 
-    const fulfilmentsItems = getFulfilledFulfillemnts(order).reduce(
-      (result, { lines }) => [
-        ...result,
-        ...getParsedFulfiledLines(lines).map(getParsedLineData(true, true))
-      ],
-      []
+    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.REFUNDED,
+      { initialValue: false, isFulfillment: true }
     );
 
-    return [...orderLinesItems, ...fulfilmentsItems];
+    const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.FULFILLED,
+      { initialValue: true, isFulfillment: true }
+    );
+
+    return [
+      ...orderLinesItems,
+      ...refundedFulfilmentsItems,
+      ...fulfilledFulfillmentsItems
+    ];
   };
 
   const itemsToBeReplaced = useFormset<LineItemData, boolean>(
@@ -133,9 +149,9 @@ function useOrderReturnForm(
     const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
       ({ id }) => {
         const line = order.lines.find(getById(id));
-        const value = line.quantity - line.quantityFulfilled;
+        const initialValue = line.quantity - line.quantityFulfilled;
 
-        return getLineItem(line, value);
+        return getLineItem(line, { initialValue });
       }
     );
 
@@ -156,7 +172,7 @@ function useOrderReturnForm(
           return item;
         }
 
-        return getLineItem(line, line.quantity);
+        return getLineItem(line, { initialValue: line.quantity });
       }
     );
 
