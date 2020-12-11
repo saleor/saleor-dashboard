@@ -1373,6 +1373,26 @@ export interface OrderRefundProductsInput {
   includeShippingCosts?: boolean | null;
 }
 
+export interface OrderReturnCreateInput {
+  orderLines?: OrderReturnLineInput[] | null;
+  fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
+  refund?: boolean | null;
+  amountToRefund?: any | null;
+  includeShippingCosts?: boolean | null;
+}
+
+export interface OrderReturnFulfillmentLineInput {
+  fulfillmentLineId: string;
+  quantity: number;
+  replace?: boolean | null;
+}
+
+export interface OrderReturnLineInput {
+  orderLineId: string;
+  quantity: number;
+  replace?: boolean | null;
+}
+
 export interface OrderSettingsUpdateInput {
   automaticallyConfirmAllNewOrders: boolean;
 }
