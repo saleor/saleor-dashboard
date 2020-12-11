@@ -28,12 +28,12 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import {
-  mergeAttributesWithFileUploadResult,
+  getAttributesFromFileUploadResult,
   mergeFileUploadErrors
 } from "@saleor/products/utils/data";
 import {
-  getAttributesVariables,
-  getAvailabilityVariables
+  getAvailabilityVariables,
+  prepareAttributesInput
 } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { MutationFetchResult } from "react-apollo";
@@ -88,23 +88,25 @@ export function createHandler(
     let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];
 
     const uploadFilesResult = await Promise.all(
-      formData.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          file: fileAttribute.value
-        })
-      )
+      formData.attributesWithNewFileValue
+        .filter(fileAttribute => !!fileAttribute.value)
+        .map(fileAttribute =>
+          uploadFile({
+            file: fileAttribute.value
+          })
+        )
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       formData.attributesWithNewFileValue,
       uploadFilesResult
     );
 
     const productVariables: ProductCreateVariables = {
       input: {
-        attributes: getAttributesVariables({
+        attributes: prepareAttributesInput({
           attributes: formData.attributes,
           attributesWithAddedNewFiles
         }),

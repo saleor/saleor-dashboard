@@ -45,12 +45,12 @@ import {
   ProductVariantEditUrlQueryParams
 } from "../urls";
 import {
+  getAttributesFromFileUploadResult,
   isFileValueUnused,
   mapFormsetStockToStockInput,
-  mergeAttributesWithFileUploadResult,
   mergeFileUploadErrors
 } from "../utils/data";
-import { getAttributesVariables } from "../utils/handlers";
+import { prepareAttributesInput } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -223,13 +223,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     > = [];
 
     const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          variables: {
-            file: fileAttribute.value
-          }
-        })
-      )
+      data.attributesWithNewFileValue
+        .filter(fileAttribute => !!fileAttribute.value)
+        .map(fileAttribute =>
+          uploadFile({
+            variables: {
+              file: fileAttribute.value
+            }
+          })
+        )
     );
 
     fileAttributeErrors = [
@@ -237,7 +239,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       ...mergeFileUploadErrors(uploadFilesResult)
     ];
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -245,7 +247,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        attributes: getAttributesVariables({
+        attributes: prepareAttributesInput({
           attributes: data.attributes,
           attributesWithAddedNewFiles
         }),

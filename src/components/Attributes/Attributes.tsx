@@ -37,6 +37,7 @@ export interface AttributeInputData {
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];
+  selectedValues?: AttributeValueFragment[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;

@@ -77,16 +77,19 @@ export const prepareAttributesInput = ({
         attributeWithNewFile => attribute.id === attributeWithNewFile.id
       );
       if (attributeWithNewFile) {
-        return attributeWithNewFile;
+        return {
+          file: attributeWithNewFile.file,
+          id: attributeWithNewFile.id
+        };
       }
       return {
-        file: attribute.value[0],
-        id: attribute.id,
-        values: []
+        file:
+          attribute.data.selectedValues &&
+          attribute.data.selectedValues[0]?.file?.url,
+        id: attribute.id
       };
     }
     return {
-      file: undefined,
       id: attribute.id,
       values: attribute.value[0] === "" ? [] : attribute.value
     };

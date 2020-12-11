@@ -135,30 +135,28 @@ export function createAttributeFileChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
   addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
-  removeAttributeNewFileValue: (id: string) => void,
+  changeAttributeNewFileValue: FormsetChange<File>,
   triggerChange: () => void
 ): FormsetChange<File> {
   return (attributeId: string, value: File) => {
     triggerChange();
 
-    if (value) {
+    const newFileValueAssigned = attributesWithNewFileValue.find(
+      attribute => attribute.id === attributeId
+    );
+
+    if (newFileValueAssigned) {
+      changeAttributeNewFileValue(attributeId, value);
+    } else {
       addAttributeNewFileValue({
         data: null,
         id: attributeId,
         label: null,
         value
       });
-      return;
     }
 
-    const removingNewFileValue = attributesWithNewFileValue.find(
-      attribute => attribute.id === attributeId
-    );
-    if (removingNewFileValue) {
-      removeAttributeNewFileValue(attributeId);
-    } else {
-      changeAttributeData(attributeId, []);
-    }
+    changeAttributeData(attributeId, value ? [value.name] : []);
   };
 }
 
@@ -216,7 +214,7 @@ interface ProductAttributesArgs {
   attributesWithAddedNewFiles: AttributeValueInput[];
 }
 
-export const getAttributesVariables = ({
+export const prepareAttributesInput = ({
   attributes,
   attributesWithAddedNewFiles
 }: ProductAttributesArgs): AttributeValueInput[] =>
@@ -226,16 +224,19 @@ export const getAttributesVariables = ({
         attributeWithNewFile => attribute.id === attributeWithNewFile.id
       );
       if (attributeWithNewFile) {
-        return attributeWithNewFile;
+        return {
+          file: attributeWithNewFile.file,
+          id: attributeWithNewFile.id
+        };
       }
       return {
-        file: attribute.value[0],
-        id: attribute.id,
-        values: []
+        file:
+          attribute.data.selectedValues &&
+          attribute.data.selectedValues[0]?.file?.url,
+        id: attribute.id
       };
     }
     return {
-      file: undefined,
       id: attribute.id,
       values: attribute.value[0] === "" ? [] : attribute.value
     };

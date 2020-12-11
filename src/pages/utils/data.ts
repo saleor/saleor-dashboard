@@ -22,6 +22,7 @@ export function getAttributeInputFromPage(
     data: {
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
       values: attribute.attribute.values
     },
     id: attribute.attribute.id,
@@ -57,7 +58,9 @@ export const getAttributesDisplayData = (
     if (attributeWithNewFileValue) {
       return {
         ...attribute,
-        value: [attributeWithNewFileValue.value.name]
+        value: attributeWithNewFileValue?.value?.name
+          ? [attributeWithNewFileValue.value.name]
+          : []
       };
     }
     return attribute;
@@ -74,10 +77,11 @@ export const isFileValueUnused = (
     return false;
   }
 
-  const modifiedAttribute = data.attributes.find(
+  const modifiedAttribute = data.attributesWithNewFileValue.find(
     dataAttribute => dataAttribute.id === existingAttribute.attribute.id
   );
-  return modifiedAttribute.value.length === 0;
+
+  return !!modifiedAttribute;
 };
 
 export const mergeFileUploadErrors = (
@@ -91,16 +95,33 @@ export const mergeFileUploadErrors = (
     return errors;
   }, []);
 
-export const mergeAttributesWithFileUploadResult = (
+export const getAttributesFromFileUploadResult = (
   attributesWithNewFileValue: FormsetData<null, File>,
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-): AttributeValueInput[] =>
-  uploadFilesResult.map((uploadFileResult, index) => {
-    const attribute = attributesWithNewFileValue[index];
-
-    return {
-      file: uploadFileResult.data.fileUpload.uploadedFile.url,
+): AttributeValueInput[] => {
+  const removedFileValues = attributesWithNewFileValue
+    .filter(attribute => !attribute.value)
+    .map(attribute => ({
+      file: undefined,
       id: attribute.id,
       values: []
-    };
-  }, []);
+    }));
+
+  const fileAttributesToUpload = attributesWithNewFileValue.filter(
+    fileAttribute => !!fileAttribute.value
+  );
+
+  const uploadedFileValues = uploadFilesResult.map(
+    (uploadFileResult, index) => {
+      const attribute = fileAttributesToUpload[index];
+
+      return {
+        file: uploadFileResult.data.fileUpload.uploadedFile.url,
+        id: attribute.id,
+        values: []
+      };
+    }
+  );
+
+  return uploadedFileValues.concat(removedFileValues);
+};

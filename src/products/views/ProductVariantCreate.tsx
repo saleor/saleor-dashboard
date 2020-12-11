@@ -27,8 +27,8 @@ import {
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
-import { mergeAttributesWithFileUploadResult } from "../utils/data";
-import { getAttributesVariables } from "../utils/handlers";
+import { getAttributesFromFileUploadResult } from "../utils/data";
+import { prepareAttributesInput } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -125,16 +125,18 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await Promise.all(
-      formData.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          variables: {
-            file: fileAttribute.value
-          }
-        })
-      )
+      formData.attributesWithNewFileValue
+        .filter(fileAttribute => !!fileAttribute.value)
+        .map(fileAttribute =>
+          uploadFile({
+            variables: {
+              file: fileAttribute.value
+            }
+          })
+        )
     );
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       formData.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -142,7 +144,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     const result = await variantCreate({
       variables: {
         input: {
-          attributes: getAttributesVariables({
+          attributes: prepareAttributesInput({
             attributes: formData.attributes.filter(
               attribute => attribute.value?.length && attribute.value[0] !== ""
             ),

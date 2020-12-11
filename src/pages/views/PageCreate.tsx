@@ -17,7 +17,7 @@ import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
-import { mergeAttributesWithFileUploadResult } from "../utils/data";
+import { getAttributesFromFileUploadResult } from "../utils/data";
 import { prepareAttributesInput } from "../utils/handlers";
 
 export interface PageCreateProps {
@@ -58,16 +58,18 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
       {(pageCreate, pageCreateOpts) => {
         const handleCreate = async (formData: PageSubmitData) => {
           const uploadFilesResult = await Promise.all(
-            formData.attributesWithNewFileValue.map(fileAttribute =>
-              uploadFile({
-                variables: {
-                  file: fileAttribute.value
-                }
-              })
-            )
+            formData.attributesWithNewFileValue
+              .filter(fileAttribute => !!fileAttribute.value)
+              .map(fileAttribute =>
+                uploadFile({
+                  variables: {
+                    file: fileAttribute.value
+                  }
+                })
+              )
           );
 
-          const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+          const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
             formData.attributesWithNewFileValue,
             uploadFilesResult
           );

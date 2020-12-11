@@ -213,7 +213,7 @@ function useProductCreateForm(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
-    attributesWithNewFileValue.remove,
+    attributesWithNewFileValue.change,
     triggerChange
   );
   const handleProductTypeSelect = createProductTypeSelectHandler(

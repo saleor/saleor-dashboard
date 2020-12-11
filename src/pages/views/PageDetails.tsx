@@ -26,8 +26,8 @@ import { usePageDetailsQuery } from "../queries";
 import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
 import {
+  getAttributesFromFileUploadResult,
   isFileValueUnused,
-  mergeAttributesWithFileUploadResult,
   mergeFileUploadErrors
 } from "../utils/data";
 import { prepareAttributesInput } from "../utils/handlers";
@@ -96,18 +96,20 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     > = [];
 
     const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          variables: {
-            file: fileAttribute.value
-          }
-        })
-      )
+      data.attributesWithNewFileValue
+        .filter(fileAttribute => !!fileAttribute.value)
+        .map(fileAttribute =>
+          uploadFile({
+            variables: {
+              file: fileAttribute.value
+            }
+          })
+        )
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );

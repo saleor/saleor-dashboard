@@ -45,13 +45,13 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import {
+  getAttributesFromFileUploadResult,
   isFileValueUnused,
   mapFormsetStockToStockInput,
-  mergeAttributesWithFileUploadResult,
   mergeFileUploadErrors
 } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { getAttributesVariables } from "@saleor/products/utils/handlers";
+import { prepareAttributesInput } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
@@ -151,16 +151,18 @@ export function createUpdateHandler(
     let errors: SubmitErrors = [];
 
     const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          file: fileAttribute.value
-        })
-      )
+      data.attributesWithNewFileValue
+        .filter(fileAttribute => !!fileAttribute.value)
+        .map(fileAttribute =>
+          uploadFile({
+            file: fileAttribute.value
+          })
+        )
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -168,7 +170,7 @@ export function createUpdateHandler(
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
-        attributes: getAttributesVariables({
+        attributes: prepareAttributesInput({
           attributes: data.attributes,
           attributesWithAddedNewFiles
         }),
