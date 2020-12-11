@@ -3095,11 +3095,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_confirmOrder": {
     "context": "save button",
-    "string": "confirm order"
+    "string": "Confirm order"
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_returnOrder": {
     "context": "return button",
-    "string": "Return / Replace Order"
+    "string": "Return / Replace order"
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
@@ -3851,6 +3851,10 @@
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
     "context": "section header",
     "string": "Fulfillment - #{fulfilmentId}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleRefunded": {
+    "context": "section header",
+    "string": "Refunded {fulfillmentName}"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
     "context": "section header",
