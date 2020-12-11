@@ -86,9 +86,9 @@ export const getReplacedProductsAmount = (
   return itemsToBeReplaced.reduce(
     (
       resultAmount: number,
-      { id, value: isItemToBeReplaced, data: { isFulfillment } }
+      { id, value: isItemToBeReplaced, data: { isFulfillment, isRefunded } }
     ) => {
-      if (!isItemToBeReplaced) {
+      if (!isItemToBeReplaced || isRefunded) {
         return resultAmount;
       }
 
@@ -138,9 +138,12 @@ const getPartialProductsValue = ({
   orderLines: OrderDetails_order_lines[];
 }) =>
   itemsQuantities.reduce((resultAmount, { id, value: quantity }) => {
-    const isItemToBeReplaced = itemsToBeReplaced.find(getById(id)).value;
+    const {
+      value: isItemToBeReplaced,
+      data: { isRefunded }
+    } = itemsToBeReplaced.find(getById(id));
 
-    if (quantity < 1 || isItemToBeReplaced) {
+    if (quantity < 1 || isItemToBeReplaced || isRefunded) {
       return resultAmount;
     }
 

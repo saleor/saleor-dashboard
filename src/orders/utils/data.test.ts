@@ -661,46 +661,132 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine"
         },
         __typename: "FulfillmentLine"
+      },
+      {
+        id: "7",
+        quantity: 1,
+        orderLine: {
+          id: "T3JkZXJMaW5lOjQ1",
+          isShippingRequired: false,
+          variant: {
+            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            quantityAvailable: 50,
+            __typename: "ProductVariant"
+          },
+          productName: "Lake Tunes",
+          productSku: "lake-tunes-mp3",
+          quantity: 20,
+          quantityFulfilled: 6,
+          unitPrice: {
+            gross: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            net: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            __typename: "TaxedMoney"
+          },
+          thumbnail: {
+            url:
+              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            __typename: "Image"
+          },
+          __typename: "OrderLine"
+        },
+        __typename: "FulfillmentLine"
+      },
+      {
+        id: "8",
+        quantity: 1,
+        orderLine: {
+          id: "T3JkZXJMaW5lOjQ1",
+          isShippingRequired: false,
+          variant: {
+            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            quantityAvailable: 50,
+            __typename: "ProductVariant"
+          },
+          productName: "Lake Tunes",
+          productSku: "lake-tunes-mp3",
+          quantity: 25,
+          quantityFulfilled: 8,
+          unitPrice: {
+            gross: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            net: {
+              amount: 9.99,
+              currency: "USD",
+              __typename: "Money"
+            },
+            __typename: "TaxedMoney"
+          },
+          thumbnail: {
+            url:
+              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            __typename: "Image"
+          },
+          __typename: "OrderLine"
+        },
+        __typename: "FulfillmentLine"
       }
     ];
 
-    const unfulfiledItemsQuantities: FormsetData<null, number> = [
+    const unfulfiledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "1",
         label: null,
         value: 0
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "2",
         label: null,
         value: 2
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "3",
         label: null,
         value: 1
       }
     ];
 
-    const fulfiledItemsQuantities: FormsetData<null, number> = [
+    const fulfiledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "4",
         label: null,
         value: 4
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "5",
         label: null,
         value: 0
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "6",
+        label: null,
+        value: 3
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "7",
+        label: null,
+        value: 4
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "8",
         label: null,
         value: 3
       }
@@ -708,38 +794,50 @@ describe("Get the total value of all replaced products", () => {
 
     const itemsToBeReplaced: FormsetData<LineItemData, boolean> = [
       {
-        data: { isFulfillment: false },
+        data: { isFulfillment: false, isRefunded: false },
         id: "1",
         label: null,
         value: true
       },
       {
-        data: { isFulfillment: false },
+        data: { isFulfillment: false, isRefunded: false },
         id: "2",
         label: null,
         value: false
       },
       {
-        data: { isFulfillment: false },
+        data: { isFulfillment: false, isRefunded: false },
         id: "3",
         label: null,
         value: true
       },
       {
-        data: { isFulfillment: true },
+        data: { isFulfillment: true, isRefunded: false },
         id: "4",
         label: null,
         value: false
       },
       {
-        data: { isFulfillment: true },
+        data: { isFulfillment: true, isRefunded: false },
         id: "5",
         label: null,
         value: true
       },
       {
-        data: { isFulfillment: true },
+        data: { isFulfillment: true, isRefunded: false },
         id: "6",
+        label: null,
+        value: true
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "7",
+        label: null,
+        value: false
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "8",
         label: null,
         value: true
       }
@@ -1031,38 +1129,50 @@ describe("Get the total value of all selected products", () => {
 
     const itemsToBeReplaced: FormsetData<LineItemData, boolean> = [
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "1",
         label: null,
         value: true
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "2",
         label: null,
         value: false
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "3",
         label: null,
         value: true
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "4",
         label: null,
         value: false
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "5",
         label: null,
         value: true
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "6",
+        label: null,
+        value: true
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "7",
+        label: null,
+        value: true
+      },
+      {
+        data: { isFulfillment: true, isRefunded: true },
+        id: "8",
         label: null,
         value: true
       }
