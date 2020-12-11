@@ -76,6 +76,7 @@ input AccountInput {
   defaultShippingAddress: AddressInput
 }
 
+
 type AccountRegister {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   requiresConfirmation: Boolean
@@ -2664,6 +2665,7 @@ type Mutation {
   orderFulfillmentRefundProducts(input: OrderRefundProductsInput!, order: ID!): FulfillmentRefundProducts
   orderMarkAsPaid(id: ID!, transactionReference: String): OrderMarkAsPaid
   orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
+  orderReturnCreate(input: OrderReturnCreateInput!): OrderReturnCreate
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
   orderUpdateShipping(order: ID!, input: OrderUpdateShippingInput): OrderUpdateShipping
   orderVoid(id: ID!): OrderVoid
@@ -3112,6 +3114,13 @@ input OrderLineInput {
 type OrderMarkAsPaid {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
+  orderErrors: [OrderError!]!
+}
+
+type OrderReturnCreate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  order: Order
+  replaceOrder: Order
   orderErrors: [OrderError!]!
 }
 
@@ -5790,4 +5799,28 @@ union _Entity = Address | User | Group | App | ProductVariant | Product | Produc
 
 type _Service {
   sdl: String
+}
+
+input OrderReturnFulfillmentLineInput {
+  fulfillmentLineId: ID!
+  quantity: Int!
+  replace: Boolean = True
+}
+
+input OrderReturnLineInput {
+  orderLineId: ID!
+  quantity: Int!
+  replace: Boolean = True
+}
+
+input OrderLinesData {
+    orderLines: [OrderReturnLineInput!]
+}
+
+input OrderReturnCreateInput {
+  orderLines: [OrderReturnLineInput!]
+  fulfillmentLines: [OrderReturnFulfillmentLineInput!]
+  refund: Boolean = False
+  amountToRefund: PositiveDecimal
+  includeShippingCosts: Boolean = false
 }

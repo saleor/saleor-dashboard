@@ -74,6 +74,10 @@ import {
 } from "./types/OrderMarkAsPaid";
 import { OrderRefund, OrderRefundVariables } from "./types/OrderRefund";
 import {
+  OrderReturnCreate,
+  OrderReturnCreateVariables
+} from "./types/OrderReturnCreate";
+import {
   OrderSettingsUpdate,
   OrderSettingsUpdateVariables
 } from "./types/OrderSettingsUpdate";
@@ -172,6 +176,29 @@ const orderDraftFinalizeMutation = gql`
     }
   }
 `;
+
+const orderReturnCreateMutation = gql`
+  ${orderErrorFragment}
+  mutation OrderReturnCreate($input: OrderReturnCreateInput!) {
+    orderReturnCreate(input: $input) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        id
+      }
+      replaceOrder {
+        id
+      }
+    }
+  }
+`;
+
+export const useOrderReturnCreateMutation = makeMutation<
+  OrderReturnCreate,
+  OrderReturnCreateVariables
+>(orderReturnCreateMutation);
+
 export const TypedOrderDraftFinalizeMutation = TypedMutation<
   OrderDraftFinalize,
   OrderDraftFinalizeVariables
@@ -191,6 +218,7 @@ const orderRefundMutation = gql`
     }
   }
 `;
+
 export const useOrderRefundMutation = makeMutation<
   OrderRefund,
   OrderRefundVariables

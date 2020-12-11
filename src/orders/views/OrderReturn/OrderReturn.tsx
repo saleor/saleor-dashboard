@@ -1,6 +1,8 @@
 import makeQuery from "@saleor/hooks/makeQuery";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
+import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
+import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { orderDetailsQuery } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -21,15 +23,38 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     }
   });
 
+  const [returnCreate, returnCreateOpts] = useOrderReturnCreateMutation({
+    // onCompleted: data => {
+    //   if (data.attributeCreate.errors.length === 0) {
+    //     notify({
+    //       status: "success",
+    //       text: intl.formatMessage({
+    //         defaultMessage: "Successfully created attribute"
+    //       })
+    //     });
+    //     navigate(attributeUrl(data.attributeCreate.attribute.id));
+    //   }
+    // }
+  });
+
+  const handleSubmit = async (data: OrderReturnFormData) => {
+    const input = {};
+
+    console.log({ data });
+    // const result = await returnCreate({
+    //   variables: {
+    //     input
+    //   }
+    // });
+  };
+
   return (
     <OrderReturnPage
       // fixes in next pr, with connecting form
       // @ts-ignore
       order={data?.order}
       loading={loading}
-      // @ts-ignore
-      // eslint-disable-next-line
-      onSubmit={() => {}}
+      onSubmit={handleSubmit}
       onBack={() => navigate(orderUrl(orderId))}
     />
   );
