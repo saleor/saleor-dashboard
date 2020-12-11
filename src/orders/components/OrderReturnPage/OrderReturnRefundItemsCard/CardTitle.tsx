@@ -1,5 +1,6 @@
 import DefaultCardTitle from "@saleor/components/CardTitle";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
@@ -8,7 +9,11 @@ import { getById } from "../utils";
 
 const messages = defineMessages({
   titleFulfilled: {
-    defaultMessage: "Fulfillment {fulfilmentName}",
+    defaultMessage: "Fulfillment {fulfillmentName}",
+    description: "section header"
+  },
+  titleRefunded: {
+    defaultMessage: "Refunded {fulfillmentName}",
     description: "section header"
   },
   titleUnfulfilled: {
@@ -31,17 +36,21 @@ const CardTitle: React.FC<CardTitleProps> = ({ order, fulfilmentId }) => {
 
   const { number, fulfillments } = order;
 
-  const fulfillmentOrder = fulfillments.find(getById(fulfilmentId))
-    ?.fulfillmentOrder;
+  const fulfilment = fulfillments.find(getById(fulfilmentId));
 
-  const fulfilmentName = `#${number}-${fulfillmentOrder}`;
+  const fulfillmentName = `#${number}-${fulfilment?.fulfillmentOrder}`;
+
+  const getCardTitleMessage = () => {
+    if (fulfilment.status === FulfillmentStatus.REFUNDED) {
+      return messages.titleRefunded;
+    }
+
+    return fulfilmentId ? messages.titleFulfilled : messages.titleUnfulfilled;
+  };
 
   return (
     <DefaultCardTitle
-      title={intl.formatMessage(
-        fulfilmentId ? messages.titleFulfilled : messages.titleUnfulfilled,
-        { fulfilmentName }
-      )}
+      title={intl.formatMessage(getCardTitleMessage(), { fulfillmentName })}
     />
   );
 };
