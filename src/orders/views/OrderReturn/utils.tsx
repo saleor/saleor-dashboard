@@ -46,7 +46,9 @@ export const getParsedData = ({
   };
 };
 
-function getParsedLineData<T>(
+function getParsedLineData<
+  T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
+>(
   itemsQuantities: FormsetQuantityData,
   itemsToBeReplaced: FormsetReplacementData,
   idKey: "fulfillmentLineId" | "orderLineId"
