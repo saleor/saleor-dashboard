@@ -33,14 +33,14 @@ const messages = defineMessages({
 
 export interface OrderReturnPageProps {
   order: OrderDetails_order;
-  disabled: boolean;
-  errors: OrderErrorFragment[];
+  loading: boolean;
+  errors?: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, disabled, errors = [], onBack, onSubmit } = props;
+  const { order, loading, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
 
@@ -61,17 +61,20 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           <Grid>
             <div>
               {!!data.unfulfiledItemsQuantities.length && (
-                <ItemsCard
-                  order={order}
-                  lines={getUnfulfilledLines(order)}
-                  itemsQuantities={data.unfulfiledItemsQuantities}
-                  itemsSelections={data.itemsToBeReplaced}
-                  onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                  onSetMaxQuantity={
-                    handlers.handleSetMaximalUnfulfiledItemsQuantities
-                  }
-                  onChangeSelected={handlers.changeItemsToBeReplaced}
-                />
+                <>
+                  <ItemsCard
+                    order={order}
+                    lines={getUnfulfilledLines(order)}
+                    itemsQuantities={data.unfulfiledItemsQuantities}
+                    itemsSelections={data.itemsToBeReplaced}
+                    onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
+                    onSetMaxQuantity={
+                      handlers.handleSetMaximalUnfulfiledItemsQuantities
+                    }
+                    onChangeSelected={handlers.changeItemsToBeReplaced}
+                  />
+                  <CardSpacer />
+                </>
               )}
               {renderCollection(
                 getFulfilledFulfillemnts(order),
@@ -100,7 +103,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 amountData={getReturnProductsAmountValues(order, data)}
                 data={data}
                 order={order}
-                disabled={disabled}
+                disabled={loading}
                 errors={errors}
                 onChange={change}
                 onRefund={submit}

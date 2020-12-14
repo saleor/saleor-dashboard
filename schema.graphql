@@ -2007,9 +2007,20 @@ type FulfillmentRefundProducts {
   orderErrors: [OrderError!]!
 }
 
+type FulfillmentReturnProducts {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  returnFulfillment: Fulfillment
+  replaceFulfillment: Fulfillment
+  order: Order
+  replaceOrder: Order
+  orderErrors: [OrderError!]!
+}
+
 enum FulfillmentStatus {
   FULFILLED
   REFUNDED
+  RETURNED
+  REFUNDED_AND_RETURNED
   CANCELED
 }
 
@@ -2662,6 +2673,7 @@ type Mutation {
   orderFulfillmentCancel(id: ID!, input: FulfillmentCancelInput!): FulfillmentCancel
   orderFulfillmentUpdateTracking(id: ID!, input: FulfillmentUpdateTrackingInput!): FulfillmentUpdateTracking
   orderFulfillmentRefundProducts(input: OrderRefundProductsInput!, order: ID!): FulfillmentRefundProducts
+  orderFulfillmentReturnProducts(input: OrderReturnProductsInput!, order: ID!): FulfillmentReturnProducts
   orderMarkAsPaid(id: ID!, transactionReference: String): OrderMarkAsPaid
   orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
@@ -2988,6 +3000,7 @@ type OrderEvent implements Node {
   warehouse: Warehouse
   transactionReference: String
   shippingCostsIncluded: Boolean
+  replaceOrder: Order
 }
 
 type OrderEventCountableConnection {
@@ -3021,6 +3034,7 @@ enum OrderEventsEmailsEnum {
 
 enum OrderEventsEnum {
   DRAFT_CREATED
+  DRAFT_CREATED_FROM_REPLACE
   DRAFT_ADDED_PRODUCTS
   DRAFT_REMOVED_PRODUCTS
   PLACED
@@ -3029,6 +3043,7 @@ enum OrderEventsEnum {
   CANCELED
   ORDER_MARKED_AS_PAID
   ORDER_FULLY_PAID
+  ORDER_REPLACE_DRAFT_CREATED
   UPDATED_ADDRESS
   EMAIL_SENT
   CONFIRMED
@@ -3046,6 +3061,8 @@ enum OrderEventsEnum {
   FULFILLMENT_RESTOCKED_ITEMS
   FULFILLMENT_FULFILLED_ITEMS
   FULFILLMENT_REFUNDED
+  FULFILLMENT_RETURNED
+  FULFILLMENT_REPLACED
   TRACKING_UPDATED
   NOTE_ADDED
   OTHER
@@ -3138,6 +3155,26 @@ input OrderRefundProductsInput {
   includeShippingCosts: Boolean = false
 }
 
+input OrderReturnFulfillmentLineInput {
+  fulfillmentLineId: ID!
+  quantity: Int!
+  replace: Boolean = false
+}
+
+input OrderReturnLineInput {
+  orderLineId: ID!
+  quantity: Int!
+  replace: Boolean = false
+}
+
+input OrderReturnProductsInput {
+  orderLines: [OrderReturnLineInput!]
+  fulfillmentLines: [OrderReturnFulfillmentLineInput!]
+  amountToRefund: PositiveDecimal
+  includeShippingCosts: Boolean = false
+  refund: Boolean = false
+}
+
 type OrderSettings {
   automaticallyConfirmAllNewOrders: Boolean!
 }
@@ -3180,6 +3217,8 @@ enum OrderStatus {
   UNCONFIRMED
   UNFULFILLED
   PARTIALLY_FULFILLED
+  PARTIALLY_RETURNED
+  RETURNED
   FULFILLED
   CANCELED
 }
@@ -4645,6 +4684,8 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   name: String!
   minimumOrderWeight: Weight
   maximumOrderWeight: Weight
+  maximumDeliveryDays: Int
+  minimumDeliveryDays: Int
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   type: ShippingMethodTypeEnum
@@ -4741,6 +4782,8 @@ input ShippingPriceInput {
   name: String
   minimumOrderWeight: WeightScalar
   maximumOrderWeight: WeightScalar
+  maximumDeliveryDays: Int
+  minimumDeliveryDays: Int
   type: ShippingMethodTypeEnum
   shippingZone: ID
 }

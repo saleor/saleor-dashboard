@@ -240,14 +240,13 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           </>
         )}
         <Button
-          type="submit"
           color="primary"
           variant="contained"
           fullWidth
           size="large"
           onClick={onRefund}
           className={classes.refundButton}
-          disabled={disabled || disableRefundButton}
+          disabled={false}
           data-test="submit"
         >
           {!disableRefundButton && !isReturn ? (
