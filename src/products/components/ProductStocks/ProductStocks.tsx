@@ -242,13 +242,15 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               <TableCell className={classes.colQuantity}>
                 <FormattedMessage
                   defaultMessage="Allocated"
-                  description="tabel column header, allocated product quantity"
+                  description="table column header, allocated product quantity"
+                  id="tableColAllocated"
                 />
               </TableCell>
               <TableCell className={classes.colQuantity}>
                 <FormattedMessage
                   defaultMessage="Quantity"
-                  description="tabel column header"
+                  description="table column header"
+                  id="tableColQuantity"
                 />
               </TableCell>
               <TableCell className={classes.colAction} />
