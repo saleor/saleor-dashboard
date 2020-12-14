@@ -4008,6 +4008,10 @@
     "context": "order refunded success message",
     "string": "Refunded Items"
   },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_3262896749": {
+    "context": "order returned success message",
+    "string": "Successfully returned products!"
+  },
   "src_dot_pageTypes": {
     "context": "page types section name",
     "string": "Page Types"
