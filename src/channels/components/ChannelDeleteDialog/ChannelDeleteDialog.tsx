@@ -39,22 +39,22 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   );
   const hasChannels = !!channelsChoices?.length;
 
+  const canBeDeleted = hasChannels || !hasOrders;
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={() =>
-        hasChannels || !hasOrders ? onConfirm(choice) : onBack()
-      }
+      onConfirm={() => (canBeDeleted ? onConfirm(choice) : onBack())}
       title={intl.formatMessage({
         defaultMessage: "Delete Channel",
         description: "dialog header"
       })}
       confirmButtonLabel={intl.formatMessage(
-        hasChannels || !hasOrders ? buttonMessages.delete : buttonMessages.ok
+        canBeDeleted ? buttonMessages.delete : buttonMessages.ok
       )}
-      variant={hasChannels || !hasOrders ? "delete" : "default"}
+      variant={canBeDeleted ? "delete" : "default"}
     >
       <div>
         {hasOrders ? (
