@@ -157,6 +157,10 @@ export const TypedOrderDetailsQuery = TypedQuery<
   OrderDetailsVariables
 >(orderDetailsQuery);
 
+export const useOrderQuery = makeQuery<OrderDetails, OrderDetailsVariables>(
+  orderDetailsQuery
+);
+
 export const searchOrderVariant = gql`
   query SearchOrderVariant($first: Int!, $query: String!, $after: String) {
     search: products(first: $first, after: $after, filter: { search: $query }) {
