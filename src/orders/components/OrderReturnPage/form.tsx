@@ -227,5 +227,4 @@ const OrderReturnForm: React.FC<OrderReturnProps> = ({
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-OrderReturnForm.displayName = "OrderReturnForm";
 export default OrderReturnForm;

@@ -112,5 +112,5 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
     </OrderRefundForm>
   );
 };
-OrderRefundPage.displayName = "OrderRefundPage";
+
 export default OrderRefundPage;
