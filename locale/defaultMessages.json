@@ -1276,6 +1276,9 @@
     "context": "window title",
     "string": "Channel details"
   },
+  "src_dot_channels_dot_views_dot_ChannelDetails_dot_3499322424": {
+    "string": "Channel deleted"
+  },
   "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
     "string": "Channel deleted"
   },
