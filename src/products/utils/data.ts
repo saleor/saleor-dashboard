@@ -6,10 +6,8 @@ import {
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { FileUpload } from "@saleor/files/types/FileUpload";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -19,13 +17,8 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueInput,
-  StockInput
-} from "@saleor/types/globalTypes";
+import { AttributeInputTypeEnum, StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import { MutationFetchResult } from "react-apollo";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateSubmitData } from "../components/ProductUpdatePage/form";
@@ -60,10 +53,11 @@ export const isFileValueUnused = (
     return false;
   }
 
-  const modifiedAttribute = data.attributes.find(
+  const modifiedAttribute = data.attributesWithNewFileValue.find(
     dataAttribute => dataAttribute.id === existingAttribute.attribute.id
   );
-  return modifiedAttribute.value.length === 0;
+
+  return !!modifiedAttribute;
 };
 
 export function getAttributeInputFromProduct(
@@ -75,6 +69,7 @@ export function getAttributeInputFromProduct(
         data: {
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
+          selectedValues: attribute.values,
           values: attribute.attribute.values
         },
         id: attribute.attribute.id,
@@ -145,6 +140,7 @@ export function getAttributeInputFromSelectedAttributes(
     data: {
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
       values: attribute.attribute.values,
       variantAttributeScope
     },
@@ -253,7 +249,9 @@ export const getAttributesDisplayData = (
     if (attributeWithNewFileValue) {
       return {
         ...attribute,
-        value: [attributeWithNewFileValue.value.name]
+        value: attributeWithNewFileValue?.value?.name
+          ? [attributeWithNewFileValue.value.name]
+          : []
       };
     }
     return attribute;
@@ -322,28 +320,3 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
-
-export const mergeFileUploadErrors = (
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-): UploadErrorFragment[] =>
-  uploadFilesResult.reduce((errors, uploadFileResult) => {
-    const uploadErrors = uploadFileResult.data.fileUpload.uploadErrors;
-    if (uploadErrors) {
-      return [...errors, ...uploadErrors];
-    }
-    return errors;
-  }, []);
-
-export const mergeAttributesWithFileUploadResult = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-): AttributeValueInput[] =>
-  uploadFilesResult.map((uploadFileResult, index) => {
-    const attribute = attributesWithNewFileValue[index];
-
-    return {
-      file: uploadFileResult.data.fileUpload.uploadedFile.url,
-      id: attribute.id,
-      values: []
-    };
-  }, []);

@@ -122,7 +122,7 @@ function useProductVariantCreateForm(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
-    attributesWithNewFileValue.remove,
+    attributesWithNewFileValue.change,
     triggerChange
   );
   const handleStockAdd = (id: string) => {

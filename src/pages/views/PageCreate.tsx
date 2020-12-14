@@ -1,3 +1,8 @@
+import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -17,8 +22,6 @@ import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
-import { mergeAttributesWithFileUploadResult } from "../utils/data";
-import { prepareAttributesInput } from "../utils/handlers";
 
 export interface PageCreateProps {
   id: string;
@@ -57,17 +60,12 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
     <TypedPageCreate onCompleted={handlePageCreate}>
       {(pageCreate, pageCreateOpts) => {
         const handleCreate = async (formData: PageSubmitData) => {
-          const uploadFilesResult = await Promise.all(
-            formData.attributesWithNewFileValue.map(fileAttribute =>
-              uploadFile({
-                variables: {
-                  file: fileAttribute.value
-                }
-              })
-            )
+          const uploadFilesResult = await handleUploadMultipleFiles(
+            formData.attributesWithNewFileValue,
+            variables => uploadFile({ variables })
           );
 
-          const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+          const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
             formData.attributesWithNewFileValue,
             uploadFilesResult
           );

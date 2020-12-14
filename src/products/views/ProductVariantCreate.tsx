@@ -1,3 +1,8 @@
+import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -27,8 +32,6 @@ import {
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
-import { mergeAttributesWithFileUploadResult } from "../utils/data";
-import { getAttributesVariables } from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -124,17 +127,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
-    const uploadFilesResult = await Promise.all(
-      formData.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          variables: {
-            file: fileAttribute.value
-          }
-        })
-      )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      formData.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
     );
 
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       formData.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -142,7 +140,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     const result = await variantCreate({
       variables: {
         input: {
-          attributes: getAttributesVariables({
+          attributes: prepareAttributesInput({
             attributes: formData.attributes.filter(
               attribute => attribute.value?.length && attribute.value[0] !== ""
             ),

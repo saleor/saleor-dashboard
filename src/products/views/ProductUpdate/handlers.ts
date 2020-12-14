@@ -2,6 +2,14 @@ import {
   AttributeValueDelete,
   AttributeValueDeleteVariables
 } from "@saleor/attributes/types/AttributeValueDelete";
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
 import {
   FileUpload,
@@ -46,12 +54,9 @@ import {
 } from "@saleor/products/types/VariantCreate";
 import {
   isFileValueUnused,
-  mapFormsetStockToStockInput,
-  mergeAttributesWithFileUploadResult,
-  mergeFileUploadErrors
+  mapFormsetStockToStockInput
 } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { getAttributesVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
@@ -150,17 +155,13 @@ export function createUpdateHandler(
   return async (data: ProductUpdatePageSubmitData) => {
     let errors: SubmitErrors = [];
 
-    const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          file: fileAttribute.value
-        })
-      )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      uploadFile
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -168,7 +169,7 @@ export function createUpdateHandler(
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
-        attributes: getAttributesVariables({
+        attributes: prepareAttributesInput({
           attributes: data.attributes,
           attributesWithAddedNewFiles
         }),

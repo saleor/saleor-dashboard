@@ -1,5 +1,13 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -44,13 +52,7 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import {
-  isFileValueUnused,
-  mapFormsetStockToStockInput,
-  mergeAttributesWithFileUploadResult,
-  mergeFileUploadErrors
-} from "../utils/data";
-import { getAttributesVariables } from "../utils/handlers";
+import { isFileValueUnused, mapFormsetStockToStockInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -222,22 +224,16 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       AttributeErrorFragment | UploadErrorFragment
     > = [];
 
-    const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue.map(fileAttribute =>
-        uploadFile({
-          variables: {
-            file: fileAttribute.value
-          }
-        })
-      )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
     );
 
     fileAttributeErrors = [
       ...fileAttributeErrors,
       ...mergeFileUploadErrors(uploadFilesResult)
     ];
-
-    const attributesWithAddedNewFiles = mergeAttributesWithFileUploadResult(
+    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -245,7 +241,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        attributes: getAttributesVariables({
+        attributes: prepareAttributesInput({
           attributes: data.attributes,
           attributesWithAddedNewFiles
         }),
