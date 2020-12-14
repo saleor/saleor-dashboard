@@ -187,7 +187,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     return [returnOrderItem];
   };
 
-  console.log({ order });
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
