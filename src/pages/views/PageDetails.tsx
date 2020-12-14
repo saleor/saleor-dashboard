@@ -30,7 +30,10 @@ import {
   isFileValueUnused,
   mergeFileUploadErrors
 } from "../utils/data";
-import { prepareAttributesInput } from "../utils/handlers";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "../utils/handlers";
 
 export interface PageDetailsProps {
   id: string;
@@ -95,20 +98,12 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       AttributeErrorFragment | UploadErrorFragment | PageErrorFragment
     > = [];
 
-    const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue
-        .filter(fileAttribute => !!fileAttribute.value)
-        .map(fileAttribute =>
-          uploadFile({
-            variables: {
-              file: fileAttribute.value
-            }
-          })
-        )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-
     const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult

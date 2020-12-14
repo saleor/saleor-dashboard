@@ -18,7 +18,10 @@ import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
 import { getAttributesFromFileUploadResult } from "../utils/data";
-import { prepareAttributesInput } from "../utils/handlers";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "../utils/handlers";
 
 export interface PageCreateProps {
   id: string;
@@ -57,16 +60,9 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
     <TypedPageCreate onCompleted={handlePageCreate}>
       {(pageCreate, pageCreateOpts) => {
         const handleCreate = async (formData: PageSubmitData) => {
-          const uploadFilesResult = await Promise.all(
-            formData.attributesWithNewFileValue
-              .filter(fileAttribute => !!fileAttribute.value)
-              .map(fileAttribute =>
-                uploadFile({
-                  variables: {
-                    file: fileAttribute.value
-                  }
-                })
-              )
+          const uploadFilesResult = await handleUploadMultipleFiles(
+            formData.attributesWithNewFileValue,
+            variables => uploadFile({ variables })
           );
 
           const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(

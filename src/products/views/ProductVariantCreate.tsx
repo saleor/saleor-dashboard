@@ -28,7 +28,10 @@ import {
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 import { getAttributesFromFileUploadResult } from "../utils/data";
-import { prepareAttributesInput } from "../utils/handlers";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -124,16 +127,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
-    const uploadFilesResult = await Promise.all(
-      formData.attributesWithNewFileValue
-        .filter(fileAttribute => !!fileAttribute.value)
-        .map(fileAttribute =>
-          uploadFile({
-            variables: {
-              file: fileAttribute.value
-            }
-          })
-        )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      formData.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
     );
 
     const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(

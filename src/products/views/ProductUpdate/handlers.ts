@@ -50,7 +50,10 @@ import {
   mapFormsetStockToStockInput,
   mergeFileUploadErrors
 } from "@saleor/products/utils/data";
-import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
+import {
+  getAvailabilityVariables,
+  handleUploadMultipleFiles
+} from "@saleor/products/utils/handlers";
 import { prepareAttributesInput } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
@@ -150,18 +153,12 @@ export function createUpdateHandler(
   return async (data: ProductUpdatePageSubmitData) => {
     let errors: SubmitErrors = [];
 
-    const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue
-        .filter(fileAttribute => !!fileAttribute.value)
-        .map(fileAttribute =>
-          uploadFile({
-            file: fileAttribute.value
-          })
-        )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      uploadFile
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-
     const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult

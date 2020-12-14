@@ -33,6 +33,7 @@ import {
 } from "@saleor/products/utils/data";
 import {
   getAvailabilityVariables,
+  handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -87,18 +88,12 @@ export function createHandler(
   return async (formData: ProductCreateData) => {
     let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];
 
-    const uploadFilesResult = await Promise.all(
-      formData.attributesWithNewFileValue
-        .filter(fileAttribute => !!fileAttribute.value)
-        .map(fileAttribute =>
-          uploadFile({
-            file: fileAttribute.value
-          })
-        )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      formData.attributesWithNewFileValue,
+      uploadFile
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-
     const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       formData.attributesWithNewFileValue,
       uploadFilesResult

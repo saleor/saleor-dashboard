@@ -95,33 +95,53 @@ export const mergeFileUploadErrors = (
     return errors;
   }, []);
 
+export const getFileValuesToUploadFromAttributes = (
+  attributesWithNewFileValue: FormsetData<null, File>
+) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
+
+export const getFileValuesRemovedFromAttributes = (
+  attributesWithNewFileValue: FormsetData<null, File>
+) => attributesWithNewFileValue.filter(attribute => !attribute.value);
+
+export const getAttributesOfRemovedFiles = (
+  fileAttributesRemoved: FormsetData<null, File>
+) =>
+  fileAttributesRemoved.map(attribute => ({
+    file: undefined,
+    id: attribute.id,
+    values: []
+  }));
+
+export const getAttributesOfUploadedFiles = (
+  fileValuesToUpload: FormsetData<null, File>,
+  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+) =>
+  uploadFilesResult.map((uploadFileResult, index) => {
+    const attribute = fileValuesToUpload[index];
+
+    return {
+      file: uploadFileResult.data.fileUpload.uploadedFile.url,
+      id: attribute.id,
+      values: []
+    };
+  });
+
 export const getAttributesFromFileUploadResult = (
   attributesWithNewFileValue: FormsetData<null, File>,
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
 ): AttributeValueInput[] => {
-  const removedFileValues = attributesWithNewFileValue
-    .filter(attribute => !attribute.value)
-    .map(attribute => ({
-      file: undefined,
-      id: attribute.id,
-      values: []
-    }));
-
-  const fileAttributesToUpload = attributesWithNewFileValue.filter(
-    fileAttribute => !!fileAttribute.value
+  const removedFileValues = getFileValuesRemovedFromAttributes(
+    attributesWithNewFileValue
+  );
+  const fileValuesToUpload = getFileValuesToUploadFromAttributes(
+    attributesWithNewFileValue
   );
 
-  const uploadedFileValues = uploadFilesResult.map(
-    (uploadFileResult, index) => {
-      const attribute = fileAttributesToUpload[index];
-
-      return {
-        file: uploadFileResult.data.fileUpload.uploadedFile.url,
-        id: attribute.id,
-        values: []
-      };
-    }
+  const removedFileAttributes = getAttributesOfRemovedFiles(removedFileValues);
+  const uploadedFileAttributes = getAttributesOfUploadedFiles(
+    fileValuesToUpload,
+    uploadFilesResult
   );
 
-  return uploadedFileValues.concat(removedFileValues);
+  return uploadedFileAttributes.concat(removedFileAttributes);
 };

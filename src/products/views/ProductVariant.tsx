@@ -50,7 +50,10 @@ import {
   mapFormsetStockToStockInput,
   mergeFileUploadErrors
 } from "../utils/data";
-import { prepareAttributesInput } from "../utils/handlers";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -222,23 +225,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       AttributeErrorFragment | UploadErrorFragment
     > = [];
 
-    const uploadFilesResult = await Promise.all(
-      data.attributesWithNewFileValue
-        .filter(fileAttribute => !!fileAttribute.value)
-        .map(fileAttribute =>
-          uploadFile({
-            variables: {
-              file: fileAttribute.value
-            }
-          })
-        )
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
     );
 
     fileAttributeErrors = [
       ...fileAttributeErrors,
       ...mergeFileUploadErrors(uploadFilesResult)
     ];
-
     const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
       data.attributesWithNewFileValue,
       uploadFilesResult

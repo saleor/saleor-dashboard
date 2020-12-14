@@ -2,6 +2,10 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
+import {
+  FileUpload,
+  FileUploadVariables
+} from "@saleor/files/types/FileUpload";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import {
@@ -9,9 +13,13 @@ import {
   AttributeValueInput
 } from "@saleor/types/globalTypes";
 import { toggle } from "@saleor/utils/lists";
+import { MutationFetchResult } from "react-apollo";
 
 import { PageDetails_page_pageType } from "../types/PageDetails";
-import { getAttributeInputFromPageType } from "./data";
+import {
+  getAttributeInputFromPageType,
+  getFileValuesToUploadFromAttributes
+} from "./data";
 
 export function createPageTypeSelectHandler(
   change: FormChange,
@@ -94,3 +102,18 @@ export const prepareAttributesInput = ({
       values: attribute.value[0] === "" ? [] : attribute.value
     };
   });
+
+export const handleUploadMultipleFiles = async (
+  attributesWithNewFileValue: FormsetData<null, File>,
+  uploadFile: (
+    variables: FileUploadVariables
+  ) => Promise<MutationFetchResult<FileUpload>>
+) =>
+  Promise.all(
+    getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(
+      fileAttribute =>
+        uploadFile({
+          file: fileAttribute.value
+        })
+    )
+  );
