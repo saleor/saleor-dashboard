@@ -33,14 +33,14 @@ const messages = defineMessages({
 
 export interface OrderReturnPageProps {
   order: OrderDetails_order;
-  disabled: boolean;
+  loading: boolean;
   errors: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, disabled, errors = [], onBack, onSubmit } = props;
+  const { order, loading, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
 
@@ -103,7 +103,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 amountData={getReturnProductsAmountValues(order, data)}
                 data={data}
                 order={order}
-                disabled={disabled}
+                disabled={loading}
                 errors={errors}
                 onChange={change}
                 onRefund={submit}
