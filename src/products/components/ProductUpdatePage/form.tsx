@@ -36,7 +36,7 @@ import { diff } from "fast-array-diff";
 import React from "react";
 
 import { ProductAttributeInput } from "../ProductAttributes";
-import { ProductStockInput } from "../ProductStocks";
+import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -127,7 +127,7 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
 
 const getStocksData = (
   product: ProductDetails_product,
-  stocks: FormsetData<null, string>
+  stocks: FormsetData<ProductStockFormsetData, string>
 ) => {
   if (product?.productType?.hasVariants) {
     return { addStocks: [], removeStocks: [], updateStocks: [] };

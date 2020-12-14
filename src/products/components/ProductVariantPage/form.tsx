@@ -114,7 +114,11 @@ function useProductVariantUpdateForm(
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated:
+          variant?.stocks?.find(stock => stock.warehouse.id === id)
+            ?.quantityAllocated || 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"

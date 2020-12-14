@@ -112,7 +112,9 @@ export function getStockInputFromVariant(
 ): ProductStockInput[] {
   return (
     variant?.stocks.map(stock => ({
-      data: null,
+      data: {
+        quantityAllocated: stock.quantityAllocated
+      },
       id: stock.warehouse.id,
       label: stock.warehouse.name,
       value: stock.quantity.toString()
@@ -137,7 +139,9 @@ export function getStockInputFromProduct(
   product: ProductDetails_product
 ): ProductStockInput[] {
   return product?.variants[0]?.stocks.map(stock => ({
-    data: null,
+    data: {
+      quantityAllocated: stock?.quantityAllocated
+    },
     id: stock.warehouse.id,
     label: stock.warehouse.name,
     value: stock.quantity.toString()
