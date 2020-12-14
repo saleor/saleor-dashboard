@@ -34,7 +34,7 @@ const messages = defineMessages({
 export interface OrderReturnPageProps {
   order: OrderDetails_order;
   loading: boolean;
-  errors: OrderErrorFragment[];
+  errors?: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
