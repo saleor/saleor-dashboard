@@ -32,7 +32,7 @@ export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
 export interface OrderReturnData {
-  amount: number | string;
+  amount: number;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
@@ -224,7 +224,7 @@ const OrderReturnForm: React.FC<OrderReturnProps> = ({
 }) => {
   const props = useOrderReturnForm(order, onSubmit);
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return <form>{children(props)}</form>;
 };
 
 OrderReturnForm.displayName = "OrderReturnForm";

@@ -61,17 +61,20 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           <Grid>
             <div>
               {!!data.unfulfiledItemsQuantities.length && (
-                <ItemsCard
-                  order={order}
-                  lines={getUnfulfilledLines(order)}
-                  itemsQuantities={data.unfulfiledItemsQuantities}
-                  itemsSelections={data.itemsToBeReplaced}
-                  onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                  onSetMaxQuantity={
-                    handlers.handleSetMaximalUnfulfiledItemsQuantities
-                  }
-                  onChangeSelected={handlers.changeItemsToBeReplaced}
-                />
+                <>
+                  <ItemsCard
+                    order={order}
+                    lines={getUnfulfilledLines(order)}
+                    itemsQuantities={data.unfulfiledItemsQuantities}
+                    itemsSelections={data.itemsToBeReplaced}
+                    onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
+                    onSetMaxQuantity={
+                      handlers.handleSetMaximalUnfulfiledItemsQuantities
+                    }
+                    onChangeSelected={handlers.changeItemsToBeReplaced}
+                  />
+                  <CardSpacer />
+                </>
               )}
               {renderCollection(
                 getFulfilledFulfillemnts(order),

@@ -456,6 +456,8 @@ export enum FulfillmentStatus {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
   REFUNDED = "REFUNDED",
+  REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
+  RETURNED = "RETURNED",
 }
 
 export enum InvoiceErrorCode {
@@ -612,13 +614,16 @@ export enum OrderEventsEnum {
   CONFIRMED = "CONFIRMED",
   DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
+  DRAFT_CREATED_FROM_REPLACE = "DRAFT_CREATED_FROM_REPLACE",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
   EMAIL_SENT = "EMAIL_SENT",
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
   FULFILLMENT_REFUNDED = "FULFILLMENT_REFUNDED",
+  FULFILLMENT_REPLACED = "FULFILLMENT_REPLACED",
   FULFILLMENT_RESTOCKED_ITEMS = "FULFILLMENT_RESTOCKED_ITEMS",
+  FULFILLMENT_RETURNED = "FULFILLMENT_RETURNED",
   INVOICE_GENERATED = "INVOICE_GENERATED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
@@ -626,6 +631,7 @@ export enum OrderEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
+  ORDER_REPLACE_DRAFT_CREATED = "ORDER_REPLACE_DRAFT_CREATED",
   OTHER = "OTHER",
   OVERSOLD_ITEMS = "OVERSOLD_ITEMS",
   PAYMENT_AUTHORIZED = "PAYMENT_AUTHORIZED",
@@ -656,6 +662,8 @@ export enum OrderStatus {
   DRAFT = "DRAFT",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
+  PARTIALLY_RETURNED = "PARTIALLY_RETURNED",
+  RETURNED = "RETURNED",
   UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
@@ -1373,14 +1381,6 @@ export interface OrderRefundProductsInput {
   includeShippingCosts?: boolean | null;
 }
 
-export interface OrderReturnCreateInput {
-  orderLines?: OrderReturnLineInput[] | null;
-  fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
-  refund?: boolean | null;
-  amountToRefund?: any | null;
-  includeShippingCosts?: boolean | null;
-}
-
 export interface OrderReturnFulfillmentLineInput {
   fulfillmentLineId: string;
   quantity: number;
@@ -1391,6 +1391,14 @@ export interface OrderReturnLineInput {
   orderLineId: string;
   quantity: number;
   replace?: boolean | null;
+}
+
+export interface OrderReturnProductsInput {
+  orderLines?: OrderReturnLineInput[] | null;
+  fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
+  amountToRefund?: any | null;
+  includeShippingCosts?: boolean | null;
+  refund?: boolean | null;
 }
 
 export interface OrderSettingsUpdateInput {
@@ -1717,6 +1725,8 @@ export interface ShippingPriceInput {
   name?: string | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
+  maximumDeliveryDays?: number | null;
+  minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
 }
