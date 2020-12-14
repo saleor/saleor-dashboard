@@ -3288,24 +3288,12 @@
     "context": "fulfillment group tracking number",
     "string": "Edit tracking"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2567258278": {
-    "context": "refunded fulfillment, section header",
-    "string": "Refunded ({quantity})"
-  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
     "context": "ordered product quantity",
     "string": "Quantity"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3254150098": {
     "string": "Tracking Number: {trackingNumber}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3494686506": {
-    "context": "section header",
-    "string": "Fulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_4039425374": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
     "context": "ordered product sku",
@@ -3844,21 +3832,41 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_cancelled": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilled": {
+    "context": "section header",
+    "string": "Fulfilled ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
     "context": "error message",
     "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunded": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunedAndReturned": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
+    "context": "refunded fulfillment, section header",
+    "string": "Returned ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
     "context": "section header",
     "string": "Fulfillment - #{fulfilmentId}"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleRefunded": {
-    "context": "section header",
-    "string": "Refunded {fulfillmentName}"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
     "context": "section header",
     "string": "Unfulfilled Items"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
     "context": "page header with order number",
