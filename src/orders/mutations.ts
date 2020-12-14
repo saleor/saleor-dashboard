@@ -78,10 +78,6 @@ import {
 } from "./types/OrderMarkAsPaid";
 import { OrderRefund, OrderRefundVariables } from "./types/OrderRefund";
 import {
-  OrderReturnCreate,
-  OrderReturnCreateVariables
-} from "./types/OrderReturnCreate";
-import {
   OrderSettingsUpdate,
   OrderSettingsUpdateVariables
 } from "./types/OrderSettingsUpdate";
