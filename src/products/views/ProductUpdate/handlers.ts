@@ -192,7 +192,7 @@ export function createUpdateHandler(
       const result = await updateProduct(productVariables);
       errors = [...errors, ...result.data.productUpdate.errors];
 
-      updateChannels({
+      await updateChannels({
         variables: getChannelsVariables(data, product)
       });
     } else {
@@ -225,7 +225,7 @@ export function createUpdateHandler(
               input: getVariantChannelsInput(data)
             }
           });
-          updateChannels({
+          await updateChannels({
             variables: getChannelsVariables(data, product)
           });
           const result = await updateSimpleProduct(

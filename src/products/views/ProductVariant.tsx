@@ -143,7 +143,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     deleteAttributeValueOpts
   ] = useAttributeValueDeleteMutation({});
 
-  const handleSubmitChannels = (
+  const handleSubmitChannels = async (
     data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
@@ -157,7 +157,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       );
     });
     if (isChannelPriceChange) {
-      updateChannels({
+      await updateChannels({
         variables: {
           id: variant.id,
           input: data.channelListings.map(listing => ({
@@ -253,7 +253,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         weight: weight(data.weight)
       }
     });
-    handleSubmitChannels(data, variant);
+    await handleSubmitChannels(data, variant);
 
     if (result.data?.productVariantUpdate.errors.length === 0) {
       const deleteAttributeValuesResult = await Promise.all(
@@ -324,9 +324,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={data => {
-          handleSubmit(data);
-          handleSubmitChannels(data, variant);
+        onSubmit={async data => {
+          await handleSubmit(data);
+          await handleSubmitChannels(data, variant);
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {

@@ -159,7 +159,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     });
     const id = result.data?.productVariantCreate?.productVariant?.id;
     if (id) {
-      handleSubmitChannels(formData, id);
+      await handleSubmitChannels(formData, id);
     }
 
     return id || null;
