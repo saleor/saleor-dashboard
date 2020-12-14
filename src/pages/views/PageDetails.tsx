@@ -1,5 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -25,15 +33,7 @@ import { usePageRemoveMutation, usePageUpdateMutation } from "../mutations";
 import { usePageDetailsQuery } from "../queries";
 import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
-import {
-  getAttributesFromFileUploadResult,
-  isFileValueUnused,
-  mergeFileUploadErrors
-} from "../utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput
-} from "../utils/handlers";
+import { isFileValueUnused } from "../utils/data";
 
 export interface PageDetailsProps {
   id: string;

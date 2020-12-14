@@ -6,10 +6,8 @@ import {
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { FileUpload } from "@saleor/files/types/FileUpload";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -19,13 +17,8 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueInput,
-  StockInput
-} from "@saleor/types/globalTypes";
+import { AttributeInputTypeEnum, StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import { MutationFetchResult } from "react-apollo";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateSubmitData } from "../components/ProductUpdatePage/form";
@@ -323,65 +316,3 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
-
-export const mergeFileUploadErrors = (
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-): UploadErrorFragment[] =>
-  uploadFilesResult.reduce((errors, uploadFileResult) => {
-    const uploadErrors = uploadFileResult.data.fileUpload.uploadErrors;
-    if (uploadErrors) {
-      return [...errors, ...uploadErrors];
-    }
-    return errors;
-  }, []);
-
-export const getFileValuesToUploadFromAttributes = (
-  attributesWithNewFileValue: FormsetData<null, File>
-) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
-
-export const getFileValuesRemovedFromAttributes = (
-  attributesWithNewFileValue: FormsetData<null, File>
-) => attributesWithNewFileValue.filter(attribute => !attribute.value);
-
-export const getAttributesOfRemovedFiles = (
-  fileAttributesRemoved: FormsetData<null, File>
-) =>
-  fileAttributesRemoved.map(attribute => ({
-    file: undefined,
-    id: attribute.id,
-    values: []
-  }));
-
-export const getAttributesOfUploadedFiles = (
-  fileValuesToUpload: FormsetData<null, File>,
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-) =>
-  uploadFilesResult.map((uploadFileResult, index) => {
-    const attribute = fileValuesToUpload[index];
-
-    return {
-      file: uploadFileResult.data.fileUpload.uploadedFile.url,
-      id: attribute.id,
-      values: []
-    };
-  });
-
-export const getAttributesFromFileUploadResult = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-): AttributeValueInput[] => {
-  const removedFileValues = getFileValuesRemovedFromAttributes(
-    attributesWithNewFileValue
-  );
-  const fileValuesToUpload = getFileValuesToUploadFromAttributes(
-    attributesWithNewFileValue
-  );
-
-  const removedFileAttributes = getAttributesOfRemovedFiles(removedFileValues);
-  const uploadedFileAttributes = getAttributesOfUploadedFiles(
-    fileValuesToUpload,
-    uploadFilesResult
-  );
-
-  return uploadedFileAttributes.concat(removedFileAttributes);
-};

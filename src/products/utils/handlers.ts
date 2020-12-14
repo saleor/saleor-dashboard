@@ -3,32 +3,16 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
-import {
-  AttributeInput,
-  AttributeInputData
-} from "@saleor/components/Attributes";
-import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
+import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
 import { toggle } from "@saleor/utils/lists";
-import { MutationFetchResult } from "react-apollo";
 
-import {
-  getAttributeInputFromProductType,
-  getFileValuesToUploadFromAttributes,
-  ProductType
-} from "./data";
+import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
@@ -217,51 +201,3 @@ export const getAvailabilityVariables = (channels: ChannelData[]) =>
       visibleInListings: channel.visibleInListings
     };
   });
-
-interface ProductAttributesArgs {
-  attributes: AttributeInput[];
-  attributesWithAddedNewFiles: AttributeValueInput[];
-}
-
-export const prepareAttributesInput = ({
-  attributes,
-  attributesWithAddedNewFiles
-}: ProductAttributesArgs): AttributeValueInput[] =>
-  attributes.map(attribute => {
-    if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
-      const attributeWithNewFile = attributesWithAddedNewFiles.find(
-        attributeWithNewFile => attribute.id === attributeWithNewFile.id
-      );
-      if (attributeWithNewFile) {
-        return {
-          file: attributeWithNewFile.file,
-          id: attributeWithNewFile.id
-        };
-      }
-      return {
-        file:
-          attribute.data.selectedValues &&
-          attribute.data.selectedValues[0]?.file?.url,
-        id: attribute.id
-      };
-    }
-    return {
-      id: attribute.id,
-      values: attribute.value[0] === "" ? [] : attribute.value
-    };
-  });
-
-export const handleUploadMultipleFiles = async (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<MutationFetchResult<FileUpload>>
-) =>
-  Promise.all(
-    getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(
-      fileAttribute =>
-        uploadFile({
-          file: fileAttribute.value
-        })
-    )
-  );

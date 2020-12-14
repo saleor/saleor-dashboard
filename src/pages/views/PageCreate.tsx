@@ -1,3 +1,8 @@
+import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -17,11 +22,6 @@ import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import { pageListUrl, pageUrl } from "../urls";
-import { getAttributesFromFileUploadResult } from "../utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput
-} from "../utils/handlers";
 
 export interface PageCreateProps {
   id: string;

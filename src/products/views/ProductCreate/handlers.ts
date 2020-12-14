@@ -1,3 +1,11 @@
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   FileUpload,
@@ -27,15 +35,7 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import {
-  getAttributesFromFileUploadResult,
-  mergeFileUploadErrors
-} from "@saleor/products/utils/data";
-import {
-  getAvailabilityVariables,
-  handleUploadMultipleFiles,
-  prepareAttributesInput
-} from "@saleor/products/utils/handlers";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { MutationFetchResult } from "react-apollo";
 

@@ -2,6 +2,14 @@ import {
   AttributeValueDelete,
   AttributeValueDeleteVariables
 } from "@saleor/attributes/types/AttributeValueDelete";
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
 import {
   FileUpload,
@@ -45,16 +53,10 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import {
-  getAttributesFromFileUploadResult,
   isFileValueUnused,
-  mapFormsetStockToStockInput,
-  mergeFileUploadErrors
+  mapFormsetStockToStockInput
 } from "@saleor/products/utils/data";
-import {
-  getAvailabilityVariables,
-  handleUploadMultipleFiles
-} from "@saleor/products/utils/handlers";
-import { prepareAttributesInput } from "@saleor/products/utils/handlers";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";

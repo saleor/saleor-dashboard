@@ -1,5 +1,13 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
+import {
+  getAttributesFromFileUploadResult,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -44,16 +52,7 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import {
-  getAttributesFromFileUploadResult,
-  isFileValueUnused,
-  mapFormsetStockToStockInput,
-  mergeFileUploadErrors
-} from "../utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput
-} from "../utils/handlers";
+import { isFileValueUnused, mapFormsetStockToStockInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {

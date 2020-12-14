@@ -1,3 +1,8 @@
+import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -27,11 +32,6 @@ import {
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
 import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
-import { getAttributesFromFileUploadResult } from "../utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput
-} from "../utils/handlers";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
