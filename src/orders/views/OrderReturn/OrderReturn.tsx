@@ -64,7 +64,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   return (
     <OrderReturnPage
-      errors={returnCreateOpts.data.orderFulfillmentReturnProducts.errors}
+      errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
