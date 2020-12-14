@@ -1,4 +1,3 @@
-import makeQuery from "@saleor/hooks/makeQuery";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
@@ -6,7 +5,7 @@ import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/f
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { useOrderQuery } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { getParsedData } from "./utils";
@@ -19,7 +18,6 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  // const errors = useState<>
 
   const { data, loading } = useOrderQuery({
     displayLoader: true,
@@ -66,7 +64,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   return (
     <OrderReturnPage
-      errors={}
+      errors={returnCreateOpts.data.orderFulfillmentReturnProducts.errors}
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
