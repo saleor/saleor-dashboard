@@ -110,7 +110,11 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
 
   return (
     <Card>
-      <CardTitle order={order} fulfilmentId={fulfilmentId} />
+      <CardTitle
+        orderNumber={order?.number}
+        lines={lines}
+        fulfillment={order?.fulfillments.find(getById(fulfilmentId))}
+      />
       <CardContent className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />
       </CardContent>
