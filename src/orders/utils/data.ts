@@ -1,7 +1,19 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
 
-import { OrderDetails_order_fulfillments_lines } from "../types/OrderDetails";
+import {
+  LineItemData,
+  OrderReturnFormData
+} from "../components/OrderReturnPage/form";
+import {
+  getAllOrderFulfilledLines,
+  getById
+} from "../components/OrderReturnPage/utils";
+import {
+  OrderDetails_order,
+  OrderDetails_order_fulfillments_lines,
+  OrderDetails_order_lines
+} from "../types/OrderDetails";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -23,9 +35,130 @@ export function getPreviouslyRefundedPrice(
   );
 }
 
+const getItemPriceAndQuantity = ({
+  orderLines,
+  itemsQuantities,
+  id
+}: {
+  orderLines: OrderDetails_order_lines[];
+  itemsQuantities: FormsetData<LineItemData, number>;
+  id: string;
+}) => {
+  const { unitPrice } = orderLines.find(getById(id));
+  const selectedQuantity = itemsQuantities.find(getById(id))?.value;
+
+  return { selectedQuantity, unitPrice };
+};
+
+const selectItemPriceAndQuantity = (
+  order: OrderDetails_order,
+  {
+    fulfiledItemsQuantities,
+    unfulfiledItemsQuantities
+  }: Partial<OrderReturnFormData>,
+  id: string,
+  isFulfillment: boolean
+) =>
+  isFulfillment
+    ? getItemPriceAndQuantity({
+        id,
+        itemsQuantities: fulfiledItemsQuantities,
+        orderLines: getAllOrderFulfilledLines(order)
+      })
+    : getItemPriceAndQuantity({
+        id,
+        itemsQuantities: unfulfiledItemsQuantities,
+        orderLines: order.lines
+      });
+
+export const getReplacedProductsAmount = (
+  order: OrderDetails_order,
+  {
+    itemsToBeReplaced,
+    unfulfiledItemsQuantities,
+    fulfiledItemsQuantities
+  }: Partial<OrderReturnFormData>
+) => {
+  if (!order || !itemsToBeReplaced.length) {
+    return 0;
+  }
+
+  return itemsToBeReplaced.reduce(
+    (
+      resultAmount: number,
+      { id, value: isItemToBeReplaced, data: { isFulfillment, isRefunded } }
+    ) => {
+      if (!isItemToBeReplaced || isRefunded) {
+        return resultAmount;
+      }
+
+      const { unitPrice, selectedQuantity } = selectItemPriceAndQuantity(
+        order,
+        { fulfiledItemsQuantities, unfulfiledItemsQuantities },
+        id,
+        isFulfillment
+      );
+
+      return resultAmount + unitPrice?.gross?.amount * selectedQuantity;
+    },
+    0
+  );
+};
+
+export const getReturnSelectedProductsAmount = (
+  order: OrderDetails_order,
+  { itemsToBeReplaced, unfulfiledItemsQuantities, fulfiledItemsQuantities }
+) => {
+  if (!order) {
+    return 0;
+  }
+
+  const unfulfilledItemsValue = getPartialProductsValue({
+    itemsQuantities: unfulfiledItemsQuantities,
+    itemsToBeReplaced,
+    orderLines: order.lines
+  });
+
+  const fulfiledItemsValue = getPartialProductsValue({
+    itemsQuantities: fulfiledItemsQuantities,
+    itemsToBeReplaced,
+    orderLines: getAllOrderFulfilledLines(order)
+  });
+
+  return unfulfilledItemsValue + fulfiledItemsValue;
+};
+
+const getPartialProductsValue = ({
+  orderLines,
+  itemsQuantities,
+  itemsToBeReplaced
+}: {
+  itemsToBeReplaced: FormsetData<LineItemData, boolean>;
+  itemsQuantities: FormsetData<LineItemData, number>;
+  orderLines: OrderDetails_order_lines[];
+}) =>
+  itemsQuantities.reduce((resultAmount, { id, value: quantity }) => {
+    const {
+      value: isItemToBeReplaced,
+      data: { isRefunded }
+    } = itemsToBeReplaced.find(getById(id));
+
+    if (quantity < 1 || isItemToBeReplaced || isRefunded) {
+      return resultAmount;
+    }
+
+    const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
+      id,
+      itemsQuantities,
+      orderLines
+    });
+
+    return resultAmount + unitPrice.gross.amount * selectedQuantity;
+  }, 0);
+
 export function getRefundedLinesPriceSum(
   lines: OrderRefundData_order_lines[],
-  refundedProductQuantities: FormsetData<null, string>
+  refundedProductQuantities: FormsetData<null, string | number>
 ): number {
   return lines?.reduce((sum, line) => {
     const refundedLine = refundedProductQuantities.find(
@@ -37,7 +170,7 @@ export function getRefundedLinesPriceSum(
 
 export function getAllFulfillmentLinesPriceSum(
   fulfillments: OrderRefundData_order_fulfillments[],
-  refundedFulfilledProductQuantities: FormsetData<null, string>
+  refundedFulfilledProductQuantities: FormsetData<null, string | number>
 ): number {
   return fulfillments?.reduce((sum, fulfillment) => {
     const fulfilmentLinesSum = fulfillment?.lines.reduce((sum, line) => {
