@@ -4863,10 +4863,6 @@
     "context": "tabel column header",
     "string": "Warehouse Name"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_2729628316": {
-    "context": "tabel column header",
-    "string": "Quantity Available"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2796503714": {
     "context": "header",
     "string": "Quantity"
@@ -6695,6 +6691,14 @@
   },
   "src_dot_yes": {
     "string": "Yes"
+  },
+  "tableColAllocated": {
+    "context": "table column header, allocated product quantity",
+    "string": "Allocated"
+  },
+  "tableColQuantity": {
+    "context": "table column header",
+    "string": "Quantity"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
