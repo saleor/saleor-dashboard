@@ -3273,7 +3273,7 @@
     "string": "Add Tracking Code"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
-    "context": "fulfillment group tracking number",
+    "context": "add tracking button",
     "string": "Add tracking"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1134347598": {
@@ -3285,12 +3285,16 @@
     "string": "Product"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2211099657": {
-    "context": "fulfillment group tracking number",
+    "context": "edit tracking button",
     "string": "Edit tracking"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
     "context": "ordered product quantity",
     "string": "Quantity"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2845258362": {
+    "context": "refund button",
+    "string": "Refund"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3254150098": {
     "string": "Tracking Number: {trackingNumber}"
@@ -3303,13 +3307,21 @@
     "context": "button",
     "string": "Cancel Fulfillment"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_77179533": {
-    "context": "fulfillment group",
-    "string": "Fulfilled from: {warehouseName}"
-  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_878013594": {
     "context": "order line total price",
     "string": "Total"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_fulfilled": {
+    "context": "fulfillment group",
+    "string": "Fulfilled from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_restocked": {
+    "context": "restocked group",
+    "string": "Restocked from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_tracking": {
+    "context": "tracking number",
+    "string": "Tracking Number: {trackingNumber}"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
     "context": "transaction reference",
@@ -3848,9 +3860,9 @@
     "context": "refunded fulfillment, section header",
     "string": "Refunded ({quantity})"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunedAndReturned": {
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refundedAndReturned": {
     "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
+    "string": "Refunded and Returned ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_replaced": {
     "context": "refunded fulfillment, section header",
