@@ -108,12 +108,15 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => onChangeQuantity(id, parseInt(event.target.value, 10));
 
+  const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
+
   return (
     <Card>
       <CardTitle
         orderNumber={order?.number}
         lines={lines}
-        fulfillment={order?.fulfillments.find(getById(fulfilmentId))}
+        fulfillmentOrder={fulfillment?.fulfillmentOrder}
+        status={fulfillment?.status}
       />
       <CardContent className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />

@@ -2,11 +2,6 @@ import { makeStyles, Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
-import {
-  OrderDetails_order_fulfillments,
-  OrderDetails_order_fulfillments_lines,
-  OrderDetails_order_lines
-} from "@saleor/orders/types/OrderDetails";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
@@ -56,8 +51,12 @@ const messages = defineMessages({
 
 type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
+type CardTitleLines = Array<{
+  quantity: number;
+}>;
+
 interface CardTitleProps {
-  lines?: OrderDetails_order_lines[] | OrderDetails_order_fulfillments_lines[];
+  lines?: CardTitleLines;
   fulfillmentOrder?: number;
   status: CardTitleStatus;
   toolbar?: React.ReactNode;
