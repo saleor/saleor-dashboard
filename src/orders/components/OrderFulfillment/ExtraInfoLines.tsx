@@ -48,7 +48,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  if (!fulfillment) {
+  if (!fulfillment || !fulfillment?.warehouse || !fulfillment?.trackingNumber) {
     return null;
   }
 
