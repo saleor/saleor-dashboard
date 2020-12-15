@@ -70,6 +70,12 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     onFileDelete();
   };
 
+  React.useEffect(() => {
+    if (!file.value) {
+      fileInputAnchor.current.value = "";
+    }
+  }, [file]);
+
   return (
     <>
       <div className={className}>
