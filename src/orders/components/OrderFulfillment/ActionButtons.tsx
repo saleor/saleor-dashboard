@@ -3,29 +3,49 @@ import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-interface FulfilledActionButtonsProps {
+interface AcionButtonsProps {
   status: FulfillmentStatus;
   trackingNumber?: string;
   onTrackingCodeAdd();
+  onRefund();
 }
 
-const FulfilledActionButtons: React.FC<FulfilledActionButtonsProps> = ({
+const statusesToShow = [
+  FulfillmentStatus.FULFILLED,
+  FulfillmentStatus.RETURNED
+];
+
+const ActionButtons: React.FC<AcionButtonsProps> = ({
   status,
   onTrackingCodeAdd,
-  trackingNumber
+  trackingNumber,
+  onRefund
 }) => {
-  if (status !== FulfillmentStatus.FULFILLED) {
+  const hasTrackingNumber = !!trackingNumber;
+
+  if (!statusesToShow.includes(status)) {
     return null;
   }
 
-  const hasTrackingNumber = !!trackingNumber;
+  if (status === FulfillmentStatus.RETURNED) {
+    return (
+      <CardActions>
+        <Button color="primary" onClick={onRefund}>
+          <FormattedMessage
+            defaultMessage="Refund"
+            description="refund button"
+          />
+        </Button>
+      </CardActions>
+    );
+  }
 
   return hasTrackingNumber ? (
     <CardActions>
       <Button color="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Edit tracking"
-          description="fulfillment group tracking number"
+          description="edit tracking button"
         />
       </Button>
     </CardActions>
@@ -34,11 +54,11 @@ const FulfilledActionButtons: React.FC<FulfilledActionButtonsProps> = ({
       <Button color="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Add tracking"
-          description="fulfillment group tracking number"
+          description="add tracking button"
         />
       </Button>
     </CardActions>
   );
 };
 
-export default FulfilledActionButtons;
+export default ActionButtons;

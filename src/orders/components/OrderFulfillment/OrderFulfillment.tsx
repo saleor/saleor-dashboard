@@ -12,8 +12,8 @@ import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
+import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-import FulfilledActionButtons from "./FulfilledActionButtons";
 import TableHeader from "./TableHeader";
 import TableLine from "./TableLine";
 
@@ -31,6 +31,7 @@ interface OrderFulfillmentProps {
   orderNumber?: string;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
+  onRefund: () => void;
 }
 
 const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
@@ -38,7 +39,8 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
     fulfillment,
     orderNumber,
     onOrderFulfillmentCancel,
-    onTrackingCodeAdd
+    onTrackingCodeAdd,
+    onRefund
   } = props;
   const classes = useStyles(props);
 
@@ -97,10 +99,11 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
           </TableBody>
           <ExtraInfoLines fulfillment={fulfillment} />
         </ResponsiveTable>
-        <FulfilledActionButtons
+        <ActionButtons
           status={fulfillment?.status}
           trackingNumber={fulfillment?.trackingNumber}
           onTrackingCodeAdd={onTrackingCodeAdd}
+          onRefund={onRefund}
         />
       </Card>
       <CardSpacer />
