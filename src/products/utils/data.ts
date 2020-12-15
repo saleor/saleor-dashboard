@@ -17,12 +17,10 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
-import { AttributeInputTypeEnum, StockInput } from "@saleor/types/globalTypes";
+import { StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ProductUpdateSubmitData } from "../components/ProductUpdatePage/form";
-import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
@@ -41,24 +39,6 @@ export interface ProductType {
   name: string;
   productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
 }
-
-export const isFileValueUnused = (
-  data: ProductUpdateSubmitData | ProductVariantUpdateSubmitData,
-  existingAttribute: SelectedVariantAttributeFragment
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = data.attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id
-  );
-
-  return !!modifiedAttribute;
-};
 
 export function getAttributeInputFromProduct(
   product: ProductDetails_product

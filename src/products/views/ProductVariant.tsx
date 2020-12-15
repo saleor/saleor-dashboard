@@ -1,10 +1,12 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
-  getAttributesFromFileUploadResult,
+  getAttributesAfterFileAttributesUpdate,
+  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors
 } from "@saleor/attributes/utils/data";
 import {
+  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
@@ -12,8 +14,6 @@ import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useFileUploadMutation } from "@saleor/files/mutations";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
@@ -52,7 +52,7 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import { isFileValueUnused, mapFormsetStockToStockInput } from "../utils/data";
+import { mapFormsetStockToStockInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -220,20 +220,18 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   };
 
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
-    let fileAttributeErrors: Array<
-      AttributeErrorFragment | UploadErrorFragment
-    > = [];
-
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables })
     );
 
-    fileAttributeErrors = [
-      ...fileAttributeErrors,
-      ...mergeFileUploadErrors(uploadFilesResult)
-    ];
-    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      variant?.nonSelectionAttributes,
+      variables => deleteAttributeValue({ variables })
+    );
+
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -243,7 +241,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         attributes: prepareAttributesInput({
           attributes: data.attributes,
-          attributesWithAddedNewFiles
+          updatedFileAttributes
         }),
         id: variantId,
         removeStocks: data.removeStocks,
@@ -255,37 +253,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     });
     await handleSubmitChannels(data, variant);
 
-    if (result.data?.productVariantUpdate.errors.length === 0) {
-      const deleteAttributeValuesResult = await Promise.all(
-        variant.nonSelectionAttributes.map(existingAttribute => {
-          const fileValueUnused = isFileValueUnused(data, existingAttribute);
-
-          if (fileValueUnused) {
-            return deleteAttributeValue({
-              variables: {
-                id: existingAttribute.values[0].id
-              }
-            });
-          }
-        })
-      );
-
-      fileAttributeErrors = deleteAttributeValuesResult.reduce(
-        (errors, deleteValueResult) => {
-          if (deleteValueResult?.data?.attributeValueDelete?.errors) {
-            return [
-              ...errors,
-              ...deleteValueResult.data.attributeValueDelete.errors
-            ];
-          }
-          return errors;
-        },
-        fileAttributeErrors
-      );
-    }
-
     return [
-      ...fileAttributeErrors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...result.data?.productVariantStocksCreate.errors,
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,

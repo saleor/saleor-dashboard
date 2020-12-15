@@ -1,5 +1,5 @@
 import {
-  getAttributesFromFileUploadResult,
+  getAttributesAfterFileAttributesUpdate,
   mergeFileUploadErrors
 } from "@saleor/attributes/utils/data";
 import {
@@ -94,7 +94,7 @@ export function createHandler(
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       formData.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -103,7 +103,7 @@ export function createHandler(
       input: {
         attributes: prepareAttributesInput({
           attributes: formData.attributes,
-          attributesWithAddedNewFiles
+          updatedFileAttributes
         }),
         category: formData.category,
         chargeTaxes: formData.chargeTaxes,
