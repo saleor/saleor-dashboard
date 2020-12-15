@@ -40,6 +40,10 @@ const messages = defineMessages({
     defaultMessage: "Cancelled ({quantity})",
     description: "cancelled fulfillment, section header"
   },
+  replaced: {
+    defaultMessage: "Replaced ({quantity})",
+    description: "refunded fulfillment, section header"
+  },
   returned: {
     defaultMessage: "Returned ({quantity})",
     description: "refunded fulfillment, section header"
@@ -50,34 +54,40 @@ const messages = defineMessages({
   }
 });
 
+type CardTitleStatus = FulfillmentStatus | "unfulfilled";
+
 interface CardTitleProps {
   lines?: OrderDetails_order_lines[] | OrderDetails_order_fulfillments_lines[];
-  fulfillment?: OrderDetails_order_fulfillments;
+  fulfillmentOrder?: number;
+  status: CardTitleStatus;
   toolbar?: React.ReactNode;
   orderNumber?: string;
   withStatus?: boolean;
 }
 
-const selectStatus = (status: FulfillmentStatus) => {
+const selectStatus = (status: CardTitleStatus) => {
   switch (status) {
     case FulfillmentStatus.FULFILLED:
       return StatusType.SUCCESS;
     case FulfillmentStatus.REFUNDED:
-      return StatusType.SUCCESS;
+      return StatusType.NEUTRAL;
     case FulfillmentStatus.RETURNED:
       return StatusType.NEUTRAL;
+    case FulfillmentStatus.REPLACED:
+      return StatusType.NEUTRAL;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
-      return StatusType.SUCCESS;
+      return StatusType.NEUTRAL;
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:
-      return StatusType.NEUTRAL;
+      return StatusType.ALERT;
   }
 };
 
 const CardTitle: React.FC<CardTitleProps> = ({
   lines = [],
-  fulfillment,
+  fulfillmentOrder,
+  status,
   orderNumber = "",
   withStatus = false,
   toolbar
@@ -85,12 +95,12 @@ const CardTitle: React.FC<CardTitleProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const fulfillmentName = fulfillment
-    ? `#${orderNumber}-${fulfillment?.fulfillmentOrder}`
-    : "";
+  const fulfillmentName =
+    orderNumber && fulfillmentOrder
+      ? `#${orderNumber}-${fulfillmentOrder}`
+      : "";
 
-  const messageForStatus =
-    messages[camelCase(fulfillment?.status)] || messages.unfulfilled;
+  const messageForStatus = messages[camelCase(status)] || messages.unfulfilled;
 
   const totalQuantity = lines.reduce(
     (resultQuantity, { quantity }) => resultQuantity + quantity,
@@ -114,10 +124,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
       toolbar={toolbar}
       title={
         withStatus ? (
-          <StatusLabel
-            label={title}
-            status={selectStatus(fulfillment?.status)}
-          />
+          <StatusLabel label={title} status={selectStatus(status)} />
         ) : (
           title
         )
