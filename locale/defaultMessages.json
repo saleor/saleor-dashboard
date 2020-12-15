@@ -3852,6 +3852,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_replaced": {
+    "context": "refunded fulfillment, section header",
+    "string": "Replaced ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
     "context": "refunded fulfillment, section header",
     "string": "Returned ({quantity})"
@@ -3899,33 +3903,9 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1134347598": {
-    "context": "product unit price",
-    "string": "Price"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1895667608": {
-    "context": "product name",
-    "string": "Product"
-  },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2095687440": {
     "context": "button",
     "string": "Fulfill"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2796503714": {
-    "context": "ordered products",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
-    "context": "section header",
-    "string": "Unfulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
-    "context": "ordered product sku",
-    "string": "SKU"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
-    "context": "order line total price",
-    "string": "Total"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
