@@ -231,6 +231,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       onTrackingCodeAdd={() =>
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
+                      onRefund={onPaymentRefund}
                     />
                   </React.Fragment>
                 ))}
