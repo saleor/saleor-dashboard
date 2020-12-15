@@ -5,7 +5,10 @@ import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
 import { maybe } from "@saleor/misc";
-import { OrderDetails_order_fulfillments_lines } from "@saleor/orders/types/OrderDetails";
+import {
+  OrderDetails_order_fulfillments_lines,
+  OrderDetails_order_lines
+} from "@saleor/orders/types/OrderDetails";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -60,22 +63,29 @@ const useStyles = makeStyles(
 );
 
 interface TableLineProps {
-  line: OrderDetails_order_fulfillments_lines;
+  line: OrderDetails_order_fulfillments_lines | OrderDetails_order_lines;
+  isOrderLine?: boolean;
 }
 
-const TableLine = ({ line }: TableLineProps) => {
+const TableLine: React.FC<TableLineProps> = ({
+  line: lineData,
+  isOrderLine = false
+}) => {
   const classes = useStyles({});
 
-  if (!line || !line.orderLine) {
+  if (!lineData) {
     return <Skeleton />;
   }
 
+  const line = isOrderLine
+    ? ({
+        ...lineData,
+        orderLine: lineData
+      } as OrderDetails_order_fulfillments_lines)
+    : (lineData as OrderDetails_order_fulfillments_lines);
+
   return (
-    <TableRow
-      className={!!line ? classes.clickableRow : undefined}
-      hover={!!line}
-      key={line.id}
-    >
+    <TableRow className={classes.clickableRow} hover key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}

@@ -1,5 +1,4 @@
 import { makeStyles, TableCell, TableHead, TableRow } from "@material-ui/core";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -9,10 +8,8 @@ const useStyles = makeStyles(
       cursor: "pointer"
     },
     colName: {
+      textAlign: "left",
       width: "auto"
-    },
-    colNameLabel: {
-      marginLeft: AVATAR_MARGIN
     },
     colPrice: {
       textAlign: "right",
@@ -61,12 +58,10 @@ const TableHeader = () => {
     <TableHead>
       <TableRow>
         <TableCell className={classes.colName}>
-          <span className={classes.colNameLabel}>
-            <FormattedMessage
-              defaultMessage="Product"
-              description="product name"
-            />
-          </span>
+          <FormattedMessage
+            defaultMessage="Product"
+            description="product name"
+          />
         </TableCell>
         <TableCell className={classes.colSku}>
           <FormattedMessage
