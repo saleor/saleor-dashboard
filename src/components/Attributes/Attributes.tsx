@@ -44,6 +44,7 @@ export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps {
   attributes: AttributeInput[];
   disabled: boolean;
+  loading: boolean;
   errors: Array<
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
@@ -204,6 +205,7 @@ function getErrorMessage(
 const Attributes: React.FC<AttributesProps> = ({
   attributes,
   disabled,
+  loading,
   errors,
   title,
   onChange,
@@ -266,6 +268,7 @@ const Attributes: React.FC<AttributesProps> = ({
                         <FileUploadField
                           className={classes.fileField}
                           disabled={disabled}
+                          loading={loading}
                           file={getFileChoice(attribute)}
                           onFileUpload={file =>
                             onFileChange(attribute.id, file)

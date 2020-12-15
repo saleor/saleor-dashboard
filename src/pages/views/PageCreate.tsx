@@ -108,7 +108,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               })}
             />
             <PageDetailsPage
-              disabled={pageCreateOpts.loading || uploadFileOpts.loading}
+              loading={pageCreateOpts.loading || uploadFileOpts.loading}
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
               page={null}

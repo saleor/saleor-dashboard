@@ -117,6 +117,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     attribute.data.variantAttributeScope ===
                     VariantAttributeScope.NOT_VARIANT_SELECTION
                 )}
+                loading={disabled}
                 disabled={disabled}
                 errors={errors}
                 onChange={handlers.selectAttribute}
@@ -131,6 +132,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     attribute.data.variantAttributeScope ===
                     VariantAttributeScope.VARIANT_SELECTION
                 )}
+                loading={disabled}
                 disabled={disabled}
                 errors={errors}
                 onChange={handlers.selectAttribute}

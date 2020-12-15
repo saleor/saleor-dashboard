@@ -222,6 +222,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <Attributes
                     attributes={data.attributes}
                     errors={errors}
+                    loading={disabled}
                     disabled={disabled}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}

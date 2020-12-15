@@ -218,7 +218,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         collections={(searchCollectionOpts?.data?.search?.edges || []).map(
           edge => edge.node
         )}
-        disabled={
+        loading={
           uploadFileOpts.loading ||
           productCreateOpts.loading ||
           productVariantCreateOpts.loading ||

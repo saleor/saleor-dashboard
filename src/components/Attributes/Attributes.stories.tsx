@@ -9,6 +9,7 @@ const props: AttributesProps = {
   attributes: ATTRIBUTES,
   disabled: false,
   errors: [],
+  loading: false,
   onChange: () => undefined,
   onFileChange: () => undefined,
   onMultiChange: () => undefined

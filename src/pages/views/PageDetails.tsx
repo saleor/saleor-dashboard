@@ -143,8 +143,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
       <PageDetailsPage
-        disabled={
+        loading={
           pageDetails.loading ||
+          pageUpdateOpts.loading ||
           uploadFileOpts.loading ||
           deleteAttributeValueOpts.loading
         }
