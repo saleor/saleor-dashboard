@@ -19,7 +19,6 @@ export const getParsedData = ({
   unfulfiledItemsQuantities,
   itemsToBeReplaced
 }: OrderReturnFormData): OrderReturnProductsInput => {
-  const shouldRefund = !!amount;
   const amountToRefund =
     amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL
       ? amount
@@ -37,6 +36,12 @@ export const getParsedData = ({
     "fulfillmentLineId"
   );
 
+  const shouldRefund = getShouldRefund({
+    amount,
+    fulfillmentLines,
+    orderLines
+  });
+
   return {
     amountToRefund,
     fulfillmentLines,
@@ -45,6 +50,30 @@ export const getParsedData = ({
     refund: shouldRefund
   };
 };
+
+const getShouldRefund = ({
+  amount,
+  orderLines,
+  fulfillmentLines
+}: {
+  amount?: number;
+  orderLines: OrderReturnLineInput[];
+  fulfillmentLines: OrderReturnFulfillmentLineInput[];
+}) => {
+  if (amount) {
+    return true;
+  }
+
+  return (
+    orderLines.some(isLineRefundable) || fulfillmentLines.some(isLineRefundable)
+  );
+};
+
+function isLineRefundable<
+  T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
+>({ replace }: T) {
+  return !replace;
+}
 
 function getParsedLineData<
   T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
