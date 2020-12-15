@@ -31,8 +31,8 @@ const messages = defineMessages({
     defaultMessage: "Refunded ({quantity})",
     description: "refunded fulfillment, section header"
   },
-  refunedAndReturned: {
-    defaultMessage: "Cancelled ({quantity})",
+  refundedAndReturned: {
+    defaultMessage: "Refunded and Returned ({quantity})",
     description: "cancelled fulfillment, section header"
   },
   replaced: {
