@@ -104,7 +104,11 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
               {intl.formatMessage(messages.noAvailableChannel)}
             </Typography>
           )
-        ) : null}
+        ) : (
+          <Typography>
+            {intl.formatMessage(messages.deletingAllProductData)}
+          </Typography>
+        )}
       </div>
     </ActionDialog>
   );
