@@ -9,8 +9,8 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
-import TableHeader from "../OrderProductsCardElements/CardHeader";
-import TableLine from "../OrderProductsCardElements/ItemsLine";
+import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
+import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 
 const useStyles = makeStyles(
@@ -22,13 +22,13 @@ const useStyles = makeStyles(
   { name: "OrderUnfulfilledItems" }
 );
 
-interface OrderUnfulfilledItemsProps {
+interface OrderUnfulfilledProductsCardProps {
   canFulfill: boolean;
   lines: OrderDetails_order_lines[];
   onFulfill: () => void;
 }
 
-const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
+const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = props => {
   const { canFulfill, lines, onFulfill } = props;
   const classes = useStyles({});
 
@@ -61,4 +61,4 @@ const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
   );
 };
 
-export default OrderUnfulfilledItems;
+export default OrderUnfulfilledProductsCard;

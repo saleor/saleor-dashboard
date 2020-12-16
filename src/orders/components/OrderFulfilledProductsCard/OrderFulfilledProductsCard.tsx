@@ -11,8 +11,8 @@ import { useIntl } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
-import TableHeader from "../OrderProductsCardElements/CardHeader";
-import TableLine from "../OrderProductsCardElements/ItemsLine";
+import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
+import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
@@ -26,7 +26,7 @@ const useStyles = makeStyles(
   { name: "OrderFulfillment" }
 );
 
-interface OrderFulfillmentProps {
+interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetails_order_fulfillments;
   orderNumber?: string;
   onOrderFulfillmentCancel: () => void;
@@ -34,7 +34,7 @@ interface OrderFulfillmentProps {
   onRefund: () => void;
 }
 
-const OrderFulfilledItems: React.FC<OrderFulfillmentProps> = props => {
+const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
   const {
     fulfillment,
     orderNumber,
@@ -111,4 +111,4 @@ const OrderFulfilledItems: React.FC<OrderFulfillmentProps> = props => {
   );
 };
 
-export default OrderFulfilledItems;
+export default OrderFulfilledProductsCard;

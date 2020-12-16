@@ -26,11 +26,11 @@ import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
-import OrderFulfilledItems from "../OrderFulfilledItems";
+import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
+import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
 
 const useStyles = makeStyles(
@@ -215,14 +215,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div>
-                <OrderUnfulfilledItems
+                <OrderUnfulfilledProductsCard
                   canFulfill={canFulfill}
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
                 />
                 {order?.fulfillments?.map(fulfillment => (
                   <React.Fragment key={fulfillment.id}>
-                    <OrderFulfilledItems
+                    <OrderFulfilledProductsCard
                       fulfillment={fulfillment}
                       orderNumber={order.number}
                       onOrderFulfillmentCancel={() =>
