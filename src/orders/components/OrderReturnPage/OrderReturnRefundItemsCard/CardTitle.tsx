@@ -1,56 +1,133 @@
+import { makeStyles, Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { StatusType } from "@saleor/components/StatusChip/types";
+import StatusLabel from "@saleor/components/StatusLabel";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
+import camelCase from "lodash/camelCase";
 import React from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
 
-import { getById } from "../utils";
+const useStyles = makeStyles(
+  theme => ({
+    orderNumber: {
+      display: "inline",
+      marginLeft: theme.spacing(1)
+    }
+  }),
+  { name: "CardTitle" }
+);
 
 const messages = defineMessages({
-  titleFulfilled: {
-    defaultMessage: "Fulfillment {fulfillmentName}",
+  cancelled: {
+    defaultMessage: "Cancelled ({quantity})",
+    description: "cancelled fulfillment, section header"
+  },
+  fulfilled: {
+    defaultMessage: "Fulfilled ({quantity})",
     description: "section header"
   },
-  titleRefunded: {
-    defaultMessage: "Refunded {fulfillmentName}",
-    description: "section header"
+  refunded: {
+    defaultMessage: "Refunded ({quantity})",
+    description: "refunded fulfillment, section header"
   },
-  titleUnfulfilled: {
-    defaultMessage: "Unfulfilled Items",
+  refundedAndReturned: {
+    defaultMessage: "Refunded and Returned ({quantity})",
+    description: "cancelled fulfillment, section header"
+  },
+  replaced: {
+    defaultMessage: "Replaced ({quantity})",
+    description: "refunded fulfillment, section header"
+  },
+  returned: {
+    defaultMessage: "Returned ({quantity})",
+    description: "refunded fulfillment, section header"
+  },
+  unfulfilled: {
+    defaultMessage: "Unfulfilled",
     description: "section header"
   }
 });
 
+type CardTitleStatus = FulfillmentStatus | "unfulfilled";
+
+type CardTitleLines = Array<{
+  quantity: number;
+}>;
+
 interface CardTitleProps {
-  order?: OrderDetails_order;
-  fulfilmentId?: string;
+  lines?: CardTitleLines;
+  fulfillmentOrder?: number;
+  status: CardTitleStatus;
+  toolbar?: React.ReactNode;
+  orderNumber?: string;
+  withStatus?: boolean;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({ order, fulfilmentId }) => {
-  const intl = useIntl();
-
-  if (!order || !fulfilmentId) {
-    return null;
+const selectStatus = (status: CardTitleStatus) => {
+  switch (status) {
+    case FulfillmentStatus.FULFILLED:
+      return StatusType.SUCCESS;
+    case FulfillmentStatus.REFUNDED:
+      return StatusType.NEUTRAL;
+    case FulfillmentStatus.RETURNED:
+      return StatusType.NEUTRAL;
+    case FulfillmentStatus.REPLACED:
+      return StatusType.NEUTRAL;
+    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+      return StatusType.NEUTRAL;
+    case FulfillmentStatus.CANCELED:
+      return StatusType.ERROR;
+    default:
+      return StatusType.ALERT;
   }
+};
 
-  const { number, fulfillments } = order;
+const CardTitle: React.FC<CardTitleProps> = ({
+  lines = [],
+  fulfillmentOrder,
+  status,
+  orderNumber = "",
+  withStatus = false,
+  toolbar
+}) => {
+  const intl = useIntl();
+  const classes = useStyles({});
 
-  const fulfilment = fulfillments.find(getById(fulfilmentId));
+  const fulfillmentName =
+    orderNumber && fulfillmentOrder
+      ? `#${orderNumber}-${fulfillmentOrder}`
+      : "";
 
-  const fulfillmentName = `#${number}-${fulfilment?.fulfillmentOrder}`;
+  const messageForStatus = messages[camelCase(status)] || messages.unfulfilled;
 
-  const getCardTitleMessage = () => {
-    if (fulfilment.status === FulfillmentStatus.REFUNDED) {
-      return messages.titleRefunded;
-    }
+  const totalQuantity = lines.reduce(
+    (resultQuantity, { quantity }) => resultQuantity + quantity,
+    0
+  );
 
-    return fulfilmentId ? messages.titleFulfilled : messages.titleUnfulfilled;
-  };
+  const title = (
+    <>
+      {intl.formatMessage(messageForStatus, {
+        fulfillmentName,
+        quantity: totalQuantity
+      })}
+      <Typography className={classes.orderNumber} variant="body1">
+        {fulfillmentName}
+      </Typography>
+    </>
+  );
 
   return (
     <DefaultCardTitle
-      title={intl.formatMessage(getCardTitleMessage(), { fulfillmentName })}
+      toolbar={toolbar}
+      title={
+        withStatus ? (
+          <StatusLabel label={title} status={selectStatus(status)} />
+        ) : (
+          title
+        )
+      }
     />
   );
 };

@@ -19,11 +19,14 @@ const useStyles = makeStyles(
     };
 
     return {
+      alertDot: {
+        "&:before": { backgroundColor: yellow[500], ...dot }
+      },
       errorDot: {
         "&:before": { backgroundColor: theme.palette.error.main, ...dot }
       },
       neutralDot: {
-        "&:before": { backgroundColor: yellow[500], ...dot }
+        "&:before": { backgroundColor: grey[300], ...dot }
       },
       root: {
         display: "inline-block",
@@ -35,9 +38,6 @@ const useStyles = makeStyles(
       },
       successDot: {
         "&:before": { backgroundColor: theme.palette.primary.main, ...dot }
-      },
-      unspecifiedDot: {
-        "&:before": { backgroundColor: grey[500], ...dot }
       }
     };
   },
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
 interface StatusLabelProps {
   className?: string;
   label: string | React.ReactNode;
-  status: "success" | "neutral" | "unspecified" | "error" | string;
+  status: "success" | "alert" | "neutral" | "error" | string;
   typographyProps?: TypographyProps;
 }
 
@@ -62,8 +62,8 @@ const StatusLabel: React.FC<StatusLabelProps> = props => {
         [classes.root]: true,
         [className]: true,
         [classes.successDot]: status === "success",
+        [classes.alertDot]: status === "alert",
         [classes.neutralDot]: status === "neutral",
-        [classes.unspecifiedDot]: status === "unspecified",
         [classes.errorDot]: status === "error"
       })}
     >

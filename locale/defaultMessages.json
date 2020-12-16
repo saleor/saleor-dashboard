@@ -3235,6 +3235,37 @@
     "context": "product's sku",
     "string": "SKU"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_1119771899": {
+    "context": "add tracking button",
+    "string": "Add tracking"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2211099657": {
+    "context": "edit tracking button",
+    "string": "Edit tracking"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2845258362": {
+    "context": "refund button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_3254150098": {
+    "string": "Tracking Number: {trackingNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_732594284": {
+    "context": "button",
+    "string": "Cancel Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_fulfilled": {
+    "context": "fulfillment group",
+    "string": "Fulfilled from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_restocked": {
+    "context": "restocked group",
+    "string": "Restocked from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_tracking": {
+    "context": "tracking number",
+    "string": "Tracking Number: {trackingNumber}"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_1097287358": {
     "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
   },
@@ -3271,57 +3302,6 @@
   "src_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_606831229": {
     "context": "dialog header",
     "string": "Add Tracking Code"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
-    "context": "fulfillment group tracking number",
-    "string": "Add tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1895667608": {
-    "context": "product name",
-    "string": "Product"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2211099657": {
-    "context": "fulfillment group tracking number",
-    "string": "Edit tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2567258278": {
-    "context": "refunded fulfillment, section header",
-    "string": "Refunded ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
-    "context": "ordered product quantity",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3254150098": {
-    "string": "Tracking Number: {trackingNumber}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3494686506": {
-    "context": "section header",
-    "string": "Fulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_4039425374": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
-    "context": "ordered product sku",
-    "string": "SKU"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
-    "context": "button",
-    "string": "Cancel Fulfillment"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_77179533": {
-    "context": "fulfillment group",
-    "string": "Fulfilled from: {warehouseName}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_878013594": {
-    "context": "order line total price",
-    "string": "Total"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
     "context": "transaction reference",
@@ -3654,6 +3634,26 @@
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
   },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_1134347598": {
+    "context": "product price",
+    "string": "Price"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_1895667608": {
+    "context": "product name",
+    "string": "Product"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_2796503714": {
+    "context": "ordered product quantity",
+    "string": "Quantity"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_878013594": {
+    "context": "order line total price",
+    "string": "Total"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
     "string": "Price"
@@ -3844,21 +3844,45 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_cancelled": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilled": {
+    "context": "section header",
+    "string": "Fulfilled ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
     "context": "error message",
     "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunded": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refundedAndReturned": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Refunded and Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_replaced": {
+    "context": "refunded fulfillment, section header",
+    "string": "Replaced ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
+    "context": "refunded fulfillment, section header",
+    "string": "Returned ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
     "context": "section header",
     "string": "Fulfillment - #{fulfilmentId}"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleRefunded": {
-    "context": "section header",
-    "string": "Refunded {fulfillmentName}"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
     "context": "section header",
     "string": "Unfulfilled Items"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
     "context": "page header with order number",
@@ -3891,33 +3915,9 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1134347598": {
-    "context": "product unit price",
-    "string": "Price"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1895667608": {
-    "context": "product name",
-    "string": "Product"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2095687440": {
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_2095687440": {
     "context": "button",
     "string": "Fulfill"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2796503714": {
-    "context": "ordered products",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
-    "context": "section header",
-    "string": "Unfulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
-    "context": "ordered product sku",
-    "string": "SKU"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
-    "context": "order line total price",
-    "string": "Total"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"

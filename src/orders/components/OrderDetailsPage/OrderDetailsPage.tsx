@@ -21,16 +21,16 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
-import OrderFulfillment from "../OrderFulfillment";
+import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
+import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
 
 const useStyles = makeStyles(
@@ -215,36 +215,26 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div>
-                {unfulfilled.length > 0 && (
-                  <OrderUnfulfilledItems
-                    canFulfill={canFulfill}
-                    lines={unfulfilled}
-                    onFulfill={onOrderFulfill}
-                  />
-                )}
-                {renderCollection(
-                  maybe(() => order.fulfillments),
-                  (fulfillment, fulfillmentIndex) => (
-                    <React.Fragment
-                      key={maybe(() => fulfillment.id, "loading")}
-                    >
-                      {!(
-                        unfulfilled.length === 0 && fulfillmentIndex === 0
-                      ) && <CardSpacer />}
-                      <OrderFulfillment
-                        fulfillment={fulfillment}
-                        orderNumber={maybe(() => order.number)}
-                        onOrderFulfillmentCancel={() =>
-                          onFulfillmentCancel(fulfillment.id)
-                        }
-                        onTrackingCodeAdd={() =>
-                          onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                        }
-                      />
-                    </React.Fragment>
-                  )
-                )}
-                <CardSpacer />
+                <OrderUnfulfilledProductsCard
+                  canFulfill={canFulfill}
+                  lines={unfulfilled}
+                  onFulfill={onOrderFulfill}
+                />
+                {order?.fulfillments?.map(fulfillment => (
+                  <React.Fragment key={fulfillment.id}>
+                    <OrderFulfilledProductsCard
+                      fulfillment={fulfillment}
+                      orderNumber={order.number}
+                      onOrderFulfillmentCancel={() =>
+                        onFulfillmentCancel(fulfillment.id)
+                      }
+                      onTrackingCodeAdd={() =>
+                        onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                      }
+                      onRefund={onPaymentRefund}
+                    />
+                  </React.Fragment>
+                ))}
                 <OrderPayment
                   order={order}
                   onCapture={onPaymentCapture}
