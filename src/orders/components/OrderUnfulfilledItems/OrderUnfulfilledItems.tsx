@@ -9,8 +9,8 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
-import TableHeader from "../OrderFulfillment/TableHeader";
-import TableLine from "../OrderFulfillment/TableLine";
+import TableHeader from "../OrderProductsCardElements/CardHeader";
+import TableLine from "../OrderProductsCardElements/ItemsLine";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 
 const useStyles = makeStyles(

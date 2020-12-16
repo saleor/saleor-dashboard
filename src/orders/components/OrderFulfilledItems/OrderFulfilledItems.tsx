@@ -11,11 +11,11 @@ import { useIntl } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
+import TableHeader from "../OrderProductsCardElements/CardHeader";
+import TableLine from "../OrderProductsCardElements/ItemsLine";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-import TableHeader from "./TableHeader";
-import TableLine from "./TableLine";
 
 const useStyles = makeStyles(
   () => ({
@@ -34,7 +34,7 @@ interface OrderFulfillmentProps {
   onRefund: () => void;
 }
 
-const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
+const OrderFulfilledItems: React.FC<OrderFulfillmentProps> = props => {
   const {
     fulfillment,
     orderNumber,
@@ -111,4 +111,4 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
   );
 };
 
-export default OrderFulfillment;
+export default OrderFulfilledItems;

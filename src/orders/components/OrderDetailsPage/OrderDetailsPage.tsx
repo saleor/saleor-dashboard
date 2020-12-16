@@ -26,7 +26,7 @@ import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
-import OrderFulfillment from "../OrderFulfillment";
+import OrderFulfilledItems from "../OrderFulfilledItems";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
@@ -222,7 +222,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 {order?.fulfillments?.map(fulfillment => (
                   <React.Fragment key={fulfillment.id}>
-                    <OrderFulfillment
+                    <OrderFulfilledItems
                       fulfillment={fulfillment}
                       orderNumber={order.number}
                       onOrderFulfillmentCancel={() =>
