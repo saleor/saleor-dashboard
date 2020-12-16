@@ -29,7 +29,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
-import React, { useEffect } from "react";
+import React from "react";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
@@ -166,10 +166,6 @@ function useProductVariantUpdateForm(
     triggerChange();
   };
 
-  useEffect(() => {
-    attributesWithNewFileValue.set([]);
-  }, [variant]);
-
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = diff(variantStocks, dataStocks);
@@ -206,7 +202,17 @@ function useProductVariantUpdateForm(
     updateStocks
   };
 
-  const submit = () => handleFormSubmit(submitData, onSubmit, setChanged);
+  const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
+    const errors = await onSubmit(data);
+
+    if (!errors?.length) {
+      attributesWithNewFileValue.set([]);
+    }
+
+    return errors;
+  };
+
+  const submit = () => handleFormSubmit(submitData, handleSubmit, setChanged);
 
   return {
     change: handleChange,
