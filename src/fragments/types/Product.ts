@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTyp
 // GraphQL fragment: Product
 // ====================================================
 
+export interface Product_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface Product_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: Product_attributes_attribute_values_file | null;
 }
 
 export interface Product_attributes_attribute {
@@ -25,11 +32,18 @@ export interface Product_attributes_attribute {
   values: (Product_attributes_attribute_values | null)[] | null;
 }
 
+export interface Product_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface Product_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: Product_attributes_values_file | null;
 }
 
 export interface Product_attributes {
@@ -38,11 +52,18 @@ export interface Product_attributes {
   values: (Product_attributes_values | null)[];
 }
 
+export interface Product_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface Product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: Product_productType_variantAttributes_values_file | null;
 }
 
 export interface Product_productType_variantAttributes {

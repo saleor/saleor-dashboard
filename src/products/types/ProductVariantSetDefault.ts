@@ -14,11 +14,18 @@ export interface ProductVariantSetDefault_productVariantSetDefault_errors {
   field: string | null;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values_file | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute {
@@ -31,11 +38,18 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   values: (ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values | null)[] | null;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_values_file | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes {
@@ -44,11 +58,18 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   values: (ProductVariantSetDefault_productVariantSetDefault_product_attributes_values | null)[];
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values_file | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes {

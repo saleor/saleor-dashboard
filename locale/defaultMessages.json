@@ -741,6 +741,10 @@
     "context": "product attribute type",
     "string": "Dropdown"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1376373679": {
+    "context": "file attribute type",
+    "string": "File"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
@@ -1275,6 +1279,10 @@
   "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
     "string": "Channel deleted"
   },
+  "src_dot_chooseFile": {
+    "context": "button",
+    "string": "Choose file"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"
@@ -1531,6 +1539,22 @@
   },
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "src_dot_components_dot_Attributes_dot_attributesNumber": {
+    "context": "number of attributes",
+    "string": "{number} Attributes"
+  },
+  "src_dot_components_dot_Attributes_dot_header": {
+    "context": "attributes, section header",
+    "string": "Attributes"
+  },
+  "src_dot_components_dot_Attributes_dot_multipleValueLable": {
+    "context": "attribute values",
+    "string": "Values"
+  },
+  "src_dot_components_dot_Attributes_dot_valueLabel": {
+    "context": "attribute value",
+    "string": "Value"
   },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
@@ -4126,22 +4150,6 @@
     "context": "pages section name",
     "string": "Pages"
   },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1071548120": {
-    "context": "number of page attributes",
-    "string": "{number} Attributes"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1148029984": {
-    "context": "attribute value",
-    "string": "Value"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_1207761269": {
-    "context": "attribute values",
-    "string": "Values"
-  },
-  "src_dot_pages_dot_components_dot_PageAttributes_dot_4153345096": {
-    "context": "page attributes, section header",
-    "string": "Attributes"
-  },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
     "string": "Create Page"
@@ -4646,22 +4654,6 @@
     "context": "products section name",
     "string": "Products"
   },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1071548120": {
-    "context": "number of product attributes",
-    "string": "{number} Attributes"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1148029984": {
-    "context": "attribute value",
-    "string": "Value"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1207761269": {
-    "context": "attribute values",
-    "string": "Values"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_4153345096": {
-    "context": "product attributes, section header",
-    "string": "Attributes"
-  },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"
   },
@@ -4929,10 +4921,6 @@
     "context": "tabel column header",
     "string": "Warehouse Name"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_2729628316": {
-    "context": "tabel column header",
-    "string": "Quantity Available"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2796503714": {
     "context": "header",
     "string": "Quantity"
@@ -4971,13 +4959,21 @@
     "context": "product label",
     "string": "Published"
   },
-  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
-    "context": "button",
-    "string": "Save variant"
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Attributes"
   },
-  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_3726089650": {
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesSelectionHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Selection Attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_deleteVariant": {
     "context": "button",
     "string": "Delete Variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_saveVariant": {
+    "context": "button",
+    "string": "Save variant"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
     "context": "variant price, header",
@@ -5118,6 +5114,14 @@
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_3185562157": {
     "context": "variant name",
     "string": "New Variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_nonSelectionAttributes": {
+    "context": "attributes, section header",
+    "string": "Variant Attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_selectionAttributesHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Selection Attributes"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1099355007": {
     "context": "product pricing, section header",
@@ -6761,6 +6765,14 @@
   },
   "src_dot_yes": {
     "string": "Yes"
+  },
+  "tableColAllocated": {
+    "context": "table column header, allocated product quantity",
+    "string": "Allocated"
+  },
+  "tableColQuantity": {
+    "context": "table column header",
+    "string": "Quantity"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",

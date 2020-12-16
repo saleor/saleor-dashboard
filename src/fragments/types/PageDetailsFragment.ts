@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: PageDetailsFragment
 // ====================================================
 
+export interface PageDetailsFragment_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetailsFragment_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetailsFragment_attributes_attribute_values_file | null;
 }
 
 export interface PageDetailsFragment_attributes_attribute {
@@ -25,11 +32,18 @@ export interface PageDetailsFragment_attributes_attribute {
   values: (PageDetailsFragment_attributes_attribute_values | null)[] | null;
 }
 
+export interface PageDetailsFragment_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetailsFragment_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetailsFragment_attributes_values_file | null;
 }
 
 export interface PageDetailsFragment_attributes {
@@ -38,11 +52,18 @@ export interface PageDetailsFragment_attributes {
   values: (PageDetailsFragment_attributes_values | null)[];
 }
 
+export interface PageDetailsFragment_pageType_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageDetailsFragment_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageDetailsFragment_pageType_attributes_values_file | null;
 }
 
 export interface PageDetailsFragment_pageType_attributes {

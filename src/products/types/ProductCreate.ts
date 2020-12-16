@@ -15,11 +15,18 @@ export interface ProductCreate_productCreate_errors {
   attributes: string[] | null;
 }
 
+export interface ProductCreate_productCreate_product_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductCreate_productCreate_product_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductCreate_productCreate_product_attributes_attribute_values_file | null;
 }
 
 export interface ProductCreate_productCreate_product_attributes_attribute {
@@ -32,11 +39,18 @@ export interface ProductCreate_productCreate_product_attributes_attribute {
   values: (ProductCreate_productCreate_product_attributes_attribute_values | null)[] | null;
 }
 
+export interface ProductCreate_productCreate_product_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductCreate_productCreate_product_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductCreate_productCreate_product_attributes_values_file | null;
 }
 
 export interface ProductCreate_productCreate_product_attributes {
@@ -45,11 +59,18 @@ export interface ProductCreate_productCreate_product_attributes {
   values: (ProductCreate_productCreate_product_attributes_values | null)[];
 }
 
+export interface ProductCreate_productCreate_product_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductCreate_productCreate_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductCreate_productCreate_product_productType_variantAttributes_values_file | null;
 }
 
 export interface ProductCreate_productCreate_product_productType_variantAttributes {

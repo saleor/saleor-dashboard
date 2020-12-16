@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { attributeValueFragment } from "./attributes";
 import { metadataFragment } from "./metadata";
 import { taxTypeFragment } from "./taxes";
 import { weightFragment } from "./weight";
@@ -112,7 +113,8 @@ export const productFragment = gql`
 `;
 
 export const productVariantAttributesFragment = gql`
-  ${fragmentMoney}
+  ${priceRangeFragment}
+  ${attributeValueFragment}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -123,26 +125,20 @@ export const productVariantAttributesFragment = gql`
         inputType
         valueRequired
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
       values {
-        id
-        name
-        slug
+        ...AttributeValueFragment
       }
     }
     productType {
       id
-      variantAttributes {
+      variantAttributes(variantSelection: VARIANT_SELECTION) {
         id
         name
         values {
-          id
-          name
-          slug
+          ...AttributeValueFragment
         }
       }
     }
@@ -228,7 +224,35 @@ export const productFragmentDetails = gql`
   }
 `;
 
+export const variantAttributeFragment = gql`
+  ${attributeValueFragment}
+  fragment VariantAttributeFragment on Attribute {
+    id
+    name
+    slug
+    inputType
+    valueRequired
+    values {
+      ...AttributeValueFragment
+    }
+  }
+`;
+
+export const selectedVariantAttributeFragment = gql`
+  ${attributeValueFragment}
+  ${variantAttributeFragment}
+  fragment SelectedVariantAttributeFragment on SelectedAttribute {
+    attribute {
+      ...VariantAttributeFragment
+    }
+    values {
+      ...AttributeValueFragment
+    }
+  }
+`;
+
 export const fragmentVariant = gql`
+  ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
   ${fragmentProductImage}
   ${stockFragment}
@@ -238,23 +262,13 @@ export const fragmentVariant = gql`
   fragment ProductVariant on ProductVariant {
     id
     ...MetadataFragment
-    attributes {
-      attribute {
-        id
-        name
-        slug
-        valueRequired
-        values {
-          id
-          name
-          slug
-        }
-      }
-      values {
-        id
-        name
-        slug
-      }
+    selectionAttributes: attributes(variantSelection: VARIANT_SELECTION) {
+      ...SelectedVariantAttributeFragment
+    }
+    nonSelectionAttributes: attributes(
+      variantSelection: NOT_VARIANT_SELECTION
+    ) {
+      ...SelectedVariantAttributeFragment
     }
     images {
       id

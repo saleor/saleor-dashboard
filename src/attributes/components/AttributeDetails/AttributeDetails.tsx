@@ -47,6 +47,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         description: "product attribute type"
       }),
       value: AttributeInputTypeEnum.MULTISELECT
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "File",
+        description: "file attribute type"
+      }),
+      value: AttributeInputTypeEnum.FILE
     }
   ];
 

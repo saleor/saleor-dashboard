@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductVariantDetails
@@ -20,33 +20,92 @@ export interface ProductVariantDetails_productVariant_privateMetadata {
   value: string;
 }
 
-export interface ProductVariantDetails_productVariant_attributes_attribute_values {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_file | null;
 }
 
-export interface ProductVariantDetails_productVariant_attributes_attribute {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (ProductVariantDetails_productVariant_attributes_attribute_values | null)[] | null;
+  values: (ProductVariantDetails_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface ProductVariantDetails_productVariant_attributes_values {
+export interface ProductVariantDetails_productVariant_selectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantDetails_productVariant_selectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantDetails_productVariant_selectionAttributes_values_file | null;
 }
 
-export interface ProductVariantDetails_productVariant_attributes {
+export interface ProductVariantDetails_productVariant_selectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: ProductVariantDetails_productVariant_attributes_attribute;
-  values: (ProductVariantDetails_productVariant_attributes_values | null)[];
+  attribute: ProductVariantDetails_productVariant_selectionAttributes_attribute;
+  values: (ProductVariantDetails_productVariant_selectionAttributes_values | null)[];
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_file | null;
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: ProductVariantDetails_productVariant_nonSelectionAttributes_values_file | null;
+}
+
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes {
+  __typename: "SelectedAttribute";
+  attribute: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute;
+  values: (ProductVariantDetails_productVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface ProductVariantDetails_productVariant_images {
@@ -195,7 +254,8 @@ export interface ProductVariantDetails_productVariant {
   id: string;
   metadata: (ProductVariantDetails_productVariant_metadata | null)[];
   privateMetadata: (ProductVariantDetails_productVariant_privateMetadata | null)[];
-  attributes: ProductVariantDetails_productVariant_attributes[];
+  selectionAttributes: ProductVariantDetails_productVariant_selectionAttributes[];
+  nonSelectionAttributes: ProductVariantDetails_productVariant_nonSelectionAttributes[];
   images: (ProductVariantDetails_productVariant_images | null)[] | null;
   name: string;
   product: ProductVariantDetails_productVariant_product;

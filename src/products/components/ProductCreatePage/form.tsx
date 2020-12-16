@@ -1,18 +1,27 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
+import {
+  AttributeInput,
+  AttributeInputData
+} from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
-import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
+import useFormset, {
+  FormsetChange,
+  FormsetData
+} from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getAttributeInputFromProductType,
+  getAttributesDisplayData,
   ProductType
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
@@ -30,10 +39,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
-import {
-  ProductAttributeInput,
-  ProductAttributeInputData
-} from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
@@ -57,7 +62,8 @@ export interface ProductCreateFormData extends MetadataFormData {
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
-  attributes: ProductAttributeInput[];
+  attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
 }
 
@@ -82,6 +88,7 @@ interface ProductCreateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
 }
@@ -159,11 +166,12 @@ function useProductCreateForm(
     ...initial,
     ...defaultInitialFormData
   });
-  const attributes = useFormset<ProductAttributeInputData>(
+  const attributes = useFormset<AttributeInputData>(
     initial?.productType
       ? getAttributeInputFromProductType(initialProductType)
       : []
   );
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<null, string>([]);
   const [productType, setProductType] = useStateFromProps<ProductType>(
     initialProductType || null
@@ -199,6 +207,13 @@ function useProductCreateForm(
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
+    triggerChange
+  );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.change,
     triggerChange
   );
   const handleProductTypeSelect = createProductTypeSelectHandler(
@@ -243,7 +258,11 @@ function useProductCreateForm(
 
   const getData = (): ProductCreateData => ({
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current,
     productType,
     stocks: stocks.data
@@ -276,6 +295,7 @@ function useProductCreateForm(
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,

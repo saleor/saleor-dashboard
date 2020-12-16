@@ -8,11 +8,18 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL query operation: CreateMultipleVariantsData
 // ====================================================
 
+export interface CreateMultipleVariantsData_product_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface CreateMultipleVariantsData_product_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: CreateMultipleVariantsData_product_attributes_attribute_values_file | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes_attribute {
@@ -25,11 +32,18 @@ export interface CreateMultipleVariantsData_product_attributes_attribute {
   values: (CreateMultipleVariantsData_product_attributes_attribute_values | null)[] | null;
 }
 
+export interface CreateMultipleVariantsData_product_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface CreateMultipleVariantsData_product_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: CreateMultipleVariantsData_product_attributes_values_file | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes {
@@ -38,11 +52,18 @@ export interface CreateMultipleVariantsData_product_attributes {
   values: (CreateMultipleVariantsData_product_attributes_values | null)[];
 }
 
+export interface CreateMultipleVariantsData_product_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface CreateMultipleVariantsData_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: CreateMultipleVariantsData_product_productType_variantAttributes_values_file | null;
 }
 
 export interface CreateMultipleVariantsData_product_productType_variantAttributes {

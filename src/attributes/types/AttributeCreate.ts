@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeValueType, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeCreate
@@ -20,12 +20,18 @@ export interface AttributeCreate_attributeCreate_attribute_privateMetadata {
   value: string;
 }
 
+export interface AttributeCreate_attributeCreate_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface AttributeCreate_attributeCreate_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  type: AttributeValueType | null;
+  file: AttributeCreate_attributeCreate_attribute_values_file | null;
 }
 
 export interface AttributeCreate_attributeCreate_attribute {

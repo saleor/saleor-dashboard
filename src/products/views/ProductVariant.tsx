@@ -1,7 +1,19 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
+import {
+  getAttributesAfterFileAttributesUpdate,
+  mergeAttributeValueDeleteErrors,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleDeleteMultipleAttributeValues,
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
@@ -97,6 +109,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
 
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+
   const [assignImage, assignImageOpts] = useVariantImageAssignMutation({});
   const [unassignImage, unassignImageOpts] = useVariantImageUnassignMutation(
     {}
@@ -124,7 +138,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
-  const handleSubmitChannels = (
+  const [
+    deleteAttributeValue,
+    deleteAttributeValueOpts
+  ] = useAttributeValueDeleteMutation({});
+
+  const handleSubmitChannels = async (
     data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
@@ -138,7 +157,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       );
     });
     if (isChannelPriceChange) {
-      updateChannels({
+      await updateChannels({
         variables: {
           id: variant.id,
           input: data.channelListings.map(listing => ({
@@ -172,11 +191,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const disableFormSave =
     loading ||
+    uploadFileOpts.loading ||
     deleteVariantOpts.loading ||
     updateVariantOpts.loading ||
     assignImageOpts.loading ||
     unassignImageOpts.loading ||
-    reorderProductVariantsOpts.loading;
+    reorderProductVariantsOpts.loading ||
+    deleteAttributeValueOpts.loading;
 
   const handleImageSelect = (id: string) => () => {
     if (variant) {
@@ -199,13 +220,29 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   };
 
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
+    );
+
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      variant?.nonSelectionAttributes,
+      variables => deleteAttributeValue({ variables })
+    );
+
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
+      data.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const result = await updateVariant({
       variables: {
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        attributes: data.attributes.map(attribute => ({
-          id: attribute.id,
-          values: [attribute.value]
-        })),
+        attributes: prepareAttributesInput({
+          attributes: data.attributes,
+          updatedFileAttributes
+        }),
         id: variantId,
         removeStocks: data.removeStocks,
         sku: data.sku,
@@ -214,9 +251,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         weight: weight(data.weight)
       }
     });
-    handleSubmitChannels(data, variant);
+    await handleSubmitChannels(data, variant);
 
     return [
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...result.data?.productVariantStocksCreate.errors,
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,
@@ -255,9 +294,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageSelect={handleImageSelect}
-        onSubmit={data => {
-          handleSubmit(data);
-          handleSubmitChannels(data, variant);
+        onSubmit={async data => {
+          await handleSubmit(data);
+          await handleSubmitChannels(data, variant);
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {

@@ -2,7 +2,6 @@ import { pageDetailsFragment, pageFragment } from "@saleor/fragments/pages";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
 import { PageList, PageListVariables } from "./types/PageList";
 
@@ -48,7 +47,6 @@ const pageDetails = gql`
     }
   }
 `;
-export const TypedPageDetailsQuery = TypedQuery<
-  PageDetails,
-  PageDetailsVariables
->(pageDetails);
+export const usePageDetailsQuery = makeQuery<PageDetails, PageDetailsVariables>(
+  pageDetails
+);
