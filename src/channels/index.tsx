@@ -11,16 +11,14 @@ import {
   channelPath,
   channelsListPath,
   ChannelsListUrlQueryParams,
-  ChannelsListUrlSortField,
-  ChannelUrlQueryParams
+  ChannelsListUrlSortField
 } from "./urls";
 import ChannelCreateComponent from "./views/ChannelCreate";
 import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
 const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ChannelUrlQueryParams = qs;
+  const params = parseQs(location.search.substr(1));
 
   return (
     <ChannelDetailsComponent
