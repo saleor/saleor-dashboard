@@ -1,3 +1,4 @@
+import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -64,18 +65,11 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     onCompleted
   });
 
-  const channelsChoices = params.id
-    ? data?.channels
-        ?.filter(
-          channel =>
-            channel.id !== params.id &&
-            channel.currencyCode === selectedChannel.currencyCode
-        )
-        .map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))
-    : [];
+  const channelsChoices = getChannelsCurrencyChoices(
+    params.id,
+    selectedChannel,
+    data?.channels
+  );
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 

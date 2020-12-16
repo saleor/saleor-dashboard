@@ -304,3 +304,21 @@ export const createSortedChannelsDataFromSale = (data?: SaleDetails_sale) =>
   createChannelsDataFromSale(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
+
+export const getChannelsCurrencyChoices = (
+  id: string,
+  selectedChannel: Channels_channels,
+  channelsList: Channels_channels[]
+) =>
+  id
+    ? channelsList
+        ?.filter(
+          channel =>
+            channel.id !== id &&
+            channel.currencyCode === selectedChannel?.currencyCode
+        )
+        .map(channel => ({
+          label: channel.name,
+          value: channel.id
+        }))
+    : [];

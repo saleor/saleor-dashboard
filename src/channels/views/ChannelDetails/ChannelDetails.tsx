@@ -1,5 +1,6 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
 import { ChannelDelete } from "@saleor/channels/types/ChannelDelete";
+import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
@@ -132,18 +133,11 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     onCompleted
   });
 
-  const channelsChoices = id
-    ? channelsListData?.data?.channels
-        ?.filter(
-          channel =>
-            channel.id !== id &&
-            channel.currencyCode === data?.channel?.currencyCode
-        )
-        .map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))
-    : [];
+  const channelsChoices = getChannelsCurrencyChoices(
+    id,
+    data?.channel,
+    channelsListData?.data?.channels
+  );
 
   const handleRemoveConfirm = (targetChannelId?: string) => {
     const data = targetChannelId
