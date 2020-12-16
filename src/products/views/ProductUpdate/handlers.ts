@@ -3,10 +3,12 @@ import {
   AttributeValueDeleteVariables
 } from "@saleor/attributes/types/AttributeValueDelete";
 import {
-  getAttributesFromFileUploadResult,
+  getAttributesAfterFileAttributesUpdate,
+  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors
 } from "@saleor/attributes/utils/data";
 import {
+  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
@@ -52,10 +54,7 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import {
-  isFileValueUnused,
-  mapFormsetStockToStockInput
-} from "@saleor/products/utils/data";
+import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
@@ -160,8 +159,18 @@ export function createUpdateHandler(
       uploadFile
     );
 
-    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      product?.attributes,
+      deleteAttributeValue
+    );
+
+    errors = [
+      ...errors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult)
+    ];
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -171,7 +180,7 @@ export function createUpdateHandler(
       input: {
         attributes: prepareAttributesInput({
           attributes: data.attributes,
-          attributesWithAddedNewFiles
+          updatedFileAttributes
         }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
@@ -253,33 +262,6 @@ export function createUpdateHandler(
           }
         });
       }
-    }
-
-    if (errors.length === 0) {
-      const deleteAttributeValuesResult = await Promise.all(
-        product.attributes.map(existingAttribute => {
-          const fileValueUnused = isFileValueUnused(data, existingAttribute);
-
-          if (fileValueUnused) {
-            return deleteAttributeValue({
-              id: existingAttribute.values[0].id
-            });
-          }
-        })
-      );
-
-      errors = deleteAttributeValuesResult.reduce(
-        (errors, deleteValueResult) => {
-          if (deleteValueResult?.data?.attributeValueDelete?.errors) {
-            return [
-              ...errors,
-              ...deleteValueResult.data.attributeValueDelete.errors
-            ];
-          }
-          return errors;
-        },
-        errors
-      );
     }
 
     return errors;

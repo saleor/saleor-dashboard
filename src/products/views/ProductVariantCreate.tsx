@@ -1,4 +1,4 @@
-import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
   prepareAttributesInput
@@ -132,7 +132,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       variables => uploadFile({ variables })
     );
 
-    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       formData.attributesWithNewFileValue,
       uploadFilesResult
     );
@@ -144,7 +144,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
             attributes: formData.attributes.filter(
               attribute => attribute.value?.length && attribute.value[0] !== ""
             ),
-            attributesWithAddedNewFiles
+            updatedFileAttributes
           }),
           product: productId,
           sku: formData.sku,

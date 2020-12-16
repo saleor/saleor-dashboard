@@ -1,10 +1,12 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
-  getAttributesFromFileUploadResult,
+  getAttributesAfterFileAttributesUpdate,
+  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors
 } from "@saleor/attributes/utils/data";
 import {
+  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
@@ -33,7 +35,6 @@ import { usePageRemoveMutation, usePageUpdateMutation } from "../mutations";
 import { usePageDetailsQuery } from "../queries";
 import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
-import { isFileValueUnused } from "../utils/data";
 
 export interface PageDetailsProps {
   id: string;
@@ -42,11 +43,11 @@ export interface PageDetailsProps {
 
 const createPageInput = (
   data: PageData,
-  attributesWithAddedNewFiles: AttributeValueInput[]
+  updatedFileAttributes: AttributeValueInput[]
 ): PageInput => ({
   attributes: prepareAttributesInput({
     attributes: data.attributes,
-    attributesWithAddedNewFiles
+    updatedFileAttributes
   }),
   contentJson: JSON.stringify(data.content),
   isPublished: data.isPublished,
@@ -103,49 +104,30 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       variables => uploadFile({ variables })
     );
 
-    errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
-    const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      pageDetails?.data?.page?.attributes,
+      variables => deleteAttributeValue({ variables })
+    );
+
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult
     );
 
-    const result = await pageUpdate({
+    const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(data, attributesWithAddedNewFiles)
+        input: createPageInput(data, updatedFileAttributes)
       }
     });
 
-    errors = [...errors, ...result.data.pageUpdate.errors];
-
-    if (errors.length === 0) {
-      const deleteAttributeValuesResult = await Promise.all(
-        pageDetails?.data?.page?.attributes.map(existingAttribute => {
-          const fileValueUnused = isFileValueUnused(data, existingAttribute);
-
-          if (fileValueUnused) {
-            return deleteAttributeValue({
-              variables: {
-                id: existingAttribute.values[0].id
-              }
-            });
-          }
-        })
-      );
-
-      errors = deleteAttributeValuesResult.reduce(
-        (errors, deleteValueResult) => {
-          if (deleteValueResult?.data?.attributeValueDelete?.errors) {
-            return [
-              ...errors,
-              ...deleteValueResult.data.attributeValueDelete.errors
-            ];
-          }
-          return errors;
-        },
-        errors
-      );
-    }
+    errors = [
+      ...errors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+      ...updateResult.data.pageUpdate.errors
+    ];
 
     return errors;
   };
@@ -161,8 +143,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
       <PageDetailsPage
-        disabled={
+        loading={
           pageDetails.loading ||
+          pageUpdateOpts.loading ||
           uploadFileOpts.loading ||
           deleteAttributeValueOpts.loading
         }

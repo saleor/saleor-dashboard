@@ -13,6 +13,7 @@ const props: FileUploadFieldProps = {
     name: "country",
     placeholder: "Select country"
   },
+  loading: false,
   onFileDelete: () => undefined,
   onFileUpload: () => undefined
 };
@@ -23,6 +24,7 @@ const InteractiveStory: React.FC = () => {
   return (
     <FileUploadField
       disabled={false}
+      loading={false}
       file={{
         label: file?.name,
         value: file?.name

@@ -10,8 +10,8 @@ import { page } from "../../../pages/fixtures";
 import Decorator from "../../Decorator";
 
 const props: PageDetailsPageProps = {
-  disabled: false,
   errors: [],
+  loading: false,
   onBack: () => undefined,
   onRemove: () => undefined,
   onSubmit: () => undefined,
@@ -23,7 +23,7 @@ storiesOf("Views / Pages / Page details", module)
   .addDecorator(Decorator)
   .add("default", () => <PageDetailsPage {...props} />)
   .add("loading", () => (
-    <PageDetailsPage {...props} disabled={true} page={undefined} />
+    <PageDetailsPage {...props} loading={true} page={undefined} />
   ))
   .add("form errors", () => (
     <PageDetailsPage

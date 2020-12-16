@@ -1,4 +1,4 @@
-import { getAttributesFromFileUploadResult } from "@saleor/attributes/utils/data";
+import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
   prepareAttributesInput
@@ -65,7 +65,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
             variables => uploadFile({ variables })
           );
 
-          const attributesWithAddedNewFiles = getAttributesFromFileUploadResult(
+          const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
             formData.attributesWithNewFileValue,
             uploadFilesResult
           );
@@ -75,7 +75,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               input: {
                 attributes: prepareAttributesInput({
                   attributes: formData.attributes,
-                  attributesWithAddedNewFiles
+                  updatedFileAttributes
                 }),
                 contentJson: JSON.stringify(formData.content),
                 isPublished: formData.isPublished,
@@ -108,7 +108,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
               })}
             />
             <PageDetailsPage
-              disabled={pageCreateOpts.loading || uploadFileOpts.loading}
+              loading={pageCreateOpts.loading || uploadFileOpts.loading}
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
               page={null}

@@ -8,6 +8,8 @@ import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import Skeleton from "../Skeleton";
+
 export interface FileChoiceType {
   label: string;
   value: string;
@@ -21,6 +23,7 @@ export interface FileUploadFieldProps {
   >;
   className?: string;
   disabled: boolean;
+  loading: boolean;
   file: FileChoiceType;
   error?: boolean;
   helperText?: string;
@@ -41,8 +44,13 @@ const useStyles = makeStyles(
       textDecoration: "none"
     },
     uploadFileContent: {
+      alignItems: "center",
       color: theme.palette.primary.main,
+      display: "flex",
       fontSize: "1rem"
+    },
+    uploadFileName: {
+      minWidth: "6rem"
     }
   }),
   { name: "FileUploadField" }
@@ -50,6 +58,7 @@ const useStyles = makeStyles(
 
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const {
+    loading,
     disabled,
     file,
     className,
@@ -81,13 +90,23 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
       <div className={className}>
         {file.label ? (
           <div className={classes.uploadFileContent}>
-            <a href={file.file?.url} target="blank" className={classes.fileUrl}>
-              {file.label}
-            </a>
+            <div className={classes.uploadFileName}>
+              {loading ? (
+                <Skeleton />
+              ) : (
+                <a
+                  href={file.file?.url}
+                  target="blank"
+                  className={classes.fileUrl}
+                >
+                  {file.label}
+                </a>
+              )}
+            </div>
             <IconButton
               color="primary"
               onClick={handleFileDelete}
-              disabled={disabled}
+              disabled={disabled || loading}
               data-test="button-delete-file"
             >
               <DeleteIcon />
@@ -97,7 +116,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
           <div>
             <Button
               onClick={clickFileInput}
-              disabled={disabled}
+              disabled={disabled || loading}
               variant="outlined"
               color="primary"
               data-test="button-upload-file"

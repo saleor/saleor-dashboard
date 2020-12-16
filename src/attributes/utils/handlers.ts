@@ -4,32 +4,37 @@ import {
   FileUploadVariables
 } from "@saleor/files/types/FileUpload";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import {
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
 
-import { getFileValuesToUploadFromAttributes } from "./data";
+import {
+  AttributeValueDelete,
+  AttributeValueDeleteVariables
+} from "../types/AttributeValueDelete";
+import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 interface AttributesArgs {
   attributes: AttributeInput[];
-  attributesWithAddedNewFiles: AttributeValueInput[];
+  updatedFileAttributes: AttributeValueInput[];
 }
 
 export const prepareAttributesInput = ({
   attributes,
-  attributesWithAddedNewFiles
+  updatedFileAttributes
 }: AttributesArgs): AttributeValueInput[] =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
-      const attributeWithNewFile = attributesWithAddedNewFiles.find(
+      const updatedFileAttribute = updatedFileAttributes.find(
         attributeWithNewFile => attribute.id === attributeWithNewFile.id
       );
-      if (attributeWithNewFile) {
+      if (updatedFileAttribute) {
         return {
-          file: attributeWithNewFile.file,
-          id: attributeWithNewFile.id
+          file: updatedFileAttribute.file,
+          id: updatedFileAttribute.id
         };
       }
       return {
@@ -58,4 +63,26 @@ export const handleUploadMultipleFiles = async (
           file: fileAttribute.value
         })
     )
+  );
+
+export const handleDeleteMultipleAttributeValues = async (
+  attributesWithNewFileValue: FormsetData<null, File>,
+  attributes: PageDetails_page_attributes[],
+  deleteAttributeValue: (
+    variables: AttributeValueDeleteVariables
+  ) => Promise<MutationFetchResult<AttributeValueDelete>>
+) =>
+  Promise.all(
+    attributes.map(existingAttribute => {
+      const fileValueUnused = isFileValueUnused(
+        attributesWithNewFileValue,
+        existingAttribute
+      );
+
+      if (fileValueUnused) {
+        return deleteAttributeValue({
+          id: existingAttribute.values[0].id
+        });
+      }
+    })
   );

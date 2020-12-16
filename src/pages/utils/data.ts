@@ -1,11 +1,8 @@
 import { AttributeInput } from "@saleor/components/Attributes";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
-import { PageSubmitData } from "../components/PageDetailsPage/form";
 import {
   PageDetails_page,
-  PageDetails_page_attributes,
   PageDetails_page_pageType
 } from "../types/PageDetails";
 
@@ -59,21 +56,3 @@ export const getAttributesDisplayData = (
     }
     return attribute;
   });
-
-export const isFileValueUnused = (
-  data: PageSubmitData,
-  existingAttribute: PageDetails_page_attributes
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = data.attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id
-  );
-
-  return !!modifiedAttribute;
-};
