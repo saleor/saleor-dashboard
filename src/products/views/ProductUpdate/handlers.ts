@@ -1,8 +1,28 @@
+import {
+  AttributeValueDelete,
+  AttributeValueDeleteVariables
+} from "@saleor/attributes/types/AttributeValueDelete";
+import {
+  getAttributesAfterFileAttributesUpdate,
+  mergeAttributeValueDeleteErrors,
+  mergeFileUploadErrors
+} from "@saleor/attributes/utils/data";
+import {
+  handleDeleteMultipleAttributeValues,
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
+import {
+  FileUpload,
+  FileUploadVariables
+} from "@saleor/files/types/FileUpload";
+import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
+import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
@@ -41,6 +61,15 @@ import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
+
+type SubmitErrors = Array<
+  | ProductErrorFragment
+  | StockErrorFragment
+  | BulkStockErrorFragment
+  | AttributeErrorFragment
+  | UploadErrorFragment
+  | ProductChannelListingErrorFragment
+>;
 
 const getSimpleProductVariables = (
   productVariables: ProductUpdateVariables,
@@ -100,6 +129,9 @@ const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
 
 export function createUpdateHandler(
   product: ProductDetails_product,
+  uploadFile: (
+    variables: FileUploadVariables
+  ) => Promise<MutationFetchResult<FileUpload>>,
   updateProduct: (
     variables: ProductUpdateVariables
   ) => Promise<MutationFetchResult<ProductUpdate>>,
@@ -114,16 +146,42 @@ export function createUpdateHandler(
   }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
   productVariantCreate: (options: {
     variables: VariantCreateVariables;
-  }) => Promise<MutationFetchResult<VariantCreate>>
+  }) => Promise<MutationFetchResult<VariantCreate>>,
+  deleteAttributeValue: (
+    variables: AttributeValueDeleteVariables
+  ) => Promise<MutationFetchResult<AttributeValueDelete>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
+    let errors: SubmitErrors = [];
+
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      uploadFile
+    );
+
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      product?.attributes,
+      deleteAttributeValue
+    );
+
+    errors = [
+      ...errors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult)
+    ];
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
+      data.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
-        attributes: data.attributes.map(attribute => ({
-          id: attribute.id,
-          values: attribute.value[0] === "" ? [] : attribute.value
-        })),
+        attributes: prepareAttributesInput({
+          attributes: data.attributes,
+          updatedFileAttributes
+        }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
@@ -139,18 +197,11 @@ export function createUpdateHandler(
       }
     };
 
-    let errors: Array<
-      | ProductErrorFragment
-      | StockErrorFragment
-      | BulkStockErrorFragment
-      | ProductChannelListingErrorFragment
-    >;
-
     if (product.productType.hasVariants) {
       const result = await updateProduct(productVariables);
-      errors = result.data.productUpdate.errors;
+      errors = [...errors, ...result.data.productUpdate.errors];
 
-      updateChannels({
+      await updateChannels({
         variables: getChannelsVariables(data, product)
       });
     } else {
@@ -169,7 +220,10 @@ export function createUpdateHandler(
             }
           }
         });
-        errors = productVariantResult.data.productVariantCreate.errors;
+        errors = [
+          ...errors,
+          ...productVariantResult.data.productVariantCreate.errors
+        ];
 
         const variantId =
           productVariantResult.data.productVariantCreate?.productVariant?.id;
@@ -180,7 +234,7 @@ export function createUpdateHandler(
               input: getVariantChannelsInput(data)
             }
           });
-          updateChannels({
+          await updateChannels({
             variables: getChannelsVariables(data, product)
           });
           const result = await updateSimpleProduct(
@@ -196,7 +250,7 @@ export function createUpdateHandler(
             product.variants[0].id
           )
         );
-        errors = getSimpleProductErrors(result.data);
+        errors = [...errors, ...getSimpleProductErrors(result.data)];
 
         await updateChannels({
           variables: getChannelsVariables(data, product)

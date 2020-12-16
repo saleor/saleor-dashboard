@@ -1,10 +1,10 @@
+import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
-import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { createAttributeMultiChangeHandler } from "./handlers";
 
-const attributes: FormsetData<ProductAttributeInputData, string[]> = [
+const attributes: FormsetData<AttributeInputData, string[]> = [
   {
     data: {
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -12,6 +12,7 @@ const attributes: FormsetData<ProductAttributeInputData, string[]> = [
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-1",
           name: "Attribute 1 Value 1",
           slug: "attr-1-v-1"
@@ -29,18 +30,21 @@ const attributes: FormsetData<ProductAttributeInputData, string[]> = [
       values: [
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-2",
           name: "Attribute 2 Value 1",
           slug: "attr-2-v-1"
         },
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-3",
           name: "Attribute 2 Value 2",
           slug: "attr-2-v-2"
         },
         {
           __typename: "AttributeValue",
+          file: null,
           id: "attrv-4",
           name: "Attribute 2 Value 3",
           slug: "attr-2-v-3"
@@ -50,6 +54,28 @@ const attributes: FormsetData<ProductAttributeInputData, string[]> = [
     id: "attr-2",
     label: "Attribute 2",
     value: ["attr-2-v-3"]
+  },
+  {
+    data: {
+      inputType: AttributeInputTypeEnum.FILE,
+      isRequired: false,
+      values: [
+        {
+          __typename: "AttributeValue",
+          file: {
+            __typename: "File",
+            contentType: "image/png",
+            url: "some-non-existing-url"
+          },
+          id: "attrv-5",
+          name: "File First Value",
+          slug: "file-first-value"
+        }
+      ]
+    },
+    id: "attr-3",
+    label: "File Attribute",
+    value: []
   }
 ];
 

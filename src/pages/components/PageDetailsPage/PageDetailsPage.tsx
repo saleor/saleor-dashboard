@@ -1,4 +1,5 @@
 import AppHeader from "@saleor/components/AppHeader";
+import Attributes from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -18,13 +19,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
-import PageAttributes from "../PageAttributes";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData } from "./form";
 
 export interface PageDetailsPageProps {
-  disabled: boolean;
+  loading: boolean;
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
@@ -38,7 +38,7 @@ export interface PageDetailsPageProps {
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
-  disabled,
+  loading,
   errors,
   page,
   pageTypes,
@@ -75,7 +75,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             <div>
               <PageInfo
                 data={data}
-                disabled={disabled}
+                disabled={loading}
                 errors={errors}
                 onChange={change}
                 onContentChange={handlers.changeContent}
@@ -85,7 +85,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 errors={errors}
                 allowEmptySlug={!pageExists}
                 description={data.seoDescription}
-                disabled={disabled}
+                disabled={loading}
                 descriptionPlaceholder={""} // TODO: Cast description to string and trim it
                 onChange={change}
                 slug={data.slug}
@@ -99,12 +99,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
               <CardSpacer />
               {data.attributes.length > 0 && (
-                <PageAttributes
+                <Attributes
                   attributes={data.attributes}
-                  disabled={disabled}
+                  disabled={loading}
+                  loading={loading}
                   errors={errors}
-                  onChange={handlers.changeAttribute}
-                  onMultiChange={handlers.changeAttributeMulti}
+                  onChange={handlers.selectAttribute}
+                  onMultiChange={handlers.selectAttributeMulti}
+                  onFileChange={handlers.selectAttributeFile}
                 />
               )}
               <CardSpacer />
@@ -115,7 +117,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <VisibilityCard
                 data={data}
                 errors={errors}
-                disabled={disabled}
+                disabled={loading}
                 messages={{
                   hiddenLabel: intl.formatMessage({
                     defaultMessage: "Hidden",
@@ -141,7 +143,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <PageOrganizeContent
                 data={data}
                 errors={errors}
-                disabled={disabled}
+                disabled={loading}
                 pageTypes={pageTypes}
                 pageType={pageType}
                 pageTypeInputDisplayValue={pageType?.name || ""}
@@ -153,7 +155,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             </div>
           </Grid>
           <SaveButtonBar
-            disabled={disabled || !hasChanged}
+            disabled={loading || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}

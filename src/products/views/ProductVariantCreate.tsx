@@ -1,6 +1,12 @@
+import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -65,6 +71,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     variables: { id: productId }
   });
 
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+
   const [
     updateChannels,
     updateChannelsOpts
@@ -119,15 +127,25 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      formData.attributesWithNewFileValue,
+      variables => uploadFile({ variables })
+    );
+
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
+      formData.attributesWithNewFileValue,
+      uploadFilesResult
+    );
+
     const result = await variantCreate({
       variables: {
         input: {
-          attributes: formData.attributes
-            .filter(attribute => attribute.value !== "")
-            .map(attribute => ({
-              id: attribute.id,
-              values: [attribute.value]
-            })),
+          attributes: prepareAttributesInput({
+            attributes: formData.attributes.filter(
+              attribute => attribute.value?.length && attribute.value[0] !== ""
+            ),
+            updatedFileAttributes
+          }),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
@@ -141,7 +159,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     });
     const id = result.data?.productVariantCreate?.productVariant?.id;
     if (id) {
-      handleSubmitChannels(formData, id);
+      await handleSubmitChannels(formData, id);
     }
 
     return id || null;
@@ -156,6 +174,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const disableForm =
     productLoading ||
+    uploadFileOpts.loading ||
     variantCreateResult.loading ||
     reorderProductVariantsOpts.loading;
 

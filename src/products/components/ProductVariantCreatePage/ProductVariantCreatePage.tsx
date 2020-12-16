@@ -1,5 +1,8 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import Attributes, {
+  VariantAttributeScope
+} from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -12,15 +15,33 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
-import ProductVariantAttributes from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
+
+const messages = defineMessages({
+  attributesHeader: {
+    defaultMessage: "Variant Attributes",
+    description: "attributes, section header"
+  },
+  attributesSelectionHeader: {
+    defaultMessage: "Variant Selection Attributes",
+    description: "attributes, section header"
+  },
+  deleteVariant: {
+    defaultMessage: "Delete Variant",
+    description: "button"
+  },
+  saveVariant: {
+    defaultMessage: "Save variant",
+    description: "button"
+  }
+});
 
 interface ProductVariantCreatePageProps {
   channels: ChannelPriceData[];
@@ -89,11 +110,34 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
-              <ProductVariantAttributes
-                attributes={data.attributes}
+              <Attributes
+                title={intl.formatMessage(messages.attributesHeader)}
+                attributes={data.attributes.filter(
+                  attribute =>
+                    attribute.data.variantAttributeScope ===
+                    VariantAttributeScope.NOT_VARIANT_SELECTION
+                )}
+                loading={disabled}
                 disabled={disabled}
                 errors={errors}
                 onChange={handlers.selectAttribute}
+                onMultiChange={handlers.selectAttributeMultiple}
+                onFileChange={handlers.selectAttributeFile}
+              />
+              <CardSpacer />
+              <Attributes
+                title={intl.formatMessage(messages.attributesSelectionHeader)}
+                attributes={data.attributes.filter(
+                  attribute =>
+                    attribute.data.variantAttributeScope ===
+                    VariantAttributeScope.VARIANT_SELECTION
+                )}
+                loading={disabled}
+                disabled={disabled}
+                errors={errors}
+                onChange={handlers.selectAttribute}
+                onMultiChange={handlers.selectAttributeMultiple}
+                onFileChange={handlers.selectAttributeFile}
               />
               <CardSpacer />
               <ProductShipping
@@ -136,14 +180,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           <SaveButtonBar
             disabled={disabled || formDisabled || !onSubmit || !hasChanged}
             labels={{
-              delete: intl.formatMessage({
-                defaultMessage: "Delete Variant",
-                description: "button"
-              }),
-              save: intl.formatMessage({
-                defaultMessage: "Save variant",
-                description: "button"
-              })
+              delete: intl.formatMessage(messages.deleteVariant),
+              save: intl.formatMessage(messages.saveVariant)
             }}
             state={saveButtonBarState}
             onCancel={onBack}

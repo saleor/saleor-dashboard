@@ -1,7 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
+import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -16,6 +17,7 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -37,7 +39,6 @@ import {
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
-import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
@@ -92,7 +93,8 @@ export interface ProductUpdatePageSubmitData
   extends ProductUpdatePageFormData,
     ChannelProps {
   addStocks: ProductStockInput[];
-  attributes: ProductAttributeInput[];
+  attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   collections: string[];
   description: OutputData;
   removeStocks: string[];
@@ -217,12 +219,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
-                  <ProductAttributes
+                  <Attributes
                     attributes={data.attributes}
                     errors={errors}
+                    loading={disabled}
                     disabled={disabled}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
                   />
                 )}
                 <CardSpacer />

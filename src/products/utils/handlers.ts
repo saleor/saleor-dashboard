@@ -3,11 +3,15 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
+import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
+import {
+  FormsetAtomicData,
+  FormsetChange,
+  FormsetData
+} from "@saleor/hooks/useFormset";
 import { toggle } from "@saleor/utils/lists";
 
-import { ProductAttributeInputData } from "../components/ProductAttributes";
 import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createAttributeChangeHandler(
@@ -101,7 +105,7 @@ export function createVariantChannelsChangeHandler(
 
 export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributes: FormsetData<ProductAttributeInputData, string[]>,
+  attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void
 ): FormsetChange<string> {
   return (attributeId: string, value: string) => {
@@ -120,8 +124,37 @@ export function createAttributeMultiChangeHandler(
   };
 }
 
+export function createAttributeFileChangeHandler(
+  changeAttributeData: FormsetChange<string[]>,
+  attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
+  addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
+  changeAttributeNewFileValue: FormsetChange<File>,
+  triggerChange: () => void
+): FormsetChange<File> {
+  return (attributeId: string, value: File) => {
+    triggerChange();
+
+    const newFileValueAssigned = attributesWithNewFileValue.find(
+      attribute => attribute.id === attributeId
+    );
+
+    if (newFileValueAssigned) {
+      changeAttributeNewFileValue(attributeId, value);
+    } else {
+      addAttributeNewFileValue({
+        data: null,
+        id: attributeId,
+        label: null,
+        value
+      });
+    }
+
+    changeAttributeData(attributeId, value ? [value.name] : []);
+  };
+}
+
 export function createProductTypeSelectHandler(
-  setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
+  setAttributes: (data: FormsetData<AttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
   productTypeChoiceList: ProductType[],
   triggerChange: () => void

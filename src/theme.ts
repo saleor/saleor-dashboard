@@ -206,6 +206,11 @@ const createTheme = (colors: IThemeColors): Theme =>
           color: colors.font.button,
           fontWeight: 600
         },
+        outlined: {
+          "& span": {
+            color: colors.primary
+          }
+        },
         root: {
           "& svg": {
             marginLeft: 8

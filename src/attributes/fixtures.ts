@@ -2,8 +2,7 @@ import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetai
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
-  AttributeTypeEnum,
-  AttributeValueType
+  AttributeTypeEnum
 } from "@saleor/types/globalTypes";
 
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
@@ -31,17 +30,17 @@ export const attribute: AttributeDetailsFragment = {
   values: [
     {
       __typename: "AttributeValue" as "AttributeValue",
+      file: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
-      slug: "john-doe",
-      type: AttributeValueType.STRING
+      slug: "john-doe"
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
+      file: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
-      slug: "milionare-pirate",
-      type: AttributeValueType.STRING
+      slug: "milionare-pirate"
     }
   ],
   visibleInStorefront: true
@@ -61,20 +60,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
           name: "John Doe",
           slug: "john-doe",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
           name: "Milionare Pirate",
           slug: "milionare-pirate",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -93,38 +92,38 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE1",
           name: "100g",
           slug: "100g",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE2",
           name: "250g",
           slug: "250g",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE3",
           name: "500g",
           slug: "500g",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE4",
           name: "1kg",
           slug: "1kg",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -143,11 +142,11 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjY=",
           name: "Saleor",
           slug: "saleor",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -166,29 +165,29 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIx",
           name: "100g",
           slug: "100g",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIy",
           name: "250g",
           slug: "250g",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIz",
           name: "500g",
           slug: "500g",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -207,20 +206,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEz",
           name: "Arabica",
           slug: "arabica",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE0",
           name: "Robusta",
           slug: "robusta",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -239,29 +238,29 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM=",
           name: "Round",
           slug: "round",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjQ=",
           name: "V-Neck",
           slug: "v-neck",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjU=",
           name: "Polo",
           slug: "polo",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -280,20 +279,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE=",
           name: "Blue",
           slug: "blue",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI=",
           name: "White",
           slug: "white",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -312,56 +311,56 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMw",
           name: "Soft",
           slug: "soft",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMx",
           name: "Hard",
           slug: "hard",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMy",
           name: "Middle soft",
           slug: "middle-soft",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMz",
           name: "Middle hard",
           slug: "middle-hard",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM0",
           name: "Middle",
           slug: "middle",
           sortOrder: 4,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM1",
           name: "Very hard",
           slug: "very-hard",
           sortOrder: 5,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -380,20 +379,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE5",
           name: "Sour",
           slug: "sour",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIw",
           name: "Sweet",
           slug: "sweet",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -412,20 +411,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI4",
           name: "English",
           slug: "english",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI5",
           name: "Pirate",
           slug: "pirate",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -444,20 +443,20 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI2",
           name: "Mirumee Press",
           slug: "mirumee-press",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI3",
           name: "Saleor Publishing",
           slug: "saleor-publishing",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],
@@ -476,56 +475,56 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjc=",
           name: "XS",
           slug: "xs",
           sortOrder: 0,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjg=",
           name: "S",
           slug: "s",
           sortOrder: 1,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjk=",
           name: "M",
           slug: "m",
           sortOrder: 2,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEw",
           name: "L",
           slug: "l",
           sortOrder: 3,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEx",
           name: "XL",
           slug: "xl",
           sortOrder: 4,
-          type: AttributeValueType.STRING,
           value: ""
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
+          file: null,
           id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEy",
           name: "XXL",
           slug: "xxl",
           sortOrder: 5,
-          type: AttributeValueType.STRING,
           value: ""
         }
       ],

@@ -24,7 +24,7 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      disabled={false}
+      loading={false}
       errors={[]}
       header="Add product"
       collections={product.collections}
@@ -52,7 +52,7 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      disabled={true}
+      loading={true}
       errors={[]}
       header="Add product"
       collections={product.collections}
@@ -80,7 +80,7 @@ storiesOf("Views / Products / Create product", module)
       channelsErrors={[]}
       currentChannels={channels}
       allChannelsCount={5}
-      disabled={false}
+      loading={false}
       errors={([
         "attributes",
         "name",

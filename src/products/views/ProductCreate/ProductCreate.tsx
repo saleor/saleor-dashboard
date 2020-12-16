@@ -4,6 +4,7 @@ import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -124,6 +125,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     navigate(productUrl(productId));
   };
 
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
     {}
   );
@@ -157,6 +160,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     const result = await createMetadataCreateHandler(
       createHandler(
         productTypes,
+        variables => uploadFile({ variables }),
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),
         updateChannels,
@@ -214,7 +218,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         collections={(searchCollectionOpts?.data?.search?.edges || []).map(
           edge => edge.node
         )}
-        disabled={
+        loading={
+          uploadFileOpts.loading ||
           productCreateOpts.loading ||
           productVariantCreateOpts.loading ||
           updateChannelsOpts.loading ||
