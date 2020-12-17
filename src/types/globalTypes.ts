@@ -102,11 +102,6 @@ export enum AttributeTypeEnum {
   PRODUCT_TYPE = "PRODUCT_TYPE",
 }
 
-export enum AuthorizationKeyType {
-  FACEBOOK = "FACEBOOK",
-  GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
-}
-
 export enum CategorySortField {
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
@@ -117,6 +112,7 @@ export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
+  CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1088,11 +1084,6 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
-}
-
-export interface AuthorizationKeyInput {
-  key: string;
-  password: string;
 }
 
 export interface BulkAttributeValueInput {
