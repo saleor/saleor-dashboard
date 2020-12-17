@@ -12,6 +12,7 @@ import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragme
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -68,59 +69,68 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput)
   };
 
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.customers)}
-          </AppHeader>
-          <PageHeader title={getUserName(customer, true)} />
-          <Grid>
-            <div>
-              <CustomerDetails
-                customer={customer}
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <CustomerInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <CustomerOrders
-                orders={maybe(() =>
-                  customer.orders.edges.map(edge => edge.node)
-                )}
-                onViewAllOrdersClick={onViewAllOrdersClick}
-                onRowClick={onRowClick}
-              />
-              <Metadata data={data} onChange={changeMetadata} />
-            </div>
-            <div>
-              <CustomerAddresses
-                customer={customer}
-                disabled={disabled}
-                onAddressManageClick={onAddressManageClick}
-              />
-              <CardSpacer />
-              <CustomerStats customer={customer} />
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled || !hasChanged}
-            state={saveButtonBar}
-            onSave={submit}
-            onCancel={onBack}
-            onDelete={onDelete}
-          />
-        </Container>
-      )}
+      {({ change, data, hasChanged, submit }) => {
+        const changeMetadata = makeMetadataChangeHandler(change);
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.customers)}
+            </AppHeader>
+            <PageHeader title={getUserName(customer, true)} />
+            <Grid>
+              <div>
+                <CustomerDetails
+                  customer={customer}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <CustomerInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <CustomerOrders
+                  orders={maybe(() =>
+                    customer.orders.edges.map(edge => edge.node)
+                  )}
+                  onViewAllOrdersClick={onViewAllOrdersClick}
+                  onRowClick={onRowClick}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
+              </div>
+              <div>
+                <CustomerAddresses
+                  customer={customer}
+                  disabled={disabled}
+                  onAddressManageClick={onAddressManageClick}
+                />
+                <CardSpacer />
+                <CustomerStats customer={customer} />
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={disabled || !hasChanged}
+              state={saveButtonBar}
+              onSave={submit}
+              onCancel={onBack}
+              onDelete={onDelete}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };
