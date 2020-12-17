@@ -37,7 +37,7 @@ import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import { diff } from "fast-array-diff";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -260,10 +260,6 @@ function useProductUpdateForm(
     triggerChange
   );
 
-  useEffect(() => {
-    attributesWithNewFileValue.set([]);
-  }, [product]);
-
   const data: ProductUpdateData = {
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -284,8 +280,18 @@ function useProductUpdateForm(
     description: description.current
   });
 
+  const handleSubmit = async (data: ProductUpdateSubmitData) => {
+    const errors = await onSubmit(data);
+
+    if (!errors?.length) {
+      attributesWithNewFileValue.set([]);
+    }
+
+    return errors;
+  };
+
   const submit = async () =>
-    handleFormSubmit(getSubmitData(), onSubmit, setChanged);
+    handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
 
   const disabled =
     !opts.hasVariants &&
