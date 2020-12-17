@@ -4,11 +4,14 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata/Metadata";
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -20,7 +23,7 @@ import CustomerInfo from "../CustomerInfo";
 import CustomerOrders from "../CustomerOrders";
 import CustomerStats from "../CustomerStats";
 
-export interface CustomerDetailsPageFormData {
+export interface CustomerDetailsPageFormData extends MetadataFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -55,18 +58,18 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
 
+  const initialForm: CustomerDetailsPageFormData = {
+    email: customer?.email || "",
+    firstName: customer?.firstName || "",
+    isActive: customer?.isActive || false,
+    lastName: customer?.lastName || "",
+    note: customer?.note || "",
+    metadata: customer?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput)
+  };
+
   return (
-    <Form
-      initial={{
-        email: maybe(() => customer.email, ""),
-        firstName: maybe(() => customer.firstName, ""),
-        isActive: maybe(() => customer.isActive, false),
-        lastName: maybe(() => customer.lastName, ""),
-        note: maybe(() => customer.note, "")
-      }}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -97,6 +100,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 onViewAllOrdersClick={onViewAllOrdersClick}
                 onRowClick={onRowClick}
               />
+              <Metadata data={data} onChange={changeMetadata} />
             </div>
             <div>
               <CustomerAddresses
