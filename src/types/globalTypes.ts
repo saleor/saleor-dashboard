@@ -81,6 +81,7 @@ export enum AttributeErrorCode {
 
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
+  FILE = "FILE",
   MULTISELECT = "MULTISELECT",
 }
 
@@ -99,13 +100,6 @@ export enum AttributeSortField {
 export enum AttributeTypeEnum {
   PAGE_TYPE = "PAGE_TYPE",
   PRODUCT_TYPE = "PRODUCT_TYPE",
-}
-
-export enum AttributeValueType {
-  COLOR = "COLOR",
-  GRADIENT = "GRADIENT",
-  STRING = "STRING",
-  URL = "URL",
 }
 
 export enum AuthorizationKeyType {
@@ -906,6 +900,10 @@ export enum TaxRateType {
   WINE = "WINE",
 }
 
+export enum UploadErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+}
+
 export enum UserSortField {
   EMAIL = "EMAIL",
   FIRST_NAME = "FIRST_NAME",
@@ -1087,12 +1085,19 @@ export interface AttributeValueCreateInput {
 
 export interface AttributeValueInput {
   id?: string | null;
-  values: (string | null)[];
+  values?: (string | null)[] | null;
+  file?: string | null;
+  contentType?: string | null;
 }
 
 export interface AuthorizationKeyInput {
   key: string;
   password: string;
+}
+
+export interface BulkAttributeValueInput {
+  id?: string | null;
+  values: (string | null)[];
 }
 
 export interface CatalogueInput {
@@ -1597,7 +1602,7 @@ export interface ProductTypeSortingInput {
 }
 
 export interface ProductVariantBulkCreateInput {
-  attributes: (AttributeValueInput | null)[];
+  attributes: (BulkAttributeValueInput | null)[];
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1697,6 +1702,8 @@ export interface ShippingPriceInput {
   name?: string | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
+  maximumDeliveryDays?: number | null;
+  minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
 }

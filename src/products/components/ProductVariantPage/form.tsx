@@ -1,4 +1,5 @@
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
@@ -8,9 +9,17 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import {
   getAttributeInputFromVariant,
+  getAttributesDisplayData,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
-import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  createAttributeFileChangeHandler,
+  getChannelsInput
+} from "@saleor/products/utils/handlers";
+import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler
+} from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
@@ -20,11 +29,10 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { diff } from "fast-array-diff";
-import React from "react";
+import React, { useEffect } from "react";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
-import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
@@ -32,13 +40,14 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   weight: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  attributes: AttributeInput[];
   stocks: ProductStockInput[];
 }
 export interface ProductVariantUpdateSubmitData
   extends ProductVariantUpdateFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
+  attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   addStocks: ProductStockInput[];
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
@@ -50,17 +59,24 @@ export interface UseProductVariantUpdateFormOpts {
   currentChannels: ChannelPriceData[];
 }
 
+interface ProductVariantUpdateHandlers
+  extends Record<
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
+      FormsetChange
+    >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"addStock" | "deleteStock", (id: string) => void> {
+  changeMetadata: FormChange;
+}
+
 export interface UseProductVariantUpdateFormResult {
   change: FormChange;
   data: ProductVariantUpdateData;
   disabled: boolean;
-  handlers: Record<
-    "changeStock" | "selectAttribute" | "changeChannels",
-    FormsetChange
-  > &
-    Record<"addStock" | "deleteStock", (id: string) => void> & {
-      changeMetadata: FormChange;
-    };
+  handlers: ProductVariantUpdateHandlers;
   hasChanged: boolean;
   submit: () => void;
 }
@@ -94,6 +110,7 @@ function useProductVariantUpdateForm(
 
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);
   const channels = useFormset(channelsInput);
   const {
@@ -107,14 +124,30 @@ function useProductVariantUpdateForm(
     triggerChange();
   };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleAttributeChange: FormsetChange = (id, value) => {
-    attributes.change(id, value);
-    triggerChange();
-  };
+  const handleAttributeChange = createAttributeChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.change,
+    triggerChange
+  );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated:
+          variant?.stocks?.find(stock => stock.warehouse.id === id)
+            ?.quantityAllocated || 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"
@@ -132,6 +165,10 @@ function useProductVariantUpdateForm(
     channels.change(id, value);
     triggerChange();
   };
+
+  useEffect(() => {
+    attributesWithNewFileValue.set([]);
+  }, [variant]);
 
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
@@ -151,7 +188,10 @@ function useProductVariantUpdateForm(
   );
   const data: ProductVariantUpdateData = {
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
     channelListings: channels.data,
     stocks: stocks.data
   };
@@ -160,6 +200,7 @@ function useProductVariantUpdateForm(
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
     addStocks,
     attributes: attributes.data,
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
     removeStocks: stockDiff.removed,
     updateStocks
@@ -177,7 +218,9 @@ function useProductVariantUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
-      selectAttribute: handleAttributeChange
+      selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
+      selectAttributeMultiple: handleAttributeMultiChange
     },
     hasChanged: changed,
     submit

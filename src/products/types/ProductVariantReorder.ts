@@ -14,11 +14,18 @@ export interface ProductVariantReorder_productVariantReorder_errors {
   field: string | null;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantReorder_productVariantReorder_product_attributes_attribute_values_file | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute {
@@ -31,11 +38,18 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   values: (ProductVariantReorder_productVariantReorder_product_attributes_attribute_values | null)[] | null;
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantReorder_productVariantReorder_product_attributes_values_file | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes {
@@ -44,11 +58,18 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes 
   values: (ProductVariantReorder_productVariantReorder_product_attributes_values | null)[];
 }
 
+export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values_file | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes {

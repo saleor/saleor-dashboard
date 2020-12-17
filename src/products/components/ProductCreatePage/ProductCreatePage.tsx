@@ -1,6 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import { AvailabilityCard } from "@saleor/components/AvailabilityCard";
+import Attributes from "@saleor/components/Attributes";
+import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -25,7 +26,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { FetchMoreProps } from "../../../types";
-import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -43,7 +43,7 @@ interface ProductCreatePageProps {
   currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
-  disabled: boolean;
+  loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
@@ -68,7 +68,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   allChannelsCount,
   channelsErrors,
   currentChannels,
-  disabled,
+  loading,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
   errors,
@@ -153,19 +153,21 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               <div>
                 <ProductDetailsForm
                   data={data}
-                  disabled={disabled}
+                  disabled={loading}
                   errors={errors}
                   onChange={change}
                   onDescriptionChange={handlers.changeDescription}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
-                  <ProductAttributes
+                  <Attributes
                     attributes={data.attributes}
-                    disabled={disabled}
+                    loading={loading}
+                    disabled={loading}
                     errors={errors}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
                   />
                 )}
                 <CardSpacer />
@@ -173,7 +175,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   <>
                     <ProductShipping
                       data={data}
-                      disabled={disabled}
+                      disabled={loading}
                       errors={errors}
                       weightUnit={weightUnit}
                       onChange={change}
@@ -182,13 +184,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     <ProductVariantPrice
                       ProductVariantChannelListings={data.channelListings}
                       errors={channelsErrors}
-                      loading={disabled}
+                      loading={loading}
                       onChange={handlers.changeChannelPrice}
                     />
                     <CardSpacer />
                     <ProductStocks
                       data={data}
-                      disabled={disabled}
+                      disabled={loading}
                       hasVariants={false}
                       onFormDataChange={change}
                       errors={errors}
@@ -214,7 +216,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   titlePlaceholder={data.name}
                   description={data.seoDescription}
                   descriptionPlaceholder={data.seoTitle}
-                  loading={disabled}
+                  loading={loading}
                   onChange={change}
                 />
                 <CardSpacer />
@@ -227,7 +229,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   categoryInputDisplayValue={selectedCategory}
                   collections={collections}
                   data={data}
-                  disabled={disabled}
+                  disabled={loading}
                   errors={errors}
                   fetchCategories={fetchCategories}
                   fetchCollections={fetchCollections}
@@ -260,14 +262,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channels={data.channelListings}
-                  disabled={disabled}
+                  disabled={loading}
                   onChange={handlers.changeChannels}
                   openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
                   data={data}
-                  disabled={disabled}
+                  disabled={loading}
                   onChange={change}
                   onTaxTypeChange={handlers.selectTaxRate}
                   selectedTaxTypeDisplayName={selectedTaxType}
@@ -279,7 +281,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || formDisabled || !hasChanged}
+              disabled={loading || !onSubmit || formDisabled || !hasChanged}
             />
           </Container>
         );

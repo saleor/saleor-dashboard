@@ -1,4 +1,6 @@
-import { PageAttributeInput } from "../components/PageAttributes";
+import { AttributeInput } from "@saleor/components/Attributes";
+import { FormsetData } from "@saleor/hooks/useFormset";
+
 import {
   PageDetails_page,
   PageDetails_page_pageType
@@ -6,11 +8,12 @@ import {
 
 export function getAttributeInputFromPage(
   page: PageDetails_page
-): PageAttributeInput[] {
+): AttributeInput[] {
   return page?.attributes.map(attribute => ({
     data: {
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
       values: attribute.attribute.values
     },
     id: attribute.attribute.id,
@@ -21,7 +24,7 @@ export function getAttributeInputFromPage(
 
 export function getAttributeInputFromPageType(
   pageType: PageDetails_page_pageType
-): PageAttributeInput[] {
+): AttributeInput[] {
   return pageType?.attributes.map(attribute => ({
     data: {
       inputType: attribute.inputType,
@@ -33,3 +36,23 @@ export function getAttributeInputFromPageType(
     value: []
   }));
 }
+
+export const getAttributesDisplayData = (
+  attributes: AttributeInput[],
+  attributesWithNewFileValue: FormsetData<null, File>
+) =>
+  attributes.map(attribute => {
+    const attributeWithNewFileValue = attributesWithNewFileValue.find(
+      attributeWithNewFile => attribute.id === attributeWithNewFile.id
+    );
+
+    if (attributeWithNewFileValue) {
+      return {
+        ...attribute,
+        value: attributeWithNewFileValue?.value?.name
+          ? [attributeWithNewFileValue.value.name]
+          : []
+      };
+    }
+    return attribute;
+  });

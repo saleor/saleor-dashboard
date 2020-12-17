@@ -15,11 +15,18 @@ export interface PageUpdate_pageUpdate_errors {
   attributes: string[] | null;
 }
 
+export interface PageUpdate_pageUpdate_page_attributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageUpdate_pageUpdate_page_attributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageUpdate_pageUpdate_page_attributes_attribute_values_file | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes_attribute {
@@ -32,11 +39,18 @@ export interface PageUpdate_pageUpdate_page_attributes_attribute {
   values: (PageUpdate_pageUpdate_page_attributes_attribute_values | null)[] | null;
 }
 
+export interface PageUpdate_pageUpdate_page_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageUpdate_pageUpdate_page_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageUpdate_pageUpdate_page_attributes_values_file | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes {
@@ -45,11 +59,18 @@ export interface PageUpdate_pageUpdate_page_attributes {
   values: (PageUpdate_pageUpdate_page_attributes_values | null)[];
 }
 
+export interface PageUpdate_pageUpdate_page_pageType_attributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface PageUpdate_pageUpdate_page_pageType_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: PageUpdate_pageUpdate_page_pageType_attributes_values_file | null;
 }
 
 export interface PageUpdate_pageUpdate_page_pageType_attributes {

@@ -1,4 +1,5 @@
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -6,8 +7,18 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
-import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  getAttributesDisplayData,
+  getVariantAttributeInputFromProduct
+} from "@saleor/products/utils/data";
+import {
+  createAttributeFileChangeHandler,
+  getChannelsInput
+} from "@saleor/products/utils/handlers";
+import {
+  createAttributeChangeHandler,
+  createAttributeMultiChangeHandler
+} from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
@@ -17,7 +28,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 
 import { ProductStockInput } from "../ProductStocks";
-import { VariantAttributeInputData } from "../ProductVariantAttributes";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
@@ -25,8 +35,9 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   weight: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
-  attributes: FormsetData<VariantAttributeInputData, string>;
   channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  attributes: AttributeInput[];
+  attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
 }
 
@@ -35,18 +46,25 @@ export interface UseProductVariantCreateFormOpts {
   currentChannels: ChannelPriceData[];
 }
 
+interface ProductVariantCreateHandlers
+  extends Record<
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
+      FormsetChange
+    >,
+    Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"addStock" | "deleteStock", (id: string) => void> {
+  changeMetadata: FormChange;
+}
+
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
   disabled: boolean;
   // TODO: type FormsetChange
-  handlers: Record<
-    "changeStock" | "selectAttribute" | "changeChannels",
-    FormsetChange
-  > &
-    Record<"addStock" | "deleteStock", (id: string) => void> & {
-      changeMetadata: FormChange;
-    };
+  handlers: ProductVariantCreateHandlers;
   hasChanged: boolean;
   submit: () => void;
 }
@@ -79,6 +97,7 @@ function useProductVariantCreateForm(
 
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
+  const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<null, string>([]);
   const channels = useFormset(channelsInput);
   const {
@@ -90,10 +109,22 @@ function useProductVariantCreateForm(
     triggerChange();
   };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleAttributeChange: FormsetChange = (id, value) => {
-    attributes.change(id, value);
-    triggerChange();
-  };
+  const handleAttributeChange = createAttributeChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
+  const handleAttributeFileChange = createAttributeFileChangeHandler(
+    attributes.change,
+    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.add,
+    attributesWithNewFileValue.change,
+    triggerChange
+  );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
@@ -124,7 +155,11 @@ function useProductVariantCreateForm(
 
   const data: ProductVariantCreateData = {
     ...form.data,
-    attributes: attributes.data,
+    attributes: getAttributesDisplayData(
+      attributes.data,
+      attributesWithNewFileValue.data
+    ),
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
     stocks: stocks.data
   };
@@ -141,7 +176,9 @@ function useProductVariantCreateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
-      selectAttribute: handleAttributeChange
+      selectAttribute: handleAttributeChange,
+      selectAttributeFile: handleAttributeFileChange,
+      selectAttributeMultiple: handleAttributeMultiChange
     },
     hasChanged: changed,
     submit

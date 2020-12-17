@@ -1,9 +1,11 @@
+import { attributeValueFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   fragmentVariant,
   productFragment,
   productFragmentDetails,
-  productVariantAttributesFragment
+  productVariantAttributesFragment,
+  variantAttributeFragment
 } from "@saleor/fragments/products";
 import { taxTypeFragment } from "@saleor/fragments/taxes";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
@@ -94,6 +96,7 @@ export const useInitialProductFilterDataQuery = makeQuery<
 
 const productListQuery = gql`
   ${productFragment}
+  ${attributeValueFragment}
   query ProductList(
     $first: Int
     $after: String
@@ -118,8 +121,7 @@ const productListQuery = gql`
               id
             }
             values {
-              id
-              name
+              ...AttributeValueFragment
             }
           }
         }
@@ -185,6 +187,7 @@ export const useProductVariantQuery = makeQuery<
 >(productVariantQuery);
 
 const productVariantCreateQuery = gql`
+  ${variantAttributeFragment}
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {
       id
@@ -203,16 +206,15 @@ const productVariantCreateQuery = gql`
       name
       productType {
         id
-        variantAttributes {
-          id
-          slug
-          name
-          valueRequired
-          values {
-            id
-            name
-            slug
-          }
+        selectionVariantAttributes: variantAttributes(
+          variantSelection: VARIANT_SELECTION
+        ) {
+          ...VariantAttributeFragment
+        }
+        nonSelectionVariantAttributes: variantAttributes(
+          variantSelection: NOT_VARIANT_SELECTION
+        ) {
+          ...VariantAttributeFragment
         }
       }
       thumbnail {

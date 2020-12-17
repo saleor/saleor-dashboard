@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -27,33 +27,92 @@ export interface VariantUpdate_productVariantUpdate_productVariant_privateMetada
   value: string;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values_file | null;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute {
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values | null)[] | null;
+  values: (VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_attributes_values {
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file | null;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_attributes {
+export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: VariantUpdate_productVariantUpdate_productVariant_attributes_attribute;
-  values: (VariantUpdate_productVariantUpdate_productVariant_attributes_values | null)[];
+  attribute: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute;
+  values: (VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values | null)[];
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values_file | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
+  __typename: "SelectedAttribute";
+  attribute: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute;
+  values: (VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_images {
@@ -202,7 +261,8 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   id: string;
   metadata: (VariantUpdate_productVariantUpdate_productVariant_metadata | null)[];
   privateMetadata: (VariantUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
-  attributes: VariantUpdate_productVariantUpdate_productVariant_attributes[];
+  selectionAttributes: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes[];
+  nonSelectionAttributes: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes[];
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
@@ -238,33 +298,92 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_private
   value: string;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values {
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values_file | null;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute {
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
   valueRequired: boolean;
-  values: (VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values | null)[] | null;
+  values: (VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values {
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file | null;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes {
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
   __typename: "SelectedAttribute";
-  attribute: VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute;
-  values: (VariantUpdate_productVariantStocksUpdate_productVariant_attributes_values | null)[];
+  attribute: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute;
+  values: (VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values | null)[];
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values_file | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {
+  __typename: "SelectedAttribute";
+  attribute: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute;
+  values: (VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values | null)[];
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_images {
@@ -413,7 +532,8 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   id: string;
   metadata: (VariantUpdate_productVariantStocksUpdate_productVariant_metadata | null)[];
   privateMetadata: (VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
-  attributes: VariantUpdate_productVariantStocksUpdate_productVariant_attributes[];
+  selectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes[];
+  nonSelectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes[];
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeValueType } from "./../../types/globalTypes";
+import { AttributeTypeEnum, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: AttributeDetailsFragment
@@ -20,12 +20,18 @@ export interface AttributeDetailsFragment_privateMetadata {
   value: string;
 }
 
+export interface AttributeDetailsFragment_values_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
 export interface AttributeDetailsFragment_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  type: AttributeValueType | null;
+  file: AttributeDetailsFragment_values_file | null;
 }
 
 export interface AttributeDetailsFragment {

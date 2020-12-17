@@ -90,7 +90,14 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                 item.value = value;
               }
             });
+
+            plugin.configuration.map(item => {
+              if (item.name === name) {
+                item.value = value;
+              }
+            });
           }
+
           triggerChange();
           set(newData);
         };

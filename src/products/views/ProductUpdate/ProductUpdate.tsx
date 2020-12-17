@@ -2,6 +2,7 @@ import placeholderImg from "@assets/images/placeholder255x255.png";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
@@ -14,6 +15,7 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useFileUploadMutation } from "@saleor/files/mutations";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -116,6 +118,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     variables: { id }
   });
   const { channel } = useAppChannel();
+
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const handleUpdate = (data: ProductUpdateMutationResult) => {
     if (data.productUpdate.errors.length === 0) {
@@ -243,6 +247,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     value: listing.channel.id
   }));
 
+  const [
+    deleteAttributeValue,
+    deleteAttributeValueOpts
+  ] = useAttributeValueDeleteMutation({});
+
   const handleBack = () => navigate(productListUrl());
 
   if (product === null) {
@@ -259,11 +268,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product,
     createUpdateHandler(
       product,
+      variables => uploadFile({ variables }),
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
       updateChannels,
       updateVariantChannels,
-      productVariantCreate
+      productVariantCreate,
+      variables => deleteAttributeValue({ variables })
     ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
@@ -286,6 +297,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
 
   const disableFormSave =
+    uploadFileOpts.loading ||
     createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
@@ -294,6 +306,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
+    deleteAttributeValueOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
