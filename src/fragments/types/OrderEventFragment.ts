@@ -12,6 +12,8 @@ export interface OrderEventFragment_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderEventFragment_lines_orderLine {

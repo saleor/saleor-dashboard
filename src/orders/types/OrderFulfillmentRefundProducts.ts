@@ -117,6 +117,8 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_orderLine {
