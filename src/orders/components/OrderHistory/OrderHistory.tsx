@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
-import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   Timeline,
@@ -10,20 +9,21 @@ import {
   TimelineEvent,
   TimelineNote
 } from "@saleor/components/Timeline";
-import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-
+import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum
-} from "../../../types/globalTypes";
-import { OrderDetails_order_events } from "../../types/OrderDetails";
+} from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
-export interface FormData {
-  message: string;
-}
+import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
+import { getEventSecondaryTitle, isOfType } from "./utils";
 
-const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
+export const getEventMessage = (
+  event: OrderDetails_order_events,
+  intl: IntlShape
+) => {
   switch (event.type) {
     case OrderEventsEnum.CANCELED:
       return intl.formatMessage({
@@ -247,6 +247,10 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
   }
 };
 
+export interface FormData {
+  message: string;
+}
+
 const useStyles = makeStyles(
   theme => ({
     eventSubtitle: {
@@ -279,6 +283,25 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
 
   const intl = useIntl();
 
+  const getTimelineEventTitleProps = (
+    event: OrderDetails_order_events
+  ): { title: string; secondaryTitle?: string } => {
+    const { type, message } = event;
+
+    const title = isOfType("rawMessage", type)
+      ? message
+      : getEventMessage(event, intl);
+
+    if (isOfType("secondaryTitle", type)) {
+      return {
+        secondaryTitle: intl.formatMessage(...getEventSecondaryTitle(event)),
+        title
+      };
+    }
+
+    return { title };
+  };
+
   return (
     <div className={classes.root}>
       <Typography className={classes.header} color="textSecondary">
@@ -301,106 +324,32 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
             .slice()
             .reverse()
             .map(event => {
-              if (event.type === OrderEventsEnum.NOTE_ADDED) {
+              const { id, user, date, message, type } = event;
+
+              if (isOfType("note", type)) {
                 return (
                   <TimelineNote
-                    date={event.date}
-                    user={event.user}
-                    message={event.message}
-                    key={event.id}
+                    date={date}
+                    user={user}
+                    message={message}
+                    key={id}
                   />
                 );
               }
-              if (event.type === OrderEventsEnum.ORDER_MARKED_AS_PAID) {
+              if (isOfType("extendable", type)) {
                 return (
-                  <TimelineEvent
-                    date={event.date}
-                    title={getEventMessage(event, intl)}
-                    secondaryTitle={intl.formatMessage(
-                      {
-                        defaultMessage:
-                          "Transaction Reference {transactionReference}",
-                        description: "transaction reference"
-                      },
-                      { transactionReference: event.transactionReference }
-                    )}
-                    key={event.id}
+                  <ExtendedTimelineEvent
+                    event={event}
+                    orderCurrency={orderCurrency}
                   />
                 );
               }
-              if (event.type === OrderEventsEnum.FULFILLMENT_REFUNDED) {
-                return (
-                  <TimelineEvent
-                    date={event.date}
-                    title={getEventMessage(event, intl)}
-                    key={event.id}
-                  >
-                    {event.lines && (
-                      <>
-                        <Typography
-                          variant="caption"
-                          color="textSecondary"
-                          className={classes.eventSubtitle}
-                        >
-                          <FormattedMessage defaultMessage="Products refunded" />
-                        </Typography>
-                        <table>
-                          <tbody>
-                            {event.lines.map(line => (
-                              <tr key={line.orderLine.id}>
-                                <td className={classes.linesTableCell}>
-                                  {line.orderLine.productName}
-                                </td>
-                                <td className={classes.linesTableCell}>
-                                  <Typography
-                                    variant="caption"
-                                    color="textSecondary"
-                                  >
-                                    {line.orderLine.variantName}
-                                  </Typography>
-                                </td>
-                                <td className={classes.linesTableCell}>
-                                  <Typography
-                                    variant="caption"
-                                    color="textSecondary"
-                                  >
-                                    {`qty: ${line.quantity}`}
-                                  </Typography>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                        <Typography
-                          variant="caption"
-                          color="textSecondary"
-                          className={classes.eventSubtitle}
-                        >
-                          <FormattedMessage defaultMessage="Refunded amount" />
-                        </Typography>
-                        {(event.amount || event.amount === 0) && (
-                          <Money
-                            money={{
-                              amount: event.amount,
-                              currency: orderCurrency
-                            }}
-                          />
-                        )}
-                        {event.shippingCostsIncluded && (
-                          <Typography>
-                            <FormattedMessage defaultMessage="Shipment was refunded" />
-                          </Typography>
-                        )}
-                      </>
-                    )}
-                  </TimelineEvent>
-                );
-              }
+
               return (
                 <TimelineEvent
-                  date={event.date}
-                  title={getEventMessage(event, intl)}
-                  key={event.id}
+                  {...getTimelineEventTitleProps(event)}
+                  key={id}
+                  date={date}
                 />
               );
             })}
