@@ -1,5 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -7,7 +8,10 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum
+} from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
@@ -17,6 +21,20 @@ import slugify from "slugify";
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { AttributePageFormData } from "../AttributePage";
 
+const useStyles = makeStyles(
+  theme => ({
+    inputTypeSection: {
+      columnGap: theme.spacing(2) + "px",
+      display: "flex",
+      [theme.breakpoints.down("md")]: {
+        flexFlow: "wrap",
+        rowGap: theme.spacing(3) + "px"
+      }
+    }
+  }),
+  { name: "AttributeDetails" }
+);
+
 export interface AttributeDetailsProps {
   canChangeType: boolean;
   data: AttributePageFormData;
@@ -25,13 +43,9 @@ export interface AttributeDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = ({
-  canChangeType,
-  data,
-  disabled,
-  errors,
-  onChange
-}) => {
+const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
+  const { canChangeType, data, disabled, errors, onChange } = props;
+  const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
     {
@@ -54,10 +68,29 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         description: "file attribute type"
       }),
       value: AttributeInputTypeEnum.FILE
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "References",
+        description: "references attribute type"
+      }),
+      value: AttributeInputTypeEnum.REFERENCE
+    }
+  ];
+  const entityTypeChoices = [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Pages",
+        description: "page attribute entity type"
+      }),
+      value: AttributeEntityTypeEnum.PAGE
     }
   ];
 
-  const formErrors = getFormErrors(["name", "slug", "inputType"], errors);
+  const formErrors = getFormErrors(
+    ["name", "slug", "inputType", "entityType"],
+    errors
+  );
 
   return (
     <Card>
@@ -101,19 +134,36 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           onChange={onChange}
         />
         <FormSpacer />
-        <SingleSelectField
-          choices={inputTypeChoices}
-          disabled={disabled || !canChangeType}
-          error={!!formErrors.inputType}
-          hint={getAttributeErrorMessage(formErrors.inputType, intl)}
-          label={intl.formatMessage({
-            defaultMessage: "Catalog Input type for Store Owner",
-            description: "attribute's editor component"
-          })}
-          name="inputType"
-          onChange={onChange}
-          value={data.inputType}
-        />
+        <div className={classes.inputTypeSection}>
+          <SingleSelectField
+            choices={inputTypeChoices}
+            disabled={disabled || !canChangeType}
+            error={!!formErrors.inputType}
+            hint={getAttributeErrorMessage(formErrors.inputType, intl)}
+            label={intl.formatMessage({
+              defaultMessage: "Catalog Input type for Store Owner",
+              description: "attribute's editor component"
+            })}
+            name="inputType"
+            onChange={onChange}
+            value={data.inputType}
+          />
+          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+            <SingleSelectField
+              choices={entityTypeChoices}
+              disabled={disabled || !canChangeType}
+              error={!!formErrors.entityType}
+              hint={getAttributeErrorMessage(formErrors.entityType, intl)}
+              label={intl.formatMessage({
+                defaultMessage: "Entity",
+                description: "attribute's editor component entity"
+              })}
+              name="entityType"
+              onChange={onChange}
+              value={data.entityType}
+            />
+          )}
+        </div>
         <FormSpacer />
         <ControlledCheckbox
           name={"valueRequired" as keyof AttributePageFormData}

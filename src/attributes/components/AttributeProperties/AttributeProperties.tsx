@@ -38,6 +38,16 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
 
+  const dashboardProperties = ![
+    AttributeInputTypeEnum.FILE,
+    AttributeInputTypeEnum.REFERENCE
+  ].includes(data.inputType);
+
+  const storefrontFacetedNavigationProperties =
+    ![AttributeInputTypeEnum.FILE, AttributeInputTypeEnum.REFERENCE].includes(
+      data.inputType
+    ) && data.type === AttributeTypeEnum.PRODUCT_TYPE;
+
   return (
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.properties)} />
@@ -80,44 +90,43 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           />
         </Typography>
         <Hr />
-        {data.inputType !== AttributeInputTypeEnum.FILE &&
-          data.type === AttributeTypeEnum.PRODUCT_TYPE && (
-            <>
-              <ControlledCheckbox
-                name={"filterableInStorefront" as keyof FormData}
-                label={intl.formatMessage({
-                  defaultMessage: "Use in Faceted Navigation",
-                  description: "attribute is filterable in storefront"
-                })}
-                checked={data.filterableInStorefront}
-                onChange={onChange}
-                disabled={disabled}
-              />
-              {data.filterableInStorefront && (
-                <>
-                  <FormSpacer />
-                  <TextField
-                    disabled={disabled}
-                    error={!!formErrors.storefrontSearchPosition}
-                    fullWidth
-                    helperText={getAttributeErrorMessage(
-                      formErrors.storefrontSearchPosition,
-                      intl
-                    )}
-                    name={
-                      "storefrontSearchPosition" as keyof AttributePageFormData
-                    }
-                    label={intl.formatMessage({
-                      defaultMessage: "Position in faceted navigation",
-                      description: "attribute position in storefront filters"
-                    })}
-                    value={data.storefrontSearchPosition}
-                    onChange={onChange}
-                  />
-                </>
-              )}
-            </>
-          )}
+        {storefrontFacetedNavigationProperties && (
+          <>
+            <ControlledCheckbox
+              name={"filterableInStorefront" as keyof FormData}
+              label={intl.formatMessage({
+                defaultMessage: "Use in Faceted Navigation",
+                description: "attribute is filterable in storefront"
+              })}
+              checked={data.filterableInStorefront}
+              onChange={onChange}
+              disabled={disabled}
+            />
+            {data.filterableInStorefront && (
+              <>
+                <FormSpacer />
+                <TextField
+                  disabled={disabled}
+                  error={!!formErrors.storefrontSearchPosition}
+                  fullWidth
+                  helperText={getAttributeErrorMessage(
+                    formErrors.storefrontSearchPosition,
+                    intl
+                  )}
+                  name={
+                    "storefrontSearchPosition" as keyof AttributePageFormData
+                  }
+                  label={intl.formatMessage({
+                    defaultMessage: "Position in faceted navigation",
+                    description: "attribute position in storefront filters"
+                  })}
+                  value={data.storefrontSearchPosition}
+                  onChange={onChange}
+                />
+              </>
+            )}
+          </>
+        )}
         <FormSpacer />
         <ControlledSwitch
           name={"visibleInStorefront" as keyof FormData}
@@ -136,7 +145,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           onChange={onChange}
           disabled={disabled}
         />
-        {data.inputType !== AttributeInputTypeEnum.FILE && (
+        {dashboardProperties && (
           <>
             <CardSpacer />
             <Typography variant="subtitle1">

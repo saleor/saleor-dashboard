@@ -72,7 +72,7 @@ function getSimpleAttributeData(
   };
 }
 
-function getFileAttributeData(
+function getFileOrReferenceAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
 ) {
@@ -145,10 +145,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     setValues(move(values[oldIndex], values, areValuesEqual, newIndex));
 
   const handleCreate = async (data: AttributePageFormData) => {
-    const input =
-      data.inputType === AttributeInputTypeEnum.FILE
-        ? getFileAttributeData(data, values)
-        : getSimpleAttributeData(data, values);
+    const input = [
+      AttributeInputTypeEnum.FILE,
+      AttributeInputTypeEnum.REFERENCE
+    ].includes(data.inputType)
+      ? getFileOrReferenceAttributeData(data, values)
+      : getSimpleAttributeData(data, values);
 
     const result = await attributeCreate({
       variables: {

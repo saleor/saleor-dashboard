@@ -749,6 +749,18 @@
     "context": "check to require attribute to have value",
     "string": "Value Required"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2665557428": {
+    "context": "attribute's editor component entity",
+    "string": "Entity"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3287512325": {
+    "context": "page attribute entity type",
+    "string": "Pages"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_331823601": {
+    "context": "references attribute type",
+    "string": "References"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
     "context": "product attribute type",
     "string": "Multiple Select"

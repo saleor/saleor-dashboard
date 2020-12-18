@@ -17,6 +17,7 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
 import {
+  AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeTypeEnum
 } from "@saleor/types/globalTypes";
@@ -51,6 +52,7 @@ export interface AttributePageFormData extends MetadataFormData {
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
+  entityType: AttributeEntityTypeEnum;
   filterableInStorefront: boolean;
   name: string;
   slug: string;
@@ -84,6 +86,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
     attribute === null
       ? {
           availableInGrid: true,
+          entityType: null,
           filterableInDashboard: true,
           filterableInStorefront: true,
           inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -98,6 +101,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
         }
       : {
           availableInGrid: maybe(() => attribute.availableInGrid, true),
+          entityType: attribute?.entityType ?? null,
           filterableInDashboard: maybe(
             () => attribute.filterableInDashboard,
             true
@@ -172,7 +176,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   errors={errors}
                   onChange={change}
                 />
-                {data.inputType !== AttributeInputTypeEnum.FILE && (
+                {![
+                  AttributeInputTypeEnum.FILE,
+                  AttributeInputTypeEnum.REFERENCE
+                ].includes(data.inputType) && (
                   <>
                     <CardSpacer />
                     <AttributeValues
