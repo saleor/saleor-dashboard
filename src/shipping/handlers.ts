@@ -47,8 +47,12 @@ export function getCreateShippingPriceRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string
 ): CreateShippingRateVariables {
+  const parsedMinDays = parseInt(data.minDays, 10);
+  const parsedMaxDays = parseInt(data.maxDays, 10);
   return {
     input: {
+      maximumDeliveryDays: parsedMaxDays,
+      minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE
@@ -62,10 +66,14 @@ export function getCreateShippingWeightRateVariables(
 ): CreateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
   const parsedMaxValue = parseFloat(data.maxValue);
+  const parsedMinDays = parseInt(data.minDays, 10);
+  const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
   return {
     input: {
+      maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
+      minimumDeliveryDays: parsedMinDays,
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
@@ -79,9 +87,13 @@ export function getUpdateShippingPriceRateVariables(
   id: string,
   rateId: string
 ): UpdateShippingRateVariables {
+  const parsedMinDays = parseInt(data.minDays, 10);
+  const parsedMaxDays = parseInt(data.maxDays, 10);
   return {
     id: rateId,
     input: {
+      maximumDeliveryDays: parsedMaxDays,
+      minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE
@@ -96,11 +108,15 @@ export function getUpdateShippingWeightRateVariables(
 ): UpdateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
   const parsedMaxValue = parseFloat(data.maxValue);
+  const parsedMinDays = parseInt(data.minDays, 10);
+  const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
   return {
     id: rateId,
     input: {
+      maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
+      minimumDeliveryDays: parsedMinDays,
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,

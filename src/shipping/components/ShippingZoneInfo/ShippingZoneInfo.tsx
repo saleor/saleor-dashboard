@@ -44,7 +44,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(["name", "minDays", "maxDays"], errors);
 
   return (
     <Card>

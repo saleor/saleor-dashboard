@@ -5388,6 +5388,12 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
   },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_3693484222": {
+    "string": "Max Delivery Time"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_4047592879": {
+    "string": "Min Delivery Time"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_579967655": {
     "string": "Shipping rate name"
   },

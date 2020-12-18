@@ -105,6 +105,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings[] | null;
