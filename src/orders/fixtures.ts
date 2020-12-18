@@ -840,7 +840,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       user: {
         __typename: "User",
         email: "admin@example.com",
-        id: "QWRkcmVzczoxNQ=="
+        firstName: "John",
+        id: "QWRkcmVzczoxNQ==",
+        lastName: "Doe"
       }
     },
     {
@@ -881,7 +883,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       user: {
         __typename: "User",
         email: "admin@example.com",
-        id: "QWRkcmVzczoxNQ=="
+        firstName: "Jane",
+        id: "QWRkcmVzczoxNQ==",
+        lastName: "Doe"
       }
     },
     {
