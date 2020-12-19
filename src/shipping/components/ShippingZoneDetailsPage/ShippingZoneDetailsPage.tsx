@@ -93,10 +93,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: FormData = {
-    name: shippingZone?.name || "",
-    warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || [],
     metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput)
+    name: shippingZone?.name || "",
+    privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput),
+    warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || []
   };
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]

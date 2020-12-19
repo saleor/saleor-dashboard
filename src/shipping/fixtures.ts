@@ -265,8 +265,8 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjE=",
-    name: "Europe",
     metadata: [],
+    name: "Europe",
     privateMetadata: []
   },
   {
@@ -419,8 +419,8 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjI=",
-    name: "Oceania",
     metadata: [],
+    name: "Oceania",
     privateMetadata: []
   },
   {
@@ -684,8 +684,8 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjM=",
-    name: "Asia",
     metadata: [],
+    name: "Asia",
     privateMetadata: []
   },
   {
@@ -979,8 +979,8 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjQ=",
-    name: "Americas",
     metadata: [],
+    name: "Americas",
     privateMetadata: []
   },
   {
@@ -1290,16 +1290,14 @@ export const shippingZones: ShippingZoneFragment[] = [
       }
     ],
     id: "U2hpcHBpbmdab25lOjU=",
-    name: "Africa",
     metadata: [],
+    name: "Africa",
     privateMetadata: []
   }
 ];
 
 export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
-  metadata: [],
-  privateMetadata: [],
   countries: [
     {
       __typename: "CountryDisplay",
@@ -1559,12 +1557,12 @@ export const shippingZone: ShippingZone_shippingZone = {
   ],
   default: false,
   id: "U2hpcHBpbmdab25lOjE=",
+  metadata: [],
   name: "Europe",
+  privateMetadata: [],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
-      metadata: [],
-      privateMetadata: [],
       channelListings: [
         {
           __typename: "ShippingMethodChannelListing",
@@ -1622,12 +1620,14 @@ export const shippingZone: ShippingZone_shippingZone = {
         unit: WeightUnitsEnum.KG,
         value: 80
       },
+      metadata: [],
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DB Schenker",
+      privateMetadata: [],
       type: ShippingMethodTypeEnum.WEIGHT,
       zipCodeRules: [
         {
@@ -1652,8 +1652,6 @@ export const shippingZone: ShippingZone_shippingZone = {
     },
     {
       __typename: "ShippingMethod",
-      metadata: [],
-      privateMetadata: [],
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1681,12 +1679,14 @@ export const shippingZone: ShippingZone_shippingZone = {
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumOrderWeight: null,
+      metadata: [],
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "Registred priority",
+      privateMetadata: [],
       type: ShippingMethodTypeEnum.WEIGHT,
       zipCodeRules: [
         {
@@ -1711,8 +1711,6 @@ export const shippingZone: ShippingZone_shippingZone = {
     },
     {
       __typename: "ShippingMethod",
-      metadata: [],
-      privateMetadata: [],
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1740,12 +1738,14 @@ export const shippingZone: ShippingZone_shippingZone = {
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumOrderWeight: null,
+      metadata: [],
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "UPS",
+      privateMetadata: [],
       type: ShippingMethodTypeEnum.PRICE,
       zipCodeRules: [
         {
@@ -1784,15 +1784,15 @@ export const shippingZone: ShippingZone_shippingZone = {
       },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumOrderWeight: null,
+      metadata: [],
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DHL",
-      type: ShippingMethodTypeEnum.PRICE,
-      metadata: [],
       privateMetadata: [],
+      type: ShippingMethodTypeEnum.PRICE,
       zipCodeRules: [
         {
           __typename: "ShippingMethodZipCodeRule",
