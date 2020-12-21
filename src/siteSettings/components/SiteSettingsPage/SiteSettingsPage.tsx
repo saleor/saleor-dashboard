@@ -20,10 +20,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop } from "../../types/SiteSettings";
 import SiteSettingsDetails from "../SiteSettingsDetails/SiteSettingsDetails";
-import SiteSettingsKeys from "../SiteSettingsKeys/SiteSettingsKeys";
 import SiteSettingsMailing, {
   SiteSettingsMailingFormData
 } from "../SiteSettingsMailing";
@@ -53,8 +51,6 @@ export interface SiteSettingsPageProps {
   shop: SiteSettings_shop;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onKeyAdd: () => void;
-  onKeyRemove: (keyType: AuthorizationKeyType) => void;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
 
@@ -93,8 +89,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     saveButtonBarState,
     shop,
     onBack,
-    onKeyAdd,
-    onKeyRemove,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -213,24 +207,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 })}
                 onChange={change}
                 onCountryChange={handleCountryChange}
-              />
-              <Hr className={classes.hr} />
-              <div>
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="Authentication Methods"
-                    description="section header"
-                  />
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage defaultMessage="Authentication method defines additional ways that customers can log in to your ecommerce." />
-                </Typography>
-              </div>
-              <SiteSettingsKeys
-                disabled={disabled}
-                keys={maybe(() => shop.authorizationKeys)}
-                onAdd={onKeyAdd}
-                onRemove={onKeyRemove}
               />
             </Grid>
             <SaveButtonBar

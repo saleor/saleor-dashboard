@@ -146,7 +146,6 @@ function loadStories() {
   require("./stories/shipping/ShippingZonesListPage");
 
   // Site settings
-  require("./stories/siteSettings/SiteSettingsKeyDialog");
   require("./stories/siteSettings/SiteSettingsPage");
 
   // Taxes

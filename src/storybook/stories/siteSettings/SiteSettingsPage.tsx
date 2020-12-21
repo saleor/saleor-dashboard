@@ -13,8 +13,6 @@ const props: Omit<SiteSettingsPageProps, "classes"> = {
   disabled: false,
   errors: [],
   onBack: () => undefined,
-  onKeyAdd: () => undefined,
-  onKeyRemove: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   shop

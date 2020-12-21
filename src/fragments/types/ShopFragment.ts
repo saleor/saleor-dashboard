@@ -2,17 +2,9 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AuthorizationKeyType } from "./../../types/globalTypes";
-
 // ====================================================
 // GraphQL fragment: ShopFragment
 // ====================================================
-
-export interface ShopFragment_authorizationKeys {
-  __typename: "AuthorizationKey";
-  key: string;
-  name: AuthorizationKeyType;
-}
 
 export interface ShopFragment_companyAddress_country {
   __typename: "CountryDisplay";
@@ -49,7 +41,6 @@ export interface ShopFragment_domain {
 
 export interface ShopFragment {
   __typename: "Shop";
-  authorizationKeys: (ShopFragment_authorizationKeys | null)[];
   companyAddress: ShopFragment_companyAddress | null;
   countries: ShopFragment_countries[];
   customerSetPasswordUrl: string | null;

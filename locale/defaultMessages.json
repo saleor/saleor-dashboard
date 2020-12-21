@@ -5686,45 +5686,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_529433178": {
     "string": "Store description is shown on taskbar after your store name"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_1238948746": {
-    "context": "dialog header",
-    "string": "Add New Authorization Key"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2237029987": {
-    "string": "Password"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2446088470": {
-    "context": "authentication provider API key",
-    "string": "Key"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_3039841202": {
-    "context": "authentication provider name",
-    "string": "Authentication type"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_50561933": {
-    "context": "button",
-    "string": "Add authentication"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1114030884": {
-    "context": "button",
-    "string": "Add key"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
-    "context": "authentication provider name",
-    "string": "Authentication Type"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_226491688": {
-    "context": "section header",
-    "string": "Authentication Keys"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_2446088470": {
-    "context": "authentication provider API key",
-    "string": "Key"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_3981699144": {
-    "context": "no authentication provider API keys",
-    "string": "No keys"
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1124962330": {
     "string": "Mailing email address"
   },
@@ -5754,9 +5715,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1004240342": {
     "string": "This adress will be used to generate invoices and calculate shipping rates."
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1214877701": {
-    "string": "Authentication method defines additional ways that customers can log in to your ecommerce."
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
     "context": "section header",
     "string": "Store Information"
@@ -5774,10 +5732,6 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3799756739": {
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_4088830385": {
-    "context": "section header",
-    "string": "Authentication Methods"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
     "string": "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
