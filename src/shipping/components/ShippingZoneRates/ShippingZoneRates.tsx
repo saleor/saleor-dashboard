@@ -34,17 +34,18 @@ export interface ShippingZoneRatesProps extends ChannelProps {
 const useStyles = makeStyles(
   theme => ({
     alignRight: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      paddingRight: 0,
+      paddingRight: 24,
       width: ICONBUTTON_SIZE + theme.spacing(0.5)
     },
     nameColumn: {
-      width: 300
+      width: "auto"
     },
     valueColumn: {
-      width: 300
+      width: "auto"
+    },
+    buttonColumn: {
+      width: "62px",
+      padding: "4px 0"
     }
   }),
   { name: "ShippingZoneRates" }
@@ -113,8 +114,8 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 description="shipping method price"
               />
             </TableCell>
-            <TableCell />
-            <TableCell />
+            <TableCell className={classes.buttonColumn} />
+            <TableCell className={classes.buttonColumn} />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -166,12 +167,14 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   <IconButtonTableCell
                     disabled={disabled}
                     onClick={() => onRateEdit(rate.id)}
+                    className={classes.buttonColumn}
                   >
                     <EditIcon />
                   </IconButtonTableCell>
                   <IconButtonTableCell
                     disabled={disabled}
                     onClick={() => onRateRemove(rate.id)}
+                    className={classes.buttonColumn}
                   >
                     <DeleteIcon />
                   </IconButtonTableCell>
