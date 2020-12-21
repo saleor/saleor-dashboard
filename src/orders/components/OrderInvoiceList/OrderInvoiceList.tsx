@@ -27,11 +27,11 @@ const useStyles = makeStyles(
       padding: 0
     },
     colAction: {
-      padding: "0 0.5rem",
-      width: "auto",
       button: {
         padding: "0"
-      }
+      },
+      padding: "0 0.5rem",
+      width: "auto"
     },
     colNumber: { width: "100%" },
     colNumberClickable: {
