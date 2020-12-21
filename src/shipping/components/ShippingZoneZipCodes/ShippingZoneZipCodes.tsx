@@ -48,9 +48,6 @@ const useStyles = makeStyles(
       width: 80
     },
     colCode: {},
-    hide: {
-      display: "none"
-    },
     option: {
       marginBottom: theme.spacing(2),
       width: 400
@@ -100,7 +97,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           </Button>
         }
       />
-      <CardContent className={classNames(classes.radioContainer, classes.hide)}>
+      <CardContent className={classNames(classes.radioContainer)}>
         <RadioGroupField
           alignTop
           choices={[
