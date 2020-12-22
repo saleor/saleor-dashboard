@@ -145,7 +145,7 @@ const Routes: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {channel &&
+      {typeof channel !== "undefined" &&
       isAuthenticated &&
       !tokenAuthLoading &&
       !tokenVerifyLoading ? (
@@ -284,7 +284,8 @@ const Routes: React.FC = () => {
             </Switch>
           </ErrorBoundary>
         </AppLayout>
-      ) : (isAuthenticated && !channel) || (hasToken && tokenVerifyLoading) ? (
+      ) : (isAuthenticated && typeof channel === "undefined") ||
+        (hasToken && tokenVerifyLoading) ? (
         <LoginLoading />
       ) : (
         <Auth />

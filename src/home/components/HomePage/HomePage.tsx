@@ -46,17 +46,18 @@ const useStyles = makeStyles(
 
 export interface HomePageProps extends UserPermissionProps {
   activities: Home_activities_edges_node[];
-  orders: number;
-  ordersToCapture: number;
-  ordersToFulfill: number;
+  orders: number | null;
+  ordersToCapture: number | null;
+  ordersToFulfill: number | null;
   productsOutOfStock: number;
   sales: Home_salesToday_gross;
-  topProducts: Home_productTopToday_edges_node[];
+  topProducts: Home_productTopToday_edges_node[] | null;
   userName: string;
   onOrdersToCaptureClick: () => void;
   onOrdersToFulfillClick: () => void;
   onProductClick: (productId: string, variantId: string) => void;
   onProductsOutOfStockClick: () => void;
+  noChannel: boolean;
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
@@ -73,7 +74,8 @@ const HomePage: React.FC<HomePageProps> = props => {
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
-    userPermissions
+    userPermissions,
+    noChannel
   } = props;
 
   const classes = useStyles(props);
@@ -131,30 +133,35 @@ const HomePage: React.FC<HomePageProps> = props => {
             ordersToFulfill={ordersToFulfill}
             productsOutOfStock={productsOutOfStock}
             userPermissions={userPermissions}
+            noChannel={noChannel}
           />
           <CardSpacer />
-          <RequirePermissions
-            userPermissions={userPermissions}
-            requiredPermissions={[
-              PermissionEnum.MANAGE_ORDERS,
-              PermissionEnum.MANAGE_PRODUCTS
-            ]}
-          >
-            <HomeProductListCard
-              onRowClick={onProductClick}
-              topProducts={topProducts}
-            />
-            <CardSpacer />
-          </RequirePermissions>
+          {topProducts && (
+            <RequirePermissions
+              userPermissions={userPermissions}
+              requiredPermissions={[
+                PermissionEnum.MANAGE_ORDERS,
+                PermissionEnum.MANAGE_PRODUCTS
+              ]}
+            >
+              <HomeProductListCard
+                onRowClick={onProductClick}
+                topProducts={topProducts}
+              />
+              <CardSpacer />
+            </RequirePermissions>
+          )}
         </div>
-        <div>
-          <RequirePermissions
-            userPermissions={userPermissions}
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
-            <HomeActivityCard activities={activities} />
-          </RequirePermissions>
-        </div>
+        {activities && (
+          <div>
+            <RequirePermissions
+              userPermissions={userPermissions}
+              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+            >
+              <HomeActivityCard activities={activities} />
+            </RequirePermissions>
+          </div>
+        )}
       </Grid>
     </Container>
   );

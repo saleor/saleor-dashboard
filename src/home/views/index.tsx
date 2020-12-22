@@ -15,21 +15,21 @@ const HomeSection = () => {
   const { user } = useUser();
   const { channel } = useAppChannel();
 
+  const noChannel = !channel && typeof channel !== "undefined";
+
   const { data } = useHomePage({
     displayLoader: true,
-    variables: { channel: channel.slug }
+    variables: { channel: channel?.slug }
   });
 
   return (
     <HomePage
-      activities={maybe(() =>
-        data.activities.edges.map(edge => edge.node).reverse()
-      )}
-      orders={maybe(() => data.ordersToday.totalCount)}
-      sales={maybe(() => data.salesToday.gross)}
-      topProducts={maybe(() =>
-        data.productTopToday.edges.map(edge => edge.node)
-      )}
+      activities={data?.activities.edges.map(edge => edge.node).reverse()}
+      orders={!noChannel ? data?.ordersToday.totalCount : 0}
+      sales={maybe(() => data?.salesToday.gross)}
+      topProducts={
+        !noChannel ? data?.productTopToday.edges.map(edge => edge.node) : null
+      }
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }
@@ -54,11 +54,12 @@ const HomeSection = () => {
           })
         )
       }
-      ordersToCapture={maybe(() => data.ordersToCapture.totalCount)}
-      ordersToFulfill={maybe(() => data.ordersToFulfill.totalCount)}
-      productsOutOfStock={maybe(() => data.productsOutOfStock.totalCount)}
+      ordersToCapture={!noChannel ? data?.ordersToCapture.totalCount : 0}
+      ordersToFulfill={!noChannel ? data?.ordersToFulfill.totalCount : 0}
+      productsOutOfStock={!noChannel ? data?.productsOutOfStock.totalCount : 0}
       userName={getUserName(user, true)}
       userPermissions={user?.userPermissions || []}
+      noChannel={noChannel}
     />
   );
 };

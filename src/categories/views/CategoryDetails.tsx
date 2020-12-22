@@ -4,7 +4,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import Skeleton from "@saleor/components/Skeleton";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { channelDetailsFragment } from "@saleor/fragments/channels";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -210,166 +212,179 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   return (
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
-      <CategoryUpdatePage
-        channelsCount={availableChannels.length}
-        channelChoices={channelChoices}
-        changeTab={changeTab}
-        currentTab={params.activeTab}
-        category={maybe(() => data.category)}
-        disabled={loading}
-        errors={updateResult.data?.categoryUpdate.errors || []}
-        onAddCategory={() => navigate(categoryAddUrl(id))}
-        onAddProduct={() => navigate(productAddUrl())}
-        onBack={() =>
-          navigate(
-            maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
-          )
-        }
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
-        onDelete={() => openModal("delete")}
-        onImageDelete={() =>
-          updateCategory({
-            variables: {
-              id,
-              input: {
-                backgroundImage: null
-              }
-            }
-          })
-        }
-        onImageUpload={file =>
-          updateCategory({
-            variables: {
-              id,
-              input: {
-                backgroundImage: file
-              }
-            }
-          })
-        }
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        pageInfo={pageInfo}
-        onProductClick={id => () => navigate(productUrl(id))}
-        onSubmit={handleSubmit}
-        products={maybe(() =>
-          data.category.products.edges.map(edge => edge.node)
-        )}
-        saveButtonBarState={updateResult.status}
-        selectedChannelId={channel.id}
-        subcategories={maybe(() =>
-          data.category.children.edges.map(edge => edge.node)
-        )}
-        subcategoryListToolbar={
-          <IconButton
-            color="primary"
-            onClick={() =>
-              openModal("delete-categories", {
-                ids: listElements
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        productListToolbar={
-          <IconButton
-            color="primary"
-            onClick={() =>
-              openModal("delete-products", {
-                ids: listElements
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-      />
-      <ActionDialog
-        confirmButtonState={deleteResult.status}
-        onClose={closeModal}
-        onConfirm={() => deleteCategory({ variables: { id } })}
-        open={params.action === "delete"}
-        title={intl.formatMessage({
-          defaultMessage: "Delete category",
-          description: "dialog title"
-        })}
-        variant="delete"
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="Are you sure you want to delete {categoryName}?"
-            values={{
-              categoryName: (
-                <strong>{maybe(() => data.category.name, "...")}</strong>
+      {typeof channel !== "undefined" ? (
+        <>
+          <CategoryUpdatePage
+            channelsCount={availableChannels.length}
+            channelChoices={channelChoices}
+            changeTab={changeTab}
+            currentTab={params.activeTab}
+            category={maybe(() => data.category)}
+            disabled={loading}
+            errors={updateResult.data?.categoryUpdate.errors || []}
+            onAddCategory={() => navigate(categoryAddUrl(id))}
+            onAddProduct={() => navigate(productAddUrl())}
+            onBack={() =>
+              navigate(
+                maybe(
+                  () => categoryUrl(data.category.parent.id),
+                  categoryListUrl()
+                )
               )
-            }}
+            }
+            onCategoryClick={id => () => navigate(categoryUrl(id))}
+            onDelete={() => openModal("delete")}
+            onImageDelete={() =>
+              updateCategory({
+                variables: {
+                  id,
+                  input: {
+                    backgroundImage: null
+                  }
+                }
+              })
+            }
+            onImageUpload={file =>
+              updateCategory({
+                variables: {
+                  id,
+                  input: {
+                    backgroundImage: file
+                  }
+                }
+              })
+            }
+            onNextPage={loadNextPage}
+            onPreviousPage={loadPreviousPage}
+            pageInfo={pageInfo}
+            onProductClick={id => () => navigate(productUrl(id))}
+            onSubmit={handleSubmit}
+            products={maybe(() =>
+              data.category.products.edges.map(edge => edge.node)
+            )}
+            saveButtonBarState={updateResult.status}
+            selectedChannelId={channel.id}
+            subcategories={maybe(() =>
+              data.category.children.edges.map(edge => edge.node)
+            )}
+            subcategoryListToolbar={
+              <IconButton
+                color="primary"
+                onClick={() =>
+                  openModal("delete-categories", {
+                    ids: listElements
+                  })
+                }
+              >
+                <DeleteIcon />
+              </IconButton>
+            }
+            productListToolbar={
+              <IconButton
+                color="primary"
+                onClick={() =>
+                  openModal("delete-products", {
+                    ids: listElements
+                  })
+                }
+              >
+                <DeleteIcon />
+              </IconButton>
+            }
+            isChecked={isSelected}
+            selected={listElements.length}
+            toggle={toggle}
+            toggleAll={toggleAll}
           />
-        </DialogContentText>
-        <DialogContentText>
-          <FormattedMessage defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront." />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={
-          params.action === "delete-categories" &&
-          maybe(() => params.ids.length > 0)
-        }
-        confirmButtonState={categoryBulkDeleteOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          categoryBulkDelete({
-            variables: { ids: params.ids }
-          }).then(() => refetch())
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Delete categories",
-          description: "dialog title"
-        })}
-        variant="delete"
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-        <DialogContentText>
-          <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "delete-products"}
-        confirmButtonState={productBulkDeleteOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkDelete({
-            variables: { ids: params.ids }
-          }).then(() => refetch())
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Delete products",
-          description: "dialog title"
-        })}
-        variant="delete"
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
+          <ActionDialog
+            confirmButtonState={deleteResult.status}
+            onClose={closeModal}
+            onConfirm={() => deleteCategory({ variables: { id } })}
+            open={params.action === "delete"}
+            title={intl.formatMessage({
+              defaultMessage: "Delete category",
+              description: "dialog title"
+            })}
+            variant="delete"
+          >
+            <DialogContentText>
+              <FormattedMessage
+                defaultMessage="Are you sure you want to delete {categoryName}?"
+                values={{
+                  categoryName: (
+                    <strong>{maybe(() => data.category.name, "...")}</strong>
+                  )
+                }}
+              />
+            </DialogContentText>
+            <DialogContentText>
+              <FormattedMessage defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront." />
+            </DialogContentText>
+          </ActionDialog>
+          <ActionDialog
+            open={
+              params.action === "delete-categories" &&
+              maybe(() => params.ids.length > 0)
+            }
+            confirmButtonState={categoryBulkDeleteOpts.status}
+            onClose={closeModal}
+            onConfirm={() =>
+              categoryBulkDelete({
+                variables: { ids: params.ids }
+              }).then(() => refetch())
+            }
+            title={intl.formatMessage({
+              defaultMessage: "Delete categories",
+              description: "dialog title"
+            })}
+            variant="delete"
+          >
+            <DialogContentText>
+              <FormattedMessage
+                defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+                values={{
+                  counter: maybe(() => params.ids.length),
+                  displayQuantity: (
+                    <strong>{maybe(() => params.ids.length)}</strong>
+                  )
+                }}
+              />
+            </DialogContentText>
+            <DialogContentText>
+              <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+            </DialogContentText>
+          </ActionDialog>
+          <ActionDialog
+            open={params.action === "delete-products"}
+            confirmButtonState={productBulkDeleteOpts.status}
+            onClose={closeModal}
+            onConfirm={() =>
+              productBulkDelete({
+                variables: { ids: params.ids }
+              }).then(() => refetch())
+            }
+            title={intl.formatMessage({
+              defaultMessage: "Delete products",
+              description: "dialog title"
+            })}
+            variant="delete"
+          >
+            <DialogContentText>
+              <FormattedMessage
+                defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+                values={{
+                  counter: maybe(() => params.ids.length),
+                  displayQuantity: (
+                    <strong>{maybe(() => params.ids.length)}</strong>
+                  )
+                }}
+              />
+            </DialogContentText>
+          </ActionDialog>
+        </>
+      ) : (
+        <Skeleton />
+      )}
     </>
   );
 };

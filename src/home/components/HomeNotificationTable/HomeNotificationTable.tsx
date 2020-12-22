@@ -36,6 +36,7 @@ interface HomeNotificationTableProps extends UserPermissionProps {
   onOrdersToFulfillClick: () => void;
   onOrdersToCaptureClick: () => void;
   onProductsOutOfStockClick: () => void;
+  noChannel: boolean;
 }
 
 const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
@@ -46,7 +47,8 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
-    userPermissions
+    userPermissions,
+    noChannel
   } = props;
 
   const classes = useStyles(props);
@@ -55,6 +57,22 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
     <Card className={classes.tableCard}>
       <ResponsiveTable>
         <TableBody className={classes.tableRow}>
+          {noChannel && (
+            <TableRow hover={true} onClick={onOrdersToFulfillClick}>
+              <TableCell>
+                <Typography>
+                  {/* <FormattedMessage
+                      defaultMessage="Create new channel"
+                      id="homeNotificationTableNoOrders"
+                    /> */}
+                  Create new channel
+                </Typography>
+              </TableCell>
+              <TableCell className={classes.arrowIcon}>
+                <KeyboardArrowRight />
+              </TableCell>
+            </TableRow>
+          )}
           <RequirePermissions
             userPermissions={userPermissions}
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}

@@ -30,6 +30,10 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   const { data: channelData, refetch } = useChannelsList({
     skip: !isAuthenticated
   });
+
+  // TODO mockup
+  // channelData= {channels: []};
+
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
     if (!selectedChannel) {
@@ -38,9 +42,10 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   }, [channelData]);
 
   const availableChannels = channelData?.channels || [];
-  const channel = availableChannels.find(
-    channel => channel.id === selectedChannel
-  );
+
+  const channel =
+    channelData &&
+    (availableChannels.find(channel => channel.id === selectedChannel) || null);
 
   return (
     <AppChannelContext.Provider
@@ -57,6 +62,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     </AppChannelContext.Provider>
   );
 };
+
 AppChannelProvider.displayName = "AppChannelProvider";
 
 function useAppChannel(enablePicker = true): UseAppChannel {
