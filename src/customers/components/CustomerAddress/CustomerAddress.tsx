@@ -5,7 +5,6 @@ import AddressFormatter from "@saleor/components/AddressFormatter";
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -99,11 +98,17 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
                 onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
               },
               {
-                label: intl.formatMessage(buttonMessages.edit),
+                label: intl.formatMessage({
+                  defaultMessage: "Edit Address",
+                  description: "button"
+                }),
                 onSelect: () => onEdit()
               },
               {
-                label: intl.formatMessage(buttonMessages.delete),
+                label: intl.formatMessage({
+                  defaultMessage: "Delete Address",
+                  description: "button"
+                }),
                 onSelect: () => onRemove()
               }
             ]}
