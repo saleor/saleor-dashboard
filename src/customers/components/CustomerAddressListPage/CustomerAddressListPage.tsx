@@ -36,10 +36,9 @@ const useStyles = makeStyles(
       width: 600
     },
     root: {
-      columnGap: theme.spacing(3),
       display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      rowGap: theme.spacing(3)
+      gap: `${theme.spacing(3)}px`,
+      gridTemplateColumns: "repeat(3, 1fr)"
     }
   }),
   { name: "CustomerAddressListPage" }
