@@ -2228,6 +2228,14 @@
     "context": "button",
     "string": "Set as default shipping address"
   },
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_2364475135": {
+    "context": "button",
+    "string": "Edit Address"
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_2657976015": {
+    "context": "button",
+    "string": "Delete Address"
+  },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_3096438859": {
     "context": "button",
     "string": "Set as default billing address"
