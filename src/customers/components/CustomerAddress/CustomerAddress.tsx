@@ -1,6 +1,4 @@
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import AddressFormatter from "@saleor/components/AddressFormatter";
@@ -9,7 +7,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
@@ -99,6 +97,14 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
                   description: "button"
                 }),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
+              },
+              {
+                label: intl.formatMessage(buttonMessages.edit),
+                onSelect: () => onEdit()
+              },
+              {
+                label: intl.formatMessage(buttonMessages.delete),
+                onSelect: () => onRemove()
               }
             ]}
           />
@@ -107,16 +113,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
       <CardContent>
         <AddressFormatter address={address} />
       </CardContent>
-      <div className={classes.actionsContainer}>
-        <CardActions className={classes.actions}>
-          <Button color="primary" disabled={disabled} onClick={onEdit}>
-            <FormattedMessage {...buttonMessages.edit} />
-          </Button>
-          <Button color="primary" disabled={disabled} onClick={onRemove}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        </CardActions>
-      </div>
     </Card>
   );
 };
