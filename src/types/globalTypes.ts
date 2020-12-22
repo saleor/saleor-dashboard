@@ -70,6 +70,10 @@ export enum AppTypeEnum {
   THIRDPARTY = "THIRDPARTY",
 }
 
+export enum AttributeEntityTypeEnum {
+  PAGE = "PAGE",
+}
+
 export enum AttributeErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -83,6 +87,7 @@ export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
+  REFERENCE = "REFERENCE",
 }
 
 export enum AttributeSortField {
@@ -117,6 +122,7 @@ export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
+  CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1026,6 +1032,7 @@ export interface AppTokenInput {
 
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
+  entityType?: AttributeEntityTypeEnum | null;
   name: string;
   slug?: string | null;
   type: AttributeTypeEnum;
@@ -1088,6 +1095,7 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
+  references?: string[] | null;
 }
 
 export interface AuthorizationKeyInput {

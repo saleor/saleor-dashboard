@@ -79,15 +79,49 @@ const FILE_ATTRIBUTE: AttributeInput = {
       }
     ]
   },
-  id: "ifudbgidfsb",
+  id: "fguygygugyu",
   label: "File Attribute",
+  value: []
+};
+
+const REFERENCE_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.REFERENCE,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "vbnhgcvjhbvhj",
+        name: "References First Value",
+        slug: "references-first-value"
+      },
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "gucngdfdfvdvd",
+        name: "References Second Value",
+        slug: "references-second-value"
+      },
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "dfdfdsfdsfdse",
+        name: "References Third Value",
+        slug: "references-third-value"
+      }
+    ]
+  },
+  id: "kclsmcdsmcs",
+  label: "References Attribute",
   value: []
 };
 
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
-  FILE_ATTRIBUTE
+  FILE_ATTRIBUTE,
+  REFERENCE_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -105,5 +139,13 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...FILE_ATTRIBUTE,
     value: [FILE_ATTRIBUTE.data.values[0].slug]
+  },
+  {
+    ...REFERENCE_ATTRIBUTE,
+    value: [
+      REFERENCE_ATTRIBUTE.data.values[0].slug,
+      REFERENCE_ATTRIBUTE.data.values[1].slug,
+      REFERENCE_ATTRIBUTE.data.values[2].slug
+    ]
   }
 ];

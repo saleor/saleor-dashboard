@@ -5,7 +5,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import CardTitle from "@saleor/components/CardTitle";
-import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
@@ -17,6 +16,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
+import { ReorderAction } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
@@ -30,6 +30,9 @@ import {
 } from "react-intl";
 
 import FileUploadField, { FileChoiceType } from "../FileUploadField";
+import SortableChipsField from "../SortableChipsField";
+import BasicAttributeRow from "./BasicAttributeRow";
+import ExtendedAttributeRow from "./ExtendedAttributeRow";
 import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
@@ -51,7 +54,10 @@ export interface AttributesProps {
   title?: React.ReactNode;
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
-  onFileChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onFileChange: FormsetChange;
+  onReferencesChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onReferencesChangeClick?: () => void; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onReferencesReorder?: ReorderAction; // TODO: temporairy optional, should be changed to required, after all pages implement it
 }
 
 const useStyles = makeStyles(
@@ -210,7 +216,10 @@ const Attributes: React.FC<AttributesProps> = ({
   title,
   onChange,
   onMultiChange,
-  onFileChange
+  onFileChange,
+  onReferencesChange,
+  onReferencesChangeClick,
+  onReferencesReorder
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -255,76 +264,91 @@ const Attributes: React.FC<AttributesProps> = ({
               return (
                 <React.Fragment key={attribute.id}>
                   {attributeIndex > 0 && <Hr />}
-                  <Grid className={classes.attributeSection} variant="uniform">
-                    <div
-                      className={classes.attributeSectionLabel}
-                      data-test="attribute-label"
+                  {attribute.data.inputType ===
+                  AttributeInputTypeEnum.REFERENCE ? (
+                    <ExtendedAttributeRow
+                      label={attribute.label}
+                      selectLabel={intl.formatMessage({
+                        defaultMessage: "Assign references",
+                        description: "button label"
+                      })}
+                      onSelect={onReferencesChangeClick}
+                      disabled={disabled}
                     >
-                      <Typography>{attribute.label}</Typography>
-                    </div>
-                    <div data-test="attribute-value">
-                      {attribute.data.inputType ===
-                      AttributeInputTypeEnum.FILE ? (
-                        <FileUploadField
-                          className={classes.fileField}
-                          disabled={disabled}
-                          loading={loading}
-                          file={getFileChoice(attribute)}
-                          onFileUpload={file =>
-                            onFileChange(attribute.id, file)
-                          }
-                          onFileDelete={() =>
-                            onFileChange(attribute.id, undefined)
-                          }
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          inputProps={{
-                            name: `attribute:${attribute.label}`
-                          }}
-                        />
-                      ) : attribute.data.inputType ===
-                        AttributeInputTypeEnum.DROPDOWN ? (
-                        <SingleAutocompleteSelectField
-                          choices={getSingleChoices(attribute.data.values)}
-                          disabled={disabled}
-                          displayValue={
-                            attribute.data.values.find(
-                              value => value.slug === attribute.value[0]
-                            )?.name ||
-                            attribute.value[0] ||
-                            ""
-                          }
-                          emptyOption={!attribute.data.isRequired}
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          name={`attribute:${attribute.label}`}
-                          label={intl.formatMessage(messages.valueLabel)}
-                          value={attribute.value[0]}
-                          onChange={event =>
-                            onChange(attribute.id, event.target.value)
-                          }
-                          allowCustomValues={!attribute.data.isRequired}
-                        />
-                      ) : (
-                        <MultiAutocompleteSelectField
-                          choices={getMultiChoices(attribute.data.values)}
-                          displayValues={getMultiDisplayValue(attribute)}
-                          disabled={disabled}
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          label={intl.formatMessage(
-                            messages.multipleValueLable
-                          )}
-                          name={`attribute:${attribute.label}`}
-                          value={attribute.value}
-                          onChange={event =>
-                            onMultiChange(attribute.id, event.target.value)
-                          }
-                          allowCustomValues={!attribute.data.isRequired}
-                        />
-                      )}
-                    </div>
-                  </Grid>
+                      <SortableChipsField
+                        values={getMultiDisplayValue(attribute)}
+                        onValueDelete={value =>
+                          onReferencesChange(
+                            attribute.id,
+                            attribute.value?.filter(id => id !== value)
+                          )
+                        }
+                        onValueReorder={onReferencesReorder}
+                        loading={loading}
+                      />
+                    </ExtendedAttributeRow>
+                  ) : attribute.data.inputType ===
+                    AttributeInputTypeEnum.FILE ? (
+                    <BasicAttributeRow label={attribute.label}>
+                      <FileUploadField
+                        className={classes.fileField}
+                        disabled={disabled}
+                        loading={loading}
+                        file={getFileChoice(attribute)}
+                        onFileUpload={file => onFileChange(attribute.id, file)}
+                        onFileDelete={() =>
+                          onFileChange(attribute.id, undefined)
+                        }
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        inputProps={{
+                          name: `attribute:${attribute.label}`
+                        }}
+                      />
+                    </BasicAttributeRow>
+                  ) : attribute.data.inputType ===
+                    AttributeInputTypeEnum.DROPDOWN ? (
+                    <BasicAttributeRow label={attribute.label}>
+                      <SingleAutocompleteSelectField
+                        choices={getSingleChoices(attribute.data.values)}
+                        disabled={disabled}
+                        displayValue={
+                          attribute.data.values.find(
+                            value => value.slug === attribute.value[0]
+                          )?.name ||
+                          attribute.value[0] ||
+                          ""
+                        }
+                        emptyOption={!attribute.data.isRequired}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        name={`attribute:${attribute.label}`}
+                        label={intl.formatMessage(messages.valueLabel)}
+                        value={attribute.value[0]}
+                        onChange={event =>
+                          onChange(attribute.id, event.target.value)
+                        }
+                        allowCustomValues={!attribute.data.isRequired}
+                      />
+                    </BasicAttributeRow>
+                  ) : (
+                    <BasicAttributeRow label={attribute.label}>
+                      <MultiAutocompleteSelectField
+                        choices={getMultiChoices(attribute.data.values)}
+                        displayValues={getMultiDisplayValue(attribute)}
+                        disabled={disabled}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        label={intl.formatMessage(messages.multipleValueLable)}
+                        name={`attribute:${attribute.label}`}
+                        value={attribute.value}
+                        onChange={event =>
+                          onMultiChange(attribute.id, event.target.value)
+                        }
+                        allowCustomValues={!attribute.data.isRequired}
+                      />
+                    </BasicAttributeRow>
+                  )}
                 </React.Fragment>
               );
             })}
