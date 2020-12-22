@@ -14,7 +14,6 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -59,7 +58,7 @@ const CustomerAddressDialog = withStyles(
     onConfirm
   }: CustomerAddressDialogProps & WithStyles<typeof styles>) => {
     const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-      maybe(() => address.country.country, "")
+      address?.country.country || ""
     );
     const {
       errors: validationErrors,
@@ -71,27 +70,24 @@ const CustomerAddressDialog = withStyles(
     );
 
     const initialForm: AddressTypeInput = {
-      city: maybe(() => address.city, ""),
-      cityArea: maybe(() => address.cityArea, ""),
-      companyName: maybe(() => address.companyName, ""),
-      country: maybe(() => address.country.code, ""),
-      countryArea: maybe(() => address.countryArea, ""),
-      firstName: maybe(() => address.firstName, ""),
-      lastName: maybe(() => address.lastName, ""),
-      phone: maybe(() => address.phone, ""),
-      postalCode: maybe(() => address.postalCode, ""),
-      streetAddress1: maybe(() => address.streetAddress1, ""),
-      streetAddress2: maybe(() => address.streetAddress2, "")
+      city: address?.city || "",
+      cityArea: address?.cityArea || "",
+      companyName: address?.companyName || "",
+      country: address?.country.code || "",
+      countryArea: address?.countryArea || "",
+      firstName: address?.firstName || "",
+      lastName: address?.lastName || "",
+      phone: address?.phone || "",
+      postalCode: address?.postalCode || "",
+      streetAddress1: address?.streetAddress1 || "",
+      streetAddress2: address?.streetAddress2 || ""
     };
 
-    const countryChoices = maybe(
-      () =>
-        countries.map(country => ({
-          label: country.label,
-          value: country.code
-        })),
-      []
-    );
+    const countryChoices =
+      countries?.map(country => ({
+        label: country.label,
+        value: country.code
+      })) || [];
 
     return (
       <Dialog

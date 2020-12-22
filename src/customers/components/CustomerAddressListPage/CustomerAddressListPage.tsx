@@ -4,10 +4,10 @@ import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user } from "../../types/CustomerAddresses";
 import CustomerAddress from "../CustomerAddress/CustomerAddress";
@@ -58,11 +58,8 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
 
   const intl = useIntl();
 
-  const isEmpty = maybe(() => customer.addresses.length) === 0;
-  const fullName = maybe(
-    () => [customer.firstName, customer.lastName].join(" "),
-    "..."
-  );
+  const isEmpty = customer?.addresses?.length === 0;
+  const fullName = [customer?.firstName, customer?.lastName].join(" ") || "...";
 
   return (
     <Container>
@@ -117,28 +114,23 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
         </div>
       ) : (
         <div className={classes.root}>
-          {renderCollection(
-            maybe(() => customer.addresses),
-            (address, addressNumber) => (
-              <CustomerAddress
-                address={address}
-                addressNumber={addressNumber + 1}
-                disabled={disabled}
-                isDefaultBillingAddress={
-                  maybe(() => customer.defaultBillingAddress.id) ===
-                  maybe(() => address.id)
-                }
-                isDefaultShippingAddress={
-                  maybe(() => customer.defaultShippingAddress.id) ===
-                  maybe(() => address.id)
-                }
-                onEdit={() => onEdit(address.id)}
-                onRemove={() => onRemove(address.id)}
-                onSetAsDefault={type => onSetAsDefault(address.id, type)}
-                key={maybe(() => address.id, "skeleton")}
-              />
-            )
-          )}
+          {renderCollection(customer?.addresses, (address, addressNumber) => (
+            <CustomerAddress
+              address={address}
+              addressNumber={addressNumber + 1}
+              disabled={disabled}
+              isDefaultBillingAddress={
+                customer?.defaultBillingAddress?.id === address?.id
+              }
+              isDefaultShippingAddress={
+                customer?.defaultShippingAddress?.id === address?.id
+              }
+              onEdit={() => onEdit(address.id)}
+              onRemove={() => onRemove(address.id)}
+              onSetAsDefault={type => onSetAsDefault(address.id, type)}
+              key={address?.id || "skeleton"}
+            />
+          ))}
         </div>
       )}
     </Container>
