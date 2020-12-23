@@ -101,7 +101,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                   />
                 }
               >
-                {sales ? (
+                {noChannel ? (
+                  0
+                ) : sales ? (
                   <Money money={sales} />
                 ) : (
                   <Skeleton style={{ width: "5em" }} />

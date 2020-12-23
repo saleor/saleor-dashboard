@@ -17,10 +17,12 @@ const HomeSection = () => {
 
   const noChannel = !channel && typeof channel !== "undefined";
 
-  const { data } = useHomePage({
-    displayLoader: true,
-    variables: { channel: channel?.slug }
-  });
+  const { data } = !noChannel
+    ? useHomePage({
+        displayLoader: true,
+        variables: { channel: channel?.slug }
+      })
+    : { data: null };
 
   return (
     <HomePage
