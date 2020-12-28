@@ -31,9 +31,6 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     skip: !isAuthenticated
   });
 
-  // TODO mockup
-  // channelData= {channels: []};
-
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
     if (!selectedChannel) {
