@@ -33,6 +33,7 @@ interface HomeNotificationTableProps extends UserPermissionProps {
   ordersToCapture: number;
   ordersToFulfill: number;
   productsOutOfStock: number;
+  onCreateNewChannelClick: () => void;
   onOrdersToFulfillClick: () => void;
   onOrdersToCaptureClick: () => void;
   onProductsOutOfStockClick: () => void;
@@ -41,6 +42,7 @@ interface HomeNotificationTableProps extends UserPermissionProps {
 
 const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
   const {
+    onCreateNewChannelClick,
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
@@ -58,7 +60,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
       <ResponsiveTable>
         <TableBody className={classes.tableRow}>
           {noChannel && (
-            <TableRow hover={true} onClick={onOrdersToFulfillClick}>
+            <TableRow hover={true} onClick={onCreateNewChannelClick}>
               <TableCell>
                 <Typography>
                   {/* <FormattedMessage

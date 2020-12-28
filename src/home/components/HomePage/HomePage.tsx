@@ -53,6 +53,7 @@ export interface HomePageProps extends UserPermissionProps {
   sales: Home_salesToday_gross;
   topProducts: Home_productTopToday_edges_node[] | null;
   userName: string;
+  onCreateNewChannelClick: () => void;
   onOrdersToCaptureClick: () => void;
   onOrdersToFulfillClick: () => void;
   onProductClick: (productId: string, variantId: string) => void;
@@ -68,6 +69,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     topProducts,
     onProductClick,
     activities,
+    onCreateNewChannelClick,
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
@@ -128,6 +130,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>
           </RequirePermissions>
           <HomeNotificationTable
+            onCreateNewChannelClick={onCreateNewChannelClick}
             onOrdersToCaptureClick={onOrdersToCaptureClick}
             onOrdersToFulfillClick={onOrdersToFulfillClick}
             onProductsOutOfStockClick={onProductsOutOfStockClick}

@@ -1,3 +1,4 @@
+import { channelsListUrl } from "@saleor/channels/urls";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
@@ -35,6 +36,9 @@ const HomeSection = () => {
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }
+      onCreateNewChannelClick={() => {
+        navigate(channelsListUrl());
+      }}
       onOrdersToCaptureClick={() =>
         navigate(
           orderListUrl({
