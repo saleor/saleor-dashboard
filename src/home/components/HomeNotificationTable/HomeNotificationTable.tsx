@@ -11,7 +11,40 @@ import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  createNewChannel: {
+    defaultMessage: "Create new channel"
+  },
+  noOrders: {
+    defaultMessage: "No orders ready to fulfill",
+    id: "homeNotificationTableNoOrders"
+  },
+  orderReady: {
+    defaultMessage:
+      "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}",
+    id: "homeNotificationTableOrders"
+  },
+  noPaymentWaiting: {
+    defaultMessage: "No payments waiting for capture",
+    id: "homeNotificationsNoPayments"
+  },
+  paymentCapture: {
+    defaultMessage:
+      "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}",
+    id: "homeNotificationTablePayments"
+  },
+  noProductsOut: {
+    defaultMessage: "No products out of stock",
+    id: "homeNotificationsTableNoProducts"
+  },
+  productOut: {
+    defaultMessage:
+      "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}",
+    id: "homeNotificationTableProducts"
+  }
+});
 
 const useStyles = makeStyles(
   () => ({
@@ -55,6 +88,8 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
 
   const classes = useStyles(props);
 
+  const intl = useIntl();
+
   return (
     <Card className={classes.tableCard}>
       <ResponsiveTable>
@@ -63,11 +98,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             <TableRow hover={true} onClick={onCreateNewChannelClick}>
               <TableCell>
                 <Typography>
-                  {/* <FormattedMessage
-                      defaultMessage="Create new channel"
-                      id="homeNotificationTableNoOrders"
-                    /> */}
-                  Create new channel
+                  {intl.formatMessage(messages.createNewChannel)}
                 </Typography>
               </TableCell>
               <TableCell className={classes.arrowIcon}>
@@ -85,20 +116,13 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                   <Skeleton />
                 ) : ordersToFulfill === 0 ? (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="No orders ready to fulfill"
-                      id="homeNotificationTableNoOrders"
-                    />
+                    {intl.formatMessage(messages.noOrders)}
                   </Typography>
                 ) : (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
-                      id="homeNotificationTableOrders"
-                      values={{
-                        amount: <strong>{ordersToFulfill}</strong>
-                      }}
-                    />
+                    {intl.formatMessage(messages.orderReady, {
+                      amount: <strong>{ordersToFulfill}</strong>
+                    })}
                   </Typography>
                 )}
               </TableCell>
@@ -112,20 +136,13 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                   <Skeleton />
                 ) : ordersToCapture === 0 ? (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="No payments waiting for capture"
-                      id="homeNotificationsNoPayments"
-                    />
+                    {intl.formatMessage(messages.noPaymentWaiting)}
                   </Typography>
                 ) : (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
-                      id="homeNotificationTablePayments"
-                      values={{
-                        amount: <strong>{ordersToCapture}</strong>
-                      }}
-                    />
+                    {intl.formatMessage(messages.paymentCapture, {
+                      amount: <strong>{ordersToCapture}</strong>
+                    })}
                   </Typography>
                 )}
               </TableCell>
@@ -144,20 +161,13 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                   <Skeleton />
                 ) : productsOutOfStock === 0 ? (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="No products out of stock"
-                      id="homeNotificationsTableNoProducts"
-                    />
+                    {intl.formatMessage(messages.noProductsOut)}
                   </Typography>
                 ) : (
                   <Typography>
-                    <FormattedMessage
-                      defaultMessage="{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
-                      id="homeNotificationTableProducts"
-                      values={{
-                        amount: <strong>{productsOutOfStock}</strong>
-                      }}
-                    />
+                    {intl.formatMessage(messages.productOut, {
+                      amount: <strong>{productsOutOfStock}</strong>
+                    })}
                   </Typography>
                 )}
               </TableCell>
