@@ -6,7 +6,6 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import Skeleton from "@saleor/components/Skeleton";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { channelDetailsFragment } from "@saleor/fragments/channels";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";

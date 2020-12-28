@@ -21,23 +21,23 @@ const messages = defineMessages({
     defaultMessage: "No orders ready to fulfill",
     id: "homeNotificationTableNoOrders"
   },
+  noPaymentWaiting: {
+    defaultMessage: "No payments waiting for capture",
+    id: "homeNotificationsNoPayments"
+  },
+  noProductsOut: {
+    defaultMessage: "No products out of stock",
+    id: "homeNotificationsTableNoProducts"
+  },
   orderReady: {
     defaultMessage:
       "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}",
     id: "homeNotificationTableOrders"
   },
-  noPaymentWaiting: {
-    defaultMessage: "No payments waiting for capture",
-    id: "homeNotificationsNoPayments"
-  },
   paymentCapture: {
     defaultMessage:
       "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}",
     id: "homeNotificationTablePayments"
-  },
-  noProductsOut: {
-    defaultMessage: "No products out of stock",
-    id: "homeNotificationsTableNoProducts"
   },
   productOut: {
     defaultMessage:
