@@ -6,7 +6,7 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user } from "../../types/CustomerAddresses";
@@ -21,6 +21,28 @@ export interface CustomerAddressListPageProps {
   onRemove: (id: string) => void;
   onSetAsDefault: (id: string, type: AddressTypeEnum) => void;
 }
+
+const messages = defineMessages({
+  fullNameAddress: {
+    defaultMessage: "{fullName}'s Address Book",
+    description: "customer's address book, header"
+  },
+  fullNameDetail: {
+    defaultMessage: "{fullName} Details",
+    description: "customer details, header"
+  },
+  addAddress: {
+    defaultMessage: "Add address",
+    description: "button"
+  },
+  noAddressToShow: {
+    defaultMessage: "There is no address to show for this customer"
+  },
+  doesntHaveAddresses: {
+    defaultMessage:
+      "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -38,7 +60,13 @@ const useStyles = makeStyles(
     root: {
       display: "grid",
       gap: `${theme.spacing(3)}px`,
-      gridTemplateColumns: "repeat(3, 1fr)"
+      gridTemplateColumns: "repeat(3, 1fr)",
+      [theme.breakpoints.down("md")]: {
+        gridTemplateColumns: "repeat(2, 1fr)"
+      },
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateColumns: "repeat(1, 1fr)"
+      }
     }
   }),
   { name: "CustomerAddressListPage" }
@@ -64,41 +92,24 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   return (
     <Container>
       <AppHeader onBack={onBack}>
-        <FormattedMessage
-          defaultMessage="{fullName} Details"
-          description="customer details, header"
-          values={{
-            fullName
-          }}
-        />
+        {intl.formatMessage(messages.fullNameDetail, { fullName })}
       </AppHeader>
       {!isEmpty && (
         <PageHeader
-          title={intl.formatMessage(
-            {
-              defaultMessage: "{fullName}'s Address Book",
-              description: "customer's address book, header"
-            },
-            {
-              fullName
-            }
-          )}
+          title={intl.formatMessage(messages.fullNameAddress, { fullName })}
         >
           <Button color="primary" variant="contained" onClick={onAdd}>
-            <FormattedMessage
-              defaultMessage="Add address"
-              description="button"
-            />
+            {intl.formatMessage(messages.addAddress)}
           </Button>
         </PageHeader>
       )}
       {isEmpty ? (
         <div className={classes.empty}>
           <Typography variant="h5">
-            <FormattedMessage defaultMessage="There is no address to show for this customer" />
+            {intl.formatMessage(messages.noAddressToShow)}
           </Typography>
           <Typography className={classes.description}>
-            <FormattedMessage defaultMessage="This customer doesn’t have any adresses added to his address book. You can add address using the button below." />
+            {intl.formatMessage(messages.doesntHaveAddresses)}
           </Typography>
           <Button
             className={classes.addButton}
@@ -106,10 +117,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
             variant="contained"
             onClick={onAdd}
           >
-            <FormattedMessage
-              defaultMessage="Add address"
-              description="button"
-            />
+            {intl.formatMessage(messages.addAddress)}
           </Button>
         </div>
       ) : (

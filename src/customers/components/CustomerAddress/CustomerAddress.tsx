@@ -6,7 +6,7 @@ import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
@@ -21,6 +21,34 @@ export interface CustomerAddressProps {
   onRemove: () => void;
   onSetAsDefault: (type: AddressTypeEnum) => void;
 }
+
+const messages = defineMessages({
+  defaultAddress: {
+    defaultMessage: "Default Address"
+  },
+  defaultShippingAddress: {
+    defaultMessage: "Default Shipping Address"
+  },
+  defaultBillingAddress: {
+    defaultMessage: "Default Billing Address"
+  },
+  setDefaultShipping: {
+    defaultMessage: "Set as default shipping address",
+    description: "button"
+  },
+  setDefaultBilling: {
+    defaultMessage: "Set as default billing address",
+    description: "button"
+  },
+  editAddress: {
+    defaultMessage: "Edit Address",
+    description: "button"
+  },
+  deleteAddress: {
+    defaultMessage: "Delete Address",
+    description: "button"
+  }
+});
 
 const useStyles = makeStyles(
   {
@@ -61,17 +89,11 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
           address ? (
             <>
               {isDefaultBillingAddress && isDefaultShippingAddress
-                ? intl.formatMessage({
-                    defaultMessage: "Default Address"
-                  })
+                ? intl.formatMessage(messages.defaultAddress)
                 : isDefaultShippingAddress
-                ? intl.formatMessage({
-                    defaultMessage: "Default Shipping Address"
-                  })
+                ? intl.formatMessage(messages.defaultShippingAddress)
                 : isDefaultBillingAddress
-                ? intl.formatMessage({
-                    defaultMessage: "Default Billing Address"
-                  })
+                ? intl.formatMessage(messages.defaultBillingAddress)
                 : null}
             </>
           ) : (
@@ -84,31 +106,19 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
             disabled={disabled}
             menuItems={[
               {
-                label: intl.formatMessage({
-                  defaultMessage: "Set as default shipping address",
-                  description: "button"
-                }),
+                label: intl.formatMessage(messages.setDefaultShipping),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING)
               },
               {
-                label: intl.formatMessage({
-                  defaultMessage: "Set as default billing address",
-                  description: "button"
-                }),
+                label: intl.formatMessage(messages.setDefaultBilling),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
               },
               {
-                label: intl.formatMessage({
-                  defaultMessage: "Edit Address",
-                  description: "button"
-                }),
+                label: intl.formatMessage(messages.editAddress),
                 onSelect: () => onEdit()
               },
               {
-                label: intl.formatMessage({
-                  defaultMessage: "Delete Address",
-                  description: "button"
-                }),
+                label: intl.formatMessage(messages.deleteAddress),
                 onSelect: () => onRemove()
               }
             ]}
