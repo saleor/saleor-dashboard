@@ -3012,6 +3012,9 @@
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_placed": {
     "string": "Order #{orderId} was placed"
   },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_createNewChannel": {
+    "string": "Create new channel"
+  },
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
