@@ -5446,6 +5446,9 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_1325966144": {
     "string": "Shipping"
   },
+  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_1470703814": {
+    "string": "Description of a shipping zone."
+  },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_2364051773": {
     "string": "Currently, there are no countries assigned to this shipping zone"
   },

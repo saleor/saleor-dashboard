@@ -257,7 +257,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 disabled={loading || disabled}
                 fullWidth
                 multiline
-                placeholder={"placeholder"}
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Description of a shipping zone."
+                })}
                 rows={10}
               />
             </Grid>
