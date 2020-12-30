@@ -13,6 +13,7 @@ export const shippingZoneFragment = gql`
       country
     }
     name
+    description
   }
 `;
 

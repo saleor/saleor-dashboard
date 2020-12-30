@@ -4782,6 +4782,7 @@ type ShippingZone implements Node & ObjectWithMetadata {
   countries: [CountryDisplay]
   shippingMethods: [ShippingMethod]
   warehouses: [Warehouse]
+  description: String
 }
 
 type ShippingZoneBulkDelete {
@@ -4830,6 +4831,7 @@ input ShippingZoneUpdateInput {
   name: String
   countries: [String]
   default: Boolean
+  description: String
   addWarehouses: [ID]
   removeWarehouses: [ID]
 }

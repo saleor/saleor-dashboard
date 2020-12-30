@@ -1719,6 +1719,7 @@ export interface ShippingZoneUpdateInput {
   name?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
+  description?: string | null;
   addWarehouses?: (string | null)[] | null;
   removeWarehouses?: (string | null)[] | null;
 }

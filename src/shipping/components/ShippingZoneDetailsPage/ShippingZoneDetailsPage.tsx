@@ -1,3 +1,5 @@
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import TextField from "@material-ui/core/TextField";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -33,8 +35,26 @@ import ShippingZoneWarehouses from "../ShippingZoneWarehouses";
 
 export interface FormData extends MetadataFormData {
   name: string;
+  description: string;
   warehouses: string[];
 }
+
+const maxDescriptionLength = 300;
+
+const useStyles = makeStyles(
+  {
+    label: {
+      flex: 1
+    },
+    labelContainer: {
+      "& span": {
+        paddingRight: 30
+      },
+      display: "flex"
+    }
+  },
+  { name: "ShippingZoneDetailsPage" }
+);
 
 export interface ShippingZoneDetailsPageProps
   extends FetchMoreProps,
@@ -91,8 +111,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   warehouses
 }) => {
   const intl = useIntl();
+  const classes = useStyles({});
 
   const initialForm: FormData = {
+    description: shippingZone?.description || "",
     metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
     name: shippingZone?.name || "",
     privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput),
@@ -124,6 +146,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
+        const description = data.description;
 
         return (
           <Container>
@@ -202,6 +225,41 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   warehouses={warehouseChoices}
                 />
               </div>
+              <TextField
+                error={description.length > maxDescriptionLength}
+                name={"description"}
+                label={
+                  <div className={classes.labelContainer}>
+                    <div className={classes.label}>
+                      <FormattedMessage defaultMessage="Description" />
+                    </div>
+                    {description?.length > 0 && (
+                      <span>
+                        <FormattedMessage
+                          defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
+                          description="character limit"
+                          values={{
+                            maxCharacters: maxDescriptionLength,
+                            numberOfCharacters: description.length
+                          }}
+                        />
+                      </span>
+                    )}
+                  </div>
+                }
+                InputProps={{
+                  inputProps: {
+                    maxLength: maxDescriptionLength
+                  }
+                }}
+                value={description}
+                onChange={change}
+                disabled={loading || disabled}
+                fullWidth
+                multiline
+                placeholder={"placeholder"}
+                rows={10}
+              />
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}

@@ -5452,6 +5452,13 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_3109712047": {
     "string": "Countries"
   },
+  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_3374163063": {
+    "string": "Description"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_3877274856": {
+    "context": "character limit",
+    "string": "{numberOfCharacters} of {maxCharacters} characters"
+  },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_4270729636": {
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
