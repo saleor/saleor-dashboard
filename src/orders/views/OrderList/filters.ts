@@ -1,4 +1,5 @@
-import { findInEnum, findValueInEnum, maybe } from "@saleor/misc";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { findInEnum, findValueInEnum } from "@saleor/misc";
 import {
   OrderFilterKeys,
   OrderListFilterOpts
@@ -16,11 +17,13 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
+  getMultipleValueQueryParam,
   getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
+  OrderListUrlFiltersWithMultipleValues,
   OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
@@ -28,37 +31,38 @@ import {
 export const ORDER_FILTERS_KEY = "orderFilters";
 
 export function getFilterOpts(
-  params: OrderListUrlFilters
+  params: OrderListUrlFilters,
+  channels: MultiAutocompleteChoiceType[]
 ): OrderListFilterOpts {
   return {
+    channel: channels
+      ? {
+          active: params?.channel !== undefined || false,
+          value: channels
+        }
+      : null,
     created: {
-      active: maybe(
-        () =>
-          [params.createdFrom, params.createdTo].some(
-            field => field !== undefined
-          ),
-        false
-      ),
+      active:
+        [params?.createdFrom, params?.createdTo].some(
+          field => field !== undefined
+        ) || false,
       value: {
-        max: maybe(() => params.createdTo, ""),
-        min: maybe(() => params.createdFrom, "")
+        max: params?.createdTo || "",
+        min: params?.createdFrom || ""
       }
     },
     customer: {
-      active: !!maybe(() => params.customer),
-      value: params.customer
+      active: !!params?.customer,
+      value: params?.customer
     },
     status: {
-      active: maybe(() => params.status !== undefined, false),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.status.map(status =>
-              findValueInEnum(status, OrderStatusFilter)
-            )
-          ),
-        []
-      )
+      active: params?.status !== undefined || false,
+      value:
+        dedupeFilter(
+          params?.status?.map(status =>
+            findValueInEnum(status, OrderStatusFilter)
+          )
+        ) || []
     }
   };
 }
@@ -67,15 +71,14 @@ export function getFilterVariables(
   params: OrderListUrlFilters
 ): OrderFilterInput {
   return {
+    channels: (params.channel as unknown) as string[],
     created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo
     }),
     customer: params.customer,
     search: params.query,
-    status: maybe(() =>
-      params.status.map(status => findInEnum(status, OrderStatusFilter))
-    )
+    status: params?.status?.map(status => findInEnum(status, OrderStatusFilter))
   };
 }
 
@@ -97,6 +100,12 @@ export function getFilterQueryParam(
         filter,
         OrderListUrlFiltersWithMultipleValuesEnum.status,
         OrderStatusFilter
+      );
+
+    case OrderFilterKeys.channel:
+      return getMultipleValueQueryParam(
+        filter,
+        OrderListUrlFiltersWithMultipleValues.channel
       );
 
     case OrderFilterKeys.customer:

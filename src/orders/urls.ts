@@ -6,6 +6,7 @@ import {
   BulkAction,
   Dialog,
   Filters,
+  FiltersAsDictWithMultipleValues,
   FiltersWithMultipleValues,
   Pagination,
   SingleAction,
@@ -28,8 +29,14 @@ export enum OrderListUrlFiltersEnum {
 export enum OrderListUrlFiltersWithMultipleValuesEnum {
   status = "status"
 }
+
+export enum OrderListUrlFiltersWithMultipleValues {
+  channel = "channel"
+}
+
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
-  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
+  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum> &
+  FiltersAsDictWithMultipleValues<OrderListUrlFiltersWithMultipleValues>;
 export type OrderListUrlDialog = "cancel" | CreateOrderDialog | TabActionDialog;
 export enum OrderListUrlSortField {
   number = "number",

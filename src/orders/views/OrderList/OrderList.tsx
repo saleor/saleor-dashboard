@@ -71,6 +71,12 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const { channel, availableChannels } = useAppChannel();
 
+  const channelOpts =
+    availableChannels?.map(channel => ({
+      label: channel.name,
+      value: channel.id
+    })) || null;
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -130,7 +136,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.orders.pageInfo),
+    data?.orders?.pageInfo,
     paginationState,
     params
   );
@@ -143,7 +149,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         settings={settings}
         currentTab={currentTab}
         disabled={loading}
-        filterOpts={getFilterOpts(params)}
+        filterOpts={getFilterOpts(params, channelOpts)}
         orders={maybe(() => data.orders.edges.map(edge => edge.node))}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
