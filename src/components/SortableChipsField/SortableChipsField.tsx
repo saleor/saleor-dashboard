@@ -13,8 +13,7 @@ const useStyles = makeStyles(
       background: "#fff",
       color: theme.palette.primary.dark,
       marginBottom: theme.spacing(1)
-    },
-    chipContainer: {}
+    }
   }),
   {
     name: "SortableChipsField"
@@ -44,7 +43,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
       useDragHandle
       onSortEnd={onValueReorder}
     >
-      <div className={classes.chipContainer}>
+      <div>
         {loading ? (
           <Skeleton />
         ) : (
