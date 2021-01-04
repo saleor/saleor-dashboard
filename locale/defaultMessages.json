@@ -42,6 +42,18 @@
   "configurationPluginsPages": {
     "string": "View and update your plugins and their settings."
   },
+  "event products list title refunded": {
+    "context": "event products list title",
+    "string": "Products refunded"
+  },
+  "event products list title replaced": {
+    "context": "event products list title",
+    "string": "Products replaced"
+  },
+  "event products list title returned": {
+    "context": "event products list title",
+    "string": "Products returned"
+  },
   "homeActivityCardHeader": {
     "context": "header",
     "string": "Activity"
@@ -3466,27 +3478,15 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentRefundedProductsTitle": {
-    "context": "event products list title",
-    "string": "Products refunded"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentRefundedTitle": {
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentRefunded": {
     "context": "event title",
     "string": "Products were refunded by "
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReplacedProductsTitle": {
-    "context": "event products list title",
-    "string": "Products replaced"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReplacedTitle": {
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReplaced": {
     "context": "event title",
     "string": "Products were replaced by "
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReturnedProductsTitle": {
-    "context": "event products list title",
-    "string": "Products returned"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReturnedTitle": {
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_fulfillmentReturned": {
     "context": "event title",
     "string": "Products were returned by"
   },
