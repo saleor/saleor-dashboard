@@ -18,7 +18,7 @@ import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
-import { getEventSecondaryTitle, isOfType } from "./utils";
+import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
 
 export const getEventMessage = (
   event: OrderDetails_order_events,
@@ -288,11 +288,11 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
   ): { title: string; secondaryTitle?: string } => {
     const { type, message } = event;
 
-    const title = isOfType("rawMessage", type)
+    const title = isTimelineEventOfType("rawMessage", type)
       ? message
       : getEventMessage(event, intl);
 
-    if (isOfType("secondaryTitle", type)) {
+    if (isTimelineEventOfType("secondaryTitle", type)) {
       return {
         secondaryTitle: intl.formatMessage(...getEventSecondaryTitle(event)),
         title
@@ -326,7 +326,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
             .map(event => {
               const { id, user, date, message, type } = event;
 
-              if (isOfType("note", type)) {
+              if (isTimelineEventOfType("note", type)) {
                 return (
                   <TimelineNote
                     date={date}
@@ -336,7 +336,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   />
                 );
               }
-              if (isOfType("extendable", type)) {
+              if (isTimelineEventOfType("extendable", type)) {
                 return (
                   <ExtendedTimelineEvent
                     event={event}

@@ -33,7 +33,7 @@ const timelineEventTypes = {
   secondaryTitleEventStatuses: [OrderEventsEnum.ORDER_MARKED_AS_PAID]
 };
 
-export const isOfType = (
+export const isTimelineEventOfType = (
   type: "extendable" | "secondaryTitle" | "rawMessage" | "note",
   eventType: OrderEventsEnum
 ) => !!timelineEventTypes[`${type}EventStatuses`]?.includes(eventType);

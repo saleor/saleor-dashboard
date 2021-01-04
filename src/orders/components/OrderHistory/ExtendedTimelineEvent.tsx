@@ -33,31 +33,37 @@ const useStyles = makeStyles(
   { name: "OrderHistory" }
 );
 
-export const messages = defineMessages({
-  fulfillmentRefundedProductsTitle: {
+export const productTitles = defineMessages({
+  fulfillment: {
     defaultMessage: "Products refunded",
     description: "event products list title"
   },
-  fulfillmentRefundedTitle: {
-    defaultMessage: "Products were refunded by ",
-    description: "event title"
-  },
-  fulfillmentReplacedProductsTitle: {
+  fulfillmentReplaced: {
     defaultMessage: "Products replaced",
     description: "event products list title"
   },
-  fulfillmentReplacedTitle: {
+  fulfillmentReturned: {
+    defaultMessage: "Products returned",
+    description: "event products list title"
+  }
+});
+
+export const titles = defineMessages({
+  fulfillmentRefunded: {
+    defaultMessage: "Products were refunded by ",
+    description: "event title"
+  },
+  fulfillmentReplaced: {
     defaultMessage: "Products were replaced by ",
     description: "event title"
   },
-  fulfillmentReturnedProductsTitle: {
-    defaultMessage: "Products returned",
-    description: "event products list title"
-  },
-  fulfillmentReturnedTitle: {
+  fulfillmentReturned: {
     defaultMessage: "Products were returned by",
     description: "event title"
-  },
+  }
+});
+
+export const messages = defineMessages({
   refundedAmount: {
     defaultMessage: "Refunded amount",
     description: "amount title"
@@ -81,13 +87,12 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
-  const getTitle = (titleType: "Title" | "ProductsTitle") =>
-    messages[`${camelCase(type)}${titleType}`];
+  const eventTypeInCamelCase = camelCase(type);
 
   const employeeName = `${user.firstName} ${user.lastName}`;
 
   const titleElements = [
-    { text: intl.formatMessage(getTitle("Title")) },
+    { text: intl.formatMessage(titles[eventTypeInCamelCase]) },
     { link: staffMemberDetailsUrl(user.id), text: employeeName }
   ];
 
@@ -100,7 +105,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
             color="textSecondary"
             className={classes.eventSubtitle}
           >
-            {intl.formatMessage(getTitle("ProductsTitle"))}
+            {intl.formatMessage(productTitles[eventTypeInCamelCase])}
           </Typography>
           <table>
             <tbody>
