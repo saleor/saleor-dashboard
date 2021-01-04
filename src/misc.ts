@@ -14,7 +14,6 @@ import {
 } from "./types";
 import {
   AddressInput,
-  AuthorizationKeyType,
   CountryCode,
   OrderStatus,
   PaymentChargeStatusEnum
@@ -210,11 +209,6 @@ export const transformAddressToForm = (data: AddressType) => ({
   streetAddress1: maybe(() => data.streetAddress1, ""),
   streetAddress2: maybe(() => data.streetAddress2, "")
 });
-
-export const authorizationKeyTypes = {
-  [AuthorizationKeyType.FACEBOOK]: "Facebook",
-  [AuthorizationKeyType.GOOGLE_OAUTH2]: "Google OAuth2"
-};
 
 export function maybe<T>(exp: () => T): T | undefined;
 export function maybe<T>(exp: () => T, d: T): T;

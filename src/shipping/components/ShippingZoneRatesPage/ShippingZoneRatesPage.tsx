@@ -90,12 +90,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     channelListings: shippingChannels,
     includeZipCodes: ZipCodeInclusion.Exclude,
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
+    metadata: rate?.metadata.map(mapMetadataItemToInput),
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
     noLimits: false,
-    type: rate?.type || null,
-    metadata: rate?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput)
+    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
+    type: rate?.type || null
   };
 
   const {

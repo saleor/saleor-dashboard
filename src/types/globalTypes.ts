@@ -102,11 +102,6 @@ export enum AttributeTypeEnum {
   PRODUCT_TYPE = "PRODUCT_TYPE",
 }
 
-export enum AuthorizationKeyType {
-  FACEBOOK = "FACEBOOK",
-  GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
-}
-
 export enum CategorySortField {
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
@@ -1098,11 +1093,6 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
-}
-
-export interface AuthorizationKeyInput {
-  key: string;
-  password: string;
 }
 
 export interface BulkAttributeValueInput {

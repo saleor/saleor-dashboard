@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { SiteDomainInput, ShopSettingsInput, AddressInput, ShopErrorCode, AuthorizationKeyType } from "./../../types/globalTypes";
+import { SiteDomainInput, ShopSettingsInput, AddressInput, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShopSettingsUpdate
@@ -12,12 +12,6 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_errors {
   __typename: "ShopError";
   code: ShopErrorCode;
   field: string | null;
-}
-
-export interface ShopSettingsUpdate_shopSettingsUpdate_shop_authorizationKeys {
-  __typename: "AuthorizationKey";
-  key: string;
-  name: AuthorizationKeyType;
 }
 
 export interface ShopSettingsUpdate_shopSettingsUpdate_shop_companyAddress_country {
@@ -55,7 +49,6 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_shop_domain {
 
 export interface ShopSettingsUpdate_shopSettingsUpdate_shop {
   __typename: "Shop";
-  authorizationKeys: (ShopSettingsUpdate_shopSettingsUpdate_shop_authorizationKeys | null)[];
   companyAddress: ShopSettingsUpdate_shopSettingsUpdate_shop_companyAddress | null;
   countries: ShopSettingsUpdate_shopSettingsUpdate_shop_countries[];
   customerSetPasswordUrl: string | null;

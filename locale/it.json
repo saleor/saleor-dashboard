@@ -6,14 +6,20 @@
   "configurationMenuAttributes": {
     "string": "Determina gli attributi usati per creare le tipologie di prodotto"
   },
+  "configurationMenuChannels": {
+    "string": "Define and manage your sales channels"
+  },
   "configurationMenuNavigation": {
     "string": "Definisci come gli utenti posso navigare nel tuo negozio"
+  },
+  "configurationMenuPageTypes": {
+    "string": "Define types of content pages used in your store"
   },
   "configurationMenuPages": {
     "string": "Gestisci e aggiungi pagine aggiuntive"
   },
   "configurationMenuPermissionGroups": {
-    "string": "Manage your permission groups and their permissions"
+    "string": "Gestisci i gruppi ed i relativi permessi"
   },
   "configurationMenuProductTypes": {
     "string": "Definisci le tipologie di prodotto che vendi"
@@ -31,7 +37,7 @@
     "string": "Gestisci il modo in cui il tuo negozio addebita le tasse"
   },
   "configurationMenuWarehouses": {
-    "string": "Manage and update your warehouse information"
+    "string": "Gestisci ed aggiorna  le informazioni del magazzino"
   },
   "configurationPluginsPages": {
     "string": "Vedi e aggiorno i tuoi plugin e le loro impostazioni."
@@ -205,9 +211,12 @@
     "context": "vat not included in order price",
     "string": "non si applica"
   },
-  "productExportFieldAvailability": {
-    "context": "product field",
-    "string": "Available for purchase"
+  "pageTypeCreateHeader": {
+    "context": "window title",
+    "string": "Create Page Type"
+  },
+  "pageTypeInputLabel": {
+    "string": "Select content type"
   },
   "productExportFieldCategory": {
     "context": "product field",
@@ -225,13 +234,9 @@
     "context": "product field",
     "string": "Nome"
   },
-  "productExportFieldPrice": {
-    "context": "product field",
-    "string": "Cost Price"
-  },
   "productExportFieldProductImages": {
     "context": "product field",
-    "string": "Product Images"
+    "string": "Immagine di Prodotto"
   },
   "productExportFieldProductWeight": {
     "context": "product field",
@@ -239,7 +244,7 @@
   },
   "productExportFieldTaxes": {
     "context": "product field",
-    "string": "Charge Taxes"
+    "string": "Tasse"
   },
   "productExportFieldType": {
     "context": "product field",
@@ -248,10 +253,6 @@
   "productExportFieldVariantImages": {
     "context": "product field",
     "string": "Immagine della variante"
-  },
-  "productExportFieldVariantPrice": {
-    "context": "product field",
-    "string": "Variant Price"
   },
   "productExportFieldVariantSku": {
     "context": "product field",
@@ -264,10 +265,6 @@
   "productExportFieldVisibility": {
     "context": "product field",
     "string": "Visibilità"
-  },
-  "productStatusLabel": {
-    "context": "product",
-    "string": "Pubblicato"
   },
   "productStockHeader": {
     "context": "product stock, section header",
@@ -288,11 +285,8 @@
   "productTypeTaxesInputLabel": {
     "string": "Tasse"
   },
-  "productVariantCreatePricesPriceInputLabel": {
-    "string": "Prezzo"
-  },
   "productVariantCreatePricesSetPricePlaceholder": {
-    "context": "variant price",
+    "context": "input label",
     "string": "Prezzo"
   },
   "productVariantCreatePricesStockInputLabel": {
@@ -309,10 +303,6 @@
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
     "string": "Warehouses"
-  },
-  "productVariantPriceOptionalCostPriceField": {
-    "context": "optional field",
-    "string": "Facoltativo"
   },
   "productVariantWarehouseSectionDescription": {
     "context": "no warehouses info",
@@ -364,15 +354,15 @@
   },
   "src_dot_accept": {
     "context": "button",
-    "string": "Accept"
+    "string": "Accetta"
   },
   "src_dot_apps": {
     "context": "apps section name",
-    "string": "Apps"
+    "string": "Applicazioni"
   },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
     "context": "dialog header",
-    "string": "Activate App"
+    "string": "Attiva Applicazione"
   },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3356885734": {
     "context": "activate app",
@@ -384,15 +374,15 @@
   },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3865193889": {
     "context": "button label",
-    "string": "Activate"
+    "string": "Attivare"
   },
   "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_1782042241": {
     "context": "button label",
-    "string": "Deactivate"
+    "string": "Disattivare"
   },
   "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2031792590": {
     "context": "dialog header",
-    "string": "Dectivate App"
+    "string": "Disattiva Applicazione"
   },
   "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2955925498": {
     "context": "deactivate app",
@@ -408,7 +398,7 @@
   },
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1462011531": {
     "context": "dialog header",
-    "string": "Delete App"
+    "string": "Cancella Applicazione"
   },
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_330001535": {
     "context": "delete app",
@@ -420,7 +410,7 @@
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_1782042241": {
     "context": "link",
-    "string": "Deactivate"
+    "string": "Disattivare"
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2432433023": {
     "context": "app privacy policy link",
@@ -444,11 +434,11 @@
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3865193889": {
     "context": "link",
-    "string": "Activate"
+    "string": "Attivare"
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3916538164": {
     "context": "section header",
-    "string": "App permissions"
+    "string": "Permessi dell' App"
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_846582072": {
     "context": "apps about permissions",
@@ -472,7 +462,7 @@
   },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
     "context": "dialog header",
-    "string": "Delete App"
+    "string": "Cancella Applicazione"
   },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_330001535": {
     "context": "delete app",
@@ -492,15 +482,15 @@
   },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_3375237564": {
     "context": "button",
-    "string": "Back to homepage"
+    "string": "Torna alla Homepage"
   },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_127674832": {
     "context": "app data privacy link",
-    "string": "Learn more about data privacy"
+    "string": "Informazioni sulla Privacy"
   },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_2538706256": {
     "context": "install button",
-    "string": "Install App"
+    "string": "Installa App"
   },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_2936990163": {
     "context": "install app permissions",
@@ -516,7 +506,7 @@
   },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_3916538164": {
     "context": "section header",
-    "string": "App permissions"
+    "string": "Permessi dell' App"
   },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
     "context": "section header",
@@ -524,7 +514,7 @@
   },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_2398081356": {
     "context": "retry installation",
-    "string": "Retry"
+    "string": "Riprova"
   },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_2868351060": {
     "context": "app installation error",
@@ -695,7 +685,7 @@
   },
   "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
     "context": "window title",
-    "string": "Install App"
+    "string": "Installa App"
   },
   "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
     "context": "app has been installed",
@@ -750,6 +740,10 @@
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
     "context": "product attribute type",
     "string": "A discesa"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1376373679": {
+    "context": "file attribute type",
+    "string": "File"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
@@ -828,6 +822,24 @@
     "context": "attribute's label'",
     "string": "Etichetta Predefinita"
   },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_205334083": {
+    "string": "Define where this attribute should be used in Saleor system"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3829816432": {
+    "context": "section header",
+    "string": "Organizzazione"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3835822980": {
+    "string": "Attribute Class"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_contentAttribute": {
+    "context": "attribute type",
+    "string": "Content Attribute"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_productAttribute": {
+    "context": "attribute type",
+    "string": "Product Attribute"
+  },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
     "string": "Crea Nuovo Attributo"
@@ -844,13 +856,16 @@
     "context": "attribute properties regarding dashboard",
     "string": "Proprietà Dashboard"
   },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3135366329": {
+    "context": "attribute visibility in storefront",
+    "string": "Public"
+  },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
     "context": "attribute position in storefront filters",
     "string": "Posizione nella navigazione sfaccettata"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3876764312": {
-    "context": "attribute",
-    "string": "Visibile sulla Pagina Prodotto del Negozio"
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3758203740": {
+    "string": "If enabled, attribute will be accessible to customers."
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
     "string": "Se attivato questo attributo può essere usato come colonna nella tabella prodotto."
@@ -1064,13 +1079,9 @@
     "context": "product type",
     "string": "Tipologia"
   },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
-    "context": "product",
-    "string": "Non pubblicato"
-  },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3640454975": {
-    "context": "product status",
-    "string": "Pubblicato"
+  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3326160357": {
+    "context": "availability status",
+    "string": "Disponibilità"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_636461959": {
     "context": "product",
@@ -1150,6 +1161,128 @@
     "context": "dialog title",
     "string": "Elimina categorie"
   },
+  "src_dot_channels": {
+    "context": "channels section name",
+    "string": "Channels"
+  },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_2257704694": {
+    "context": "delete channel",
+    "string": "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
+  },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_2342703674": {
+    "context": "dialog header",
+    "string": "Select Channel"
+  },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_2405647976": {
+    "context": "dialog header",
+    "string": "Delete Channel"
+  },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_777038435": {
+    "context": "delete channel",
+    "string": "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
+  },
+  "src_dot_channels_dot_components_dot_ChannelDeleteDialog_dot_863901": {
+    "context": "currency channel",
+    "string": "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it."
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_1223259680": {
+    "context": "channel settings",
+    "string": "Channel Settings"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_1843613796": {
+    "context": "selected currency",
+    "string": "Selected Currency"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_2864204643": {
+    "context": "button",
+    "string": "Copiato"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3478065224": {
+    "context": "channel slug",
+    "string": "Slug"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3511613983": {
+    "context": "channel name",
+    "string": "Channel Name"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_383867403": {
+    "context": "button",
+    "string": "Copy"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3873626327": {
+    "context": "channel currency",
+    "string": "Currency"
+  },
+  "src_dot_channels_dot_components_dot_ChannelPickerDialog_dot_2423186459": {
+    "context": "dialog header",
+    "string": "Select a channel"
+  },
+  "src_dot_channels_dot_components_dot_ChannelPickerDialog_dot_507892781": {
+    "context": "select label",
+    "string": "Channel name"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1004218338": {
+    "context": "inactive",
+    "string": "Inattivo"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1756106276": {
+    "context": "status",
+    "string": "Stato"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1782042241": {
+    "context": "deactivate",
+    "string": "Disattivare"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_2605883031": {
+    "context": "channel status title",
+    "string": "Channel Status"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_3247064221": {
+    "context": "active",
+    "string": "Attivo"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_3865193889": {
+    "context": "activate",
+    "string": "Attivare"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3511613983": {
+    "context": "channel name",
+    "string": "Channel Name"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4190792473": {
+    "context": "table actions",
+    "string": "Azioni"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4224047662": {
+    "context": "button",
+    "string": "Create Channel"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_2071399707": {
+    "context": "currency code select",
+    "string": "{code} - {countries}"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_4169662653": {
+    "context": "channel create",
+    "string": "New Channel"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_4224047662": {
+    "context": "window title",
+    "string": "Create Channel"
+  },
+  "src_dot_channels_dot_views_dot_ChannelDetails_dot_1742743610": {
+    "context": "window title",
+    "string": "Channel details"
+  },
+  "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
+    "string": "Channel deleted"
+  },
+  "src_dot_chooseFile": {
+    "context": "button",
+    "string": "Choose file"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Azzera"
@@ -1157,10 +1290,6 @@
   "src_dot_collections": {
     "context": "collections section name",
     "string": "Collezioni"
-  },
-  "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
-    "context": "collection",
-    "string": "sarà visibile da {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_643174786": {
     "context": "collection label",
@@ -1176,14 +1305,6 @@
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_951411809": {
     "context": "page header",
     "string": "Aggiungi Collezione"
-  },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
-    "context": "collection",
-    "string": "sarà visibile da {date}"
-  },
-  "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2906897537": {
-    "context": "switch button",
-    "string": "Evidenziato in Home"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_643174786": {
     "context": "collection label",
@@ -1230,10 +1351,6 @@
   "src_dot_collections_dot_components_dot_CollectionList_dot_2137803833": {
     "string": "Nessuna collezione trovata"
   },
-  "src_dot_collections_dot_components_dot_CollectionList_dot_2341910657": {
-    "context": "collection is not published",
-    "string": "Non pubblicato"
-  },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2527742754": {
     "string": "N. di Prodotti"
   },
@@ -1244,10 +1361,6 @@
     "context": "collection availability",
     "string": "Disponibilità"
   },
-  "src_dot_collections_dot_components_dot_CollectionList_dot_3640454975": {
-    "context": "collection is published",
-    "string": "Pubblicato"
-  },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
     "string": "Nessun prodotto trovato"
   },
@@ -1255,13 +1368,9 @@
     "context": "product type",
     "string": "Tipologia"
   },
-  "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Non pubblicato"
-  },
-  "src_dot_collections_dot_components_dot_CollectionProducts_dot_3640454975": {
-    "context": "product is published",
-    "string": "Pubblicato"
+  "src_dot_collections_dot_components_dot_CollectionProducts_dot_3326160357": {
+    "context": "product availability",
+    "string": "Disponibilità"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_4114667680": {
     "context": "products in collection",
@@ -1290,6 +1399,9 @@
   "src_dot_collections_dot_views_dot_3482612628": {
     "string": "Prodotti eliminati dalla collezione"
   },
+  "src_dot_collections_dot_views_dot_3576236500": {
+    "string": "Manage Collection Channel Availability"
+  },
   "src_dot_collections_dot_views_dot_3791354625": {
     "context": "dialog title",
     "string": "Rimuovi prodotti dalla collezione"
@@ -1313,30 +1425,8 @@
     "context": "dialog title",
     "string": "Elimina immagine"
   },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_1547167026": {
-    "context": "publish collections",
-    "string": "Pubblicato"
-  },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_1944626595": {
-    "string": "{counter,plural,one {Sei sicuro di voler impostare non pubblicata questa collezione?} other {Sei sicuro di voler impostare non pubblicato {displayQuantity} collezioni?}}"
-  },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_2237014112": {
-    "context": "unpublish collections",
-    "string": "Non pubblicare"
-  },
   "src_dot_collections_dot_views_dot_CollectionList_dot_2491832187": {
     "string": "{counter,plural,one {Sei sicuro di voler eliminare questa collezione?} other {Sei sicuro di voler eliminare {displayQuantity} collezioni?}}"
-  },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_2637364047": {
-    "context": "dialog title",
-    "string": "Collezioni non pubblicate"
-  },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_2756013640": {
-    "string": "{counter,plural,one {Sei sicuro di voler pubblicare questa collezione?} other {Sei sicuro di voler pubblicare {displayQuantity} collezioni?}}"
-  },
-  "src_dot_collections_dot_views_dot_CollectionList_dot_2823425739": {
-    "context": "dialog title",
-    "string": "Pubblica ccollezioni"
   },
   "src_dot_collections_dot_views_dot_CollectionList_dot_3817188998": {
     "context": "dialog title",
@@ -1385,20 +1475,29 @@
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Codice area"
   },
-  "src_dot_components_dot_AppLayout_dot_21332146": {
-    "context": "button",
-    "string": "Esci"
-  },
-  "src_dot_components_dot_AppLayout_dot_248888005": {
-    "context": "button",
-    "string": "Settaggi Account"
-  },
   "src_dot_components_dot_AppStatus_dot_1624959454": {
     "string": "If you want to disable this App please uncheck the box below."
   },
   "src_dot_components_dot_AppStatus_dot_1750277107": {
     "context": "section header",
     "string": "App Status"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
+    "context": "button",
+    "string": "Assegna Attributi"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
+    "context": "dialog header",
+    "string": "Assegna attributo"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
+    "string": "Nessun risultato trovato"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_524117994": {
+    "string": "Cerca per nome attributo"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
+    "string": "Cerca Attributi"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
@@ -1422,7 +1521,7 @@
   },
   "src_dot_components_dot_AssignContainerDialog_dot_1731102929": {
     "context": "button",
-    "string": "Assign"
+    "string": "Assegna"
   },
   "src_dot_components_dot_AssignProductDialog_dot_2100305525": {
     "context": "button",
@@ -1438,24 +1537,135 @@
     "context": "dialog header",
     "string": "Assegna Prodotto"
   },
+  "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
+    "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "src_dot_components_dot_Attributes_dot_attributesNumber": {
+    "context": "number of attributes",
+    "string": "{number} Attributi"
+  },
+  "src_dot_components_dot_Attributes_dot_header": {
+    "context": "attributes, section header",
+    "string": "Attributi"
+  },
+  "src_dot_components_dot_Attributes_dot_multipleValueLable": {
+    "context": "attribute values",
+    "string": "Valori"
+  },
+  "src_dot_components_dot_Attributes_dot_valueLabel": {
+    "context": "attribute value",
+    "string": "Valore"
+  },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "Nessun risultato"
   },
   "src_dot_components_dot_AvailabilityCard_dot_1306298759": {
     "context": "product availability",
-    "string": "Available for purchase"
+    "string": "Disponibile per l'acquisto"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_2162667201": {
+    "context": "channel publication date",
+    "string": "Visible since {date}"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_2232321263": {
+    "context": "product publication date label",
+    "string": "will become published on {date}"
   },
   "src_dot_components_dot_AvailabilityCard_dot_2938074852": {
     "context": "product available for purchase date",
-    "string": "will become available on {date}"
+    "string": "Sara disponibile a partire da"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_3285520461": {
+    "context": "channel publication date",
+    "string": "Will become available on {date}"
   },
   "src_dot_components_dot_AvailabilityCard_dot_570524410": {
     "context": "product availability date label",
-    "string": "Set availability date"
+    "string": "Imposta la data di disponibilita"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_643174786": {
+    "context": "channel publication status",
+    "string": "Visibile"
+  },
+  "src_dot_components_dot_AvailabilityCard_dot_77815154": {
+    "context": "channel publication status",
+    "string": "Nascosto"
   },
   "src_dot_components_dot_AvailabilityCard_dot_825317195": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_3177750460": {
+    "context": "unassign multiple attributes from item",
+    "string": "{counter,plural,one {Are you sure you want to unassign this attribute from {itemTypeName}?} other {Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_1528830621": {
+    "string": "Select channels you want for {contentType} to be available on"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_1866672276": {
+    "string": "No Channels found"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_3488518738": {
+    "string": "Select all channels"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_3754190292": {
+    "string": "Channels A to Z"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityContent_dot_4243012684": {
+    "string": "Search through channels"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
+    "context": "product channel publication status",
+    "string": "nascosta"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1484966255": {
+    "context": "product status title",
+    "string": "Available in {count}/{allCount}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
+    "context": "product channel  publication date",
+    "string": "published since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
+    "context": "product channel publication date",
+    "string": "Will become available on {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
+    "context": "product status",
+    "string": "Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_1311467573": {
+    "string": "Show in product listings"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_1815688500": {
+    "context": "date",
+    "string": "da {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2060790769": {
+    "context": "publish on date",
+    "string": "Publicato il"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2264302389": {
+    "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2699516026": {
+    "context": "available on date",
+    "string": "Set available on"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_292404896": {
+    "string": "Imposta la data di pubblicazione"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_3326160357": {
+    "context": "section header",
+    "string": "Disponibilità"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_370220662": {
+    "context": "channels availability text",
+    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
+    "context": "section header button",
+    "string": "Gestisci"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -1722,7 +1932,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createPermissionGroup": {
     "context": "button",
-    "string": "Create Permission Group"
+    "string": "Crea un gruppo con permessi"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createProduct": {
     "context": "button",
@@ -1782,30 +1992,11 @@
     "context": "button",
     "string": "Torna alla dashboard"
   },
+  "src_dot_components_dot_PriceField_dot_4072537038": {
+    "string": "Price cannot be lower than 0"
+  },
   "src_dot_components_dot_RadioGroupField_dot_4205644805": {
     "string": "Nessun risultato trovato"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_1603794322": {
-    "context": "dialog header",
-    "string": "Aggiungi collegamento immagine"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_2049070632": {
-    "context": "replace image, button",
-    "string": "Ripiazza"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_2160163587": {
-    "context": "button",
-    "string": "Aggiungi o Modifica il Collegamento"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_286109898": {
-    "context": "rich text error",
-    "string": "Contenuto non valido"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_2925475978": {
-    "string": "URL collegato"
-  },
-  "src_dot_components_dot_RichTextEditor_dot_4035057905": {
-    "string": "URL Immagine"
   },
   "src_dot_components_dot_RowNumberSelect_dot_1154361791": {
     "string": "Numero di Righe:"
@@ -1875,6 +2066,18 @@
   "src_dot_components_dot_Timeline_dot_3028189627": {
     "string": "Lascia il tuo commento qui..."
   },
+  "src_dot_components_dot_UserChip_dot_21332146": {
+    "context": "button",
+    "string": "Esci"
+  },
+  "src_dot_components_dot_UserChip_dot_248888005": {
+    "context": "button",
+    "string": "Settaggi Account"
+  },
+  "src_dot_components_dot_UserChip_dot_85001470": {
+    "context": "button",
+    "string": "Enable Dark Mode"
+  },
   "src_dot_components_dot_VisibilityCard_dot_1311467573": {
     "string": "Show in product listings"
   },
@@ -1936,7 +2139,7 @@
     "string": "Varie"
   },
   "src_dot_configuration_dot_1440737903": {
-    "string": "Shipping Settings"
+    "string": "Configurazione Spedizioni"
   },
   "src_dot_configuration_dot_1742602794": {
     "string": "Attributes and Product Types"
@@ -1944,8 +2147,14 @@
   "src_dot_configuration_dot_3140151600": {
     "string": "Impostazioni Staff"
   },
+  "src_dot_configuration_dot_3351299924": {
+    "string": "Content Management"
+  },
   "src_dot_configuration_dot_3655543906": {
     "string": "Impostazioni Prodotto"
+  },
+  "src_dot_configuration_dot_887806978": {
+    "string": "Multichannel"
   },
   "src_dot_confirm": {
     "context": "button",
@@ -2105,10 +2314,6 @@
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_joinDate": {
     "context": "customer",
     "string": "Data di Iscrizione"
-  },
-  "src_dot_customers_dot_components_dot_CustomerListPage_dot_moneySpent": {
-    "context": "customer",
-    "string": "Soldi Spesi"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_numberOfOrders": {
     "string": "Numero di Ordini"
@@ -2285,16 +2490,12 @@
     "context": "button",
     "string": "Assegna Prodotti"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Non pubblicato"
-  },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
     "string": "Nome Prodotto"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3640454975": {
-    "context": "product is published",
-    "string": "Pubblicato"
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3326160357": {
+    "context": "product availability",
+    "string": "Disponibilità"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_4257289053": {
     "string": "Tipologia di Prodotto"
@@ -2399,6 +2600,17 @@
   "src_dot_discounts_dot_components_dot_SaleValue_dot_1205967018": {
     "context": "sale discount",
     "string": "Valore Sconto"
+  },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_1615342575": {
+    "context": "channels sale info",
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_discounts_dot_components_dot_SaleValue_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
   },
   "src_dot_discounts_dot_components_dot_VoucherCreatePage_dot_1357216572": {
     "context": "page header",
@@ -2529,6 +2741,13 @@
   "src_dot_discounts_dot_components_dot_VoucherList_dot_79160621": {
     "string": "Nessun voucher trovato"
   },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1148029984": {
+    "context": "column title",
+    "string": "Valore"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_2746532349": {
     "context": "voucher requirements, header",
     "string": "Requisiti Minimi"
@@ -2540,6 +2759,13 @@
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_3740704788": {
     "context": "voucher requirement",
     "string": "Quantità minima di oggetti"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
   },
   "src_dot_discounts_dot_components_dot_VoucherRequirements_dot_653777456": {
     "context": "voucher requirement",
@@ -2581,6 +2807,10 @@
     "context": "voucher discount type",
     "string": "Importo Fisso"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_1134347598": {
+    "context": "column title",
+    "string": "Prezzo"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1148029984": {
     "context": "section header",
     "string": "Valore"
@@ -2592,11 +2822,21 @@
     "context": "voucher application, switch button",
     "string": "Solo una volta per ordine"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_1615342575": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1960678372": {
     "string": "Informazioni Specifiche Voucher"
   },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_4097816011": {
+    "string": "No channels found"
+  },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_4189095909": {
     "string": "Se questa opzione è disabilitata, lo sconto verrà contato per ogni prodotto idoneo"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherValue_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
   },
   "src_dot_discounts_dot_order": {
     "context": "voucher discount",
@@ -2610,69 +2850,49 @@
     "context": "voucher discount",
     "string": "Spedizione"
   },
-  "src_dot_discounts_dot_views_dot_1162257691": {
-    "string": "Voucher eliminato"
+  "src_dot_discounts_dot_views_dot_SaleCreate_dot_3707049729": {
+    "string": "Offerta creata correttamente"
   },
-  "src_dot_discounts_dot_views_dot_1402402714": {
-    "context": "dialog header",
-    "string": "Rimuovi Collezioni Dal Voucher"
+  "src_dot_discounts_dot_views_dot_SaleCreate_dot_480188715": {
+    "string": "Manage Sales Channel Availability"
   },
-  "src_dot_discounts_dot_views_dot_1457489953": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1457489953": {
     "context": "dialog content",
     "string": "Sei sicuro di voler cancellare {saleName}?"
   },
-  "src_dot_discounts_dot_views_dot_1827854264": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1827854264": {
     "context": "dialog header",
     "string": "Rimuovi Categorie dall'Offerta"
   },
-  "src_dot_discounts_dot_views_dot_1952217501": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1952217501": {
     "context": "dialog header",
     "string": "Rimuovi Collezioni Dall'Offerta"
   },
-  "src_dot_discounts_dot_views_dot_2072403265": {
-    "context": "dialog header",
-    "string": "Rimuovi Prodotti Dall'Offerta"
-  },
-  "src_dot_discounts_dot_views_dot_2353723060": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2353723060": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Sei sicuro di voler rimuovere questa categoria?} other {Sei sicuro di voler rimuovere {displayQuantity} categorie?}}"
+    "string": "{counter,plural,one {Are you sure you want to unassign this category?} other {Are you sure you want to unassign {displayQuantity} categories?}}"
   },
-  "src_dot_discounts_dot_views_dot_2534378844": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2534378844": {
     "string": "Offerta rimossa"
   },
-  "src_dot_discounts_dot_views_dot_2669520431": {
-    "context": "dialog header",
-    "string": "Rimuovi Categorie Dal Voucher"
-  },
-  "src_dot_discounts_dot_views_dot_3215481647": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3215481647": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Sei sicuro di voler rimuovere questo prodotto?} other {Sei sicuro di voler rimuovere {displayQuantity} prodotti?}}"
+    "string": "{counter,plural,one {Are you sure you want to unassign this product?} other {Are you sure you want to unassign {displayQuantity} products?}}"
   },
-  "src_dot_discounts_dot_views_dot_3261917848": {
-    "context": "dialog content",
-    "string": "Sei sicuro di voler cancellare {voucherCode}?"
-  },
-  "src_dot_discounts_dot_views_dot_3395246518": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3395246518": {
     "context": "dialog header",
     "string": "Rimuovi Prodotti Dall'Offerta"
   },
-  "src_dot_discounts_dot_views_dot_3707049729": {
-    "string": "Offerta creata correttamente"
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3823295269": {
+    "string": "Manage Channel Availability"
   },
-  "src_dot_discounts_dot_views_dot_506030254": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_506030254": {
     "context": "dialog header",
     "string": "Elimina Offerta"
   },
-  "src_dot_discounts_dot_views_dot_655651329": {
-    "string": "Voucher creato correttamente"
-  },
-  "src_dot_discounts_dot_views_dot_767268203": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_767268203": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Sei sicuro di voler rimuovere questa collezione?} other {Sei sicuro di voler rimuovere {displayQuantity} collezioni?}}"
-  },
-  "src_dot_discounts_dot_views_dot_895379508": {
-    "context": "dialog header",
-    "string": "Elimina Offerta"
+    "string": "{counter,plural,one {Are you sure you want to unassign this collection?} other {Are you sure you want to unassign {displayQuantity} collections?}}"
   },
   "src_dot_discounts_dot_views_dot_SaleList_dot_2809303671": {
     "context": "dialog header",
@@ -2681,6 +2901,50 @@
   "src_dot_discounts_dot_views_dot_SaleList_dot_372098008": {
     "context": "dialog content",
     "string": "{counter,plural,one {Sei sicuro di voler eliminare questa offerta?} other {Sei sicuro di voler eliminare {displayQuantity} offerte?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherCreate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherCreate_dot_655651329": {
+    "string": "Voucher creato correttamente"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1162257691": {
+    "string": "Voucher eliminato"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1402402714": {
+    "context": "dialog header",
+    "string": "Rimuovi Collezioni Dal Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2072403265": {
+    "context": "dialog header",
+    "string": "Rimuovi Prodotti Dal Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2353723060": {
+    "context": "dialog content",
+    "string": "{counter,plural,one {Are you sure you want to unassign this category?} other {Are you sure you want to unassign {displayQuantity} categories?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2669520431": {
+    "context": "dialog header",
+    "string": "Rimuovi Categorie Dal Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3215481647": {
+    "context": "dialog content",
+    "string": "{counter,plural,one {Are you sure you want to unassign this product?} other {Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3261917848": {
+    "context": "dialog content",
+    "string": "Sei sicuro di voler cancellare {voucherCode}?"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_767268203": {
+    "context": "dialog content",
+    "string": "{counter,plural,one {Are you sure you want to unassign this collection?} other {Are you sure you want to unassign {displayQuantity} collections?}}"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_895379508": {
+    "context": "dialog header",
+    "string": "Elimina Voucher"
   },
   "src_dot_discounts_dot_views_dot_VoucherList_dot_2983742638": {
     "context": "dialog content",
@@ -2717,6 +2981,10 @@
   },
   "src_dot_endHour": {
     "string": "Ora Fine"
+  },
+  "src_dot_exchangeRates": {
+    "context": "Manage and Update your warehouse information",
+    "string": "Exchange Rates"
   },
   "src_dot_firstName": {
     "string": "Nome"
@@ -2777,6 +3045,10 @@
     "context": "orders section name",
     "string": "Ordini"
   },
+  "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_1243773440": {
+    "context": "section header",
+    "string": "Sales channel"
+  },
   "src_dot_orders_dot_components_dot_OrderAddressEditDialog_dot_3278396777": {
     "context": "dialog header",
     "string": " Modifica Indirizzo di Spedizione"
@@ -2801,6 +3073,10 @@
   },
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+  },
+  "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
+    "context": "section header",
+    "string": "Sales channel"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerNote_dot_1505053535": {
     "string": "Nessuna nota dal cliente"
@@ -2841,6 +3117,10 @@
     "context": "button",
     "string": "Cancella ordine"
   },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_3086420445": {
+    "context": "save button",
+    "string": "confirm order"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
     "string": "Elimina Bozza Ordine"
@@ -2855,21 +3135,12 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1895667608": {
     "string": "Prodotto"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_270371448": {
-    "string": "Product is out of stock"
-  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2796503714": {
     "context": "quantity of ordered products",
     "string": "Quantità"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_2963336581": {
-    "string": "Product is unavailable to purchase"
-  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_546865199": {
     "string": "Nessun Prodotto aggiunto all'Ordine"
-  },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_59548500": {
-    "string": "Product is hidden"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_878013594": {
     "context": "total price of ordered products",
@@ -2963,7 +3234,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_3244948255": {
     "context": "header",
-    "string": "Items ready to ship"
+    "string": "Prodotto pronto per la spedizione"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_3620521256": {
     "context": "page header",
@@ -2974,11 +3245,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_4251997263": {
     "context": "checkbox",
-    "string": "Send shipment details to customer"
+    "string": "Invia i dettagli della spedizione al cliente"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_580490159": {
     "context": "page header with order number",
-    "string": "Order #{orderNumber}"
+    "string": "Ordine Numero"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_693960049": {
     "context": "product's sku",
@@ -3037,6 +3308,10 @@
     "context": "fulfillment group tracking number",
     "string": "Modifica tracciamento"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2567258278": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
     "context": "ordered product quantity",
     "string": "Quantità"
@@ -3068,9 +3343,23 @@
     "context": "order line total price",
     "string": "Totale"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
+    "context": "transaction reference",
+    "string": "Transaction Reference {transactionReference}"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1230178536": {
     "context": "order history message",
     "string": "Indirizzo ordine aggiornato"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_123236698": {
+    "string": "Shipment was refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1322321687": {
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_1463685940": {
+    "context": "order history message",
+    "string": "Order was marked as paid"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1521936480": {
     "context": "order history message",
@@ -3120,6 +3409,10 @@
     "context": "order history message",
     "string": "L'ordine è stato interamente pagato"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_276183305": {
+    "context": "order history message",
+    "string": "Order was confirmed"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2770854455": {
     "context": "order history message",
     "string": "Pagamento catturato"
@@ -3134,11 +3427,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3237374063": {
     "context": "order history message",
-    "string": "Payment was authorized"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
-    "context": "order history message",
-    "string": "Ordini segnati come Pagato"
+    "string": "Pagamento autorizzato"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3453124210": {
     "context": "order history message",
@@ -3151,6 +3440,10 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3506022286": {
     "context": "order history message",
     "string": "Prodotti aggiunti alla bozza d'ordine"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3731274949": {
+    "context": "order history message",
+    "string": "Order was refunded by {refundedBy}"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
     "context": "order history message",
@@ -3169,7 +3462,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4121987561": {
     "context": "order history message",
-    "string": "Order refund information was sent to customer"
+    "string": "Informazioni sul rimborso inviate al cliente"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4265697648": {
     "context": "order history message",
@@ -3178,6 +3471,9 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4266665081": {
     "context": "order history message",
     "string": "Pagamento fallito"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_492197448": {
+    "string": "Products refunded"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_493321552": {
     "context": "order history message",
@@ -3225,6 +3521,10 @@
     "context": "generate invoice button",
     "string": "Generate"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_2225897825": {
+    "context": "button",
+    "string": "Order Settings"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
     "string": "Crea ordine"
@@ -3269,8 +3569,15 @@
   "src_dot_orders_dot_components_dot_OrderList_dot_898333473": {
     "string": "Nessun ordine trovato"
   },
-  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_2823153104": {
-    "string": "Sei sicuro di voler marcare questo ordine come pagato?"
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_1739834732": {
+    "context": "transaction reference",
+    "string": "Transaction reference"
+  },
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_1758712563": {
+    "string": "Please provide a transaction reference using the input below:"
+  },
+  "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_2105685861": {
+    "string": "You're going to mark this order as paid."
   },
   "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_4196844912": {
     "context": "dialog header",
@@ -3279,10 +3586,6 @@
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_1466130374": {
     "context": "dialog header",
     "string": "Cattura Pagamento"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_250371749": {
-    "context": "dialog header",
-    "string": "Rimborsa Pagamento"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_75546233": {
     "context": "amount of refunded money",
@@ -3294,6 +3597,10 @@
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_3089049828": {
     "context": "dialog header",
     "string": "Annulla Pagamento"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_1322321687": {
+    "context": "order payment",
+    "string": "Refunded amount"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_1325966144": {
     "context": "order shipping method name",
@@ -3366,6 +3673,181 @@
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "Nessun prodotto corrispondente alla richiesta"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1580639738": {
+    "context": "order refund amount",
+    "string": "Proposed refund amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1705174606": {
+    "context": "order refund amount",
+    "string": "Max Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1734445951": {
+    "context": "order refund amount",
+    "string": "Refund total amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2045860028": {
+    "context": "order refund amount",
+    "string": "Authorized Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2854815744": {
+    "context": "order refund amount",
+    "string": "Previously refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2907874606": {
+    "context": "order refund amount",
+    "string": "Selected products value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_79173946": {
+    "context": "order refund amount",
+    "string": "Shipment cost"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_120912052": {
+    "context": "order refund amount",
+    "string": "Refunded items can’t be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_159210811": {
+    "string": "Amount must be bigger than 0"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2256869831": {
+    "context": "section header",
+    "string": "Refunded Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2845258362": {
+    "context": "order refund amount, input button",
+    "string": "Rimborsa"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4033685232": {
+    "string": "Amount cannot be bigger than max refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_40513382": {
+    "context": "order refund amount, input button",
+    "string": "Refund {currency} {amount}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4224226791": {
+    "context": "label",
+    "string": "Automatic Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_508357513": {
+    "context": "label",
+    "string": "Manual Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_553737700": {
+    "context": "checkbox",
+    "string": "Refund shipment costs"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_75546233": {
+    "context": "order refund amount, input label",
+    "string": "Importo"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
+    "context": "tabel column header",
+    "string": "Prezzo"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1657559629": {
+    "string": "Nessun prodotto trovato"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1895667608": {
+    "context": "tabel column header",
+    "string": "Prodotto"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_3536696555": {
+    "context": "tabel column header",
+    "string": "Refunded Qty"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_3988345170": {
+    "context": "button",
+    "string": "Set maximal quantities"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_615325604": {
+    "context": "section header",
+    "string": "Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_878013594": {
+    "context": "tabel column header",
+    "string": "Totale"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_937914544": {
+    "context": "error message",
+    "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_194531545": {
+    "context": "page header",
+    "string": "Order no. {orderNumber} - Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_3620521256": {
+    "context": "page header",
+    "string": "Ordine"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_580490159": {
+    "context": "page header with order number",
+    "string": "Ordine Numero"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1134347598": {
+    "context": "tabel column header",
+    "string": "Prezzo"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1404351240": {
+    "context": "section header",
+    "string": "Unfulfilled Products"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1657559629": {
+    "string": "Nessun prodotto trovato"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1895667608": {
+    "context": "tabel column header",
+    "string": "Prodotto"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_2271032876": {
+    "context": "section notice",
+    "string": "Unfulfilled products will be restocked"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_3536696555": {
+    "context": "tabel column header",
+    "string": "Refunded Qty"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_3988345170": {
+    "context": "button",
+    "string": "Set maximal quantities"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_878013594": {
+    "context": "tabel column header",
+    "string": "Totale"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_937914544": {
+    "context": "error message",
+    "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_1275363773": {
+    "context": "section header",
+    "string": "Refund Order"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_refundMiscellaneous": {
+    "context": "refund type",
+    "string": "Miscellaneous Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_refundProducts": {
+    "context": "refund type",
+    "string": "Refund Products"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
+    "context": "header",
+    "string": "Order settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_3782847217": {
+    "string": "General Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_1391686013": {
+    "context": "section header",
+    "string": "Configurazioni"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_3281882935": {
+    "context": "checkbox label description",
+    "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_513393066": {
+    "context": "checkbox label",
+    "string": "Automatically confirm all orders"
   },
   "src_dot_orders_dot_components_dot_OrderShippingMethodEditDialog_dot_3369240294": {
     "context": "dialog header",
@@ -3443,13 +3925,10 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
     "context": "window title",
-    "string": "Order #{orderNumber}"
+    "string": "Ordine Numero"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Metodo di spedizione aggiornato correttamente"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_667274681": {
-    "string": "Pagamento rimborsato correttamente"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_694622335": {
     "context": "window title",
@@ -3486,6 +3965,120 @@
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
     "string": "Bozza ordine creata correttamente"
+  },
+  "src_dot_orders_dot_views_dot_OrderRefund_dot_1366101924": {
+    "context": "order refunded success message",
+    "string": "Refunded Items"
+  },
+  "src_dot_pageTypes": {
+    "context": "page types section name",
+    "string": "Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1192828581": {
+    "string": "Nessun attributo trovato"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1228425832": {
+    "string": "Nome attributo"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1656462109": {
+    "context": "button",
+    "string": "Assegna Attributo"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_3478065224": {
+    "context": "attribute internal name",
+    "string": "Slug"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_4266703515": {
+    "context": "delete page types with its pages",
+    "string": "{counter,plural,one {Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other {Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_69987032": {
+    "context": "dialog header",
+    "string": "Delete Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeBulkDeleteDialog_dot_8271141": {
+    "context": "delete page types",
+    "string": "{counter,plural,one {Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other {Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeCreatePage_dot_4047854353": {
+    "context": "header",
+    "string": "Create Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_2364900868": {
+    "context": "delete page type with its pages",
+    "string": "Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3120835055": {
+    "context": "dialog header",
+    "string": "Delete Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3734861990": {
+    "context": "delete page type",
+    "string": "Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
+    "string": "These are general information about this Content Type."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1509432322": {
+    "context": "section header",
+    "string": "Metadata"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_3466659718": {
+    "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_613275198": {
+    "context": "section header",
+    "string": "Content Attributes"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeDetails_dot_1631499902": {
+    "string": "Content Type Name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
+    "context": "button",
+    "string": "create page type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793828289": {
+    "string": "Search Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_464566131": {
+    "context": "tab name",
+    "string": "All Page Types"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_1631499902": {
+    "context": "page type name",
+    "string": "Content Type Name"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
+    "string": "No page types found"
+  },
+  "src_dot_pageTypes_dot_views_dot_2634056946": {
+    "context": "dialog header",
+    "string": "Unassign Attribute from Page Type"
+  },
+  "src_dot_pageTypes_dot_views_dot_3442954831": {
+    "string": "Page type deleted"
+  },
+  "src_dot_pageTypes_dot_views_dot_870815507": {
+    "context": "unassign attribute from page type, button",
+    "string": "Rimuovi"
+  },
+  "src_dot_pageTypes_dot_views_dot_891131033": {
+    "context": "dialog header",
+    "string": "Unassign Attribute From Page Type"
+  },
+  "src_dot_pageTypes_dot_views_dot_98187848": {
+    "string": "Successfully created page type"
   },
   "src_dot_pages": {
     "context": "pages section name",
@@ -3544,6 +4137,13 @@
   "src_dot_pages_dot_components_dot_PageList_dot_3767550649": {
     "context": "page status",
     "string": "Non Pubblicato "
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_2959504520": {
+    "string": "Content type"
+  },
+  "src_dot_pages_dot_components_dot_PageOrganizeContent_dot_590187004": {
+    "context": "section header",
+    "string": "Organize Content"
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
@@ -3626,7 +4226,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
     "context": "button",
-    "string": "Assign"
+    "string": "Assegna"
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_2986043376": {
     "context": "dialog header",
@@ -3680,7 +4280,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupInfo_dot_2081191949": {
     "context": "text field label",
-    "string": "Group name"
+    "string": "Nome del gruppo"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupListPage_dot_613749311": {
     "context": "button",
@@ -3691,7 +4291,7 @@
     "string": "Permission Group Name"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_2734377620": {
-    "string": "Members"
+    "string": "Membri"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_4190792473": {
     "string": "Azioni"
@@ -3849,30 +4449,6 @@
     "context": "product types section name",
     "string": "Tipologie di Prodotto"
   },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
-    "context": "button",
-    "string": "Assegna Attributi"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
-    "context": "dialog header",
-    "string": "Assegna attributo"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
-    "string": "Nessun risultato trovato"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_524117994": {
-    "string": "Cerca per nome attributo"
-  },
-  "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_902296540": {
-    "string": "Cerca Attributi"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_404238501": {
-    "context": "dialog header",
-    "string": "Rimuovi Attributo dalla Tipologia di Prodotto"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_722498450": {
-    "string": "Sei sicuro di voler rimuovere {attributeName} da {productTypeName}?"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1192828581": {
     "string": "Nessun attributo trovato"
   },
@@ -3894,14 +4470,6 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
     "context": "section header",
     "string": "Attributi Variante"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_2646729060": {
-    "context": "unassign multiple attributes from product type",
-    "string": "{counter,plural,one {Sei sicuro di voler rimuovere questo attributo da {productTypeName}?} other {Sei sicuro di voler rimuovere {attributeQuantity} attributi da {productTypeName}?}}"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_766918870": {
-    "context": "dialog header",
-    "string": "Rimuovi Attributo dalla Tipologia di Prodotto"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
     "context": "delete product type",
@@ -4004,6 +4572,14 @@
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Tipologia di Prodotto eliminato"
   },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_404238501": {
+    "context": "dialog header",
+    "string": "Rimuovi Attributo dalla Tipologia di Prodotto"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_766918870": {
+    "context": "dialog header",
+    "string": "Rimuovi Attributo dalla Tipologia di Prodotto"
+  },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",
     "string": "Non assegnato"
@@ -4011,22 +4587,6 @@
   "src_dot_products": {
     "context": "products section name",
     "string": "Prodotti"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1071548120": {
-    "context": "number of product attributes",
-    "string": "{number} Attributi"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1148029984": {
-    "context": "attribute value",
-    "string": "Valore"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_1207761269": {
-    "context": "attribute values",
-    "string": "Valori"
-  },
-  "src_dot_products_dot_components_dot_ProductAttributes_dot_4153345096": {
-    "context": "product attributes, section header",
-    "string": "Attributi"
   },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Categoria"
@@ -4038,10 +4598,6 @@
     "context": "product organization, header",
     "string": "Organizzazione"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2232321263": {
-    "context": "product publication date label",
-    "string": "will become published on {date}"
-  },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2341910657": {
     "context": "product label",
     "string": "Non pubblicato"
@@ -4052,6 +4608,10 @@
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_3640454975": {
     "context": "product label",
     "string": "Pubblicato"
+  },
+  "src_dot_products_dot_components_dot_ProductDetailsForm_dot_3416636340": {
+    "context": "product rating",
+    "string": "Product Rating"
   },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
@@ -4068,6 +4628,9 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1547327218": {
     "context": "there are more elements of list that are hidden",
     "string": "and {number} more"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1583816707": {
+    "string": "Add all channels"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1890035856": {
     "context": "informations about product organization, header",
@@ -4194,10 +4757,6 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Cerca Prodotti..."
   },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_3640454975": {
-    "context": "product status",
-    "string": "Pubblicato"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_821159718": {
     "context": "tab name",
     "string": "Tutti i prodotti"
@@ -4244,17 +4803,13 @@
     "context": "product type",
     "string": "Tipologia"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
-    "context": "product status",
-    "string": "Non pubblicato"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurabile"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
-    "context": "product status",
-    "string": "Pubblicato"
+  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
+    "context": "product channels",
+    "string": "Disponibilità"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
@@ -4285,14 +4840,6 @@
   "src_dot_products_dot_components_dot_ProductOrganization_dot_4257289053": {
     "string": "Tipologia di Prodotto"
   },
-  "src_dot_products_dot_components_dot_ProductPricing_dot_1099355007": {
-    "context": "product pricing",
-    "string": "Prezzo"
-  },
-  "src_dot_products_dot_components_dot_ProductPricing_dot_1134347598": {
-    "context": "product price",
-    "string": "Prezzo"
-  },
   "src_dot_products_dot_components_dot_ProductShipping_dot_1325966144": {
     "context": "product shipping",
     "string": "Spedizione"
@@ -4307,10 +4854,6 @@
   "src_dot_products_dot_components_dot_ProductStocks_dot_2622674857": {
     "context": "tabel column header",
     "string": "Warehouse Name"
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_2729628316": {
-    "context": "tabel column header",
-    "string": "Quantity Available"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2796503714": {
     "context": "header",
@@ -4339,10 +4882,6 @@
     "context": "checkbox",
     "string": "Override the product type's tax rate"
   },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2232321263": {
-    "context": "product publication date label",
-    "string": "will become published on {date}"
-  },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2341910657": {
     "context": "product label",
     "string": "Non pubblicato"
@@ -4354,16 +4893,24 @@
     "context": "product label",
     "string": "Pubblicato"
   },
-  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
-    "context": "button",
-    "string": "Salva variante"
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesHeader": {
+    "context": "attributes, section header",
+    "string": "Attributi Variante"
   },
-  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_3726089650": {
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesSelectionHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Selection Attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_deleteVariant": {
     "context": "button",
     "string": "Elimina Variante"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_saveVariant": {
+    "context": "button",
+    "string": "Salva variante"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
-    "context": "variant price",
+    "context": "variant price, header",
     "string": "Prezzo"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1346828628": {
@@ -4389,6 +4936,10 @@
     "context": "product attribute values, page title",
     "string": "Choose Values"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2330516954": {
+    "context": "variant channel price",
+    "string": "{channel} Price"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2478977538": {
     "context": "attribute values, variant creation step",
     "string": "Seleziona Valori"
@@ -4403,6 +4954,9 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2783195765": {
     "string": "Applica un prezzo singolo a tutti gli SKU"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2877822536": {
+    "string": "Skip pricing for now"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3387090508": {
     "string": "Applica una giacenza distinta per ogni attributo ad ogni SKU"
@@ -4429,7 +4983,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_520980261": {
     "context": "variant creator summary card header",
-    "string": "Created Variants"
+    "string": "Varianti creati"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_551319747": {
     "string": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
@@ -4495,6 +5049,14 @@
     "context": "variant name",
     "string": "Nuova Variante"
   },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_nonSelectionAttributes": {
+    "context": "attributes, section header",
+    "string": "Attributi Variante"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_selectionAttributesHeader": {
+    "context": "attributes, section header",
+    "string": "Variant Selection Attributes"
+  },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1099355007": {
     "context": "product pricing, section header",
     "string": "Prezzo"
@@ -4502,8 +5064,24 @@
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
     "string": "Prezzo"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
-    "string": "Prezzo di costo"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
+    "context": "tabel column header",
+    "string": "Selling Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2051669917": {
+    "context": "tabel column header",
+    "string": "Cost Price"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
+    "context": "info text",
+    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3511613983": {
+    "context": "tabel column header",
+    "string": "Channel Name"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_4097816011": {
+    "string": "No channels found"
   },
   "src_dot_products_dot_components_dot_ProductVariantSetDefault_dot_3683859003": {
     "context": "set variant as default, button",
@@ -4571,14 +5149,6 @@
     "context": "product variant name",
     "string": "Variante"
   },
-  "src_dot_products_dot_views_dot_1542417144": {
-    "context": "window title",
-    "string": "Crea Prodotto"
-  },
-  "src_dot_products_dot_views_dot_1591632382": {
-    "context": "page header",
-    "string": "Nuovo Prodotto"
-  },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
     "string": "Elimina Immagine"
@@ -4593,12 +5163,23 @@
   "src_dot_products_dot_views_dot_2880386427": {
     "string": "Sei sicuro di voler cancellare questa immagine?"
   },
-  "src_dot_products_dot_views_dot_2899821092": {
-    "string": "Prodotto creato"
-  },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
     "string": "Crea variante"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_1542417144": {
+    "context": "window title",
+    "string": "Crea Prodotto"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_1591632382": {
+    "context": "page header",
+    "string": "Nuovo Prodotto"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_2899821092": {
+    "string": "Prodotto creato"
+  },
+  "src_dot_products_dot_views_dot_ProductCreate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_1204353135": {
     "context": "dialog content",
@@ -4607,30 +5188,6 @@
   "src_dot_products_dot_views_dot_ProductList_dot_1505423810": {
     "context": "waiting for export to end, header",
     "string": "Exporting CSV"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
-    "context": "publish product, button",
-    "string": "Pubblicato"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2036051956": {
-    "context": "dialog content",
-    "string": "{counter,plural,one {Sei sicuro di voler impostare non pubblicato questo prodotto?} other {Sei sicuro di voler impostare non pubblicato {displayQuantity} prodotti?}}"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
-    "context": "unpublish product, button",
-    "string": "Non pubblicare"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2946646245": {
-    "context": "dialog header",
-    "string": "Pubblica Prodotti"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3362608461": {
-    "context": "dialog header",
-    "string": "Prodotti Non Pubblicati"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3518737068": {
-    "context": "dialog content",
-    "string": "{counter,plural,one {Sei sicuro di voler pubblicare questo prodotto?} other {Sei sicuro di voler pubblicare {displayQuantity} prodotti?}}"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
@@ -4651,12 +5208,11 @@
     "context": "delete product",
     "string": "Sei sicuro di voler cancellare {name}?"
   },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
+  },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Prodotto rimosso"
-  },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_671489548": {
-    "context": "snackbar text",
-    "string": "Product availability updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_879305849": {
     "context": "dialog header",
@@ -4668,7 +5224,7 @@
   },
   "src_dot_products_dot_views_dot_ProductVariantCreator_dot_830692292": {
     "context": "window title",
-    "string": "Create Variants"
+    "string": "Creare Varianti"
   },
   "src_dot_properties": {
     "string": "Propietà"
@@ -4724,6 +5280,112 @@
   "src_dot_shipping": {
     "context": "shipping section name",
     "string": "Metodi di Spedizione"
+  },
+  "src_dot_shipping_dot_components_dot_DeleteShippingRateDialog_dot_1502359905": {
+    "context": "dialog header",
+    "string": "Elimina Metodo di Spedizione"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_1063111824": {
+    "context": "max price in channel",
+    "string": "Max. value"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_1449127001": {
+    "string": "Min Value"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_1615342575": {
+    "context": "channels discount info",
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_3989471564": {
+    "context": "card title",
+    "string": "Order Value"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_4226393146": {
+    "context": "price rates info",
+    "string": "Questa tariffa verrà applicata a tutti gli ordine di qualsiasi prezzo"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_507892781": {
+    "context": "channel name",
+    "string": "Channel name"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_58751738": {
+    "string": "Max Value"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_666501915": {
+    "context": "min price in channel",
+    "string": "Min. value"
+  },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_882649212": {
+    "context": "checkbox label",
+    "string": "Non ci sono limiti nel valore"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_1064401942": {
+    "context": "info text",
+    "string": "This rate will apply to all orders"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_2211490913": {
+    "context": "card title",
+    "string": "Order Weight"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_2935375344": {
+    "string": "Min. Order Weight"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_882649212": {
+    "context": "checkbox label",
+    "string": "Non ci sono limiti nel valore"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_959089677": {
+    "string": "Max. Order Weight"
+  },
+  "src_dot_shipping_dot_components_dot_PricingCard_dot_1099355007": {
+    "context": "pricing card title",
+    "string": "Prezzo"
+  },
+  "src_dot_shipping_dot_components_dot_PricingCard_dot_1134347598": {
+    "context": "column title",
+    "string": "Prezzo"
+  },
+  "src_dot_shipping_dot_components_dot_PricingCard_dot_3211447524": {
+    "context": "info text",
+    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
+  },
+  "src_dot_shipping_dot_components_dot_PricingCard_dot_507892781": {
+    "context": "column title",
+    "string": "Channel name"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_2850255786": {
+    "string": "Cerca Prodotti"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_353369701": {
+    "string": "Nessun prodotto corrispondente alla richiesta"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_3756118423": {
+    "context": "dialog header",
+    "string": "Assign Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1737533260": {
+    "string": "No Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_1781179817": {
+    "context": "section header",
+    "string": "Excluded Products"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2100305525": {
+    "context": "button",
+    "string": "Assegna Prodotti"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2697405188": {
+    "string": "Nome Prodotto"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
+    "string": "Azioni"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
+    "string": "Are you sure you want to remove this ZIP-code rule?"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_2944856644": {
+    "context": "header",
+    "string": "Remove ZIP-codes from Shipping Rate"
   },
   "src_dot_shipping_dot_components_dot_ShippingWeightUnitForm_dot_2863708228": {
     "string": "Questa unità verrà usata come principale unità di peso di trasporto"
@@ -4793,89 +5455,22 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_4270729636": {
     "string": "Questa è la zona di spedizione principale. Copre tutte le nazioni per le quali non sono state assegnate ad altre zone di spedizione"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1109610983": {
-    "string": "Nome Zona di Spedizione"
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_579967655": {
+    "string": "Shipping rate name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1337705349": {
-    "string": "Valore Ordine Minimo"
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1161979494": {
+    "context": "page title",
+    "string": "Price Rate Create"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1388947267": {
-    "string": "Questa tariffa sarà applicata a tutti gli ordini di qualsiasi peso"
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1325966144": {
+    "string": "Spedizione"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1397795758": {
-    "context": "add weight based shipping method, dialog header",
-    "string": "Aggiungi Rapporto di Peso"
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_3538551526": {
+    "context": "page title",
+    "string": "Weight Rate Create"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1403365734": {
-    "context": "shipping method price",
-    "string": "Prezzo Tariffa"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1486599614": {
-    "string": "Questo sarà mostrato al cliente al momento del checkout"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1542600502": {
-    "context": "button",
-    "string": "Aggiorna tariffa"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_16061680": {
-    "context": "button",
-    "string": "Crea tariffa"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1878009504": {
-    "string": "Peso Ordine Minimo"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2215090771": {
-    "context": "shipping method, switch button",
-    "string": "Questa è la spedizione gratuita"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2324036635": {
-    "context": "order weight range",
-    "string": "Gamma di peso"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2533614652": {
-    "context": "order price range",
-    "string": "Valore gamma"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2892088870": {
-    "context": "dialog header",
-    "string": "Aggiungi Rapporto di Prezzo"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3213611593": {
-    "context": "shipping method",
-    "string": "Tariffa"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3463567334": {
-    "string": "Valore Massimo Ordine"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3659741519": {
-    "string": "Peso Massimo Ordine"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_382595300": {
-    "context": "shipping method name",
-    "string": "Nome Tariffa"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_3934114933": {
-    "context": "dialog header",
-    "string": "Modifica Tariffa di Prezzo"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_4152709923": {
-    "context": "edit weight based shipping method, dialog header",
-    "string": "Modifica Tariffa Peso"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_4226393146": {
-    "string": "Questa tariffa verrà applicata a tutti gli ordine di qualsiasi prezzo"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_882649212": {
-    "context": "shipping method has no value limits",
-    "string": "Non ci sono limiti nel valore"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_price": {
-    "context": "error message",
-    "string": "Maximum price cannot be lower than minimum"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_weight": {
-    "context": "error message",
-    "string": "Maximum weight cannot be lower than minimum"
+  "src_dot_shipping_dot_components_dot_ShippingZoneRatesPage_dot_1325966144": {
+    "string": "Spedizione"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_1134347598": {
     "context": "shipping method price",
@@ -4923,6 +5518,54 @@
     "context": "input placeholder",
     "string": "Select Warehouse"
   },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_1938537617": {
+    "string": "Please provide range of ZIP codes you want to add to the include/exclude list."
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3099331554": {
+    "context": "add zip code range, button",
+    "string": "Aggiungi"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3529644799": {
+    "context": "range input label",
+    "string": "Zip Codes (Start)"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_4196919717": {
+    "context": "dialog header",
+    "string": "Add ZIP-Codes"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_551327109": {
+    "context": "range input label",
+    "string": "Zip Codes (End)"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1462092303": {
+    "string": "Added ZIP-codes will be excluded from using this delivery methods. If none are added all ZIP-Codes will be able to use that shipping rate"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1605967697": {
+    "context": "action",
+    "string": "Exclude ZIP-codes"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2728850129": {
+    "string": "Only added ZIP-codes will be able to use this shipping rate"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2850315665": {
+    "context": "number of zip code ranges",
+    "string": "{number} ZIP-Code ranges"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_3795380518": {
+    "context": "button",
+    "string": "Add ZIP-Code range"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_4288715411": {
+    "string": "This shipping rate has no ZIP-codes assigned"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_529495587": {
+    "context": "postal codes, header",
+    "string": "ZIP-Codes"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_671838332": {
+    "context": "action",
+    "string": "Include ZIP-codes"
+  },
   "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1325966144": {
     "context": "header",
     "string": "Spedizione"
@@ -4945,6 +5588,22 @@
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_655374584": {
     "string": "Nessuna zona di spedizione trovata"
   },
+  "src_dot_shipping_dot_components_dot_UnassignDialog_dot_1203193503": {
+    "context": "dialog header",
+    "string": "Unassign Products From Shipping"
+  },
+  "src_dot_shipping_dot_components_dot_UnassignDialog_dot_3215481647": {
+    "context": "dialog content",
+    "string": "{counter,plural,one {Are you sure you want to unassign this product?} other {Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "src_dot_shipping_dot_invalid": {
+    "context": "error message",
+    "string": "Value is invalid"
+  },
+  "src_dot_shipping_dot_price": {
+    "context": "error message",
+    "string": "Maximum price cannot be lower than minimum"
+  },
   "src_dot_shipping_dot_views_dot_1005071028": {
     "string": "Sei sicuro di voler rimuovere la zona di spedizione {shippingZoneName}?"
   },
@@ -4960,6 +5619,20 @@
     "context": "dialog content",
     "string": "{counter,plural,one {Sei sicuro di voler eliminare questa zona di spedizione?} other {Sei sicuro di voler eliminare {displayQuantity} zone di spedizione?}}"
   },
+  "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_2710215007": {
+    "context": "zip code range add error text",
+    "string": "Cannot add specified zip codes range."
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_870815507": {
+    "context": "unassign products from shipping method, button",
+    "string": "Rimuovi"
+  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
     "string": "Elimina Zona di Spedizione"
@@ -4968,13 +5641,27 @@
     "context": "unassign country",
     "string": "Sei sicuro di voler cancellare {countryName} da questa zona di spedizione?"
   },
-  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1502359905": {
-    "context": "dialog header",
-    "string": "Elimina Metodo di Spedizione"
-  },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
     "context": "unassign country, dialog header",
     "string": "Rimuovi dalle Zone di Spedizione"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
+    "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_2710215007": {
+    "context": "zip code range add error text",
+    "string": "Cannot add specified zip codes range."
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
+    "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_870815507": {
+    "context": "unassign products from shipping method, button",
+    "string": "Rimuovi"
+  },
+  "src_dot_shipping_dot_weight": {
+    "context": "error message",
+    "string": "Maximum weight cannot be lower than minimum"
   },
   "src_dot_show": {
     "context": "button",
@@ -4998,45 +5685,6 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_529433178": {
     "string": "La descrizione negozio è mostrata nella barra attività dopo il nome del tuo negozio"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_1238948746": {
-    "context": "dialog header",
-    "string": "Aggiungi nuova chiave di autenticazione "
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2237029987": {
-    "string": "Password"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_2446088470": {
-    "context": "authentication provider API key",
-    "string": "Chiave"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_3039841202": {
-    "context": "authentication provider name",
-    "string": "Tipo di autenticazione"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_50561933": {
-    "context": "button",
-    "string": "Aggiungi Autenticazione"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1114030884": {
-    "context": "button",
-    "string": "Aggiungi Chiave"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
-    "context": "authentication provider name",
-    "string": "Tipo di Autenticazione"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_226491688": {
-    "context": "section header",
-    "string": "Chiavi di Autenticazione"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_2446088470": {
-    "context": "authentication provider API key",
-    "string": "Chiave"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_3981699144": {
-    "context": "no authentication provider API keys",
-    "string": "Nessuna cjoave"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1124962330": {
     "string": "Indirizzo Email Mailing"
@@ -5067,9 +5715,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1004240342": {
     "string": "Questo indirizzo verrà utilizzato per generare le fatture e calcolare le spese di spedizione."
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1214877701": {
-    "string": "Metodo di Autenticazione definisce modi aggiuntivi per accedere al tuo ecommerce per i clienti"
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
     "context": "section header",
     "string": "Informazioni Negozio"
@@ -5087,10 +5732,6 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3799756739": {
     "string": "Queste sono informazioni generali sul tuo negozio. Definiscono la URL del negozio e ciò che viene mostrato nella taskbar del browser."
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_4088830385": {
-    "context": "section header",
-    "string": "Metodi di Autenticazione"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
     "string": "Qui troverai tutte le impostazioni sulle emails del tuo negozio. Puoi indicare l'email principale e alcuni contenuti delle tue email."
@@ -5443,15 +6084,6 @@
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1163855804": {
     "string": "Lingue"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1866913828": {
-    "string": "Cerca Offerta"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1930485532": {
-    "string": "Cerca Voucher"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2105464697": {
-    "string": "Cerca Prodotto"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_222873645": {
     "string": "Collezioni"
   },
@@ -5459,35 +6091,26 @@
     "context": "header",
     "string": "Traduzioni in {language}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2559018090": {
-    "string": "Cerca Pagina"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2968663655": {
     "string": "Prodotti"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3287512325": {
     "string": "Pagine"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3420445375": {
-    "string": "Cerca Tipologia di Prodotto"
-  },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3583204912": {
     "string": "Categorie"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3841025483": {
-    "string": "Cerca Categoria"
+  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_3731925413": {
+    "string": "Metodi di spedizione"
   },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_4057224233": {
-    "string": "Cerca Collezione"
+  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_4153345096": {
+    "string": "Attributi"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_487083593": {
     "string": "Vendite"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_749185240": {
     "string": "Voucher"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_765385638": {
-    "string": "Tipologie di Prodotto"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_1136143456": {
     "context": "translation progress",
@@ -5532,24 +6155,16 @@
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Titolo Pagina"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1281101905": {
-    "context": "header",
-    "string": "Traduzione Tipologia di Prodotto \"{productTypeName}\" - {languageCode}"
-  },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1567737068": {
     "context": "attribute values",
     "string": "Valore {number}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2510190956": {
-    "context": "header",
-    "string": "Attributo Prodotto ({attributeName})"
-  },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
     "string": "Nome Attributo"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3538502409": {
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
     "context": "header",
-    "string": "Attributo Variante ({attributeName})"
+    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Descrizione Motore di Ricerca"
@@ -5577,12 +6192,23 @@
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_898281424": {
     "string": "Nome Offerta"
   },
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_3498202636": {
+    "context": "header",
+    "string": "Translation ShippingMethod \"{shippingMethodName}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_99732714": {
+    "string": "ShippingMethod Name"
+  },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2447510181": {
     "context": "header",
     "string": "Traduzione Voucher \"{voucherName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2599922713": {
     "string": "Nome Voucher"
+  },
+  "src_dot_unconfirmed": {
+    "context": "order status",
+    "string": "Unconfirmed"
   },
   "src_dot_undo": {
     "context": "button",
@@ -5651,6 +6277,18 @@
     "context": "error message",
     "string": "Solo i pagamenti pre-autorizzati possono essere acquisiti"
   },
+  "src_dot_utils_dot_errors_dot_channelAlreadyExist": {
+    "string": "This channel has already been created"
+  },
+  "src_dot_utils_dot_errors_dot_channelSameCurrency": {
+    "string": "Currency in both channels must be the same"
+  },
+  "src_dot_utils_dot_errors_dot_channelUnique": {
+    "string": "Slug must be unique"
+  },
+  "src_dot_utils_dot_errors_dot_duplicated": {
+    "string": "The same object cannot be in both lists"
+  },
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"
   },
@@ -5659,7 +6297,7 @@
     "string": "Email address is not set"
   },
   "src_dot_utils_dot_errors_dot_graphqlError": {
-    "string": "API error"
+    "string": "Errore API"
   },
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"
@@ -5680,6 +6318,10 @@
   "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
     "string": "Url has invalid format"
   },
+  "src_dot_utils_dot_errors_dot_lessThanMin": {
+    "context": "error message",
+    "string": "Max value cannot be less than min value"
+  },
   "src_dot_utils_dot_errors_dot_misconfigured": {
     "string": "Plugin is misconfigured and cannot be activated"
   },
@@ -5696,7 +6338,7 @@
   },
   "src_dot_utils_dot_errors_dot_notFound": {
     "context": "error message",
-    "string": "Invoice not found"
+    "string": "Page not found."
   },
   "src_dot_utils_dot_errors_dot_notReady": {
     "context": "error message",
@@ -5727,6 +6369,9 @@
   },
   "src_dot_utils_dot_errors_dot_permissionOutOfScope": {
     "string": "Those permissions are out of your scope"
+  },
+  "src_dot_utils_dot_errors_dot_priceInvalid": {
+    "string": "Product price cannot be lower than 0."
   },
   "src_dot_utils_dot_errors_dot_shippingNotApplicable": {
     "context": "error message",
@@ -5859,6 +6504,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
     "context": "event",
     "string": "Checkout updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1366770851": {
+    "context": "event",
+    "string": "Order confirmed"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
     "context": "event",
@@ -6004,6 +6653,14 @@
   },
   "src_dot_yes": {
     "string": "Sì"
+  },
+  "tableColAllocated": {
+    "context": "table column header, allocated product quantity",
+    "string": "Assegnata"
+  },
+  "tableColQuantity": {
+    "context": "table column header",
+    "string": "Quantità"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",

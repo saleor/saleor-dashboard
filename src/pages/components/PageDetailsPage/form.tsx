@@ -29,7 +29,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -144,10 +144,6 @@ function usePageForm(
     triggerChange
   );
 
-  useEffect(() => {
-    attributesWithNewFileValue.set([]);
-  }, [page]);
-
   // Need to make it function to always have content.current up to date
   const getData = (): PageData => ({
     ...form.data,
@@ -165,9 +161,19 @@ function usePageForm(
     attributesWithNewFileValue: attributesWithNewFileValue.data
   });
 
+  const handleSubmit = async (data: PageData) => {
+    const errors = await onSubmit(data);
+
+    if (!errors?.length && pageExists) {
+      attributesWithNewFileValue.set([]);
+    }
+
+    return errors;
+  };
+
   const submit = () =>
     pageExists
-      ? handleFormSubmit(getSubmitData(), onSubmit, setChanged)
+      ? handleFormSubmit(getSubmitData(), handleSubmit, setChanged)
       : onSubmit(getSubmitData());
 
   return {
