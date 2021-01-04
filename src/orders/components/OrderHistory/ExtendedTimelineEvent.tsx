@@ -34,7 +34,7 @@ const useStyles = makeStyles(
 );
 
 export const productTitles = defineMessages({
-  fulfillment: {
+  fulfillmentRefunded: {
     defaultMessage: "Products refunded",
     description: "event products list title",
     id: "event products list title refunded"
@@ -54,15 +54,18 @@ export const productTitles = defineMessages({
 export const titles = defineMessages({
   fulfillmentRefunded: {
     defaultMessage: "Products were refunded by ",
-    description: "event title"
+    description: "event title",
+    id: "event title refunded"
   },
   fulfillmentReplaced: {
     defaultMessage: "Products were replaced by ",
-    description: "event title"
+    description: "event title",
+    id: "event title replaced"
   },
   fulfillmentReturned: {
     defaultMessage: "Products were returned by",
-    description: "event title"
+    description: "event title",
+    id: "event title returned"
   }
 });
 
