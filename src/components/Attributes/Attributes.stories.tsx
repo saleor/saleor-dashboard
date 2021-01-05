@@ -13,8 +13,8 @@ const props: AttributesProps = {
   onChange: () => undefined,
   onFileChange: () => undefined,
   onMultiChange: () => undefined,
-  onReferencesChange: () => undefined,
-  onReferencesChangeClick: () => undefined,
+  onReferencesAddClick: () => undefined,
+  onReferencesRemove: () => undefined,
   onReferencesReorder: () => undefined
 };
 

@@ -12,6 +12,7 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
@@ -19,6 +20,7 @@ import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -139,6 +141,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     variables => updatePrivateMetadata({ variables })
   );
 
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
@@ -161,6 +167,27 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           )
         }
         onSubmit={handleSubmit}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={attribute => {
+          navigate(
+            pageUrl(id, {
+              action: "assign-attribute-value",
+              id: attribute.id
+            })
+          );
+        }}
+        referencePages={searchPages.result.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferncePages={searchPages.search}
+        fetchMoreReferencePages={{
+          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+          loading: searchPages.result.loading,
+          onFetchMore: searchPages.loadMore
+        }}
+        onCloseDialog={() => navigate(pageUrl(id))}
       />
       <ActionDialog
         open={params.action === "remove"}

@@ -1,5 +1,6 @@
 import AppHeader from "@saleor/components/AppHeader";
-import Attributes from "@saleor/components/Attributes";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
+import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -13,6 +14,8 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
@@ -28,6 +31,7 @@ export interface PageDetailsPageProps {
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -35,6 +39,11 @@ export interface PageDetailsPageProps {
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  fetchReferncePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  onCloseDialog: () => void;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -42,12 +51,18 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   errors,
   page,
   pageTypes,
+  referencePages,
   saveButtonBarState,
   onBack,
   onRemove,
   onSubmit,
   fetchPageTypes,
-  fetchMorePageTypes
+  fetchMorePageTypes,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferncePages,
+  fetchMoreReferencePages,
+  onCloseDialog
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -55,7 +70,12 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const pageExists = page !== null;
 
   return (
-    <PageForm page={page} pageTypes={pageTypes} onSubmit={onSubmit}>
+    <PageForm
+      page={page}
+      pageTypes={pageTypes}
+      referencePages={referencePages}
+      onSubmit={onSubmit}
+    >
       {({ change, data, pageType, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -107,6 +127,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onChange={handlers.selectAttribute}
                   onMultiChange={handlers.selectAttributeMulti}
                   onFileChange={handlers.selectAttributeFile}
+                  onReferencesRemove={handlers.selectAttributeReference}
+                  onReferencesAddClick={onAssignReferencesClick}
                 />
               )}
               <CardSpacer />
@@ -160,6 +182,26 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}
             onSave={submit}
+          />
+          <AssignAttributeValueDialog
+            attributeValues={getAttributeValuesFromReferences(
+              assignReferencesAttributeId,
+              data.attributes,
+              referencePages
+            )}
+            hasMore={fetchMoreReferencePages?.hasMore}
+            open={!!assignReferencesAttributeId}
+            onFetch={fetchReferncePages}
+            onFetchMore={fetchMoreReferencePages?.onFetchMore}
+            loading={fetchMoreReferencePages?.loading}
+            onClose={onCloseDialog}
+            onSubmit={attributeValues => {
+              handlers.selectAttributeReference(
+                assignReferencesAttributeId,
+                attributeValues
+              );
+              onCloseDialog();
+            }}
           />
         </Container>
       )}

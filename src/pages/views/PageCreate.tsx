@@ -8,6 +8,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
@@ -21,13 +22,19 @@ import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
-import { pageListUrl, pageUrl } from "../urls";
+import {
+  pageCreateUrl,
+  pageListUrl,
+  pageUrl,
+  PageUrlQueryParams
+} from "../urls";
 
 export interface PageCreateProps {
   id: string;
+  params: PageUrlQueryParams;
 }
 
-export const PageCreate: React.FC<PageCreateProps> = () => {
+export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -55,6 +62,10 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
       navigate(pageUrl(data.pageCreate.page.id));
     }
   };
+
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
@@ -124,6 +135,27 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
                 loading: searchPageTypesOpts.loading,
                 onFetchMore: loadMorePageTypes
               }}
+              assignReferencesAttributeId={
+                params.action === "assign-attribute-value" && params.id
+              }
+              onAssignReferencesClick={attribute => {
+                navigate(
+                  pageCreateUrl({
+                    action: "assign-attribute-value",
+                    id: attribute.id
+                  })
+                );
+              }}
+              referencePages={searchPages.result.data?.search.edges.map(
+                edge => edge.node
+              )}
+              fetchReferncePages={searchPages.search}
+              fetchMoreReferencePages={{
+                hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+                loading: searchPages.result.loading,
+                onFetchMore: searchPages.loadMore
+              }}
+              onCloseDialog={() => navigate(pageCreateUrl())}
             />
           </>
         );
