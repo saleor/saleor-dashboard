@@ -36,17 +36,17 @@ const useStyles = makeStyles(
 export const productTitles = defineMessages({
   fulfillmentRefunded: {
     defaultMessage: "Products refunded",
-    description: "event products list title",
+    description: "refunded products list title",
     id: "event products list title refunded"
   },
   fulfillmentReplaced: {
     defaultMessage: "Products replaced",
-    description: "event products list title",
+    description: "replaced products list title",
     id: "event products list title replaced"
   },
   fulfillmentReturned: {
     defaultMessage: "Products returned",
-    description: "event products list title",
+    description: "returned products list title",
     id: "event products list title returned"
   }
 });
@@ -54,17 +54,17 @@ export const productTitles = defineMessages({
 export const titles = defineMessages({
   fulfillmentRefunded: {
     defaultMessage: "Products were refunded by ",
-    description: "event title",
+    description: "refunded event title",
     id: "event title refunded"
   },
   fulfillmentReplaced: {
     defaultMessage: "Products were replaced by ",
-    description: "event title",
+    description: "replaced event title",
     id: "event title replaced"
   },
   fulfillmentReturned: {
     defaultMessage: "Products were returned by",
-    description: "event title",
+    description: "returned event title",
     id: "event title returned"
   }
 });
@@ -115,19 +115,19 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
           </Typography>
           <table>
             <tbody>
-              {event.lines.map(line => (
-                <tr key={line.orderLine.id}>
+              {event.lines.map(({ orderLine, quantity }) => (
+                <tr key={orderLine.id}>
                   <td className={classes.linesTableCell}>
-                    {line.orderLine.productName}
+                    {orderLine.productName}
                   </td>
                   <td className={classes.linesTableCell}>
                     <Typography variant="caption" color="textSecondary">
-                      {line.orderLine.variantName}
+                      {orderLine.variantName}
                     </Typography>
                   </td>
                   <td className={classes.linesTableCell}>
                     <Typography variant="caption" color="textSecondary">
-                      {`qty: ${line.quantity}`}
+                      {`qty: ${quantity}`}
                     </Typography>
                   </td>
                 </tr>
@@ -145,7 +145,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
               </Typography>
               <Money
                 money={{
-                  amount: event.amount,
+                  amount,
                   currency: orderCurrency
                 }}
               />
