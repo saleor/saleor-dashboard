@@ -638,11 +638,6 @@ input BulkAttributeValueInput {
   values: [String]!
 }
 
-input BulkAttributeValueInput {
-  id: ID
-  values: [String]!
-}
-
 type BulkProductError {
   field: String
   message: String
