@@ -38,7 +38,7 @@ const useStyles = makeStyles(
 export const productTitles = defineMessages({
   draftCreatedFromReplace: {
     defaultMessage: "Products replaced",
-    description: "event products list title",
+    description: "draft created from replace products list title",
     id: "event products title draft reissued"
   },
   fulfillmentRefunded: {
@@ -61,7 +61,7 @@ export const productTitles = defineMessages({
 export const titles = defineMessages({
   draftCreatedFromReplace: {
     defaultMessage: "Draft was reissued from order ",
-    description: "event title",
+    description: "draft created from replace event title",
     id: "event title draft reissued"
   },
   fulfillmentRefunded: {
@@ -116,8 +116,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     lines,
     amount,
     shippingCostsIncluded,
-    orderId,
-    orderNumber
+    relatedOrder
   } = event;
   const classes = useStyles({});
   const intl = useIntl();
@@ -129,7 +128,10 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   const titleElements = {
     by: { text: intl.formatMessage(messages.by) },
     employeeName: { link: staffMemberDetailsUrl(user.id), text: employeeName },
-    orderNumber: { link: orderUrl(orderId), text: `#${orderNumber}` },
+    orderNumber: {
+      link: orderUrl(relatedOrder.id),
+      text: `#${relatedOrder.number}`
+    },
     title: { text: intl.formatMessage(titles[eventTypeInCamelCase]) }
   };
 
