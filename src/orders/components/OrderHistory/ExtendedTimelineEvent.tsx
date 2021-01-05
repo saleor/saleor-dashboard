@@ -1,7 +1,9 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
+import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
+import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import camelCase from "lodash/camelCase";
 import React from "react";
@@ -34,6 +36,11 @@ const useStyles = makeStyles(
 );
 
 export const productTitles = defineMessages({
+  draftCreatedFromReplace: {
+    defaultMessage: "Products replaced",
+    description: "event products list title",
+    id: "event products title draft reissued"
+  },
   fulfillmentRefunded: {
     defaultMessage: "Products refunded",
     description: "refunded products list title",
@@ -52,6 +59,11 @@ export const productTitles = defineMessages({
 });
 
 export const titles = defineMessages({
+  draftCreatedFromReplace: {
+    defaultMessage: "Draft was reissued from order ",
+    description: "event title",
+    id: "event title draft reissued"
+  },
   fulfillmentRefunded: {
     defaultMessage: "Products were refunded by ",
     description: "refunded event title",
@@ -70,13 +82,20 @@ export const titles = defineMessages({
 });
 
 export const messages = defineMessages({
+  by: {
+    defaultMessage: "by",
+    description: "by preposition",
+    id: "by preposition"
+  },
   refundedAmount: {
     defaultMessage: "Refunded amount",
-    description: "amount title"
+    description: "amount title",
+    id: "amount title"
   },
   refundedShipment: {
     defaultMessage: "Shipment was refunded",
-    description: "shipment refund title"
+    description: "shipment refund title",
+    id: "shipment refund title"
   }
 });
 
@@ -89,7 +108,17 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   event,
   orderCurrency
 }) => {
-  const { id, date, type, user, lines, amount, shippingCostsIncluded } = event;
+  const {
+    id,
+    date,
+    type,
+    user,
+    lines,
+    amount,
+    shippingCostsIncluded,
+    orderId,
+    orderNumber
+  } = event;
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -97,13 +126,28 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
 
   const employeeName = `${user.firstName} ${user.lastName}`;
 
-  const titleElements = [
-    { text: intl.formatMessage(titles[eventTypeInCamelCase]) },
-    { link: staffMemberDetailsUrl(user.id), text: employeeName }
-  ];
+  const titleElements = {
+    by: { text: intl.formatMessage(messages.by) },
+    employeeName: { link: staffMemberDetailsUrl(user.id), text: employeeName },
+    orderNumber: { link: orderUrl(orderId), text: `#${orderNumber}` },
+    title: { text: intl.formatMessage(titles[eventTypeInCamelCase]) }
+  };
+
+  const selectTitleElements = () => {
+    const { title, by, employeeName, orderNumber } = titleElements;
+
+    switch (type) {
+      case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
+        return [title, orderNumber, by, employeeName];
+      }
+      default: {
+        return [title, employeeName];
+      }
+    }
+  };
 
   return (
-    <TimelineEvent date={date} titleElements={titleElements} key={id}>
+    <TimelineEvent date={date} titleElements={selectTitleElements()} key={id}>
       {lines && (
         <>
           <Typography

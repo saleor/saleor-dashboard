@@ -23,7 +23,8 @@ const timelineEventTypes = {
   extendableEventStatuses: [
     OrderEventsEnum.FULFILLMENT_REFUNDED,
     OrderEventsEnum.FULFILLMENT_REPLACED,
-    OrderEventsEnum.FULFILLMENT_RETURNED
+    OrderEventsEnum.FULFILLMENT_RETURNED,
+    OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE
   ],
   noteStatuses: [OrderEventsEnum.NOTE_ADDED],
   rawMessageEventStatuses: [
