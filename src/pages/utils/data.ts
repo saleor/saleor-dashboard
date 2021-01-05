@@ -1,7 +1,5 @@
 import { AttributeInput } from "@saleor/components/Attributes";
-import { FormsetData } from "@saleor/hooks/useFormset";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
 import {
   PageDetails_page,
@@ -38,39 +36,6 @@ export function getAttributeInputFromPageType(
     value: []
   }));
 }
-
-export const getAttributesDisplayData = (
-  attributes: AttributeInput[],
-  attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: SearchPages_search_edges_node[]
-) =>
-  attributes.map(attribute => {
-    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
-      return {
-        ...attribute,
-        data: {
-          ...attribute.data,
-          references: attribute.value.map(value =>
-            referencePages.find(reference => reference.id === value)
-          )
-        }
-      };
-    }
-
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
-
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
-    return attribute;
-  });
 
 export const getAttributeValuesFromReferences = (
   attributeId: string,

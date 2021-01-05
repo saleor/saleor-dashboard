@@ -6,6 +6,7 @@ import {
 import { ChannelPriceData } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -13,6 +14,7 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -31,15 +33,23 @@ import {
   useVariantCreateMutation
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
-import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
+import {
+  productListUrl,
+  productUrl,
+  productVariantAddUrl,
+  ProductVariantAddUrlQueryParams,
+  productVariantEditUrl
+} from "../urls";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
   productId: string;
+  params: ProductVariantAddUrlQueryParams;
 }
 
 export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
-  productId
+  productId,
+  params
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -178,6 +188,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     variantCreateResult.loading ||
     reorderProductVariantsOpts.loading;
 
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle
@@ -208,6 +222,27 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
         weightUnit={shop?.defaultWeightUnit}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={attribute => {
+          navigate(
+            productVariantAddUrl(productId, {
+              action: "assign-attribute-value",
+              id: attribute.id
+            })
+          );
+        }}
+        referencePages={searchPages.result.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferncePages={searchPages.search}
+        fetchMoreReferencePages={{
+          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+          loading: searchPages.result.loading,
+          onFetchMore: searchPages.loadMore
+        }}
+        onCloseDialog={() => navigate(productVariantAddUrl(productId))}
       />
     </>
   );

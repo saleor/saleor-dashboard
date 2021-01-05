@@ -38,6 +38,7 @@ import {
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -338,6 +339,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       ?.errors || [])
   ];
 
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle title={data?.product?.name} />
@@ -426,6 +431,27 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         selectedChannelId={channel.id}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={attribute => {
+          navigate(
+            productUrl(id, {
+              action: "assign-attribute-value",
+              id: attribute.id
+            })
+          );
+        }}
+        referencePages={searchPages.result.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferncePages={searchPages.search}
+        fetchMoreReferencePages={{
+          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+          loading: searchPages.result.loading,
+          onFetchMore: searchPages.loadMore
+        }}
+        onCloseDialog={() => navigate(productUrl(id))}
       />
       <ActionDialog
         open={params.action === "remove"}

@@ -31,7 +31,7 @@ export interface PageDetailsPageProps {
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
-  referencePages?: SearchPages_search_edges_node[];
+  referencePages: SearchPages_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

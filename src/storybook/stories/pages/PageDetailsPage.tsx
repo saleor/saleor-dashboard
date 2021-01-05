@@ -18,6 +18,7 @@ const props: PageDetailsPageProps = {
   onRemove: () => undefined,
   onSubmit: () => undefined,
   page,
+  referencePages: [],
   saveButtonBarState: "default"
 };
 

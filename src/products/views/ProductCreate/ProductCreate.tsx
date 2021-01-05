@@ -1,5 +1,4 @@
 import { useChannelsList } from "@saleor/channels/queries";
-import { ChannelsAction } from "@saleor/channels/urls";
 import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -19,12 +18,14 @@ import {
 import { useProductCreateMutation } from "@saleor/products/mutations";
 import {
   productAddUrl,
+  ProductCreateUrlDialog,
   ProductCreateUrlQueryParams,
   productListUrl,
   productUrl
 } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -55,7 +56,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   );
 
   const [openModal, closeModal] = createDialogActionHandlers<
-    ChannelsAction,
+    ProductCreateUrlDialog,
     ProductCreateUrlQueryParams
   >(navigate, params => productAddUrl(params), params);
 
@@ -184,6 +185,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   }, [productCreateComplete]);
 
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle
@@ -267,6 +272,27 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={attribute => {
+          navigate(
+            productAddUrl({
+              action: "assign-attribute-value",
+              id: attribute.id
+            })
+          );
+        }}
+        referencePages={searchPages.result.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferncePages={searchPages.search}
+        fetchMoreReferencePages={{
+          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+          loading: searchPages.result.loading,
+          onFetchMore: searchPages.loadMore
+        }}
+        onCloseDialog={() => navigate(productAddUrl())}
       />
     </>
   );

@@ -1,9 +1,11 @@
+import { AttributeInput } from "@saleor/components/Attributes";
 import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import {
   AttributeInputTypeEnum,
   AttributeValueInput
@@ -104,3 +106,38 @@ export const getAttributesAfterFileAttributesUpdate = (
 
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
+
+export const getAttributesDisplayData = (
+  attributes: AttributeInput[],
+  attributesWithNewFileValue: FormsetData<null, File>,
+  referencePages: SearchPages_search_edges_node[]
+) =>
+  attributes.map(attribute => {
+    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
+      return {
+        ...attribute,
+        data: {
+          ...attribute.data,
+          references:
+            referencePages &&
+            attribute.value?.map(value =>
+              referencePages.find(reference => reference.id === value)
+            )
+        }
+      };
+    }
+
+    const attributeWithNewFileValue = attributesWithNewFileValue.find(
+      attributeWithNewFile => attribute.id === attributeWithNewFile.id
+    );
+
+    if (attributeWithNewFileValue) {
+      return {
+        ...attribute,
+        value: attributeWithNewFileValue?.value?.name
+          ? [attributeWithNewFileValue.value.name]
+          : []
+      };
+    }
+    return attribute;
+  });

@@ -133,6 +133,10 @@ function getMultiChoices(
 function getMultiDisplayValue(
   attribute: AttributeInput
 ): MultiAutocompleteChoiceType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
   return attribute.value.map(attributeValue => {
     const definedAttributeValue = attribute.data.values.find(
       definedValue => definedValue.slug === attributeValue
@@ -154,6 +158,10 @@ function getMultiDisplayValue(
 function getReferenceDisplayValue(
   attribute: AttributeInput
 ): SortableChipsFieldValueType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
   return attribute.value.map(attributeValue => {
     const definedAttributeValue = attribute.data.references?.find(
       reference => reference.id === attributeValue
@@ -182,7 +190,7 @@ function getSingleChoices(
 }
 
 function getFileChoice(attribute: AttributeInput): FileChoiceType {
-  const attributeValue = attribute.value[0];
+  const attributeValue = attribute.value?.length > 0 && attribute.value[0];
 
   const definedAttributeValue = attribute.data.values.find(
     definedValue => definedValue.slug === attributeValue

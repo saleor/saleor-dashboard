@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -13,10 +14,7 @@ import {
   PageDetails_page,
   PageDetails_page_pageType
 } from "@saleor/pages/types/PageDetails";
-import {
-  getAttributeInputFromPage,
-  getAttributesDisplayData
-} from "@saleor/pages/utils/data";
+import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import {
   createAttributeChangeHandler,
@@ -75,15 +73,15 @@ export interface PageFormProps {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
   pageTypes?: PageDetails_page_pageType[];
-  referencePages?: SearchPages_search_edges_node[];
+  referencePages: SearchPages_search_edges_node[];
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
 function usePageForm(
   page: PageDetails_page,
   onSubmit: (data: PageData) => SubmitPromise,
-  pageTypes?: PageDetails_page_pageType[],
-  referencePages?: SearchPages_search_edges_node[]
+  referencePages: SearchPages_search_edges_node[],
+  pageTypes?: PageDetails_page_pageType[]
 ): UsePageUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
@@ -207,11 +205,11 @@ function usePageForm(
 const PageForm: React.FC<PageFormProps> = ({
   children,
   page,
-  pageTypes,
   referencePages,
+  pageTypes,
   onSubmit
 }) => {
-  const props = usePageForm(page, onSubmit, pageTypes, referencePages);
+  const props = usePageForm(page, onSubmit, referencePages, pageTypes);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

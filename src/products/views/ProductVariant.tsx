@@ -13,6 +13,7 @@ import {
 import { createVariantChannels } from "@saleor/channels/utils";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -21,6 +22,7 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
+import usePageSearch from "@saleor/searches/usePageSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -269,6 +271,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  const searchPages = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
@@ -303,6 +309,29 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={attribute => {
+          navigate(
+            productVariantEditUrl(productId, variantId, {
+              action: "assign-attribute-value",
+              id: attribute.id
+            })
+          );
+        }}
+        referencePages={searchPages.result.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferncePages={searchPages.search}
+        fetchMoreReferencePages={{
+          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
+          loading: searchPages.result.loading,
+          onFetchMore: searchPages.loadMore
+        }}
+        onCloseDialog={() =>
+          navigate(productVariantEditUrl(productId, variantId))
+        }
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}
