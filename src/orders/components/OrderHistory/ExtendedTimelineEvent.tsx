@@ -115,7 +115,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
           </Typography>
           <table>
             <tbody>
-              {event.lines.map(({ orderLine, quantity }) => (
+              {lines.map(({ orderLine, quantity }) => (
                 <tr key={orderLine.id}>
                   <td className={classes.linesTableCell}>
                     {orderLine.productName}
