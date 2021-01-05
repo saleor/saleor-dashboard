@@ -19,6 +19,8 @@ export const fragmentOrderEvent = gql`
     user {
       id
       email
+      firstName
+      lastName
     }
     lines {
       quantity

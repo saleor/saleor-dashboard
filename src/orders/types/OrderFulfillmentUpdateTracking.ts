@@ -52,6 +52,8 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines_orderLine {

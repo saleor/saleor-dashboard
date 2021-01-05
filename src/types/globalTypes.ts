@@ -562,7 +562,6 @@ export enum OrderErrorCode {
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
-  CANNOT_REFUND_FULFILLMENT_LINE = "CANNOT_REFUND_FULFILLMENT_LINE",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
@@ -622,7 +621,7 @@ export enum OrderEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
-  ORDER_REPLACE_CREATED = "ORDER_REPLACE_CREATED",
+  ORDER_REPLACEMENT_CREATED = "ORDER_REPLACEMENT_CREATED",
   OTHER = "OTHER",
   OVERSOLD_ITEMS = "OVERSOLD_ITEMS",
   PAYMENT_AUTHORIZED = "PAYMENT_AUTHORIZED",
@@ -1093,6 +1092,11 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
+}
+
+export interface BulkAttributeValueInput {
+  id?: string | null;
+  values: (string | null)[];
 }
 
 export interface BulkAttributeValueInput {

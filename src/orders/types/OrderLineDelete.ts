@@ -52,6 +52,8 @@ export interface OrderLineDelete_draftOrderLineDelete_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderLineDelete_draftOrderLineDelete_order_events_lines_orderLine {

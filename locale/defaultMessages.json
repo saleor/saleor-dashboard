@@ -42,6 +42,30 @@
   "configurationPluginsPages": {
     "string": "View and update your plugins and their settings."
   },
+  "event products list title refunded": {
+    "context": "refunded products list title",
+    "string": "Products refunded"
+  },
+  "event products list title replaced": {
+    "context": "replaced products list title",
+    "string": "Products replaced"
+  },
+  "event products list title returned": {
+    "context": "returned products list title",
+    "string": "Products returned"
+  },
+  "event title refunded": {
+    "context": "refunded event title",
+    "string": "Products were refunded by "
+  },
+  "event title replaced": {
+    "context": "replaced event title",
+    "string": "Products were replaced by "
+  },
+  "event title returned": {
+    "context": "returned event title",
+    "string": "Products were returned by"
+  },
   "homeActivityCardHeader": {
     "context": "header",
     "string": "Activity"
@@ -3327,19 +3351,9 @@
     "context": "dialog header",
     "string": "Add Tracking Code"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
-    "context": "transaction reference",
-    "string": "Transaction Reference {transactionReference}"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1230178536": {
     "context": "order history message",
     "string": "Order address was updated"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_123236698": {
-    "string": "Shipment was refunded"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_1322321687": {
-    "string": "Refunded amount"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1463685940": {
     "context": "order history message",
@@ -3456,9 +3470,6 @@
     "context": "order history message",
     "string": "Payment failed"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_492197448": {
-    "string": "Products refunded"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_493321552": {
     "context": "order history message",
     "string": "Order cancel information was sent to customer"
@@ -3478,6 +3489,14 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_950782935": {
     "context": "order history message",
     "string": "Order was cancelled"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_refundedAmount": {
+    "context": "amount title",
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_refundedShipment": {
+    "context": "shipment refund title",
+    "string": "Shipment was refunded"
   },
   "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
