@@ -129,8 +129,8 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     by: { text: intl.formatMessage(messages.by) },
     employeeName: { link: staffMemberDetailsUrl(user.id), text: employeeName },
     orderNumber: {
-      link: orderUrl(relatedOrder.id),
-      text: `#${relatedOrder.number}`
+      link: orderUrl(relatedOrder?.id),
+      text: `#${relatedOrder?.number}`
     },
     title: { text: intl.formatMessage(titles[eventTypeInCamelCase]) }
   };
