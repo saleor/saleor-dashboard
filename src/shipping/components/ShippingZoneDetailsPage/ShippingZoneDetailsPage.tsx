@@ -24,7 +24,7 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
@@ -39,7 +39,7 @@ export interface FormData extends MetadataFormData {
   warehouses: string[];
 }
 
-const maxDescriptionLength = 300;
+const MAX_DESCRIPTION_LENGTH = 300;
 
 const useStyles = makeStyles(
   {
@@ -55,6 +55,35 @@ const useStyles = makeStyles(
   },
   { name: "ShippingZoneDetailsPage" }
 );
+
+const messages = defineMessages({
+  countries: {
+    defaultMessage: "Countries",
+    description: "countries"
+  },
+  defaultZone: {
+    defaultMessage:
+      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones",
+    description: "default shipping zone"
+  },
+  description: {
+    defaultMessage: "Description",
+    description: "description"
+  },
+  descriptionMessage: {
+    defaultMessage: "Description of a shipping zone.",
+    description: "field placeholder"
+  },
+  noCountriesAssigned: {
+    defaultMessage:
+      "Currently, there are no countries assigned to this shipping zone",
+    description: "no countries assigned to zone"
+  },
+  shipping: {
+    defaultMessage: "Shipping",
+    description: "shipping"
+  }
+});
 
 export interface ShippingZoneDetailsPageProps
   extends FetchMoreProps,
@@ -151,7 +180,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         return (
           <Container>
             <AppHeader onBack={onBack}>
-              <FormattedMessage defaultMessage="Shipping" />
+              <FormattedMessage {...messages.shipping} />
             </AppHeader>
             <PageHeader title={shippingZone?.name} />
             <Grid>
@@ -170,20 +199,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     shippingZone?.default === undefined
                       ? undefined
                       : shippingZone.default
-                      ? intl.formatMessage({
-                          defaultMessage:
-                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                        })
-                      : intl.formatMessage({
-                          defaultMessage:
-                            "Currently, there are no countries assigned to this shipping zone"
-                        })
+                      ? intl.formatMessage(messages.defaultZone)
+                      : intl.formatMessage(messages.noCountriesAssigned)
                   )}
                   onCountryAssign={onCountryAdd}
                   onCountryUnassign={onCountryRemove}
-                  title={intl.formatMessage({
-                    defaultMessage: "Countries"
-                  })}
+                  title={intl.formatMessage(messages.countries)}
                 />
                 <CardSpacer />
                 <ShippingZoneRates
@@ -226,12 +247,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 />
               </div>
               <TextField
-                error={description.length > maxDescriptionLength}
+                error={description.length > MAX_DESCRIPTION_LENGTH}
                 name={"description"}
                 label={
                   <div className={classes.labelContainer}>
                     <div className={classes.label}>
-                      <FormattedMessage defaultMessage="Description" />
+                      <FormattedMessage {...messages.description} />
                     </div>
                     {description?.length > 0 && (
                       <span>
@@ -239,7 +260,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                           defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
                           description="character limit"
                           values={{
-                            maxCharacters: maxDescriptionLength,
+                            maxCharacters: MAX_DESCRIPTION_LENGTH,
                             numberOfCharacters: description.length
                           }}
                         />
@@ -249,7 +270,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 }
                 InputProps={{
                   inputProps: {
-                    maxLength: maxDescriptionLength
+                    maxLength: MAX_DESCRIPTION_LENGTH
                   }
                 }}
                 value={description}
@@ -257,9 +278,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 disabled={loading || disabled}
                 fullWidth
                 multiline
-                placeholder={intl.formatMessage({
-                  defaultMessage: "Description of a shipping zone."
-                })}
+                placeholder={intl.formatMessage(messages.descriptionMessage)}
                 rows={10}
               />
             </Grid>
