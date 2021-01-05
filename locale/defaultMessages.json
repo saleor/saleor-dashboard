@@ -43,27 +43,27 @@
     "string": "View and update your plugins and their settings."
   },
   "event products list title refunded": {
-    "context": "event products list title",
+    "context": "refunded products list title",
     "string": "Products refunded"
   },
   "event products list title replaced": {
-    "context": "event products list title",
+    "context": "replaced products list title",
     "string": "Products replaced"
   },
   "event products list title returned": {
-    "context": "event products list title",
+    "context": "returned products list title",
     "string": "Products returned"
   },
   "event title refunded": {
-    "context": "event title",
+    "context": "refunded event title",
     "string": "Products were refunded by "
   },
   "event title replaced": {
-    "context": "event title",
+    "context": "replaced event title",
     "string": "Products were replaced by "
   },
   "event title returned": {
-    "context": "event title",
+    "context": "returned event title",
     "string": "Products were returned by"
   },
   "homeActivityCardHeader": {
