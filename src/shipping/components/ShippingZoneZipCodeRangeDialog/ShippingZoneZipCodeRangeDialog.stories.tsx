@@ -4,7 +4,7 @@ import React from "react";
 
 import ShippingZoneZipCodeRangeDialog from "./ShippingZoneZipCodeRangeDialog";
 
-storiesOf("Shipping / Add zip code range", module)
+storiesOf("Shipping / Add postal code range", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ShippingZoneZipCodeRangeDialog
