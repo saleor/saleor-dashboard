@@ -3510,6 +3510,14 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
+    "context": "replacement created order history message description",
+    "string": "was created for replaced products"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_draftNumber": {
+    "context": "replacement created order history message draft number",
+    "string": "Draft #{orderNumber} "
+  },
   "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
   },
