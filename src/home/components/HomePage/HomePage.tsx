@@ -73,10 +73,10 @@ const HomePage: React.FC<HomePageProps> = props => {
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
-    ordersToCapture,
-    ordersToFulfill,
-    productsOutOfStock,
-    userPermissions,
+    ordersToCapture = 0,
+    ordersToFulfill = 0,
+    productsOutOfStock = 0,
+    userPermissions = [],
     noChannel
   } = props;
 
@@ -121,10 +121,12 @@ const HomePage: React.FC<HomePageProps> = props => {
                   />
                 }
               >
-                {orders === undefined ? (
-                  <Skeleton style={{ width: "5em" }} />
-                ) : (
+                {noChannel ? (
+                  0
+                ) : orders !== undefined ? (
                   orders
+                ) : (
+                  <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
             </div>

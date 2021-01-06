@@ -4,7 +4,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import React from "react";
 
-import { getUserName, maybe } from "../../misc";
+import { getUserName } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
 import { productListUrl, productVariantEditUrl } from "../../products/urls";
 import { OrderStatusFilter, StockAvailability } from "../../types/globalTypes";
@@ -18,21 +18,18 @@ const HomeSection = () => {
 
   const noChannel = !channel && typeof channel !== "undefined";
 
-  const { data } = !noChannel
-    ? useHomePage({
-        displayLoader: true,
-        variables: { channel: channel?.slug }
-      })
-    : { data: null };
+  const { data } = useHomePage({
+    displayLoader: true,
+    variables: { channel: channel?.slug },
+    skip: false
+  });
 
   return (
     <HomePage
       activities={data?.activities.edges.map(edge => edge.node).reverse()}
-      orders={!noChannel ? data?.ordersToday.totalCount : 0}
-      sales={maybe(() => data?.salesToday.gross)}
-      topProducts={
-        !noChannel ? data?.productTopToday.edges.map(edge => edge.node) : null
-      }
+      orders={data?.ordersToday.totalCount}
+      sales={data?.salesToday.gross}
+      topProducts={data?.productTopToday.edges.map(edge => edge.node)}
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }
@@ -60,11 +57,11 @@ const HomeSection = () => {
           })
         )
       }
-      ordersToCapture={!noChannel ? data?.ordersToCapture.totalCount : 0}
-      ordersToFulfill={!noChannel ? data?.ordersToFulfill.totalCount : 0}
-      productsOutOfStock={!noChannel ? data?.productsOutOfStock.totalCount : 0}
+      ordersToCapture={data?.ordersToCapture.totalCount}
+      ordersToFulfill={data?.ordersToFulfill.totalCount}
+      productsOutOfStock={data?.productsOutOfStock.totalCount}
       userName={getUserName(user, true)}
-      userPermissions={user?.userPermissions || []}
+      userPermissions={user?.userPermissions}
       noChannel={noChannel}
     />
   );
