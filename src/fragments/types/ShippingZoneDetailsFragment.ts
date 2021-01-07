@@ -117,6 +117,7 @@ export interface ShippingZoneDetailsFragment {
   id: string;
   countries: (ShippingZoneDetailsFragment_countries | null)[] | null;
   name: string;
+  description: string | null;
   default: boolean;
   shippingMethods: (ShippingZoneDetailsFragment_shippingMethods | null)[] | null;
   warehouses: (ShippingZoneDetailsFragment_warehouses | null)[] | null;

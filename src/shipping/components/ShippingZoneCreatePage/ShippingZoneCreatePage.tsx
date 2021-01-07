@@ -11,7 +11,7 @@ import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
 import ShippingZoneInfo from "../ShippingZoneInfo";
@@ -19,8 +19,28 @@ import ShippingZoneInfo from "../ShippingZoneInfo";
 export interface FormData {
   countries: string[];
   default: boolean;
+  description: string;
   name: string;
 }
+
+const messages = defineMessages({
+  countries: {
+    defaultMessage: "Countries",
+    description: "country list header"
+  },
+  createZone: {
+    defaultMessage: "Create New Shipping Zone",
+    description: "section header"
+  },
+  defaultZone: {
+    defaultMessage:
+      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+  },
+  noCountriesAssigned: {
+    defaultMessage:
+      "Currently, there are no countries assigned to this shipping zone"
+  }
+});
 
 export interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
@@ -46,6 +66,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   const initialForm: FormData = {
     countries: [],
     default: false,
+    description: "",
     name: ""
   };
 
@@ -57,12 +78,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             <AppHeader onBack={onBack}>
               {intl.formatMessage(sectionNames.shipping)}
             </AppHeader>
-            <PageHeader
-              title={intl.formatMessage({
-                defaultMessage: "Create New Shipping Zone",
-                description: "header"
-              })}
-            />
+            <PageHeader title={intl.formatMessage(messages.createZone)} />
             <Grid>
               <div>
                 <ShippingZoneInfo
@@ -79,14 +95,8 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                   disabled={disabled}
                   emptyText={
                     data.default
-                      ? intl.formatMessage({
-                          defaultMessage:
-                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                        })
-                      : intl.formatMessage({
-                          defaultMessage:
-                            "Currently, there are no countries assigned to this shipping zone"
-                        })
+                      ? intl.formatMessage(messages.defaultZone)
+                      : intl.formatMessage(messages.noCountriesAssigned)
                   }
                   onCountryAssign={toggleModal}
                   onCountryUnassign={countryCode =>
@@ -99,9 +109,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                       }
                     } as any)
                   }
-                  title={intl.formatMessage({
-                    defaultMessage: "Countries"
-                  })}
+                  title={intl.formatMessage(messages.countries)}
                 />
               </div>
             </Grid>

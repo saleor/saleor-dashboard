@@ -1710,6 +1710,7 @@ export interface ShippingZipCodeRulesCreateInputRange {
 
 export interface ShippingZoneCreateInput {
   name?: string | null;
+  description?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
@@ -1717,6 +1718,7 @@ export interface ShippingZoneCreateInput {
 
 export interface ShippingZoneUpdateInput {
   name?: string | null;
+  description?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;

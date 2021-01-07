@@ -31,6 +31,7 @@ export interface ShippingZones_shippingZones_edges_node {
   id: string;
   countries: (ShippingZones_shippingZones_edges_node_countries | null)[] | null;
   name: string;
+  description: string | null;
 }
 
 export interface ShippingZones_shippingZones_edges {

@@ -264,6 +264,7 @@ export const shippingZones: ShippingZoneFragment[] = [
         country: "Wielka Brytania"
       }
     ],
+    description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjE=",
     metadata: [],
     name: "Europe",
@@ -418,6 +419,7 @@ export const shippingZones: ShippingZoneFragment[] = [
         country: "Wallis i Futuna"
       }
     ],
+    description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjI=",
     metadata: [],
     name: "Oceania",
@@ -425,7 +427,6 @@ export const shippingZones: ShippingZoneFragment[] = [
   },
   {
     __typename: "ShippingZone",
-
     countries: [
       {
         __typename: "CountryDisplay",
@@ -683,6 +684,7 @@ export const shippingZones: ShippingZoneFragment[] = [
         country: "Jemen"
       }
     ],
+    description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjM=",
     metadata: [],
     name: "Asia",
@@ -690,7 +692,6 @@ export const shippingZones: ShippingZoneFragment[] = [
   },
   {
     __typename: "ShippingZone",
-
     countries: [
       {
         __typename: "CountryDisplay",
@@ -978,6 +979,7 @@ export const shippingZones: ShippingZoneFragment[] = [
         country: "Wyspy Dziewicze Stanów Zjednoczonych"
       }
     ],
+    description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjQ=",
     metadata: [],
     name: "Americas",
@@ -985,7 +987,6 @@ export const shippingZones: ShippingZoneFragment[] = [
   },
   {
     __typename: "ShippingZone",
-
     countries: [
       {
         __typename: "CountryDisplay",
@@ -1289,6 +1290,7 @@ export const shippingZones: ShippingZoneFragment[] = [
         country: "Zimbabwe"
       }
     ],
+    description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjU=",
     metadata: [],
     name: "Africa",
@@ -1556,6 +1558,7 @@ export const shippingZone: ShippingZone_shippingZone = {
     }
   ],
   default: false,
+  description: "Shipping zone description",
   id: "U2hpcHBpbmdab25lOjE=",
   metadata: [],
   name: "Europe",

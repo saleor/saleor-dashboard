@@ -149,6 +149,7 @@ export interface ShippingZone_shippingZone {
   id: string;
   countries: (ShippingZone_shippingZone_countries | null)[] | null;
   name: string;
+  description: string | null;
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
   warehouses: (ShippingZone_shippingZone_warehouses | null)[] | null;
