@@ -1543,6 +1543,10 @@
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
+  "src_dot_components_dot_Attributes_dot_3824528779": {
+    "context": "button label",
+    "string": "Assign references"
+  },
   "src_dot_components_dot_Attributes_dot_attributesNumber": {
     "context": "number of attributes",
     "string": "{number} Attributes"
