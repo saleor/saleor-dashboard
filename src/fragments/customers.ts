@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import { fragmentAddress } from "./address";
+import { metadataFragment } from "./metadata";
 
 export const customerFragment = gql`
   fragment CustomerFragment on User {
@@ -12,10 +13,12 @@ export const customerFragment = gql`
 `;
 
 export const customerDetailsFragment = gql`
+  ${metadataFragment}
   ${customerFragment}
   ${fragmentAddress}
   fragment CustomerDetailsFragment on User {
     ...CustomerFragment
+    ...MetadataFragment
     dateJoined
     lastLogin
     defaultShippingAddress {

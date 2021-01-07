@@ -6,6 +6,18 @@
 // GraphQL fragment: CustomerDetailsFragment
 // ====================================================
 
+export interface CustomerDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CustomerDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CustomerDetailsFragment_defaultShippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -56,6 +68,8 @@ export interface CustomerDetailsFragment {
   email: string;
   firstName: string;
   lastName: string;
+  metadata: (CustomerDetailsFragment_metadata | null)[];
+  privateMetadata: (CustomerDetailsFragment_privateMetadata | null)[];
   dateJoined: any;
   lastLogin: any | null;
   defaultShippingAddress: CustomerDetailsFragment_defaultShippingAddress | null;
