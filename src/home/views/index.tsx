@@ -20,8 +20,8 @@ const HomeSection = () => {
 
   const { data } = useHomePage({
     displayLoader: true,
-    variables: { channel: channel?.slug },
-    skip: false
+    skip: noChannel,
+    variables: { channel: channel?.slug }
   });
 
   return (
