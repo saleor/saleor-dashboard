@@ -197,17 +197,17 @@ export const transformOrderStatus = (
 };
 
 export const transformAddressToForm = (data: AddressType) => ({
-  city: maybe(() => data.city, ""),
-  cityArea: maybe(() => data.cityArea, ""),
-  companyName: maybe(() => data.companyName, ""),
-  country: maybe(() => data.country.code, ""),
-  countryArea: maybe(() => data.countryArea, ""),
-  firstName: maybe(() => data.firstName, ""),
-  lastName: maybe(() => data.lastName, ""),
-  phone: maybe(() => data.phone, ""),
-  postalCode: maybe(() => data.postalCode, ""),
-  streetAddress1: maybe(() => data.streetAddress1, ""),
-  streetAddress2: maybe(() => data.streetAddress2, "")
+  city: data?.city || "",
+  cityArea: data?.cityArea || "",
+  companyName: data?.companyName || "",
+  country: data?.country?.code || "",
+  countryArea: data?.countryArea || "",
+  firstName: data?.firstName || "",
+  lastName: data?.lastName || "",
+  phone: data?.phone || "",
+  postalCode: data?.postalCode || "",
+  streetAddress1: data?.streetAddress1 || "",
+  streetAddress2: data?.streetAddress2 || ""
 });
 
 export function maybe<T>(exp: () => T): T | undefined;

@@ -2200,40 +2200,48 @@
     "context": "dialog title",
     "string": "Add Address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1090326769": {
-    "context": "customer's address book, header",
-    "string": "{fullName}'s Address Book"
-  },
-  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1428369222": {
-    "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
-  },
-  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1484733755": {
-    "string": "There is no address to show for this customer"
-  },
-  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_3623935073": {
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_addAddress": {
     "context": "button",
     "string": "Add address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_489918044": {
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_doesntHaveAddresses": {
+    "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_fullNameAddress": {
+    "context": "customer's address book, header",
+    "string": "{fullName}'s Address Book"
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_fullNameDetail": {
     "context": "customer details, header",
     "string": "{fullName} Details"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddress_dot_1224809208": {
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_noAddressToShow": {
+    "string": "There is no address to show for this customer"
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_defaultAddress": {
     "string": "Default Address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddress_dot_1578192486": {
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_defaultBillingAddress": {
     "string": "Default Billing Address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddress_dot_2131178753": {
-    "context": "button",
-    "string": "Set as default shipping address"
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_defaultShippingAddress": {
+    "string": "Default Shipping Address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddress_dot_3096438859": {
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_deleteAddress": {
+    "context": "button",
+    "string": "Delete Address"
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_editAddress": {
+    "context": "button",
+    "string": "Edit Address"
+  },
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_setDefaultBilling": {
     "context": "button",
     "string": "Set as default billing address"
   },
-  "src_dot_customers_dot_components_dot_CustomerAddress_dot_4109348993": {
-    "string": "Default Shipping Address"
+  "src_dot_customers_dot_components_dot_CustomerAddress_dot_setDefaultShipping": {
+    "context": "button",
+    "string": "Set as default shipping address"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_1967111456": {
     "context": "header",
