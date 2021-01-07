@@ -230,11 +230,11 @@ const Channel: React.FC<ChannelProps> = ({
                           )
                         : ""
                     }
-                    value={publicationDate ? publicationDate : ""}
+                    value={publicationDate}
                     onChange={e =>
                       onChange(id, {
                         ...formData,
-                        publicationDate: e.target.value
+                        publicationDate: e.target.value || null
                       })
                     }
                     className={classes.date}
