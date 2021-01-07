@@ -102,10 +102,9 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           alignTop
           choices={[
             {
-              disabled: true,
               label: (
                 <div className={classes.option}>
-                  <Typography color="textSecondary" variant="body1">
+                  <Typography variant="body1">
                     <FormattedMessage
                       defaultMessage="Exclude ZIP-codes"
                       description="action"
@@ -119,9 +118,10 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
               value: ZipCodeInclusion.Exclude
             },
             {
+              disabled: true,
               label: (
                 <div className={classes.option}>
-                  <Typography variant="body1">
+                  <Typography color="textSecondary" variant="body1">
                     <FormattedMessage
                       defaultMessage="Include ZIP-codes"
                       description="action"
