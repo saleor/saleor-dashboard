@@ -186,8 +186,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         notify({
           status: "error",
           text: intl.formatMessage({
-            defaultMessage: "Cannot add specified zip codes range.",
-            description: "zip code range add error text"
+            defaultMessage: "Cannot add specified postal codes range.",
+            description: "postal code range add error text"
           })
         });
       }

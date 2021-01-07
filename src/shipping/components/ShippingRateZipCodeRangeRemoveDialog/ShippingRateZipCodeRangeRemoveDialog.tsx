@@ -25,13 +25,13 @@ const ShippingRateZipCodeRangeRemoveDialog: React.FC<ShippingRateZipCodeRangeRem
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        defaultMessage: "Remove ZIP-codes from Shipping Rate",
+        defaultMessage: "Remove postal codes from Shipping Rate",
         description: "header"
       })}
       variant="delete"
     >
       <DialogContentText>
-        <FormattedMessage defaultMessage="Are you sure you want to remove this ZIP-code rule?" />
+        <FormattedMessage defaultMessage="Are you sure you want to remove this postal code rule?" />
       </DialogContentText>
     </ActionDialog>
   );

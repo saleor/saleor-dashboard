@@ -81,7 +81,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "ZIP-Codes",
+          defaultMessage: "Postal codes",
           description: "postal codes, header"
         })}
         toolbar={
@@ -91,7 +91,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
             data-test="add-zip-code-range"
           >
             <FormattedMessage
-              defaultMessage="Add ZIP-Code range"
+              defaultMessage="Add postal code range"
               description="button"
             />
           </Button>
@@ -106,12 +106,12 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                 <div className={classes.option}>
                   <Typography variant="body1">
                     <FormattedMessage
-                      defaultMessage="Exclude ZIP-codes"
+                      defaultMessage="Exclude postal codes"
                       description="action"
                     />
                   </Typography>
                   <Typography color="textSecondary" variant="caption">
-                    <FormattedMessage defaultMessage="Added ZIP-codes will be excluded from using this delivery methods. If none are added all ZIP-Codes will be able to use that shipping rate" />
+                    <FormattedMessage defaultMessage="Added postal codes will be excluded from using this delivery methods. If none are added all postal codes will be able to use that shipping rate" />
                   </Typography>
                 </div>
               ),
@@ -123,12 +123,12 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                 <div className={classes.option}>
                   <Typography color="textSecondary" variant="body1">
                     <FormattedMessage
-                      defaultMessage="Include ZIP-codes"
+                      defaultMessage="Include postal codes"
                       description="action"
                     />
                   </Typography>
                   <Typography color="textSecondary" variant="caption">
-                    <FormattedMessage defaultMessage="Only added ZIP-codes will be able to use this shipping rate" />
+                    <FormattedMessage defaultMessage="Only added postal codes will be able to use this shipping rate" />
                   </Typography>
                 </div>
               ),
@@ -155,8 +155,8 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                   ) : (
                     <Typography variant="caption">
                       <FormattedMessage
-                        defaultMessage="{number} ZIP-Code ranges"
-                        description="number of zip code ranges"
+                        defaultMessage="{number} postal code ranges"
+                        description="number of postal code ranges"
                         values={{
                           number: zipCodes.length
                         }}
@@ -210,7 +210,7 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                 <TableRow>
                   <TableCell colSpan={2}>
                     <Typography color="textSecondary">
-                      <FormattedMessage defaultMessage="This shipping rate has no ZIP-codes assigned" />
+                      <FormattedMessage defaultMessage="This shipping rate has no postal codes assigned" />
                     </Typography>
                   </TableCell>
                 </TableRow>

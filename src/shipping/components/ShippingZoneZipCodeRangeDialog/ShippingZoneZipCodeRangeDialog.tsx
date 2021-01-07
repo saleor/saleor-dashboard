@@ -50,7 +50,7 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
     <Dialog open={open}>
       <DialogTitle>
         <FormattedMessage
-          defaultMessage="Add ZIP-Codes"
+          defaultMessage="Add postal codes"
           description="dialog header"
         />
       </DialogTitle>
@@ -59,12 +59,12 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
           <>
             <DialogContent>
               <Typography className={classes.info}>
-                <FormattedMessage defaultMessage="Please provide range of ZIP codes you want to add to the include/exclude list." />
+                <FormattedMessage defaultMessage="Please provide range of postal codes you want to add to the include/exclude list." />
               </Typography>
               <Grid variant="uniform">
                 <TextField
                   label={intl.formatMessage({
-                    defaultMessage: "Zip Codes (Start)",
+                    defaultMessage: "Postal codes (start)",
                     description: "range input label"
                   })}
                   name="min"
@@ -73,7 +73,7 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
                 />
                 <TextField
                   label={intl.formatMessage({
-                    defaultMessage: "Zip Codes (End)",
+                    defaultMessage: "Postal codes (end)",
                     description: "range input label"
                   })}
                   name="max"
@@ -94,7 +94,7 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
               >
                 <FormattedMessage
                   defaultMessage="Add"
-                  description="add zip code range, button"
+                  description="add postal code range, button"
                 />
               </ConfirmButton>
             </DialogActions>

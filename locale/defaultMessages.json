@@ -5391,12 +5391,12 @@
   "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_579967655": {
     "string": "Shipping rate name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
-    "string": "Are you sure you want to remove this ZIP-code rule?"
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_3640694505": {
+    "string": "Are you sure you want to remove this postal code rule?"
   },
-  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_2944856644": {
+  "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_76039652": {
     "context": "header",
-    "string": "Remove ZIP-codes from Shipping Rate"
+    "string": "Remove postal codes from Shipping Rate"
   },
   "src_dot_shipping_dot_components_dot_ShippingWeightUnitForm_dot_2863708228": {
     "string": "This unit will be used as default shipping weight"
@@ -5543,53 +5543,53 @@
     "context": "input placeholder",
     "string": "Select Warehouse"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_1938537617": {
-    "string": "Please provide range of ZIP codes you want to add to the include/exclude list."
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3070993206": {
+    "context": "range input label",
+    "string": "Postal codes (end)"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3099331554": {
-    "context": "add zip code range, button",
+    "context": "add postal code range, button",
     "string": "Add"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3529644799": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3419096551": {
     "context": "range input label",
-    "string": "Zip Codes (Start)"
+    "string": "Postal codes (start)"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_4196919717": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3668595137": {
+    "string": "Please provide range of postal codes you want to add to the include/exclude list."
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_3849853790": {
     "context": "dialog header",
-    "string": "Add ZIP-Codes"
+    "string": "Add postal codes"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodeRangeDialog_dot_551327109": {
-    "context": "range input label",
-    "string": "Zip Codes (End)"
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1301350004": {
+    "string": "This shipping rate has no postal codes assigned"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1462092303": {
-    "string": "Added ZIP-codes will be excluded from using this delivery methods. If none are added all ZIP-Codes will be able to use that shipping rate"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1605967697": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1680649143": {
     "context": "action",
-    "string": "Exclude ZIP-codes"
+    "string": "Include postal codes"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2728850129": {
-    "string": "Only added ZIP-codes will be able to use this shipping rate"
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1779803917": {
+    "string": "Added postal codes will be excluded from using this delivery methods. If none are added all postal codes will be able to use that shipping rate"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2850315665": {
-    "context": "number of zip code ranges",
-    "string": "{number} ZIP-Code ranges"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_3795380518": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_1909179974": {
     "context": "button",
-    "string": "Add ZIP-Code range"
+    "string": "Add postal code range"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_4288715411": {
-    "string": "This shipping rate has no ZIP-codes assigned"
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2274108851": {
+    "context": "number of postal code ranges",
+    "string": "{number} postal code ranges"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_529495587": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_2965119249": {
+    "string": "Only added postal codes will be able to use this shipping rate"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_3782353530": {
     "context": "postal codes, header",
-    "string": "ZIP-Codes"
+    "string": "Postal codes"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_671838332": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneZipCodes_dot_399764149": {
     "context": "action",
-    "string": "Include ZIP-codes"
+    "string": "Exclude postal codes"
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1325966144": {
     "context": "header",
@@ -5647,12 +5647,12 @@
   "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
     "string": "Manage Channel Availability"
   },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_2710215007": {
-    "context": "zip code range add error text",
-    "string": "Cannot add specified zip codes range."
-  },
   "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
     "string": "Manage Channel Availability"
+  },
+  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_4243341946": {
+    "context": "postal code range add error text",
+    "string": "Cannot add specified postal codes range."
   },
   "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_870815507": {
     "context": "unassign products from shipping method, button",
@@ -5673,12 +5673,12 @@
   "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
     "string": "Manage Channels Availability"
   },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_2710215007": {
-    "context": "zip code range add error text",
-    "string": "Cannot add specified zip codes range."
-  },
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
     "string": "Manage Channels Availability"
+  },
+  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_4243341946": {
+    "context": "postal code range add error text",
+    "string": "Cannot add specified postal codes range."
   },
   "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_870815507": {
     "context": "unassign products from shipping method, button",
