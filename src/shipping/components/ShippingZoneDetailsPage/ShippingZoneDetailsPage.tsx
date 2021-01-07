@@ -1,5 +1,3 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import TextField from "@material-ui/core/TextField";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -39,49 +37,22 @@ export interface FormData extends MetadataFormData {
   warehouses: string[];
 }
 
-const MAX_DESCRIPTION_LENGTH = 300;
-
-const useStyles = makeStyles(
-  {
-    label: {
-      flex: 1
-    },
-    labelContainer: {
-      "& span": {
-        paddingRight: 30
-      },
-      display: "flex"
-    }
-  },
-  { name: "ShippingZoneDetailsPage" }
-);
-
 const messages = defineMessages({
   countries: {
     defaultMessage: "Countries",
-    description: "countries"
+    description: "country list header"
   },
   defaultZone: {
     defaultMessage:
-      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones",
-    description: "default shipping zone"
-  },
-  description: {
-    defaultMessage: "Description",
-    description: "description"
-  },
-  descriptionMessage: {
-    defaultMessage: "Description of a shipping zone.",
-    description: "field placeholder"
+      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
   noCountriesAssigned: {
     defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone",
-    description: "no countries assigned to zone"
+      "Currently, there are no countries assigned to this shipping zone"
   },
   shipping: {
     defaultMessage: "Shipping",
-    description: "shipping"
+    description: "shipping section header"
   }
 });
 
@@ -140,7 +111,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   warehouses
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   const initialForm: FormData = {
     description: shippingZone?.description || "",
@@ -175,7 +145,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
-        const description = data.description;
 
         return (
           <Container>
@@ -246,41 +215,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   warehouses={warehouseChoices}
                 />
               </div>
-              <TextField
-                error={description.length > MAX_DESCRIPTION_LENGTH}
-                name={"description"}
-                label={
-                  <div className={classes.labelContainer}>
-                    <div className={classes.label}>
-                      <FormattedMessage {...messages.description} />
-                    </div>
-                    {description?.length > 0 && (
-                      <span>
-                        <FormattedMessage
-                          defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                          description="character limit"
-                          values={{
-                            maxCharacters: MAX_DESCRIPTION_LENGTH,
-                            numberOfCharacters: description.length
-                          }}
-                        />
-                      </span>
-                    )}
-                  </div>
-                }
-                InputProps={{
-                  inputProps: {
-                    maxLength: MAX_DESCRIPTION_LENGTH
-                  }
-                }}
-                value={description}
-                onChange={change}
-                disabled={loading || disabled}
-                fullWidth
-                multiline
-                placeholder={intl.formatMessage(messages.descriptionMessage)}
-                rows={10}
-              />
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}

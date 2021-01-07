@@ -15,7 +15,7 @@ import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
-import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
+import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -116,7 +116,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
             />
             <Grid>
               <div>
-                <ShippingZoneInfo
+                <ShippingRateInfo
                   data={data}
                   disabled={disabled}
                   errors={errors}

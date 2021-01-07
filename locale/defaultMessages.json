@@ -5380,6 +5380,9 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
   },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_579967655": {
+    "string": "Shipping rate name"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_1083561409": {
     "string": "Are you sure you want to remove this ZIP-code rule?"
   },
@@ -5430,68 +5433,47 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_3510295703": {
     "string": "Search Countries"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_3877274856": {
-    "context": "character limit",
-    "string": "{numberOfCharacters} of {maxCharacters} characters"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_countries": {
-    "context": "countries",
+    "context": "country list header",
     "string": "Countries"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_createZone": {
-    "context": "header",
+    "context": "section header",
     "string": "Create New Shipping Zone"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_defaultZone": {
-    "context": "default shipping zone",
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_description": {
-    "context": "description",
-    "string": "Description"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_descriptionMessage": {
-    "context": "field placeholder",
-    "string": "Description of a shipping zone."
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_noCountriesAssigned": {
-    "context": "no countries assigned to zone",
     "string": "Currently, there are no countries assigned to this shipping zone"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_shipping": {
-    "context": "shipping",
-    "string": "Shipping"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_3877274856": {
-    "context": "character limit",
-    "string": "{numberOfCharacters} of {maxCharacters} characters"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_countries": {
-    "context": "countries",
+    "context": "country list header",
     "string": "Countries"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_defaultZone": {
-    "context": "default shipping zone",
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_description": {
-    "context": "description",
-    "string": "Description"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_descriptionMessage": {
-    "context": "field placeholder",
-    "string": "Description of a shipping zone."
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_noCountriesAssigned": {
-    "context": "no countries assigned to zone",
     "string": "Currently, there are no countries assigned to this shipping zone"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_shipping": {
-    "context": "shipping",
+    "context": "shipping section header",
     "string": "Shipping"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_579967655": {
-    "string": "Shipping rate name"
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1470703814": {
+    "context": "field placeholder",
+    "string": "Description of a shipping zone."
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1560416099": {
+    "string": "Shipping zone name"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3374163063": {
+    "string": "Description"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3877274856": {
+    "context": "character limit",
+    "string": "{numberOfCharacters} of {maxCharacters} characters"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1161979494": {
     "context": "page title",
