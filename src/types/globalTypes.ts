@@ -70,6 +70,10 @@ export enum AppTypeEnum {
   THIRDPARTY = "THIRDPARTY",
 }
 
+export enum AttributeEntityTypeEnum {
+  PAGE = "PAGE",
+}
+
 export enum AttributeErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -83,6 +87,7 @@ export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
+  REFERENCE = "REFERENCE",
 }
 
 export enum AttributeSortField {
@@ -1022,6 +1027,7 @@ export interface AppTokenInput {
 
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
+  entityType?: AttributeEntityTypeEnum | null;
   name: string;
   slug?: string | null;
   type: AttributeTypeEnum;
@@ -1084,6 +1090,7 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
+  references?: string[] | null;
 }
 
 export interface BulkAttributeValueInput {
