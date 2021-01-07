@@ -32,6 +32,7 @@ import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
+import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -168,24 +169,23 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     return disabled;
   };
 
-  const selectCardMenuItems = () => {
-    const returnOrderItem = {
-      label: intl.formatMessage(messages.returnOrder),
-      onSelect: onOrderReturn
-    };
-
-    if (canCancel) {
-      return [
-        {
+  const selectCardMenuItems = () =>
+    filteredConditionalItems([
+      {
+        item: {
           label: intl.formatMessage(messages.cancelOrder),
           onSelect: onOrderCancel
         },
-        returnOrderItem
-      ];
-    }
-
-    return [returnOrderItem];
-  };
+        shouldExist: canCancel
+      },
+      {
+        item: {
+          label: intl.formatMessage(messages.returnOrder),
+          onSelect: onOrderReturn
+        },
+        shouldExist: hasAnyItemsReplaceable(order)
+      }
+    ]);
 
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
