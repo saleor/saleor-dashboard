@@ -17,7 +17,7 @@ import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
-import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
+import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
@@ -124,7 +124,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             <PageHeader title={rate?.name} />
             <Grid>
               <div>
-                <ShippingZoneInfo
+                <ShippingRateInfo
                   data={data}
                   disabled={disabled}
                   errors={errors}

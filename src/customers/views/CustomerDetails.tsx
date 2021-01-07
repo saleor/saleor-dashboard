@@ -5,6 +5,11 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -78,7 +83,10 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                   return <NotFoundPage onBack={handleBack} />;
                 }
 
-                const handleSubmit = async (
+                const [updateMetadata] = useMetadataUpdate({});
+                const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+                const updateData = async (
                   data: CustomerDetailsPageFormData
                 ) => {
                   const result = await updateCustomer({
@@ -96,6 +104,13 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
 
                   return result.data.customerUpdate.errors;
                 };
+
+                const handleSubmit = createMetadataUpdateHandler(
+                  user,
+                  updateData,
+                  variables => updateMetadata({ variables }),
+                  variables => updatePrivateMetadata({ variables })
+                );
 
                 return (
                   <>

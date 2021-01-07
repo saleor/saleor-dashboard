@@ -21,6 +21,7 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
       <Typography component="p">
         {address.firstName} {address.lastName}
       </Typography>
+      <Typography component="p">{address.phone}</Typography>
       {address.companyName && (
         <Typography component="p">{address.companyName}</Typography>
       )}

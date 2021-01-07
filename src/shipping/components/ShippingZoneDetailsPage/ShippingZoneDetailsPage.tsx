@@ -22,7 +22,7 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
@@ -33,8 +33,28 @@ import ShippingZoneWarehouses from "../ShippingZoneWarehouses";
 
 export interface FormData extends MetadataFormData {
   name: string;
+  description: string;
   warehouses: string[];
 }
+
+const messages = defineMessages({
+  countries: {
+    defaultMessage: "Countries",
+    description: "country list header"
+  },
+  defaultZone: {
+    defaultMessage:
+      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+  },
+  noCountriesAssigned: {
+    defaultMessage:
+      "Currently, there are no countries assigned to this shipping zone"
+  },
+  shipping: {
+    defaultMessage: "Shipping",
+    description: "shipping section header"
+  }
+});
 
 export interface ShippingZoneDetailsPageProps
   extends FetchMoreProps,
@@ -93,6 +113,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: FormData = {
+    description: shippingZone?.description || "",
     metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
     name: shippingZone?.name || "",
     privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput),
@@ -128,7 +149,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         return (
           <Container>
             <AppHeader onBack={onBack}>
-              <FormattedMessage defaultMessage="Shipping" />
+              <FormattedMessage {...messages.shipping} />
             </AppHeader>
             <PageHeader title={shippingZone?.name} />
             <Grid>
@@ -147,20 +168,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                     shippingZone?.default === undefined
                       ? undefined
                       : shippingZone.default
-                      ? intl.formatMessage({
-                          defaultMessage:
-                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                        })
-                      : intl.formatMessage({
-                          defaultMessage:
-                            "Currently, there are no countries assigned to this shipping zone"
-                        })
+                      ? intl.formatMessage(messages.defaultZone)
+                      : intl.formatMessage(messages.noCountriesAssigned)
                   )}
                   onCountryAssign={onCountryAdd}
                   onCountryUnassign={onCountryRemove}
-                  title={intl.formatMessage({
-                    defaultMessage: "Countries"
-                  })}
+                  title={intl.formatMessage(messages.countries)}
                 />
                 <CardSpacer />
                 <ShippingZoneRates

@@ -37,15 +37,15 @@ const useStyles = makeStyles(
       paddingRight: 24,
       width: ICONBUTTON_SIZE + theme.spacing(0.5)
     },
+    buttonColumn: {
+      padding: "4px 0",
+      width: "62px"
+    },
     nameColumn: {
       width: "auto"
     },
     valueColumn: {
       width: "auto"
-    },
-    buttonColumn: {
-      width: "62px",
-      padding: "4px 0"
     }
   }),
   { name: "ShippingZoneRates" }

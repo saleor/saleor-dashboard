@@ -144,6 +144,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         id,
         input: {
           addWarehouses: warehouseDiff.added,
+          description: submitData.description,
           name: submitData.name,
           removeWarehouses: warehouseDiff.removed
         }

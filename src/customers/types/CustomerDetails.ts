@@ -8,6 +8,18 @@ import { PaymentChargeStatusEnum } from "./../../types/globalTypes";
 // GraphQL query operation: CustomerDetails
 // ====================================================
 
+export interface CustomerDetails_user_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CustomerDetails_user_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CustomerDetails_user_defaultShippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -104,6 +116,8 @@ export interface CustomerDetails_user {
   email: string;
   firstName: string;
   lastName: string;
+  metadata: (CustomerDetails_user_metadata | null)[];
+  privateMetadata: (CustomerDetails_user_privateMetadata | null)[];
   dateJoined: any;
   lastLogin: any | null;
   defaultShippingAddress: CustomerDetails_user_defaultShippingAddress | null;

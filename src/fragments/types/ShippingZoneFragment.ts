@@ -31,4 +31,5 @@ export interface ShippingZoneFragment {
   id: string;
   countries: (ShippingZoneFragment_countries | null)[] | null;
   name: string;
+  description: string | null;
 }

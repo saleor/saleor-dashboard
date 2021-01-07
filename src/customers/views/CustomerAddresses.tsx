@@ -9,7 +9,6 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
@@ -102,23 +101,20 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                   {(removeCustomerAddress, removeCustomerAddressOpts) => (
                     <TypedCustomerAddressesQuery variables={{ id }}>
                       {customerData => {
-                        const countryChoices = maybe(
-                          () =>
-                            shop.countries.map(country => ({
-                              code: country.code,
-                              label: country.country
-                            })),
-                          []
-                        );
+                        const countryChoices =
+                          shop?.countries?.map(country => ({
+                            code: country.code,
+                            label: country.country
+                          })) || [];
 
                         return (
                           <>
                             <WindowTitle
-                              title={maybe(() => customerData.data.user.email)}
+                              title={customerData?.data?.user.email}
                             />
                             <CustomerAddressListPage
-                              customer={maybe(() => customerData.data.user)}
-                              disabled={customerData.loading}
+                              customer={customerData?.data?.user}
+                              disabled={customerData?.loading}
                               onAdd={() => openModal("add")}
                               onBack={() => navigate(customerUrl(id))}
                               onEdit={id =>
@@ -143,12 +139,10 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 createCustomerAddressOpts.status
                               }
                               countries={countryChoices}
-                              errors={maybe(
-                                () =>
-                                  createCustomerAddressOpts.data.addressCreate
-                                    .errors,
-                                []
-                              )}
+                              errors={
+                                createCustomerAddressOpts?.data?.addressCreate
+                                  .errors || []
+                              }
                               open={params.action === "add"}
                               variant="create"
                               onClose={closeModal}
@@ -162,21 +156,17 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               }
                             />
                             <CustomerAddressDialog
-                              address={maybe(() =>
-                                customerData.data.user.addresses.find(
-                                  addr => addr.id === params.id
-                                )
+                              address={customerData?.data?.user.addresses.find(
+                                addr => addr.id === params.id
                               )}
                               confirmButtonState={
                                 updateCustomerAddressOpts.status
                               }
                               countries={countryChoices}
-                              errors={maybe(
-                                () =>
-                                  updateCustomerAddressOpts.data.addressUpdate
-                                    .errors,
-                                []
-                              )}
+                              errors={
+                                updateCustomerAddressOpts?.data?.addressUpdate
+                                  .errors || []
+                              }
                               open={params.action === "edit"}
                               variant="edit"
                               onClose={closeModal}

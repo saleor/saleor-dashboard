@@ -14,6 +14,18 @@ export interface UpdateCustomer_customerUpdate_errors {
   field: string | null;
 }
 
+export interface UpdateCustomer_customerUpdate_user_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface UpdateCustomer_customerUpdate_user_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface UpdateCustomer_customerUpdate_user_defaultShippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -64,6 +76,8 @@ export interface UpdateCustomer_customerUpdate_user {
   email: string;
   firstName: string;
   lastName: string;
+  metadata: (UpdateCustomer_customerUpdate_user_metadata | null)[];
+  privateMetadata: (UpdateCustomer_customerUpdate_user_privateMetadata | null)[];
   dateJoined: any;
   lastLogin: any | null;
   defaultShippingAddress: UpdateCustomer_customerUpdate_user_defaultShippingAddress | null;
