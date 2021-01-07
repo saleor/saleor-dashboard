@@ -1,3 +1,4 @@
+import { mergeAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -93,6 +94,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onCloseDialog
 }) => {
   const intl = useIntl();
+
+  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   return (
     <ProductVariantCreateForm
@@ -206,26 +209,32 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             onCancel={onBack}
             onSave={submit}
           />
-          <AssignAttributeValueDialog
-            attributeValues={getAttributeValuesFromReferences(
-              assignReferencesAttributeId,
-              data.attributes,
-              referencePages
-            )}
-            hasMore={fetchMoreReferencePages?.hasMore}
-            open={!!assignReferencesAttributeId}
-            onFetch={fetchReferncePages}
-            onFetchMore={fetchMoreReferencePages?.onFetchMore}
-            loading={fetchMoreReferencePages?.loading}
-            onClose={onCloseDialog}
-            onSubmit={attributeValues => {
-              handlers.selectAttributeReference(
+          {openAssignReferencesAttributeDialog && (
+            <AssignAttributeValueDialog
+              attributeValues={getAttributeValuesFromReferences(
                 assignReferencesAttributeId,
-                attributeValues
-              );
-              onCloseDialog();
-            }}
-          />
+                data.attributes,
+                referencePages
+              )}
+              hasMore={fetchMoreReferencePages?.hasMore}
+              open={openAssignReferencesAttributeDialog}
+              onFetch={fetchReferncePages}
+              onFetchMore={fetchMoreReferencePages?.onFetchMore}
+              loading={fetchMoreReferencePages?.loading}
+              onClose={onCloseDialog}
+              onSubmit={attributeValues => {
+                handlers.selectAttributeReference(
+                  assignReferencesAttributeId,
+                  mergeAttributeValues(
+                    assignReferencesAttributeId,
+                    attributeValues,
+                    data.attributes
+                  )
+                );
+                onCloseDialog();
+              }}
+            />
+          )}
         </Container>
       )}
     </ProductVariantCreateForm>

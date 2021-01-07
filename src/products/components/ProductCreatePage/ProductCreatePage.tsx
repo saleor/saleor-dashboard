@@ -1,3 +1,4 @@
+import { mergeAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -129,6 +130,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       label: taxType.description,
       value: taxType.taxCode
     })) || [];
+
+  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   return (
     <ProductCreateForm
@@ -301,26 +304,32 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               state={saveButtonBarState}
               disabled={loading || !onSubmit || formDisabled || !hasChanged}
             />
-            <AssignAttributeValueDialog
-              attributeValues={getAttributeValuesFromReferences(
-                assignReferencesAttributeId,
-                data.attributes,
-                referencePages
-              )}
-              hasMore={fetchMoreReferencePages?.hasMore}
-              open={!!assignReferencesAttributeId}
-              onFetch={fetchReferncePages}
-              onFetchMore={fetchMoreReferencePages?.onFetchMore}
-              loading={fetchMoreReferencePages?.loading}
-              onClose={onCloseDialog}
-              onSubmit={attributeValues => {
-                handlers.selectAttributeReference(
+            {openAssignReferencesAttributeDialog && (
+              <AssignAttributeValueDialog
+                attributeValues={getAttributeValuesFromReferences(
                   assignReferencesAttributeId,
-                  attributeValues
-                );
-                onCloseDialog();
-              }}
-            />
+                  data.attributes,
+                  referencePages
+                )}
+                hasMore={fetchMoreReferencePages?.hasMore}
+                open={openAssignReferencesAttributeDialog}
+                onFetch={fetchReferncePages}
+                onFetchMore={fetchMoreReferencePages?.onFetchMore}
+                loading={fetchMoreReferencePages?.loading}
+                onClose={onCloseDialog}
+                onSubmit={attributeValues => {
+                  handlers.selectAttributeReference(
+                    assignReferencesAttributeId,
+                    mergeAttributeValues(
+                      assignReferencesAttributeId,
+                      attributeValues,
+                      data.attributes
+                    )
+                  );
+                  onCloseDialog();
+                }}
+              />
+            )}
           </Container>
         );
       }}

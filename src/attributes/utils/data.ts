@@ -1,4 +1,7 @@
-import { AttributeInput } from "@saleor/components/Attributes";
+import {
+  AttributeInput,
+  AttributeInputData
+} from "@saleor/components/Attributes";
 import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
@@ -55,6 +58,18 @@ export const mergeAttributeValueDeleteErrors = (
     }
     return errors;
   }, []);
+
+export const mergeAttributeValues = (
+  attributeId: string,
+  attributeValues: string[],
+  attributes: FormsetData<AttributeInputData, string[]>
+) => {
+  const attribute = attributes.find(attribute => attribute.id === attributeId);
+
+  return attribute.value
+    ? [...attribute.value, ...attributeValues]
+    : attributeValues;
+};
 
 export const getFileValuesToUploadFromAttributes = (
   attributesWithNewFileValue: FormsetData<null, File>
