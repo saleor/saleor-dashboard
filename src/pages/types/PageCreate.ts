@@ -28,6 +28,7 @@ export interface PageCreate_pageCreate_page_attributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes_attribute {
@@ -52,6 +53,7 @@ export interface PageCreate_pageCreate_page_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes {
@@ -72,6 +74,7 @@ export interface PageCreate_pageCreate_page_pageType_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_pageType_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_pageType_attributes {

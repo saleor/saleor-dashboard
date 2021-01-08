@@ -20,6 +20,7 @@ export interface SearchProductTypes_search_edges_node_productAttributes_values {
   name: string | null;
   slug: string | null;
   file: SearchProductTypes_search_edges_node_productAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface SearchProductTypes_search_edges_node_productAttributes {

@@ -26,6 +26,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute {
@@ -50,6 +51,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes {
@@ -70,6 +72,7 @@ export interface ProductVariantReorder_productVariantReorder_product_productType
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes {

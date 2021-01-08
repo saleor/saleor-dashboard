@@ -32,6 +32,7 @@ export interface ProductVariant_selectionAttributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: ProductVariant_selectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute {
@@ -56,6 +57,7 @@ export interface ProductVariant_selectionAttributes_values {
   name: string | null;
   slug: string | null;
   file: ProductVariant_selectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -76,6 +78,7 @@ export interface ProductVariant_nonSelectionAttributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute {
@@ -100,6 +103,7 @@ export interface ProductVariant_nonSelectionAttributes_values {
   name: string | null;
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {
