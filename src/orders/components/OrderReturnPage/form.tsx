@@ -172,7 +172,10 @@ function useOrderReturnForm(
           return item;
         }
 
-        return getLineItem(line, { initialValue: line.quantity });
+        return getLineItem(line, {
+          initialValue: line.quantity,
+          isRefunded: item.data.isRefunded
+        });
       }
     );
 
