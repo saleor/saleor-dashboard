@@ -39,7 +39,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
-import { ProductStockInput } from "../ProductStocks";
+import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
@@ -172,7 +172,7 @@ function useProductCreateForm(
       : []
   );
   const attributesWithNewFileValue = useFormset<null, File>([]);
-  const stocks = useFormset<null, string>([]);
+  const stocks = useFormset<ProductStockFormsetData>([]);
   const [productType, setProductType] = useStateFromProps<ProductType>(
     initialProductType || null
   );
@@ -229,7 +229,9 @@ function useProductCreateForm(
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated: 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"
