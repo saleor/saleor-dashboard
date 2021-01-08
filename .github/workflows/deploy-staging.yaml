@@ -3,11 +3,12 @@ on:
   push:
     branches:
       - master
+      - ci/staging/**
 jobs:
   build:
     runs-on: ubuntu-20.04
     env:
-      API_URI: https://master.staging.saleor.cloud/graphql
+      API_URI: https://master.staging.saleor.cloud/graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
     steps:
@@ -40,3 +41,4 @@ jobs:
           aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/static/
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
+
