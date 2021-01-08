@@ -20,20 +20,22 @@ export const getEventSecondaryTitle = (
 };
 
 const timelineEventTypes = {
-  extendableEventStatuses: [
+  extendable: [
     OrderEventsEnum.FULFILLMENT_REFUNDED,
     OrderEventsEnum.FULFILLMENT_REPLACED,
-    OrderEventsEnum.FULFILLMENT_RETURNED
+    OrderEventsEnum.FULFILLMENT_RETURNED,
+    OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE
   ],
-  noteStatuses: [OrderEventsEnum.NOTE_ADDED],
-  rawMessageEventStatuses: [
+  linked: [OrderEventsEnum.ORDER_REPLACEMENT_CREATED],
+  note: [OrderEventsEnum.NOTE_ADDED],
+  rawMessage: [
     OrderEventsEnum.OTHER,
     OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION
   ],
-  secondaryTitleEventStatuses: [OrderEventsEnum.ORDER_MARKED_AS_PAID]
+  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID]
 };
 
 export const isTimelineEventOfType = (
-  type: "extendable" | "secondaryTitle" | "rawMessage" | "note",
+  type: "extendable" | "secondaryTitle" | "rawMessage" | "note" | "linked",
   eventType: OrderEventsEnum
-) => !!timelineEventTypes[`${type}EventStatuses`]?.includes(eventType);
+) => !!timelineEventTypes[type]?.includes(eventType);

@@ -1099,11 +1099,6 @@ export interface BulkAttributeValueInput {
   values: (string | null)[];
 }
 
-export interface BulkAttributeValueInput {
-  id?: string | null;
-  values: (string | null)[];
-}
-
 export interface CatalogueInput {
   products?: (string | null)[] | null;
   categories?: (string | null)[] | null;

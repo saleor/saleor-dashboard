@@ -48,6 +48,12 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddr
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_user {
   __typename: "User";
   id: string;
@@ -78,6 +84,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

@@ -48,6 +48,12 @@ export interface OrderLineDelete_draftOrderLineDelete_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderLineDelete_draftOrderLineDelete_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderLineDelete_draftOrderLineDelete_order_events_user {
   __typename: "User";
   id: string;
@@ -78,6 +84,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderLineDelete_draftOrderLineDelete_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

@@ -27,7 +27,9 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   });
 
   const [returnCreate, returnCreateOpts] = useOrderReturnCreateMutation({
-    onCompleted: ({ orderFulfillmentReturnProducts: { errors } }) => {
+    onCompleted: ({
+      orderFulfillmentReturnProducts: { errors, replaceOrder }
+    }) => {
       if (!errors.length) {
         notify({
           status: "success",
@@ -36,7 +38,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
             description: "order returned success message"
           })
         });
-        navigateBackToOrder();
+        navigateToOrder(replaceOrder?.id);
       }
     }
   });
@@ -60,7 +62,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     return orderFulfillmentReturnProducts.errors;
   };
 
-  const navigateBackToOrder = () => navigate(orderUrl(orderId));
+  const navigateToOrder = (id?: string) => id && navigate(orderUrl(id));
 
   return (
     <OrderReturnPage
@@ -68,7 +70,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
-      onBack={navigateBackToOrder}
+      onBack={() => navigateToOrder(orderId)}
     />
   );
 };

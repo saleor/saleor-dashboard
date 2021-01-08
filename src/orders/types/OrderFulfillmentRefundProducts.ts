@@ -113,6 +113,12 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_user {
   __typename: "User";
   id: string;
@@ -143,6 +149,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

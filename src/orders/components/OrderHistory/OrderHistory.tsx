@@ -7,14 +7,18 @@ import {
   Timeline,
   TimelineAddNote,
   TimelineEvent,
+  TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
+import { orderUrl } from "@saleor/orders/urls";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum
 } from "@saleor/types/globalTypes";
 import React from "react";
+import { defineMessages } from "react-intl";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
@@ -247,6 +251,17 @@ export const getEventMessage = (
   }
 };
 
+export const replacementCreatedMessages = defineMessages({
+  description: {
+    defaultMessage: "was created for replaced products",
+    description: "replacement created order history message description"
+  },
+  draftNumber: {
+    defaultMessage: "Draft #{orderNumber} ",
+    description: "replacement created order history message draft number"
+  }
+});
+
 export interface FormData {
   message: string;
 }
@@ -285,7 +300,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
 
   const getTimelineEventTitleProps = (
     event: OrderDetails_order_events
-  ): { title: string; secondaryTitle?: string } => {
+  ): Partial<TimelineEventProps> => {
     const { type, message } = event;
 
     const title = isTimelineEventOfType("rawMessage", type)
@@ -300,6 +315,26 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
     }
 
     return { title };
+  };
+
+  const getTitleElements = (
+    event: OrderDetails_order_events
+  ): TitleElement[] => {
+    const { type, relatedOrder } = event;
+
+    switch (type) {
+      case OrderEventsEnum.ORDER_REPLACEMENT_CREATED: {
+        return [
+          {
+            link: orderUrl(relatedOrder?.id),
+            text: intl.formatMessage(replacementCreatedMessages.draftNumber, {
+              orderNumber: relatedOrder?.number
+            })
+          },
+          { text: intl.formatMessage(replacementCreatedMessages.description) }
+        ];
+      }
+    }
   };
 
   return (
@@ -341,6 +376,16 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   <ExtendedTimelineEvent
                     event={event}
                     orderCurrency={orderCurrency}
+                  />
+                );
+              }
+
+              if (isTimelineEventOfType("linked", type)) {
+                return (
+                  <TimelineEvent
+                    titleElements={getTitleElements(event)}
+                    key={id}
+                    date={date}
                   />
                 );
               }
