@@ -274,7 +274,6 @@ function useProductUpdateForm(
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    addStocks: [],
     attributes: attributes.data,
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current
