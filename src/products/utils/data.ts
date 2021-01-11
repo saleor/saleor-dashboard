@@ -96,22 +96,18 @@ export function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope
 ): AttributeInput[] {
-  return variantAttributes?.map(attribute => {
-    const value = attribute.values.length > 0 && attribute.values[0]?.slug;
-
-    return {
-      data: {
-        inputType: attribute.attribute.inputType,
-        isRequired: attribute.attribute.valueRequired,
-        selectedValues: attribute.values,
-        values: attribute.attribute.values,
-        variantAttributeScope
-      },
-      id: attribute.attribute.id,
-      label: attribute.attribute.name,
-      value: value ? [value] : undefined
-    };
-  });
+  return variantAttributes?.map(attribute => ({
+    data: {
+      inputType: attribute.attribute.inputType,
+      isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
+      values: attribute.attribute.values,
+      variantAttributeScope
+    },
+    id: attribute.attribute.id,
+    label: attribute.attribute.name,
+    value: getSelectedAttributeValues(attribute)
+  }));
 }
 
 export function getAttributeInputFromVariant(

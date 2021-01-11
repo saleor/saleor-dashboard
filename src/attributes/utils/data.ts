@@ -64,7 +64,10 @@ export function getAttributeData(
 }
 
 export function getSelectedAttributeValues(
-  attribute: PageDetails_page_attributes | ProductDetails_product_attributes
+  attribute:
+    | PageDetails_page_attributes
+    | ProductDetails_product_attributes
+    | SelectedVariantAttributeFragment
 ) {
   if (attribute.attribute.inputType === AttributeInputTypeEnum.REFERENCE) {
     return attribute.values.map(value => value.reference);
@@ -204,10 +207,11 @@ export const getReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referencePages &&
-      attribute.value?.map(value =>
-        referencePages.find(reference => reference.id === value)
-      )
+      referencePages?.length > 0 && attribute.value?.length > 0
+        ? attribute.value.map(value =>
+            referencePages.find(reference => reference.id === value)
+          )
+        : []
   }
 });
 
