@@ -26,17 +26,17 @@ export enum OrderListUrlFiltersEnum {
   payment = "payment",
   query = "query"
 }
-export enum OrderListUrlFiltersWithMultipleValuesEnum {
+export enum OrderListUrlFiltersWithMultipleValues {
   status = "status"
 }
 
-export enum OrderListUrlFiltersWithMultipleValues {
+export enum OrderListUrlFiltersDictWithMultipleValues {
   channel = "channel"
 }
 
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
-  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum> &
-  FiltersAsDictWithMultipleValues<OrderListUrlFiltersWithMultipleValues>;
+  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValues> &
+  FiltersAsDictWithMultipleValues<OrderListUrlFiltersDictWithMultipleValues>;
 export type OrderListUrlDialog = "cancel" | CreateOrderDialog | TabActionDialog;
 export enum OrderListUrlSortField {
   number = "number",

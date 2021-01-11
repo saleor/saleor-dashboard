@@ -22,9 +22,9 @@ import {
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
+  OrderListUrlFiltersDictWithMultipleValues,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
-  OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
 
@@ -37,15 +37,14 @@ export function getFilterOpts(
   return {
     channel: channels
       ? {
-          active: params?.channel !== undefined || false,
+          active: params?.channel !== undefined,
           value: channels
         }
       : null,
     created: {
-      active:
-        [params?.createdFrom, params?.createdTo].some(
-          field => field !== undefined
-        ) || false,
+      active: [params?.createdFrom, params?.createdTo].some(
+        field => field !== undefined
+      ),
       value: {
         max: params?.createdTo || "",
         min: params?.createdFrom || ""
@@ -56,13 +55,12 @@ export function getFilterOpts(
       value: params?.customer
     },
     status: {
-      active: params?.status !== undefined || false,
-      value:
-        dedupeFilter(
-          params?.status?.map(status =>
-            findValueInEnum(status, OrderStatusFilter)
-          )
-        ) || []
+      active: params?.status !== undefined,
+      value: dedupeFilter(
+        params?.status?.map(status =>
+          findValueInEnum(status, OrderStatusFilter)
+        )
+      )
     }
   };
 }
@@ -98,14 +96,14 @@ export function getFilterQueryParam(
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(
         filter,
-        OrderListUrlFiltersWithMultipleValuesEnum.status,
+        OrderListUrlFiltersWithMultipleValues.status,
         OrderStatusFilter
       );
 
     case OrderFilterKeys.channel:
       return getMultipleValueQueryParam(
         filter,
-        OrderListUrlFiltersWithMultipleValues.channel
+        OrderListUrlFiltersDictWithMultipleValues.channel
       );
 
     case OrderFilterKeys.customer:
@@ -124,5 +122,5 @@ export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   OrderListUrlFilters
 >({
   ...OrderListUrlFiltersEnum,
-  ...OrderListUrlFiltersWithMultipleValuesEnum
+  ...OrderListUrlFiltersWithMultipleValues
 });
