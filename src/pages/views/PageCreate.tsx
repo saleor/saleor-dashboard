@@ -50,6 +50,14 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const handlePageCreate = (data: PageCreateData) => {
@@ -72,9 +80,17 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       })
     );
 
-  const searchPages = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
+  const fetchMorePageTypes = {
+    hasMore: searchPageTypesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchPageTypesOpts.loading,
+    onFetchMore: loadMorePageTypes
+  };
+
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
 
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
@@ -139,24 +155,16 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               onRemove={() => undefined}
               onSubmit={handleSubmit}
               fetchPageTypes={searchPageTypes}
-              fetchMorePageTypes={{
-                hasMore: searchPageTypesOpts.data?.search.pageInfo.hasNextPage,
-                loading: searchPageTypesOpts.loading,
-                onFetchMore: loadMorePageTypes
-              }}
+              fetchMorePageTypes={fetchMorePageTypes}
               assignReferencesAttributeId={
                 params.action === "assign-attribute-value" && params.id
               }
               onAssignReferencesClick={handleAssignAttributeReferenceClick}
-              referencePages={searchPages.result.data?.search.edges.map(
+              referencePages={searchPagesOpts.data?.search.edges.map(
                 edge => edge.node
               )}
-              fetchReferencePages={searchPages.search}
-              fetchMoreReferencePages={{
-                hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
-                loading: searchPages.result.loading,
-                onFetchMore: searchPages.loadMore
-              }}
+              fetchReferencePages={searchPages}
+              fetchMoreReferencePages={fetchMoreReferencePages}
               onCloseDialog={() => navigate(pageCreateUrl())}
             />
           </>

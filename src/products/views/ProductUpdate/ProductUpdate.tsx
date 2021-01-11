@@ -99,6 +99,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -348,9 +355,21 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       ?.errors || [])
   ];
 
-  const searchPages = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
+  const fetchMoreCollections = {
+    hasMore: searchCollectionsOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchCollectionsOpts.loading,
+    onFetchMore: loadMoreCollections
+  };
+  const fetchMoreCategories = {
+    hasMore: searchCategoriesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchCategoriesOpts.loading,
+    onFetchMore: loadMoreCategories
+  };
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
 
   return (
     <>
@@ -427,16 +446,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        fetchMoreCategories={{
-          hasMore: searchCategoriesOpts?.data?.search?.pageInfo?.hasNextPage,
-          loading: searchCategoriesOpts.loading,
-          onFetchMore: loadMoreCategories
-        }}
-        fetchMoreCollections={{
-          hasMore: searchCollectionsOpts?.data?.search?.pageInfo?.hasNextPage,
-          loading: searchCollectionsOpts.loading,
-          onFetchMore: loadMoreCollections
-        }}
+        fetchMoreCategories={fetchMoreCategories}
+        fetchMoreCollections={fetchMoreCollections}
         selectedChannelId={channel.id}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
@@ -444,15 +455,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPages.result.data?.search.edges.map(
+        referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferencePages={searchPages.search}
-        fetchMoreReferencePages={{
-          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
-          loading: searchPages.result.loading,
-          onFetchMore: searchPages.loadMore
-        }}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
         onCloseDialog={() => navigate(productUrl(id))}
       />
       <ActionDialog

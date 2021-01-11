@@ -150,9 +150,19 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     variables => updatePrivateMetadata({ variables })
   );
 
-  const searchPages = usePageSearch({
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
 
   return (
     <>
@@ -180,15 +190,11 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPages.result.data?.search.edges.map(
+        referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferencePages={searchPages.search}
-        fetchMoreReferencePages={{
-          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
-          loading: searchPages.result.loading,
-          onFetchMore: searchPages.loadMore
-        }}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
         onCloseDialog={() => navigate(pageUrl(id))}
       />
       <ActionDialog

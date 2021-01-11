@@ -82,6 +82,13 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   } = useProductTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -194,9 +201,33 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   }, [productCreateComplete]);
 
-  const searchPages = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
+  const fetchMoreProductTypes = {
+    hasMore: searchProductTypesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchProductTypesOpts.loading,
+    onFetchMore: loadMoreProductTypes
+  };
+  const fetchMoreCollections = {
+    hasMore: searchCollectionOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchCollectionOpts.loading,
+    onFetchMore: loadMoreCollections
+  };
+  const fetchMoreCategories = {
+    hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchCategoryOpts.loading,
+    onFetchMore: loadMoreCategories
+  };
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
+
+  const loading =
+    uploadFileOpts.loading ||
+    productCreateOpts.loading ||
+    productVariantCreateOpts.loading ||
+    updateChannelsOpts.loading ||
+    updateVariantChannelsOpts.loading;
 
   return (
     <>
@@ -232,13 +263,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         collections={(searchCollectionOpts?.data?.search?.edges || []).map(
           edge => edge.node
         )}
-        loading={
-          uploadFileOpts.loading ||
-          productCreateOpts.loading ||
-          productVariantCreateOpts.loading ||
-          updateChannelsOpts.loading ||
-          updateVariantChannelsOpts.loading
-        }
+        loading={loading}
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
             ?.errors
@@ -259,21 +284,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         saveButtonBarState={productCreateOpts.status}
-        fetchMoreCategories={{
-          hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
-          loading: searchCategoryOpts.loading,
-          onFetchMore: loadMoreCategories
-        }}
-        fetchMoreCollections={{
-          hasMore: searchCollectionOpts.data?.search.pageInfo.hasNextPage,
-          loading: searchCollectionOpts.loading,
-          onFetchMore: loadMoreCollections
-        }}
-        fetchMoreProductTypes={{
-          hasMore: searchProductTypesOpts.data?.search.pageInfo.hasNextPage,
-          loading: searchProductTypesOpts.loading,
-          onFetchMore: loadMoreProductTypes
-        }}
+        fetchMoreCategories={fetchMoreCategories}
+        fetchMoreCollections={fetchMoreCollections}
+        fetchMoreProductTypes={fetchMoreProductTypes}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
@@ -285,15 +298,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPages.result.data?.search.edges.map(
+        referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferencePages={searchPages.search}
-        fetchMoreReferencePages={{
-          hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
-          loading: searchPages.result.loading,
-          onFetchMore: searchPages.loadMore
-        }}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
         onCloseDialog={() => navigate(productAddUrl())}
       />
     </>
