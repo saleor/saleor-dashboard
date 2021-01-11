@@ -34,6 +34,8 @@ import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
+  ProductVariantUpdateData,
+  ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData
 } from "./form";
 
@@ -137,6 +139,22 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductVariantUpdateData,
+    handlers: ProductVariantUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <>
@@ -284,17 +302,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   onFetchMore={fetchMoreReferencePages?.onFetchMore}
                   loading={fetchMoreReferencePages?.loading}
                   onClose={onCloseDialog}
-                  onSubmit={attributeValues => {
-                    handlers.selectAttributeReference(
-                      assignReferencesAttributeId,
-                      mergeAttributeValues(
-                        assignReferencesAttributeId,
-                        attributeValues,
-                        data.attributes
-                      )
-                    );
-                    onCloseDialog();
-                  }}
+                  onSubmit={attributeValues =>
+                    handleAssignReferenceAttribute(
+                      attributeValues,
+                      data,
+                      handlers
+                    )
+                  }
                 />
               )}
             </>

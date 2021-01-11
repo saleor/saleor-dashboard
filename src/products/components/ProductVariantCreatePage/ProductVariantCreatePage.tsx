@@ -27,7 +27,10 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
-import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
+import ProductVariantCreateForm, {
+  ProductVariantCreateData,
+  ProductVariantCreateHandlers
+} from "./form";
 
 const messages = defineMessages({
   attributesHeader: {
@@ -96,6 +99,22 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   const intl = useIntl();
 
   const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductVariantCreateData,
+    handlers: ProductVariantCreateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <ProductVariantCreateForm
@@ -222,17 +241,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               onFetchMore={fetchMoreReferencePages?.onFetchMore}
               loading={fetchMoreReferencePages?.loading}
               onClose={onCloseDialog}
-              onSubmit={attributeValues => {
-                handlers.selectAttributeReference(
-                  assignReferencesAttributeId,
-                  mergeAttributeValues(
-                    assignReferencesAttributeId,
-                    attributeValues,
-                    data.attributes
-                  )
-                );
-                onCloseDialog();
-              }}
+              onSubmit={attributeValues =>
+                handleAssignReferenceAttribute(attributeValues, data, handlers)
+              }
             />
           )}
         </Container>

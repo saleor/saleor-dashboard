@@ -50,7 +50,10 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ProductUpdateForm from "./form";
+import ProductUpdateForm, {
+  ProductUpdateData,
+  ProductUpdateHandlers
+} from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   defaultWeightUnit: string;
@@ -186,6 +189,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     })) || [];
 
   const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductUpdateData,
+    handlers: ProductUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <ProductUpdateForm
@@ -396,17 +415,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onFetchMore={fetchMoreReferencePages?.onFetchMore}
                 loading={fetchMoreReferencePages?.loading}
                 onClose={onCloseDialog}
-                onSubmit={attributeValues => {
-                  handlers.selectAttributeReference(
-                    assignReferencesAttributeId,
-                    mergeAttributeValues(
-                      assignReferencesAttributeId,
-                      attributeValues,
-                      data.attributes
-                    )
-                  );
-                  onCloseDialog();
-                }}
+                onSubmit={attributeValues =>
+                  handleAssignReferenceAttribute(
+                    attributeValues,
+                    data,
+                    handlers
+                  )
+                }
               />
             )}
           </Container>

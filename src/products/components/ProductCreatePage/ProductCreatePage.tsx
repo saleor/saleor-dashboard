@@ -37,7 +37,8 @@ import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductCreateForm, {
   ProductCreateData,
-  ProductCreateFormData
+  ProductCreateFormData,
+  ProductCreateHandlers
 } from "./form";
 
 interface ProductCreatePageProps {
@@ -132,6 +133,22 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     })) || [];
 
   const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductCreateData,
+    handlers: ProductCreateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <ProductCreateForm
@@ -317,17 +334,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onFetchMore={fetchMoreReferencePages?.onFetchMore}
                 loading={fetchMoreReferencePages?.loading}
                 onClose={onCloseDialog}
-                onSubmit={attributeValues => {
-                  handlers.selectAttributeReference(
-                    assignReferencesAttributeId,
-                    mergeAttributeValues(
-                      assignReferencesAttributeId,
-                      attributeValues,
-                      data.attributes
-                    )
-                  );
-                  onCloseDialog();
-                }}
+                onSubmit={attributeValues =>
+                  handleAssignReferenceAttribute(
+                    attributeValues,
+                    data,
+                    handlers
+                  )
+                }
               />
             )}
           </Container>

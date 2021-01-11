@@ -4,6 +4,7 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -182,6 +183,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      productVariantAddUrl(productId, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+  };
+
   const disableForm =
     productLoading ||
     uploadFileOpts.loading ||
@@ -225,14 +235,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
-        onAssignReferencesClick={attribute => {
-          navigate(
-            productVariantAddUrl(productId, {
-              action: "assign-attribute-value",
-              id: attribute.id
-            })
-          );
-        }}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}

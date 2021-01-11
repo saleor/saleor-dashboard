@@ -62,7 +62,7 @@ export interface UseProductVariantUpdateFormOpts {
   referencePages: SearchPages_search_edges_node[];
 }
 
-interface ProductVariantUpdateHandlers
+export interface ProductVariantUpdateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"

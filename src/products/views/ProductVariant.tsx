@@ -11,6 +11,7 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -271,6 +272,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      productVariantEditUrl(productId, variantId, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+  };
+
   const searchPages = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
@@ -312,14 +322,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
-        onAssignReferencesClick={attribute => {
-          navigate(
-            productVariantEditUrl(productId, variantId, {
-              action: "assign-attribute-value",
-              id: attribute.id
-            })
-          );
-        }}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}

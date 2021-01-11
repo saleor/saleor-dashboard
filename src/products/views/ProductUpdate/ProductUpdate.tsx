@@ -11,6 +11,7 @@ import {
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -297,6 +298,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables })
   );
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      productUrl(id, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+  };
+
   const disableFormSave =
     uploadFileOpts.loading ||
     createProductImageOpts.loading ||
@@ -434,14 +444,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
-        onAssignReferencesClick={attribute => {
-          navigate(
-            productUrl(id, {
-              action: "assign-attribute-value",
-              id: attribute.id
-            })
-          );
-        }}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}

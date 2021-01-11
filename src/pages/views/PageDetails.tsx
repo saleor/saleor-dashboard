@@ -11,6 +11,7 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -96,6 +97,15 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     }
   });
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      pageUrl(id, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+  };
+
   const handleUpdate = async (data: PageSubmitData) => {
     let errors: Array<
       AttributeErrorFragment | UploadErrorFragment | PageErrorFragment
@@ -170,14 +180,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
-        onAssignReferencesClick={attribute => {
-          navigate(
-            pageUrl(id, {
-              action: "assign-attribute-value",
-              id: attribute.id
-            })
-          );
-        }}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}

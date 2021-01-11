@@ -1,5 +1,6 @@
 import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -177,6 +178,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   };
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      productAddUrl({
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+  };
+
   React.useEffect(() => {
     const productId = productCreateOpts.data?.productCreate?.product?.id;
 
@@ -275,14 +285,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
-        onAssignReferencesClick={attribute => {
-          navigate(
-            productAddUrl({
-              action: "assign-attribute-value",
-              id: attribute.id
-            })
-          );
-        }}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}

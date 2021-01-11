@@ -25,7 +25,7 @@ import { useIntl } from "react-intl";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
-import PageForm, { PageData } from "./form";
+import PageForm, { PageData, PageUpdateHandlers } from "./form";
 
 export interface PageDetailsPageProps {
   loading: boolean;
@@ -71,6 +71,22 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const pageExists = page !== null;
 
   const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: PageData,
+    handlers: PageUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <PageForm
@@ -199,17 +215,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               onFetchMore={fetchMoreReferencePages?.onFetchMore}
               loading={fetchMoreReferencePages?.loading}
               onClose={onCloseDialog}
-              onSubmit={attributeValues => {
-                handlers.selectAttributeReference(
-                  assignReferencesAttributeId,
-                  mergeAttributeValues(
-                    assignReferencesAttributeId,
-                    attributeValues,
-                    data.attributes
-                  )
-                );
-                onCloseDialog();
-              }}
+              onSubmit={attributeValues =>
+                handleAssignReferenceAttribute(attributeValues, data, handlers)
+              }
             />
           )}
         </Container>

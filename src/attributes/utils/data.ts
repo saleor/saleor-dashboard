@@ -122,6 +122,40 @@ export const getAttributesAfterFileAttributesUpdate = (
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
 
+export const getFileAttributeDisplayData = (
+  attribute: AttributeInput,
+  attributesWithNewFileValue: FormsetData<null, File>
+) => {
+  const attributeWithNewFileValue = attributesWithNewFileValue.find(
+    attributeWithNewFile => attribute.id === attributeWithNewFile.id
+  );
+
+  if (attributeWithNewFileValue) {
+    return {
+      ...attribute,
+      value: attributeWithNewFileValue?.value?.name
+        ? [attributeWithNewFileValue.value.name]
+        : []
+    };
+  }
+  return attribute;
+};
+
+export const getReferenceAttributeDisplayData = (
+  attribute: AttributeInput,
+  referencePages: SearchPages_search_edges_node[]
+) => ({
+  ...attribute,
+  data: {
+    ...attribute.data,
+    references:
+      referencePages &&
+      attribute.value?.map(value =>
+        referencePages.find(reference => reference.id === value)
+      )
+  }
+});
+
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
@@ -129,30 +163,11 @@ export const getAttributesDisplayData = (
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
-      return {
-        ...attribute,
-        data: {
-          ...attribute.data,
-          references:
-            referencePages &&
-            attribute.value?.map(value =>
-              referencePages.find(reference => reference.id === value)
-            )
-        }
-      };
+      return getReferenceAttributeDisplayData(attribute, referencePages);
+    }
+    if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
+      return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
     }
 
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
-
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
     return attribute;
   });

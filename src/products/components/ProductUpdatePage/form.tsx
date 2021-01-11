@@ -87,7 +87,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   removeStocks: string[];
 }
 
-interface ProductUpdateHandlers
+export interface ProductUpdateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"

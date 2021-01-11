@@ -47,7 +47,7 @@ export interface UseProductVariantCreateFormOpts {
   referencePages: SearchPages_search_edges_node[];
 }
 
-interface ProductVariantCreateHandlers
+export interface ProductVariantCreateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"

@@ -69,7 +69,7 @@ export interface ProductCreateData extends ProductCreateFormData {
   stocks: ProductStockInput[];
 }
 
-interface ProductCreateHandlers
+export interface ProductCreateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"

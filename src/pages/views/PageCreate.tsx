@@ -3,6 +3,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -61,6 +62,15 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       });
       navigate(pageUrl(data.pageCreate.page.id));
     }
+  };
+
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+    navigate(
+      pageCreateUrl({
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
   };
 
   const searchPages = usePageSearch({
@@ -138,14 +148,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               assignReferencesAttributeId={
                 params.action === "assign-attribute-value" && params.id
               }
-              onAssignReferencesClick={attribute => {
-                navigate(
-                  pageCreateUrl({
-                    action: "assign-attribute-value",
-                    id: attribute.id
-                  })
-                );
-              }}
+              onAssignReferencesClick={handleAssignAttributeReferenceClick}
               referencePages={searchPages.result.data?.search.edges.map(
                 edge => edge.node
               )}

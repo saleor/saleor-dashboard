@@ -51,7 +51,7 @@ export interface PageSubmitData extends PageFormData {
   content: OutputData;
 }
 
-interface PageUpdateHandlers {
+export interface PageUpdateHandlers {
   changeMetadata: FormChange;
   changeContent: RichTextEditorChange;
   selectPageType: FormChange;

@@ -1,10 +1,25 @@
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import AssignContainerDialog, {
   AssignContainerDialogProps
 } from "../AssignContainerDialog";
+
+const messages = defineMessages({
+  header: {
+    defaultMessage: "Assign Attribute Value",
+    description: "dialog header"
+  },
+  searchLabel: {
+    defaultMessage: "Search Attribute Value",
+    description: "label"
+  },
+  searchPlaceholder: {
+    defaultMessage: "Search by value name, etc...",
+    description: "placeholder"
+  }
+});
 
 interface AssignAttributeValueDialogProps
   extends Omit<
@@ -27,17 +42,10 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
         name: value.title
       }))}
       search={{
-        label: intl.formatMessage({
-          defaultMessage: "Search Attribute Value"
-        }),
-        placeholder: intl.formatMessage({
-          defaultMessage: "Search by value name, etc..."
-        })
+        label: intl.formatMessage(messages.searchLabel),
+        placeholder: intl.formatMessage(messages.searchPlaceholder)
       }}
-      title={intl.formatMessage({
-        defaultMessage: "Assign Attribute Value",
-        description: "dialog header"
-      })}
+      title={intl.formatMessage(messages.header)}
       confirmButtonState="default"
       {...rest}
     />
