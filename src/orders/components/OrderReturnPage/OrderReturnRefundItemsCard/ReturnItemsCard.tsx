@@ -8,7 +8,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TextField
+  TextField,
+  Typography
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
@@ -20,13 +21,14 @@ import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getById } from "../utils";
 import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
+import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(
   theme => {
@@ -40,10 +42,12 @@ const useStyles = makeStyles(
         paddingBottom: 0,
         paddingTop: 0
       },
+
       notice: {
         marginBottom: theme.spacing(1),
         marginTop: theme.spacing(2)
       },
+
       quantityInnerInput: {
         ...inputPadding
       },
@@ -70,6 +74,7 @@ const messages = defineMessages({
     defaultMessage: "Improper value",
     description: "error message"
   },
+
   titleFulfilled: {
     defaultMessage: "Fulfillment - #{fulfilmentId}",
     description: "section header"
@@ -101,8 +106,8 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsSelections,
   itemsQuantities,
   fulfilmentId,
-  order
-  // errors
+  order,
+  errors
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -133,6 +138,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 description="table column header"
               />
             </TableCell>
+            <TableCell />
             <TableCell align="right">
               <FormattedMessage
                 defaultMessage="Price"
@@ -165,7 +171,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               productName,
               variant
             }) => {
-              const isError = false;
+              const isValueError = false;
               const isRefunded = itemsQuantities.find(getById(id)).data
                 .isRefunded;
               const isReplacable = !!variant && !isRefunded;
@@ -179,10 +185,11 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 <TableRow key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
-                    style={{ width: "50%" }}
+                    style={{ width: "30%" }}
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
+                  <ProductErrorCell lineId={id} errors={errors} />
                   <TableCell align="right">
                     <Money
                       money={{
@@ -212,9 +219,10 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                           </div>
                         )
                       }}
-                      error={isError}
+                      error={isValueError}
                       helperText={
-                        isError && intl.formatMessage(messages.improperValue)
+                        isValueError &&
+                        intl.formatMessage(messages.improperValue)
                       }
                     />
                   </TableCell>
