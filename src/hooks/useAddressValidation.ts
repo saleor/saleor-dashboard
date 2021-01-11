@@ -1,18 +1,18 @@
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { transformFormToAddress } from "@saleor/misc";
 import { AccountErrorCode, AddressInput } from "@saleor/types/globalTypes";
 import { add, remove } from "@saleor/utils/lists";
 import { useState } from "react";
 
-interface UseAddressValidation<T> {
+interface UseAddressValidation<TInput, TOutput> {
   errors: AccountErrorFragment[];
-  submit: (data: T & AddressTypeInput) => void;
+  submit: (data: TInput & AddressTypeInput) => TOutput;
 }
 
-function useAddressValidation<T>(
-  onSubmit: (address: T & AddressInput) => void
-): UseAddressValidation<T> {
+function useAddressValidation<TInput, TOutput>(
+  onSubmit: (address: TInput & AddressInput) => TOutput
+): UseAddressValidation<TInput, TOutput> {
   const [validationErrors, setValidationErrors] = useState<
     AccountErrorFragment[]
   >([]);
@@ -25,7 +25,7 @@ function useAddressValidation<T>(
 
   return {
     errors: validationErrors,
-    submit: (data: T & AddressTypeInput) => {
+    submit: (data: TInput & AddressTypeInput) => {
       try {
         setValidationErrors(
           remove(
@@ -34,7 +34,7 @@ function useAddressValidation<T>(
             (a, b) => a.field === b.field
           )
         );
-        onSubmit(transformFormToAddress(data));
+        return onSubmit(transformFormToAddress(data));
       } catch {
         setValidationErrors(add(countryRequiredError, validationErrors));
       }

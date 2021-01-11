@@ -141,28 +141,20 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                   // that it should clean operation stack if mutations
                   // were successful
                   const handleSubmit = async (data: MenuDetailsSubmitData) => {
-                    try {
-                      const result = await menuUpdate({
-                        variables: {
-                          id,
-                          moves: getMoves(data),
-                          name: data.name,
-                          removeIds: getRemoveIds(data)
-                        }
-                      });
-                      if (result) {
-                        if (
-                          result.data.menuItemBulkDelete.errors.length > 0 ||
-                          result.data.menuItemMove.errors.length > 0 ||
-                          result.data.menuUpdate.errors.length > 0
-                        ) {
-                          return false;
-                        }
+                    const result = await menuUpdate({
+                      variables: {
+                        id,
+                        moves: getMoves(data),
+                        name: data.name,
+                        removeIds: getRemoveIds(data)
                       }
-                      return true;
-                    } catch {
-                      return false;
-                    }
+                    });
+
+                    return [
+                      ...result.data.menuItemBulkDelete.errors,
+                      ...result.data.menuItemMove.errors,
+                      ...result.data.menuUpdate.errors
+                    ];
                   };
 
                   return (

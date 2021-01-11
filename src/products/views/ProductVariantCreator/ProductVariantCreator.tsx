@@ -31,6 +31,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     onCompleted: data => {
       if (data.productVariantBulkCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage({
             defaultMessage: "Successfully created variants",
             description: "success message"

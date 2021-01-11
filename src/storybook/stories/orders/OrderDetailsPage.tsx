@@ -19,10 +19,14 @@ const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   countries,
+  disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,
+  onInvoiceClick: () => undefined,
+  onInvoiceGenerate: () => undefined,
+  onInvoiceSend: () => undefined,
   onNoteAdd: undefined,
   onOrderCancel: undefined,
   onOrderFulfill: undefined,
@@ -33,7 +37,9 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProductClick: undefined,
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
+  onSubmit: () => undefined,
   order,
+  saveButtonBarState: "default",
   userPermissions: adminUserPermissions
 };
 

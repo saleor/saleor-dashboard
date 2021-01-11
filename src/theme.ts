@@ -1,10 +1,15 @@
 import Card from "@material-ui/core/Card";
+import Checkbox from "@material-ui/core/Checkbox";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { createElement } from "react";
 
 import { IThemeColors } from "./components/Theme/themes";
+import CheckboxIcon from "./icons/Checkbox";
+import CheckboxCheckedIcon from "./icons/CheckboxChecked";
+import CheckboxIndeterminateIcon from "./icons/CheckboxIndeterminate";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
   [
@@ -117,6 +122,7 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiFormControlLabel: {
         label: {
+          lineHeight: 1.2,
           marginLeft: 4
         }
       },
@@ -343,7 +349,10 @@ export default (colors: IThemeColors): Theme =>
               color: colors.font.default
             }
           },
-          alignSelf: "baseline"
+          display: "block",
+          paddingBottom: 10,
+          paddingLeft: 0,
+          paddingRight: 45
         },
         message: {
           fontSize: 16
@@ -353,8 +362,7 @@ export default (colors: IThemeColors): Theme =>
           boxShadow:
             "0 6px 10px 0px rgba(0, 0, 0, 0.15), 0 1px 18px 0px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.10)",
           color: colors.font.default,
-          display: "grid",
-          gridTemplateColumns: "1fr 56px",
+          display: "block",
           maxWidth: 480
         }
       },
@@ -559,4 +567,11 @@ Card.defaultProps = {
 
 Typography.defaultProps = {
   component: "div"
+};
+
+Checkbox.defaultProps = {
+  checkedIcon: createElement(CheckboxCheckedIcon),
+  color: "primary",
+  icon: createElement(CheckboxIcon),
+  indeterminateIcon: createElement(CheckboxIndeterminateIcon)
 };

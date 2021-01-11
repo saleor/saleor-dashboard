@@ -1,5 +1,5 @@
-import { User } from "@saleor/auth/types/User";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { User } from "@saleor/fragments/types/User";
 import difference from "lodash-es/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";

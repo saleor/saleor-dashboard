@@ -6,7 +6,8 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,7 +34,7 @@ export interface CustomerDetailsPageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerDetailsPageFormData) => void;
+  onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise;
   onViewAllOrdersClick: () => void;
   onRowClick: (id: string) => void;
   onAddressManageClick: () => void;

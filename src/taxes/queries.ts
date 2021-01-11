@@ -1,34 +1,14 @@
+import {
+  countryWithTaxesFragment,
+  shopTaxesFragment,
+  taxTypeFragment
+} from "@saleor/fragments/taxes";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import { CountryList } from "./types/CountryList";
-
-export const countryFragment = gql`
-  fragment CountryFragment on CountryDisplay {
-    country
-    code
-  }
-`;
-export const countryWithTaxesFragment = gql`
-  ${countryFragment}
-  fragment CountryWithTaxesFragment on CountryDisplay {
-    ...CountryFragment
-    vat {
-      standardRate
-      reducedRates {
-        rateType
-        rate
-      }
-    }
-  }
-`;
-export const shopTaxesFragment = gql`
-  fragment ShopTaxesFragment on Shop {
-    chargeTaxesOnShipping
-    includeTaxesInPrices
-    displayGrossPrices
-  }
-`;
+import { TaxTypeList } from "./types/TaxTypeList";
 
 const countryList = gql`
   ${countryWithTaxesFragment}
@@ -43,3 +23,13 @@ const countryList = gql`
   }
 `;
 export const TypedCountryListQuery = TypedQuery<CountryList, {}>(countryList);
+
+const taxTypeList = gql`
+  ${taxTypeFragment}
+  query TaxTypeList {
+    taxTypes {
+      ...TaxTypeFragment
+    }
+  }
+`;
+export const useTaxTypeList = makeQuery<TaxTypeList, {}>(taxTypeList);

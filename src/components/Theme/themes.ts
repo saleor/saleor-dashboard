@@ -70,7 +70,7 @@ export const dark: IThemeColors = {
 export const light: IThemeColors = {
   autofill: "#f4f6c5",
   background: {
-    default: "#F1F6F6",
+    default: "#EFF5F8",
     paper: "#FFFFFF"
   },
   checkbox: {

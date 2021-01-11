@@ -62,6 +62,11 @@ enum AccountErrorCode {
   PASSWORD_TOO_SIMILAR
   REQUIRED
   UNIQUE
+  JWT_SIGNATURE_EXPIRED
+  JWT_INVALID_TOKEN
+  JWT_DECODE_ERROR
+  JWT_MISSING_TOKEN
+  JWT_INVALID_CSRF_TOKEN
 }
 
 input AccountInput {
@@ -190,6 +195,12 @@ type AddressValidationData {
   postalCodePrefix: String
 }
 
+type Allocation implements Node {
+  id: ID!
+  quantity: Int!
+  warehouse: Warehouse!
+}
+
 type App implements Node & ObjectWithMetadata {
   id: ID!
   name: String
@@ -201,7 +212,23 @@ type App implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+  type: AppTypeEnum
   webhooks: [Webhook]
+  aboutApp: String
+  dataPrivacy: String
+  dataPrivacyUrl: String
+  homepageUrl: String
+  supportUrl: String
+  configurationUrl: String
+  appUrl: String
+  version: String
+  accessToken: String
+}
+
+type AppActivate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  appErrors: [AppError!]!
+  app: App
 }
 
 type AppCountableConnection {
@@ -222,10 +249,22 @@ type AppCreate {
   app: App
 }
 
+type AppDeactivate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  appErrors: [AppError!]!
+  app: App
+}
+
 type AppDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   app: App
+}
+
+type AppDeleteFailedInstallation {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  appErrors: [AppError!]!
+  appInstallation: AppInstallation
 }
 
 type AppError {
@@ -236,8 +275,14 @@ type AppError {
 }
 
 enum AppErrorCode {
+  FORBIDDEN
   GRAPHQL_ERROR
   INVALID
+  INVALID_STATUS
+  INVALID_PERMISSION
+  INVALID_URL_FORMAT
+  INVALID_MANIFEST_FORMAT
+  MANIFEST_URL_CANT_CONNECT
   NOT_FOUND
   REQUIRED
   UNIQUE
@@ -245,15 +290,51 @@ enum AppErrorCode {
   OUT_OF_SCOPE_PERMISSION
 }
 
+type AppFetchManifest {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  manifest: Manifest
+  appErrors: [AppError!]!
+}
+
 input AppFilterInput {
   search: String
   isActive: Boolean
+  type: AppTypeEnum
 }
 
 input AppInput {
   name: String
   isActive: Boolean
   permissions: [PermissionEnum]
+}
+
+type AppInstall {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  appErrors: [AppError!]!
+  appInstallation: AppInstallation
+}
+
+input AppInstallInput {
+  appName: String
+  manifestUrl: String
+  activateAfterInstallation: Boolean = true
+  permissions: [PermissionEnum]
+}
+
+type AppInstallation implements Node & Job {
+  appName: String!
+  manifestUrl: String!
+  id: ID!
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String
+}
+
+type AppRetryInstall {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  appErrors: [AppError!]!
+  appInstallation: AppInstallation
 }
 
 enum AppSortField {
@@ -296,6 +377,11 @@ type AppTokenVerify {
   appErrors: [AppError!]!
 }
 
+enum AppTypeEnum {
+  LOCAL
+  THIRDPARTY
+}
+
 type AppUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
@@ -332,7 +418,7 @@ type Attribute implements Node & ObjectWithMetadata {
 type AttributeAssign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productType: ProductType
-  productErrors: [ProductAttributeError!]!
+  productErrors: [ProductError!]!
 }
 
 input AttributeAssignInput {
@@ -608,6 +694,7 @@ type BulkProductError {
   field: String
   message: String
   code: ProductErrorCode!
+  attributes: [ID!]
   index: Int
   warehouses: [ID!]
 }
@@ -616,6 +703,7 @@ type BulkStockError {
   field: String
   message: String
   code: ProductErrorCode!
+  attributes: [ID!]
   index: Int
 }
 
@@ -817,6 +905,7 @@ type CheckoutComplete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   confirmationNeeded: Boolean!
+  confirmationData: JSONString
   checkoutErrors: [CheckoutError!]!
 }
 
@@ -867,6 +956,7 @@ type CheckoutError {
   field: String
   message: String
   code: CheckoutErrorCode!
+  variants: [ID!]
 }
 
 enum CheckoutErrorCode {
@@ -874,6 +964,7 @@ enum CheckoutErrorCode {
   CHECKOUT_NOT_FULLY_PAID
   GRAPHQL_ERROR
   PRODUCT_NOT_PUBLISHED
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE
   INSUFFICIENT_STOCK
   INVALID
   INVALID_SHIPPING_METHOD
@@ -983,15 +1074,15 @@ type Collection implements Node & ObjectWithMetadata {
   description: String!
   descriptionJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
-  products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
+  products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
+  isPublished: Boolean!
 }
 
 type CollectionAddProducts {
@@ -1099,6 +1190,7 @@ enum CollectionSortField {
   NAME
   AVAILABILITY
   PRODUCT_COUNT
+  PUBLICATION_DATE
 }
 
 input CollectionSortingInput {
@@ -1169,6 +1261,7 @@ enum ConfigurationTypeFieldEnum {
   BOOLEAN
   SECRET
   PASSWORD
+  SECRETMULTILINE
 }
 
 type ConfirmAccount {
@@ -1443,18 +1536,20 @@ type CountryDisplay {
 }
 
 type CreateToken {
-  token: String
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
+  token: String
+  refreshToken: String
+  csrfToken: String
   user: User
+  accountErrors: [AccountError!]!
 }
 
 type CreditCard {
   brand: String!
-  firstDigits: String!
+  firstDigits: String
   lastDigits: String!
-  expMonth: Int!
-  expYear: Int!
+  expMonth: Int
+  expYear: Int
 }
 
 type CustomerBulkDelete {
@@ -1540,7 +1635,10 @@ input DateTimeRangeInput {
   lte: DateTime
 }
 
-scalar Decimal
+type DeactivateAllUserTokens {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  accountErrors: [AccountError!]!
+}
 
 type DeleteMetadata {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
@@ -1688,7 +1786,7 @@ input DraftOrderCreateInput {
   billingAddress: AddressInput
   user: ID
   userEmail: String
-  discount: Decimal
+  discount: PositiveDecimal
   shippingAddress: AddressInput
   shippingMethod: ID
   voucher: ID
@@ -1706,7 +1804,7 @@ input DraftOrderInput {
   billingAddress: AddressInput
   user: ID
   userEmail: String
-  discount: Decimal
+  discount: PositiveDecimal
   shippingAddress: AddressInput
   shippingMethod: ID
   voucher: ID
@@ -1749,6 +1847,109 @@ type DraftOrderUpdate {
 type Error {
   field: String
   message: String
+}
+
+type ExportError {
+  field: String
+  message: String
+  code: ExportErrorCode!
+}
+
+enum ExportErrorCode {
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
+type ExportEvent implements Node {
+  id: ID!
+  date: DateTime!
+  type: ExportEventsEnum!
+  user: User
+  app: App
+  message: String!
+}
+
+enum ExportEventsEnum {
+  EXPORT_PENDING
+  EXPORT_SUCCESS
+  EXPORT_FAILED
+  EXPORT_DELETED
+  EXPORTED_FILE_SENT
+  EXPORT_FAILED_INFO_SENT
+}
+
+type ExportFile implements Node & Job {
+  id: ID!
+  user: User
+  app: App
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String
+  url: String
+  events: [ExportEvent!]
+}
+
+type ExportFileCountableConnection {
+  pageInfo: PageInfo!
+  edges: [ExportFileCountableEdge!]!
+  totalCount: Int
+}
+
+type ExportFileCountableEdge {
+  node: ExportFile!
+  cursor: String!
+}
+
+input ExportFileFilterInput {
+  createdAt: DateTimeRangeInput
+  updatedAt: DateTimeRangeInput
+  status: JobStatusEnum
+  user: String
+  app: String
+}
+
+enum ExportFileSortField {
+  STATUS
+  CREATED_AT
+  UPDATED_AT
+}
+
+input ExportFileSortingInput {
+  direction: OrderDirection!
+  field: ExportFileSortField!
+}
+
+input ExportInfoInput {
+  attributes: [ID!]
+  warehouses: [ID!]
+  fields: [ProductFieldEnum!]
+}
+
+type ExportProducts {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  exportFile: ExportFile
+  exportErrors: [ExportError!]!
+}
+
+input ExportProductsInput {
+  scope: ExportScope!
+  filter: ProductFilterInput
+  ids: [ID!]
+  exportInfo: ExportInfoInput
+  fileType: FileTypesEnum!
+}
+
+enum ExportScope {
+  ALL
+  IDS
+  FILTER
+}
+
+enum FileTypesEnum {
+  CSV
+  XLSX
 }
 
 type Fulfillment implements Node & ObjectWithMetadata {
@@ -1871,7 +2072,7 @@ type GiftCardCreate {
 input GiftCardCreateInput {
   startDate: Date
   endDate: Date
-  balance: Decimal
+  balance: PositiveDecimal
   userEmail: String
   code: String
 }
@@ -1906,7 +2107,7 @@ type GiftCardUpdate {
 input GiftCardUpdateInput {
   startDate: Date
   endDate: Date
-  balance: Decimal
+  balance: PositiveDecimal
   userEmail: String
 }
 
@@ -1945,7 +2146,94 @@ input IntRangeInput {
   lte: Int
 }
 
+type Invoice implements ObjectWithMetadata & Job & Node {
+  id: ID!
+  metadata: [MetadataItem]!
+  status: JobStatusEnum!
+  number: String
+  externalUrl: String
+  privateMetadata: [MetadataItem]!
+  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
+  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String
+  url: String
+}
+
+type InvoiceCreate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+input InvoiceCreateInput {
+  number: String!
+  url: String!
+}
+
+type InvoiceDelete {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+type InvoiceError {
+  field: String
+  message: String
+  code: InvoiceErrorCode!
+}
+
+enum InvoiceErrorCode {
+  REQUIRED
+  NOT_READY
+  URL_NOT_SET
+  EMAIL_NOT_SET
+  NUMBER_NOT_SET
+  NOT_FOUND
+  INVALID_STATUS
+}
+
+type InvoiceRequest {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  order: Order
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+type InvoiceRequestDelete {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+type InvoiceSendEmail {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+type InvoiceUpdate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
 scalar JSONString
+
+interface Job {
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String
+}
+
+enum JobStatusEnum {
+  PENDING
+  SUCCESS
+  FAILED
+  DELETED
+}
 
 enum LanguageCodeEnum {
   AR
@@ -1971,9 +2259,12 @@ enum LanguageCodeEnum {
   IS
   IT
   JA
+  KA
+  KM
   KO
   LT
   MN
+  MY
   NB
   NL
   PL
@@ -2001,6 +2292,21 @@ type LanguageDisplay {
   language: String!
 }
 
+type Manifest {
+  identifier: String!
+  version: String!
+  name: String!
+  about: String
+  permissions: [Permission]
+  appUrl: String
+  configurationUrl: String
+  tokenTargetUrl: String
+  dataPrivacy: String
+  dataPrivacyUrl: String
+  homepageUrl: String
+  supportUrl: String
+}
+
 type Margin {
   start: Int
   stop: Int
@@ -2009,6 +2315,7 @@ type Margin {
 type Menu implements Node {
   id: ID!
   name: String!
+  slug: String!
   items: [MenuItem]
 }
 
@@ -2037,6 +2344,7 @@ type MenuCreate {
 
 input MenuCreateInput {
   name: String!
+  slug: String
   items: [MenuItemInput]
 }
 
@@ -2066,10 +2374,12 @@ enum MenuErrorCode {
 
 input MenuFilterInput {
   search: String
+  slug: [String]
 }
 
 input MenuInput {
   name: String
+  slug: String
 }
 
 type MenuItem implements Node {
@@ -2237,6 +2547,7 @@ enum MetadataErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  REQUIRED
 }
 
 input MetadataInput {
@@ -2343,7 +2654,9 @@ type Mutation {
   productClearMetadata(id: ID!, input: MetaPath!): ProductClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productUpdatePrivateMetadata(id: ID!, input: MetaInput!): ProductUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productClearPrivateMetadata(id: ID!, input: MetaPath!): ProductClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
+  productSetAvailabilityForPurchase(isAvailable: Boolean!, productId: ID!, startDate: Date): ProductSetAvailabilityForPurchase
   productImageCreate(input: ProductImageCreateInput!): ProductImageCreate
+  productVariantReorder(moves: [ReorderInput]!, productId: ID!): ProductVariantReorder
   productImageDelete(id: ID!): ProductImageDelete
   productImageBulkDelete(ids: [ID]!): ProductImageBulkDelete
   productImageReorder(imagesIds: [ID]!, productId: ID!): ProductImageReorder
@@ -2369,6 +2682,7 @@ type Mutation {
   productVariantStocksDelete(variantId: ID!, warehouseIds: [ID!]): ProductVariantStocksDelete
   productVariantStocksUpdate(stocks: [StockInput!]!, variantId: ID!): ProductVariantStocksUpdate
   productVariantUpdate(id: ID!, input: ProductVariantInput!): ProductVariantUpdate
+  productVariantSetDefault(productId: ID!, variantId: ID!): ProductVariantSetDefault
   productVariantTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ProductVariantTranslate
   productVariantUpdateMetadata(id: ID!, input: MetaInput!): ProductVariantUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   productVariantClearMetadata(id: ID!, input: MetaPath!): ProductVariantClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
@@ -2376,10 +2690,10 @@ type Mutation {
   productVariantClearPrivateMetadata(id: ID!, input: MetaPath!): ProductVariantClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   variantImageAssign(imageId: ID!, variantId: ID!): VariantImageAssign
   variantImageUnassign(imageId: ID!, variantId: ID!): VariantImageUnassign
-  paymentCapture(amount: Decimal, paymentId: ID!): PaymentCapture
-  paymentRefund(amount: Decimal, paymentId: ID!): PaymentRefund
+  paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
+  paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
-  paymentSecureConfirm(paymentId: ID!): PaymentSecureConfirm
+  paymentInitialize(gateway: String!, paymentData: JSONString): PaymentInitialize
   pageCreate(input: PageInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
@@ -2397,7 +2711,7 @@ type Mutation {
   draftOrderUpdate(id: ID!, input: DraftOrderInput!): DraftOrderUpdate
   orderAddNote(order: ID!, input: OrderAddNoteInput!): OrderAddNote
   orderCancel(id: ID!): OrderCancel
-  orderCapture(amount: Decimal!, id: ID!): OrderCapture
+  orderCapture(amount: PositiveDecimal!, id: ID!): OrderCapture
   orderClearPrivateMeta(id: ID!, input: MetaPath!): OrderClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderClearMeta(input: MetaPath!, token: UUID!): OrderClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderFulfill(input: OrderFulfillInput!, order: ID): OrderFulfill
@@ -2408,7 +2722,7 @@ type Mutation {
   orderFulfillmentUpdateMeta(id: ID!, input: MetaInput!): FulfillmentUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderFulfillmentUpdatePrivateMeta(id: ID!, input: MetaInput!): FulfillmentUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderMarkAsPaid(id: ID!): OrderMarkAsPaid
-  orderRefund(amount: Decimal!, id: ID!): OrderRefund
+  orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
   orderUpdateMeta(input: MetaInput!, token: UUID!): OrderUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderUpdatePrivateMeta(id: ID!, input: MetaInput!): OrderUpdatePrivateMeta @deprecated(reason: "Use the `updatePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
@@ -2430,6 +2744,12 @@ type Mutation {
   menuItemUpdate(id: ID!, input: MenuItemInput!): MenuItemUpdate
   menuItemTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): MenuItemTranslate
   menuItemMove(menu: ID!, moves: [MenuItemMoveInput]!): MenuItemMove
+  invoiceRequest(number: String, orderId: ID!): InvoiceRequest
+  invoiceRequestDelete(id: ID!): InvoiceRequestDelete
+  invoiceCreate(input: InvoiceCreateInput!, orderId: ID!): InvoiceCreate
+  invoiceDelete(id: ID!): InvoiceDelete
+  invoiceUpdate(id: ID!, input: UpdateInvoiceInput!): InvoiceUpdate
+  invoiceSendEmail(id: ID!): InvoiceSendEmail
   giftCardActivate(id: ID!): GiftCardActivate
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
@@ -2449,12 +2769,10 @@ type Mutation {
   voucherCataloguesAdd(id: ID!, input: CatalogueInput!): VoucherAddCatalogues
   voucherCataloguesRemove(id: ID!, input: CatalogueInput!): VoucherRemoveCatalogues
   voucherTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): VoucherTranslate
-  tokenCreate(email: String!, password: String!): CreateToken
-  tokenRefresh(token: String!): RefreshToken
-  tokenVerify(token: String!): VerifyToken
+  exportProducts(input: ExportProductsInput!): ExportProducts
   checkoutAddPromoCode(checkoutId: ID!, promoCode: String!): CheckoutAddPromoCode
   checkoutBillingAddressUpdate(billingAddress: AddressInput!, checkoutId: ID!): CheckoutBillingAddressUpdate
-  checkoutComplete(checkoutId: ID!, redirectUrl: String, storeSource: Boolean = false): CheckoutComplete
+  checkoutComplete(checkoutId: ID!, paymentData: JSONString, redirectUrl: String, storeSource: Boolean = false): CheckoutComplete
   checkoutCreate(input: CheckoutCreateInput!): CheckoutCreate
   checkoutCustomerAttach(checkoutId: ID!, customerId: ID): CheckoutCustomerAttach
   checkoutCustomerDetach(checkoutId: ID!): CheckoutCustomerDetach
@@ -2476,9 +2794,19 @@ type Mutation {
   appTokenCreate(input: AppTokenInput!): AppTokenCreate
   appTokenDelete(id: ID!): AppTokenDelete
   appTokenVerify(token: String!): AppTokenVerify
+  appInstall(input: AppInstallInput!): AppInstall
+  appRetryInstall(activateAfterInstallation: Boolean = true, id: ID!): AppRetryInstall
+  appDeleteFailedInstallation(id: ID!): AppDeleteFailedInstallation
+  appFetchManifest(manifestUrl: String!): AppFetchManifest
+  appActivate(id: ID!): AppActivate
+  appDeactivate(id: ID!): AppDeactivate
+  tokenCreate(email: String!, password: String!): CreateToken
+  tokenRefresh(csrfToken: String, refreshToken: String): RefreshToken
+  tokenVerify(token: String!): VerifyToken
+  tokensDeactivateAll: DeactivateAllUserTokens
   requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
   confirmAccount(email: String!, token: String!): ConfirmAccount
-  setPassword(token: String!, email: String!, password: String!): SetPassword
+  setPassword(email: String!, password: String!, token: String!): SetPassword
   passwordChange(newPassword: String!, oldPassword: String!): PasswordChange
   requestEmailChange(newEmail: String!, password: String!, redirectUrl: String!): RequestEmailChange
   confirmEmailChange(token: String!): ConfirmEmailChange
@@ -2585,6 +2913,7 @@ type Order implements Node & ObjectWithMetadata {
   lines: [OrderLine]!
   actions: [OrderAction]!
   availableShippingMethods: [ShippingMethod]
+  invoices: [Invoice]
   number: String
   isPaid: Boolean
   paymentStatus: PaymentChargeStatusEnum
@@ -2690,6 +3019,7 @@ enum OrderErrorCode {
   GRAPHQL_ERROR
   INVALID
   PRODUCT_NOT_PUBLISHED
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE
   NOT_FOUND
   ORDER_NO_SHIPPING_ADDRESS
   PAYMENT_ERROR
@@ -2697,6 +3027,7 @@ enum OrderErrorCode {
   REQUIRED
   SHIPPING_METHOD_NOT_APPLICABLE
   SHIPPING_METHOD_REQUIRED
+  TAX_ERROR
   UNIQUE
   VOID_INACTIVE_PAYMENT
   ZERO_QUANTITY
@@ -2718,6 +3049,7 @@ type OrderEvent implements Node {
   quantity: Int
   composedId: String
   orderNumber: String
+  invoiceNumber: String
   oversoldItems: [String]
   lines: [OrderEventOrderLineObject]
   fulfilledItems: [FulfillmentLine]
@@ -2746,6 +3078,8 @@ enum OrderEventsEmailsEnum {
   SHIPPING_CONFIRMATION
   TRACKING_UPDATED
   ORDER_CONFIRMATION
+  ORDER_CANCEL
+  ORDER_REFUND
   FULFILLMENT_CONFIRMATION
   DIGITAL_LINKS
 }
@@ -2762,10 +3096,16 @@ enum OrderEventsEnum {
   ORDER_FULLY_PAID
   UPDATED_ADDRESS
   EMAIL_SENT
+  PAYMENT_AUTHORIZED
   PAYMENT_CAPTURED
+  EXTERNAL_SERVICE_NOTIFICATION
   PAYMENT_REFUNDED
   PAYMENT_VOIDED
   PAYMENT_FAILED
+  INVOICE_REQUESTED
+  INVOICE_GENERATED
+  INVOICE_UPDATED
+  INVOICE_SENT
   FULFILLMENT_CANCELED
   FULFILLMENT_RESTOCKED_ITEMS
   FULFILLMENT_FULFILLED_ITEMS
@@ -2800,8 +3140,8 @@ input OrderFulfillLineInput {
 }
 
 input OrderFulfillStockInput {
-  quantity: Int
-  warehouse: ID
+  quantity: Int!
+  warehouse: ID!
 }
 
 type OrderLine implements Node {
@@ -2816,9 +3156,11 @@ type OrderLine implements Node {
   digitalContentUrl: DigitalContentUrl
   thumbnail(size: Int): Image
   unitPrice: TaxedMoney
+  totalPrice: TaxedMoney
   variant: ProductVariant
   translatedProductName: String!
   translatedVariantName: String!
+  allocations: [Allocation!]
 }
 
 input OrderLineCreateInput {
@@ -2911,7 +3253,7 @@ type OrderVoid {
   orderErrors: [OrderError!]!
 }
 
-type Page implements Node {
+type Page implements Node & ObjectWithMetadata {
   seoTitle: String
   seoDescription: String
   id: ID!
@@ -2919,10 +3261,14 @@ type Page implements Node {
   content: String!
   contentJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   slug: String!
   created: DateTime!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
+  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
+  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
+  isPublished: Boolean!
 }
 
 type PageBulkDelete {
@@ -3064,14 +3410,11 @@ type Payment implements Node {
   token: String!
   checkout: Checkout
   order: Order
-  billingEmail: String!
   customerIpAddress: String
-  extraData: String!
   chargeStatus: PaymentChargeStatusEnum!
   actions: [OrderAction]!
   total: Money
   capturedAmount: Money
-  billingAddress: Address
   transactions: [Transaction]
   availableCaptureAmount: Money
   availableRefundAmount: Money
@@ -3086,10 +3429,13 @@ type PaymentCapture {
 
 enum PaymentChargeStatusEnum {
   NOT_CHARGED
+  PENDING
   PARTIALLY_CHARGED
   FULLY_CHARGED
   PARTIALLY_REFUNDED
   FULLY_REFUNDED
+  REFUSED
+  CANCELLED
 }
 
 type PaymentCountableConnection {
@@ -3114,35 +3460,44 @@ enum PaymentErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  REQUIRED
+  UNIQUE
   PARTIAL_PAYMENT_NOT_ALLOWED
   SHIPPING_ADDRESS_NOT_SET
   INVALID_SHIPPING_METHOD
   SHIPPING_METHOD_NOT_SET
   PAYMENT_ERROR
-  REQUIRED
-  UNIQUE
+  NOT_SUPPORTED_GATEWAY
 }
 
 type PaymentGateway {
   name: String!
   id: ID!
   config: [GatewayConfigLine!]!
+  currencies: [String]!
+}
+
+type PaymentInitialize {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  initializedPayment: PaymentInitialized
+  paymentErrors: [PaymentError!]!
+}
+
+type PaymentInitialized {
+  gateway: String!
+  name: String!
+  data: JSONString
 }
 
 input PaymentInput {
   gateway: String!
-  token: String!
-  amount: Decimal
+  token: String
+  amount: PositiveDecimal
   billingAddress: AddressInput
+  returnUrl: String
 }
 
 type PaymentRefund {
-  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  payment: Payment
-  paymentErrors: [PaymentError!]!
-}
-
-type PaymentSecureConfirm {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   payment: Payment
   paymentErrors: [PaymentError!]!
@@ -3176,17 +3531,17 @@ enum PermissionEnum {
   MANAGE_ORDERS
   MANAGE_PAGES
   MANAGE_PRODUCTS
+  MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
-  MANAGE_WEBHOOKS
   MANAGE_CHECKOUTS
 }
 
 type PermissionGroupCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  group: Group
   permissionGroupErrors: [PermissionGroupError!]!
+  group: Group
 }
 
 input PermissionGroupCreateInput {
@@ -3235,8 +3590,8 @@ input PermissionGroupSortingInput {
 
 type PermissionGroupUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  group: Group
   permissionGroupErrors: [PermissionGroupError!]!
+  group: Group
 }
 
 input PermissionGroupUpdateInput {
@@ -3307,6 +3662,8 @@ input PluginUpdateInput {
   configuration: [ConfigurationItemInput]
 }
 
+scalar PositiveDecimal
+
 input PriceRangeInput {
   gte: Float
   lte: Float
@@ -3320,13 +3677,15 @@ type Product implements Node & ObjectWithMetadata & ObjectWithJSONMetadata {
   description: String!
   descriptionJson: JSONString!
   publicationDate: Date
-  isPublished: Boolean!
   productType: ProductType!
   slug: String!
   category: Category
   updatedAt: DateTime
   chargeTaxes: Boolean!
   weight: Weight
+  availableForPurchase: Date
+  visibleInListings: Boolean!
+  defaultVariant: ProductVariant
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
@@ -3347,13 +3706,8 @@ type Product implements Node & ObjectWithMetadata & ObjectWithJSONMetadata {
   images: [ProductImage]
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
-}
-
-type ProductAttributeError {
-  field: String
-  message: String
-  code: ProductErrorCode!
-  attributes: [ID!]
+  isAvailableForPurchase: Boolean
+  isPublished: Boolean!
 }
 
 type ProductBulkDelete {
@@ -3413,7 +3767,8 @@ input ProductCreateInput {
   weight: WeightScalar
   sku: String
   trackInventory: Boolean
-  basePrice: Decimal
+  basePrice: PositiveDecimal
+  visibleInListings: Boolean
   productType: ID!
   stocks: [StockInput!]
 }
@@ -3428,6 +3783,7 @@ type ProductError {
   field: String
   message: String
   code: ProductErrorCode!
+  attributes: [ID!]
 }
 
 enum ProductErrorCode {
@@ -3439,10 +3795,30 @@ enum ProductErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_PRODUCTS_IMAGE
+  NOT_PRODUCTS_VARIANT
   NOT_FOUND
   REQUIRED
   UNIQUE
   VARIANT_NO_DIGITAL_CONTENT
+}
+
+enum ProductFieldEnum {
+  NAME
+  DESCRIPTION
+  PRODUCT_TYPE
+  CATEGORY
+  VISIBLE
+  AVAILABLE_FOR_PURCHASE
+  SEARCHABLE
+  PRODUCT_WEIGHT
+  COLLECTIONS
+  CHARGE_TAXES
+  PRODUCT_IMAGES
+  VARIANT_SKU
+  VARIANT_PRICE
+  COST_PRICE
+  VARIANT_WEIGHT
+  VARIANT_IMAGES
 }
 
 input ProductFilterInput {
@@ -3460,6 +3836,7 @@ input ProductFilterInput {
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
+  ids: [ID]
 }
 
 type ProductImage implements Node {
@@ -3529,7 +3906,8 @@ input ProductInput {
   weight: WeightScalar
   sku: String
   trackInventory: Boolean
-  basePrice: Decimal
+  basePrice: PositiveDecimal
+  visibleInListings: Boolean
 }
 
 input ProductMetadataFilterInput {
@@ -3550,6 +3928,7 @@ enum ProductOrderField {
   DATE
   TYPE
   PUBLISHED
+  PUBLICATION_DATE
 }
 
 type ProductPricingInfo {
@@ -3559,6 +3938,12 @@ type ProductPricingInfo {
   priceRange: TaxedMoneyRange
   priceRangeUndiscounted: TaxedMoneyRange
   priceRangeLocalCurrency: TaxedMoneyRange
+}
+
+type ProductSetAvailabilityForPurchase {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  product: Product
+  productErrors: [ProductError!]!
 }
 
 input ProductStockFilterInput {
@@ -3779,8 +4164,8 @@ type ProductVariantBulkCreate {
 
 input ProductVariantBulkCreateInput {
   attributes: [AttributeValueInput]!
-  costPrice: Decimal
-  price: Decimal
+  costPrice: PositiveDecimal
+  price: PositiveDecimal
   sku: String!
   trackInventory: Boolean
   weight: WeightScalar
@@ -3824,8 +4209,8 @@ type ProductVariantCreate {
 
 input ProductVariantCreateInput {
   attributes: [AttributeValueInput]!
-  costPrice: Decimal
-  price: Decimal
+  costPrice: PositiveDecimal
+  price: PositiveDecimal
   sku: String
   trackInventory: Boolean
   weight: WeightScalar
@@ -3839,13 +4224,30 @@ type ProductVariantDelete {
   productVariant: ProductVariant
 }
 
+input ProductVariantFilterInput {
+  search: String
+  sku: [String]
+}
+
 input ProductVariantInput {
   attributes: [AttributeValueInput]
-  costPrice: Decimal
-  price: Decimal
+  costPrice: PositiveDecimal
+  price: PositiveDecimal
   sku: String
   trackInventory: Boolean
   weight: WeightScalar
+}
+
+type ProductVariantReorder {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  product: Product
+  productErrors: [ProductError!]!
+}
+
+type ProductVariantSetDefault {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  product: Product
+  productErrors: [ProductError!]!
 }
 
 type ProductVariantStocksCreate {
@@ -3934,8 +4336,8 @@ type Query {
   products(filter: ProductFilterInput, sortBy: ProductOrder, stockAvailability: StockAvailability, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   productType(id: ID!): ProductType
   productTypes(filter: ProductTypeFilterInput, sortBy: ProductTypeSortingInput, before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection
-  productVariant(id: ID!): ProductVariant
-  productVariants(ids: [ID], before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
+  productVariant(id: ID, sku: String): ProductVariant
+  productVariants(ids: [ID], filter: ProductVariantFilterInput, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   reportProductSales(period: ReportingPeriod!, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   payment(id: ID!): Payment
   payments(before: String, after: String, first: Int, last: Int): PaymentCountableConnection
@@ -3947,7 +4349,7 @@ type Query {
   draftOrders(sortBy: OrderSortingInput, filter: OrderDraftFilterInput, created: ReportingPeriod, before: String, after: String, first: Int, last: Int): OrderCountableConnection
   ordersTotal(period: ReportingPeriod): TaxedMoney
   orderByToken(token: UUID!): Order
-  menu(id: ID, name: String): Menu
+  menu(id: ID, name: String, slug: String): Menu
   menus(sortBy: MenuSortingInput, filter: MenuFilterInput, before: String, after: String, first: Int, last: Int): MenuCountableConnection
   menuItem(id: ID!): MenuItem
   menuItems(sortBy: MenuItemSortingInput, filter: MenuItemFilterInput, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
@@ -3959,11 +4361,14 @@ type Query {
   sales(filter: SaleFilterInput, sortBy: SaleSortingInput, query: String, before: String, after: String, first: Int, last: Int): SaleCountableConnection
   voucher(id: ID!): Voucher
   vouchers(filter: VoucherFilterInput, sortBy: VoucherSortingInput, query: String, before: String, after: String, first: Int, last: Int): VoucherCountableConnection
+  exportFile(id: ID!): ExportFile
+  exportFiles(filter: ExportFileFilterInput, sortBy: ExportFileSortingInput, before: String, after: String, first: Int, last: Int): ExportFileCountableConnection
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
   checkouts(before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
   checkoutLine(id: ID): CheckoutLine
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
+  appsInstallations: [AppInstallation!]!
   apps(filter: AppFilterInput, sortBy: AppSortingInput, before: String, after: String, first: Int, last: Int): AppCountableConnection
   app(id: ID!): App
   addressValidationRules(countryCode: CountryCode!, countryArea: String, city: String, cityArea: String): AddressValidationData
@@ -3986,8 +4391,10 @@ type ReducedRate {
 }
 
 type RefreshToken {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
-  payload: GenericScalar
+  user: User
+  accountErrors: [AccountError!]!
 }
 
 input ReorderInput {
@@ -4069,7 +4476,7 @@ input SaleFilterInput {
 input SaleInput {
   name: String
   type: DiscountValueTypeEnum
-  value: Decimal
+  value: PositiveDecimal
   products: [ID]
   categories: [ID]
   collections: [ID]
@@ -4237,10 +4644,12 @@ type ServiceAccountUpdatePrivateMeta {
 }
 
 type SetPassword {
-  token: String
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
+  token: String
+  refreshToken: String
+  csrfToken: String
   user: User
+  accountErrors: [AccountError!]!
 }
 
 type ShippingError {
@@ -4313,9 +4722,9 @@ type ShippingPriceDelete {
 
 input ShippingPriceInput {
   name: String
-  price: Decimal
-  minimumOrderPrice: Decimal
-  maximumOrderPrice: Decimal
+  price: PositiveDecimal
+  minimumOrderPrice: PositiveDecimal
+  maximumOrderPrice: PositiveDecimal
   minimumOrderWeight: WeightScalar
   maximumOrderWeight: WeightScalar
   type: ShippingMethodTypeEnum
@@ -4364,8 +4773,8 @@ type ShippingZoneCountableEdge {
 
 type ShippingZoneCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  shippingZone: ShippingZone
   shippingErrors: [ShippingError!]!
+  shippingZone: ShippingZone
 }
 
 input ShippingZoneCreateInput {
@@ -4383,8 +4792,8 @@ type ShippingZoneDelete {
 
 type ShippingZoneUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  shippingZone: ShippingZone
   shippingErrors: [ShippingError!]!
+  shippingZone: ShippingZone
 }
 
 input ShippingZoneUpdateInput {
@@ -4396,21 +4805,21 @@ input ShippingZoneUpdateInput {
 }
 
 type Shop {
-  availablePaymentGateways: [PaymentGateway!]!
+  availablePaymentGateways(currency: String): [PaymentGateway!]!
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
-  currencies: [String]!
-  defaultCurrency: String!
+  currencies: [String]! @deprecated(reason: "This field will be removed in Saleor 3.0")
+  defaultCurrency: String! @deprecated(reason: "This field will be removed in Saleor 3.0")
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
   defaultMailSenderAddress: String
   description: String
   domain: Domain!
-  homepageCollection: Collection
+  homepageCollection: Collection @deprecated(reason: "Use the `collection` query with the `slug` parameter. This field will be removed in Saleor 3.0")
   languages: [LanguageDisplay]!
   name: String!
-  navigation: Navigation
+  navigation: Navigation @deprecated(reason: "Fetch menus using the `menu` query with `slug` parameter.")
   permissions: [Permission]!
   phonePrefixes: [String]!
   headerText: String
@@ -4703,7 +5112,6 @@ type Transaction implements Node {
   kind: TransactionKind!
   isSuccess: Boolean!
   error: TransactionError
-  gatewayResponse: JSONString!
   amount: Money
 }
 
@@ -4722,10 +5130,14 @@ enum TransactionError {
 
 enum TransactionKind {
   AUTH
+  PENDING
+  ACTION_TO_CONFIRM
   REFUND
+  REFUND_ONGOING
   CAPTURE
   VOID
   CONFIRM
+  CANCEL
 }
 
 union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
@@ -4776,6 +5188,11 @@ input TranslationInput {
 }
 
 scalar UUID
+
+input UpdateInvoiceInput {
+  number: String
+  url: String
+}
 
 type UpdateMetadata {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
@@ -4932,8 +5349,11 @@ type VariantPricingInfo {
 }
 
 type VerifyToken {
-  payload: GenericScalar
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
+  isValid: Boolean!
+  payload: GenericScalar
+  accountErrors: [AccountError!]!
 }
 
 type Voucher implements Node {
@@ -5014,11 +5434,11 @@ input VoucherInput {
   startDate: DateTime
   endDate: DateTime
   discountValueType: DiscountValueTypeEnum
-  discountValue: Decimal
+  discountValue: PositiveDecimal
   products: [ID]
   collections: [ID]
   categories: [ID]
-  minAmountSpent: Decimal
+  minAmountSpent: PositiveDecimal
   minCheckoutItemsQuantity: Int
   countries: [String]
   applyOncePerOrder: Boolean
@@ -5153,14 +5573,14 @@ input WarehouseFilterInput {
 
 type WarehouseShippingZoneAssign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  warehouse: Warehouse
   warehouseErrors: [WarehouseError!]!
+  warehouse: Warehouse
 }
 
 type WarehouseShippingZoneUnassign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  warehouse: Warehouse
   warehouseErrors: [WarehouseError!]!
+  warehouse: Warehouse
 }
 
 enum WarehouseSortField {
@@ -5226,8 +5646,8 @@ input WebhookCreateInput {
 
 type WebhookDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  webhook: Webhook
   webhookErrors: [WebhookError!]!
+  webhook: Webhook
 }
 
 type WebhookError {
@@ -5256,9 +5676,15 @@ enum WebhookEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
   CUSTOMER_CREATED
   PRODUCT_CREATED
+  PRODUCT_UPDATED
   CHECKOUT_QUANTITY_CHANGED
+  CHECKOUT_CREATED
+  CHECKOUT_UPDATED
   FULFILLMENT_CREATED
 }
 
@@ -5273,9 +5699,15 @@ enum WebhookSampleEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
   CUSTOMER_CREATED
   PRODUCT_CREATED
+  PRODUCT_UPDATED
   CHECKOUT_QUANTITY_CHANGED
+  CHECKOUT_CREATED
+  CHECKOUT_UPDATED
   FULFILLMENT_CREATED
 }
 
@@ -5293,8 +5725,8 @@ input WebhookSortingInput {
 
 type WebhookUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  webhook: Webhook
   webhookErrors: [WebhookError!]!
+  webhook: Webhook
 }
 
 input WebhookUpdateInput {
@@ -5308,7 +5740,7 @@ input WebhookUpdateInput {
 }
 
 type Weight {
-  unit: String!
+  unit: WeightUnitsEnum!
   value: Float!
 }
 

@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
@@ -11,10 +11,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { generateCode } from "../../../misc";
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherInfoProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
   variant: "create" | "update";
@@ -61,7 +61,7 @@ const VoucherInfo = ({
           error={!!formErrors.code}
           fullWidth
           helperText={getDiscountErrorMessage(formErrors.code, intl)}
-          name={"code" as keyof FormData}
+          name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
             defaultMessage: "Discount Code"
           })}

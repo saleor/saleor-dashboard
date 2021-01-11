@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";

@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { maybe } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";

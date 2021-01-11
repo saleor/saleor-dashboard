@@ -12,6 +12,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
+import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture(placeholderImage);
 
@@ -19,6 +20,7 @@ const props: ProductUpdatePageProps = {
   ...listActionsProps,
   categories: [product.category],
   collections,
+  defaultWeightUnit: "kg",
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,
@@ -31,13 +33,17 @@ const props: ProductUpdatePageProps = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
+  onSetDefaultVariant: () => undefined,
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
+  onVariantReorder: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  onWarehouseConfigure: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",
+  taxTypes,
   variants: product.variants,
   warehouses: warehouseList
 };
@@ -86,6 +92,26 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...product,
+
+        productType: {
+          ...product.productType,
+          hasVariants: false
+        },
+        variants: [
+          {
+            ...product.variants[0],
+            stocks: []
+          }
+        ]
+      }}
+    />
+  ))
+  .add("no stock, no variants and no warehouses", () => (
+    <ProductUpdatePage
+      {...props}
+      warehouses={[]}
+      product={{
+        ...product,
         productType: {
           ...product.productType,
           hasVariants: false
@@ -112,6 +138,7 @@ storiesOf("Views / Products / Product edit", module)
     <ProductUpdatePage
       {...props}
       errors={([
+        "attributes",
         "basePrice",
         "category",
         "chargeTaxes",
@@ -123,10 +150,16 @@ storiesOf("Views / Products / Product edit", module)
         "seoTitle",
         "sku",
         "stockQuantity"
-      ] as Array<keyof ProductUpdatePageFormData>).map(field => ({
-        __typename: "ProductError",
-        code: ProductErrorCode.INVALID,
-        field
-      }))}
+      ] as Array<keyof ProductUpdatePageFormData | "attributes">).map(
+        field => ({
+          __typename: "ProductError",
+          attributes:
+            field === "attributes"
+              ? [product.attributes[0].attribute.id]
+              : null,
+          code: ProductErrorCode.INVALID,
+          field
+        })
+      )}
     />
   ));

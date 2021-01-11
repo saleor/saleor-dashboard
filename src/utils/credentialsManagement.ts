@@ -1,16 +1,18 @@
-import { User } from "@saleor/auth/types/User";
+import { User } from "@saleor/fragments/types/User";
 
 export const isSupported =
   navigator.credentials && navigator.credentials.preventSilentAccess;
 
-export function login(loginFn: (id: string, password: string) => void) {
+export function login<T>(loginFn: (id: string, password: string) => T): T {
   if (isSupported) {
     navigator.credentials.get({ password: true }).then(credential => {
       if (credential instanceof PasswordCredential) {
-        loginFn(credential.id, credential.password);
+        return loginFn(credential.id, credential.password);
       }
     });
   }
+
+  return null;
 }
 
 export function saveCredentials(user: User, password: string) {

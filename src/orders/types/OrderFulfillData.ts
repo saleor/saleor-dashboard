@@ -6,6 +6,17 @@
 // GraphQL query operation: OrderFulfillData
 // ====================================================
 
+export interface OrderFulfillData_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderFulfillData_order_lines_allocations {
+  __typename: "Allocation";
+  quantity: number;
+  warehouse: OrderFulfillData_order_lines_allocations_warehouse;
+}
+
 export interface OrderFulfillData_order_lines_variant_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -51,6 +62,7 @@ export interface OrderFulfillData_order_lines {
   isShippingRequired: boolean;
   productName: string;
   quantity: number;
+  allocations: OrderFulfillData_order_lines_allocations[] | null;
   quantityFulfilled: number;
   variant: OrderFulfillData_order_lines_variant | null;
   thumbnail: OrderFulfillData_order_lines_thumbnail | null;

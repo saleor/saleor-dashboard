@@ -47,7 +47,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
   };
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, submit }) => (
+      {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
             <AppHeader onBack={onBack}>
@@ -77,7 +77,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
             </Grid>
           </Container>
           <SaveButtonBar
-            disabled={disabled}
+            disabled={disabled || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
             onSave={submit}

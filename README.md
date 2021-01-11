@@ -6,7 +6,7 @@ A GraphQL-powered, single-page dashboard application for [Saleor](https://github
 
 ## Demo
 
-See the [public demo](https://pwa.saleor.io/dashboard/) of Saleor Dashboard!
+See the [public demo](https://demo.saleor.io/dashboard/) of Saleor Dashboard!
 
 Or launch the demo on a free Heroku instance.
 
@@ -40,7 +40,7 @@ $ cd saleor-dashboard
 To use the official stable release, checkout to a release tag:
 
 ```
-$ git checkout 2.10.0
+$ git checkout 2.10.1
 ```
 
 See the list of all releases here: https://github.com/mirumee/saleor-dashboard/releases/

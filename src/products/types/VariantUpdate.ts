@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -12,6 +12,19 @@ export interface VariantUpdate_productVariantUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  attributes: string[] | null;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
@@ -61,6 +74,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_price {
   currency: string;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_product_images {
   __typename: "ProductImage";
   id: string;
@@ -91,6 +109,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_varia
 export interface VariantUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
+  defaultVariant: VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
@@ -111,9 +130,17 @@ export interface VariantUpdate_productVariantUpdate_productVariant_stocks {
   warehouse: VariantUpdate_productVariantUpdate_productVariant_stocks_warehouse;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantUpdate_productVariantUpdate_productVariant_metadata | null)[];
+  privateMetadata: (VariantUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   attributes: VariantUpdate_productVariantUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
@@ -123,6 +150,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   sku: string;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
 }
 
 export interface VariantUpdate_productVariantUpdate {
@@ -136,6 +164,18 @@ export interface VariantUpdate_productVariantStocksUpdate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_attributes_attribute_values {
@@ -185,6 +225,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_price {
   currency: string;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_images {
   __typename: "ProductImage";
   id: string;
@@ -215,6 +260,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product {
   __typename: "Product";
   id: string;
+  defaultVariant: VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_product_images | null)[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
@@ -235,9 +281,17 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks 
   warehouse: VariantUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
+  metadata: (VariantUpdate_productVariantStocksUpdate_productVariant_metadata | null)[];
+  privateMetadata: (VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   attributes: VariantUpdate_productVariantStocksUpdate_productVariant_attributes[];
   costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
@@ -247,6 +301,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   sku: string;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate {
@@ -337,4 +392,5 @@ export interface VariantUpdateVariables {
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];
+  weight?: any | null;
 }

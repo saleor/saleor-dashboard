@@ -117,4 +117,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   SaleListUrlQueryParams,
   SaleListUrlFilters
->(SaleListUrlFiltersEnum);
+>({
+  ...SaleListUrlFiltersEnum,
+  ...SaleListUrlFiltersWithMultipleValues
+});

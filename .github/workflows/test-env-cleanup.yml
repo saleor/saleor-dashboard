@@ -1,0 +1,37 @@
+name: TEST-ENV-CLEANUP
+# Remove test instance for closed pull requests
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["*"]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rlespinasse/github-slug-action@2.0.0
+      - name: Set domain
+        # Set test instance domain based on branch name slug
+        run: |
+          echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Remove S3 directory
+        run: aws s3 rm --recursive s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}/
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
+
+      - name: Mark deployment as deactivated
+        uses: bobheadxi/deployments@v0.4.2
+        with:
+          step: deactivate-env
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}

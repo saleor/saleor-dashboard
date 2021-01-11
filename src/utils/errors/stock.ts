@@ -1,6 +1,6 @@
+import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
+import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { BulkStockErrorFragment } from "@saleor/products/types/BulkStockErrorFragment";
-import { StockErrorFragment } from "@saleor/products/types/StockErrorFragment";
 import { StockErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

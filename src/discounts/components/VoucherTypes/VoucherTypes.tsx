@@ -3,17 +3,17 @@ import CardContent from "@material-ui/core/CardContent";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
-import { FormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherTypesProps {
-  data: FormData;
+  data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -68,7 +68,7 @@ const VoucherTypes = ({
             disabled={disabled}
             error={!!formErrors.discountType}
             hint={getDiscountErrorMessage(formErrors.discountType, intl)}
-            name={"discountType" as keyof FormData}
+            name={"discountType" as keyof VoucherDetailsPageFormData}
             value={data.discountType}
             onChange={onChange}
           />

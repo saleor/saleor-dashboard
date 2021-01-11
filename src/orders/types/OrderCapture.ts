@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderCapture
@@ -12,6 +12,18 @@ export interface OrderCapture_orderCapture_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+}
+
+export interface OrderCapture_orderCapture_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderCapture_orderCapture_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface OrderCapture_orderCapture_order_billingAddress_country {
@@ -49,10 +61,25 @@ export interface OrderCapture_orderCapture_order_events {
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
+  invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
   type: OrderEventsEnum | null;
   user: OrderCapture_orderCapture_order_events_user | null;
+}
+
+export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant_product;
+  quantityAvailable: number;
 }
 
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -82,6 +109,7 @@ export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -113,6 +141,20 @@ export interface OrderCapture_orderCapture_order_fulfillments {
   warehouse: OrderCapture_orderCapture_order_fulfillments_warehouse | null;
 }
 
+export interface OrderCapture_orderCapture_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderCapture_orderCapture_order_lines_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderCapture_orderCapture_order_lines_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderCapture_orderCapture_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -140,6 +182,7 @@ export interface OrderCapture_orderCapture_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderCapture_orderCapture_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -252,9 +295,20 @@ export interface OrderCapture_orderCapture_order_discount {
   currency: string;
 }
 
+export interface OrderCapture_orderCapture_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderCapture_orderCapture_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderCapture_orderCapture_order_metadata | null)[];
+  privateMetadata: (OrderCapture_orderCapture_order_privateMetadata | null)[];
   billingAddress: OrderCapture_orderCapture_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
@@ -278,6 +332,7 @@ export interface OrderCapture_orderCapture_order {
   userEmail: string | null;
   availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
   discount: OrderCapture_orderCapture_order_discount | null;
+  invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
 }
 
 export interface OrderCapture_orderCapture {

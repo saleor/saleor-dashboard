@@ -1,6 +1,7 @@
-import { ShippingMethodTypeEnum } from "../types/globalTypes";
-import { ShippingZoneDetailsFragment } from "./types/ShippingZoneDetailsFragment";
-import { ShippingZoneFragment } from "./types/ShippingZoneFragment";
+import { ShippingZoneDetailsFragment } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
+
+import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {
@@ -1553,7 +1554,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       maximumOrderPrice: null,
       maximumOrderWeight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 80
       },
       minimumOrderPrice: {
@@ -1563,7 +1564,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       minimumOrderWeight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DB Schenker",
@@ -1586,7 +1587,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       minimumOrderWeight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "Registred priority",
@@ -1609,7 +1610,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       minimumOrderWeight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 0
       },
 
@@ -1633,7 +1634,7 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       minimumOrderWeight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DHL",

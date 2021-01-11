@@ -12,9 +12,9 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Money from "@saleor/components/Money";
 import { SingleSelectField } from "@saleor/components/SingleSelectField";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -120,8 +120,8 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               {nonFieldErrors.length > 0 && (
                 <>
                   <FormSpacer />
-                  {nonFieldErrors.map(err => (
-                    <DialogContentText color="error">
+                  {nonFieldErrors.map((err, index) => (
+                    <DialogContentText color="error" key={index}>
                       {getOrderErrorMessage(err, intl)}
                     </DialogContentText>
                   ))}

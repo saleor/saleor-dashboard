@@ -41,6 +41,7 @@ import {
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
+  ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
@@ -201,7 +202,7 @@ export function getFilterOpts(
         max: maybe(() => params.updatedAtTo, ""),
         min: maybe(() => params.updatedAtFrom, "")
       }
-    },
+    }
   };
 }
 
@@ -209,7 +210,8 @@ export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
   return {
-    allegroStatus: params.allegroStatus !== undefined ? params.allegroStatus : null,
+    allegroStatus:
+      params.allegroStatus !== undefined ? params.allegroStatus : null,
     attributes: !!params.attributes
       ? Object.keys(params.attributes).map(key => ({
           slug: key,
@@ -239,7 +241,7 @@ export function getFilterVariables(
     updatedAt: getGteLteVariables({
       gte: params.updatedAtFrom,
       lte: params.updatedAtTo
-    }),
+    })
   };
 }
 
@@ -320,4 +322,8 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   ProductListUrlQueryParams,
   ProductListUrlFilters
->(ProductListUrlFiltersEnum);
+>({
+  ...ProductListUrlFiltersEnum,
+  ...ProductListUrlFiltersWithMultipleValues,
+  ...ProductListUrlFiltersAsDictWithMultipleValues
+});

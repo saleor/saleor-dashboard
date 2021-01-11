@@ -121,7 +121,6 @@ function loadStories() {
   require("./stories/orders/OrderCustomer");
   require("./stories/orders/OrderDetailsPage");
   require("./stories/orders/OrderDraftCancelDialog");
-  require("./stories/orders/OrderDraftFinalizeDialog");
   require("./stories/orders/OrderDraftListPage");
   require("./stories/orders/OrderDraftPage");
   require("./stories/orders/OrderFulfillmentCancelDialog");
@@ -134,6 +133,7 @@ function loadStories() {
   require("./stories/orders/OrderPaymentVoidDialog");
   require("./stories/orders/OrderProductAddDialog");
   require("./stories/orders/OrderShippingMethodEditDialog");
+  require("./stories/orders/OrderInvoiceList");
 
   // Product types
   require("./stories/productTypes/ProductTypeAttributeUnassignDialog");

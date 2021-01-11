@@ -67,7 +67,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           {error && (
-            <div className={classes.panel}>
+            <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
               </Typography>
@@ -82,7 +82,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-tc": "email"
+              "data-test": "email"
             }}
           />
           <FormSpacer />
@@ -97,7 +97,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             type="password"
             value={data.password}
             inputProps={{
-              "data-tc": "password"
+              "data-test": "password"
             }}
           />
           <FormSpacer />
@@ -109,7 +109,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               variant="contained"
               onClick={handleSubmit}
               type="submit"
-              data-tc="submit"
+              data-test="submit"
             >
               <FormattedMessage defaultMessage="Login" description="button" />
             </Button>

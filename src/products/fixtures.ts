@@ -1,10 +1,13 @@
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import {
+  AttributeInputTypeEnum,
+  WeightUnitsEnum
+} from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
-import { ProductVariant } from "./types/ProductVariant";
 import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
 
 export const product: (
@@ -21,7 +24,7 @@ export const product: (
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Borders",
         slug: "Borders",
-        valueRequired: true,
+        valueRequired: false,
         values: [
           {
             __typename: "AttributeValue",
@@ -92,13 +95,18 @@ export const product: (
       ]
     }
   ],
+  availableForPurchase: null,
   basePrice: {
     __typename: "Money" as "Money",
     amount: 339.39,
     currency: "NZD",
     localized: "339.39 NZD"
   },
-  category: { __typename: "Category", id: "Q2F0ZWdvcnk6MQ==", name: "Apparel" },
+  category: {
+    __typename: "Category",
+    id: "Q2F0ZWdvcnk6MQ==",
+    name: "Apparel"
+  },
   chargeTaxes: true,
   collections: [
     {
@@ -107,6 +115,7 @@ export const product: (
       name: "Winter sale"
     }
   ],
+  defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
   descriptionJson: JSON.stringify(content),
   id: "p10171",
   images: [
@@ -147,10 +156,18 @@ export const product: (
     }
   ],
   isAvailable: false,
+  isAvailableForPurchase: false,
   isFeatured: false,
   isPublished: true,
   jsonPrivateMetadata: "{}",
   margin: { __typename: "Margin", start: 2, stop: 7 },
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Ergonomic Plastic Bacon",
   pricing: {
     __typename: "ProductPricingInfo",
@@ -184,13 +201,17 @@ export const product: (
       }
     }
   },
+  privateMetadata: [],
   productType: {
     __typename: "ProductType",
     hasVariants: true,
     id: "pt76406",
     name: "Versatile",
-    seoDescription: "Omnis rerum ea. Fugit dignissimos modi est rerum",
-    seoTitle: "Ergonomic Plastic Bacon",
+    taxType: {
+      __typename: "TaxType",
+      description: "standard",
+      taxCode: "standard"
+    },
     variantAttributes: [
       {
         __typename: "Attribute",
@@ -237,6 +258,12 @@ export const product: (
   seoDescription: "Seo description",
   seoTitle: "Seo title",
   sku: "59661-34207",
+  slug: "Borders",
+  taxType: {
+    __typename: "TaxType",
+    description: "standard",
+    taxCode: "standard"
+  },
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
   url: "/example-url",
   variants: [
@@ -279,7 +306,12 @@ export const product: (
           warehouse: warehouseList[1]
         }
       ],
-      trackInventory: true
+      trackInventory: true,
+      weight: {
+        __typename: "Weight",
+        unit: WeightUnitsEnum.KG,
+        value: 3
+      }
     },
     {
       __typename: "ProductVariant",
@@ -309,9 +341,20 @@ export const product: (
           warehouse: warehouseList[0]
         }
       ],
-      trackInventory: false
+      trackInventory: false,
+      weight: {
+        __typename: "Weight",
+        unit: WeightUnitsEnum.KG,
+        value: 4
+      }
     }
-  ]
+  ],
+  visibleInListings: true,
+  weight: {
+    __typename: "Weight",
+    unit: WeightUnitsEnum.KG,
+    value: 5
+  }
 });
 export const products = (
   placeholderImage: string
@@ -1539,14 +1582,26 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       url: placeholderImage
     }
   ],
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Extended Hard",
   price: {
     __typename: "Money",
     amount: 100,
     currency: "USD"
   },
+  privateMetadata: [],
   product: {
     __typename: "Product" as "Product",
+    defaultVariant: {
+      __typename: "ProductVariant",
+      id: "var1"
+    },
     id: "prod1",
     images: [
       {
@@ -1695,7 +1750,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     }
   ],
-  trackInventory: true
+  trackInventory: true,
+  weight: {
+    __typename: "Weight",
+    unit: WeightUnitsEnum.KG,
+    value: 6
+  }
 });
 export const variantImages = (placeholderImage: string) =>
   variant(placeholderImage).images;

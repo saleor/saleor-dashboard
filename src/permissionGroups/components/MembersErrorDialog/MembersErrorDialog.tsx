@@ -29,7 +29,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
         defaultMessage: "Unassign users",
         description: "dialog title"
       })}
-      variant="default"
+      variant="info"
     >
       <DialogContentText>
         <FormattedMessage

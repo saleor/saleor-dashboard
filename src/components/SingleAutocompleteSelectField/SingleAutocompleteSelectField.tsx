@@ -1,9 +1,9 @@
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
-import Downshift from "downshift";
+import classNames from "classnames";
+import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
@@ -27,6 +27,7 @@ const useStyles = makeStyles(
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
+  className?: string;
   error?: boolean;
   name: string;
   displayValue: string;
@@ -51,6 +52,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   const {
     add,
     allowCustomValues,
+    className,
     choices,
     disabled,
     displayValue,
@@ -71,22 +73,27 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   } = props;
   const classes = useStyles(props);
 
-  const [prevDisplayValue] = useStateFromProps(displayValue);
-
-  const handleChange = item =>
+  const handleChange = (
+    item: string,
+    stateAndHelpers: ControllerStateAndHelpers
+  ) => {
     onChange({
       target: {
         name,
         value: item
       }
     } as any);
+    stateAndHelpers.reset({
+      inputValue: item
+    });
+  };
 
   return (
     <DebounceAutocomplete debounceFn={fetchChoices}>
       {debounceFn => (
         <Downshift
           defaultInputValue={displayValue}
-          itemToString={() => displayValue}
+          itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
           selectedItem={value}
@@ -106,23 +113,52 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               choices && selectedItem
                 ? choices.filter(c => c.value === selectedItem).length === 0
                 : false;
-            const hasInputValueChanged = prevDisplayValue !== displayValue;
 
-            if (hasInputValueChanged) {
+            const choiceFromInputValue = choices.find(
+              ({ value: choiceId }) => choiceId === inputValue
+            );
+
+            const isValueInValues = !!choiceFromInputValue;
+
+            const isValueInLabels = !!choices.find(
+              choice => choice.label === inputValue
+            );
+
+            const ensureProperValues = (alwaysCheck: boolean = false) => {
+              if ((allowCustomValues || isValueInLabels) && !alwaysCheck) {
+                return;
+              }
+
+              if (isValueInValues && !isValueInLabels) {
+                reset({ inputValue: choiceFromInputValue.label });
+                return;
+              }
+
               reset({ inputValue: displayValue });
-            }
+            };
 
-            const displayCustomValue =
+            const displayCustomValue = !!(
               inputValue &&
               inputValue.length > 0 &&
               allowCustomValues &&
-              !choices.find(
-                choice =>
-                  choice.label.toLowerCase() === inputValue.toLowerCase()
-              );
+              !isValueInLabels
+            );
+
+            const handleBlur = () => {
+              ensureProperValues(true);
+              closeMenu();
+            };
+
+            // fix for bug where input value is returned from debounce as id instead of label
+            if (value === inputValue && !!inputValue) {
+              ensureProperValues();
+            }
 
             return (
-              <div className={classes.container} {...rest}>
+              <div
+                className={classNames(classes.container, className)}
+                {...rest}
+              >
                 <TextField
                   InputProps={{
                     ...InputProps,
@@ -136,7 +172,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                     ),
                     error,
                     id: undefined,
-                    onBlur: closeMenu,
+                    onBlur: handleBlur,
                     onClick: toggleMenu
                   }}
                   error={error}
@@ -184,6 +220,7 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
   ...rest
 }) => {
   const [query, setQuery] = React.useState("");
+
   if (fetchChoices) {
     return (
       <DebounceAutocomplete debounceFn={fetchChoices}>

@@ -12,7 +12,9 @@ import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch"
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
+import StaffDetailsPage, {
+  StaffDetailsFormData
+} from "../components/StaffDetailsPage/StaffDetailsPage";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
 import {
   TypedStaffAvatarDeleteMutation,
@@ -56,6 +58,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const handleChangePassword = (data: ChangeStaffPassword) => {
     if (data.passwordChange.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
@@ -87,6 +90,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberUpdate = (data: StaffMemberUpdate) => {
           if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -94,6 +98,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberDelete = (data: StaffMemberDelete) => {
           if (!maybe(() => data.staffDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffListUrl());
@@ -102,6 +107,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarUpdate = (data: StaffAvatarUpdate) => {
           if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -109,6 +115,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarDelete = (data: StaffAvatarDelete) => {
           if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(id));
@@ -117,168 +124,175 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
 
         return (
           <TypedStaffMemberUpdateMutation onCompleted={handleStaffMemberUpdate}>
-            {(updateStaffMember, updateResult) => (
-              <TypedStaffMemberDeleteMutation
-                variables={{ id }}
-                onCompleted={handleStaffMemberDelete}
-              >
-                {(deleteStaffMember, deleteResult) => (
-                  <TypedStaffAvatarUpdateMutation
-                    onCompleted={handleStaffMemberAvatarUpdate}
-                  >
-                    {updateStaffAvatar => (
-                      <TypedStaffAvatarDeleteMutation
-                        onCompleted={handleStaffMemberAvatarDelete}
-                      >
-                        {(deleteStaffAvatar, deleteAvatarResult) => {
-                          const isUserSameAsViewer =
-                            user.user?.id === data?.user?.id;
+            {(updateStaffMember, updateResult) => {
+              const handleSubmit = async (formData: StaffDetailsFormData) => {
+                const result = await updateStaffMember({
+                  variables: {
+                    id,
+                    input: {
+                      email: formData.email,
+                      firstName: formData.firstName,
+                      isActive: formData.isActive,
+                      lastName: formData.lastName,
+                      ...groupsDiff(data?.user, formData)
+                    }
+                  }
+                });
 
-                          return (
-                            <>
-                              <WindowTitle
-                                title={getStringOrPlaceholder(
-                                  staffMember?.email
-                                )}
-                              />
-                              <StaffDetailsPage
-                                errors={
-                                  updateResult?.data?.staffUpdate?.errors || []
-                                }
-                                canEditAvatar={isUserSameAsViewer}
-                                canEditPreferences={isUserSameAsViewer}
-                                canEditStatus={!isUserSameAsViewer}
-                                canRemove={!isUserSameAsViewer}
-                                disabled={loading}
-                                onBack={handleBack}
-                                initialSearch=""
-                                onChangePassword={() =>
-                                  navigate(
-                                    staffMemberDetailsUrl(id, {
-                                      action: "change-password"
-                                    })
-                                  )
-                                }
-                                onDelete={() =>
-                                  navigate(
-                                    staffMemberDetailsUrl(id, {
-                                      action: "remove"
-                                    })
-                                  )
-                                }
-                                onSubmit={variables => {
-                                  updateStaffMember({
-                                    variables: {
-                                      id,
-                                      input: {
-                                        email: variables.email,
-                                        firstName: variables.firstName,
-                                        isActive: variables.isActive,
-                                        lastName: variables.lastName,
-                                        ...groupsDiff(data?.user, variables)
+                return result.data.staffUpdate.errors;
+              };
+
+              return (
+                <TypedStaffMemberDeleteMutation
+                  variables={{ id }}
+                  onCompleted={handleStaffMemberDelete}
+                >
+                  {(deleteStaffMember, deleteResult) => (
+                    <TypedStaffAvatarUpdateMutation
+                      onCompleted={handleStaffMemberAvatarUpdate}
+                    >
+                      {updateStaffAvatar => (
+                        <TypedStaffAvatarDeleteMutation
+                          onCompleted={handleStaffMemberAvatarDelete}
+                        >
+                          {(deleteStaffAvatar, deleteAvatarResult) => {
+                            const isUserSameAsViewer =
+                              user.user?.id === data?.user?.id;
+
+                            return (
+                              <>
+                                <WindowTitle
+                                  title={getStringOrPlaceholder(
+                                    staffMember?.email
+                                  )}
+                                />
+                                <StaffDetailsPage
+                                  errors={
+                                    updateResult?.data?.staffUpdate?.errors ||
+                                    []
+                                  }
+                                  canEditAvatar={isUserSameAsViewer}
+                                  canEditPreferences={isUserSameAsViewer}
+                                  canEditStatus={!isUserSameAsViewer}
+                                  canRemove={!isUserSameAsViewer}
+                                  disabled={loading}
+                                  onBack={handleBack}
+                                  initialSearch=""
+                                  onChangePassword={() =>
+                                    navigate(
+                                      staffMemberDetailsUrl(id, {
+                                        action: "change-password"
+                                      })
+                                    )
+                                  }
+                                  onDelete={() =>
+                                    navigate(
+                                      staffMemberDetailsUrl(id, {
+                                        action: "remove"
+                                      })
+                                    )
+                                  }
+                                  onSubmit={handleSubmit}
+                                  onImageUpload={file =>
+                                    updateStaffAvatar({
+                                      variables: {
+                                        image: file
                                       }
-                                    }
-                                  });
-                                }}
-                                onImageUpload={file =>
-                                  updateStaffAvatar({
-                                    variables: {
-                                      image: file
-                                    }
-                                  })
-                                }
-                                onImageDelete={() =>
-                                  navigate(
-                                    staffMemberDetailsUrl(id, {
-                                      action: "remove-avatar"
                                     })
-                                  )
-                                }
-                                availablePermissionGroups={searchPermissionGroupsOpts.data?.search.edges.map(
-                                  edge => edge.node
-                                )}
-                                staffMember={staffMember}
-                                saveButtonBarState={updateResult.status}
-                                fetchMorePermissionGroups={{
-                                  hasMore:
-                                    searchPermissionGroupsOpts.data?.search
-                                      .pageInfo.hasNextPage,
-                                  loading: searchPermissionGroupsOpts.loading,
-                                  onFetchMore: loadMorePermissionGroups
-                                }}
-                                onSearchChange={searchPermissionGroups}
-                              />
-                              <ActionDialog
-                                open={params.action === "remove"}
-                                title={intl.formatMessage({
-                                  defaultMessage: "delete Staff User",
-                                  description: "dialog header"
-                                })}
-                                confirmButtonState={deleteResult.status}
-                                variant="delete"
-                                onClose={closeModal}
-                                onConfirm={deleteStaffMember}
-                              >
-                                <DialogContentText>
-                                  <FormattedMessage
-                                    defaultMessage="Are you sure you want to delete {email} from staff members?"
-                                    values={{
-                                      email: getStringOrPlaceholder(
-                                        data?.user?.email
-                                      )
-                                    }}
-                                  />
-                                </DialogContentText>
-                              </ActionDialog>
-                              <ActionDialog
-                                open={params.action === "remove-avatar"}
-                                title={intl.formatMessage({
-                                  defaultMessage: "Delete Staff User Avatar",
-                                  description: "dialog header"
-                                })}
-                                confirmButtonState={deleteAvatarResult.status}
-                                variant="delete"
-                                onClose={closeModal}
-                                onConfirm={deleteStaffAvatar}
-                              >
-                                <DialogContentText>
-                                  <FormattedMessage
-                                    defaultMessage="Are you sure you want to remove {email} avatar?"
-                                    values={{
-                                      email: (
-                                        <strong>
-                                          {getStringOrPlaceholder(
-                                            data?.user?.email
-                                          )}
-                                        </strong>
-                                      )
-                                    }}
-                                  />
-                                </DialogContentText>
-                              </ActionDialog>
-                              <StaffPasswordResetDialog
-                                confirmButtonState={changePasswordOpts.status}
-                                errors={
-                                  changePasswordOpts?.data?.passwordChange
-                                    ?.errors || []
-                                }
-                                open={params.action === "change-password"}
-                                onClose={closeModal}
-                                onSubmit={data =>
-                                  changePassword({
-                                    variables: data
-                                  })
-                                }
-                              />
-                            </>
-                          );
-                        }}
-                      </TypedStaffAvatarDeleteMutation>
-                    )}
-                  </TypedStaffAvatarUpdateMutation>
-                )}
-              </TypedStaffMemberDeleteMutation>
-            )}
+                                  }
+                                  onImageDelete={() =>
+                                    navigate(
+                                      staffMemberDetailsUrl(id, {
+                                        action: "remove-avatar"
+                                      })
+                                    )
+                                  }
+                                  availablePermissionGroups={searchPermissionGroupsOpts.data?.search.edges.map(
+                                    edge => edge.node
+                                  )}
+                                  staffMember={staffMember}
+                                  saveButtonBarState={updateResult.status}
+                                  fetchMorePermissionGroups={{
+                                    hasMore:
+                                      searchPermissionGroupsOpts.data?.search
+                                        .pageInfo.hasNextPage,
+                                    loading: searchPermissionGroupsOpts.loading,
+                                    onFetchMore: loadMorePermissionGroups
+                                  }}
+                                  onSearchChange={searchPermissionGroups}
+                                />
+                                <ActionDialog
+                                  open={params.action === "remove"}
+                                  title={intl.formatMessage({
+                                    defaultMessage: "delete Staff User",
+                                    description: "dialog header"
+                                  })}
+                                  confirmButtonState={deleteResult.status}
+                                  variant="delete"
+                                  onClose={closeModal}
+                                  onConfirm={deleteStaffMember}
+                                >
+                                  <DialogContentText>
+                                    <FormattedMessage
+                                      defaultMessage="Are you sure you want to delete {email} from staff members?"
+                                      values={{
+                                        email: getStringOrPlaceholder(
+                                          data?.user?.email
+                                        )
+                                      }}
+                                    />
+                                  </DialogContentText>
+                                </ActionDialog>
+                                <ActionDialog
+                                  open={params.action === "remove-avatar"}
+                                  title={intl.formatMessage({
+                                    defaultMessage: "Delete Staff User Avatar",
+                                    description: "dialog header"
+                                  })}
+                                  confirmButtonState={deleteAvatarResult.status}
+                                  variant="delete"
+                                  onClose={closeModal}
+                                  onConfirm={deleteStaffAvatar}
+                                >
+                                  <DialogContentText>
+                                    <FormattedMessage
+                                      defaultMessage="Are you sure you want to remove {email} avatar?"
+                                      values={{
+                                        email: (
+                                          <strong>
+                                            {getStringOrPlaceholder(
+                                              data?.user?.email
+                                            )}
+                                          </strong>
+                                        )
+                                      }}
+                                    />
+                                  </DialogContentText>
+                                </ActionDialog>
+                                <StaffPasswordResetDialog
+                                  confirmButtonState={changePasswordOpts.status}
+                                  errors={
+                                    changePasswordOpts?.data?.passwordChange
+                                      ?.errors || []
+                                  }
+                                  open={params.action === "change-password"}
+                                  onClose={closeModal}
+                                  onSubmit={data =>
+                                    changePassword({
+                                      variables: data
+                                    })
+                                  }
+                                />
+                              </>
+                            );
+                          }}
+                        </TypedStaffAvatarDeleteMutation>
+                      )}
+                    </TypedStaffAvatarUpdateMutation>
+                  )}
+                </TypedStaffMemberDeleteMutation>
+              );
+            }}
           </TypedStaffMemberUpdateMutation>
         );
       }}

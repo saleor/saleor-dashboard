@@ -63,6 +63,10 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
           <>
             <DialogContent>
               <TextField
+                multiline={
+                  field?.type === ConfigurationTypeFieldEnum.SECRETMULTILINE
+                }
+                autoComplete="off"
                 fullWidth
                 label={field && field.label}
                 name="value"

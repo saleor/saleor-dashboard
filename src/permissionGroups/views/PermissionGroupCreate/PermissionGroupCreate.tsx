@@ -22,6 +22,7 @@ const PermissionGroupCreateView: React.FC = () => {
   const handleSuccess = (data: PermissionGroupCreate) => {
     if (data?.permissionGroupCreate?.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Permission group created"
         })

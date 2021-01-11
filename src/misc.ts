@@ -59,6 +59,10 @@ export function decimal(value: string | number) {
   return value;
 }
 
+export function weight(value: string) {
+  return value === "" ? null : parseFloat(value);
+}
+
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
@@ -231,7 +235,7 @@ export function hasErrors(errorList: UserError[] | null): boolean {
 export function getMutationState(
   called: boolean,
   loading: boolean,
-  ...errorList: UserError[][]
+  ...errorList: any[][]
 ): ConfirmButtonTransitionState {
   if (loading) {
     return "loading";
@@ -302,10 +306,10 @@ export function createHref(url: string) {
 interface AnyEvent {
   stopPropagation: () => void;
 }
-export function stopPropagation(cb: () => void) {
+export function stopPropagation(cb: (event?: AnyEvent) => void) {
   return (event: AnyEvent) => {
     event.stopPropagation();
-    cb();
+    cb(event);
   };
 }
 

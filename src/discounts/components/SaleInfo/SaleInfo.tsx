@@ -2,17 +2,17 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../SaleDetailsPage";
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
 export interface SaleInfoProps {
-  data: FormData;
+  data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -38,7 +38,7 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
           disabled={disabled}
           error={!!formErrors.name}
           helperText={getDiscountErrorMessage(formErrors.name, intl)}
-          name={"name" as keyof FormData}
+          name={"name" as keyof SaleDetailsPageFormData}
           onChange={onChange}
           label={intl.formatMessage({
             defaultMessage: "Name",

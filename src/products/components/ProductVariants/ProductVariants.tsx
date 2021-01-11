@@ -3,9 +3,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
-import TableBody from "@material-ui/core/TableBody";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -14,17 +13,23 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import {
+  SortableTableBody,
+  SortableTableRow
+} from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions } from "../../../types";
+import { ListActions, ReorderAction } from "../../../types";
 import {
+  ProductDetails_product,
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
-import { ProductVariant_costPrice } from "../../types/ProductVariant";
+import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 function getWarehouseChoices(
   variants: ProductDetails_product_variants[],
@@ -64,30 +69,37 @@ function getWarehouseChoices(
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
+      colActions: {
+        width: 70
+      },
       colInventory: {
-        width: 300
+        width: 200
       },
       colName: {},
       colPrice: {
-        width: 150
+        width: 135
       },
       colSku: {
         width: 200
       }
     },
+    colGrab: {
+      width: 60
+    },
     colInventory: {
       textAlign: "right"
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colPrice: {
       textAlign: "right"
     },
     colSku: {},
     colStatus: {},
-    denseTable: {
-      "& td, & th": {
-        paddingRight: theme.spacing(3)
-      }
+    defaultVariant: {
+      color: fade(theme.palette.text.secondary, 0.6),
+      display: "block"
     },
     link: {
       cursor: "pointer"
@@ -169,23 +181,29 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
+  product: ProductDetails_product;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
+  onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
+  onSetDefaultVariant(variant: ProductDetails_product_variants);
   onVariantAdd?();
   onVariantsAdd?();
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 7;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
     disabled,
     variants,
+    product,
     fallbackPrice,
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
+    onVariantReorder,
+    onSetDefaultVariant,
     isChecked,
     selected,
     toggle,
@@ -211,7 +229,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variant"
+              data-test="button-add-variant"
             >
               <FormattedMessage
                 defaultMessage="Create variant"
@@ -223,7 +241,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantsAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variants"
+              data-test="button-add-variants"
             >
               <FormattedMessage
                 defaultMessage="Create variants"
@@ -258,7 +276,16 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         </CardContent>
       )}
       {hasVariants && (
-        <ResponsiveTable className={classes.denseTable}>
+        <ResponsiveTable>
+          <colgroup>
+            <col className={classes.colGrab} />
+            <col />
+            <col className={classes.colName} />
+            <col className={classes.colSku} />
+            <col className={classes.colPrice} />
+            <col className={classes.colInventory} />
+            <col className={classes.colActions} />
+          </colgroup>
           <TableHead
             colSpan={numberOfColumns}
             selected={selected}
@@ -266,6 +293,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             items={variants}
             toggleAll={toggleAll}
             toolbar={toolbar}
+            dragRows
           >
             <TableCell className={classes.colName}>
               <FormattedMessage
@@ -290,10 +318,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 description="product variant inventory status"
               />
             </TableCell>
+            <TableCell className={classes.colActions}></TableCell>
           </TableHead>
-          <TableBody>
-            {renderCollection(variants, variant => {
+          <SortableTableBody onSortEnd={onVariantReorder}>
+            {renderCollection(variants, (variant, variantIndex) => {
               const isSelected = variant ? isChecked(variant.id) : false;
+              const isDefault =
+                variant && product?.defaultVariant?.id === variant?.id;
               const numAvailable =
                 variant && variant.stocks
                   ? variant.stocks.reduce(
@@ -303,11 +334,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   : null;
 
               return (
-                <TableRow
+                <SortableTableRow
                   selected={isSelected}
                   hover={!!variant}
                   onClick={onRowClick(variant.id)}
                   key={variant ? variant.id : "skeleton"}
+                  index={variantIndex || 0}
                   className={classes.link}
                 >
                   <TableCell padding="checkbox">
@@ -318,14 +350,22 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       onChange={() => toggle(variant.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-tc="name">
+                  <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
+                    {isDefault && (
+                      <span className={classes.defaultVariant}>
+                        {intl.formatMessage({
+                          defaultMessage: "Default",
+                          description: "default product variant indicator"
+                        })}
+                      </span>
+                    )}
                   </TableCell>
-                  <TableCell className={classes.colSku} data-tc="sku">
+                  <TableCell className={classes.colSku} data-test="sku">
                     {variant ? variant.sku : <Skeleton />}
                   </TableCell>
                   <Hidden smDown>
-                    <TableCell className={classes.colPrice} data-tc="price">
+                    <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
                         variant.price ? (
                           <Money money={variant.price} />
@@ -341,7 +381,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </Hidden>
                   <TableCell
                     className={classes.colInventory}
-                    data-tc="inventory"
+                    data-test="inventory"
                   >
                     {numAvailable === null ? (
                       <Skeleton />
@@ -354,10 +394,21 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       )
                     )}
                   </TableCell>
-                </TableRow>
+                  <TableCell
+                    className={classes.colActions}
+                    data-test="actions"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    {variant?.id !== product?.defaultVariant?.id && (
+                      <ProductVariantSetDefault
+                        onSetDefaultVariant={() => onSetDefaultVariant(variant)}
+                      />
+                    )}
+                  </TableCell>
+                </SortableTableRow>
               );
             })}
-          </TableBody>
+          </SortableTableBody>
         </ResponsiveTable>
       )}
     </Card>

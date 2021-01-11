@@ -18,6 +18,7 @@ export function handleItemCreate(
   if (data.menuItemCreate.errors.length === 0) {
     closeModal();
     notify({
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges)
     });
   }
@@ -32,6 +33,7 @@ export function handleItemUpdate(
 ) {
   if (data.menuItemUpdate.errors.length === 0) {
     notify({
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges)
     });
     navigate(
@@ -51,6 +53,7 @@ export function handleDelete(
 ) {
   if (data.menuDelete.errors.length === 0) {
     notify({
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges)
     });
     navigate(menuListUrl(), true);
@@ -69,6 +72,7 @@ export function handleUpdate(
     data.menuUpdate.errors.length === 0
   ) {
     notify({
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges)
     });
     refetch();

@@ -10,9 +10,9 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -76,8 +76,8 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                   <FormSpacer />
                   {errors
                     .filter(err => !formFields.includes(err.field))
-                    .map(err => (
-                      <DialogContentText color="error">
+                    .map((err, index) => (
+                      <DialogContentText color="error" key={index}>
                         {getOrderErrorMessage(err, intl)}
                       </DialogContentText>
                     ))}

@@ -8,6 +8,18 @@ import { AttributeUpdateInput, AttributeInputTypeEnum, AttributeValueType, Produ
 // GraphQL mutation operation: AttributeUpdate
 // ====================================================
 
+export interface AttributeUpdate_attributeUpdate_attribute_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AttributeUpdate_attributeUpdate_attribute_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface AttributeUpdate_attributeUpdate_attribute_values {
   __typename: "AttributeValue";
   id: string;
@@ -24,6 +36,8 @@ export interface AttributeUpdate_attributeUpdate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  metadata: (AttributeUpdate_attributeUpdate_attribute_metadata | null)[];
+  privateMetadata: (AttributeUpdate_attributeUpdate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;

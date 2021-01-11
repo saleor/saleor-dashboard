@@ -38,8 +38,8 @@ const useStyles = makeStyles(
       width: 47
     },
     avatarDefault: {
-      "& p": {
-        color: "#fff",
+      "& div": {
+        color: theme.palette.primary.contrastText,
         lineHeight: "47px"
       },
       background: theme.palette.primary.main,
@@ -50,6 +50,9 @@ const useStyles = makeStyles(
     avatarImage: {
       pointerEvents: "none",
       width: "100%"
+    },
+    colEmail: {
+      width: 400
     },
     statusText: {
       color: "#9E9D9D"
@@ -67,6 +70,8 @@ const useStyles = makeStyles(
 interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
   staffMembers: StaffList_staffUsers_edges_node[];
 }
+
+const numberOfColumns = 2;
 
 const StaffList: React.FC<StaffListProps> = props => {
   const {
@@ -87,6 +92,10 @@ const StaffList: React.FC<StaffListProps> = props => {
 
   return (
     <ResponsiveTable>
+      <colgroup>
+        <col />
+        <col className={classes.colEmail} />
+      </colgroup>
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -119,7 +128,7 @@ const StaffList: React.FC<StaffListProps> = props => {
       <TableFooter>
         <TableRow>
           <TablePagination
-            colSpan={3}
+            colSpan={numberOfColumns}
             settings={settings}
             hasNextPage={
               pageInfo && !disabled ? pageInfo.hasNextPage : undefined
@@ -184,7 +193,7 @@ const StaffList: React.FC<StaffListProps> = props => {
           ),
           () => (
             <TableRow>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No staff members found" />
               </TableCell>
             </TableRow>

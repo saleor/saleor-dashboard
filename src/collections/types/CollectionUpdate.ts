@@ -8,6 +8,18 @@ import { CollectionInput, ProductErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: CollectionUpdate
 // ====================================================
 
+export interface CollectionUpdate_collectionUpdate_collection_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface CollectionUpdate_collectionUpdate_collection_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface CollectionUpdate_collectionUpdate_collection_backgroundImage {
   __typename: "Image";
   alt: string | null;
@@ -19,7 +31,10 @@ export interface CollectionUpdate_collectionUpdate_collection {
   id: string;
   isPublished: boolean;
   name: string;
+  metadata: (CollectionUpdate_collectionUpdate_collection_metadata | null)[];
+  privateMetadata: (CollectionUpdate_collectionUpdate_collection_privateMetadata | null)[];
   backgroundImage: CollectionUpdate_collectionUpdate_collection_backgroundImage | null;
+  slug: string;
   descriptionJson: any;
   publicationDate: any | null;
   seoDescription: string | null;

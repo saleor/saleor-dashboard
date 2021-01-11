@@ -3,12 +3,12 @@ import CardContent from "@material-ui/core/CardContent";
 import { IconProps } from "@material-ui/core/Icon";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { hasPermission } from "../auth/misc";
-import { User } from "../auth/types/User";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import { PermissionEnum } from "../types/globalTypes";
@@ -126,6 +126,8 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     className={item.url ? classes.card : classes.cardDisabled}
                     onClick={() => onSectionClick(item.url)}
                     key={itemIndex}
+                    data-test="settingsSubsection"
+                    data-testid={item.title.toLowerCase()}
                   >
                     <CardContent className={classes.cardContent}>
                       <div className={classes.icon}>{item.icon}</div>

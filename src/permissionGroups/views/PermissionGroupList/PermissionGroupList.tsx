@@ -1,4 +1,5 @@
 import { configurationMenuUrl } from "@saleor/configuration";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -10,7 +11,6 @@ import PermissionGroupDeleteDialog from "@saleor/permissionGroups/components/Per
 import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
 import { usePermissionGroupListQuery } from "@saleor/permissionGroups/queries";
 import { PermissionGroupDelete } from "@saleor/permissionGroups/types/PermissionGroupDelete";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -81,6 +81,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const handleDeleteSuccess = (data: PermissionGroupDelete) => {
     if (data.permissionGroupDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Permission Group Deleted"
         })

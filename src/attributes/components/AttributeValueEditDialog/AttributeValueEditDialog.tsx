@@ -5,11 +5,11 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";

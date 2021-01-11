@@ -87,7 +87,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         })}
         onClick={onPreviousPage}
         disabled={!hasPreviousPage}
-        data-tc="button-pagination-back"
+        data-test="button-pagination-back"
         {...backIconButtonProps}
       >
         {direction === "rtl" ? <ArrowRight /> : <ArrowLeft />}
@@ -99,7 +99,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         })}
         onClick={onNextPage}
         disabled={!hasNextPage}
-        data-tc="button-pagination-next"
+        data-test="button-pagination-next"
         {...nextIconButtonProps}
       >
         {direction === "rtl" ? <ArrowLeft /> : <ArrowRight />}

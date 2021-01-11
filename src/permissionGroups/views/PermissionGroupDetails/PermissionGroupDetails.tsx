@@ -21,7 +21,9 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
-import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
+import PermissionGroupDetailsPage, {
+  PermissionGroupDetailsPageFormData
+} from "../../components/PermissionGroupDetailsPage";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import { usePermissionGroupUpdate } from "../../mutations";
 import { usePermissionGroupDetailsQuery } from "../../queries";
@@ -66,6 +68,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
     if (data.permissionGroupUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
@@ -130,6 +133,21 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
   const disabled = loading || !isGroupEditable || permissionsExceeded;
 
+  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) => {
+    const result = await permissionGroupUpdate({
+      variables: {
+        id,
+        input: {
+          name: formData.name,
+          ...permissionsDiff(data?.permissionGroup, formData),
+          ...usersDiff(data?.permissionGroup, formData)
+        }
+      }
+    });
+
+    return result.data.permissionGroupUpdate.errors;
+  };
+
   return (
     <>
       <PermissionGroupDetailsPage
@@ -143,18 +161,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         errors={
           permissionGroupUpdateResult?.data?.permissionGroupUpdate.errors || []
         }
-        onSubmit={formData =>
-          permissionGroupUpdate({
-            variables: {
-              id,
-              input: {
-                name: formData.name,
-                ...permissionsDiff(data?.permissionGroup, formData),
-                ...usersDiff(data?.permissionGroup, formData)
-              }
-            }
-          })
-        }
+        onSubmit={handleSubmit}
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={disabled}

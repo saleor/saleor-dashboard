@@ -36,8 +36,11 @@ const useStyles = makeStyles(
   }
 );
 
-export interface RadioGroupFieldChoice {
-  value: string;
+export interface RadioGroupFieldChoice<
+  T extends string | number = string | number
+> {
+  disabled?: boolean;
+  value: T;
   label: React.ReactNode;
 }
 
@@ -49,7 +52,7 @@ interface RadioGroupFieldProps {
   hint?: string;
   label?: string;
   name?: string;
-  value: string;
+  value: string | number;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -87,6 +90,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
         {choices.length > 0 ? (
           choices.map(choice => (
             <FormControlLabel
+              disabled={choice.disabled}
               value={choice.value}
               className={classes.radioLabel}
               control={<Radio color="primary" />}

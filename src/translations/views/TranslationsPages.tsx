@@ -53,6 +53,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   const onUpdate = (data: UpdatePageTranslations) => {
     if (data.pageTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

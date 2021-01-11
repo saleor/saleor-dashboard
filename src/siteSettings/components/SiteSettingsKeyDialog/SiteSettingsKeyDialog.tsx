@@ -7,8 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
@@ -70,6 +70,7 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
               />
               <FormSpacer />
               <TextField
+                autoComplete="off"
                 error={!!formErrors.key}
                 fullWidth
                 label={intl.formatMessage({
@@ -83,6 +84,7 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
               />
               <FormSpacer />
               <TextField
+                autoComplete="off"
                 error={!!formErrors.password}
                 fullWidth
                 label={intl.formatMessage({

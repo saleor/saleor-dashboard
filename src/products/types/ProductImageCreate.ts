@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductImageCreate
@@ -58,12 +58,19 @@ export interface ProductImageCreate_productImageCreate_product_productType_varia
   values: (ProductImageCreate_productImageCreate_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductImageCreate_productImageCreate_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductImageCreate_productImageCreate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductImageCreate_productImageCreate_product_productType_taxType | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted_start_gross {
@@ -97,6 +104,23 @@ export interface ProductImageCreate_productImageCreate_product_pricing_priceRang
 export interface ProductImageCreate_productImageCreate_product_pricing {
   __typename: "ProductPricingInfo";
   priceRangeUndiscounted: ProductImageCreate_productImageCreate_product_pricing_priceRangeUndiscounted | null;
+}
+
+export interface ProductImageCreate_productImageCreate_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductImageCreate_productImageCreate_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductImageCreate_productImageCreate_product_category {
@@ -174,26 +198,47 @@ export interface ProductImageCreate_productImageCreate_product_variants {
   trackInventory: boolean;
 }
 
+export interface ProductImageCreate_productImageCreate_product_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
+export interface ProductImageCreate_productImageCreate_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductImageCreate_productImageCreate_product {
   __typename: "Product";
   id: string;
   attributes: ProductImageCreate_productImageCreate_product_attributes[];
   productType: ProductImageCreate_productImageCreate_product_productType;
   pricing: ProductImageCreate_productImageCreate_product_pricing | null;
+  metadata: (ProductImageCreate_productImageCreate_product_metadata | null)[];
+  privateMetadata: (ProductImageCreate_productImageCreate_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductImageCreate_productImageCreate_product_defaultVariant | null;
   category: ProductImageCreate_productImageCreate_product_category | null;
   collections: (ProductImageCreate_productImageCreate_product_collections | null)[] | null;
   margin: ProductImageCreate_productImageCreate_product_margin | null;
   purchaseCost: ProductImageCreate_productImageCreate_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
+  weight: ProductImageCreate_productImageCreate_product_weight | null;
+  taxType: ProductImageCreate_productImageCreate_product_taxType | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
 }
 
 export interface ProductImageCreate_productImageCreate {

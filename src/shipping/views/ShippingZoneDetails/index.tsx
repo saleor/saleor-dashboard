@@ -80,6 +80,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -91,6 +92,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceUpdate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -102,6 +104,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -113,6 +116,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         navigate(shippingZonesListUrl(), true);
@@ -124,6 +128,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingZoneUpdate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -135,6 +140,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.createWarehouse.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -142,13 +148,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = (submitData: FormData) => {
+  const handleSubmit = async (submitData: FormData) => {
     const warehouseDiff = diff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
       submitData.warehouses
     );
 
-    updateShippingZone({
+    const result = await updateShippingZone({
       variables: {
         id,
         input: {
@@ -158,6 +164,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
       }
     });
+
+    return result.data.shippingZoneUpdate.errors;
   };
 
   if (data?.shippingZone === null) {
@@ -221,9 +229,15 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         disabled={updateShippingRateOpts.loading}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         onClose={closeModal}
-        onSubmit={data =>
+        onSubmit={submitData =>
           updateShippingRate({
-            variables: getUpdateShippingRateVariables(data, params, id)
+            variables: getUpdateShippingRateVariables(
+              submitData,
+              data?.shippingZone?.shippingMethods.find(
+                shippingMethod => shippingMethod.id === params.id
+              ),
+              id
+            )
           })
         }
         open={params.action === "edit-rate"}

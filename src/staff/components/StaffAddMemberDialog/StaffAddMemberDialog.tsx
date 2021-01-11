@@ -10,10 +10,10 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";

@@ -35,7 +35,7 @@ export interface SingleAutocompleteSelectFieldContentProps
   choices: SingleAutocompleteChoiceType[];
   displayCustomValue: boolean;
   emptyOption: boolean;
-  getItemProps: (options: GetItemPropsOptions) => void;
+  getItemProps: (options: GetItemPropsOptions) => any;
   highlightedIndex: number;
   inputValue: string;
   isCustomValueSelected: boolean;
@@ -124,6 +124,8 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
+const sliceSize = 20;
+
 const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
   const {
     add,
@@ -147,6 +149,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const [calledForMore, setCalledForMore] = React.useState(false);
+  const [slice, setSlice] = React.useState(sliceSize);
 
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
@@ -154,8 +157,19 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     if (!calledForMore && onFetchMore && scrolledToBottom) {
       onFetchMore();
       setCalledForMore(true);
+    } else if (scrolledToBottom) {
+      setSlice(slice => slice + sliceSize);
     }
   }, [scrolledToBottom]);
+
+  React.useEffect(() => {
+    setSlice(sliceSize);
+    if (anchor.current?.scrollTo) {
+      anchor.current.scrollTo({
+        top: 0
+      });
+    }
+  }, [choices?.length]);
 
   React.useEffect(() => {
     if (calledForMore && !loading) {
@@ -163,19 +177,26 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     }
   }, [loading]);
 
+  const emptyOptionProps = getItemProps({
+    item: ""
+  });
+
   return (
     <Paper className={classes.root}>
-      <div className={classes.content} ref={anchor}>
+      <div
+        className={classes.content}
+        ref={anchor}
+        data-test="autocomplete-dropdown"
+      >
         {choices.length > 0 || displayCustomValue ? (
           <>
             {emptyOption && (
               <MenuItem
                 className={classes.menuItem}
                 component="div"
-                {...getItemProps({
-                  item: ""
-                })}
-                data-tc="singleautocomplete-select-option"
+                data-test="singleautocomplete-select-option"
+                data-test-type="empty"
+                {...emptyOptionProps}
               >
                 <Typography color="textSecondary">
                   <FormattedMessage defaultMessage="None" />
@@ -189,7 +210,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="singleautocomplete-select-option-add"
+                data-test="singleautocomplete-select-option-add"
+                data-test-type="add"
                 onClick={add.onClick}
               >
                 <Add color="primary" className={classes.add} />
@@ -205,7 +227,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="singleautocomplete-select-option"
+                data-test="singleautocomplete-select-option"
+                data-test-type="custom"
               >
                 <FormattedMessage
                   defaultMessage="Add new value: {value}"
@@ -219,7 +242,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             {choices.length > 0 && (!!add || displayCustomValue) && (
               <Hr className={classes.hr} />
             )}
-            {choices.map((suggestion, index) => {
+            {choices.slice(0, slice).map((suggestion, index) => {
               const choiceIndex = getChoiceIndex(
                 index,
                 emptyOption,
@@ -237,7 +260,9 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-tc="singleautocomplete-select-option"
+                  data-test="singleautocomplete-select-option"
+                  data-test-value={suggestion.value}
+                  data-test-type="option"
                 >
                   {suggestion.label}
                 </MenuItem>
@@ -256,7 +281,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
           <MenuItem
             disabled={true}
             component="div"
-            data-tc="singleautocomplete-select-no-options"
+            data-test="singleautocomplete-select-no-options"
           >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>

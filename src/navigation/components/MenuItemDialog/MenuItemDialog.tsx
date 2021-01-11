@@ -10,11 +10,11 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
-import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";

@@ -23,8 +23,8 @@ const useStyles = makeStyles(
       color: theme.palette.common.white
     },
     root: {
-      background: fade(theme.palette.secondary.main, 0.8),
-      borderRadius: 8,
+      background: fade(theme.palette.primary.main, 0.8),
+      borderRadius: 18,
       display: "inline-block",
       marginRight: theme.spacing(2),
       padding: "6px 12px"

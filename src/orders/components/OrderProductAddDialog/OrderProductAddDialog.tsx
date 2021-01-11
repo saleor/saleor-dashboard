@@ -18,12 +18,12 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { FetchMoreProps } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -38,7 +38,8 @@ import {
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      paddingLeft: 0
+      paddingLeft: 0,
+      width: 64
     },
     colName: {
       paddingLeft: 0
@@ -185,13 +186,16 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose: () => setVariants([])
   });
 
-  const selectedVariantsToProductsMap = products
-    ? products.map(product =>
+  const productChoices = products.filter(
+    product => product.variants?.length > 0
+  );
+  const selectedVariantsToProductsMap = productChoices
+    ? productChoices.map(product =>
         product.variants.map(variant => isVariantSelected(variant, variants))
       )
     : [];
-  const productsWithAllVariantsSelected = products
-    ? products.map(product =>
+  const productsWithAllVariantsSelected = productChoices
+    ? productChoices.map(product =>
         hasAllVariantsSelected(product.variants, variants)
       )
     : [];
@@ -247,7 +251,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           <ResponsiveTable key="table">
             <TableBody>
               {renderCollection(
-                products,
+                productChoices,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRow>
@@ -340,8 +344,8 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
         {errors.length > 0 && (
           <>
             <FormSpacer />
-            {errors.map(err => (
-              <DialogContentText color="error">
+            {errors.map((err, index) => (
+              <DialogContentText color="error" key={index}>
                 {getOrderErrorMessage(err, intl)}
               </DialogContentText>
             ))}

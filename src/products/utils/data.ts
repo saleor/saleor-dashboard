@@ -1,5 +1,7 @@
+import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
@@ -9,12 +11,12 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
+import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import { RawDraftContentState } from "draft-js";
 
 import { ProductAttributeInput } from "../components/ProductAttributes";
 import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
-import { ProductVariant } from "../types/ProductVariant";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
@@ -121,16 +123,14 @@ export function getStockInputFromVariant(
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateData_product
 ): VariantAttributeInput[] {
-  return maybe(() =>
-    product.productType.variantAttributes.map(attribute => ({
-      data: {
-        values: attribute.values
-      },
-      id: attribute.id,
-      label: attribute.name,
-      value: ""
-    }))
-  );
+  return product?.productType?.variantAttributes?.map(attribute => ({
+    data: {
+      values: attribute.values
+    },
+    id: attribute.id,
+    label: attribute.name,
+    value: ""
+  }));
 }
 
 export function getStockInputFromProduct(
@@ -168,19 +168,27 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
   );
 }
 
-export interface ProductUpdatePageFormData {
+export interface ProductUpdatePageFormData extends MetadataFormData {
+  availableForPurchase: string;
   basePrice: number;
   category: string | null;
-  collections: string[];
+  changeTaxCode: boolean;
   chargeTaxes: boolean;
+  collections: string[];
   description: RawDraftContentState;
+  isAvailable: boolean;
+  isAvailableForPurchase: boolean;
   isPublished: boolean;
   name: string;
+  slug: string;
   publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
+  taxCode: string;
   trackInventory: boolean;
+  visibleInListings: boolean;
+  weight: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -188,16 +196,22 @@ export function getProductUpdatePageFormData(
   variants: ProductDetails_product_variants[]
 ): ProductUpdatePageFormData {
   return {
+    availableForPurchase: product?.availableForPurchase,
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
+    changeTaxCode: !!product?.taxType.taxCode,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
+    isAvailable: !!product?.isAvailable,
+    isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),
+    metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
+    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
@@ -210,7 +224,11 @@ export function getProductUpdatePageFormData(
           : undefined,
       ""
     ),
-    trackInventory: !!product?.variants[0]?.trackInventory
+    slug: product?.slug || "",
+    taxCode: product?.taxType.taxCode,
+    trackInventory: !!product?.variants[0]?.trackInventory,
+    visibleInListings: !!product?.visibleInListings,
+    weight: product?.weight?.value.toString() || ""
   };
 }
 
@@ -218,7 +236,7 @@ export function mapFormsetStockToStockInput(
   stock: FormsetAtomicData<null, string>
 ): StockInput {
   return {
-    quantity: parseInt(stock.value, 10),
+    quantity: parseInt(stock.value, 10) || 0,
     warehouse: stock.id
   };
 }

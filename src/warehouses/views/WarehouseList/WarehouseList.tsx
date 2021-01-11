@@ -71,6 +71,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         refetch();

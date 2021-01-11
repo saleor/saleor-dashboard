@@ -11,11 +11,11 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -111,8 +111,8 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 {errors.length > 0 && (
                   <>
                     <FormSpacer />
-                    {errors.map(err => (
-                      <DialogContentText color="error">
+                    {errors.map((err, index) => (
+                      <DialogContentText color="error" key={index}>
                         {getOrderErrorMessage(err, intl)}
                       </DialogContentText>
                     ))}

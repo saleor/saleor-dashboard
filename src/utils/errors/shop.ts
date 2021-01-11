@@ -1,5 +1,5 @@
+import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import { ShopErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

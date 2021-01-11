@@ -1,6 +1,7 @@
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { User } from "@saleor/fragments/types/User";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
@@ -9,7 +10,6 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import { matchPath } from "react-router";
 
-import { User } from "../../auth/types/User";
 import {
   configurationMenuUrl,
   createConfigurationMenu
@@ -193,7 +193,7 @@ const MenuList: React.FC<MenuListProps> = props => {
   });
   const intl = useIntl();
 
-  const configutationMenu = createConfigurationMenu(intl).map(menu => {
+  const configurationMenu = createConfigurationMenu(intl).map(menu => {
     menu.menuItems.map(item =>
       user.userPermissions.map(perm => perm.code).includes(item.permission)
     );
@@ -224,6 +224,7 @@ const MenuList: React.FC<MenuListProps> = props => {
       className={classNames(className, {
         [classes.menuIsActive]: activeSubMenu.isActive
       })}
+      data-test="mainMenu"
     >
       {/* FIXME: this .split("?")[0] looks gross */}
       {menuItems.map(menuItem => {
@@ -257,6 +258,8 @@ const MenuList: React.FC<MenuListProps> = props => {
                 [classes.menuListItemActive]: isAnyChildActive
               })}
               key={menuItem.label}
+              data-testid={menuItem.testingContextId}
+              data-test="menuItemEntry"
             >
               <div
                 className={classNames(classes.menuItemHover, {
@@ -264,7 +267,6 @@ const MenuList: React.FC<MenuListProps> = props => {
                     menuItem.ariaLabel === activeSubMenu.label &&
                     activeSubMenu.isActive
                 })}
-                data-tc={menuItem.label}
                 onClick={() => handleSubMenu(menuItem.ariaLabel)}
               >
                 <SVG
@@ -311,6 +313,8 @@ const MenuList: React.FC<MenuListProps> = props => {
             href={createHref(menuItem.url)}
             onClick={event => closeSubMenu(menuItem.url, event)}
             key={menuItem.label}
+            data-testid={menuItem.testingContextId}
+            data-test="menuItemEntry"
           >
             <div className={classes.menuItemHover}>
               <SVG
@@ -332,7 +336,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           </a>
         );
       })}
-      {renderConfigure && configutationMenu.length > 0 && (
+      {renderConfigure && configurationMenu.length > 0 && (
         <a
           className={classes.menuListItem}
           href={createHref(configurationMenuUrl)}

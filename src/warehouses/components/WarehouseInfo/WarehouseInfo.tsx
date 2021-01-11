@@ -2,11 +2,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
+import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
-import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -28,7 +28,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
+    <Card data-test="generalInformationSection">
       <CardTitle
         title={intl.formatMessage(commonMessages.generalInformations)}
       />

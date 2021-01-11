@@ -19,8 +19,8 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -164,7 +164,7 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                             <TextField
                               type="number"
                               inputProps={{
-                                max: remainingQuantity,
+                                max: remainingQuantity.toString(),
                                 style: { textAlign: "right" }
                               }}
                               className={classes.quantityInput}
@@ -213,8 +213,8 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                     <FormSpacer />
                     {errors
                       .filter(err => !formFields.includes(err.field))
-                      .map(err => (
-                        <DialogContentText color="error">
+                      .map((err, index) => (
+                        <DialogContentText color="error" key={index}>
                           {getOrderErrorMessage(err, intl)}
                         </DialogContentText>
                       ))}

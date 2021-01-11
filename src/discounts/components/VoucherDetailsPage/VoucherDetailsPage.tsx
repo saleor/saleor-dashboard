@@ -10,7 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,7 +47,7 @@ export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
     : VoucherDetailsPageTab.categories;
 }
 
-export interface FormData {
+export interface VoucherDetailsPageFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   code: string;
@@ -89,7 +89,7 @@ export interface VoucherDetailsPageProps
   onProductUnassign: (id: string) => void;
   onProductClick: (id: string) => () => void;
   onRemove: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
 }
 
@@ -141,7 +141,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     requirementsPickerInitValue = RequirementsPicker.NONE;
   }
 
-  const initialForm: FormData = {
+  const initialForm: VoucherDetailsPageFormData = {
     applyOncePerCustomer: maybe(() => voucher.applyOncePerCustomer, false),
     applyOncePerOrder: maybe(() => voucher.applyOncePerOrder, false),
     code: maybe(() => voucher.code, ""),

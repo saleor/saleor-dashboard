@@ -21,6 +21,7 @@ export const CountryList: React.FC = () => {
   const handleUpdateTaxSettings = (data: UpdateTaxSettings) => {
     if (data.shopSettingsUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -29,9 +30,15 @@ export const CountryList: React.FC = () => {
   const handleFetchTaxes = (data: FetchTaxes) => {
     if (data.shopFetchTaxRates.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully fetched tax rates"
         })
+      });
+    } else {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
   };
