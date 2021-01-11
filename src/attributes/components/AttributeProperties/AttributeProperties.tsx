@@ -2,6 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -10,16 +11,58 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import {
-  AttributeInputTypeEnum,
-  AttributeTypeEnum
-} from "@saleor/types/globalTypes";
+import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { AttributePageFormData } from "../AttributePage";
+
+const messages = defineMessages({
+  availableInGrid: {
+    defaultMessage: "Add to Column Options",
+    description: "add attribute as column in product list table"
+  },
+  availableInGridCaption: {
+    defaultMessage:
+      "If enabled this attribute can be used as a column in product table.",
+    description: "caption"
+  },
+  dashboardPropertiesTitle: {
+    defaultMessage: "Dashboard Properties",
+    description: "attribute properties regarding dashboard"
+  },
+  filterableInDashboard: {
+    defaultMessage: "Use in Filtering",
+    description: "use attribute in filtering"
+  },
+  filterableInDashboardCaption: {
+    defaultMessage:
+      "If enabled, you’ll be able to use this attribute to filter products in product list.",
+    description: "caption"
+  },
+  filterableInStorefront: {
+    defaultMessage: "Use in Faceted Navigation",
+    description: "attribute is filterable in storefront"
+  },
+  storefrontPropertiesTitle: {
+    defaultMessage: "Storefront Properties",
+    description: "attribute properties regarding storefront"
+  },
+  storefrontSearchPosition: {
+    defaultMessage: "Position in faceted navigation",
+    description: "attribute position in storefront filters"
+  },
+  visibleInStorefront: {
+    defaultMessage: "Public",
+    description: "attribute visibility in storefront"
+  },
+  visibleInStorefrontCaption: {
+    defaultMessage: "If enabled, attribute will be accessible to customers.",
+    description: "caption"
+  }
+});
 
 export interface AttributePropertiesProps {
   data: AttributePageFormData;
@@ -38,15 +81,13 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
 
-  const dashboardProperties = ![
-    AttributeInputTypeEnum.FILE,
-    AttributeInputTypeEnum.REFERENCE
-  ].includes(data.inputType);
+  const dashboardProperties = ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
+    data.inputType
+  );
 
   const storefrontFacetedNavigationProperties =
-    ![AttributeInputTypeEnum.FILE, AttributeInputTypeEnum.REFERENCE].includes(
-      data.inputType
-    ) && data.type === AttributeTypeEnum.PRODUCT_TYPE;
+    ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) &&
+    data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
     <Card>
@@ -84,20 +125,14 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
         /> */}
 
         <Typography variant="subtitle1">
-          <FormattedMessage
-            defaultMessage="Storefront Properties"
-            description="attribute properties regarding storefront"
-          />
+          <FormattedMessage {...messages.storefrontPropertiesTitle} />
         </Typography>
         <Hr />
         {storefrontFacetedNavigationProperties && (
           <>
             <ControlledCheckbox
               name={"filterableInStorefront" as keyof FormData}
-              label={intl.formatMessage({
-                defaultMessage: "Use in Faceted Navigation",
-                description: "attribute is filterable in storefront"
-              })}
+              label={intl.formatMessage(messages.filterableInStorefront)}
               checked={data.filterableInStorefront}
               onChange={onChange}
               disabled={disabled}
@@ -116,10 +151,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
                   name={
                     "storefrontSearchPosition" as keyof AttributePageFormData
                   }
-                  label={intl.formatMessage({
-                    defaultMessage: "Position in faceted navigation",
-                    description: "attribute position in storefront filters"
-                  })}
+                  label={intl.formatMessage(messages.storefrontSearchPosition)}
                   value={data.storefrontSearchPosition}
                   onChange={onChange}
                 />
@@ -132,12 +164,9 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           name={"visibleInStorefront" as keyof FormData}
           label={
             <>
-              <FormattedMessage
-                defaultMessage="Public"
-                description="attribute visibility in storefront"
-              />
+              <FormattedMessage {...messages.visibleInStorefront} />
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="If enabled, attribute will be accessible to customers." />
+                <FormattedMessage {...messages.visibleInStorefrontCaption} />
               </Typography>
             </>
           }
@@ -149,10 +178,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           <>
             <CardSpacer />
             <Typography variant="subtitle1">
-              <FormattedMessage
-                defaultMessage="Dashboard Properties"
-                description="attribute properties regarding dashboard"
-              />
+              <FormattedMessage {...messages.dashboardPropertiesTitle} />
             </Typography>
             <Hr />
             <CardSpacer />
@@ -160,12 +186,11 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
               name={"filterableInDashboard" as keyof FormData}
               label={
                 <>
-                  <FormattedMessage
-                    defaultMessage="Use in Filtering"
-                    description="use attribute in filtering"
-                  />
+                  <FormattedMessage {...messages.filterableInDashboard} />
                   <Typography variant="caption">
-                    <FormattedMessage defaultMessage="If enabled, you’ll be able to use this attribute to filter products in product list." />
+                    <FormattedMessage
+                      {...messages.filterableInDashboardCaption}
+                    />
                   </Typography>
                 </>
               }
@@ -178,12 +203,9 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
               name={"availableInGrid" as keyof FormData}
               label={
                 <>
-                  <FormattedMessage
-                    defaultMessage="Add to Column Options"
-                    description="add attribute as column in product list table"
-                  />
+                  <FormattedMessage {...messages.availableInGrid} />
                   <Typography variant="caption">
-                    <FormattedMessage defaultMessage="If enabled this attribute can be used as a column in product table." />
+                    <FormattedMessage {...messages.availableInGridCaption} />
                   </Typography>
                 </>
               }

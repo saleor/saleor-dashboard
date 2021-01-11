@@ -1,3 +1,4 @@
+import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -176,10 +177,9 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   errors={errors}
                   onChange={change}
                 />
-                {![
-                  AttributeInputTypeEnum.FILE,
-                  AttributeInputTypeEnum.REFERENCE
-                ].includes(data.inputType) && (
+                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
+                  data.inputType
+                ) && (
                   <>
                     <CardSpacer />
                     <AttributeValues

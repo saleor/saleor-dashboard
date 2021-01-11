@@ -15,11 +15,64 @@ import {
 import { getFormErrors } from "@saleor/utils/errors";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { AttributePageFormData } from "../AttributePage";
+
+const messages = defineMessages({
+  attributeLabel: {
+    defaultMessage: "Default Label",
+    description: "attribute's label"
+  },
+  attributeSlug: {
+    defaultMessage: "Attribute Code",
+    description: "attribute's slug short code label"
+  },
+  attributeSlugHelperText: {
+    defaultMessage: "This is used internally. Make sure you don’t use spaces",
+    description: "attribute slug input field helper text"
+  },
+  entityType: {
+    defaultMessage: "Entity",
+    description: "attribute's editor component entity"
+  },
+  inputType: {
+    defaultMessage: "Catalog Input type for Store Owner",
+    description: "attribute's editor component"
+  },
+  valueRequired: {
+    defaultMessage: "Value Required",
+    description: "check to require attribute to have value"
+  }
+});
+
+const inputTypeMessages = defineMessages({
+  dropdown: {
+    defaultMessage: "Dropdown",
+    description: "product attribute type"
+  },
+  file: {
+    defaultMessage: "File",
+    description: "file attribute type"
+  },
+  multiselect: {
+    defaultMessage: "Multiple Select",
+    description: "product attribute type"
+  },
+  references: {
+    defaultMessage: "References",
+    description: "references attribute type"
+  }
+});
+
+const entityTypeMessages = defineMessages({
+  page: {
+    defaultMessage: "Pages",
+    description: "page attribute entity type"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -49,40 +102,25 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   const intl = useIntl();
   const inputTypeChoices = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Dropdown",
-        description: "product attribute type"
-      }),
+      label: intl.formatMessage(inputTypeMessages.dropdown),
       value: AttributeInputTypeEnum.DROPDOWN
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Multiple Select",
-        description: "product attribute type"
-      }),
+      label: intl.formatMessage(inputTypeMessages.multiselect),
       value: AttributeInputTypeEnum.MULTISELECT
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "File",
-        description: "file attribute type"
-      }),
+      label: intl.formatMessage(inputTypeMessages.file),
       value: AttributeInputTypeEnum.FILE
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "References",
-        description: "references attribute type"
-      }),
+      label: intl.formatMessage(inputTypeMessages.references),
       value: AttributeInputTypeEnum.REFERENCE
     }
   ];
   const entityTypeChoices = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Pages",
-        description: "page attribute entity type"
-      }),
+      label: intl.formatMessage(entityTypeMessages.page),
       value: AttributeEntityTypeEnum.PAGE
     }
   ];
@@ -101,10 +139,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
-          label={intl.formatMessage({
-            defaultMessage: "Default Label",
-            description: "attribute's label"
-          })}
+          label={intl.formatMessage(messages.attributeLabel)}
           name={"name" as keyof AttributePageFormData}
           fullWidth
           helperText={getAttributeErrorMessage(formErrors.name, intl)}
@@ -115,20 +150,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
         <TextField
           disabled={disabled}
           error={!!formErrors.slug}
-          label={intl.formatMessage({
-            defaultMessage: "Attribute Code",
-            description: "attribute's slug short code label"
-          })}
+          label={intl.formatMessage(messages.attributeSlug)}
           name={"slug" as keyof AttributePageFormData}
           placeholder={slugify(data.name).toLowerCase()}
           fullWidth
           helperText={
             getAttributeSlugErrorMessage(formErrors.slug, intl) ||
-            intl.formatMessage({
-              defaultMessage:
-                "This is used internally. Make sure you don’t use spaces",
-              description: "attribute slug input field helper text"
-            })
+            intl.formatMessage(messages.attributeSlugHelperText)
           }
           value={data.slug}
           onChange={onChange}
@@ -140,10 +168,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
             disabled={disabled || !canChangeType}
             error={!!formErrors.inputType}
             hint={getAttributeErrorMessage(formErrors.inputType, intl)}
-            label={intl.formatMessage({
-              defaultMessage: "Catalog Input type for Store Owner",
-              description: "attribute's editor component"
-            })}
+            label={intl.formatMessage(messages.inputType)}
             name="inputType"
             onChange={onChange}
             value={data.inputType}
@@ -154,10 +179,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               disabled={disabled || !canChangeType}
               error={!!formErrors.entityType}
               hint={getAttributeErrorMessage(formErrors.entityType, intl)}
-              label={intl.formatMessage({
-                defaultMessage: "Entity",
-                description: "attribute's editor component entity"
-              })}
+              label={intl.formatMessage(messages.entityType)}
               name="entityType"
               onChange={onChange}
               value={data.entityType}
@@ -167,10 +189,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
         <FormSpacer />
         <ControlledCheckbox
           name={"valueRequired" as keyof AttributePageFormData}
-          label={intl.formatMessage({
-            defaultMessage: "Value Required",
-            description: "check to require attribute to have value"
-          })}
+          label={intl.formatMessage(messages.valueRequired)}
           checked={data.valueRequired}
           onChange={onChange}
           disabled={disabled}
