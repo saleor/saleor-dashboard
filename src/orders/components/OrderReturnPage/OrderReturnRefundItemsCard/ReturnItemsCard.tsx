@@ -13,6 +13,7 @@ import {
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import {
@@ -83,6 +84,7 @@ interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
   fulfilmentId?: string;
   canReplace?: boolean;
+  errors: OrderErrorFragment[];
   lines: OrderDetails_order_lines[];
   order: OrderDetails_order;
   itemsSelections: FormsetReplacementData;
@@ -100,6 +102,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsQuantities,
   fulfilmentId,
   order
+  // errors
 }) => {
   const classes = useStyles({});
   const intl = useIntl();

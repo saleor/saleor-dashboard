@@ -63,6 +63,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               {!!data.unfulfiledItemsQuantities.length && (
                 <>
                   <ItemsCard
+                    errors={errors}
                     order={order}
                     lines={getUnfulfilledLines(order)}
                     itemsQuantities={data.unfulfiledItemsQuantities}
@@ -81,6 +82,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 ({ id, lines }) => (
                   <React.Fragment key={id}>
                     <ItemsCard
+                      errors={errors}
                       order={order}
                       fulfilmentId={id}
                       lines={getParsedFulfiledLines(lines)}
