@@ -97,14 +97,13 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     }
   });
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageUrl(id, {
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   const handleUpdate = async (data: PageSubmitData) => {
     let errors: Array<
@@ -184,7 +183,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferncePages={searchPages.search}
+        fetchReferencePages={searchPages.search}
         fetchMoreReferencePages={{
           hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
           loading: searchPages.result.loading,

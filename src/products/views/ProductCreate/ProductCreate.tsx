@@ -178,14 +178,13 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   };
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productAddUrl({
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   React.useEffect(() => {
     const productId = productCreateOpts.data?.productCreate?.product?.id;
@@ -289,7 +288,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferncePages={searchPages.search}
+        fetchReferencePages={searchPages.search}
         fetchMoreReferencePages={{
           hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
           loading: searchPages.result.loading,

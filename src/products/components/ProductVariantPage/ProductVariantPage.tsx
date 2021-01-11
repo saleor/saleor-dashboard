@@ -83,7 +83,7 @@ interface ProductVariantPageProps {
   warehouses: WarehouseFragment[];
   referencePages: SearchPages_search_edges_node[];
   fetchMoreReferencePages?: FetchMoreProps;
-  fetchReferncePages?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
@@ -121,7 +121,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onWarehouseConfigure,
   assignReferencesAttributeId,
   onAssignReferencesClick,
-  fetchReferncePages,
+  fetchReferencePages,
   fetchMoreReferencePages,
   onCloseDialog
 }) => {
@@ -138,7 +138,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     ?.filter(image => variantImages.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
-  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -289,7 +289,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
               />
-              {openAssignReferencesAttributeDialog && (
+              {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog
                   attributeValues={getAttributeValuesFromReferences(
                     assignReferencesAttributeId,
@@ -297,8 +297,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     referencePages
                   )}
                   hasMore={fetchMoreReferencePages?.hasMore}
-                  open={openAssignReferencesAttributeDialog}
-                  onFetch={fetchReferncePages}
+                  open={canOpenAssignReferencesAttributeDialog}
+                  onFetch={fetchReferencePages}
                   onFetchMore={fetchMoreReferencePages?.onFetchMore}
                   loading={fetchMoreReferencePages?.loading}
                   onClose={onCloseDialog}

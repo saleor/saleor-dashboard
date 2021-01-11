@@ -42,7 +42,7 @@ export interface PageDetailsPageProps {
   fetchMorePageTypes?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  fetchReferncePages?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   onCloseDialog: () => void;
 }
@@ -61,7 +61,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchMorePageTypes,
   assignReferencesAttributeId,
   onAssignReferencesClick,
-  fetchReferncePages,
+  fetchReferencePages,
   fetchMoreReferencePages,
   onCloseDialog
 }) => {
@@ -70,7 +70,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
   const pageExists = page !== null;
 
-  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -202,7 +202,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             onDelete={page === null ? undefined : onRemove}
             onSave={submit}
           />
-          {openAssignReferencesAttributeDialog && (
+          {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog
               attributeValues={getAttributeValuesFromReferences(
                 assignReferencesAttributeId,
@@ -210,8 +210,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 referencePages
               )}
               hasMore={fetchMoreReferencePages?.hasMore}
-              open={openAssignReferencesAttributeDialog}
-              onFetch={fetchReferncePages}
+              open={canOpenAssignReferencesAttributeDialog}
+              onFetch={fetchReferencePages}
               onFetchMore={fetchMoreReferencePages?.onFetchMore}
               loading={fetchMoreReferencePages?.loading}
               onClose={onCloseDialog}

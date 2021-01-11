@@ -272,14 +272,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantEditUrl(productId, variantId, {
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   const searchPages = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
@@ -326,7 +325,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferncePages={searchPages.search}
+        fetchReferencePages={searchPages.search}
         fetchMoreReferencePages={{
           hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
           loading: searchPages.result.loading,

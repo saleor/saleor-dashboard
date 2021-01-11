@@ -183,14 +183,13 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const handleVariantClick = (id: string) =>
     navigate(productVariantEditUrl(productId, id));
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantAddUrl(productId, {
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   const disableForm =
     productLoading ||
@@ -239,7 +238,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferncePages={searchPages.search}
+        fetchReferencePages={searchPages.search}
         fetchMoreReferencePages={{
           hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
           loading: searchPages.result.loading,

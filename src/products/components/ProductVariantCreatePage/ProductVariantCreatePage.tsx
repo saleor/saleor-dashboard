@@ -69,7 +69,7 @@ interface ProductVariantCreatePageProps {
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  fetchReferncePages?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   onCloseDialog: () => void;
 }
@@ -92,13 +92,13 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onWarehouseConfigure,
   assignReferencesAttributeId,
   onAssignReferencesClick,
-  fetchReferncePages,
+  fetchReferencePages,
   fetchMoreReferencePages,
   onCloseDialog
 }) => {
   const intl = useIntl();
 
-  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -228,7 +228,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             onCancel={onBack}
             onSave={submit}
           />
-          {openAssignReferencesAttributeDialog && (
+          {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog
               attributeValues={getAttributeValuesFromReferences(
                 assignReferencesAttributeId,
@@ -236,8 +236,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 referencePages
               )}
               hasMore={fetchMoreReferencePages?.hasMore}
-              open={openAssignReferencesAttributeDialog}
-              onFetch={fetchReferncePages}
+              open={canOpenAssignReferencesAttributeDialog}
+              onFetch={fetchReferencePages}
               onFetchMore={fetchMoreReferencePages?.onFetchMore}
               loading={fetchMoreReferencePages?.loading}
               onClose={onCloseDialog}

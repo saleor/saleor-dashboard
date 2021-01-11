@@ -298,14 +298,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables })
   );
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   const disableFormSave =
     uploadFileOpts.loading ||
@@ -448,7 +447,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         referencePages={searchPages.result.data?.search.edges.map(
           edge => edge.node
         )}
-        fetchReferncePages={searchPages.search}
+        fetchReferencePages={searchPages.search}
         fetchMoreReferencePages={{
           hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
           loading: searchPages.result.loading,

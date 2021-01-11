@@ -64,14 +64,13 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     }
   };
 
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) => {
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageCreateUrl({
         action: "assign-attribute-value",
         id: attribute.id
       })
     );
-  };
 
   const searchPages = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
@@ -152,7 +151,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               referencePages={searchPages.result.data?.search.edges.map(
                 edge => edge.node
               )}
-              fetchReferncePages={searchPages.search}
+              fetchReferencePages={searchPages.search}
               fetchMoreReferencePages={{
                 hasMore: searchPages.result.data?.search.pageInfo.hasNextPage,
                 loading: searchPages.result.loading,

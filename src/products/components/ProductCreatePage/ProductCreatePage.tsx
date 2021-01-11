@@ -68,7 +68,7 @@ interface ProductCreatePageProps {
   onChannelsChange: (data: ChannelData[]) => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  fetchReferncePages?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   onCloseDialog: () => void;
   onBack?();
@@ -104,7 +104,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   openChannelsModal,
   assignReferencesAttributeId,
   onAssignReferencesClick,
-  fetchReferncePages,
+  fetchReferencePages,
   fetchMoreReferencePages,
   onCloseDialog
 }: ProductCreatePageProps) => {
@@ -132,7 +132,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
-  const openAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -321,7 +321,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               state={saveButtonBarState}
               disabled={loading || !onSubmit || formDisabled || !hasChanged}
             />
-            {openAssignReferencesAttributeDialog && (
+            {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog
                 attributeValues={getAttributeValuesFromReferences(
                   assignReferencesAttributeId,
@@ -329,8 +329,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   referencePages
                 )}
                 hasMore={fetchMoreReferencePages?.hasMore}
-                open={openAssignReferencesAttributeDialog}
-                onFetch={fetchReferncePages}
+                open={canOpenAssignReferencesAttributeDialog}
+                onFetch={fetchReferencePages}
                 onFetchMore={fetchMoreReferencePages?.onFetchMore}
                 loading={fetchMoreReferencePages?.loading}
                 onClose={onCloseDialog}
