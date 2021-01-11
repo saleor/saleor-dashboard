@@ -240,6 +240,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   taxType: SimpleProductUpdate_productUpdate_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+  jsonPrivateMetadata: any;
 }
 
 export interface SimpleProductUpdate_productUpdate {

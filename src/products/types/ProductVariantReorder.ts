@@ -239,6 +239,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   taxType: ProductVariantReorder_productVariantReorder_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+  jsonPrivateMetadata: any;
 }
 
 export interface ProductVariantReorder_productVariantReorder {

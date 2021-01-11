@@ -233,4 +233,5 @@ export interface Product {
   taxType: Product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+  jsonPrivateMetadata: any;
 }

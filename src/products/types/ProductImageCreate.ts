@@ -239,6 +239,7 @@ export interface ProductImageCreate_productImageCreate_product {
   taxType: ProductImageCreate_productImageCreate_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+  jsonPrivateMetadata: any;
 }
 
 export interface ProductImageCreate_productImageCreate {

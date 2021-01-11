@@ -46,6 +46,7 @@ export const productFragment = gql`
       name
       hasVariants
     }
+    updatedAt
   }
 `;
 
@@ -191,6 +192,7 @@ export const productFragmentDetails = gql`
     }
     availableForPurchase
     visibleInListings
+    jsonPrivateMetadata
   }
 `;
 

@@ -239,6 +239,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   taxType: ProductImageUpdate_productImageUpdate_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
+  jsonPrivateMetadata: any;
 }
 
 export interface ProductImageUpdate_productImageUpdate {

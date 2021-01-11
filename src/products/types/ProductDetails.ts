@@ -233,7 +233,7 @@ export interface ProductDetails_product {
   taxType: ProductDetails_product_taxType | null;
   availableForPurchase: any | null;
   visibleInListings: boolean;
-  jsonPrivateMetadata?: any;
+  jsonPrivateMetadata: any;
 }
 
 export interface ProductDetails_taxTypes {
