@@ -6,6 +6,7 @@ import { RequireOnlyOne } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListings } from "@saleor/shipping/types/ShippingZone";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash-es/uniqBy";
 
 export interface Channel {
@@ -311,14 +312,11 @@ export const getChannelsCurrencyChoices = (
   channelsList: Channels_channels[]
 ) =>
   id
-    ? channelsList
-        ?.filter(
+    ? mapNodeToChoice(
+        channelsList?.filter(
           channel =>
             channel.id !== id &&
             channel.currencyCode === selectedChannel?.currencyCode
         )
-        .map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))
+      )
     : [];
