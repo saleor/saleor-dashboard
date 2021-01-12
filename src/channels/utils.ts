@@ -6,6 +6,7 @@ import { RequireOnlyOne } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { ShippingZone_shippingZone_shippingMethods_channelListings } from "@saleor/shipping/types/ShippingZone";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash-es/uniqBy";
 
 export interface Channel {
@@ -304,3 +305,18 @@ export const createSortedChannelsDataFromSale = (data?: SaleDetails_sale) =>
   createChannelsDataFromSale(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
+
+export const getChannelsCurrencyChoices = (
+  id: string,
+  selectedChannel: Channels_channels,
+  channelsList: Channels_channels[]
+) =>
+  id
+    ? mapNodeToChoice(
+        channelsList?.filter(
+          channel =>
+            channel.id !== id &&
+            channel.currencyCode === selectedChannel?.currencyCode
+        )
+      )
+    : [];

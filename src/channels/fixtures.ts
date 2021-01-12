@@ -18,6 +18,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbm5lcDoy",
     isActive: true,
     name: "Test",
@@ -26,6 +27,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbm7lbDoy213",
     isActive: true,
     name: "Channel",
@@ -34,6 +36,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbn5lbDoytr",
     isActive: true,
     name: "Channel test",
@@ -42,6 +45,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbm5lbDo5bot",
     isActive: true,
     name: "Channel USD",
@@ -50,6 +54,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbm7lbDoyr0tr",
     isActive: true,
     name: "Channel",
@@ -58,6 +63,7 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
+    hasOrders: false,
     id: "Q2hhbn5lbDoyya",
     isActive: true,
     name: "Channel test",
@@ -67,6 +73,7 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     id: "Q2hhbm5lbDo5w0z",
+    hasOrders: false,
     isActive: true,
     name: "Channel USD",
     slug: "channel-usd1"
@@ -76,6 +83,7 @@ export const channelsList: Channels_channels[] = [
 export const channel: Channel_channel = {
   __typename: "Channel",
   currencyCode: "zl",
+  hasOrders: false,
   id: "Q2hhbm5lbDov78",
   isActive: true,
   name: "Test",

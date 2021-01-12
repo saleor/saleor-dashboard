@@ -13,4 +13,5 @@ export interface ChannelDetailsFragment {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }

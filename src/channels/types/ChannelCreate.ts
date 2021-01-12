@@ -15,6 +15,7 @@ export interface ChannelCreate_channelCreate_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface ChannelCreate_channelCreate_errors {
