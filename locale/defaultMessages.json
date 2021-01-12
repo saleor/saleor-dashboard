@@ -5388,7 +5388,16 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
   },
-  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_579967655": {
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_maxDays": {
+    "context": "label",
+    "string": "Max Delivery Time"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_minDays": {
+    "context": "label",
+    "string": "Min Delivery Time"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_name": {
+    "context": "label",
     "string": "Shipping rate name"
   },
   "src_dot_shipping_dot_components_dot_ShippingRateZipCodeRangeRemoveDialog_dot_3640694505": {
@@ -5469,19 +5478,17 @@
     "context": "shipping section header",
     "string": "Shipping"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1470703814": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_descriptionCharacterLimit": {
+    "context": "character limit",
+    "string": "{numberOfCharacters} of {maxCharacters} characters"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_descriptionPlaceholder": {
     "context": "field placeholder",
     "string": "Description of a shipping zone."
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1560416099": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_name": {
+    "context": "label",
     "string": "Shipping zone name"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3374163063": {
-    "string": "Description"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3877274856": {
-    "context": "character limit",
-    "string": "{numberOfCharacters} of {maxCharacters} characters"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRatesCreatePage_dot_1161979494": {
     "context": "page title",
