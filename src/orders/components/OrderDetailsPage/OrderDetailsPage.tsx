@@ -254,13 +254,17 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   selectedChannelName={order?.channel?.name}
                 />
                 <CardSpacer />
-                <OrderInvoiceList
-                  invoices={order?.invoices}
-                  onInvoiceClick={onInvoiceClick}
-                  onInvoiceGenerate={onInvoiceGenerate}
-                  onInvoiceSend={onInvoiceSend}
-                />
-                <CardSpacer />
+                {order?.status !== OrderStatus.UNCONFIRMED && (
+                  <div>
+                    <OrderInvoiceList
+                      invoices={order?.invoices}
+                      onInvoiceClick={onInvoiceClick}
+                      onInvoiceGenerate={onInvoiceGenerate}
+                      onInvoiceSend={onInvoiceSend}
+                    />
+                    <CardSpacer />
+                  </div>
+                )}
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
             </Grid>
