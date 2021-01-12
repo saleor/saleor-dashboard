@@ -10,6 +10,7 @@ import { AttributeList_attributes_edges_node } from "./types/AttributeList";
 export const attribute: AttributeDetailsFragment = {
   __typename: "Attribute" as "Attribute",
   availableInGrid: true,
+  entityType: null,
   filterableInDashboard: false,
   filterableInStorefront: true,
   id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
