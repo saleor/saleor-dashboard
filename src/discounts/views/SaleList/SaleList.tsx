@@ -199,7 +199,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
-              selectedChannelId={channel.id}
+              selectedChannelId={channel?.id}
             />
             <ActionDialog
               confirmButtonState={saleBulkDeleteOpts.status}

@@ -261,7 +261,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           data.category.products.edges.map(edge => edge.node)
         )}
         saveButtonBarState={updateResult.status}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
         subcategories={maybe(() =>
           data.category.children.edges.map(edge => edge.node)
         )}
