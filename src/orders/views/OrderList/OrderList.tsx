@@ -15,6 +15,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -71,11 +72,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const { channel, availableChannels } = useAppChannel();
 
-  const channelOpts =
-    availableChannels?.map(channel => ({
-      label: channel.name,
-      value: channel.id
-    })) || null;
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels)
+    : null;
 
   const tabs = getFilterTabs();
 
@@ -183,10 +182,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
       />
       <ChannelPickerDialog
-        channelsChoices={availableChannels.map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))}
+        channelsChoices={mapNodeToChoice(availableChannels)}
         confirmButtonState="success"
         defaultChoice={channel.id}
         open={params.action === "create-order"}

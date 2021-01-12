@@ -1,4 +1,5 @@
 import Decorator from "@saleor/storybook/Decorator";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -7,10 +8,7 @@ import ChannelPickerDialog, {
   ChannelPickerDialogProps
 } from "./ChannelPickerDialog";
 
-const channelsChoices = channelsList.map(channel => ({
-  label: channel.name,
-  value: channel.id
-}));
+const channelsChoices = mapNodeToChoice(channelsList);
 
 const props: ChannelPickerDialogProps = {
   channelsChoices,
