@@ -124,6 +124,16 @@ export function createAttributeMultiChangeHandler(
   };
 }
 
+export function createAttributeReferenceChangeHandler(
+  changeAttributeData: FormsetChange<string[]>,
+  triggerChange: () => void
+): FormsetChange<string[]> {
+  return (attributeId: string, values: string[]) => {
+    changeAttributeData(attributeId, values);
+    triggerChange();
+  };
+}
+
 export function createAttributeFileChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,

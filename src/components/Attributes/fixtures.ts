@@ -88,6 +88,23 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.REFERENCE,
     isRequired: true,
+    references: [
+      {
+        __typename: "Page",
+        id: "vbnhgcvjhbvhj",
+        title: "References First Value"
+      },
+      {
+        __typename: "Page",
+        id: "gucngdfdfvdvd",
+        title: "References Second Value"
+      },
+      {
+        __typename: "Page",
+        id: "dfdfdsfdsfdse",
+        title: "References Third Value"
+      }
+    ],
     values: [
       {
         __typename: "AttributeValue",
@@ -143,9 +160,9 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...REFERENCE_ATTRIBUTE,
     value: [
-      REFERENCE_ATTRIBUTE.data.values[0].slug,
-      REFERENCE_ATTRIBUTE.data.values[1].slug,
-      REFERENCE_ATTRIBUTE.data.values[2].slug
+      REFERENCE_ATTRIBUTE.data.values[0].id,
+      REFERENCE_ATTRIBUTE.data.values[1].id,
+      REFERENCE_ATTRIBUTE.data.values[2].id
     ]
   }
 ];

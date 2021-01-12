@@ -9,7 +9,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
-import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
+import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -116,18 +116,22 @@ export function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope
 ): AttributeInput[] {
-  return variantAttributes?.map(attribute => ({
-    data: {
-      inputType: attribute.attribute.inputType,
-      isRequired: attribute.attribute.valueRequired,
-      selectedValues: attribute.values,
-      values: attribute.attribute.values,
-      variantAttributeScope
-    },
-    id: attribute.attribute.id,
-    label: attribute.attribute.name,
-    value: [(attribute.values.length && attribute.values[0]?.slug) || null]
-  }));
+  return variantAttributes?.map(attribute => {
+    const value = attribute.values.length > 0 && attribute.values[0]?.slug;
+
+    return {
+      data: {
+        inputType: attribute.attribute.inputType,
+        isRequired: attribute.attribute.valueRequired,
+        selectedValues: attribute.values,
+        values: attribute.attribute.values,
+        variantAttributeScope
+      },
+      id: attribute.attribute.id,
+      label: attribute.attribute.name,
+      value: value ? [value] : undefined
+    };
+  });
 }
 
 export function getAttributeInputFromVariant(
@@ -216,26 +220,6 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
     []
   );
 }
-
-export const getAttributesDisplayData = (
-  attributes: AttributeInput[],
-  attributesWithNewFileValue: FormsetData<null, File>
-) =>
-  attributes.map(attribute => {
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
-
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
-    return attribute;
-  });
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;

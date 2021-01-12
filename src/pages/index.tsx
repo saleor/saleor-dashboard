@@ -14,7 +14,7 @@ import {
   pagePath,
   PageUrlQueryParams
 } from "./urls";
-import PageCreate from "./views/PageCreate";
+import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
@@ -26,6 +26,18 @@ const PageList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     PageListUrlSortField.title
   );
   return <PageListComponent params={params} />;
+};
+
+const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: PageUrlQueryParams = qs;
+
+  return (
+    <PageCreateComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
 };
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
