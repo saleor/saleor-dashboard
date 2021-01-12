@@ -19,6 +19,7 @@ export interface ChannelDetailsPageProps {
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack?: () => void;
+  onDelete?: () => void;
   onSubmit?: (data: FormData) => void;
   updateChannelStatus?: () => void;
 }
@@ -37,6 +38,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   errors,
   onBack,
   onSubmit,
+  onDelete,
   saveButtonBarState,
   updateChannelStatus
 }) => {
@@ -79,6 +81,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
             <SaveButtonBar
               onCancel={onBack}
               onSave={submit}
+              onDelete={onDelete}
               state={saveButtonBarState}
               disabled={disabled || formDisabled || !onSubmit || !hasChanged}
             />

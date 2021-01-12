@@ -1,3 +1,4 @@
+import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -64,25 +65,25 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     onCompleted
   });
 
-  const channelsChoices = params.id
-    ? data?.channels
-        ?.filter(
-          channel =>
-            channel.id !== params.id &&
-            channel.currencyCode === selectedChannel.currencyCode
-        )
-        .map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))
-    : [];
+  const channelsChoices = getChannelsCurrencyChoices(
+    params.id,
+    selectedChannel,
+    data?.channels
+  );
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
-  const handleRemoveConfirm = (id: string) =>
-    deleteChannel({
-      variables: { id: params.id, input: { targetChannel: id } }
-    });
+  const handleRemoveConfirm = (targetChannelId?: string) => {
+    if (targetChannelId) {
+      deleteChannel({
+        variables: { id: params.id, input: { targetChannel: targetChannelId } }
+      });
+    } else {
+      deleteChannel({
+        variables: { id: params.id }
+      });
+    }
+  };
 
   return (
     <>
@@ -101,6 +102,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       {!!selectedChannel && (
         <ChannelDeleteDialog
           channelsChoices={channelsChoices}
+          hasOrders={selectedChannel.hasOrders}
           open={params.action === "remove"}
           confirmButtonState={deleteChannelOpts.status}
           onBack={() => navigate(channelsListUrl())}

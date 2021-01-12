@@ -32,6 +32,8 @@ export interface FormData {
   noLimits: boolean;
   minValue: string;
   maxValue: string;
+  minDays: string;
+  maxDays: string;
   type: ShippingMethodTypeEnum;
 }
 
@@ -77,7 +79,9 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   const initialForm: FormData = {
     channelListings: shippingChannels,
     includeZipCodes: ZipCodeInclusion.Include,
+    maxDays: "",
     maxValue: "",
+    minDays: "",
     minValue: "",
     name: "",
     noLimits: false,

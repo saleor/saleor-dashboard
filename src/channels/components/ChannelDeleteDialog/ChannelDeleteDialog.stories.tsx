@@ -10,6 +10,7 @@ import ChannelDeleteDialog, {
 
 const props: ChannelDeleteDialogProps = {
   channelsChoices: mapNodeToChoice(channelsList),
+  hasOrders: true,
   confirmButtonState: "default",
   onBack: () => undefined,
   onClose: () => undefined,

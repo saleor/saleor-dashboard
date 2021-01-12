@@ -15,6 +15,7 @@ export interface ChannelActivate_channelActivate_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface ChannelActivate_channelActivate_errors {
