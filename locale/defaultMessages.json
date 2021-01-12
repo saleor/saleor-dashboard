@@ -733,37 +733,49 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
-    "context": "attribute's editor component",
-    "string": "Catalog Input type for Store Owner"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeLabel": {
+    "context": "attribute's label",
+    "string": "Default Label"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
-    "context": "product attribute type",
-    "string": "Dropdown"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1376373679": {
-    "context": "file attribute type",
-    "string": "File"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
-    "context": "check to require attribute to have value",
-    "string": "Value Required"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
-    "context": "product attribute type",
-    "string": "Multiple Select"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3605174225": {
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeSlug": {
     "context": "attribute's slug short code label",
     "string": "Attribute Code"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_4107478955": {
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeSlugHelperText": {
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_691600601": {
-    "context": "attribute's label",
-    "string": "Default Label"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_dropdown": {
+    "context": "product attribute type",
+    "string": "Dropdown"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_entityType": {
+    "context": "attribute's editor component entity",
+    "string": "Entity"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_file": {
+    "context": "file attribute type",
+    "string": "File"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_inputType": {
+    "context": "attribute's editor component",
+    "string": "Catalog Input type for Store Owner"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_multiselect": {
+    "context": "product attribute type",
+    "string": "Multiple Select"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_page": {
+    "context": "page attribute entity type",
+    "string": "Pages"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_references": {
+    "context": "references attribute type",
+    "string": "References"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
+    "context": "check to require attribute to have value",
+    "string": "Value Required"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
@@ -844,42 +856,45 @@
     "context": "page title",
     "string": "Create New Attribute"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1318123158": {
-    "context": "attribute is filterable in storefront",
-    "string": "Use in Faceted Navigation"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1877630205": {
-    "context": "attribute properties regarding storefront",
-    "string": "Storefront Properties"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_26409543": {
-    "context": "attribute properties regarding dashboard",
-    "string": "Dashboard Properties"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3135366329": {
-    "context": "attribute visibility in storefront",
-    "string": "Public"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
-    "context": "attribute position in storefront filters",
-    "string": "Position in faceted navigation"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3758203740": {
-    "string": "If enabled, attribute will be accessible to customers."
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
-    "string": "If enabled this attribute can be used as a column in product table."
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_673770329": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_availableInGrid": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_714335445": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_availableInGridCaption": {
+    "context": "caption",
+    "string": "If enabled this attribute can be used as a column in product table."
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_dashboardPropertiesTitle": {
+    "context": "attribute properties regarding dashboard",
+    "string": "Dashboard Properties"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInDashboard": {
     "context": "use attribute in filtering",
     "string": "Use in Filtering"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_787251583": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInDashboardCaption": {
+    "context": "caption",
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInStorefront": {
+    "context": "attribute is filterable in storefront",
+    "string": "Use in Faceted Navigation"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontPropertiesTitle": {
+    "context": "attribute properties regarding storefront",
+    "string": "Storefront Properties"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontSearchPosition": {
+    "context": "attribute position in storefront filters",
+    "string": "Position in faceted navigation"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_visibleInStorefront": {
+    "context": "attribute visibility in storefront",
+    "string": "Public"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_visibleInStorefrontCaption": {
+    "context": "caption",
+    "string": "If enabled, attribute will be accessible to customers."
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",

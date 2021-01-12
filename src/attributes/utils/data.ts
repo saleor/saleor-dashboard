@@ -10,7 +10,52 @@ import {
 } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
 
+import { AttributePageFormData } from "../components/AttributePage";
+import { AttributeValueEditDialogFormData } from "../components/AttributeValueEditDialog";
 import { AttributeValueDelete } from "../types/AttributeValueDelete";
+
+export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
+  AttributeInputTypeEnum.DROPDOWN,
+  AttributeInputTypeEnum.MULTISELECT
+];
+
+function getSimpleAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[]
+) {
+  return {
+    ...data,
+    metadata: undefined,
+    privateMetadata: undefined,
+    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
+    values: values.map(value => ({
+      name: value.name
+    }))
+  };
+}
+
+function getFileOrReferenceAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[]
+) {
+  return {
+    ...getSimpleAttributeData(data, values),
+    availableInGrid: undefined,
+    filterableInDashboard: undefined,
+    filterableInStorefront: undefined
+  };
+}
+
+export function getAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[]
+) {
+  if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
+    return getSimpleAttributeData(data, values);
+  } else {
+    return getFileOrReferenceAttributeData(data, values);
+  }
+}
 
 export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
