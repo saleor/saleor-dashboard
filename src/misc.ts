@@ -205,7 +205,7 @@ export const transformOrderStatus = (
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
-        status: StatusType.ERROR
+        status: StatusType.NEUTRAL
       };
   }
   return {
