@@ -4321,6 +4321,10 @@
     "context": "payment status",
     "string": "Partially refunded"
   },
+  "src_dot_partiallyReturned": {
+    "context": "order status",
+    "string": "Partially returned"
+  },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
     "string": "Permission Groups"
@@ -5355,6 +5359,10 @@
   },
   "src_dot_requiredField": {
     "string": "This field is required"
+  },
+  "src_dot_returned": {
+    "context": "order status",
+    "string": "Returned"
   },
   "src_dot_sales": {
     "context": "sales section name",

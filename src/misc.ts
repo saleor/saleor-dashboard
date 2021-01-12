@@ -136,12 +136,20 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Partially fulfilled",
     description: "order status"
   },
+  partiallyReturned: {
+    defaultMessage: "Partially returned",
+    description: "order status"
+  },
   readyToCapture: {
     defaultMessage: "Ready to capture",
     description: "order status"
   },
   readyToFulfill: {
     defaultMessage: "Ready to fulfill",
+    description: "order status"
+  },
+  returned: {
+    defaultMessage: "Returned",
     description: "order status"
   },
   unconfirmed: {
@@ -187,6 +195,16 @@ export const transformOrderStatus = (
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
+        status: StatusType.NEUTRAL
+      };
+    case OrderStatus.PARTIALLY_RETURNED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
+        status: StatusType.NEUTRAL
+      };
+    case OrderStatus.RETURNED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.returned),
         status: StatusType.NEUTRAL
       };
   }
