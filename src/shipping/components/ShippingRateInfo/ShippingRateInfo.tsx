@@ -108,7 +108,6 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             name="maxDays"
             value={data.maxDays}
             onChange={onChange}
-            required
           />
         </div>
       </CardContent>
