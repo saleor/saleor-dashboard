@@ -140,7 +140,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
-  const numberOfColumns = 3 + settings.columns.length;
+  const numberOfColumns = 2 + settings.columns.length;
 
   const getProductPrice = product => {
     const priceRangeUndiscounted = product?.pricing?.priceRangeUndiscounted;
