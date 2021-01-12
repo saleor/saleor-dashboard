@@ -178,6 +178,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleUpdate = async (data: AttributePageFormData) => {
     const input = {
       ...data,
+      entityType: undefined,
       inputType: undefined,
       metadata: undefined,
       privateMetadata: undefined,
