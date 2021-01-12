@@ -1,6 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
+import { mergeAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -21,9 +23,11 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import {
   ChannelProps,
   FetchMoreProps,
@@ -46,7 +50,10 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ProductUpdateForm from "./form";
+import ProductUpdateForm, {
+  ProductUpdateData,
+  ProductUpdateHandlers
+} from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   defaultWeightUnit: string;
@@ -69,8 +76,14 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
+  referencePages: SearchPages_search_edges_node[];
+  assignReferencesAttributeId?: string;
+  fetchMoreReferencePages?: FetchMoreProps;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  fetchReferencePages?: (data: string) => void;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  onCloseDialog: () => void;
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
@@ -123,6 +136,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   variants,
   warehouses,
   taxTypes,
+  referencePages,
   onBack,
   onDelete,
   onImageDelete,
@@ -144,7 +158,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   selectedChannelId,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferencePages,
+  fetchMoreReferencePages,
+  onCloseDialog
 }) => {
   const intl = useIntl();
 
@@ -169,6 +188,24 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductUpdateData,
+    handlers: ProductUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
+
   return (
     <ProductUpdateForm
       onSubmit={onSubmit}
@@ -184,6 +221,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       warehouses={warehouses}
       currentChannels={currentChannels}
       hasVariants={hasVariants}
+      referencePages={referencePages}
     >
       {({
         change,
@@ -227,6 +265,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
                     onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
                   />
                 )}
                 <CardSpacer />
@@ -362,6 +402,28 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)
               }
             />
+            {canOpenAssignReferencesAttributeDialog && (
+              <AssignAttributeValueDialog
+                attributeValues={getAttributeValuesFromReferences(
+                  assignReferencesAttributeId,
+                  data.attributes,
+                  referencePages
+                )}
+                hasMore={fetchMoreReferencePages?.hasMore}
+                open={canOpenAssignReferencesAttributeDialog}
+                onFetch={fetchReferencePages}
+                onFetchMore={fetchMoreReferencePages?.onFetchMore}
+                loading={fetchMoreReferencePages?.loading}
+                onClose={onCloseDialog}
+                onSubmit={attributeValues =>
+                  handleAssignReferenceAttribute(
+                    attributeValues,
+                    data,
+                    handlers
+                  )
+                }
+              />
+            )}
           </Container>
         </>
       )}

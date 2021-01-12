@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import {
   AttributeInput,
@@ -16,13 +17,13 @@ import useFormset, {
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getAttributeInputFromProductType,
-  getAttributesDisplayData,
   ProductType
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
   createProductTypeSelectHandler
@@ -31,6 +32,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -67,7 +69,7 @@ export interface ProductCreateData extends ProductCreateFormData {
   stocks: ProductStockInput[];
 }
 
-interface ProductCreateHandlers
+export interface ProductCreateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"
@@ -88,6 +90,7 @@ interface ProductCreateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
@@ -117,6 +120,7 @@ export interface UseProductCreateFormOpts
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
   productTypeChoiceList: SearchProductTypes_search_edges_node[];
+  referencePages: SearchPages_search_edges_node[];
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
@@ -209,6 +213,10 @@ function useProductCreateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -262,7 +270,8 @@ function useProductCreateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current,
@@ -299,6 +308,7 @@ function useProductCreateForm(
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectProductType: handleProductTypeSelect,

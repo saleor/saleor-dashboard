@@ -1517,6 +1517,18 @@
   "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
     "string": "Search Attributes"
   },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_header": {
+    "context": "dialog header",
+    "string": "Assign Attribute Value"
+  },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_searchLabel": {
+    "context": "label",
+    "string": "Search Attribute Value"
+  },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_searchPlaceholder": {
+    "context": "placeholder",
+    "string": "Search by value name, etc..."
+  },
   "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
     "string": "Assign Category"

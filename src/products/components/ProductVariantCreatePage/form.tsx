@@ -1,3 +1,4 @@
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -7,12 +8,10 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
-import {
-  getAttributesDisplayData,
-  getVariantAttributeInputFromProduct
-} from "@saleor/products/utils/data";
+import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import {
   createAttributeFileChangeHandler,
+  createAttributeReferenceChangeHandler,
   getChannelsInput
 } from "@saleor/products/utils/handlers";
 import {
@@ -23,6 +22,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -44,9 +44,10 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 export interface UseProductVariantCreateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelPriceData[];
+  referencePages: SearchPages_search_edges_node[];
 }
 
-interface ProductVariantCreateHandlers
+export interface ProductVariantCreateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"
@@ -54,6 +55,7 @@ interface ProductVariantCreateHandlers
       | "changeChannels",
       FormsetChange
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
@@ -118,6 +120,10 @@ function useProductVariantCreateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -157,7 +163,8 @@ function useProductVariantCreateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
@@ -178,7 +185,8 @@ function useProductVariantCreateForm(
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
-      selectAttributeMultiple: handleAttributeMultiChange
+      selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged: changed,
     submit

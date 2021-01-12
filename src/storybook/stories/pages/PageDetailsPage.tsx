@@ -12,10 +12,13 @@ import Decorator from "../../Decorator";
 const props: PageDetailsPageProps = {
   errors: [],
   loading: false,
+  onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
+  onCloseDialog: () => undefined,
   onRemove: () => undefined,
   onSubmit: () => undefined,
   page,
+  referencePages: [],
   saveButtonBarState: "default"
 };
 
