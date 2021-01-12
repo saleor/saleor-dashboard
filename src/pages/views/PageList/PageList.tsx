@@ -116,7 +116,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 settings={settings}
                 pages={maybe(() => data.pages.edges.map(edge => edge.node))}
                 pageInfo={pageInfo}
-                onAdd={() => navigate(pageCreateUrl)}
+                onAdd={() => navigate(pageCreateUrl())}
                 onBack={() => navigate(configurationMenuUrl)}
                 onNextPage={loadNextPage}
                 onPreviousPage={loadPreviousPage}

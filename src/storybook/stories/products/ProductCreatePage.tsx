@@ -45,6 +45,9 @@ storiesOf("Views / Products / Create product", module)
       onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
+      referencePages={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ))
   .add("When loading", () => (
@@ -73,6 +76,9 @@ storiesOf("Views / Products / Create product", module)
       onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
+      referencePages={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ))
   .add("form errors", () => (
@@ -118,5 +124,8 @@ storiesOf("Views / Products / Create product", module)
       onWarehouseConfigure={() => undefined}
       taxTypes={taxTypes}
       weightUnit="kg"
+      referencePages={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ));

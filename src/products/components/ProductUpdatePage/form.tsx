@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -14,7 +15,6 @@ import useFormset, {
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
-  getAttributesDisplayData,
   getProductUpdatePageFormData,
   getStockInputFromProduct
 } from "@saleor/products/utils/data";
@@ -22,6 +22,7 @@ import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
@@ -29,6 +30,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -85,7 +87,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   removeStocks: string[];
 }
 
-interface ProductUpdateHandlers
+export interface ProductUpdateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"
@@ -105,6 +107,7 @@ interface ProductUpdateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
@@ -134,6 +137,7 @@ export interface UseProductUpdateFormOpts
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
   hasVariants: boolean;
+  referencePages: SearchPages_search_edges_node[];
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -219,6 +223,10 @@ function useProductUpdateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -264,7 +272,8 @@ function useProductUpdateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages
     ),
     description: description.current,
     stocks: stocks.data
@@ -316,6 +325,7 @@ function useProductUpdateForm(
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect

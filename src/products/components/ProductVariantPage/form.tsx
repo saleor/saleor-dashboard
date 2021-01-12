@@ -1,3 +1,4 @@
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -9,11 +10,11 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import {
   getAttributeInputFromVariant,
-  getAttributesDisplayData,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import {
   createAttributeFileChangeHandler,
+  createAttributeReferenceChangeHandler,
   getChannelsInput
 } from "@saleor/products/utils/handlers";
 import {
@@ -24,6 +25,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -57,9 +59,10 @@ export interface ProductVariantUpdateSubmitData
 export interface UseProductVariantUpdateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelPriceData[];
+  referencePages: SearchPages_search_edges_node[];
 }
 
-interface ProductVariantUpdateHandlers
+export interface ProductVariantUpdateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"
@@ -67,6 +70,7 @@ interface ProductVariantUpdateHandlers
       | "changeChannels",
       FormsetChange
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
@@ -133,6 +137,10 @@ function useProductVariantUpdateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -186,7 +194,8 @@ function useProductVariantUpdateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages
     ),
     channelListings: channels.data,
     stocks: stocks.data
@@ -226,7 +235,8 @@ function useProductVariantUpdateForm(
       deleteStock: handleStockDelete,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
-      selectAttributeMultiple: handleAttributeMultiChange
+      selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged: changed,
     submit

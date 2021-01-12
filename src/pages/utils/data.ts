@@ -1,5 +1,5 @@
 import { AttributeInput } from "@saleor/components/Attributes";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 
 import {
   PageDetails_page,
@@ -37,22 +37,17 @@ export function getAttributeInputFromPageType(
   }));
 }
 
-export const getAttributesDisplayData = (
+export const getAttributeValuesFromReferences = (
+  attributeId: string,
   attributes: AttributeInput[],
-  attributesWithNewFileValue: FormsetData<null, File>
-) =>
-  attributes.map(attribute => {
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
+  referencePages: SearchPages_search_edges_node[]
+) => {
+  const attribute = attributes?.find(attribute => attribute.id === attributeId);
 
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
-    return attribute;
-  });
+  return (
+    referencePages?.filter(
+      value =>
+        !attribute?.value?.some(selectedValue => selectedValue === value.id)
+    ) || []
+  );
+};

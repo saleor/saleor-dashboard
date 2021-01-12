@@ -20,9 +20,9 @@ const useStyles = makeStyles(
   }
 );
 
-interface SortableChipsFieldValueType {
+export interface SortableChipsFieldValueType {
   label: string;
-  value: any;
+  value: string;
 }
 
 export interface SortableChipsFieldProps extends SortableContainerProps {

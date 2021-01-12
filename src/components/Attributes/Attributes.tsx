@@ -16,6 +16,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { ReorderAction } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -30,7 +31,9 @@ import {
 } from "react-intl";
 
 import FileUploadField, { FileChoiceType } from "../FileUploadField";
-import SortableChipsField from "../SortableChipsField";
+import SortableChipsField, {
+  SortableChipsFieldValueType
+} from "../SortableChipsField";
 import BasicAttributeRow from "./BasicAttributeRow";
 import ExtendedAttributeRow from "./ExtendedAttributeRow";
 import { VariantAttributeScope } from "./types";
@@ -41,6 +44,7 @@ export interface AttributeInputData {
   isRequired: boolean;
   values: AttributeValueFragment[];
   selectedValues?: AttributeValueFragment[];
+  references?: SearchPages_search_edges_node[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
@@ -55,8 +59,8 @@ export interface AttributesProps {
   onChange: FormsetChange;
   onMultiChange: FormsetChange;
   onFileChange: FormsetChange;
-  onReferencesChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
-  onReferencesChangeClick?: () => void; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onReferencesRemove?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onReferencesAddClick?: (attribute: AttributeInput) => void; // TODO: temporairy optional, should be changed to required, after all pages implement it
   onReferencesReorder?: ReorderAction; // TODO: temporairy optional, should be changed to required, after all pages implement it
 }
 
@@ -129,6 +133,10 @@ function getMultiChoices(
 function getMultiDisplayValue(
   attribute: AttributeInput
 ): MultiAutocompleteChoiceType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
   return attribute.value.map(attributeValue => {
     const definedAttributeValue = attribute.data.values.find(
       definedValue => definedValue.slug === attributeValue
@@ -137,6 +145,31 @@ function getMultiDisplayValue(
       return {
         label: definedAttributeValue.name,
         value: definedAttributeValue.slug
+      };
+    }
+
+    return {
+      label: attributeValue,
+      value: attributeValue
+    };
+  });
+}
+
+function getReferenceDisplayValue(
+  attribute: AttributeInput
+): SortableChipsFieldValueType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
+  return attribute.value.map(attributeValue => {
+    const definedAttributeValue = attribute.data.references?.find(
+      reference => reference.id === attributeValue
+    );
+    if (!!definedAttributeValue) {
+      return {
+        label: definedAttributeValue.title,
+        value: definedAttributeValue.id
       };
     }
 
@@ -157,7 +190,7 @@ function getSingleChoices(
 }
 
 function getFileChoice(attribute: AttributeInput): FileChoiceType {
-  const attributeValue = attribute.value[0];
+  const attributeValue = attribute.value?.length > 0 && attribute.value[0];
 
   const definedAttributeValue = attribute.data.values.find(
     definedValue => definedValue.slug === attributeValue
@@ -217,8 +250,8 @@ const Attributes: React.FC<AttributesProps> = ({
   onChange,
   onMultiChange,
   onFileChange,
-  onReferencesChange,
-  onReferencesChangeClick,
+  onReferencesRemove,
+  onReferencesAddClick,
   onReferencesReorder
 }) => {
   const intl = useIntl();
@@ -272,13 +305,13 @@ const Attributes: React.FC<AttributesProps> = ({
                         defaultMessage: "Assign references",
                         description: "button label"
                       })}
-                      onSelect={onReferencesChangeClick}
+                      onSelect={() => onReferencesAddClick(attribute)}
                       disabled={disabled}
                     >
                       <SortableChipsField
-                        values={getMultiDisplayValue(attribute)}
+                        values={getReferenceDisplayValue(attribute)}
                         onValueDelete={value =>
-                          onReferencesChange(
+                          onReferencesRemove(
                             attribute.id,
                             attribute.value?.filter(id => id !== value)
                           )

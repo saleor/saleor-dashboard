@@ -1,6 +1,9 @@
+import { mergeAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, {
+  AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -12,8 +15,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { ReorderAction } from "@saleor/types";
+import { FetchMoreProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -22,7 +27,10 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
-import ProductVariantCreateForm, { ProductVariantCreateData } from "./form";
+import ProductVariantCreateForm, {
+  ProductVariantCreateData,
+  ProductVariantCreateHandlers
+} from "./form";
 
 const messages = defineMessages({
   attributesHeader: {
@@ -53,11 +61,17 @@ interface ProductVariantCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;
+  referencePages: SearchPages_search_edges_node[];
   onBack: () => void;
   onSubmit: (data: ProductVariantCreateData) => void;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: ReorderAction;
   onWarehouseConfigure: () => void;
+  assignReferencesAttributeId?: string;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  onCloseDialog: () => void;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -70,13 +84,37 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   saveButtonBarState,
   warehouses,
   weightUnit,
+  referencePages,
   onBack,
   onSubmit,
   onVariantClick,
   onVariantReorder,
-  onWarehouseConfigure
+  onWarehouseConfigure,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferencePages,
+  fetchMoreReferencePages,
+  onCloseDialog
 }) => {
   const intl = useIntl();
+
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductVariantCreateData,
+    handlers: ProductVariantCreateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <ProductVariantCreateForm
@@ -84,6 +122,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       onSubmit={onSubmit}
       warehouses={warehouses}
       currentChannels={channels}
+      referencePages={referencePages}
     >
       {({
         change,
@@ -138,6 +177,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={handlers.selectAttribute}
                 onMultiChange={handlers.selectAttributeMultiple}
                 onFileChange={handlers.selectAttributeFile}
+                onReferencesRemove={handlers.selectAttributeReference}
+                onReferencesAddClick={onAssignReferencesClick}
               />
               <CardSpacer />
               <ProductShipping
@@ -187,6 +228,24 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             onCancel={onBack}
             onSave={submit}
           />
+          {canOpenAssignReferencesAttributeDialog && (
+            <AssignAttributeValueDialog
+              attributeValues={getAttributeValuesFromReferences(
+                assignReferencesAttributeId,
+                data.attributes,
+                referencePages
+              )}
+              hasMore={fetchMoreReferencePages?.hasMore}
+              open={canOpenAssignReferencesAttributeDialog}
+              onFetch={fetchReferencePages}
+              onFetchMore={fetchMoreReferencePages?.onFetchMore}
+              loading={fetchMoreReferencePages?.loading}
+              onClose={onCloseDialog}
+              onSubmit={attributeValues =>
+                handleAssignReferenceAttribute(attributeValues, data, handlers)
+              }
+            />
+          )}
         </Container>
       )}
     </ProductVariantCreateForm>
