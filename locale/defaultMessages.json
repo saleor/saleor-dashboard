@@ -5476,8 +5476,8 @@
   "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_1560416099": {
     "string": "Shipping zone name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3374163063": {
-    "string": "Description"
+  "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3448904855": {
+    "string": "Description (optional)"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneInfo_dot_3877274856": {
     "context": "character limit",
