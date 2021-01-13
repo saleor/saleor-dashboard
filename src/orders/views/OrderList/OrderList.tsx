@@ -15,6 +15,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -72,6 +73,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { channel, availableChannels } = useAppChannel();
 
   const noChannel = !channel && typeof channel !== "undefined";
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels)
+    : null;
 
   const tabs = getFilterTabs();
 
@@ -132,7 +136,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.orders.pageInfo),
+    data?.orders?.pageInfo,
     paginationState,
     params
   );
@@ -145,7 +149,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         settings={settings}
         currentTab={currentTab}
         disabled={loading}
-        filterOpts={getFilterOpts(params)}
+        filterOpts={getFilterOpts(params, channelOpts)}
         orders={maybe(() => data.orders.edges.map(edge => edge.node))}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
@@ -180,10 +184,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       />
       {!noChannel && (
         <ChannelPickerDialog
-          channelsChoices={availableChannels.map(channel => ({
-            label: channel.name,
-            value: channel.id
-          }))}
+          channelsChoices={mapNodeToChoice(availableChannels)}
           confirmButtonState="success"
           defaultChoice={channel.id}
           open={params.action === "create-order"}

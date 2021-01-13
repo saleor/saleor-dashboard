@@ -1,4 +1,5 @@
 import Decorator from "@saleor/storybook/Decorator";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -8,10 +9,7 @@ import ChannelDeleteDialog, {
 } from "./ChannelDeleteDialog";
 
 const props: ChannelDeleteDialogProps = {
-  channelsChoices: channelsList.map(channel => ({
-    label: channel.name,
-    value: channel.id
-  })),
+  channelsChoices: mapNodeToChoice(channelsList),
   hasOrders: true,
   confirmButtonState: "default",
   onBack: () => undefined,

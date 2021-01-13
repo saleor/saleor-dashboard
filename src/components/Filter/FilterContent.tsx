@@ -157,6 +157,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
         </div>
         <Hr />
         {filters
+          .filter(filter => !!filter)
           .sort((a, b) => (a.name > b.name ? 1 : -1))
           .map(filterField => (
             <React.Fragment key={filterField.name}>

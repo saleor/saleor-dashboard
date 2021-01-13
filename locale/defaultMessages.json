@@ -3550,6 +3550,10 @@
     "context": "tab name",
     "string": "All Orders"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_channel": {
+    "context": "order",
+    "string": "Channel"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
     "string": "Customer"

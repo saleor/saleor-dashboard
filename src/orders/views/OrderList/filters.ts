@@ -1,4 +1,5 @@
-import { findInEnum, findValueInEnum, maybe } from "@saleor/misc";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { findInEnum, findValueInEnum } from "@saleor/misc";
 import {
   OrderFilterKeys,
   OrderListFilterOpts
@@ -16,48 +17,49 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
+  getMultipleValueQueryParam,
   getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
+  OrderListUrlFiltersDictWithMultipleValues,
   OrderListUrlFiltersEnum,
-  OrderListUrlFiltersWithMultipleValuesEnum,
+  OrderListUrlFiltersWithMultipleValues,
   OrderListUrlQueryParams
 } from "../../urls";
 
 export const ORDER_FILTERS_KEY = "orderFilters";
 
 export function getFilterOpts(
-  params: OrderListUrlFilters
+  params: OrderListUrlFilters,
+  channels: MultiAutocompleteChoiceType[]
 ): OrderListFilterOpts {
   return {
+    channel: channels
+      ? {
+          active: params?.channel !== undefined,
+          value: channels
+        }
+      : null,
     created: {
-      active: maybe(
-        () =>
-          [params.createdFrom, params.createdTo].some(
-            field => field !== undefined
-          ),
-        false
+      active: [params?.createdFrom, params?.createdTo].some(
+        field => field !== undefined
       ),
       value: {
-        max: maybe(() => params.createdTo, ""),
-        min: maybe(() => params.createdFrom, "")
+        max: params?.createdTo || "",
+        min: params?.createdFrom || ""
       }
     },
     customer: {
-      active: !!maybe(() => params.customer),
-      value: params.customer
+      active: !!params?.customer,
+      value: params?.customer
     },
     status: {
-      active: maybe(() => params.status !== undefined, false),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.status.map(status =>
-              findValueInEnum(status, OrderStatusFilter)
-            )
-          ),
-        []
+      active: params?.status !== undefined,
+      value: dedupeFilter(
+        params?.status?.map(status =>
+          findValueInEnum(status, OrderStatusFilter)
+        )
       )
     }
   };
@@ -67,15 +69,14 @@ export function getFilterVariables(
   params: OrderListUrlFilters
 ): OrderFilterInput {
   return {
+    channels: (params.channel as unknown) as string[],
     created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo
     }),
     customer: params.customer,
     search: params.query,
-    status: maybe(() =>
-      params.status.map(status => findInEnum(status, OrderStatusFilter))
-    )
+    status: params?.status?.map(status => findInEnum(status, OrderStatusFilter))
   };
 }
 
@@ -95,8 +96,14 @@ export function getFilterQueryParam(
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(
         filter,
-        OrderListUrlFiltersWithMultipleValuesEnum.status,
+        OrderListUrlFiltersWithMultipleValues.status,
         OrderStatusFilter
+      );
+
+    case OrderFilterKeys.channel:
+      return getMultipleValueQueryParam(
+        filter,
+        OrderListUrlFiltersDictWithMultipleValues.channel
       );
 
     case OrderFilterKeys.customer:
@@ -115,5 +122,5 @@ export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   OrderListUrlFilters
 >({
   ...OrderListUrlFiltersEnum,
-  ...OrderListUrlFiltersWithMultipleValuesEnum
+  ...OrderListUrlFiltersWithMultipleValues
 });
