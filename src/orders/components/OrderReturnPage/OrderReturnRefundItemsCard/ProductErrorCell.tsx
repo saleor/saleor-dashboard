@@ -1,6 +1,5 @@
 import { makeStyles, TableCell, Typography } from "@material-ui/core";
 import ErrorExclamationCircleIcon from "@saleor/icons/ErrorExclamationCircle";
-import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
 import React, { useState } from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
