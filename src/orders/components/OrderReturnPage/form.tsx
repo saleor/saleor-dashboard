@@ -119,7 +119,7 @@ function useOrderReturnForm(
     }
 
     const orderLinesItems = getOrderUnfulfilledLines(order).map(
-      getParsedLineData({ initialValue: true })
+      getParsedLineData({ initialValue: false })
     );
 
     const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
@@ -131,7 +131,7 @@ function useOrderReturnForm(
     const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
       FulfillmentStatus.FULFILLED,
-      { initialValue: true, isFulfillment: true }
+      { initialValue: false, isFulfillment: true }
     );
 
     return [
@@ -172,7 +172,10 @@ function useOrderReturnForm(
           return item;
         }
 
-        return getLineItem(line, { initialValue: line.quantity });
+        return getLineItem(line, {
+          initialValue: line.quantity,
+          isRefunded: item.data.isRefunded
+        });
       }
     );
 

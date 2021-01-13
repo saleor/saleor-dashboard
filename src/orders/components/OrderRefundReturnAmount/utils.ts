@@ -1,3 +1,4 @@
+import { IMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
@@ -27,19 +28,50 @@ export const getMiscellaneousAmountValues = (
   };
 };
 
+const getCalculatedTotalAmount = ({
+  shipmentCost,
+  shipmentCosts,
+  allLinesSum,
+  maxRefund
+}: {
+  shipmentCost: IMoney;
+  shipmentCosts: IMoney;
+  allLinesSum: number;
+  previouslyRefunded: IMoney;
+  maxRefund: IMoney;
+}) => {
+  if (maxRefund?.amount === 0) {
+    return 0;
+  }
+
+  const shipmentCostValue = shipmentCost ? shipmentCost.amount : 0;
+
+  const calculatedTotalAmount = shipmentCosts
+    ? allLinesSum + shipmentCostValue
+    : allLinesSum;
+
+  return calculatedTotalAmount;
+};
+
+const getAuthorizedAmount = (order: OrderRefundData_order) =>
+  order?.total?.gross;
+
+const getShipmentCost = (order: OrderRefundData_order) =>
+  getAuthorizedAmount(order)?.currency &&
+  (order?.shippingPrice?.gross || {
+    amount: 0,
+    currency: getAuthorizedAmount(order)?.currency
+  });
+
 export const getProductsAmountValues = (
   order: OrderRefundData_order,
   fulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
   shipmentCosts
 ): OrderRefundAmountValuesProps => {
-  const authorizedAmount = order?.total?.gross;
-  const shipmentCost =
-    authorizedAmount?.currency &&
-    (order?.shippingPrice?.gross || {
-      amount: 0,
-      currency: authorizedAmount?.currency
-    });
+  const authorizedAmount = getAuthorizedAmount(order);
+  const shipmentCost = getShipmentCost(order);
+
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
   const maxRefund = order?.totalCaptured;
   const refundedLinesSum = getRefundedLinesPriceSum(
@@ -51,9 +83,13 @@ export const getProductsAmountValues = (
     fulfilledItemsQuantities as FormsetData<null, string>
   );
   const allLinesSum = refundedLinesSum + allFulfillmentLinesSum;
-  const calculatedTotalAmount = shipmentCosts
-    ? allLinesSum + shipmentCost?.amount
-    : allLinesSum;
+  const calculatedTotalAmount = getCalculatedTotalAmount({
+    allLinesSum,
+    maxRefund,
+    previouslyRefunded,
+    shipmentCost,
+    shipmentCosts
+  });
 
   const selectedProductsValue = authorizedAmount?.currency && {
     amount: allLinesSum,
@@ -80,11 +116,35 @@ export const getProductsAmountValues = (
   };
 };
 
+const getReturnTotalAmount = ({
+  selectedProductsValue,
+  refundShipmentCosts,
+  order
+}: {
+  order: OrderDetails_order;
+  selectedProductsValue: IMoney;
+  refundShipmentCosts: boolean;
+}) => {
+  if (refundShipmentCosts) {
+    const totalValue =
+      selectedProductsValue?.amount + getShipmentCost(order)?.amount;
+    return totalValue || 0;
+  }
+
+  return selectedProductsValue?.amount || 0;
+};
+
 export const getReturnProductsAmountValues = (
   order: OrderDetails_order,
   formData: OrderReturnFormData
 ) => {
-  const authorizedAmount = order?.total?.gross;
+  const authorizedAmount = getAuthorizedAmount(order);
+
+  const {
+    fulfiledItemsQuantities,
+    unfulfiledItemsQuantities,
+    refundShipmentCosts
+  } = formData;
 
   const replacedProductsValue = authorizedAmount?.currency && {
     amount: getReplacedProductsAmount(order, formData),
@@ -96,11 +156,14 @@ export const getReturnProductsAmountValues = (
     currency: authorizedAmount.currency
   };
 
-  const {
-    fulfiledItemsQuantities,
-    unfulfiledItemsQuantities,
-    refundShipmentCosts
-  } = formData;
+  const refundTotalAmount = authorizedAmount?.currency && {
+    amount: getReturnTotalAmount({
+      order,
+      refundShipmentCosts,
+      selectedProductsValue
+    }),
+    currency: authorizedAmount.currency
+  };
 
   return {
     ...getProductsAmountValues(
@@ -109,6 +172,7 @@ export const getReturnProductsAmountValues = (
       unfulfiledItemsQuantities,
       refundShipmentCosts
     ),
+    refundTotalAmount,
     replacedProductsValue,
     selectedProductsValue
   };

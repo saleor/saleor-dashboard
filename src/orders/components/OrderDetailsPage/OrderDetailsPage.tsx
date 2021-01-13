@@ -32,6 +32,7 @@ import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
+import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -168,24 +169,22 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     return disabled;
   };
 
-  const selectCardMenuItems = () => {
-    const returnOrderItem = {
-      label: intl.formatMessage(messages.returnOrder),
-      onSelect: onOrderReturn
-    };
-
-    if (canCancel) {
-      return [
-        {
-          label: intl.formatMessage(messages.cancelOrder),
-          onSelect: onOrderCancel
-        },
-        returnOrderItem
-      ];
+  const selectCardMenuItems = filteredConditionalItems([
+    {
+      item: {
+        label: intl.formatMessage(messages.cancelOrder),
+        onSelect: onOrderCancel
+      },
+      shouldExist: canCancel
+    },
+    {
+      item: {
+        label: intl.formatMessage(messages.returnOrder),
+        onSelect: onOrderReturn
+      },
+      shouldExist: hasAnyItemsReplaceable(order)
     }
-
-    return [returnOrderItem];
-  };
+  ]);
 
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
@@ -202,7 +201,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
             >
-              <CardMenu menuItems={selectCardMenuItems()} />
+              <CardMenu menuItems={selectCardMenuItems} />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
