@@ -96,17 +96,19 @@ export function createFilterStructure(
       ),
       active: opts.status.active
     },
-    opts?.channel?.value.length
-      ? {
-          ...createOptionsField(
-            OrderFilterKeys.channel,
-            intl.formatMessage(messages.channel),
-            [],
-            true,
-            opts.channel.value
-          ),
-          active: opts.channel.active
-        }
-      : null
+    ...(opts?.channel?.value.length
+      ? [
+          {
+            ...createOptionsField(
+              OrderFilterKeys.channel,
+              intl.formatMessage(messages.channel),
+              [],
+              true,
+              opts.channel.value
+            ),
+            active: opts.channel.active
+          }
+        ]
+      : [])
   ];
 }
