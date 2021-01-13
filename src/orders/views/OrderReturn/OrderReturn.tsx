@@ -14,9 +14,14 @@ import { useIntl } from "react-intl";
 import { getParsedData } from "./utils";
 
 export const messages = defineMessages({
-  cannotRefund: {
-    defaultMessage: "Cannot refund some of the items",
-    description: "order return error message when cannot refund"
+  cannotRefundDescription: {
+    defaultMessage:
+      "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
+    description: "order return error description when cannot refund"
+  },
+  cannotRefundTitle: {
+    defaultMessage: "Couldn't refund products",
+    description: "order return error title when cannot refund"
   },
   successAlert: {
     defaultMessage: "Successfully returned products!",
@@ -56,7 +61,8 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         notify({
           autohide: 5000,
           status: "error",
-          text: intl.formatMessage(messages.cannotRefund)
+          text: intl.formatMessage(messages.cannotRefundDescription),
+          title: intl.formatMessage(messages.cannotRefundTitle)
         });
 
         return;
