@@ -142,13 +142,21 @@ const Routes: React.FC = () => {
   } = useAuth();
   const { channel } = useAppChannel(false);
 
+  const channelLoaded = typeof channel !== "undefined";
+
+  const homePageLoaded =
+    channelLoaded &&
+    isAuthenticated &&
+    !tokenAuthLoading &&
+    !tokenVerifyLoading;
+
+  const homePageLoading =
+    (isAuthenticated && !channelLoaded) || (hasToken && tokenVerifyLoading);
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {channel &&
-      isAuthenticated &&
-      !tokenAuthLoading &&
-      !tokenVerifyLoading ? (
+      {homePageLoaded ? (
         <AppLayout>
           <ErrorBoundary
             onError={() =>
@@ -284,7 +292,7 @@ const Routes: React.FC = () => {
             </Switch>
           </ErrorBoundary>
         </AppLayout>
-      ) : (isAuthenticated && !channel) || (hasToken && tokenVerifyLoading) ? (
+      ) : homePageLoading ? (
         <LoginLoading />
       ) : (
         <Auth />

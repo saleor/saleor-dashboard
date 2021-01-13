@@ -127,6 +127,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   });
   const { availableChannels, channel } = useAppChannel();
 
+  const noChannel = !channel && typeof channel !== "undefined";
+
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
@@ -222,8 +224,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const filter = getFilterVariables(params, channel.slug);
-  const sort = getSortQueryVariables(params, channel.slug);
+  const filter = !noChannel ? getFilterVariables(params, channel.slug) : null;
+  const sort = !noChannel ? getSortQueryVariables(params, channel.slug) : null;
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
@@ -302,7 +304,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           () => attributes.data.availableInGrid.edges.map(edge => edge.node),
           []
         )}
-        currencySymbol={channel?.currencyCode}
+        currencySymbol={channel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
@@ -380,7 +382,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
         channelsCount={availableChannels?.length}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
       />
       <ActionDialog
         open={params.action === "delete"}

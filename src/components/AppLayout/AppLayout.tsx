@@ -215,12 +215,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
                           />
-                          <AppChannelSelect
-                            channels={availableChannels}
-                            disabled={!isPickerActive}
-                            selectedChannelId={channel.id}
-                            onChannelSelect={setChannel}
-                          />
+                          {channel && (
+                            <AppChannelSelect
+                              channels={availableChannels}
+                              disabled={!isPickerActive}
+                              selectedChannelId={channel.id}
+                              onChannelSelect={setChannel}
+                            />
+                          )}
                           <UserChip
                             isDarkThemeEnabled={isDark}
                             user={user}

@@ -71,6 +71,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const { channel, availableChannels } = useAppChannel();
 
+  const noChannel = !channel && typeof channel !== "undefined";
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -176,23 +178,25 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onSubmit={handleFilterTabDelete}
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
       />
-      <ChannelPickerDialog
-        channelsChoices={availableChannels.map(channel => ({
-          label: channel.name,
-          value: channel.id
-        }))}
-        confirmButtonState="success"
-        defaultChoice={channel.id}
-        open={params.action === "create-order"}
-        onClose={closeModal}
-        onConfirm={channel =>
-          createOrder({
-            variables: {
-              input: { channel }
-            }
-          })
-        }
-      />
+      {!noChannel && (
+        <ChannelPickerDialog
+          channelsChoices={availableChannels.map(channel => ({
+            label: channel.name,
+            value: channel.id
+          }))}
+          confirmButtonState="success"
+          defaultChoice={channel.id}
+          open={params.action === "create-order"}
+          onClose={closeModal}
+          onConfirm={channel =>
+            createOrder({
+              variables: {
+                input: { channel }
+              }
+            })
+          }
+        />
+      )}
     </>
   );
 };

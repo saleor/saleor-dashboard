@@ -423,7 +423,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />
