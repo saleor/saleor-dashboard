@@ -8,8 +8,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TextField,
-  Typography
+  TextField
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
@@ -21,7 +20,7 @@ import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
@@ -106,8 +105,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsSelections,
   itemsQuantities,
   fulfilmentId,
-  order,
-  errors
+  order
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -162,34 +160,42 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
         <TableBody>
           {renderCollection(
             lines,
-            ({
-              quantity,
-              quantityFulfilled,
-              id,
-              thumbnail,
-              unitPrice,
-              productName,
-              variant
-            }) => {
+            line => {
+              const {
+                quantity,
+                quantityFulfilled,
+                id,
+                thumbnail,
+                unitPrice,
+                productName,
+                variant
+              } = line;
               const isValueError = false;
               const isRefunded = itemsQuantities.find(getById(id)).data
                 .isRefunded;
               const isReplacable = !!variant && !isRefunded;
+              const isReturnable = !!variant;
               const lineQuantity = fulfilmentId
                 ? quantity
                 : quantity - quantityFulfilled;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
+              const anyLineWithoutVariant = lines.some(
+                ({ variant }) => !variant
+              );
+              const productNameCellWidth = anyLineWithoutVariant
+                ? "30%"
+                : "50%";
 
               return (
                 <TableRow key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
-                    style={{ width: "30%" }}
+                    style={{ width: productNameCellWidth }}
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
-                  <ProductErrorCell lineId={id} errors={errors} />
+                  <ProductErrorCell hasVariant={isReturnable} />
                   <TableCell align="right">
                     <Money
                       money={{
@@ -199,32 +205,34 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     />
                   </TableCell>
                   <TableCell align="right">
-                    <TextField
-                      type="number"
-                      inputProps={{
-                        className: classes.quantityInnerInput,
-                        "data-test": "quantityInput",
-                        "data-test-id": id,
-                        max: lineQuantity.toString(),
-                        min: 0,
-                        style: { textAlign: "right" }
-                      }}
-                      fullWidth
-                      value={currentQuantity}
-                      onChange={handleChangeQuantity(id)}
-                      InputProps={{
-                        endAdornment: lineQuantity && (
-                          <div className={classes.remainingQuantity}>
-                            / {lineQuantity}
-                          </div>
-                        )
-                      }}
-                      error={isValueError}
-                      helperText={
-                        isValueError &&
-                        intl.formatMessage(messages.improperValue)
-                      }
-                    />
+                    {isReturnable && (
+                      <TextField
+                        type="number"
+                        inputProps={{
+                          className: classes.quantityInnerInput,
+                          "data-test": "quantityInput",
+                          "data-test-id": id,
+                          max: lineQuantity.toString(),
+                          min: 0,
+                          style: { textAlign: "right" }
+                        }}
+                        fullWidth
+                        value={currentQuantity}
+                        onChange={handleChangeQuantity(id)}
+                        InputProps={{
+                          endAdornment: lineQuantity && (
+                            <div className={classes.remainingQuantity}>
+                              / {lineQuantity}
+                            </div>
+                          )
+                        }}
+                        error={isValueError}
+                        helperText={
+                          isValueError &&
+                          intl.formatMessage(messages.improperValue)
+                        }
+                      />
+                    )}
                   </TableCell>
                   <TableCell align="center">
                     {isReplacable && (

@@ -1,6 +1,6 @@
 import { makeStyles, TableCell, Typography } from "@material-ui/core";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import ErrorExclamationCircleIcon from "@saleor/icons/ErrorExclamationCircle";
+import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
 import React, { useState } from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
@@ -53,24 +53,18 @@ const messages = defineMessages({
 });
 
 interface ProductErrorCellProps {
-  lineId: string;
-  errors: OrderErrorFragment[];
+  hasVariant: boolean;
 }
 
-const ProductErrorCell: React.FC<ProductErrorCellProps> = (
-  {
-    //   errors,
-    //   lineId
-  }
-) => {
+const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
-  // replace with proper find from errors
-  const hasProductError = true;
-  const shouldShowErrorBox = showErrorBox && hasProductError;
+  if (hasVariant) {
+    return <TableCell />;
+  }
 
   return (
     <TableCell align="right" className={classes.container}>
@@ -84,7 +78,7 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = (
         </Typography>
         <ErrorExclamationCircleIcon />
       </div>
-      {shouldShowErrorBox && (
+      {showErrorBox && (
         <div className={classes.errorBox}>
           <Typography className={classes.errorText}>
             {intl.formatMessage(messages.description)}
