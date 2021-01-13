@@ -44,8 +44,10 @@ const getCalculatedTotalAmount = ({
     return 0;
   }
 
+  const shipmentCostValue = shipmentCost ? shipmentCost.amount : 0;
+
   const calculatedTotalAmount = shipmentCosts
-    ? allLinesSum + shipmentCost?.amount
+    ? allLinesSum + shipmentCostValue
     : allLinesSum;
 
   return calculatedTotalAmount;
@@ -124,10 +126,12 @@ const getReturnTotalAmount = ({
   refundShipmentCosts: boolean;
 }) => {
   if (refundShipmentCosts) {
-    return selectedProductsValue?.amount + getShipmentCost(order)?.amount;
+    const totalValue =
+      selectedProductsValue?.amount + getShipmentCost(order)?.amount;
+    return totalValue || 0;
   }
 
-  return selectedProductsValue?.amount;
+  return selectedProductsValue?.amount || 0;
 };
 
 export const getReturnProductsAmountValues = (

@@ -169,23 +169,22 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     return disabled;
   };
 
-  const selectCardMenuItems = () =>
-    filteredConditionalItems([
-      {
-        item: {
-          label: intl.formatMessage(messages.cancelOrder),
-          onSelect: onOrderCancel
-        },
-        shouldExist: canCancel
+  const selectCardMenuItems = filteredConditionalItems([
+    {
+      item: {
+        label: intl.formatMessage(messages.cancelOrder),
+        onSelect: onOrderCancel
       },
-      {
-        item: {
-          label: intl.formatMessage(messages.returnOrder),
-          onSelect: onOrderReturn
-        },
-        shouldExist: hasAnyItemsReplaceable(order)
-      }
-    ]);
+      shouldExist: canCancel
+    },
+    {
+      item: {
+        label: intl.formatMessage(messages.returnOrder),
+        onSelect: onOrderReturn
+      },
+      shouldExist: hasAnyItemsReplaceable(order)
+    }
+  ]);
 
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
@@ -202,7 +201,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
             >
-              <CardMenu menuItems={selectCardMenuItems()} />
+              <CardMenu menuItems={selectCardMenuItems} />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
