@@ -3911,6 +3911,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_description": {
+    "context": "product no longer exists error description",
+    "string": "This product is no longer in database so it can’t be replaced, nor returned"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilled": {
     "context": "section header",
     "string": "Fulfilled ({quantity})"
@@ -3934,6 +3938,10 @@
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
     "context": "refunded fulfillment, section header",
     "string": "Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_title": {
+    "context": "product no longer exists error title",
+    "string": "Product no longer exists"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
     "context": "section header",
@@ -4071,7 +4079,15 @@
     "context": "order refunded success message",
     "string": "Refunded Items"
   },
-  "src_dot_orders_dot_views_dot_OrderReturn_dot_3262896749": {
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_cannotRefundDescription": {
+    "context": "order return error description when cannot refund",
+    "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
+  },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_cannotRefundTitle": {
+    "context": "order return error title when cannot refund",
+    "string": "Couldn't refund products"
+  },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_successAlert": {
     "context": "order returned success message",
     "string": "Successfully returned products!"
   },
