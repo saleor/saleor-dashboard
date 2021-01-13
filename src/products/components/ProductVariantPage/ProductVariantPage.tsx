@@ -217,6 +217,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onFileChange={handlers.selectAttributeFile}
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                   <CardSpacer />
                   <Attributes
@@ -236,6 +237,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onFileChange={handlers.selectAttributeFile}
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                   <CardSpacer />
                   <ProductVariantImages

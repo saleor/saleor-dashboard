@@ -1,5 +1,12 @@
 import { OutputData } from "@editorjs/editorjs";
 import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler
+} from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -16,13 +23,8 @@ import {
 } from "@saleor/pages/types/PageDetails";
 import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
-import {
-  createAttributeChangeHandler,
-  createAttributeFileChangeHandler,
-  createAttributeMultiChangeHandler,
-  createAttributeReferenceChangeHandler
-} from "@saleor/products/utils/handlers";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -59,6 +61,7 @@ export interface PageUpdateHandlers {
   selectAttributeMulti: FormsetChange<string>;
   selectAttributeReference: FormsetChange<string[]>;
   selectAttributeFile: FormsetChange<File>;
+  reorderAttributeValue: FormsetChange<ReorderEvent>;
 }
 export interface UsePageUpdateFormResult {
   change: FormChange;
@@ -150,6 +153,11 @@ function usePageForm(
     attributesWithNewFileValue.change,
     triggerChange
   );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
 
   // Need to make it function to always have content.current up to date
   const getData = (): PageData => ({
@@ -190,6 +198,7 @@ function usePageForm(
     handlers: {
       changeContent,
       changeMetadata,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
