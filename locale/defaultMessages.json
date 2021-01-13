@@ -2424,6 +2424,9 @@
   "src_dot_description": {
     "string": "Description"
   },
+  "src_dot_descriptionOptional": {
+    "string": "Description (optional)"
+  },
   "src_dot_discounts": {
     "string": "Discounts"
   },

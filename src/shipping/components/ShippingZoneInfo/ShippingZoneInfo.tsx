@@ -87,7 +87,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           label={
             <div className={classes.labelContainer}>
               <div className={classes.label}>
-                <FormattedMessage {...commonMessages.description} />
+                <FormattedMessage {...commonMessages.descriptionOptional} />
               </div>
               {data.description?.length > 0 && (
                 <span>
