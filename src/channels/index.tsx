@@ -17,9 +17,16 @@ import ChannelCreateComponent from "./views/ChannelCreate";
 import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
-const ChannelDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
-}) => <ChannelDetailsComponent id={decodeURIComponent(match.params.id)} />;
+const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const params = parseQs(location.search.substr(1));
+
+  return (
+    <ChannelDetailsComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));

@@ -81,6 +81,8 @@ export interface ShippingMethodFragment {
   privateMetadata: (ShippingMethodFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodFragment_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodFragment_channelListings[] | null;

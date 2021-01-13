@@ -38,6 +38,15 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
+    channel: {
+      active: false,
+      value: [
+        {
+          label: "Channel PLN",
+          value: "channelId"
+        }
+      ]
+    },
     created: {
       active: false,
       value: {

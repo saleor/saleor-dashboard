@@ -298,7 +298,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               ...(updateChannelsOpts.data
                                 ?.voucherChannelListingUpdate.errors || [])
                             ]}
-                            selectedChannelId={channel.id}
+                            selectedChannelId={channel?.id}
                             pageInfo={pageInfo}
                             onNextPage={loadNextPage}
                             onPreviousPage={loadPreviousPage}

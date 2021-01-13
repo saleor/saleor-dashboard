@@ -130,6 +130,8 @@ export interface ShippingZone_shippingZone_shippingMethods {
   privateMetadata: (ShippingZone_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: ShippingZone_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: ShippingZone_shippingZone_shippingMethods_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZone_shippingZone_shippingMethods_channelListings[] | null;

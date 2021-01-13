@@ -112,6 +112,8 @@ export interface ShippingMethodWithExcludedProductsFragment {
   privateMetadata: (ShippingMethodWithExcludedProductsFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodWithExcludedProductsFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodWithExcludedProductsFragment_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodWithExcludedProductsFragment_channelListings[] | null;

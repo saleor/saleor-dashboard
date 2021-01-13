@@ -2,6 +2,7 @@
 
 exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
+  "channel": Array [],
   "createdFrom": "2019-12-09",
   "createdTo": "2019-12-38",
   "customer": "email@example.com",

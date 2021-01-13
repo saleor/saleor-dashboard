@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { commonMessages } from "@saleor/intl";
 import { orderStatusMessages } from "@saleor/misc";
 import { FilterOpts, MinMax } from "@saleor/types";
@@ -13,16 +14,22 @@ import { defineMessages, IntlShape } from "react-intl";
 export enum OrderFilterKeys {
   created = "created",
   customer = "customer",
-  status = "status"
+  status = "status",
+  channel = "channel"
 }
 
 export interface OrderListFilterOpts {
   created: FilterOpts<MinMax>;
   customer: FilterOpts<string>;
   status: FilterOpts<OrderStatusFilter[]>;
+  channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
 }
 
 const messages = defineMessages({
+  channel: {
+    defaultMessage: "Channel",
+    description: "order"
+  },
   customer: {
     defaultMessage: "Customer",
     description: "order"
@@ -88,6 +95,20 @@ export function createFilterStructure(
         ]
       ),
       active: opts.status.active
-    }
+    },
+    ...(opts?.channel?.value.length
+      ? [
+          {
+            ...createOptionsField(
+              OrderFilterKeys.channel,
+              intl.formatMessage(messages.channel),
+              [],
+              true,
+              opts.channel.value
+            ),
+            active: opts.channel.active
+          }
+        ]
+      : [])
   ];
 }

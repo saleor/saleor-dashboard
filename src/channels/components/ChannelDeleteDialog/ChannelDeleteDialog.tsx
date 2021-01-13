@@ -8,12 +8,39 @@ import {
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 
+const messages = defineMessages({
+  needToBeMoved: {
+    defaultMessage:
+      "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:.",
+    description: "delete channel"
+  },
+  deletingAllProductData: {
+    defaultMessage:
+      "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?",
+    description: "delete channel"
+  },
+  noAvailableChannel: {
+    defaultMessage:
+      "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it.",
+    description: "currency channel"
+  },
+  selectChannel: {
+    defaultMessage: "Select Channel",
+    description: "dialog header"
+  },
+  deleteChannel: {
+    defaultMessage: "Delete Channel",
+    description: "dialog header"
+  }
+});
+
 export interface ChannelDeleteDialogProps {
   channelsChoices: Choices;
+  hasOrders: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onBack: () => void;
@@ -23,6 +50,7 @@ export interface ChannelDeleteDialogProps {
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   channelsChoices = [],
+  hasOrders,
   confirmButtonState,
   open,
   onBack,
@@ -37,55 +65,48 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   );
   const hasChannels = !!channelsChoices?.length;
 
+  const canBeDeleted = hasChannels || !hasOrders;
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={() => (hasChannels ? onConfirm(choice) : onBack())}
-      title={intl.formatMessage({
-        defaultMessage: "Delete Channel",
-        description: "dialog header"
-      })}
+      onConfirm={() => (canBeDeleted ? onConfirm(choice) : onBack())}
+      title={intl.formatMessage(messages.deleteChannel)}
       confirmButtonLabel={intl.formatMessage(
-        hasChannels ? buttonMessages.delete : buttonMessages.ok
+        canBeDeleted ? buttonMessages.delete : buttonMessages.ok
       )}
-      variant={hasChannels ? "delete" : "default"}
+      variant={canBeDeleted ? "delete" : "default"}
     >
       <div>
-        {hasChannels ? (
-          <>
+        {hasOrders ? (
+          hasChannels ? (
+            <>
+              <Typography>
+                {intl.formatMessage(messages.needToBeMoved)}
+              </Typography>
+              <div className={classes.select}>
+                <SingleSelectField
+                  choices={channelsChoices}
+                  name="channels"
+                  label={intl.formatMessage(messages.selectChannel)}
+                  value={choice}
+                  onChange={e => setChoice(e.target.value)}
+                />
+              </div>
+              <Typography>
+                {intl.formatMessage(messages.deletingAllProductData)}
+              </Typography>
+            </>
+          ) : (
             <Typography>
-              <FormattedMessage
-                defaultMessage="All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
-                description="delete channel"
-              />
+              {intl.formatMessage(messages.noAvailableChannel)}
             </Typography>
-            <div className={classes.select}>
-              <SingleSelectField
-                choices={channelsChoices}
-                name="channels"
-                label={intl.formatMessage({
-                  defaultMessage: "Select Channel",
-                  description: "dialog header"
-                })}
-                value={choice}
-                onChange={e => setChoice(e.target.value)}
-              />
-            </div>
-            <Typography>
-              <FormattedMessage
-                defaultMessage="Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
-                description="delete channel"
-              />
-            </Typography>
-          </>
+          )
         ) : (
           <Typography>
-            <FormattedMessage
-              defaultMessage="There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it."
-              description="currency channel"
-            />
+            {intl.formatMessage(messages.deletingAllProductData)}
           </Typography>
         )}
       </div>
