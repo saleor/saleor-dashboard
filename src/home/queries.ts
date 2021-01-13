@@ -1,7 +1,7 @@
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
-import { Home } from "./types/Home";
+import { Home, HomeVariables } from "./types/Home";
 
 const home = gql`
   query Home($channel: String!) {
@@ -80,4 +80,5 @@ const home = gql`
     }
   }
 `;
-export const HomePageQuery = TypedQuery<Home, {}>(home);
+
+export const useHomePage = makeQuery<Home, HomeVariables>(home);

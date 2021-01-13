@@ -51,12 +51,12 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
             sale.type === SaleType.FIXED && channel?.discountValue ? (
               <Money
                 money={{
-                  amount: channel.discountValue,
-                  currency: channel.currency
+                  amount: channel?.discountValue,
+                  currency: channel?.currency
                 }}
               />
             ) : channel?.discountValue ? (
-              <Percent amount={channel.discountValue} />
+              <Percent amount={channel?.discountValue} />
             ) : (
               "-"
             )

@@ -262,7 +262,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
               <ChannelPickerDialog
                 channelsChoices={mapNodeToChoice(availableChannels)}
                 confirmButtonState="success"
-                defaultChoice={channel.id}
+                defaultChoice={channel?.id}
                 open={params.action === "create-order"}
                 onClose={closeModal}
                 onConfirm={channel =>

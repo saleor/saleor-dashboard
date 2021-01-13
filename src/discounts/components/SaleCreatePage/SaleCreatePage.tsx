@@ -78,7 +78,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
           triggerChange
         );
         const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(channel.discountValue)
+          validatePrice(channel?.discountValue)
         );
         return (
           <Container>

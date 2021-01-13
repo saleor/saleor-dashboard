@@ -200,7 +200,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
-              selectedChannelId={channel.id}
+              selectedChannelId={channel?.id}
             />
             <ActionDialog
               confirmButtonState={voucherBulkDeleteOpts.status}

@@ -4,6 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import Skeleton from "@saleor/components/Skeleton";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -207,6 +208,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  if (typeof channel === "undefined") {
+    return <Skeleton />;
+  }
+
   return (
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
@@ -256,7 +261,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           data.category.products.edges.map(edge => edge.node)
         )}
         saveButtonBarState={updateResult.status}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
         subcategories={maybe(() =>
           data.category.children.edges.map(edge => edge.node)
         )}
