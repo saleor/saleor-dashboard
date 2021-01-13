@@ -12,6 +12,7 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "fdinugiffgffd",
         name: "Dropdown First Value",
+        reference: null,
         slug: "dropdown-first-value"
       },
       {
@@ -19,6 +20,7 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "fdhfdhdihidff",
         name: "Dropdown Second Value",
+        reference: null,
         slug: "dropdown-second-value"
       }
     ]
@@ -38,6 +40,7 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "terteretregtt",
         name: "Multiselect First Value",
+        reference: null,
         slug: "multiselect-first-value"
       },
       {
@@ -45,6 +48,7 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "tyueyryetopwr",
         name: "Multiselect Second Value",
+        reference: null,
         slug: "multiselect-second-value"
       },
       {
@@ -52,6 +56,7 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "truiwrtweirqd",
         name: "Multiselect Third Value",
+        reference: null,
         slug: "multiselect-third-value"
       }
     ]
@@ -75,6 +80,7 @@ const FILE_ATTRIBUTE: AttributeInput = {
         },
         id: "gdghdgdhkkdae",
         name: "File First Value",
+        reference: null,
         slug: "file-first-value"
       }
     ]
@@ -111,6 +117,7 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "vbnhgcvjhbvhj",
         name: "References First Value",
+        reference: null,
         slug: "references-first-value"
       },
       {
@@ -118,6 +125,7 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "gucngdfdfvdvd",
         name: "References Second Value",
+        reference: null,
         slug: "references-second-value"
       },
       {
@@ -125,6 +133,7 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         file: null,
         id: "dfdfdsfdsfdse",
         name: "References Third Value",
+        reference: null,
         slug: "references-third-value"
       }
     ]

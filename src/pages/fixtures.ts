@@ -52,6 +52,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODc=",
             name: "Suzanne Ellison",
             slug: "suzanne-ellison",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -59,6 +60,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
             name: "Dennis Perkins",
             slug: "dennis-perkins",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -66,6 +68,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
             name: "Dylan Lamb",
             slug: "dylan-lamb",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           }
@@ -77,6 +80,7 @@ export const page: PageDetails_page = {
           id: "QXR0cmlidXRlVmFsdWU6ODk=",
           name: "Dylan Lamb",
           slug: "dylan-lamb",
+          reference: null,
           __typename: "AttributeValue",
           file: null
         }
@@ -95,6 +99,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTA=",
             name: "Security",
             slug: "security",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -102,6 +107,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
             name: "Support",
             slug: "support",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -109,6 +115,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
             name: "Medical",
             slug: "medical",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -116,6 +123,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
             name: "General",
             slug: "general",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           }
@@ -127,6 +135,7 @@ export const page: PageDetails_page = {
           id: "QXR0cmlidXRlVmFsdWU6OTA=",
           name: "Security",
           slug: "security",
+          reference: null,
           __typename: "AttributeValue",
           file: null
         }
@@ -159,6 +168,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODc=",
             name: "Suzanne Ellison",
             slug: "suzanne-ellison",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -166,6 +176,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
             name: "Dennis Perkins",
             slug: "dennis-perkins",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -173,6 +184,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
             name: "Dylan Lamb",
             slug: "dylan-lamb",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           }
@@ -189,6 +201,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTA=",
             name: "Security",
             slug: "security",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -196,6 +209,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
             name: "Support",
             slug: "support",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -203,6 +217,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
             name: "Medical",
             slug: "medical",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           },
@@ -210,6 +225,7 @@ export const page: PageDetails_page = {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
             name: "General",
             slug: "general",
+            reference: null,
             __typename: "AttributeValue",
             file: null
           }

@@ -32,6 +32,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   name: string | null;
   slug: string | null;
   file: AttributeValueCreate_attributeValueCreate_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {

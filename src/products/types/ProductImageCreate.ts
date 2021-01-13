@@ -26,6 +26,7 @@ export interface ProductImageCreate_productImageCreate_product_attributes_attrib
   name: string | null;
   slug: string | null;
   file: ProductImageCreate_productImageCreate_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_attributes_attribute {
@@ -50,6 +51,7 @@ export interface ProductImageCreate_productImageCreate_product_attributes_values
   name: string | null;
   slug: string | null;
   file: ProductImageCreate_productImageCreate_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_attributes {
@@ -70,6 +72,7 @@ export interface ProductImageCreate_productImageCreate_product_productType_varia
   name: string | null;
   slug: string | null;
   file: ProductImageCreate_productImageCreate_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_productType_variantAttributes {

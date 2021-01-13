@@ -15,6 +15,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           file: null,
           id: "attrv-1",
           name: "Attribute 1 Value 1",
+          reference: null,
           slug: "attr-1-v-1"
         }
       ]
@@ -33,6 +34,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           file: null,
           id: "attrv-2",
           name: "Attribute 2 Value 1",
+          reference: null,
           slug: "attr-2-v-1"
         },
         {
@@ -40,6 +42,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           file: null,
           id: "attrv-3",
           name: "Attribute 2 Value 2",
+          reference: null,
           slug: "attr-2-v-2"
         },
         {
@@ -47,6 +50,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           file: null,
           id: "attrv-4",
           name: "Attribute 2 Value 3",
+          reference: null,
           slug: "attr-2-v-3"
         }
       ]
@@ -69,6 +73,7 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           },
           id: "gdghdgdhkkdae",
           name: "File First Value",
+          reference: null,
           slug: "file-first-value"
         }
       ]

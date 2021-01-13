@@ -8,6 +8,7 @@ import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/Select
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
+import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import {
   AttributeInputTypeEnum,
@@ -60,6 +61,18 @@ export function getAttributeData(
   } else {
     return getFileOrReferenceAttributeData(data, values);
   }
+}
+
+export function getSelectedAttributeValues(
+  attribute:
+    | PageDetails_page_attributes
+    | ProductDetails_product_attributes
+    | SelectedVariantAttributeFragment
+) {
+  if (attribute.attribute.inputType === AttributeInputTypeEnum.REFERENCE) {
+    return attribute.values.map(value => value.reference);
+  }
+  return attribute.values.map(value => value.slug);
 }
 
 export const isFileValueUnused = (
@@ -194,10 +207,11 @@ export const getReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referencePages &&
-      attribute.value?.map(value =>
-        referencePages.find(reference => reference.id === value)
-      )
+      referencePages?.length > 0 && attribute.value?.length > 0
+        ? attribute.value.map(value =>
+            referencePages.find(reference => reference.id === value)
+          )
+        : []
   }
 });
 

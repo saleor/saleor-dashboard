@@ -32,6 +32,7 @@ export interface AttributeDetails_attribute_values {
   name: string | null;
   slug: string | null;
   file: AttributeDetails_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface AttributeDetails_attribute {

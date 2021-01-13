@@ -163,13 +163,25 @@ function getReferenceDisplayValue(
   }
 
   return attribute.value.map(attributeValue => {
-    const definedAttributeValue = attribute.data.references?.find(
-      reference => reference.id === attributeValue
+    const definedAttributeValue = attribute.data.values.find(
+      definedValue => definedValue.reference === attributeValue
     );
+    // If value has been previously assigned, use it's data
     if (!!definedAttributeValue) {
       return {
-        label: definedAttributeValue.title,
-        value: definedAttributeValue.id
+        label: definedAttributeValue.name,
+        value: definedAttributeValue.reference
+      };
+    }
+
+    const definedAttributeReference = attribute.data.references?.find(
+      reference => reference.id === attributeValue
+    );
+    // If value has not been yet assigned, use data of reference
+    if (!!definedAttributeReference) {
+      return {
+        label: definedAttributeReference.title,
+        value: definedAttributeReference.id
       };
     }
 

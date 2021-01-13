@@ -1,10 +1,10 @@
+import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
@@ -54,27 +54,7 @@ export function getAttributeInputFromProduct(
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: attribute.values.map(value => value.slug)
-      })),
-    []
-  );
-}
-
-export interface ProductAttributeValueChoices {
-  id: string;
-  values: MultiAutocompleteChoiceType[];
-}
-export function getSelectedAttributesFromProduct(
-  product: ProductDetails_product
-): ProductAttributeValueChoices[] {
-  return maybe(
-    () =>
-      product.attributes.map(attribute => ({
-        id: attribute.attribute.id,
-        values: attribute.values.map(value => ({
-          label: value.name,
-          value: value.slug
-        }))
+        value: getSelectedAttributeValues(attribute)
       })),
     []
   );
@@ -116,22 +96,18 @@ export function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope
 ): AttributeInput[] {
-  return variantAttributes?.map(attribute => {
-    const value = attribute.values.length > 0 && attribute.values[0]?.slug;
-
-    return {
-      data: {
-        inputType: attribute.attribute.inputType,
-        isRequired: attribute.attribute.valueRequired,
-        selectedValues: attribute.values,
-        values: attribute.attribute.values,
-        variantAttributeScope
-      },
-      id: attribute.attribute.id,
-      label: attribute.attribute.name,
-      value: value ? [value] : undefined
-    };
-  });
+  return variantAttributes?.map(attribute => ({
+    data: {
+      inputType: attribute.attribute.inputType,
+      isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
+      values: attribute.attribute.values,
+      variantAttributeScope
+    },
+    id: attribute.attribute.id,
+    label: attribute.attribute.name,
+    value: getSelectedAttributeValues(attribute)
+  }));
 }
 
 export function getAttributeInputFromVariant(
