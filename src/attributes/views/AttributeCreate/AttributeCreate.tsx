@@ -158,6 +158,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           __typename: "AttributeValue" as "AttributeValue",
           file: null,
           id: valueIndex.toString(),
+          reference: null,
           slug: slugify(value.name).toLowerCase(),
           sortOrder: valueIndex,
           value: null,

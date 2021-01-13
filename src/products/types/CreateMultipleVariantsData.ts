@@ -20,6 +20,7 @@ export interface CreateMultipleVariantsData_product_attributes_attribute_values 
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes_attribute {
@@ -44,6 +45,7 @@ export interface CreateMultipleVariantsData_product_attributes_values {
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes {
@@ -64,6 +66,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_productType_variantAttributes {

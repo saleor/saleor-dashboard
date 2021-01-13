@@ -44,6 +44,12 @@ export const prepareAttributesInput = ({
         id: attribute.id
       };
     }
+    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
+      return {
+        id: attribute.id,
+        references: attribute.value
+      };
+    }
     return {
       id: attribute.id,
       values: attribute.value[0] === "" ? [] : attribute.value

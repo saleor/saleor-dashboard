@@ -20,6 +20,7 @@ export interface ProductDetails_product_attributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: ProductDetails_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductDetails_product_attributes_attribute {
@@ -44,6 +45,7 @@ export interface ProductDetails_product_attributes_values {
   name: string | null;
   slug: string | null;
   file: ProductDetails_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductDetails_product_attributes {
@@ -64,6 +66,7 @@ export interface ProductDetails_product_productType_variantAttributes_values {
   name: string | null;
   slug: string | null;
   file: ProductDetails_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes {

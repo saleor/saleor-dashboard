@@ -32,6 +32,7 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_values {
   name: string | null;
   slug: string | null;
   file: AttributeValueDelete_attributeValueDelete_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {

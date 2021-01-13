@@ -32,6 +32,7 @@ export interface AttributeUpdate_attributeUpdate_attribute_values {
   name: string | null;
   slug: string | null;
   file: AttributeUpdate_attributeUpdate_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface AttributeUpdate_attributeUpdate_attribute {

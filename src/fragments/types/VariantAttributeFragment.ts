@@ -20,6 +20,7 @@ export interface VariantAttributeFragment_values {
   name: string | null;
   slug: string | null;
   file: VariantAttributeFragment_values_file | null;
+  reference: string | null;
 }
 
 export interface VariantAttributeFragment {

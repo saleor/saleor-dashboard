@@ -18,4 +18,5 @@ export interface AttributeValueFragment {
   name: string | null;
   slug: string | null;
   file: AttributeValueFragment_file | null;
+  reference: string | null;
 }

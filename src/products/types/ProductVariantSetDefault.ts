@@ -26,6 +26,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   name: string | null;
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute {
@@ -50,6 +51,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   name: string | null;
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes {
@@ -70,6 +72,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_produ
   name: string | null;
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes {

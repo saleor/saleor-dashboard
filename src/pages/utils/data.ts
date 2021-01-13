@@ -1,3 +1,4 @@
+import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 
@@ -18,7 +19,7 @@ export function getAttributeInputFromPage(
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,
-    value: attribute.values.map(value => value.slug)
+    value: getSelectedAttributeValues(attribute)
   }));
 }
 
