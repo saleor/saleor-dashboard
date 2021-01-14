@@ -31,6 +31,7 @@ export interface TokenAuth_tokenCreate_user {
   email: string;
   firstName: string;
   lastName: string;
+  isStaff: boolean;
   userPermissions: (TokenAuth_tokenCreate_user_userPermissions | null)[] | null;
   avatar: TokenAuth_tokenCreate_user_avatar | null;
 }

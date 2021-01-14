@@ -3032,6 +3032,9 @@
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
+  "src_dot_insufficientPermissions": {
+    "string": "Insufficient permissions"
+  },
   "src_dot_lastName": {
     "string": "Last Name"
   },
@@ -6250,6 +6253,9 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2599922713": {
     "string": "Voucher Name"
+  },
+  "src_dot_unauthorizedDashboardAccess": {
+    "string": "Only staff users can access the dashboard"
   },
   "src_dot_unconfirmed": {
     "context": "order status",
