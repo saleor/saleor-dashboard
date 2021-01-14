@@ -17,6 +17,7 @@ const user: User = {
   email: "email@example.com",
   firstName: "User",
   id: "123",
+  isStaff: true,
   lastName: "User",
   userPermissions: [
     {
