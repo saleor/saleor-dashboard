@@ -255,7 +255,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 <CardSpacer />
                 {order?.status !== OrderStatus.UNCONFIRMED && (
-                  <React.Fragment key={order ? order.id : "skeleton"}>
+                  <>
                     <OrderInvoiceList
                       invoices={order?.invoices}
                       onInvoiceClick={onInvoiceClick}
@@ -263,7 +263,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       onInvoiceSend={onInvoiceSend}
                     />
                     <CardSpacer />
-                  </React.Fragment>
+                  </>
                 )}
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
