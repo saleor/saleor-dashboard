@@ -9,7 +9,22 @@ import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  descriptionCharacterLimit: {
+    defaultMessage: "{numberOfCharacters} of {maxCharacters} characters",
+    description: "character limit"
+  },
+  descriptionPlaceholder: {
+    defaultMessage: "Description of a shipping zone.",
+    description: "field placeholder"
+  },
+  name: {
+    defaultMessage: "Shipping zone name",
+    description: "label"
+  }
+});
 
 export interface ShippingZoneInfoProps {
   data: Record<"name" | "description", string>;
@@ -57,9 +72,10 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           error={!!formErrors.name}
           fullWidth
           helperText={getShippingErrorMessage(formErrors.name, intl)}
-          label={intl.formatMessage({
-            defaultMessage: "Shipping zone name"
-          })}
+          label={intl.formatMessage(messages.name)}
+          inputProps={{
+            "data-test": "name"
+          }}
           name="name"
           value={data.name}
           onChange={onChange}
@@ -71,13 +87,12 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           label={
             <div className={classes.labelContainer}>
               <div className={classes.label}>
-                <FormattedMessage defaultMessage="Description" />
+                <FormattedMessage {...commonMessages.descriptionOptional} />
               </div>
               {data.description?.length > 0 && (
                 <span>
                   <FormattedMessage
-                    defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                    description="character limit"
+                    {...messages.descriptionCharacterLimit}
                     values={{
                       maxCharacters: MAX_DESCRIPTION_LENGTH,
                       numberOfCharacters: data.description.length
@@ -97,10 +112,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           disabled={disabled}
           fullWidth
           multiline
-          placeholder={intl.formatMessage({
-            defaultMessage: "Description of a shipping zone.",
-            description: "field placeholder"
-          })}
+          placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           rows={10}
         />
       </CardContent>

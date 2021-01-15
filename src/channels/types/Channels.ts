@@ -13,6 +13,7 @@ export interface Channels_channels {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface Channels {

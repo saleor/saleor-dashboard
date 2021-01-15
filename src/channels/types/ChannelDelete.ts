@@ -8,15 +8,6 @@ import { ChannelDeleteInput, ChannelErrorCode } from "./../../types/globalTypes"
 // GraphQL mutation operation: ChannelDelete
 // ====================================================
 
-export interface ChannelDelete_channelDelete_channel {
-  __typename: "Channel";
-  id: string;
-  isActive: boolean;
-  name: string;
-  slug: string;
-  currencyCode: string;
-}
-
 export interface ChannelDelete_channelDelete_errors {
   __typename: "ChannelError";
   code: ChannelErrorCode;
@@ -26,7 +17,6 @@ export interface ChannelDelete_channelDelete_errors {
 
 export interface ChannelDelete_channelDelete {
   __typename: "ChannelDelete";
-  channel: ChannelDelete_channelDelete_channel | null;
   errors: ChannelDelete_channelDelete_errors[];
 }
 
@@ -36,5 +26,5 @@ export interface ChannelDelete {
 
 export interface ChannelDeleteVariables {
   id: string;
-  input: ChannelDeleteInput;
+  input?: ChannelDeleteInput | null;
 }

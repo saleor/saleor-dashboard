@@ -13,6 +13,8 @@ const shop = shopFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
   activities: shop.activities.edges.map(edge => edge.node),
+  noChannel: false,
+  onCreateNewChannelClick: () => undefined,
   onOrdersToCaptureClick: () => undefined,
   onOrdersToFulfillClick: () => undefined,
   onProductClick: () => undefined,

@@ -87,6 +87,8 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   privateMetadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;

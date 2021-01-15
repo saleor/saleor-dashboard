@@ -15,5 +15,6 @@ export const channelDetailsFragment = gql`
     name
     slug
     currencyCode
+    hasOrders
   }
 `;

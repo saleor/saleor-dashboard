@@ -21,6 +21,15 @@ const props: OrderListPageProps = {
   ...filterPageProps,
   ...sortPageProps,
   filterOpts: {
+    channel: {
+      active: false,
+      value: [
+        {
+          label: "Channel PLN",
+          value: "channelId"
+        }
+      ]
+    },
     created: {
       active: false,
       value: {

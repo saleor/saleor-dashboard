@@ -105,6 +105,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_minimumOrderWeight | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods_channelListings[] | null;
@@ -202,6 +204,8 @@ export interface CreateShippingRate_shippingPriceCreate_shippingMethod {
   privateMetadata: (CreateShippingRate_shippingPriceCreate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: CreateShippingRate_shippingPriceCreate_shippingMethod_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: CreateShippingRate_shippingPriceCreate_shippingMethod_channelListings[] | null;

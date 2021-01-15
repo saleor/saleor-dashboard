@@ -69,12 +69,12 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
             channel?.discountValue ? (
               <Money
                 money={{
-                  amount: channel.discountValue,
-                  currency: channel.channel.currencyCode
+                  amount: channel?.discountValue,
+                  currency: channel?.channel.currencyCode
                 }}
               />
             ) : channel?.discountValue ? (
-              <Percent amount={channel.discountValue} />
+              <Percent amount={channel?.discountValue} />
             ) : (
               "-"
             )

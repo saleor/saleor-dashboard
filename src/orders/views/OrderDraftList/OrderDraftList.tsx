@@ -20,6 +20,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -259,12 +260,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
               />
               <ChannelPickerDialog
-                channelsChoices={availableChannels.map(channel => ({
-                  label: channel.name,
-                  value: channel.id
-                }))}
+                channelsChoices={mapNodeToChoice(availableChannels)}
                 confirmButtonState="success"
-                defaultChoice={channel.id}
+                defaultChoice={channel?.id}
                 open={params.action === "create-order"}
                 onClose={closeModal}
                 onConfirm={channel =>

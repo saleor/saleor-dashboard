@@ -81,6 +81,8 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   privateMetadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings[] | null;

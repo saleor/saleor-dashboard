@@ -46,17 +46,19 @@ const useStyles = makeStyles(
 
 export interface HomePageProps extends UserPermissionProps {
   activities: Home_activities_edges_node[];
-  orders: number;
-  ordersToCapture: number;
-  ordersToFulfill: number;
+  orders: number | null;
+  ordersToCapture: number | null;
+  ordersToFulfill: number | null;
   productsOutOfStock: number;
   sales: Home_salesToday_gross;
-  topProducts: Home_productTopToday_edges_node[];
+  topProducts: Home_productTopToday_edges_node[] | null;
   userName: string;
+  onCreateNewChannelClick: () => void;
   onOrdersToCaptureClick: () => void;
   onOrdersToFulfillClick: () => void;
   onProductClick: (productId: string, variantId: string) => void;
   onProductsOutOfStockClick: () => void;
+  noChannel: boolean;
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
@@ -67,13 +69,15 @@ const HomePage: React.FC<HomePageProps> = props => {
     topProducts,
     onProductClick,
     activities,
+    onCreateNewChannelClick,
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
-    ordersToCapture,
-    ordersToFulfill,
-    productsOutOfStock,
-    userPermissions
+    ordersToCapture = 0,
+    ordersToFulfill = 0,
+    productsOutOfStock = 0,
+    userPermissions = [],
+    noChannel
   } = props;
 
   const classes = useStyles(props);
@@ -99,7 +103,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                   />
                 }
               >
-                {sales ? (
+                {noChannel ? (
+                  0
+                ) : sales ? (
                   <Money money={sales} />
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
@@ -115,15 +121,18 @@ const HomePage: React.FC<HomePageProps> = props => {
                   />
                 }
               >
-                {orders === undefined ? (
-                  <Skeleton style={{ width: "5em" }} />
-                ) : (
+                {noChannel ? (
+                  0
+                ) : orders !== undefined ? (
                   orders
+                ) : (
+                  <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
             </div>
           </RequirePermissions>
           <HomeNotificationTable
+            onCreateNewChannelClick={onCreateNewChannelClick}
             onOrdersToCaptureClick={onOrdersToCaptureClick}
             onOrdersToFulfillClick={onOrdersToFulfillClick}
             onProductsOutOfStockClick={onProductsOutOfStockClick}
@@ -131,30 +140,35 @@ const HomePage: React.FC<HomePageProps> = props => {
             ordersToFulfill={ordersToFulfill}
             productsOutOfStock={productsOutOfStock}
             userPermissions={userPermissions}
+            noChannel={noChannel}
           />
           <CardSpacer />
-          <RequirePermissions
-            userPermissions={userPermissions}
-            requiredPermissions={[
-              PermissionEnum.MANAGE_ORDERS,
-              PermissionEnum.MANAGE_PRODUCTS
-            ]}
-          >
-            <HomeProductListCard
-              onRowClick={onProductClick}
-              topProducts={topProducts}
-            />
-            <CardSpacer />
-          </RequirePermissions>
+          {topProducts && (
+            <RequirePermissions
+              userPermissions={userPermissions}
+              requiredPermissions={[
+                PermissionEnum.MANAGE_ORDERS,
+                PermissionEnum.MANAGE_PRODUCTS
+              ]}
+            >
+              <HomeProductListCard
+                onRowClick={onProductClick}
+                topProducts={topProducts}
+              />
+              <CardSpacer />
+            </RequirePermissions>
+          )}
         </div>
-        <div>
-          <RequirePermissions
-            userPermissions={userPermissions}
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
-            <HomeActivityCard activities={activities} />
-          </RequirePermissions>
-        </div>
+        {activities && (
+          <div>
+            <RequirePermissions
+              userPermissions={userPermissions}
+              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+            >
+              <HomeActivityCard activities={activities} />
+            </RequirePermissions>
+          </div>
+        )}
       </Grid>
     </Container>
   );

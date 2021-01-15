@@ -11,6 +11,8 @@ export enum ChannelsListUrlSortField {
 }
 export type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
 export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
+export type ChannelUrlDialog = "remove";
+export type ChannelUrlQueryParams = Dialog<ChannelUrlDialog>;
 export type ChannelsListUrlDialog = "remove";
 export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
   ChannelsListUrlFilters &

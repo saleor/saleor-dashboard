@@ -15,6 +15,7 @@ export interface ChannelDeactivate_channelDeactivate_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  hasOrders: boolean;
 }
 
 export interface ChannelDeactivate_channelDeactivate_errors {
