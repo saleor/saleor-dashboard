@@ -208,9 +208,15 @@ export const getReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referencePages?.length > 0 && attribute.value?.length > 0
-        ? attribute.value.map(value =>
-            referencePages.find(reference => reference.id === value)
-          )
+        ? attribute.value.map(value => {
+            const reference = referencePages.find(
+              reference => reference.id === value
+            );
+            return {
+              label: reference.title,
+              value: reference.id
+            };
+          })
         : []
   }
 });

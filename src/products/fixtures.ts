@@ -22,6 +22,7 @@ export const product: (
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as "Attribute",
+        entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Borders",
@@ -61,6 +62,7 @@ export const product: (
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as "Attribute",
+        entityType: null,
         id: "pta22785",
         inputType: AttributeInputTypeEnum.MULTISELECT,
         name: "Legacy",
@@ -262,6 +264,7 @@ export const product: (
     nonSelectionVariantAttributes: [
       {
         __typename: "Attribute",
+        entityType: null,
         id: "isdugfhud",
         inputType: AttributeInputTypeEnum.FILE,
         name: "Attachment",
@@ -286,6 +289,7 @@ export const product: (
     selectionVariantAttributes: [
       {
         __typename: "Attribute",
+        entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Color",
@@ -2710,6 +2714,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute",
+        entityType: null,
         id: "nfnyffcf8eyfm",
         inputType: AttributeInputTypeEnum.FILE,
         name: "Attachment",
@@ -2945,6 +2950,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as "Attribute",
+        entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Borders",
@@ -2984,6 +2990,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as "Attribute",
+        entityType: null,
         id: "pta22785",
         inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Legacy",

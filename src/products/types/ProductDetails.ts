@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductDetails
@@ -29,6 +29,7 @@ export interface ProductDetails_product_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductDetails_product_attributes_attribute_values | null)[] | null;
 }

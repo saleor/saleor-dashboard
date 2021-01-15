@@ -71,6 +71,10 @@ const entityTypeMessages = defineMessages({
   page: {
     defaultMessage: "Pages",
     description: "page attribute entity type"
+  },
+  product: {
+    defaultMessage: "Products",
+    description: "product attribute entity type"
   }
 });
 
@@ -122,6 +126,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(entityTypeMessages.page),
       value: AttributeEntityTypeEnum.PAGE
+    },
+    {
+      label: intl.formatMessage(entityTypeMessages.product),
+      value: AttributeEntityTypeEnum.PRODUCT
     }
   ];
 

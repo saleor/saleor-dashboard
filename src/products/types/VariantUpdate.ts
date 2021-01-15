@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -48,6 +48,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
@@ -94,6 +95,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
@@ -323,6 +325,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
@@ -369,6 +372,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }

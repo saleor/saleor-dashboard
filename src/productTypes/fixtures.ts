@@ -15,6 +15,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Author",
@@ -49,6 +50,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Box Size",
@@ -105,6 +107,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToz",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Brand",
@@ -128,6 +131,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Candy Box Size",
@@ -173,6 +177,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Coffee Genre",
@@ -207,6 +212,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToy",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Collar",
@@ -252,6 +258,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Color",
@@ -286,6 +293,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Cover",
@@ -364,6 +372,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Flavor",
@@ -398,6 +407,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Language",
@@ -432,6 +442,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Publisher",
@@ -466,6 +477,7 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   {
     node: {
       __typename: "Attribute" as "Attribute",
+      entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       inputType: AttributeInputTypeEnum.DROPDOWN,
       name: "Size",
