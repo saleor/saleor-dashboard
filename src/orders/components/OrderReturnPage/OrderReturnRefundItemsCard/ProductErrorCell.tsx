@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     errorBox: {
-      backgroundColor: "#FE6D76",
+      backgroundColor: theme.palette.error.main,
       borderRadius: 8,
       marginRight: theme.spacing(3),
       padding: theme.spacing(2, 3),
@@ -25,7 +25,7 @@ const useStyles = makeStyles(
       fontSize: 14
     },
     errorTextHighlighted: {
-      color: "#FE6D76",
+      color: theme.palette.error.main,
       fontSize: 12,
       marginRight: theme.spacing(1)
     },
