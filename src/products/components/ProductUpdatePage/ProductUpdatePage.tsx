@@ -267,6 +267,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onFileChange={handlers.selectAttributeFile}
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                 )}
                 <CardSpacer />

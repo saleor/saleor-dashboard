@@ -148,6 +148,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onFileChange={handlers.selectAttributeFile}
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
+                  onReferencesReorder={handlers.reorderAttributeValue}
                 />
               )}
               <CardSpacer />

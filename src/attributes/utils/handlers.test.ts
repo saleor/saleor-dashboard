@@ -1,8 +1,7 @@
+import { createAttributeMultiChangeHandler } from "@saleor/attributes/utils/handlers";
 import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
-
-import { createAttributeMultiChangeHandler } from "./handlers";
 
 const attributes: FormsetData<AttributeInputData, string[]> = [
   {
@@ -71,14 +70,14 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
             contentType: "image/png",
             url: "some-non-existing-url"
           },
-          id: "attrv-5",
+          id: "gdghdgdhkkdae",
           name: "File First Value",
           reference: null,
           slug: "file-first-value"
         }
       ]
     },
-    id: "attr-3",
+    id: "ifudbgidfsb",
     label: "File Attribute",
     value: []
   }
