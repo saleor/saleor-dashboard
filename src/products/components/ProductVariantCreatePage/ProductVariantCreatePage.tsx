@@ -162,6 +162,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={handlers.selectAttribute}
                 onMultiChange={handlers.selectAttributeMultiple}
                 onFileChange={handlers.selectAttributeFile}
+                onReferencesRemove={handlers.selectAttributeReference}
+                onReferencesAddClick={onAssignReferencesClick}
+                onReferencesReorder={handlers.reorderAttributeValue}
               />
               <CardSpacer />
               <Attributes
@@ -179,6 +182,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onFileChange={handlers.selectAttributeFile}
                 onReferencesRemove={handlers.selectAttributeReference}
                 onReferencesAddClick={onAssignReferencesClick}
+                onReferencesReorder={handlers.reorderAttributeValue}
               />
               <CardSpacer />
               <ProductShipping

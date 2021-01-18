@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
@@ -13,6 +14,9 @@ const useStyles = makeStyles(
       background: "#fff",
       color: theme.palette.primary.dark,
       marginBottom: theme.spacing(1)
+    },
+    errorText: {
+      color: theme.palette.error.light
     }
   }),
   {
@@ -28,12 +32,21 @@ export interface SortableChipsFieldValueType {
 export interface SortableChipsFieldProps extends SortableContainerProps {
   loading?: boolean;
   values: SortableChipsFieldValueType[];
+  error?: boolean;
+  helperText?: string;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
 }
 
 const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const { loading, values, onValueDelete, onValueReorder } = props;
+  const {
+    loading,
+    values,
+    error,
+    helperText,
+    onValueDelete,
+    onValueReorder
+  } = props;
   const classes = useStyles(props);
 
   return (
@@ -56,6 +69,11 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
               onClose={() => onValueDelete(value.value)}
             />
           ))
+        )}
+        {error && (
+          <Typography variant="caption" className={classes.errorText}>
+            {helperText}
+          </Typography>
         )}
       </div>
     </SortableContainer>

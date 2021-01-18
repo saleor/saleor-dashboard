@@ -17,7 +17,7 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { ReorderAction } from "@saleor/types";
+import { ReorderEvent } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
@@ -56,12 +56,12 @@ export interface AttributesProps {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  onChange: FormsetChange;
-  onMultiChange: FormsetChange;
-  onFileChange: FormsetChange;
-  onReferencesRemove?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
-  onReferencesAddClick?: (attribute: AttributeInput) => void; // TODO: temporairy optional, should be changed to required, after all pages implement it
-  onReferencesReorder?: ReorderAction; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onChange: FormsetChange<string>;
+  onMultiChange: FormsetChange<string>;
+  onFileChange: FormsetChange<File>;
+  onReferencesRemove: FormsetChange<string[]>;
+  onReferencesAddClick: (attribute: AttributeInput) => void;
+  onReferencesReorder: FormsetChange<ReorderEvent>;
 }
 
 const useStyles = makeStyles(
@@ -328,8 +328,12 @@ const Attributes: React.FC<AttributesProps> = ({
                             attribute.value?.filter(id => id !== value)
                           )
                         }
-                        onValueReorder={onReferencesReorder}
+                        onValueReorder={event =>
+                          onReferencesReorder(attribute.id, event)
+                        }
                         loading={loading}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
                       />
                     </ExtendedAttributeRow>
                   ) : attribute.data.inputType ===

@@ -1,4 +1,11 @@
 import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -9,21 +16,14 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
-import {
-  createAttributeFileChangeHandler,
-  createAttributeReferenceChangeHandler,
-  getChannelsInput
-} from "@saleor/products/utils/handlers";
-import {
-  createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
-} from "@saleor/products/utils/handlers";
+import { getChannelsInput } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 
@@ -57,6 +57,7 @@ export interface ProductVariantCreateHandlers
     >,
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
 }
@@ -131,6 +132,11 @@ function useProductVariantCreateForm(
     attributesWithNewFileValue.change,
     triggerChange
   );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
@@ -183,6 +189,7 @@ function useProductVariantCreateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,

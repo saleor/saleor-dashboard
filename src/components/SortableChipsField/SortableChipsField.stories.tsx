@@ -24,4 +24,11 @@ storiesOf("Generics / Sortable chips field", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <SortableChipsField {...props} />)
-  .add("loading", () => <SortableChipsField {...props} loading={true} />);
+  .add("loading", () => <SortableChipsField {...props} loading={true} />)
+  .add("with error", () => (
+    <SortableChipsField
+      {...props}
+      error={true}
+      helperText="Something went wrong"
+    />
+  ));
