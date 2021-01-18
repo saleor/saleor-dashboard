@@ -157,7 +157,7 @@ export const collection: (
       publicationDate: null
     }
   ],
-  descriptionJson: JSON.stringify(content),
+  description: JSON.stringify(content),
   id: "Q29sbGVjdGlvbjox",
   metadata: [
     {

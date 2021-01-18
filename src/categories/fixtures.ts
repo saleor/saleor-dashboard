@@ -105,7 +105,7 @@ export const category: (
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
     }
   },
-  descriptionJson: JSON.stringify(content),
+  description: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
   metadata: [
     {

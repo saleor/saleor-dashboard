@@ -4,7 +4,7 @@ export const categoryTranslationFragment = gql`
   fragment CategoryTranslationFragment on CategoryTranslatableContent {
     translation(languageCode: $language) {
       id
-      descriptionJson
+      description
       language {
         language
       }
@@ -15,7 +15,7 @@ export const categoryTranslationFragment = gql`
     category {
       id
       name
-      descriptionJson
+      description
       seoDescription
       seoTitle
     }
@@ -26,13 +26,13 @@ export const collectionTranslationFragment = gql`
     collection {
       id
       name
-      descriptionJson
+      description
       seoDescription
       seoTitle
     }
     translation(languageCode: $language) {
       id
-      descriptionJson
+      description
       language {
         language
       }
@@ -47,13 +47,13 @@ export const productTranslationFragment = gql`
     product {
       id
       name
-      descriptionJson
+      description
       seoDescription
       seoTitle
     }
     translation(languageCode: $language) {
       id
-      descriptionJson
+      description
       language {
         code
         language
@@ -118,14 +118,14 @@ export const pageTranslationFragment = gql`
   fragment PageTranslationFragment on PageTranslatableContent {
     page {
       id
-      contentJson
+      content
       seoDescription
       seoTitle
       title
     }
     translation(languageCode: $language) {
       id
-      contentJson
+      content
       seoDescription
       seoTitle
       title
@@ -139,14 +139,14 @@ export const pageTranslationFragment = gql`
 export const pageTranslatableFragment = gql`
   fragment PageTranslatableFragment on PageTranslatableContent {
     id
-    contentJson
+    content
     seoDescription
     seoTitle
     title
 
     translation(languageCode: $language) {
       id
-      contentJson
+      content
       seoDescription
       seoTitle
       title

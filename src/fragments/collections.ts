@@ -29,7 +29,7 @@ export const collectionDetailsFragment = gql`
       url
     }
     slug
-    descriptionJson
+    description
     seoDescription
     seoTitle
   }

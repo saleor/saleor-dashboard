@@ -12,7 +12,7 @@ export interface ProductTranslationFragment_product {
   __typename: "Product";
   id: string;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -26,7 +26,7 @@ export interface ProductTranslationFragment_translation_language {
 export interface ProductTranslationFragment_translation {
   __typename: "ProductTranslation";
   id: string;
-  descriptionJson: any;
+  description: any;
   language: ProductTranslationFragment_translation_language;
   name: string;
   seoDescription: string | null;

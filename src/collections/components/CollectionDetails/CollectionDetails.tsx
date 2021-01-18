@@ -33,7 +33,7 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name", "descriptionJson"], errors);
+  const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
     <Card>
@@ -57,8 +57,8 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         <FormSpacer />
         <RichTextEditor
           data={data.description}
-          error={!!formErrors.descriptionJson}
-          helperText={getProductErrorMessage(formErrors.descriptionJson, intl)}
+          error={!!formErrors.description}
+          helperText={getProductErrorMessage(formErrors.description, intl)}
           label={intl.formatMessage(commonMessages.description)}
           name="description"
           disabled={disabled}

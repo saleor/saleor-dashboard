@@ -188,7 +188,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         id,
         input: {
           backgroundImageAlt: formData.backgroundImageAlt,
-          descriptionJson: JSON.stringify(formData.description),
+          description: JSON.stringify(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,

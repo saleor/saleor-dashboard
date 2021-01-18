@@ -48,7 +48,7 @@ export interface CreateCollection_collectionCreate_collection {
   privateMetadata: (CreateCollection_collectionCreate_collection_privateMetadata | null)[];
   backgroundImage: CreateCollection_collectionCreate_collection_backgroundImage | null;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }

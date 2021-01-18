@@ -70,8 +70,8 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (field: string, data: string) => {
           const input: TranslationInput = {};
-          if (field === fieldNames.descriptionJson) {
-            input.descriptionJson = JSON.stringify(data);
+          if (field === fieldNames.description) {
+            input.description = JSON.stringify(data);
           } else if (field === fieldNames.name) {
             input.name = data;
           } else if (field === fieldNames.seoDescription) {

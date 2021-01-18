@@ -18,7 +18,7 @@ export interface TranslationsCollectionsPageProps
 }
 
 export const fieldNames = {
-  descriptionJson: "description",
+  description: "description",
   name: "name",
   seoDescription: "seoDescription",
   seoTitle: "seoTitle"
@@ -80,10 +80,10 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
-            name: fieldNames.descriptionJson,
-            translation: data?.translation?.descriptionJson || null,
+            name: fieldNames.description,
+            translation: data?.translation?.description || null,
             type: "rich" as "rich",
-            value: data?.collection?.descriptionJson
+            value: data?.collection?.description
           }
         ]}
         saveButtonState={saveButtonState}

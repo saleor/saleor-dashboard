@@ -37,7 +37,7 @@ export interface CategoryDetailsFragment {
   backgroundImage: CategoryDetailsFragment_backgroundImage | null;
   name: string;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryDetailsFragment_parent | null;

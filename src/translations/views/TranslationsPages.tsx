@@ -72,8 +72,8 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (field: string, data: string) => {
           const input: PageTranslationInput = {};
-          if (field === fieldNames.contentJson) {
-            input.contentJson = JSON.stringify(data);
+          if (field === fieldNames.content) {
+            input.content = JSON.stringify(data);
           } else if (field === fieldNames.title) {
             input.title = data;
           } else if (field === fieldNames.seoDescription) {

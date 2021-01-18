@@ -198,7 +198,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
-            descriptionJson: JSON.stringify(formData.description),
+            description: JSON.stringify(formData.description),
             name: formData.name,
             seo: {
               description: formData.seoDescription,
