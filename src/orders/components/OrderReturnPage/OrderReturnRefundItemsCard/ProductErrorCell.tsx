@@ -1,4 +1,5 @@
 import { makeStyles, TableCell, Typography } from "@material-ui/core";
+import Popper from "@material-ui/core/Popper";
 import ErrorExclamationCircleIcon from "@saleor/icons/ErrorExclamationCircle";
 import React, { useState } from "react";
 import { defineMessages } from "react-intl";
@@ -12,11 +13,8 @@ const useStyles = makeStyles(
     errorBox: {
       backgroundColor: "#FE6D76",
       borderRadius: 8,
-      padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-      position: "absolute",
-      right: theme.spacing(3),
-      textAlign: "left",
-      top: `calc(100% - 8px)`,
+      marginRight: theme.spacing(3),
+      padding: theme.spacing(2, 3),
       width: 280,
       zIndex: 1000
     },
@@ -58,6 +56,7 @@ interface ProductErrorCellProps {
 const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const popperAnchorRef = React.useRef<HTMLButtonElement | null>(null);
 
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
@@ -66,7 +65,11 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   }
 
   return (
-    <TableCell align="right" className={classes.container}>
+    <TableCell
+      align="right"
+      className={classes.container}
+      ref={popperAnchorRef}
+    >
       <div
         className={classes.titleContainer}
         onMouseEnter={() => setShowErrorBox(true)}
@@ -77,13 +80,17 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
         </Typography>
         <ErrorExclamationCircleIcon />
       </div>
-      {showErrorBox && (
+      <Popper
+        placement="bottom-end"
+        open={showErrorBox}
+        anchorEl={popperAnchorRef.current}
+      >
         <div className={classes.errorBox}>
           <Typography className={classes.errorText}>
             {intl.formatMessage(messages.description)}
           </Typography>
         </div>
-      )}
+      </Popper>
     </TableCell>
   );
 };

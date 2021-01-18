@@ -77,7 +77,7 @@ export const light: IThemeColors = {
     default: "#616161"
   },
   divider: "#EAEAEA",
-  error: "#C22D74",
+  error: "#FE6D76",
   font: {
     button: "#FFFFFF",
     default: "#3D3D3D",
