@@ -6,6 +6,7 @@ export const fragmentUser = gql`
     email
     firstName
     lastName
+    isStaff
     userPermissions {
       code
       name

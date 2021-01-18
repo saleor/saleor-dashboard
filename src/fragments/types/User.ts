@@ -25,6 +25,7 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
+  isStaff: boolean;
   userPermissions: (User_userPermissions | null)[] | null;
   avatar: User_avatar | null;
 }

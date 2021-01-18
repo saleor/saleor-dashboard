@@ -20,10 +20,15 @@ function renderAuthProvider(apolloClient: ApolloClient<any>) {
   return result;
 }
 
-const credentials = {
+const adminCredentials = {
   email: "admin@example.com",
   password: "admin",
   token: null
+};
+
+const nonStaffUserCredentials = {
+  email: "client@example.com",
+  password: "password"
 };
 
 beforeEach(() => {
@@ -36,10 +41,10 @@ describe("User", () => {
     const hook = renderAuthProvider(apolloClient);
 
     await act(() =>
-      hook.current.login(credentials.email, credentials.password)
+      hook.current.login(adminCredentials.email, adminCredentials.password)
     );
-    expect(hook.current.userContext.email).toBe(credentials.email);
-    credentials.token = getTokens().auth;
+    expect(hook.current.userContext.email).toBe(adminCredentials.email);
+    adminCredentials.token = getTokens().auth;
 
     done();
   });
@@ -48,19 +53,33 @@ describe("User", () => {
     const hook = renderAuthProvider(apolloClient);
 
     await act(() =>
-      hook.current.login(credentials.email, "NotAValidPassword123!")
+      hook.current.login(adminCredentials.email, "NotAValidPassword123!")
     );
     expect(hook.current.userContext).toBe(null);
 
     done();
   });
 
+  it("will not be logged in if is non-staff", async done => {
+    const hook = renderAuthProvider(apolloClient);
+
+    await act(() =>
+      hook.current.login(
+        nonStaffUserCredentials.email,
+        nonStaffUserCredentials.password
+      )
+    );
+    expect(hook.current.userContext).toBe(undefined);
+
+    done();
+  });
+
   it("will be logged if has valid token", async done => {
-    setAuthToken(credentials.token, false);
+    setAuthToken(adminCredentials.token, false);
     const hook = renderAuthProvider(apolloClient);
 
     await act(() => hook.current.autologinPromise.current);
-    expect(hook.current.userContext.email).toBe(credentials.email);
+    expect(hook.current.userContext.email).toBe(adminCredentials.email);
 
     done();
   });

@@ -2,6 +2,7 @@ import { IMessageContext } from "@saleor/components/messages";
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
@@ -41,6 +42,26 @@ export function useAuthProvider(
   const autologinPromise = useRef<Promise<any>>();
   const refreshPromise = useRef<Promise<boolean>>();
 
+  useEffect(() => {
+    const token = getTokens().auth;
+    if (!!token && !userContext) {
+      autologinPromise.current = tokenVerify({ variables: { token } });
+    } else {
+      autologinPromise.current = loginWithCredentialsManagementAPI(login);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userContext && !userContext.isStaff) {
+      logout();
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
+        title: intl.formatMessage(commonMessages.insufficientPermissions)
+      });
+    }
+  }, [userContext]);
+
   const logout = () => {
     setUserContext(undefined);
     if (isCredentialsManagementAPISupported) {
@@ -54,22 +75,18 @@ export function useAuthProvider(
     TokenAuthVariables
   >(tokenAuthMutation, {
     client: apolloClient,
-    onCompleted: result => {
-      if (result.tokenCreate.errors.length > 0) {
+    onCompleted: ({ tokenCreate }) => {
+      if (tokenCreate.errors.length > 0) {
         logout();
       }
 
-      const user = result.tokenCreate.user;
+      const user = tokenCreate.user;
 
       // FIXME: Now we set state also when auth fails and returned user is
       // `null`, because the LoginView uses this `null` to display error.
       setUserContext(user);
       if (user) {
-        setTokens(
-          result.tokenCreate.token,
-          result.tokenCreate.csrfToken,
-          persistToken
-        );
+        setTokens(tokenCreate.token, tokenCreate.csrfToken, persistToken);
       }
     },
     onError: logout
@@ -114,15 +131,6 @@ export function useAuthProvider(
       displayDemoMessage(intl, notify);
     }
   };
-
-  useEffect(() => {
-    const token = getTokens().auth;
-    if (!!token && !userContext) {
-      autologinPromise.current = tokenVerify({ variables: { token } });
-    } else {
-      autologinPromise.current = loginWithCredentialsManagementAPI(login);
-    }
-  }, []);
 
   const login = async (email: string, password: string) => {
     const result = await tokenAuth({ variables: { email, password } });
