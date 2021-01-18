@@ -40,6 +40,7 @@ import {
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -104,6 +105,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     search: searchPages,
     result: searchPagesOpts
   } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const warehouses = useWarehouseList({
@@ -370,6 +378,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
+  };
 
   return (
     <>
@@ -458,8 +471,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productUrl(id))}
       />
       <ActionDialog

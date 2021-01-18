@@ -1,4 +1,7 @@
-import { mergeAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -15,8 +18,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -62,6 +65,7 @@ interface ProductVariantCreatePageProps {
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;
   referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
   onBack: () => void;
   onSubmit: (data: ProductVariantCreateData) => void;
   onVariantClick: (variantId: string) => void;
@@ -70,7 +74,9 @@ interface ProductVariantCreatePageProps {
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
   onCloseDialog: () => void;
 }
 
@@ -85,6 +91,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   warehouses,
   weightUnit,
   referencePages,
+  referenceProducts,
   onBack,
   onSubmit,
   onVariantClick,
@@ -93,7 +100,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
+  fetchReferenceProducts,
   fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -123,6 +132,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       warehouses={warehouses}
       currentChannels={channels}
       referencePages={referencePages}
+      referenceProducts={referenceProducts}
+      fetchReferencePages={fetchReferencePages}
+      fetchMoreReferencePages={fetchMoreReferencePages}
+      fetchReferenceProducts={fetchReferenceProducts}
+      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      assignReferencesAttributeId={assignReferencesAttributeId}
     >
       {({
         change,
@@ -237,13 +252,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               attributeValues={getAttributeValuesFromReferences(
                 assignReferencesAttributeId,
                 data.attributes,
-                referencePages
+                referencePages,
+                referenceProducts
               )}
-              hasMore={fetchMoreReferencePages?.hasMore}
+              hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}
-              onFetch={fetchReferencePages}
-              onFetchMore={fetchMoreReferencePages?.onFetchMore}
-              loading={fetchMoreReferencePages?.loading}
+              onFetch={handlers.fetchReferences}
+              onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+              loading={handlers.fetchMoreReferences?.loading}
               onClose={onCloseDialog}
               onSubmit={attributeValues =>
                 handleAssignReferenceAttribute(attributeValues, data, handlers)

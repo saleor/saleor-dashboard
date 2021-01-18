@@ -1,5 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
-import { mergeAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -23,11 +26,11 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import {
   ChannelProps,
   FetchMoreProps,
@@ -77,11 +80,14 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
   referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantsAdd: () => void;
@@ -137,6 +143,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   warehouses,
   taxTypes,
   referencePages,
+  referenceProducts,
   onBack,
   onDelete,
   onImageDelete,
@@ -163,6 +170,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAssignReferencesClick,
   fetchReferencePages,
   fetchMoreReferencePages,
+  fetchReferenceProducts,
+  fetchMoreReferenceProducts,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -222,6 +231,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       currentChannels={currentChannels}
       hasVariants={hasVariants}
       referencePages={referencePages}
+      referenceProducts={referenceProducts}
+      fetchReferencePages={fetchReferencePages}
+      fetchMoreReferencePages={fetchMoreReferencePages}
+      fetchReferenceProducts={fetchReferenceProducts}
+      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      assignReferencesAttributeId={assignReferencesAttributeId}
     >
       {({
         change,
@@ -408,13 +423,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 attributeValues={getAttributeValuesFromReferences(
                   assignReferencesAttributeId,
                   data.attributes,
-                  referencePages
+                  referencePages,
+                  referenceProducts
                 )}
-                hasMore={fetchMoreReferencePages?.hasMore}
+                hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
-                onFetch={fetchReferencePages}
-                onFetchMore={fetchMoreReferencePages?.onFetchMore}
-                loading={fetchMoreReferencePages?.loading}
+                onFetch={handlers.fetchReferences}
+                onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(

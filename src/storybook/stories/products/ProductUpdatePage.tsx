@@ -60,6 +60,7 @@ const props: ProductUpdatePageProps = {
   placeholderImage,
   product,
   referencePages: [],
+  referenceProducts: [],
   saveButtonBarState: "default",
   selectedChannelId: "123",
   taxTypes,

@@ -1,4 +1,7 @@
-import { mergeAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -18,9 +21,9 @@ import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/Prod
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -82,8 +85,11 @@ interface ProductVariantPageProps {
   variant?: ProductVariant;
   warehouses: WarehouseFragment[];
   referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
   fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
@@ -110,6 +116,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   variant,
   warehouses,
   referencePages,
+  referenceProducts,
   onAdd,
   onBack,
   onDelete,
@@ -122,7 +129,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
+  fetchReferenceProducts,
   fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -173,6 +182,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           warehouses={warehouses}
           currentChannels={channels}
           referencePages={referencePages}
+          referenceProducts={referenceProducts}
+          fetchReferencePages={fetchReferencePages}
+          fetchMoreReferencePages={fetchMoreReferencePages}
+          fetchReferenceProducts={fetchReferenceProducts}
+          fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+          assignReferencesAttributeId={assignReferencesAttributeId}
         >
           {({
             change,
@@ -296,13 +311,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   attributeValues={getAttributeValuesFromReferences(
                     assignReferencesAttributeId,
                     data.attributes,
-                    referencePages
+                    referencePages,
+                    referenceProducts
                   )}
-                  hasMore={fetchMoreReferencePages?.hasMore}
+                  hasMore={handlers.fetchMoreReferences?.hasMore}
                   open={canOpenAssignReferencesAttributeDialog}
-                  onFetch={fetchReferencePages}
-                  onFetchMore={fetchMoreReferencePages?.onFetchMore}
-                  loading={fetchMoreReferencePages?.loading}
+                  onFetch={handlers.fetchReferences}
+                  onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                  loading={handlers.fetchMoreReferences?.loading}
                   onClose={onCloseDialog}
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(

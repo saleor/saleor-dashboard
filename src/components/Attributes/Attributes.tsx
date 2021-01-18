@@ -38,12 +38,7 @@ import SortableChipsField, {
 } from "../SortableChipsField";
 import BasicAttributeRow from "./BasicAttributeRow";
 import ExtendedAttributeRow from "./ExtendedAttributeRow";
-import { VariantAttributeScope } from "./types";
-
-export interface AttributeReference {
-  label: string;
-  value: string;
-}
+import { AttributeReference, VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;

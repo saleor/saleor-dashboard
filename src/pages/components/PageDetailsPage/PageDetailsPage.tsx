@@ -1,4 +1,7 @@
-import { mergeAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
@@ -15,9 +18,9 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { getAttributeValuesFromReferences } from "@saleor/pages/utils/data";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,6 +36,7 @@ export interface PageDetailsPageProps {
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
   referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -44,6 +48,8 @@ export interface PageDetailsPageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
   onCloseDialog: () => void;
 }
 
@@ -53,6 +59,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   page,
   pageTypes,
   referencePages,
+  referenceProducts,
   saveButtonBarState,
   onBack,
   onRemove,
@@ -63,6 +70,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   onAssignReferencesClick,
   fetchReferencePages,
   fetchMoreReferencePages,
+  fetchReferenceProducts,
+  fetchMoreReferenceProducts,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -93,6 +102,12 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       page={page}
       pageTypes={pageTypes}
       referencePages={referencePages}
+      referenceProducts={referenceProducts}
+      fetchReferencePages={fetchReferencePages}
+      fetchMoreReferencePages={fetchMoreReferencePages}
+      fetchReferenceProducts={fetchReferenceProducts}
+      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      assignReferencesAttributeId={assignReferencesAttributeId}
       onSubmit={onSubmit}
     >
       {({ change, data, pageType, handlers, hasChanged, submit }) => (
@@ -208,13 +223,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               attributeValues={getAttributeValuesFromReferences(
                 assignReferencesAttributeId,
                 data.attributes,
-                referencePages
+                referencePages,
+                referenceProducts
               )}
-              hasMore={fetchMoreReferencePages?.hasMore}
+              hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}
-              onFetch={fetchReferencePages}
-              onFetchMore={fetchMoreReferencePages?.onFetchMore}
-              loading={fetchMoreReferencePages?.loading}
+              onFetch={handlers.fetchReferences}
+              onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+              loading={handlers.fetchMoreReferences?.loading}
               onClose={onCloseDialog}
               onSubmit={attributeValues =>
                 handleAssignReferenceAttribute(attributeValues, data, handlers)

@@ -1,6 +1,5 @@
 import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 
 import {
   PageDetails_page,
@@ -39,18 +38,3 @@ export function getAttributeInputFromPageType(
     value: []
   }));
 }
-
-export const getAttributeValuesFromReferences = (
-  attributeId: string,
-  attributes: AttributeInput[],
-  referencePages: SearchPages_search_edges_node[]
-) => {
-  const attribute = attributes?.find(attribute => attribute.id === attributeId);
-
-  return (
-    referencePages?.filter(
-      value =>
-        !attribute?.value?.some(selectedValue => selectedValue === value.id)
-    ) || []
-  );
-};

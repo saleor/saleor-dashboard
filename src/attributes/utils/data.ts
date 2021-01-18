@@ -10,7 +10,9 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import {
+  AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
@@ -199,7 +201,7 @@ export const getFileAttributeDisplayData = (
   return attribute;
 };
 
-export const getReferenceAttributeDisplayData = (
+export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: SearchPages_search_edges_node[]
 ) => ({
@@ -213,22 +215,64 @@ export const getReferenceAttributeDisplayData = (
               reference => reference.id === value
             );
             return {
-              label: reference.title,
-              value: reference.id
+              label: reference?.title,
+              value: reference?.id
             };
           })
         : []
   }
 });
 
+export const getProductReferenceAttributeDisplayData = (
+  attribute: AttributeInput,
+  referenceProducts: SearchProducts_search_edges_node[]
+) => ({
+  ...attribute,
+  data: {
+    ...attribute.data,
+    references:
+      referenceProducts?.length > 0 && attribute.value?.length > 0
+        ? attribute.value.map(value => {
+            const reference = referenceProducts.find(
+              reference => reference.id === value
+            );
+            return {
+              label: reference?.name,
+              value: reference?.id
+            };
+          })
+        : []
+  }
+});
+
+export const getReferenceAttributeDisplayData = (
+  attribute: AttributeInput,
+  referencePages: SearchPages_search_edges_node[],
+  referenceProducts: SearchProducts_search_edges_node[]
+) => {
+  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+    return getPageReferenceAttributeDisplayData(attribute, referencePages);
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    return getProductReferenceAttributeDisplayData(
+      attribute,
+      referenceProducts
+    );
+  }
+};
+
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: SearchPages_search_edges_node[]
+  referencePages: SearchPages_search_edges_node[],
+  referenceProducts: SearchProducts_search_edges_node[]
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
-      return getReferenceAttributeDisplayData(attribute, referencePages);
+      return getReferenceAttributeDisplayData(
+        attribute,
+        referencePages,
+        referenceProducts
+      );
     }
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
       return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
@@ -236,3 +280,39 @@ export const getAttributesDisplayData = (
 
     return attribute;
   });
+
+export const getAttributeValuesFromReferences = (
+  attributeId: string,
+  attributes: AttributeInput[],
+  referencePages: SearchPages_search_edges_node[],
+  referenceProducts: SearchProducts_search_edges_node[]
+) => {
+  const attribute = attributes?.find(attribute => attribute.id === attributeId);
+
+  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+    return (
+      referencePages
+        ?.filter(
+          value =>
+            !attribute?.value?.some(selectedValue => selectedValue === value.id)
+        )
+        ?.map(reference => ({
+          label: reference.title,
+          value: reference.id
+        })) || []
+    );
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    return (
+      referenceProducts
+        ?.filter(
+          value =>
+            !attribute?.value?.some(selectedValue => selectedValue === value.id)
+        )
+        ?.map(reference => ({
+          label: reference.name,
+          value: reference.id
+        })) || []
+    );
+  }
+  return [];
+};

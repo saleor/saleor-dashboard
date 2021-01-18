@@ -22,6 +22,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -158,10 +159,24 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
+  };
+
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
   };
 
   return (
@@ -193,8 +208,13 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(pageUrl(id))}
       />
       <ActionDialog

@@ -12,8 +12,9 @@ import {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
-import { ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import {
+  AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
@@ -65,6 +66,50 @@ export function createAttributeReferenceChangeHandler(
     changeAttributeData(attributeId, values);
     triggerChange();
   };
+}
+
+export function createFetchReferencesHandler(
+  attributes: FormsetData<AttributeInputData, string[]>,
+  assignReferencesAttributeId: string,
+  fetchReferencePages?: (data: string) => void,
+  fetchReferenceProducts?: (data: string) => void
+) {
+  return (value: string) => {
+    const attribute = attributes?.find(
+      attribute => attribute.id === assignReferencesAttributeId
+    );
+
+    if (!attribute) {
+      return;
+    }
+
+    if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+      fetchReferencePages(value);
+    } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+      fetchReferenceProducts(value);
+    }
+  };
+}
+
+export function createFetchMoreReferencesHandler(
+  attributes: FormsetData<AttributeInputData, string[]>,
+  assignReferencesAttributeId: string,
+  fetchMoreReferencePages?: FetchMoreProps,
+  fetchMoreReferenceProducts?: FetchMoreProps
+) {
+  const attribute = attributes?.find(
+    attribute => attribute.id === assignReferencesAttributeId
+  );
+
+  if (!attribute) {
+    return;
+  }
+
+  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+    return fetchMoreReferencePages;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    return fetchMoreReferenceProducts;
+  }
 }
 
 export function createAttributeFileChangeHandler(

@@ -11,6 +11,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -58,6 +59,14 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const handlePageCreate = (data: PageCreateData) => {
@@ -90,6 +99,12 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
+  };
+
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
   };
 
   return (
@@ -163,8 +178,13 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               referencePages={searchPagesOpts.data?.search.edges.map(
                 edge => edge.node
               )}
+              referenceProducts={searchProductsOpts.data?.search.edges.map(
+                edge => edge.node
+              )}
               fetchReferencePages={searchPages}
               fetchMoreReferencePages={fetchMoreReferencePages}
+              fetchReferenceProducts={searchProducts}
+              fetchMoreReferenceProducts={fetchMoreReferenceProducts}
               onCloseDialog={() => navigate(pageCreateUrl())}
             />
           </>

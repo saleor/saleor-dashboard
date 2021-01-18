@@ -16,6 +16,7 @@ import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -198,11 +199,23 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   } = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
+  };
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
   };
 
   const disableForm =
@@ -248,8 +261,13 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
       />
     </>

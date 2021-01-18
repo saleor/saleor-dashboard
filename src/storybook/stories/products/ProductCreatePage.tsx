@@ -46,6 +46,7 @@ storiesOf("Views / Products / Create product", module)
       taxTypes={taxTypes}
       weightUnit="kg"
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -77,6 +78,7 @@ storiesOf("Views / Products / Create product", module)
       taxTypes={taxTypes}
       weightUnit="kg"
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -125,6 +127,7 @@ storiesOf("Views / Products / Create product", module)
       taxTypes={taxTypes}
       weightUnit="kg"
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
