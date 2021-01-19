@@ -1,4 +1,7 @@
 import "./user";
+import "./softAsserations";
+import "./customer";
+import "./shippingMethod";
 
 Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.
