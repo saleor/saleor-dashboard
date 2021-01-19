@@ -45,6 +45,7 @@ export const page: PageDetails_page = {
         id: "QXR0cmlidXRlOjI3",
         slug: "author",
         name: "Author",
+        entityType: null,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         values: [
@@ -92,6 +93,7 @@ export const page: PageDetails_page = {
         id: "QXR0cmlidXRlOjI5",
         slug: "tag",
         name: "Tag",
+        entityType: null,
         inputType: AttributeInputTypeEnum.MULTISELECT,
         valueRequired: false,
         values: [
@@ -161,6 +163,7 @@ export const page: PageDetails_page = {
       {
         id: "QXR0cmlidXRlOjI3",
         name: "Author",
+        entityType: null,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         values: [
@@ -194,6 +197,7 @@ export const page: PageDetails_page = {
       {
         id: "QXR0cmlidXRlOjI5",
         name: "Tag",
+        entityType: null,
         inputType: AttributeInputTypeEnum.MULTISELECT,
         valueRequired: false,
         values: [

@@ -47,6 +47,7 @@ export function getAttributeInputFromProduct(
     (): AttributeInput[] =>
       product.attributes.map(attribute => ({
         data: {
+          entityType: attribute.attribute.entityType,
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
@@ -65,6 +66,7 @@ export function getAttributeInputFromProductType(
 ): AttributeInput[] {
   return productType.productAttributes.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values
@@ -81,6 +83,7 @@ export function getAttributeInputFromAttributes(
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values,
@@ -98,6 +101,7 @@ export function getAttributeInputFromSelectedAttributes(
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
+      entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,

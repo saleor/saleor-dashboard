@@ -12,6 +12,7 @@ export function getAttributeInputFromPage(
 ): AttributeInput[] {
   return page?.attributes.map(attribute => ({
     data: {
+      entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
@@ -28,6 +29,7 @@ export function getAttributeInputFromPageType(
 ): AttributeInput[] {
   return pageType?.attributes.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values
