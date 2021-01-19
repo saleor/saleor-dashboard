@@ -13,6 +13,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add file attributes - #884 by @orzechdev
 - Add shipping delivery days - #914 by @orzechdev
 - Guard against non-staff users logging in - #947 by @jwm0
+- Drop descriptionJson and contentJson fields - #950 by @jwm0
 
 # 2.11.1
 
