@@ -1,14 +1,33 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { useOrderQuery } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
 import React from "react";
+import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
 
 import { getParsedData } from "./utils";
+
+export const messages = defineMessages({
+  cannotRefundDescription: {
+    defaultMessage:
+      "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
+    description: "order return error description when cannot refund"
+  },
+  cannotRefundTitle: {
+    defaultMessage: "Couldn't refund products",
+    description: "order return error title when cannot refund"
+  },
+  successAlert: {
+    defaultMessage: "Successfully returned products!",
+    description: "order returned success message"
+  }
+});
 
 interface OrderReturnProps {
   orderId: string;
@@ -33,13 +52,27 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       if (!errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Successfully returned products!",
-            description: "order returned success message"
-          })
+          text: intl.formatMessage(messages.successAlert)
         });
         navigateToOrder(replaceOrder?.id);
       }
+
+      if (errors[0].code === OrderErrorCode.CANNOT_REFUND) {
+        notify({
+          autohide: 5000,
+          status: "error",
+          text: intl.formatMessage(messages.cannotRefundDescription),
+          title: intl.formatMessage(messages.cannotRefundTitle)
+        });
+
+        return;
+      }
+
+      notify({
+        autohide: 5000,
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
     }
   });
 
