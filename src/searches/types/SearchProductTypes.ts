@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: SearchProductTypes
@@ -27,6 +27,7 @@ export interface SearchProductTypes_search_edges_node_productAttributes {
   __typename: "Attribute";
   id: string;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   slug: string | null;
   name: string | null;
   valueRequired: boolean;

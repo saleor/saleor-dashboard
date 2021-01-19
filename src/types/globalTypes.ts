@@ -72,6 +72,7 @@ export enum AppTypeEnum {
 
 export enum AttributeEntityTypeEnum {
   PAGE = "PAGE",
+  PRODUCT = "PRODUCT",
 }
 
 export enum AttributeErrorCode {

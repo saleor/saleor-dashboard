@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: PageAttributesFragment
@@ -29,6 +29,7 @@ export interface PageAttributesFragment_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageAttributesFragment_attributes_attribute_values | null)[] | null;
 }
@@ -74,6 +75,7 @@ export interface PageAttributesFragment_pageType_attributes {
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageAttributesFragment_pageType_attributes_values | null)[] | null;
 }
