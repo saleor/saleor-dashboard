@@ -364,22 +364,22 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   ];
 
   const fetchMoreCollections = {
-    hasMore: searchCollectionsOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections
   };
   const fetchMoreCategories = {
-    hasMore: searchCategoriesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCategoriesOpts.loading,
     onFetchMore: loadMoreCategories
   };
   const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
   const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };

@@ -208,12 +208,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   });
 
   const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
   const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };

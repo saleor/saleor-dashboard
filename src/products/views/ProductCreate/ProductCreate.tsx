@@ -210,27 +210,27 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   }, [productCreateComplete]);
 
   const fetchMoreProductTypes = {
-    hasMore: searchProductTypesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductTypesOpts.loading,
     onFetchMore: loadMoreProductTypes
   };
   const fetchMoreCollections = {
-    hasMore: searchCollectionOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCollectionOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCollectionOpts.loading,
     onFetchMore: loadMoreCollections
   };
   const fetchMoreCategories = {
-    hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCategoryOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCategoryOpts.loading,
     onFetchMore: loadMoreCategories
   };
   const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
   const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };

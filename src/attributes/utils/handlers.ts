@@ -83,9 +83,15 @@ export function createFetchReferencesHandler(
       return;
     }
 
-    if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+    if (
+      attribute.data.entityType === AttributeEntityTypeEnum.PAGE &&
+      fetchReferencePages
+    ) {
       fetchReferencePages(value);
-    } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT &&
+      fetchReferenceProducts
+    ) {
       fetchReferenceProducts(value);
     }
   };

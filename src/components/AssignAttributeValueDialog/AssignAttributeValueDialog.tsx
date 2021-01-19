@@ -1,10 +1,10 @@
+import { AttributeReference } from "@saleor/attributes/utils/data";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignContainerDialog, {
   AssignContainerDialogProps
 } from "../AssignContainerDialog";
-import { AttributeReference } from "../Attributes";
 
 const messages = defineMessages({
   header: {

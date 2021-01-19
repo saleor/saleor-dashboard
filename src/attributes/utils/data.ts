@@ -27,6 +27,11 @@ export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.MULTISELECT
 ];
 
+export interface AttributeReference {
+  label: string;
+  value: string;
+}
+
 function getSimpleAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
@@ -201,6 +206,20 @@ export const getFileAttributeDisplayData = (
   return attribute;
 };
 
+const getAttributeReferenceFromPageReference = (
+  reference?: SearchPages_search_edges_node
+): AttributeReference => ({
+  label: reference?.title,
+  value: reference?.id
+});
+
+const getAttributeReferenceFromProductReference = (
+  reference?: SearchProducts_search_edges_node
+): AttributeReference => ({
+  label: reference?.name,
+  value: reference?.id
+});
+
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: SearchPages_search_edges_node[]
@@ -214,10 +233,7 @@ export const getPageReferenceAttributeDisplayData = (
             const reference = referencePages.find(
               reference => reference.id === value
             );
-            return {
-              label: reference?.title,
-              value: reference?.id
-            };
+            return getAttributeReferenceFromPageReference(reference);
           })
         : []
   }
@@ -236,10 +252,7 @@ export const getProductReferenceAttributeDisplayData = (
             const reference = referenceProducts.find(
               reference => reference.id === value
             );
-            return {
-              label: reference?.name,
-              value: reference?.id
-            };
+            return getAttributeReferenceFromProductReference(reference);
           })
         : []
   }
@@ -281,37 +294,42 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
+export const getAttributeValuesFromPageReferences = (
+  attribute?: AttributeInput,
+  referencePages?: SearchPages_search_edges_node[]
+) =>
+  referencePages
+    ?.filter(
+      value =>
+        !attribute?.value?.some(selectedValue => selectedValue === value.id)
+    )
+    ?.map(getAttributeReferenceFromPageReference) || [];
+
+export const getAttributeValuesFromProductReferences = (
+  attribute?: AttributeInput,
+  referenceProducts?: SearchProducts_search_edges_node[]
+) =>
+  referenceProducts
+    ?.filter(
+      value =>
+        !attribute?.value?.some(selectedValue => selectedValue === value.id)
+    )
+    ?.map(getAttributeReferenceFromProductReference) || [];
+
 export const getAttributeValuesFromReferences = (
   attributeId: string,
-  attributes: AttributeInput[],
-  referencePages: SearchPages_search_edges_node[],
-  referenceProducts: SearchProducts_search_edges_node[]
+  attributes?: AttributeInput[],
+  referencePages?: SearchPages_search_edges_node[],
+  referenceProducts?: SearchProducts_search_edges_node[]
 ) => {
   const attribute = attributes?.find(attribute => attribute.id === attributeId);
 
-  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
-    return (
-      referencePages
-        ?.filter(
-          value =>
-            !attribute?.value?.some(selectedValue => selectedValue === value.id)
-        )
-        ?.map(reference => ({
-          label: reference.title,
-          value: reference.id
-        })) || []
-    );
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
-    return (
+  if (attribute?.data?.entityType === AttributeEntityTypeEnum.PAGE) {
+    return getAttributeValuesFromPageReferences(attribute, referencePages);
+  } else if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    return getAttributeValuesFromProductReferences(
+      attribute,
       referenceProducts
-        ?.filter(
-          value =>
-            !attribute?.value?.some(selectedValue => selectedValue === value.id)
-        )
-        ?.map(reference => ({
-          label: reference.name,
-          value: reference.id
-        })) || []
     );
   }
   return [];
