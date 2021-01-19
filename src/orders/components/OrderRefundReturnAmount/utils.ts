@@ -28,31 +28,6 @@ export const getMiscellaneousAmountValues = (
   };
 };
 
-const getCalculatedTotalAmount = ({
-  shipmentCost,
-  shipmentCosts,
-  allLinesSum,
-  maxRefund
-}: {
-  shipmentCost: IMoney;
-  shipmentCosts: IMoney;
-  allLinesSum: number;
-  previouslyRefunded: IMoney;
-  maxRefund: IMoney;
-}) => {
-  if (maxRefund?.amount === 0) {
-    return 0;
-  }
-
-  const shipmentCostValue = shipmentCost ? shipmentCost.amount : 0;
-
-  const calculatedTotalAmount = shipmentCosts
-    ? allLinesSum + shipmentCostValue
-    : allLinesSum;
-
-  return calculatedTotalAmount;
-};
-
 const getAuthorizedAmount = (order: OrderRefundData_order) =>
   order?.total?.gross;
 
@@ -62,6 +37,8 @@ const getShipmentCost = (order: OrderRefundData_order) =>
     amount: 0,
     currency: getAuthorizedAmount(order)?.currency
   });
+
+const getMaxRefund = (order: OrderRefundData_order) => order?.totalCaptured;
 
 export const getProductsAmountValues = (
   order: OrderRefundData_order,
@@ -73,7 +50,7 @@ export const getProductsAmountValues = (
   const shipmentCost = getShipmentCost(order);
 
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = order?.totalCaptured;
+  const maxRefund = getMaxRefund(order);
   const refundedLinesSum = getRefundedLinesPriceSum(
     order?.lines,
     unfulfilledItemsQuantities as FormsetData<null, string>
@@ -116,15 +93,46 @@ export const getProductsAmountValues = (
   };
 };
 
+const getCalculatedTotalAmount = ({
+  shipmentCost,
+  shipmentCosts,
+  allLinesSum,
+  maxRefund
+}: {
+  shipmentCost: IMoney;
+  shipmentCosts: IMoney;
+  allLinesSum: number;
+  previouslyRefunded: IMoney;
+  maxRefund: IMoney;
+}) => {
+  if (maxRefund?.amount === 0) {
+    return 0;
+  }
+
+  const shipmentCostValue = shipmentCost ? shipmentCost.amount : 0;
+
+  const calculatedTotalAmount = shipmentCosts
+    ? allLinesSum + shipmentCostValue
+    : allLinesSum;
+
+  return calculatedTotalAmount;
+};
+
 const getReturnTotalAmount = ({
   selectedProductsValue,
   refundShipmentCosts,
-  order
+  order,
+  maxRefund
 }: {
   order: OrderDetails_order;
   selectedProductsValue: IMoney;
   refundShipmentCosts: boolean;
+  maxRefund: IMoney;
 }) => {
+  if (maxRefund?.amount === 0) {
+    return 0;
+  }
+
   if (refundShipmentCosts) {
     const totalValue =
       selectedProductsValue?.amount + getShipmentCost(order)?.amount;
@@ -158,6 +166,7 @@ export const getReturnProductsAmountValues = (
 
   const refundTotalAmount = authorizedAmount?.currency && {
     amount: getReturnTotalAmount({
+      maxRefund: getMaxRefund(order),
       order,
       refundShipmentCosts,
       selectedProductsValue
