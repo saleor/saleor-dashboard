@@ -1,11 +1,17 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Menu from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
-import { commonMessages } from "@saleor/intl";
+import ProductVideoUrlDialog from "@saleor/products/components/ProductVideoUrlDialog";
 import { ReorderAction } from "@saleor/types";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
 import classNames from "classnames";
@@ -157,8 +163,8 @@ const ImageListContainer = SortableContainer<ImageListContainerProps>(
       ))}
       {preview
         .sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
-        .map(image => (
-          <ImageTile loading={true} image={image} />
+        .map((image, index) => (
+          <ImageTile loading={true} image={image} key={index} />
         ))}
     </div>
   )
@@ -168,7 +174,6 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
   const {
     images,
     placeholderImage,
-    loading,
     onImageEdit,
     onImageDelete,
     onImageReorder,
@@ -177,10 +182,13 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const upload = React.useRef(null);
+  const imagesUpload = React.useRef(null);
+  const anchor = React.useRef();
   const [imagesToUpload, setImagesToUpload] = React.useState<
     ProductDetails_product_images[]
   >([]);
+  const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
+  const [modalOpenStatus, setModalOpenStatus] = React.useState(false);
 
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () =>
@@ -209,27 +217,77 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Images",
+          defaultMessage: "Media",
           description: "section header"
         })}
         toolbar={
           <>
             <Button
-              onClick={() => upload.current.click()}
-              disabled={loading}
+              onClick={() => setPopperOpenStatus(true)}
               variant="text"
               color="primary"
               data-test="button-upload-image"
+              ref={anchor}
             >
-              {intl.formatMessage(commonMessages.uploadImage)}
+              {intl.formatMessage({
+                defaultMessage: "Upload",
+                description: "modal button upload"
+              })}
             </Button>
+
+            <Popper
+              open={popperOpenStatus}
+              anchorEl={anchor.current}
+              transition
+              placement="bottom-end"
+            >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
+                  <Paper>
+                    <ClickAwayListener
+                      onClickAway={() => setPopperOpenStatus(false)}
+                      mouseEvent="onClick"
+                    >
+                      <Menu>
+                        <MenuItem
+                          onClick={() => imagesUpload.current.click()}
+                          data-test="uploadImages"
+                          key="upload-images"
+                        >
+                          {intl.formatMessage({
+                            defaultMessage: "Upload Images",
+                            description: "modal button images upload"
+                          })}
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => setModalOpenStatus(true)}
+                          data-test="uploadVideoURL"
+                          key="upload-video-url"
+                        >
+                          {intl.formatMessage({
+                            defaultMessage: "Upload URL",
+                            description: "modal button url upload"
+                          })}
+                        </MenuItem>
+                      </Menu>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+
+            <ProductVideoUrlDialog
+              onClose={() => setModalOpenStatus(false)}
+              open={modalOpenStatus}
+            />
+
             <input
               className={classes.fileField}
               id="fileUpload"
               onChange={event => handleImageUpload(event.target.files)}
               multiple
               type="file"
-              ref={upload}
+              ref={imagesUpload}
               accept="image/*"
             />
           </>

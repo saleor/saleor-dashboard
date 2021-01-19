@@ -47,6 +47,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
 
   const [updateImage, updateResult] = useProductImageUpdateMutation({
     onCompleted: data => {
+      q;
       if (data.productImageUpdate.errors.length === 0) {
         notify({
           status: "success",
