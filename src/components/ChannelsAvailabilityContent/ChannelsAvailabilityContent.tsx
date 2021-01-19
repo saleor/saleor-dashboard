@@ -77,7 +77,10 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
         <Typography className={classes.contentTitle}>
           <FormattedMessage defaultMessage="Channels A to Z" />
         </Typography>
-        <div className={classes.scrollArea}>
+        <div
+          className={classes.scrollArea}
+          data-test-id="manage-products-channels-availiability-list"
+        >
           {filteredChannels?.length ? (
             filteredChannels.map(option => (
               <div key={option.id} className={classes.option}>

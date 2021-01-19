@@ -124,6 +124,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         <CardContent>
           {!!currencyCodes ? (
             <SingleAutocompleteSelectField
+              data-test-id="channel-currency-select-input"
               allowCustomValues
               error={!!formErrors.currencyCode}
               helperText={getChannelsErrorMessage(

@@ -35,6 +35,7 @@ export interface Choice {
 
 export type Choices = Choice[];
 interface SingleSelectFieldProps {
+  testId?: string;
   choices: Choices;
   className?: string;
   disabled?: boolean;
@@ -62,7 +63,8 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     hint,
     selectProps,
     placeholder,
-    InputProps
+    InputProps,
+    testId
   } = props;
   const classes = useStyles(props);
 
@@ -84,6 +86,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         {label}
       </InputLabel>
       <Select
+        data-test-id={testId}
         variant="outlined"
         fullWidth
         renderValue={choiceValue =>
