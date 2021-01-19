@@ -1326,6 +1326,7 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  channels?: (string | null)[] | null;
 }
 
 export interface OrderFilterInput {
