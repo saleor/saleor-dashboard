@@ -1,97 +1,102 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
-  FormsetReplacementData,
   OrderReturnFormData
 } from "@saleor/orders/components/OrderReturnPage/form";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import {
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput
 } from "@saleor/types/globalTypes";
 
-export const getParsedData = ({
-  amount,
-  amountCalculationMode,
-  refundShipmentCosts,
-  fulfiledItemsQuantities,
-  unfulfiledItemsQuantities,
-  itemsToBeReplaced
-}: OrderReturnFormData): OrderReturnProductsInput => {
-  const amountToRefund =
-    amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL
-      ? amount
-      : undefined;
+class ReturnFormDataParser {
+  private order: OrderDetails_order;
+  private formData: OrderReturnFormData;
 
-  const orderLines = getParsedLineData<OrderReturnLineInput>(
-    unfulfiledItemsQuantities,
-    itemsToBeReplaced,
-    "orderLineId"
-  );
-
-  const fulfillmentLines = getParsedLineData<OrderReturnFulfillmentLineInput>(
-    fulfiledItemsQuantities,
-    itemsToBeReplaced,
-    "fulfillmentLineId"
-  );
-
-  const shouldRefund = getShouldRefund({
-    amount,
-    fulfillmentLines,
-    orderLines
-  });
-
-  return {
-    amountToRefund,
-    fulfillmentLines,
-    includeShippingCosts: refundShipmentCosts,
-    orderLines,
-    refund: shouldRefund
-  };
-};
-
-const getShouldRefund = ({
-  amount,
-  orderLines,
-  fulfillmentLines
-}: {
-  amount?: number;
-  orderLines: OrderReturnLineInput[];
-  fulfillmentLines: OrderReturnFulfillmentLineInput[];
-}) => {
-  if (amount) {
-    return true;
+  constructor(order: OrderDetails_order, formData: OrderReturnFormData) {
+    this.order = order;
+    this.formData = formData;
   }
 
-  return (
-    orderLines.some(isLineRefundable) || fulfillmentLines.some(isLineRefundable)
-  );
-};
+  public getParsedData = (): OrderReturnProductsInput => {
+    const {
+      fulfiledItemsQuantities,
+      unfulfiledItemsQuantities,
+      refundShipmentCosts
+    } = this.formData;
 
-function isLineRefundable<
-  T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
->({ replace }: T) {
-  return !replace;
-}
+    const fulfillmentLines = this.getParsedLineData<
+      OrderReturnFulfillmentLineInput
+    >(fulfiledItemsQuantities, "fulfillmentLineId");
 
-function getParsedLineData<
-  T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
->(
-  itemsQuantities: FormsetQuantityData,
-  itemsToBeReplaced: FormsetReplacementData,
-  idKey: "fulfillmentLineId" | "orderLineId"
-): T[] {
-  return itemsQuantities.reduce((result, { value: quantity, id }) => {
-    if (!quantity) {
-      return result;
+    const orderLines = this.getParsedLineData<OrderReturnLineInput>(
+      unfulfiledItemsQuantities,
+      "orderLineId"
+    );
+
+    return {
+      amountToRefund: this.getAmountToRefund(),
+      fulfillmentLines,
+      includeShippingCosts: refundShipmentCosts,
+      orderLines,
+      refund: this.getShouldRefund(orderLines, fulfillmentLines)
+    };
+  };
+
+  private getAmountToRefund = (): number | undefined =>
+    this.formData.amountCalculationMode ===
+    OrderRefundAmountCalculationMode.MANUAL
+      ? this.formData.amount
+      : undefined;
+
+  private getParsedLineData = function<
+    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
+  >(
+    itemsQuantities: FormsetQuantityData,
+    idKey: "fulfillmentLineId" | "orderLineId"
+  ): T[] {
+    const { itemsToBeReplaced } = this.formData;
+
+    return itemsQuantities.reduce((result, { value: quantity, id }) => {
+      if (!quantity) {
+        return result;
+      }
+
+      const shouldReplace = !!itemsToBeReplaced.find(getById(id))?.value;
+
+      return [
+        ...result,
+        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T
+      ];
+    }, []);
+  };
+
+  private getShouldRefund = (
+    orderLines: OrderReturnLineInput[],
+    fulfillmentLines: OrderReturnFulfillmentLineInput[]
+  ) => {
+    if (!this.order.totalCaptured?.amount) {
+      return false;
     }
 
-    const shouldReplace = !!itemsToBeReplaced.find(getById(id))?.value;
+    if (!!this.getAmountToRefund()) {
+      return true;
+    }
 
-    return [
-      ...result,
-      ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T
-    ];
-  }, []);
+    return (
+      orderLines.some(ReturnFormDataParser.isLineRefundable) ||
+      fulfillmentLines.some(ReturnFormDataParser.isLineRefundable)
+    );
+  };
+
+  private static isLineRefundable = function<
+    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
+  >({ replace }: T) {
+    return !replace;
+  };
 }
+
+export default ReturnFormDataParser;
