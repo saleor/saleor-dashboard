@@ -11,7 +11,7 @@ import React from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
 
-import { getParsedData } from "./utils";
+import ReturnFormDataParser from "./utils";
 
 export const messages = defineMessages({
   cannotRefundDescription: {
@@ -54,6 +54,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
           status: "success",
           text: intl.formatMessage(messages.successAlert)
         });
+
         navigateToOrder(replaceOrder?.id);
       }
 
@@ -84,7 +85,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     const result = await returnCreate({
       variables: {
         id: data.order.id,
-        input: getParsedData(formData)
+        input: new ReturnFormDataParser(data.order, formData).getParsedData()
       }
     });
 
@@ -95,7 +96,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     return orderFulfillmentReturnProducts.errors;
   };
 
-  const navigateToOrder = (id?: string) => id && navigate(orderUrl(id));
+  const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));
 
   return (
     <OrderReturnPage
@@ -103,7 +104,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
-      onBack={() => navigateToOrder(orderId)}
+      onBack={() => navigateToOrder()}
     />
   );
 };
