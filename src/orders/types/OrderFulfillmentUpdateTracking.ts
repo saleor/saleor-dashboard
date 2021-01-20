@@ -48,10 +48,18 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines_orderLine {
@@ -76,6 +84,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

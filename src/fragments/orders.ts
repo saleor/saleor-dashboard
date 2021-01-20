@@ -12,6 +12,10 @@ export const fragmentOrderEvent = gql`
     email
     emailType
     invoiceNumber
+    relatedOrder {
+      id
+      number
+    }
     message
     quantity
     transactionReference
@@ -19,6 +23,8 @@ export const fragmentOrderEvent = gql`
     user {
       id
       email
+      firstName
+      lastName
     }
     lines {
       quantity

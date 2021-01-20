@@ -42,10 +42,18 @@ export interface OrderDetailsFragment_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDetailsFragment_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderDetailsFragment_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderDetailsFragment_events_lines_orderLine {
@@ -70,6 +78,7 @@ export interface OrderDetailsFragment_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderDetailsFragment_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

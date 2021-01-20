@@ -9,91 +9,22 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
-import { IMoney } from "@saleor/components/Money";
-import PriceField from "@saleor/components/PriceField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import {
-  getAllFulfillmentLinesPriceSum,
-  getPreviouslyRefundedPrice,
-  getRefundedLinesPriceSum
-} from "@saleor/orders/utils/data";
-import { getFormErrors } from "@saleor/utils/errors";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import OrderRefundAmountValues, {
-  OrderRefundAmountValuesProps
-} from "../OrderRefundAmountValues";
 import {
   OrderRefundAmountCalculationMode,
   OrderRefundFormData,
   OrderRefundType
 } from "../OrderRefundPage/form";
-
-const getMiscellaneousAmountValues = (
-  order: OrderRefundData_order
-): OrderRefundAmountValuesProps => {
-  const authorizedAmount = order?.total?.gross;
-  const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = order?.totalCaptured;
-
-  return {
-    authorizedAmount,
-    maxRefund,
-    previouslyRefunded
-  };
-};
-
-const getProductsAmountValues = (
-  order: OrderRefundData_order,
-  data: OrderRefundFormData
-): OrderRefundAmountValuesProps => {
-  const authorizedAmount = order?.total?.gross;
-  const shipmentCost =
-    authorizedAmount?.currency &&
-    (order?.shippingPrice?.gross || {
-      amount: 0,
-      currency: authorizedAmount?.currency
-    });
-  const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = order?.totalCaptured;
-  const refundedLinesSum = getRefundedLinesPriceSum(
-    order?.lines,
-    data.refundedProductQuantities
-  );
-  const allFulfillmentLinesSum = getAllFulfillmentLinesPriceSum(
-    order?.fulfillments,
-    data.refundedFulfilledProductQuantities
-  );
-  const allLinesSum = refundedLinesSum + allFulfillmentLinesSum;
-  const calculatedTotalAmount = data.refundShipmentCosts
-    ? allLinesSum + shipmentCost?.amount
-    : allLinesSum;
-  const selectedProductsValue = authorizedAmount?.currency && {
-    amount: allLinesSum,
-    currency: authorizedAmount.currency
-  };
-  const proposedRefundAmount = authorizedAmount?.currency && {
-    amount: calculatedTotalAmount,
-    currency: authorizedAmount.currency
-  };
-  const refundTotalAmount = authorizedAmount?.currency && {
-    amount: calculatedTotalAmount,
-    currency: authorizedAmount.currency
-  };
-
-  return {
-    authorizedAmount,
-    maxRefund,
-    previouslyRefunded,
-    proposedRefundAmount,
-    refundTotalAmount,
-    selectedProductsValue,
-    shipmentCost
-  };
-};
+import { OrderReturnFormData } from "../OrderReturnPage/form";
+import OrderRefundAmountValues, {
+  OrderRefundAmountValuesProps
+} from "./OrderRefundReturnAmountValues";
+import RefundAmountInput from "./RefundAmountInput";
 
 const useStyles = makeStyles(
   theme => ({
@@ -124,79 +55,53 @@ const useStyles = makeStyles(
   { name: "OrderRefundAmount" }
 );
 
-interface RefundAmountInputProps {
-  data: OrderRefundFormData;
-  maxRefund: IMoney;
-  currencySymbol: string;
-  amountTooSmall: boolean;
-  amountTooBig: boolean;
-  disabled: boolean;
-  errors: OrderErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
-}
-
-const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
-  const {
-    data,
-    maxRefund,
-    amountTooSmall,
-    amountTooBig,
-    currencySymbol,
-    disabled,
-    errors,
-    onChange
-  } = props;
-  const intl = useIntl();
-  const classes = useStyles(props);
-
-  const formErrors = getFormErrors(["amount"], errors);
-
-  return (
-    <PriceField
-      disabled={disabled}
-      onChange={onChange}
-      currencySymbol={currencySymbol}
-      name={"amount" as keyof FormData}
-      value={data.amount}
-      label={intl.formatMessage({
-        defaultMessage: "Amount",
-        description: "order refund amount, input label"
-      })}
-      className={classes.priceField}
-      InputProps={{ inputProps: { max: maxRefund?.amount } }}
-      inputProps={{
-        "data-test": "amountInput",
-        max: maxRefund?.amount
-      }}
-      error={!!formErrors.amount || amountTooSmall || amountTooBig}
-      hint={
-        getOrderErrorMessage(formErrors.amount, intl) ||
-        (amountTooSmall &&
-          intl.formatMessage({
-            defaultMessage: "Amount must be bigger than 0"
-          })) ||
-        (amountTooBig &&
-          intl.formatMessage({
-            defaultMessage: "Amount cannot be bigger than max refund"
-          }))
-      }
-    />
-  );
-};
+const messages = defineMessages({
+  refundButton: {
+    defaultMessage: "Refund",
+    description: "order refund amount button"
+  },
+  refundCannotBeFulfilled: {
+    defaultMessage: "Refunded items can't be fulfilled",
+    description: "order refund subtitle"
+  },
+  returnButton: {
+    defaultMessage: "Return & Replace products",
+    description: "order return amount button"
+  },
+  returnCannotBeFulfilled: {
+    defaultMessage: "Returned items can't be fulfilled",
+    description: "order return subtitle"
+  }
+});
 
 interface OrderRefundAmountProps {
-  data: OrderRefundFormData;
-  order: OrderRefundData_order;
+  data: OrderRefundFormData | OrderReturnFormData;
+  order: OrderRefundData_order | OrderDetails_order;
   disabled: boolean;
+  disableSubmitButton?: boolean;
+  isReturn?: boolean;
   errors: OrderErrorFragment[];
+  amountData: OrderRefundAmountValuesProps;
   onChange: (event: React.ChangeEvent<any>) => void;
   onRefund: () => void;
 }
 
 const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
-  const { data, order, disabled, errors, onChange, onRefund } = props;
+  const {
+    data,
+    order,
+    disabled,
+    errors,
+    onChange,
+    onRefund,
+    isReturn = false,
+    amountData,
+    disableSubmitButton
+  } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const { type = OrderRefundType.PRODUCTS } = data as OrderRefundFormData;
 
   const amountCurrency = order?.total?.gross?.currency;
 
@@ -207,14 +112,12 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     proposedRefundAmount,
     refundTotalAmount,
     selectedProductsValue,
-    shipmentCost
-  } =
-    data.type === OrderRefundType.PRODUCTS
-      ? getProductsAmountValues(order, data)
-      : getMiscellaneousAmountValues(order);
+    shipmentCost,
+    replacedProductsValue
+  } = amountData;
 
   const selectedRefundAmount =
-    data.type === OrderRefundType.PRODUCTS &&
+    type === OrderRefundType.PRODUCTS &&
     data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC
       ? refundTotalAmount?.amount
       : data.amount;
@@ -222,8 +125,9 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
   const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
   const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;
 
-  const disableRefundButton =
-    !selectedRefundAmount || isAmountTooSmall || isAmountTooBig;
+  const disableRefundButton = isReturn
+    ? disableSubmitButton || isAmountTooSmall || isAmountTooBig
+    : !selectedRefundAmount || isAmountTooBig || isAmountTooSmall;
 
   return (
     <Card>
@@ -234,7 +138,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
         })}
       />
       <CardContent>
-        {data.type === OrderRefundType.PRODUCTS && (
+        {type === OrderRefundType.PRODUCTS && (
           <RadioGroup
             value={data.amountCalculationMode}
             onChange={onChange}
@@ -261,6 +165,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   name="refundShipmentCosts"
                   onChange={onChange}
                 />
+                <CardSpacer />
                 <OrderRefundAmountValues
                   authorizedAmount={authorizedAmount}
                   previouslyRefunded={previouslyRefunded}
@@ -268,8 +173,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   selectedProductsValue={selectedProductsValue}
                   refundTotalAmount={refundTotalAmount}
                   shipmentCost={data.refundShipmentCosts && shipmentCost}
+                  replacedProductsValue={replacedProductsValue}
                 />
-                <CardSpacer />
               </>
             )}
             <Hr className={classes.hr} />
@@ -302,9 +207,10 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   selectedProductsValue={selectedProductsValue}
                   proposedRefundAmount={proposedRefundAmount}
                   shipmentCost={data.refundShipmentCosts && shipmentCost}
+                  replacedProductsValue={replacedProductsValue}
                 />
                 <RefundAmountInput
-                  data={data}
+                  data={data as OrderRefundFormData}
                   maxRefund={maxRefund}
                   amountTooSmall={isAmountTooSmall}
                   amountTooBig={isAmountTooBig}
@@ -317,7 +223,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
             )}
           </RadioGroup>
         )}
-        {data.type === OrderRefundType.MISCELLANEOUS && (
+        {type === OrderRefundType.MISCELLANEOUS && (
           <>
             <OrderRefundAmountValues
               authorizedAmount={authorizedAmount}
@@ -325,7 +231,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
               maxRefund={maxRefund}
             />
             <RefundAmountInput
-              data={data}
+              data={data as OrderRefundFormData}
               maxRefund={maxRefund}
               amountTooSmall={isAmountTooSmall}
               amountTooBig={isAmountTooBig}
@@ -337,17 +243,16 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           </>
         )}
         <Button
-          type="submit"
           color="primary"
           variant="contained"
           fullWidth
           size="large"
           onClick={onRefund}
           className={classes.refundButton}
-          disabled={disabled || disableRefundButton}
+          disabled={disableRefundButton}
           data-test="submit"
         >
-          {!disableRefundButton ? (
+          {!disableRefundButton && !isReturn ? (
             <FormattedMessage
               defaultMessage="Refund {currency} {amount}"
               description="order refund amount, input button"
@@ -357,10 +262,9 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
               }}
             />
           ) : (
-            <FormattedMessage
-              defaultMessage="Refund"
-              description="order refund amount, input button"
-            />
+            intl.formatMessage(
+              isReturn ? messages.returnButton : messages.refundButton
+            )
           )}
         </Button>
         <Typography
@@ -368,10 +272,11 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           color="textSecondary"
           className={classes.refundCaution}
         >
-          <FormattedMessage
-            defaultMessage="Refunded items can’t be fulfilled"
-            description="order refund amount"
-          />
+          {intl.formatMessage(
+            isReturn
+              ? messages.returnCannotBeFulfilled
+              : messages.refundCannotBeFulfilled
+          )}
         </Typography>
       </CardContent>
     </Card>

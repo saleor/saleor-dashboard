@@ -834,13 +834,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: null,
       quantity: 1,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
       user: {
         __typename: "User",
         email: "admin@example.com",
-        id: "QWRkcmVzczoxNQ=="
+        firstName: "John",
+        id: "QWRkcmVzczoxNQ==",
+        lastName: "Doe"
       }
     },
     {
@@ -875,13 +878,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       ],
       message: null,
       quantity: 1,
+      relatedOrder: null,
       shippingCostsIncluded: true,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_REFUNDED,
       user: {
         __typename: "User",
         email: "admin@example.com",
-        id: "QWRkcmVzczoxNQ=="
+        firstName: "Jane",
+        id: "QWRkcmVzczoxNQ==",
+        lastName: "Doe"
       }
     },
     {
@@ -895,6 +901,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: "This is note",
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "124",
       type: OrderEventsEnum.NOTE_ADDED,
@@ -911,6 +918,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: "This is note",
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "125",
       type: OrderEventsEnum.NOTE_ADDED,
@@ -927,6 +935,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: "Note from external service",
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "126",
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
@@ -943,6 +952,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: null,
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "127",
       type: OrderEventsEnum.EMAIL_SENT,
@@ -959,6 +969,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: null,
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "128",
       type: OrderEventsEnum.EMAIL_SENT,
@@ -975,6 +986,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [],
       message: null,
       quantity: null,
+      relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "129",
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,

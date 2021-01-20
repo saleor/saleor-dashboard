@@ -16,6 +16,7 @@ import {
   OrderListUrlSortField,
   orderPath,
   orderRefundPath,
+  orderReturnPath,
   orderSettingsPath,
   OrderUrlQueryParams
 } from "./urls";
@@ -24,6 +25,7 @@ import OrderDraftListComponent from "./views/OrderDraftList";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderListComponent from "./views/OrderList";
 import OrderRefundComponent from "./views/OrderRefund";
+import OrderReturnComponent from "./views/OrderReturn";
 import OrderSettings from "./views/OrderSettings";
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
@@ -71,6 +73,10 @@ const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
+const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
 const Component = () => {
   const intl = useIntl();
 
@@ -82,6 +88,7 @@ const Component = () => {
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
+        <Route path={orderReturnPath(":id")} component={OrderReturn} />
         <Route path={orderRefundPath(":id")} component={OrderRefund} />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>

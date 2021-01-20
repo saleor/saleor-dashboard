@@ -14,6 +14,10 @@ import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
+import {
+  FulfillmentReturnProducts,
+  FulfillmentReturnProductsVariables
+} from "./types/FulfillmentReturnProducts";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
   InvoiceEmailSend,
@@ -172,6 +176,32 @@ const orderDraftFinalizeMutation = gql`
     }
   }
 `;
+
+const orderReturnCreateMutation = gql`
+  ${orderErrorFragment}
+  mutation FulfillmentReturnProducts(
+    $id: ID!
+    $input: OrderReturnProductsInput!
+  ) {
+    orderFulfillmentReturnProducts(input: $input, order: $id) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        id
+      }
+      replaceOrder {
+        id
+      }
+    }
+  }
+`;
+
+export const useOrderReturnCreateMutation = makeMutation<
+  FulfillmentReturnProducts,
+  FulfillmentReturnProductsVariables
+>(orderReturnCreateMutation);
+
 export const TypedOrderDraftFinalizeMutation = TypedMutation<
   OrderDraftFinalize,
   OrderDraftFinalizeVariables
@@ -191,6 +221,7 @@ const orderRefundMutation = gql`
     }
   }
 `;
+
 export const useOrderRefundMutation = makeMutation<
   OrderRefund,
   OrderRefundVariables
