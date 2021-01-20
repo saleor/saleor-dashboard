@@ -72,6 +72,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isOrderLine = false
 }) => {
   const classes = useStyles({});
+  const { quantity, quantityFulfilled } = lineData as OrderDetails_order_lines;
 
   if (!lineData) {
     return <Skeleton />;
@@ -83,6 +84,10 @@ const TableLine: React.FC<TableLineProps> = ({
         orderLine: lineData
       } as OrderDetails_order_fulfillments_lines)
     : (lineData as OrderDetails_order_fulfillments_lines);
+
+  const quantityToDisplay = isOrderLine
+    ? quantity - quantityFulfilled
+    : quantity;
 
   return (
     <TableRow className={classes.clickableRow} hover key={line.id}>
@@ -96,7 +101,7 @@ const TableLine: React.FC<TableLineProps> = ({
         {line?.orderLine.productSku || <Skeleton />}
       </TableCell>
       <TableCell className={classes.colQuantity}>
-        {line?.quantity || <Skeleton />}
+        {quantityToDisplay || <Skeleton />}
       </TableCell>
       <TableCell className={classes.colPrice}>
         {maybe(() => line.orderLine.unitPrice.gross) ? (
