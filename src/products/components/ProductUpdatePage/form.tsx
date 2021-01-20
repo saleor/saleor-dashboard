@@ -5,7 +5,9 @@ import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeValueReorderHandler
+  createAttributeValueReorderHandler,
+  createFetchMoreReferencesHandler,
+  createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
@@ -34,8 +36,9 @@ import {
   validatePrice
 } from "@saleor/products/utils/validation";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -116,6 +119,8 @@ export interface ProductUpdateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  fetchReferences: (value: string) => void;
+  fetchMoreReferences: FetchMoreProps;
 }
 export interface UseProductUpdateFormResult {
   change: FormChange;
@@ -143,6 +148,12 @@ export interface UseProductUpdateFormOpts
   currentChannels: ChannelData[];
   hasVariants: boolean;
   referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -232,6 +243,18 @@ function useProductUpdateForm(
     attributes.change,
     triggerChange
   );
+  const handleFetchReferences = createFetchReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchReferencePages,
+    opts.fetchReferenceProducts
+  );
+  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchMoreReferencePages,
+    opts.fetchMoreReferenceProducts
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -283,7 +306,8 @@ function useProductUpdateForm(
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
-      opts.referencePages
+      opts.referencePages,
+      opts.referenceProducts
     ),
     description: description.current,
     stocks: stocks.data
@@ -332,6 +356,8 @@ function useProductUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
+      fetchMoreReferences: handleFetchMoreReferences,
+      fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,

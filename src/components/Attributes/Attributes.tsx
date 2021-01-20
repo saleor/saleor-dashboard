@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
@@ -39,11 +40,6 @@ import SortableChipsField, {
 import BasicAttributeRow from "./BasicAttributeRow";
 import ExtendedAttributeRow from "./ExtendedAttributeRow";
 import { VariantAttributeScope } from "./types";
-
-export interface AttributeReference {
-  label: string;
-  value: string;
-}
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
