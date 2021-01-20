@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantImageUnassign
@@ -47,6 +47,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_select
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantImageUnassign_variantImageUnassign_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
@@ -93,6 +94,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_nonSel
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (VariantImageUnassign_variantImageUnassign_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }

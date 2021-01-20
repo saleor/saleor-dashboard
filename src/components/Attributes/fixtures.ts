@@ -1,4 +1,7 @@
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum
+} from "@saleor/types/globalTypes";
 
 import { AttributeInput } from "./Attributes";
 
@@ -92,23 +95,21 @@ const FILE_ATTRIBUTE: AttributeInput = {
 
 const REFERENCE_ATTRIBUTE: AttributeInput = {
   data: {
+    entityType: AttributeEntityTypeEnum.PAGE,
     inputType: AttributeInputTypeEnum.REFERENCE,
     isRequired: true,
     references: [
       {
-        __typename: "Page",
-        id: "vbnhgcvjhbvhj",
-        title: "References First Value"
+        label: "References First Value",
+        value: "vbnhgcvjhbvhj"
       },
       {
-        __typename: "Page",
-        id: "gucngdfdfvdvd",
-        title: "References Second Value"
+        label: "References Second Value",
+        value: "gucngdfdfvdvd"
       },
       {
-        __typename: "Page",
-        id: "dfdfdsfdsfdse",
-        title: "References Third Value"
+        label: "References Third Value",
+        value: "dfdfdsfdsfdse"
       }
     ],
     values: [

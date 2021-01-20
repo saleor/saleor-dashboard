@@ -454,6 +454,7 @@ type AttributeDelete {
 
 enum AttributeEntityTypeEnum {
   PAGE
+  PRODUCT
 }
 
 type AttributeError {
@@ -570,7 +571,6 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
-  type: AttributeValueType @deprecated(reason: "Use the `inputType` field to determine the type of attribute's value. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
   reference: ID
@@ -626,13 +626,6 @@ type AttributeValueTranslation implements Node {
   id: ID!
   name: String!
   language: LanguageDisplay!
-}
-
-enum AttributeValueType {
-  COLOR
-  GRADIENT
-  URL
-  STRING
 }
 
 type AttributeValueUpdate {
@@ -2319,10 +2312,12 @@ type Margin {
   stop: Int
 }
 
-type Menu implements Node {
+type Menu implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   slug: String!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   items: [MenuItem]
 }
 
@@ -2389,7 +2384,7 @@ input MenuInput {
   slug: String
 }
 
-type MenuItem implements Node {
+type MenuItem implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   menu: Menu!
@@ -2398,6 +2393,8 @@ type MenuItem implements Node {
   collection: Collection
   page: Page
   level: Int!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   children: [MenuItem]
   url: String
   translation(languageCode: LanguageCodeEnum!): MenuItemTranslation
@@ -2841,6 +2838,7 @@ type Order implements Node & ObjectWithMetadata {
   shippingMethodName: String
   channel: Channel!
   shippingPrice: TaxedMoney
+  shippingTaxRate: Float!
   token: String!
   voucher: Voucher
   giftCards: [GiftCard]
@@ -2937,6 +2935,7 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
+  channels: [ID]
 }
 
 type OrderError {
@@ -4241,12 +4240,8 @@ type ProductVariant implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  quantity: Int! @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
-  quantityAllocated: Int @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
-  stockQuantity: Int! @deprecated(reason: "Use the quantityAvailable field instead. This field will be removed after 2020-07-31.")
   channelListings: [ProductVariantChannelListing!]
   pricing: VariantPricingInfo
-  isAvailable: Boolean @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
   attributes(variantSelection: VariantAttributeScope): [SelectedAttribute!]!
   costPrice: Money
   margin: Int
@@ -4484,7 +4479,7 @@ type Query {
   permissionGroup(id: ID!): Group
   me: User
   staffUsers(filter: StaffUserInput, sortBy: UserSortingInput, before: String, after: String, first: Int, last: Int): UserCountableConnection
-  user(id: ID!): User
+  user(id: ID, email: String): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
 }

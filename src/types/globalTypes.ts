@@ -72,6 +72,7 @@ export enum AppTypeEnum {
 
 export enum AttributeEntityTypeEnum {
   PAGE = "PAGE",
+  PRODUCT = "PRODUCT",
 }
 
 export enum AttributeErrorCode {
@@ -1333,6 +1334,7 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  channels?: (string | null)[] | null;
 }
 
 export interface OrderFilterInput {

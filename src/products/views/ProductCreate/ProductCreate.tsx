@@ -27,6 +27,7 @@ import {
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -87,6 +88,13 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     search: searchPages,
     result: searchPagesOpts
   } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const warehouses = useWarehouseList({
@@ -202,24 +210,29 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   }, [productCreateComplete]);
 
   const fetchMoreProductTypes = {
-    hasMore: searchProductTypesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductTypesOpts.loading,
     onFetchMore: loadMoreProductTypes
   };
   const fetchMoreCollections = {
-    hasMore: searchCollectionOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCollectionOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCollectionOpts.loading,
     onFetchMore: loadMoreCollections
   };
   const fetchMoreCategories = {
-    hasMore: searchCategoryOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchCategoryOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCategoryOpts.loading,
     onFetchMore: loadMoreCategories
   };
   const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search.pageInfo.hasNextPage,
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
+  };
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
   };
 
   const loading =
@@ -301,8 +314,13 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         referencePages={searchPagesOpts.data?.search.edges.map(
           edge => edge.node
         )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productAddUrl())}
       />
     </>

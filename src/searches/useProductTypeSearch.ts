@@ -27,6 +27,7 @@ export const searchProductTypes = gql`
           productAttributes {
             id
             inputType
+            entityType
             slug
             name
             valueRequired

@@ -813,6 +813,10 @@
     "context": "page attribute entity type",
     "string": "Pages"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_product": {
+    "context": "product attribute entity type",
+    "string": "Products"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_references": {
     "context": "references attribute type",
     "string": "References"

@@ -19,6 +19,7 @@ const props: PageDetailsPageProps = {
   onSubmit: () => undefined,
   page,
   referencePages: [],
+  referenceProducts: [],
   saveButtonBarState: "default"
 };
 

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantReorder
@@ -35,6 +35,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantReorder_productVariantReorder_product_attributes_attribute_values | null)[] | null;
 }

@@ -1,4 +1,4 @@
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { AttributeReference } from "@saleor/attributes/utils/data";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -26,7 +26,7 @@ interface AssignAttributeValueDialogProps
     AssignContainerDialogProps,
     "containers" | "title" | "search" | "confirmButtonState"
   > {
-  attributeValues: SearchPages_search_edges_node[];
+  attributeValues: AttributeReference[];
 }
 
 const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
@@ -38,8 +38,8 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   return (
     <AssignContainerDialog
       containers={attributeValues.map(value => ({
-        id: value.id,
-        name: value.title
+        id: value.value,
+        name: value.label
       }))}
       search={{
         label: intl.formatMessage(messages.searchLabel),

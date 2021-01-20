@@ -36,6 +36,7 @@ storiesOf("Views / Products / Create product variant", module)
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -76,6 +77,7 @@ storiesOf("Views / Products / Create product variant", module)
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -97,6 +99,7 @@ storiesOf("Views / Products / Create product variant", module)
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -121,6 +124,7 @@ storiesOf("Views / Products / Create product variant", module)
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />
@@ -142,6 +146,7 @@ storiesOf("Views / Products / Create product variant", module)
       warehouses={[]}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
+      referenceProducts={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
     />

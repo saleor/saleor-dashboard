@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
@@ -16,9 +17,11 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { ReorderEvent } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum
+} from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";
@@ -40,11 +43,12 @@ import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
+  entityType?: AttributeEntityTypeEnum;
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];
   selectedValues?: AttributeValueFragment[];
-  references?: SearchPages_search_edges_node[];
+  references?: AttributeReference[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
@@ -175,14 +179,11 @@ function getReferenceDisplayValue(
     }
 
     const definedAttributeReference = attribute.data.references?.find(
-      reference => reference.id === attributeValue
+      reference => reference.value === attributeValue
     );
     // If value has not been yet assigned, use data of reference
     if (!!definedAttributeReference) {
-      return {
-        label: definedAttributeReference.title,
-        value: definedAttributeReference.id
-      };
+      return definedAttributeReference;
     }
 
     return {

@@ -15,6 +15,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add shipping delivery days - #914 by @orzechdev
 - Guard against non-staff users logging in - #947 by @jwm0
 - Add reference attributes - #917 by @orzechdev
+- Add product reference attributes - #948 by @orzechdev
 
 # 2.11.1
 

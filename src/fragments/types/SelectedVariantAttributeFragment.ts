@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: SelectedVariantAttributeFragment
@@ -29,6 +29,7 @@ export interface SelectedVariantAttributeFragment_attribute {
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (SelectedVariantAttributeFragment_attribute_values | null)[] | null;
 }
