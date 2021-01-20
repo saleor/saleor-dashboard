@@ -79,8 +79,8 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
@@ -142,8 +142,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   variants,
   warehouses,
   taxTypes,
-  referencePages,
-  referenceProducts,
+  referencePages = [],
+  referenceProducts = [],
   onBack,
   onDelete,
   onImageDelete,

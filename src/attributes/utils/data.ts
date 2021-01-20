@@ -16,6 +16,7 @@ import {
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
+import { mapNodeToChoice, mapPagesToChoices } from "@saleor/utils/maps";
 import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
@@ -206,20 +207,6 @@ export const getFileAttributeDisplayData = (
   return attribute;
 };
 
-const getAttributeReferenceFromPageReference = (
-  reference?: SearchPages_search_edges_node
-): AttributeReference => ({
-  label: reference?.title,
-  value: reference?.id
-});
-
-const getAttributeReferenceFromProductReference = (
-  reference?: SearchProducts_search_edges_node
-): AttributeReference => ({
-  label: reference?.name,
-  value: reference?.id
-});
-
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: SearchPages_search_edges_node[]
@@ -229,12 +216,14 @@ export const getPageReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referencePages?.length > 0 && attribute.value?.length > 0
-        ? attribute.value.map(value => {
-            const reference = referencePages.find(
-              reference => reference.id === value
-            );
-            return getAttributeReferenceFromPageReference(reference);
-          })
+        ? mapPagesToChoices(
+            attribute.value.map(value => {
+              const reference = referencePages.find(
+                reference => reference.id === value
+              );
+              return { ...reference };
+            })
+          )
         : []
   }
 });
@@ -248,12 +237,14 @@ export const getProductReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? attribute.value.map(value => {
-            const reference = referenceProducts.find(
-              reference => reference.id === value
-            );
-            return getAttributeReferenceFromProductReference(reference);
-          })
+        ? mapNodeToChoice(
+            attribute.value.map(value => {
+              const reference = referenceProducts.find(
+                reference => reference.id === value
+              );
+              return { ...reference };
+            })
+          )
         : []
   }
 });
@@ -294,27 +285,16 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
-export const getAttributeValuesFromPageReferences = (
+export const getSelectedReferencesFromAttribute = <
+  Node extends SearchPages_search_edges_node | SearchProducts_search_edges_node
+>(
   attribute?: AttributeInput,
-  referencePages?: SearchPages_search_edges_node[]
+  references?: Node[]
 ) =>
-  referencePages
-    ?.filter(
-      value =>
-        !attribute?.value?.some(selectedValue => selectedValue === value.id)
-    )
-    ?.map(getAttributeReferenceFromPageReference) || [];
-
-export const getAttributeValuesFromProductReferences = (
-  attribute?: AttributeInput,
-  referenceProducts?: SearchProducts_search_edges_node[]
-) =>
-  referenceProducts
-    ?.filter(
-      value =>
-        !attribute?.value?.some(selectedValue => selectedValue === value.id)
-    )
-    ?.map(getAttributeReferenceFromProductReference) || [];
+  references?.filter(
+    value =>
+      !attribute?.value?.some(selectedValue => selectedValue === value.id)
+  ) || [];
 
 export const getAttributeValuesFromReferences = (
   attributeId: string,
@@ -325,11 +305,12 @@ export const getAttributeValuesFromReferences = (
   const attribute = attributes?.find(attribute => attribute.id === attributeId);
 
   if (attribute?.data?.entityType === AttributeEntityTypeEnum.PAGE) {
-    return getAttributeValuesFromPageReferences(attribute, referencePages);
+    return mapPagesToChoices(
+      getSelectedReferencesFromAttribute(attribute, referencePages)
+    );
   } else if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
-    return getAttributeValuesFromProductReferences(
-      attribute,
-      referenceProducts
+    return mapNodeToChoice(
+      getSelectedReferencesFromAttribute(attribute, referenceProducts)
     );
   }
   return [];

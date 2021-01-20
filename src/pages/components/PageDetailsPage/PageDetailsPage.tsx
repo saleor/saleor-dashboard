@@ -35,8 +35,8 @@ export interface PageDetailsPageProps {
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -58,8 +58,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   errors,
   page,
   pageTypes,
-  referencePages,
-  referenceProducts,
+  referencePages = [],
+  referenceProducts = [],
   saveButtonBarState,
   onBack,
   onRemove,

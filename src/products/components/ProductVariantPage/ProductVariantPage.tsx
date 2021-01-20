@@ -84,8 +84,8 @@ interface ProductVariantPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariant;
   warehouses: WarehouseFragment[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
@@ -115,8 +115,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   saveButtonBarState,
   variant,
   warehouses,
-  referencePages,
-  referenceProducts,
+  referencePages = [],
+  referenceProducts = [],
   onAdd,
   onBack,
   onDelete,

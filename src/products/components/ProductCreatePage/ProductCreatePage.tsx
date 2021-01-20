@@ -57,8 +57,8 @@ interface ProductCreatePageProps {
   fetchMoreProductTypes: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
   productTypes?: SearchProductTypes_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -97,8 +97,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   header,
   initial,
   productTypes: productTypeChoiceList,
-  referencePages,
-  referenceProducts,
+  referencePages = [],
+  referenceProducts = [],
   saveButtonBarState,
   warehouses,
   taxTypes,

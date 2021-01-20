@@ -64,8 +64,8 @@ interface ProductVariantCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   onBack: () => void;
   onSubmit: (data: ProductVariantCreateData) => void;
   onVariantClick: (variantId: string) => void;
@@ -90,8 +90,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   saveButtonBarState,
   warehouses,
   weightUnit,
-  referencePages,
-  referenceProducts,
+  referencePages = [],
+  referenceProducts = [],
   onBack,
   onSubmit,
   onVariantClick,
