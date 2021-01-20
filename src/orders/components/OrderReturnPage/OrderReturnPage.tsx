@@ -43,77 +43,85 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const { order, loading, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
-
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(messages.appTitle, {
-              orderNumber: order?.number
-            })}
-          </AppHeader>
-          <PageHeader
-            title={intl.formatMessage(messages.pageTitle, {
-              orderNumber: order?.number
-            })}
-          />
-          <Grid>
-            <div>
-              {!!data.unfulfiledItemsQuantities.length && (
-                <>
-                  <ItemsCard
-                    errors={errors}
-                    order={order}
-                    lines={getUnfulfilledLines(order)}
-                    itemsQuantities={data.unfulfiledItemsQuantities}
-                    itemsSelections={data.itemsToBeReplaced}
-                    onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                    onSetMaxQuantity={
-                      handlers.handleSetMaximalUnfulfiledItemsQuantities
-                    }
-                    onChangeSelected={handlers.changeItemsToBeReplaced}
-                  />
-                  <CardSpacer />
-                </>
-              )}
-              {renderCollection(
-                getFulfilledFulfillemnts(order),
-                ({ id, lines }) => (
-                  <React.Fragment key={id}>
+      {({ data, handlers, change, submit }) => {
+        const { fulfiledItemsQuantities, unfulfiledItemsQuantities } = data;
+
+        const hasAnyItemsSelected =
+          fulfiledItemsQuantities.some(({ value }) => !!value) ||
+          unfulfiledItemsQuantities.some(({ value }) => !!value);
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(messages.appTitle, {
+                orderNumber: order?.number
+              })}
+            </AppHeader>
+            <PageHeader
+              title={intl.formatMessage(messages.pageTitle, {
+                orderNumber: order?.number
+              })}
+            />
+            <Grid>
+              <div>
+                {!!data.unfulfiledItemsQuantities.length && (
+                  <>
                     <ItemsCard
                       errors={errors}
                       order={order}
-                      fulfilmentId={id}
-                      lines={getParsedFulfiledLines(lines)}
-                      itemsQuantities={data.fulfiledItemsQuantities}
+                      lines={getUnfulfilledLines(order)}
+                      itemsQuantities={data.unfulfiledItemsQuantities}
                       itemsSelections={data.itemsToBeReplaced}
-                      onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                      onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(
-                        id
-                      )}
+                      onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
+                      onSetMaxQuantity={
+                        handlers.handleSetMaximalUnfulfiledItemsQuantities
+                      }
                       onChangeSelected={handlers.changeItemsToBeReplaced}
                     />
                     <CardSpacer />
-                  </React.Fragment>
-                )
-              )}
-            </div>
-            <div>
-              <OrderAmount
-                isReturn
-                amountData={getReturnProductsAmountValues(order, data)}
-                data={data}
-                order={order}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-                onRefund={submit}
-              />
-            </div>
-          </Grid>
-        </Container>
-      )}
+                  </>
+                )}
+                {renderCollection(
+                  getFulfilledFulfillemnts(order),
+                  ({ id, lines }) => (
+                    <React.Fragment key={id}>
+                      <ItemsCard
+                        errors={errors}
+                        order={order}
+                        fulfilmentId={id}
+                        lines={getParsedFulfiledLines(lines)}
+                        itemsQuantities={data.fulfiledItemsQuantities}
+                        itemsSelections={data.itemsToBeReplaced}
+                        onChangeQuantity={handlers.changeFulfiledItemsQuantity}
+                        onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(
+                          id
+                        )}
+                        onChangeSelected={handlers.changeItemsToBeReplaced}
+                      />
+                      <CardSpacer />
+                    </React.Fragment>
+                  )
+                )}
+              </div>
+              <div>
+                <OrderAmount
+                  isReturn
+                  amountData={getReturnProductsAmountValues(order, data)}
+                  data={data}
+                  order={order}
+                  disableSubmitButton={!hasAnyItemsSelected}
+                  disabled={loading}
+                  errors={errors}
+                  onChange={change}
+                  onRefund={submit}
+                />
+              </div>
+            </Grid>
+          </Container>
+        );
+      }}
     </OrderRefundForm>
   );
 };

@@ -78,6 +78,7 @@ interface OrderRefundAmountProps {
   data: OrderRefundFormData | OrderReturnFormData;
   order: OrderRefundData_order | OrderDetails_order;
   disabled: boolean;
+  disableSubmitButton?: boolean;
   isReturn?: boolean;
   errors: OrderErrorFragment[];
   amountData: OrderRefundAmountValuesProps;
@@ -94,7 +95,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     onChange,
     onRefund,
     isReturn = false,
-    amountData
+    amountData,
+    disableSubmitButton
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -123,8 +125,9 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
   const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
   const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;
 
-  const disableRefundButton =
-    !selectedRefundAmount || isAmountTooSmall || isAmountTooBig;
+  const disableRefundButton = isReturn
+    ? disableSubmitButton || isAmountTooSmall || isAmountTooBig
+    : !selectedRefundAmount || isAmountTooBig || isAmountTooSmall;
 
   return (
     <Card>
@@ -246,7 +249,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           size="large"
           onClick={onRefund}
           className={classes.refundButton}
-          disabled={false}
+          disabled={disableRefundButton}
           data-test="submit"
         >
           {!disableRefundButton && !isReturn ? (
