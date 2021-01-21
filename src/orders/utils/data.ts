@@ -53,8 +53,8 @@ const getItemPriceAndQuantity = ({
 const selectItemPriceAndQuantity = (
   order: OrderDetails_order,
   {
-    fulfiledItemsQuantities,
-    unfulfiledItemsQuantities
+    fulfilledItemsQuantities,
+    unfulfilledItemsQuantities
   }: Partial<OrderReturnFormData>,
   id: string,
   isFulfillment: boolean
@@ -62,12 +62,12 @@ const selectItemPriceAndQuantity = (
   isFulfillment
     ? getItemPriceAndQuantity({
         id,
-        itemsQuantities: fulfiledItemsQuantities,
+        itemsQuantities: fulfilledItemsQuantities,
         orderLines: getAllOrderFulfilledLines(order)
       })
     : getItemPriceAndQuantity({
         id,
-        itemsQuantities: unfulfiledItemsQuantities,
+        itemsQuantities: unfulfilledItemsQuantities,
         orderLines: order.lines
       });
 
@@ -75,8 +75,8 @@ export const getReplacedProductsAmount = (
   order: OrderDetails_order,
   {
     itemsToBeReplaced,
-    unfulfiledItemsQuantities,
-    fulfiledItemsQuantities
+    unfulfilledItemsQuantities,
+    fulfilledItemsQuantities
   }: Partial<OrderReturnFormData>
 ) => {
   if (!order || !itemsToBeReplaced.length) {
@@ -94,7 +94,7 @@ export const getReplacedProductsAmount = (
 
       const { unitPrice, selectedQuantity } = selectItemPriceAndQuantity(
         order,
-        { fulfiledItemsQuantities, unfulfiledItemsQuantities },
+        { fulfilledItemsQuantities, unfulfilledItemsQuantities },
         id,
         isFulfillment
       );
