@@ -107,20 +107,20 @@ export const getReplacedProductsAmount = (
 
 export const getReturnSelectedProductsAmount = (
   order: OrderDetails_order,
-  { itemsToBeReplaced, unfulfiledItemsQuantities, fulfiledItemsQuantities }
+  { itemsToBeReplaced, unfulfilledItemsQuantities, fulfilledItemsQuantities }
 ) => {
   if (!order) {
     return 0;
   }
 
   const unfulfilledItemsValue = getPartialProductsValue({
-    itemsQuantities: unfulfiledItemsQuantities,
+    itemsQuantities: unfulfilledItemsQuantities,
     itemsToBeReplaced,
     orderLines: order.lines
   });
 
   const fulfiledItemsValue = getPartialProductsValue({
-    itemsQuantities: fulfiledItemsQuantities,
+    itemsQuantities: fulfilledItemsQuantities,
     itemsToBeReplaced,
     orderLines: getAllOrderFulfilledLines(order)
   });

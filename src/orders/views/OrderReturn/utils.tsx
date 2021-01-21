@@ -23,17 +23,17 @@ class ReturnFormDataParser {
 
   public getParsedData = (): OrderReturnProductsInput => {
     const {
-      fulfiledItemsQuantities,
-      unfulfiledItemsQuantities,
+      fulfilledItemsQuantities,
+      unfulfilledItemsQuantities,
       refundShipmentCosts
     } = this.formData;
 
     const fulfillmentLines = this.getParsedLineData<
       OrderReturnFulfillmentLineInput
-    >(fulfiledItemsQuantities, "fulfillmentLineId");
+    >(fulfilledItemsQuantities, "fulfillmentLineId");
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
-      unfulfiledItemsQuantities,
+      unfulfilledItemsQuantities,
       "orderLineId"
     );
 

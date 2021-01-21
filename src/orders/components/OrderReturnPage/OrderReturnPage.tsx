@@ -46,11 +46,11 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit }) => {
-        const { fulfiledItemsQuantities, unfulfiledItemsQuantities } = data;
+        const { fulfilledItemsQuantities, unfulfilledItemsQuantities } = data;
 
         const hasAnyItemsSelected =
-          fulfiledItemsQuantities.some(({ value }) => !!value) ||
-          unfulfiledItemsQuantities.some(({ value }) => !!value);
+          fulfilledItemsQuantities.some(({ value }) => !!value) ||
+          unfulfilledItemsQuantities.some(({ value }) => !!value);
 
         return (
           <Container>
@@ -66,13 +66,13 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             />
             <Grid>
               <div>
-                {!!data.unfulfiledItemsQuantities.length && (
+                {!!data.unfulfilledItemsQuantities.length && (
                   <>
                     <ItemsCard
                       errors={errors}
                       order={order}
                       lines={getUnfulfilledLines(order)}
-                      itemsQuantities={data.unfulfiledItemsQuantities}
+                      itemsQuantities={data.unfulfilledItemsQuantities}
                       itemsSelections={data.itemsToBeReplaced}
                       onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
                       onSetMaxQuantity={
@@ -92,7 +92,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                         order={order}
                         fulfilmentId={id}
                         lines={getParsedFulfiledLines(lines)}
-                        itemsQuantities={data.fulfiledItemsQuantities}
+                        itemsQuantities={data.fulfilledItemsQuantities}
                         itemsSelections={data.itemsToBeReplaced}
                         onChangeQuantity={handlers.changeFulfiledItemsQuantity}
                         onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(

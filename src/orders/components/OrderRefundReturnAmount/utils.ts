@@ -149,8 +149,8 @@ export const getReturnProductsAmountValues = (
   const authorizedAmount = getAuthorizedAmount(order);
 
   const {
-    fulfiledItemsQuantities,
-    unfulfiledItemsQuantities,
+    fulfilledItemsQuantities,
+    unfulfilledItemsQuantities,
     refundShipmentCosts
   } = formData;
 
@@ -177,8 +177,8 @@ export const getReturnProductsAmountValues = (
   return {
     ...getProductsAmountValues(
       order,
-      fulfiledItemsQuantities,
-      unfulfiledItemsQuantities,
+      fulfilledItemsQuantities,
+      unfulfilledItemsQuantities,
       refundShipmentCosts
     ),
     refundTotalAmount,
