@@ -3839,6 +3839,10 @@
     "context": "checkbox",
     "string": "Refund shipment costs"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_982301568": {
+    "context": "label",
+    "string": "No refund"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooBig": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
