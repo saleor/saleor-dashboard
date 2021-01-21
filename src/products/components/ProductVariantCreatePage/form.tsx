@@ -30,7 +30,7 @@ import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 
-import { ProductStockInput } from "../ProductStocks";
+import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
@@ -112,7 +112,7 @@ function useProductVariantCreateForm(
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
   const attributesWithNewFileValue = useFormset<null, File>([]);
-  const stocks = useFormset<null, string>([]);
+  const stocks = useFormset<ProductStockFormsetData, string>([]);
   const channels = useFormset(channelsInput);
   const {
     makeChangeHandler: makeMetadataChangeHandler
@@ -163,7 +163,9 @@ function useProductVariantCreateForm(
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated: 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"

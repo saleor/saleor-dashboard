@@ -274,7 +274,9 @@ function useProductUpdateForm(
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated: 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"
@@ -317,7 +319,6 @@ function useProductUpdateForm(
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    addStocks: [],
     attributes: attributes.data,
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current
