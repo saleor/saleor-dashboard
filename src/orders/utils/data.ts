@@ -137,24 +137,24 @@ const getPartialProductsValue = ({
   itemsQuantities: FormsetData<LineItemData, number>;
   orderLines: OrderDetails_order_lines[];
 }) =>
-  itemsQuantities.reduce((resultAmount, { id, value: quantity }) => {
-    const {
-      value: isItemToBeReplaced,
-      data: { isRefunded }
-    } = itemsToBeReplaced.find(getById(id));
+  itemsQuantities.reduce(
+    (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
+      const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
 
-    if (quantity < 1 || isItemToBeReplaced || isRefunded) {
-      return resultAmount;
-    }
+      if (quantity < 1 || isItemToBeReplaced || isRefunded) {
+        return resultAmount;
+      }
 
-    const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
-      id,
-      itemsQuantities,
-      orderLines
-    });
+      const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
+        id,
+        itemsQuantities,
+        orderLines
+      });
 
-    return resultAmount + unitPrice.gross.amount * selectedQuantity;
-  }, 0);
+      return resultAmount + unitPrice.gross.amount * selectedQuantity;
+    },
+    0
+  );
 
 export function getRefundedLinesPriceSum(
   lines: OrderRefundData_order_lines[],

@@ -78,7 +78,11 @@ class ReturnFormDataParser {
     orderLines: OrderReturnLineInput[],
     fulfillmentLines: OrderReturnFulfillmentLineInput[]
   ) => {
-    if (!this.order.totalCaptured?.amount) {
+    if (
+      !this.order.totalCaptured?.amount ||
+      this.formData.amountCalculationMode ===
+        OrderRefundAmountCalculationMode.NONE
+    ) {
       return false;
     }
 

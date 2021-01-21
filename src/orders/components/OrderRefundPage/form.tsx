@@ -14,7 +14,8 @@ export enum OrderRefundType {
 }
 export enum OrderRefundAmountCalculationMode {
   AUTOMATIC = "automatic",
-  MANUAL = "manual"
+  MANUAL = "manual",
+  NONE = "none"
 }
 
 export interface OrderRefundData {

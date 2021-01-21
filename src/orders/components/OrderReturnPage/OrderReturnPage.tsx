@@ -107,6 +107,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               </div>
               <div>
                 <OrderAmount
+                  allowNoRefund
                   isReturn
                   amountData={getReturnProductsAmountValues(order, data)}
                   data={data}
