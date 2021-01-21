@@ -1,0 +1,1 @@
+export { SentryAdapter } from "./Sentry";

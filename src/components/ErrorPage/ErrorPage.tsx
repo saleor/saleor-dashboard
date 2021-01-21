@@ -7,6 +7,7 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
 export interface ErrorPageProps {
+  id?: string | null;
   onBack: () => void;
 }
 
@@ -30,6 +31,9 @@ const useStyles = makeStyles(
       gridTemplateColumns: "1fr 487px",
       margin: "0 auto",
       width: 830
+    },
+    errorId: {
+      marginTop: theme.spacing(3)
     },
     innerContainer: {
       [theme.breakpoints.down("sm")]: {
@@ -58,7 +62,7 @@ const useStyles = makeStyles(
 );
 
 const ErrorPage: React.FC<ErrorPageProps> = props => {
-  const { onBack } = props;
+  const { onBack, id } = props;
 
   const classes = useStyles(props);
 
@@ -79,6 +83,11 @@ const ErrorPage: React.FC<ErrorPageProps> = props => {
             <Typography>
               <FormattedMessage defaultMessage="Don't worry, everything is gonna be fine" />
             </Typography>
+            {!!id && (
+              <Typography variant="subtitle2" className={classes.errorId}>
+                Error ID: {id}
+              </Typography>
+            )}
           </div>
           <div>
             <Button
