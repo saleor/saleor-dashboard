@@ -10,6 +10,7 @@ Cypress.Commands.add("createShippingRate", (name, shippingZone) => {
         })
     }
     `;
+  return mutation;
 });
 
 Cypress.Commands.add("createShippingZone", (name, country) => {
@@ -25,6 +26,7 @@ Cypress.Commands.add("createShippingZone", (name, country) => {
         }
       }
     `;
+  return mutation;
 });
 
 Cypress.Commands.add("", (shippingRateId, channelId) => {
@@ -45,4 +47,5 @@ Cypress.Commands.add("", (shippingRateId, channelId) => {
         }
       }
     `;
+  return mutation;
 });
