@@ -11,8 +11,10 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
+import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -21,6 +23,8 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
+import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -269,6 +273,40 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
+    navigate(
+      productVariantEditUrl(productId, variantId, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
+  };
+
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
@@ -303,6 +341,23 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantReorder={handleVariantReorder}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
+        referencePages={searchPagesOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        onCloseDialog={() =>
+          navigate(productVariantEditUrl(productId, variantId))
+        }
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

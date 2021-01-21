@@ -1,5 +1,10 @@
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
   VariantAttributeScope
@@ -17,7 +22,9 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
-import { ReorderAction } from "@saleor/types";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { FetchMoreProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -30,6 +37,8 @@ import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
+  ProductVariantUpdateData,
+  ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData
 } from "./form";
 
@@ -61,6 +70,7 @@ export interface ProductVariantPageSubmitData
 }
 
 interface ProductVariantPageProps {
+  assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
   errors:
@@ -74,6 +84,14 @@ interface ProductVariantPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariant;
   warehouses: WarehouseFragment[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
   onAdd();
   onBack();
@@ -97,6 +115,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   saveButtonBarState,
   variant,
   warehouses,
+  referencePages = [],
+  referenceProducts = [],
   onAdd,
   onBack,
   onDelete,
@@ -105,7 +125,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onVariantClick,
   onVariantReorder,
   onSetDefaultVariant,
-  onWarehouseConfigure
+  onWarehouseConfigure,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferencePages,
+  fetchReferenceProducts,
+  fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
+  onCloseDialog
 }) => {
   const intl = useIntl();
 
@@ -119,6 +146,24 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const images = productImages
     ?.filter(image => variantImages.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
+
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductVariantUpdateData,
+    handlers: ProductVariantUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
 
   return (
     <>
@@ -136,6 +181,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           onSubmit={onSubmit}
           warehouses={warehouses}
           currentChannels={channels}
+          referencePages={referencePages}
+          referenceProducts={referenceProducts}
+          fetchReferencePages={fetchReferencePages}
+          fetchMoreReferencePages={fetchMoreReferencePages}
+          fetchReferenceProducts={fetchReferenceProducts}
+          fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+          assignReferencesAttributeId={assignReferencesAttributeId}
         >
           {({
             change,
@@ -178,6 +230,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
                     onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                   <CardSpacer />
                   <Attributes
@@ -195,6 +250,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
                     onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                   <CardSpacer />
                   <ProductVariantImages
@@ -248,6 +306,29 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
               />
+              {canOpenAssignReferencesAttributeDialog && (
+                <AssignAttributeValueDialog
+                  attributeValues={getAttributeValuesFromReferences(
+                    assignReferencesAttributeId,
+                    data.attributes,
+                    referencePages,
+                    referenceProducts
+                  )}
+                  hasMore={handlers.fetchMoreReferences?.hasMore}
+                  open={canOpenAssignReferencesAttributeDialog}
+                  onFetch={handlers.fetchReferences}
+                  onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                  loading={handlers.fetchMoreReferences?.loading}
+                  onClose={onCloseDialog}
+                  onSubmit={attributeValues =>
+                    handleAssignReferenceAttribute(
+                      attributeValues,
+                      data,
+                      handlers
+                    )
+                  }
+                />
+              )}
             </>
           )}
         </ProductVariantUpdateForm>

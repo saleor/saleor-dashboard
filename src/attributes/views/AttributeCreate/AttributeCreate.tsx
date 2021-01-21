@@ -1,12 +1,10 @@
+import { getAttributeData } from "@saleor/attributes/utils/data";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
-import {
-  AttributeErrorCode,
-  AttributeInputTypeEnum
-} from "@saleor/types/globalTypes";
+import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
@@ -55,33 +53,6 @@ function areValuesEqual(
   b: AttributeValueEditDialogFormData
 ) {
   return a.name === b.name;
-}
-
-function getSimpleAttributeData(
-  data: AttributePageFormData,
-  values: AttributeValueEditDialogFormData[]
-) {
-  return {
-    ...data,
-    metadata: undefined,
-    privateMetadata: undefined,
-    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
-    values: values.map(value => ({
-      name: value.name
-    }))
-  };
-}
-
-function getFileAttributeData(
-  data: AttributePageFormData,
-  values: AttributeValueEditDialogFormData[]
-) {
-  return {
-    ...getSimpleAttributeData(data, values),
-    availableInGrid: undefined,
-    filterableInDashboard: undefined,
-    filterableInStorefront: undefined
-  };
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
@@ -145,10 +116,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     setValues(move(values[oldIndex], values, areValuesEqual, newIndex));
 
   const handleCreate = async (data: AttributePageFormData) => {
-    const input =
-      data.inputType === AttributeInputTypeEnum.FILE
-        ? getFileAttributeData(data, values)
-        : getSimpleAttributeData(data, values);
+    const input = getAttributeData(data, values);
 
     const result = await attributeCreate({
       variables: {
@@ -190,6 +158,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           __typename: "AttributeValue" as "AttributeValue",
           file: null,
           id: valueIndex.toString(),
+          reference: null,
           slug: slugify(value.name).toLowerCase(),
           sortOrder: valueIndex,
           value: null,

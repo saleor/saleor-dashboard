@@ -3,7 +3,6 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import classNames from "classnames";
-import Undo from "editorjs-undo";
 import React from "react";
 
 import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
@@ -34,6 +33,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [isFocused, setFocus] = React.useState(false);
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
+  const prevTogglePromise = React.useRef<Promise<boolean>>(); // used to await subsequent toggle invocations
+
   React.useEffect(
     () => {
       if (data) {
@@ -46,8 +47,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             onChange(savedData);
           },
           onReady: () => {
-            const undo = new Undo({ editor });
-            undo.initialize(data);
+            // FIXME: This throws an error and is not working
+            // const undo = new Undo({ editor });
+            // undo.initialize(data);
+
             if (onReady) {
               onReady();
             }
@@ -62,10 +65,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     // Rerender editor only if changed from undefined to defined state
     [data === undefined]
   );
+
   React.useEffect(() => {
-    if (editor.current?.readOnly) {
-      editor.current.readOnly.toggle(disabled);
-    }
+    const toggle = async () => {
+      if (editor.current?.readOnly) {
+        // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
+        // Remove this logic when this is fixed in EditorJS
+        if (prevTogglePromise.current instanceof Promise) {
+          await prevTogglePromise.current;
+        }
+        prevTogglePromise.current = editor.current.readOnly.toggle(disabled);
+      }
+    };
+
+    toggle();
   }, [disabled]);
 
   return (

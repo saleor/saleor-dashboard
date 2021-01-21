@@ -1,15 +1,15 @@
+import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
-import { FormsetAtomicData, FormsetData } from "@saleor/hooks/useFormset";
+import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -47,6 +47,7 @@ export function getAttributeInputFromProduct(
     (): AttributeInput[] =>
       product.attributes.map(attribute => ({
         data: {
+          entityType: attribute.attribute.entityType,
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
@@ -54,27 +55,7 @@ export function getAttributeInputFromProduct(
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: attribute.values.map(value => value.slug)
-      })),
-    []
-  );
-}
-
-export interface ProductAttributeValueChoices {
-  id: string;
-  values: MultiAutocompleteChoiceType[];
-}
-export function getSelectedAttributesFromProduct(
-  product: ProductDetails_product
-): ProductAttributeValueChoices[] {
-  return maybe(
-    () =>
-      product.attributes.map(attribute => ({
-        id: attribute.attribute.id,
-        values: attribute.values.map(value => ({
-          label: value.name,
-          value: value.slug
-        }))
+        value: getSelectedAttributeValues(attribute)
       })),
     []
   );
@@ -85,6 +66,7 @@ export function getAttributeInputFromProductType(
 ): AttributeInput[] {
   return productType.productAttributes.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values
@@ -101,6 +83,7 @@ export function getAttributeInputFromAttributes(
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values,
@@ -118,6 +101,7 @@ export function getAttributeInputFromSelectedAttributes(
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
+      entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
@@ -126,7 +110,7 @@ export function getAttributeInputFromSelectedAttributes(
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,
-    value: [(attribute.values.length && attribute.values[0]?.slug) || null]
+    value: getSelectedAttributeValues(attribute)
   }));
 }
 
@@ -216,26 +200,6 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
     []
   );
 }
-
-export const getAttributesDisplayData = (
-  attributes: AttributeInput[],
-  attributesWithNewFileValue: FormsetData<null, File>
-) =>
-  attributes.map(attribute => {
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
-
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
-    return attribute;
-  });
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;

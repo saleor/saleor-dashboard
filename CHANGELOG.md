@@ -9,10 +9,13 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add shipping methods to translation section - #864 by @marekchoinski
 - New Miscellaneous and Product refunds - #870 by @orzechdev
 - Add zip code exclusion - #877 by @dominik-zeglen
+- Add order reissue
 - Update quantity column in Inventory part of Product Variant view - #904 by @dominik-zeglen
 - Add file attributes - #884 by @orzechdev
 - Add shipping delivery days - #914 by @orzechdev
 - Guard against non-staff users logging in - #947 by @jwm0
+- Add reference attributes - #917 by @orzechdev
+- Add product reference attributes - #948 by @orzechdev
 - Drop descriptionJson and contentJson fields - #950 by @jwm0
 
 # 2.11.1

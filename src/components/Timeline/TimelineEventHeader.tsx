@@ -1,0 +1,93 @@
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import useNavigator from "@saleor/hooks/useNavigator";
+import React from "react";
+
+import { DateTime } from "../Date";
+import Link from "../Link";
+
+const useStyles = makeStyles(
+  theme => ({
+    container: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%"
+    },
+    date: {
+      color: theme.typography.caption.color,
+      paddingLeft: 24
+    },
+    elementsContainer: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap"
+    },
+    secondaryTitle: {
+      color: "#9e9e9e",
+      fontSize: 14,
+      marginTop: theme.spacing(2)
+    },
+    titleElement: {
+      marginRight: "0.5rem"
+    }
+  }),
+  { name: "TimelineEventHeader" }
+);
+
+export interface TitleElement {
+  text: string;
+  link?: string;
+}
+
+export interface TimelineEventHeaderProps {
+  title?: string;
+  date: string;
+  titleElements?: TitleElement[];
+  secondaryTitle?: string;
+}
+
+export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
+  const { title, date, titleElements, secondaryTitle } = props;
+  const navigate = useNavigator();
+
+  const classes = useStyles(props);
+
+  return (
+    <div className={classes.container}>
+      {title && <Typography>{title}</Typography>}
+      {titleElements && (
+        <div className={classes.elementsContainer}>
+          {titleElements.map(({ text, link }) => {
+            if (link) {
+              return (
+                <Link
+                  className={classes.titleElement}
+                  onClick={() => navigate(link)}
+                >
+                  {text}
+                </Link>
+              );
+            }
+
+            return (
+              <Typography className={classes.titleElement}>{text}</Typography>
+            );
+          })}
+        </div>
+      )}
+      <Typography className={classes.date}>
+        <DateTime date={date} />
+      </Typography>
+      {secondaryTitle && (
+        <Typography className={classes.secondaryTitle}>
+          {secondaryTitle}
+        </Typography>
+      )}
+    </div>
+  );
+};
+
+export default TimelineEventHeader;

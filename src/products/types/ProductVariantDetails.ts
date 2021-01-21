@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductVariantDetails
@@ -32,6 +32,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   name: string | null;
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute {
@@ -40,6 +41,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantDetails_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
@@ -56,6 +58,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_values
   name: string | null;
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes {
@@ -76,6 +79,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   name: string | null;
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute {
@@ -84,6 +88,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
@@ -100,6 +105,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_val
   name: string | null;
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes {

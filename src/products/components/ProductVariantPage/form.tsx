@@ -1,3 +1,13 @@
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler,
+  createFetchMoreReferencesHandler,
+  createFetchReferencesHandler
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -9,22 +19,17 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import {
   getAttributeInputFromVariant,
-  getAttributesDisplayData,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
-import {
-  createAttributeFileChangeHandler,
-  getChannelsInput
-} from "@saleor/products/utils/handlers";
-import {
-  createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
-} from "@saleor/products/utils/handlers";
+import { getChannelsInput } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -57,9 +62,16 @@ export interface ProductVariantUpdateSubmitData
 export interface UseProductVariantUpdateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelPriceData[];
+  referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
 }
 
-interface ProductVariantUpdateHandlers
+export interface ProductVariantUpdateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"
@@ -67,9 +79,13 @@ interface ProductVariantUpdateHandlers
       | "changeChannels",
       FormsetChange
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
+  fetchReferences: (value: string) => void;
+  fetchMoreReferences: FetchMoreProps;
 }
 
 export interface UseProductVariantUpdateFormResult {
@@ -133,11 +149,32 @@ function useProductVariantUpdateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleFetchReferences = createFetchReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchReferencePages,
+    opts.fetchReferenceProducts
+  );
+  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchMoreReferencePages,
+    opts.fetchMoreReferenceProducts
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
+    triggerChange
+  );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
     triggerChange
   );
   const handleStockAdd = (id: string) => {
@@ -186,7 +223,9 @@ function useProductVariantUpdateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages,
+      opts.referenceProducts
     ),
     channelListings: channels.data,
     stocks: stocks.data
@@ -224,9 +263,13 @@ function useProductVariantUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
+      fetchMoreReferences: handleFetchMoreReferences,
+      fetchReferences: handleFetchReferences,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
-      selectAttributeMultiple: handleAttributeMultiChange
+      selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged: changed,
     submit

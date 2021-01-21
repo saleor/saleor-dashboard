@@ -24,6 +24,7 @@ export const searchPageTypes = gql`
           attributes {
             id
             inputType
+            entityType
             slug
             name
             valueRequired

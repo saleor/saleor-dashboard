@@ -4,8 +4,8 @@ import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
-import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
@@ -17,7 +17,11 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { ReorderEvent } from "@saleor/types";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum
+} from "@saleor/types/globalTypes";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";
@@ -30,14 +34,21 @@ import {
 } from "react-intl";
 
 import FileUploadField, { FileChoiceType } from "../FileUploadField";
+import SortableChipsField, {
+  SortableChipsFieldValueType
+} from "../SortableChipsField";
+import BasicAttributeRow from "./BasicAttributeRow";
+import ExtendedAttributeRow from "./ExtendedAttributeRow";
 import { VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
+  entityType?: AttributeEntityTypeEnum;
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];
   selectedValues?: AttributeValueFragment[];
+  references?: AttributeReference[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
@@ -49,9 +60,12 @@ export interface AttributesProps {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  onChange: FormsetChange;
-  onMultiChange: FormsetChange;
-  onFileChange?: FormsetChange; // TODO: temporairy optional, should be changed to required, after all pages implement it
+  onChange: FormsetChange<string>;
+  onMultiChange: FormsetChange<string>;
+  onFileChange: FormsetChange<File>;
+  onReferencesRemove: FormsetChange<string[]>;
+  onReferencesAddClick: (attribute: AttributeInput) => void;
+  onReferencesReorder: FormsetChange<ReorderEvent>;
 }
 
 const useStyles = makeStyles(
@@ -123,6 +137,10 @@ function getMultiChoices(
 function getMultiDisplayValue(
   attribute: AttributeInput
 ): MultiAutocompleteChoiceType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
   return attribute.value.map(attributeValue => {
     const definedAttributeValue = attribute.data.values.find(
       definedValue => definedValue.slug === attributeValue
@@ -132,6 +150,40 @@ function getMultiDisplayValue(
         label: definedAttributeValue.name,
         value: definedAttributeValue.slug
       };
+    }
+
+    return {
+      label: attributeValue,
+      value: attributeValue
+    };
+  });
+}
+
+function getReferenceDisplayValue(
+  attribute: AttributeInput
+): SortableChipsFieldValueType[] {
+  if (!attribute.value) {
+    return [];
+  }
+
+  return attribute.value.map(attributeValue => {
+    const definedAttributeValue = attribute.data.values.find(
+      definedValue => definedValue.reference === attributeValue
+    );
+    // If value has been previously assigned, use it's data
+    if (!!definedAttributeValue) {
+      return {
+        label: definedAttributeValue.name,
+        value: definedAttributeValue.reference
+      };
+    }
+
+    const definedAttributeReference = attribute.data.references?.find(
+      reference => reference.value === attributeValue
+    );
+    // If value has not been yet assigned, use data of reference
+    if (!!definedAttributeReference) {
+      return definedAttributeReference;
     }
 
     return {
@@ -151,7 +203,7 @@ function getSingleChoices(
 }
 
 function getFileChoice(attribute: AttributeInput): FileChoiceType {
-  const attributeValue = attribute.value[0];
+  const attributeValue = attribute.value?.length > 0 && attribute.value[0];
 
   const definedAttributeValue = attribute.data.values.find(
     definedValue => definedValue.slug === attributeValue
@@ -210,7 +262,10 @@ const Attributes: React.FC<AttributesProps> = ({
   title,
   onChange,
   onMultiChange,
-  onFileChange
+  onFileChange,
+  onReferencesRemove,
+  onReferencesAddClick,
+  onReferencesReorder
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -255,76 +310,95 @@ const Attributes: React.FC<AttributesProps> = ({
               return (
                 <React.Fragment key={attribute.id}>
                   {attributeIndex > 0 && <Hr />}
-                  <Grid className={classes.attributeSection} variant="uniform">
-                    <div
-                      className={classes.attributeSectionLabel}
-                      data-test="attribute-label"
+                  {attribute.data.inputType ===
+                  AttributeInputTypeEnum.REFERENCE ? (
+                    <ExtendedAttributeRow
+                      label={attribute.label}
+                      selectLabel={intl.formatMessage({
+                        defaultMessage: "Assign references",
+                        description: "button label"
+                      })}
+                      onSelect={() => onReferencesAddClick(attribute)}
+                      disabled={disabled}
                     >
-                      <Typography>{attribute.label}</Typography>
-                    </div>
-                    <div data-test="attribute-value">
-                      {attribute.data.inputType ===
-                      AttributeInputTypeEnum.FILE ? (
-                        <FileUploadField
-                          className={classes.fileField}
-                          disabled={disabled}
-                          loading={loading}
-                          file={getFileChoice(attribute)}
-                          onFileUpload={file =>
-                            onFileChange(attribute.id, file)
-                          }
-                          onFileDelete={() =>
-                            onFileChange(attribute.id, undefined)
-                          }
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          inputProps={{
-                            name: `attribute:${attribute.label}`
-                          }}
-                        />
-                      ) : attribute.data.inputType ===
-                        AttributeInputTypeEnum.DROPDOWN ? (
-                        <SingleAutocompleteSelectField
-                          choices={getSingleChoices(attribute.data.values)}
-                          disabled={disabled}
-                          displayValue={
-                            attribute.data.values.find(
-                              value => value.slug === attribute.value[0]
-                            )?.name ||
-                            attribute.value[0] ||
-                            ""
-                          }
-                          emptyOption={!attribute.data.isRequired}
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          name={`attribute:${attribute.label}`}
-                          label={intl.formatMessage(messages.valueLabel)}
-                          value={attribute.value[0]}
-                          onChange={event =>
-                            onChange(attribute.id, event.target.value)
-                          }
-                          allowCustomValues={!attribute.data.isRequired}
-                        />
-                      ) : (
-                        <MultiAutocompleteSelectField
-                          choices={getMultiChoices(attribute.data.values)}
-                          displayValues={getMultiDisplayValue(attribute)}
-                          disabled={disabled}
-                          error={!!error}
-                          helperText={getErrorMessage(error, intl)}
-                          label={intl.formatMessage(
-                            messages.multipleValueLable
-                          )}
-                          name={`attribute:${attribute.label}`}
-                          value={attribute.value}
-                          onChange={event =>
-                            onMultiChange(attribute.id, event.target.value)
-                          }
-                          allowCustomValues={!attribute.data.isRequired}
-                        />
-                      )}
-                    </div>
-                  </Grid>
+                      <SortableChipsField
+                        values={getReferenceDisplayValue(attribute)}
+                        onValueDelete={value =>
+                          onReferencesRemove(
+                            attribute.id,
+                            attribute.value?.filter(id => id !== value)
+                          )
+                        }
+                        onValueReorder={event =>
+                          onReferencesReorder(attribute.id, event)
+                        }
+                        loading={loading}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                      />
+                    </ExtendedAttributeRow>
+                  ) : attribute.data.inputType ===
+                    AttributeInputTypeEnum.FILE ? (
+                    <BasicAttributeRow label={attribute.label}>
+                      <FileUploadField
+                        className={classes.fileField}
+                        disabled={disabled}
+                        loading={loading}
+                        file={getFileChoice(attribute)}
+                        onFileUpload={file => onFileChange(attribute.id, file)}
+                        onFileDelete={() =>
+                          onFileChange(attribute.id, undefined)
+                        }
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        inputProps={{
+                          name: `attribute:${attribute.label}`
+                        }}
+                      />
+                    </BasicAttributeRow>
+                  ) : attribute.data.inputType ===
+                    AttributeInputTypeEnum.DROPDOWN ? (
+                    <BasicAttributeRow label={attribute.label}>
+                      <SingleAutocompleteSelectField
+                        choices={getSingleChoices(attribute.data.values)}
+                        disabled={disabled}
+                        displayValue={
+                          attribute.data.values.find(
+                            value => value.slug === attribute.value[0]
+                          )?.name ||
+                          attribute.value[0] ||
+                          ""
+                        }
+                        emptyOption={!attribute.data.isRequired}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        name={`attribute:${attribute.label}`}
+                        label={intl.formatMessage(messages.valueLabel)}
+                        value={attribute.value[0]}
+                        onChange={event =>
+                          onChange(attribute.id, event.target.value)
+                        }
+                        allowCustomValues={!attribute.data.isRequired}
+                      />
+                    </BasicAttributeRow>
+                  ) : (
+                    <BasicAttributeRow label={attribute.label}>
+                      <MultiAutocompleteSelectField
+                        choices={getMultiChoices(attribute.data.values)}
+                        displayValues={getMultiDisplayValue(attribute)}
+                        disabled={disabled}
+                        error={!!error}
+                        helperText={getErrorMessage(error, intl)}
+                        label={intl.formatMessage(messages.multipleValueLable)}
+                        name={`attribute:${attribute.label}`}
+                        value={attribute.value}
+                        onChange={event =>
+                          onMultiChange(attribute.id, event.target.value)
+                        }
+                        allowCustomValues={!attribute.data.isRequired}
+                      />
+                    </BasicAttributeRow>
+                  )}
                 </React.Fragment>
               );
             })}

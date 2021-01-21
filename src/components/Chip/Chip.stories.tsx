@@ -1,9 +1,8 @@
 import Chip, { ChipProps } from "@saleor/components/Chip";
+import CardDecorator from "@saleor/storybook/CardDecorator";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-
-import CardDecorator from "../../CardDecorator";
-import Decorator from "../../Decorator";
 
 const props: ChipProps = {
   label: "Lorem Ipsum"

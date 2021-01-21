@@ -1,6 +1,11 @@
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import Attributes from "@saleor/components/Attributes";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
+import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -20,6 +25,8 @@ import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice
 import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import React from "react";
@@ -33,7 +40,8 @@ import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductCreateForm, {
   ProductCreateData,
-  ProductCreateFormData
+  ProductCreateFormData,
+  ProductCreateHandlers
 } from "./form";
 
 interface ProductCreatePageProps {
@@ -49,6 +57,8 @@ interface ProductCreatePageProps {
   fetchMoreProductTypes: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
   productTypes?: SearchProductTypes_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -60,6 +70,13 @@ interface ProductCreatePageProps {
   onWarehouseConfigure: () => void;
   openChannelsModal: () => void;
   onChannelsChange: (data: ChannelData[]) => void;
+  assignReferencesAttributeId?: string;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  onCloseDialog: () => void;
   onBack?();
   onSubmit?(data: ProductCreateData);
 }
@@ -80,6 +97,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   header,
   initial,
   productTypes: productTypeChoiceList,
+  referencePages = [],
+  referenceProducts = [],
   saveButtonBarState,
   warehouses,
   taxTypes,
@@ -89,7 +108,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onSubmit,
   onChannelsChange,
   onWarehouseConfigure,
-  openChannelsModal
+  openChannelsModal,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferencePages,
+  fetchMoreReferencePages,
+  fetchReferenceProducts,
+  fetchMoreReferenceProducts,
+  onCloseDialog
 }: ProductCreatePageProps) => {
   const intl = useIntl();
 
@@ -115,6 +141,24 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxType.taxCode
     })) || [];
 
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: ProductCreateData,
+    handlers: ProductCreateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
+
   return (
     <ProductCreateForm
       onSubmit={onSubmit}
@@ -122,6 +166,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       categories={categories}
       collections={collections}
       productTypes={productTypeChoiceList}
+      referencePages={referencePages}
+      referenceProducts={referenceProducts}
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
@@ -131,6 +177,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       warehouses={warehouses}
       currentChannels={currentChannels}
       productTypeChoiceList={productTypeChoiceList}
+      fetchReferencePages={fetchReferencePages}
+      fetchMoreReferencePages={fetchMoreReferencePages}
+      fetchReferenceProducts={fetchReferenceProducts}
+      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      assignReferencesAttributeId={assignReferencesAttributeId}
     >
       {({
         change,
@@ -168,6 +219,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
                     onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
                   />
                 )}
                 <CardSpacer />
@@ -283,6 +337,29 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               state={saveButtonBarState}
               disabled={loading || !onSubmit || formDisabled || !hasChanged}
             />
+            {canOpenAssignReferencesAttributeDialog && (
+              <AssignAttributeValueDialog
+                attributeValues={getAttributeValuesFromReferences(
+                  assignReferencesAttributeId,
+                  data.attributes,
+                  referencePages,
+                  referenceProducts
+                )}
+                hasMore={handlers.fetchMoreReferences?.hasMore}
+                open={canOpenAssignReferencesAttributeDialog}
+                onFetch={handlers.fetchReferences}
+                onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                loading={handlers.fetchMoreReferences?.loading}
+                onClose={onCloseDialog}
+                onSubmit={attributeValues =>
+                  handleAssignReferenceAttribute(
+                    attributeValues,
+                    data,
+                    handlers
+                  )
+                }
+              />
+            )}
           </Container>
         );
       }}

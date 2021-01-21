@@ -18,6 +18,7 @@ import {
   productPath,
   ProductUrlQueryParams,
   productVariantAddPath,
+  ProductVariantAddUrlQueryParams,
   productVariantCreatorPath,
   productVariantEditPath,
   ProductVariantEditUrlQueryParams
@@ -99,11 +100,17 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
-}) => (
-  <ProductVariantCreateComponent
-    productId={decodeURIComponent(match.params.id)}
-  />
-);
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductVariantAddUrlQueryParams = qs;
+
+  return (
+    <ProductVariantCreateComponent
+      productId={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const ProductVariantCreator: React.FC<RouteComponentProps<{
   id: string;

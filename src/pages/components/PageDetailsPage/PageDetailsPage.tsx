@@ -1,5 +1,10 @@
+import {
+  getAttributeValuesFromReferences,
+  mergeAttributeValues
+} from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
-import Attributes from "@saleor/components/Attributes";
+import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
+import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -13,7 +18,9 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -21,13 +28,15 @@ import { useIntl } from "react-intl";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
-import PageForm, { PageData } from "./form";
+import PageForm, { PageData, PageUpdateHandlers } from "./form";
 
 export interface PageDetailsPageProps {
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
   pageTypes?: SearchPageTypes_search_edges_node[];
+  referencePages?: SearchPages_search_edges_node[];
+  referenceProducts?: SearchProducts_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -35,6 +44,13 @@ export interface PageDetailsPageProps {
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
+  onAssignReferencesClick: (attribute: AttributeInput) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  onCloseDialog: () => void;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -42,20 +58,58 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   errors,
   page,
   pageTypes,
+  referencePages = [],
+  referenceProducts = [],
   saveButtonBarState,
   onBack,
   onRemove,
   onSubmit,
   fetchPageTypes,
-  fetchMorePageTypes
+  fetchMorePageTypes,
+  assignReferencesAttributeId,
+  onAssignReferencesClick,
+  fetchReferencePages,
+  fetchMoreReferencePages,
+  fetchReferenceProducts,
+  fetchMoreReferenceProducts,
+  onCloseDialog
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
   const pageExists = page !== null;
 
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleAssignReferenceAttribute = (
+    attributeValues: string[],
+    data: PageData,
+    handlers: PageUpdateHandlers
+  ) => {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes
+      )
+    );
+    onCloseDialog();
+  };
+
   return (
-    <PageForm page={page} pageTypes={pageTypes} onSubmit={onSubmit}>
+    <PageForm
+      page={page}
+      pageTypes={pageTypes}
+      referencePages={referencePages}
+      referenceProducts={referenceProducts}
+      fetchReferencePages={fetchReferencePages}
+      fetchMoreReferencePages={fetchMoreReferencePages}
+      fetchReferenceProducts={fetchReferenceProducts}
+      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      assignReferencesAttributeId={assignReferencesAttributeId}
+      onSubmit={onSubmit}
+    >
       {({ change, data, pageType, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -107,6 +161,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onChange={handlers.selectAttribute}
                   onMultiChange={handlers.selectAttributeMulti}
                   onFileChange={handlers.selectAttributeFile}
+                  onReferencesRemove={handlers.selectAttributeReference}
+                  onReferencesAddClick={onAssignReferencesClick}
+                  onReferencesReorder={handlers.reorderAttributeValue}
                 />
               )}
               <CardSpacer />
@@ -161,6 +218,25 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             onDelete={page === null ? undefined : onRemove}
             onSave={submit}
           />
+          {canOpenAssignReferencesAttributeDialog && (
+            <AssignAttributeValueDialog
+              attributeValues={getAttributeValuesFromReferences(
+                assignReferencesAttributeId,
+                data.attributes,
+                referencePages,
+                referenceProducts
+              )}
+              hasMore={handlers.fetchMoreReferences?.hasMore}
+              open={canOpenAssignReferencesAttributeDialog}
+              onFetch={handlers.fetchReferences}
+              onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+              loading={handlers.fetchMoreReferences?.loading}
+              onClose={onCloseDialog}
+              onSubmit={attributeValues =>
+                handleAssignReferenceAttribute(attributeValues, data, handlers)
+              }
+            />
+          )}
         </Container>
       )}
     </PageForm>

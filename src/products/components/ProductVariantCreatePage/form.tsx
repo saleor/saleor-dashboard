@@ -1,3 +1,13 @@
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler,
+  createFetchMoreReferencesHandler,
+  createFetchReferencesHandler
+} from "@saleor/attributes/utils/handlers";
 import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -7,27 +17,20 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
-import {
-  getAttributesDisplayData,
-  getVariantAttributeInputFromProduct
-} from "@saleor/products/utils/data";
-import {
-  createAttributeFileChangeHandler,
-  getChannelsInput
-} from "@saleor/products/utils/handlers";
-import {
-  createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
-} from "@saleor/products/utils/handlers";
+import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+import { getChannelsInput } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 
-import { ProductStockInput } from "../ProductStocks";
+import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
@@ -44,9 +47,16 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 export interface UseProductVariantCreateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelPriceData[];
+  referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
 }
 
-interface ProductVariantCreateHandlers
+export interface ProductVariantCreateHandlers
   extends Record<
       | "changeStock"
       | "selectAttribute"
@@ -54,9 +64,13 @@ interface ProductVariantCreateHandlers
       | "changeChannels",
       FormsetChange
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
+  fetchReferences: (value: string) => void;
+  fetchMoreReferences: FetchMoreProps;
 }
 
 export interface UseProductVariantCreateFormResult {
@@ -98,7 +112,7 @@ function useProductVariantCreateForm(
   const form = useForm(initial);
   const attributes = useFormset(attributeInput);
   const attributesWithNewFileValue = useFormset<null, File>([]);
-  const stocks = useFormset<null, string>([]);
+  const stocks = useFormset<ProductStockFormsetData, string>([]);
   const channels = useFormset(channelsInput);
   const {
     makeChangeHandler: makeMetadataChangeHandler
@@ -118,6 +132,22 @@ function useProductVariantCreateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleFetchReferences = createFetchReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchReferencePages,
+    opts.fetchReferenceProducts
+  );
+  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchMoreReferencePages,
+    opts.fetchMoreReferenceProducts
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -125,10 +155,17 @@ function useProductVariantCreateForm(
     attributesWithNewFileValue.change,
     triggerChange
   );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
+    triggerChange
+  );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated: 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"
@@ -157,7 +194,9 @@ function useProductVariantCreateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages,
+      opts.referenceProducts
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
@@ -176,9 +215,13 @@ function useProductVariantCreateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
+      fetchMoreReferences: handleFetchMoreReferences,
+      fetchReferences: handleFetchReferences,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
-      selectAttributeMultiple: handleAttributeMultiChange
+      selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged: changed,
     submit
