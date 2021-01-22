@@ -13,7 +13,7 @@ jobs:
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard
-      SENTRY_URL_PREFIX: "~/static"
+      SENTRY_URL_PREFIX: "~/dashboard/static"
       ENVIRONMENT: master-staging
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
