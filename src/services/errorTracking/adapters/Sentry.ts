@@ -4,13 +4,15 @@ import { TrackerMethods } from "../types";
 
 interface Config {
   dsn: string;
+  environment?: string;
 }
 
 export const SentryAdapter = (config: Config): TrackerMethods => {
   const init: TrackerMethods["init"] = () => {
     if (config?.dsn) {
       Sentry.init({
-        dsn: config.dsn
+        dsn: config.dsn,
+        environment: config.environment
       });
       return true;
     }
