@@ -1,11 +1,11 @@
 import { TrackerMethods, TrackerPermission, UserData } from "./types";
 
-type ErrorTrackingFactory = (
+type ErrorTrackerFactory = (
   ExtensionFactory: TrackerMethods,
   permissions?: TrackerPermission[]
 ) => TrackerMethods;
 
-export const ErrorTrackingFactory: ErrorTrackingFactory = (
+export const ErrorTrackerFactory: ErrorTrackerFactory = (
   extension,
   permissions = []
 ) => {

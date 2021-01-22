@@ -1,9 +1,11 @@
 import { SentryAdapter } from "./adapters";
-import { ErrorTrackingFactory } from "./errorTracking";
+import { ErrorTrackerFactory } from "./trackerFactory";
 
-export const errorTracking = ErrorTrackingFactory(
+const errorTracker = ErrorTrackerFactory(
   SentryAdapter({
     dsn: process.env.SENTRY_DSN,
     environment: process.env.ENVIRONMENT
   })
 );
+
+export default errorTracker;

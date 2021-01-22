@@ -54,7 +54,7 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
-import { errorTracking } from "./services/errorTracking";
+import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -68,7 +68,7 @@ if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
-errorTracking.init();
+errorTracker.init();
 
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
@@ -163,7 +163,7 @@ const Routes: React.FC = () => {
         <AppLayout>
           <ErrorBoundary
             onError={e => {
-              const errorId = errorTracking.captureException(e);
+              const errorId = errorTracker.captureException(e);
 
               dispatchAppState({
                 payload: {

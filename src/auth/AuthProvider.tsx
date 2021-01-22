@@ -4,7 +4,7 @@ import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
-import { errorTracking } from "@saleor/services/errorTracking";
+import errorTracker from "@saleor/services/errorTracking";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
@@ -55,7 +55,7 @@ export function useAuthProvider(
   useEffect(() => {
     if (userContext) {
       const { id, email, firstName, lastName } = userContext;
-      errorTracking.setUserData({
+      errorTracker.setUserData({
         email,
         id,
         username: `${firstName} ${lastName}`

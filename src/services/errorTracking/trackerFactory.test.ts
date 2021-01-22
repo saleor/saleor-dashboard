@@ -1,4 +1,4 @@
-import { ErrorTrackingFactory } from "./errorTracking";
+import { ErrorTrackerFactory } from "./trackerFactory";
 import { TrackerMethods, TrackerPermission } from "./types";
 
 const testErrorId = "testId";
@@ -27,7 +27,7 @@ const TestAdapter = (): TrackerMethods => {
 
 describe("Error Tracking", () => {
   it("Initiates the tracker", () => {
-    const errorTracking = ErrorTrackingFactory(TestAdapter());
+    const errorTracking = ErrorTrackerFactory(TestAdapter());
     const enabled = errorTracking.init();
 
     expect(enabled).toBe(true);
@@ -35,7 +35,7 @@ describe("Error Tracking", () => {
   });
 
   it("Does not fire events when is not initiated", () => {
-    const errorTracking = ErrorTrackingFactory(TestAdapter());
+    const errorTracking = ErrorTrackerFactory(TestAdapter());
     const sampleError = new Error("test");
     const id = errorTracking.captureException(sampleError);
 
@@ -44,7 +44,7 @@ describe("Error Tracking", () => {
   });
 
   it("Sends a captured exception", () => {
-    const errorTracking = ErrorTrackingFactory(TestAdapter());
+    const errorTracking = ErrorTrackerFactory(TestAdapter());
     errorTracking.init();
     const sampleError = new Error("test");
     const id = errorTracking.captureException(sampleError);
@@ -54,7 +54,7 @@ describe("Error Tracking", () => {
   });
 
   it("Does not save user data without permission", () => {
-    const errorTracking = ErrorTrackingFactory(TestAdapter());
+    const errorTracking = ErrorTrackerFactory(TestAdapter());
     errorTracking.init();
     const userData = {
       email: "john@example.com",
@@ -67,7 +67,7 @@ describe("Error Tracking", () => {
   });
 
   it("Does save user data with proper permission", () => {
-    const errorTracking = ErrorTrackingFactory(TestAdapter(), [
+    const errorTracking = ErrorTrackerFactory(TestAdapter(), [
       TrackerPermission.USER_DATA
     ]);
     errorTracking.init();
