@@ -4,7 +4,6 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
