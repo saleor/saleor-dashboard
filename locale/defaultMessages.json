@@ -3776,6 +3776,10 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1097582574": {
+    "context": "section header returned",
+    "string": "Fulfillment returned"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
     "string": "Price"
