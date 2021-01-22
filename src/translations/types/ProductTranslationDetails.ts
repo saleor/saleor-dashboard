@@ -16,7 +16,7 @@ export interface ProductTranslationDetails_translation_ProductTranslatableConten
   __typename: "Product";
   id: string;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -30,7 +30,7 @@ export interface ProductTranslationDetails_translation_ProductTranslatableConten
 export interface ProductTranslationDetails_translation_ProductTranslatableContent_translation {
   __typename: "ProductTranslation";
   id: string;
-  descriptionJson: any;
+  description: any;
   language: ProductTranslationDetails_translation_ProductTranslatableContent_translation_language;
   name: string;
   seoDescription: string | null;

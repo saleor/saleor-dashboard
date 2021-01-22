@@ -56,7 +56,7 @@ function useCategoryUpdateForm(
     slug: category?.slug || ""
   });
   const [description, changeDescription] = useRichText({
-    initial: category?.descriptionJson,
+    initial: category?.description,
     triggerChange
   });
 

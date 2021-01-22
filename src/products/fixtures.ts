@@ -204,7 +204,7 @@ export const product: (
     }
   ],
   defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
-  descriptionJson: JSON.stringify(content),
+  description: JSON.stringify(content),
   id: "p10171",
   images: [
     {

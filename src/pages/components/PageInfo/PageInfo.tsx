@@ -39,7 +39,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["title", "contentJson"], errors);
+  const formErrors = getFormErrors(["title", "content"], errors);
 
   return (
     <Card className={classes.root}>
@@ -64,8 +64,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
         <RichTextEditor
           data={data.content}
           disabled={disabled}
-          error={!!formErrors.contentJson}
-          helperText={getPageErrorMessage(formErrors.contentJson, intl)}
+          error={!!formErrors.content}
+          helperText={getPageErrorMessage(formErrors.content, intl)}
           label={intl.formatMessage({
             defaultMessage: "Content",
             description: "page content"

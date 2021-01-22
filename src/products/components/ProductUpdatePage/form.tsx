@@ -205,7 +205,7 @@ function useProductUpdateForm(
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
   const [description, changeDescription] = useRichText({
-    initial: product?.descriptionJson,
+    initial: product?.description,
     triggerChange
   });
 

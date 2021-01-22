@@ -128,7 +128,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                   attributes: formData.attributes,
                   updatedFileAttributes
                 }),
-                contentJson: JSON.stringify(formData.content),
+                content: JSON.stringify(formData.content),
                 isPublished: formData.isPublished,
                 pageType: formData.pageType,
                 publicationDate: formData.publicationDate,

@@ -259,7 +259,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   privateMetadata: (ProductVariantSetDefault_productVariantSetDefault_product_privateMetadata | null)[];
   name: string;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

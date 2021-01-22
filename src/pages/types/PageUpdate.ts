@@ -116,7 +116,7 @@ export interface PageUpdate_pageUpdate_page {
   pageType: PageUpdate_pageUpdate_page_pageType;
   metadata: (PageUpdate_pageUpdate_page_metadata | null)[];
   privateMetadata: (PageUpdate_pageUpdate_page_privateMetadata | null)[];
-  contentJson: any;
+  content: any;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;

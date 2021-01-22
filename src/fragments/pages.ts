@@ -56,7 +56,7 @@ export const pageDetailsFragment = gql`
     ...PageFragment
     ...PageAttributesFragment
     ...MetadataFragment
-    contentJson
+    content
     seoTitle
     seoDescription
     publicationDate

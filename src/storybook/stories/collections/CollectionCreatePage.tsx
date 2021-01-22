@@ -39,7 +39,7 @@ storiesOf("Views / Collections / Create collection", module)
         },
         {
           code: CollectionErrorCode.REQUIRED,
-          field: "descriptionJson"
+          field: "description"
         }
       ].map(err => ({
         __typename: "CollectionError",

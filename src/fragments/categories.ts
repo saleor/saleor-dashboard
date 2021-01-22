@@ -25,7 +25,7 @@ export const categoryDetailsFragment = gql`
     }
     name
     slug
-    descriptionJson
+    description
     seoDescription
     seoTitle
     parent {

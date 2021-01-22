@@ -53,7 +53,7 @@ const createPageInput = (
     attributes: data.attributes,
     updatedFileAttributes
   }),
-  contentJson: JSON.stringify(data.content),
+  content: JSON.stringify(data.content),
   isPublished: data.isPublished,
   publicationDate: data.publicationDate,
   seo: {

@@ -145,7 +145,7 @@ export const page: PageDetails_page = {
       __typename: "SelectedAttribute"
     }
   ],
-  contentJson: JSON.stringify(content),
+  content: JSON.stringify(content),
   id: "Kzx152sEm==",
   isPublished: false,
   metadata: [

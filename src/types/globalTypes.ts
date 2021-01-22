@@ -1119,8 +1119,7 @@ export interface CategoryFilterInput {
 }
 
 export interface CategoryInput {
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   seo?: SeoInput | null;
@@ -1160,8 +1159,7 @@ export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
@@ -1180,8 +1178,7 @@ export interface CollectionInput {
   isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
@@ -1429,8 +1426,7 @@ export interface OrderUpdateShippingInput {
 export interface PageCreateInput {
   slug?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
   attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
@@ -1441,8 +1437,7 @@ export interface PageCreateInput {
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
   attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
@@ -1551,8 +1546,7 @@ export interface ProductCreateInput {
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
@@ -1584,8 +1578,7 @@ export interface ProductInput {
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
@@ -1818,8 +1811,7 @@ export interface TranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   name?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
 }
 
 export interface UserCreateInput {

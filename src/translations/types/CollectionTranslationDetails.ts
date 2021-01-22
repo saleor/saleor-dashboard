@@ -16,7 +16,7 @@ export interface CollectionTranslationDetails_translation_CollectionTranslatable
   __typename: "Collection";
   id: string;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -29,7 +29,7 @@ export interface CollectionTranslationDetails_translation_CollectionTranslatable
 export interface CollectionTranslationDetails_translation_CollectionTranslatableContent_translation {
   __typename: "CollectionTranslation";
   id: string;
-  descriptionJson: any;
+  description: any;
   language: CollectionTranslationDetails_translation_CollectionTranslatableContent_translation_language;
   name: string;
   seoDescription: string | null;
