@@ -43,7 +43,7 @@ export interface SingleAutocompleteSelectFieldProps
   InputProps?: InputProps;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
-  FormHelperTextProps: ExtendedFormHelperTextProps;
+  FormHelperTextProps?: ExtendedFormHelperTextProps;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
