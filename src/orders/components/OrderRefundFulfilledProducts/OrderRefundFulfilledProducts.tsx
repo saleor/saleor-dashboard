@@ -17,6 +17,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_fulfillments } from "@saleor/orders/types/OrderRefundData";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -91,10 +92,15 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
       <CardTitle
         title={
           <>
-            {intl.formatMessage({
-              defaultMessage: "Fulfillment",
-              description: "section header"
-            })}
+            {fulfillment.status === FulfillmentStatus.RETURNED
+              ? intl.formatMessage({
+                  defaultMessage: "Fulfillment returned",
+                  description: "section header returned"
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Fulfillment",
+                  description: "section header"
+                })}
             {fulfillment && (
               <Typography className={classes.orderNumber} variant="body1">
                 {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}
