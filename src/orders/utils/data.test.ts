@@ -738,7 +738,7 @@ describe("Get the total value of all replaced products", () => {
       }
     ];
 
-    const unfulfiledItemsQuantities: FormsetData<LineItemData, number> = [
+    const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
         data: { isFulfillment: false, isRefunded: false },
         id: "1",
@@ -759,7 +759,7 @@ describe("Get the total value of all replaced products", () => {
       }
     ];
 
-    const fulfiledItemsQuantities: FormsetData<LineItemData, number> = [
+    const fulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
         data: { isFulfillment: true, isRefunded: false },
         id: "4",
@@ -861,8 +861,8 @@ describe("Get the total value of all replaced products", () => {
       },
       {
         itemsToBeReplaced,
-        unfulfiledItemsQuantities,
-        fulfiledItemsQuantities
+        unfulfilledItemsQuantities,
+        fulfilledItemsQuantities
       }
     );
 
@@ -1085,42 +1085,42 @@ describe("Get the total value of all selected products", () => {
       }
     ];
 
-    const unfulfiledItemsQuantities: FormsetData<null, number> = [
+    const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "1",
         label: null,
         value: 0
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "2",
         label: null,
         value: 2
       },
       {
-        data: null,
+        data: { isFulfillment: false, isRefunded: false },
         id: "3",
         label: null,
         value: 1
       }
     ];
 
-    const fulfiledItemsQuantities: FormsetData<null, number> = [
+    const fulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "4",
         label: null,
         value: 4
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "5",
         label: null,
         value: 0
       },
       {
-        data: null,
+        data: { isFulfillment: true, isRefunded: false },
         id: "6",
         label: null,
         value: 3
@@ -1196,8 +1196,8 @@ describe("Get the total value of all selected products", () => {
       },
       {
         itemsToBeReplaced,
-        unfulfiledItemsQuantities,
-        fulfiledItemsQuantities
+        unfulfilledItemsQuantities,
+        fulfilledItemsQuantities
       }
     );
 

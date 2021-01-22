@@ -82,6 +82,7 @@ interface OrderRefundAmountProps {
   isReturn?: boolean;
   errors: OrderErrorFragment[];
   amountData: OrderRefundAmountValuesProps;
+  allowNoRefund?: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onRefund: () => void;
 }
@@ -96,7 +97,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     onRefund,
     isReturn = false,
     amountData,
-    disableSubmitButton
+    disableSubmitButton,
+    allowNoRefund = false
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -144,6 +146,17 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
             onChange={onChange}
             name="amountCalculationMode"
           >
+            {allowNoRefund && (
+              <FormControlLabel
+                disabled={disabled}
+                value={OrderRefundAmountCalculationMode.NONE}
+                control={<Radio color="primary" />}
+                label={intl.formatMessage({
+                  defaultMessage: "No refund",
+                  description: "label"
+                })}
+              />
+            )}
             <FormControlLabel
               disabled={disabled}
               value={OrderRefundAmountCalculationMode.AUTOMATIC}
@@ -153,6 +166,18 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 description: "label"
               })}
             />
+            {data.amountCalculationMode ===
+              OrderRefundAmountCalculationMode.NONE && (
+              <>
+                <CardSpacer />
+                <OrderRefundAmountValues
+                  authorizedAmount={authorizedAmount}
+                  previouslyRefunded={previouslyRefunded}
+                  maxRefund={maxRefund}
+                  shipmentCost={data.refundShipmentCosts && shipmentCost}
+                />
+              </>
+            )}
             {data.amountCalculationMode ===
               OrderRefundAmountCalculationMode.AUTOMATIC && (
               <>

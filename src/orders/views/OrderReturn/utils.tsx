@@ -23,17 +23,17 @@ class ReturnFormDataParser {
 
   public getParsedData = (): OrderReturnProductsInput => {
     const {
-      fulfiledItemsQuantities,
-      unfulfiledItemsQuantities,
+      fulfilledItemsQuantities,
+      unfulfilledItemsQuantities,
       refundShipmentCosts
     } = this.formData;
 
     const fulfillmentLines = this.getParsedLineData<
       OrderReturnFulfillmentLineInput
-    >(fulfiledItemsQuantities, "fulfillmentLineId");
+    >(fulfilledItemsQuantities, "fulfillmentLineId");
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
-      unfulfiledItemsQuantities,
+      unfulfilledItemsQuantities,
       "orderLineId"
     );
 
@@ -78,7 +78,11 @@ class ReturnFormDataParser {
     orderLines: OrderReturnLineInput[],
     fulfillmentLines: OrderReturnFulfillmentLineInput[]
   ) => {
-    if (!this.order.totalCaptured?.amount) {
+    if (
+      !this.order.totalCaptured?.amount ||
+      this.formData.amountCalculationMode ===
+        OrderRefundAmountCalculationMode.NONE
+    ) {
       return false;
     }
 

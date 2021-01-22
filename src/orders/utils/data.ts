@@ -53,8 +53,8 @@ const getItemPriceAndQuantity = ({
 const selectItemPriceAndQuantity = (
   order: OrderDetails_order,
   {
-    fulfiledItemsQuantities,
-    unfulfiledItemsQuantities
+    fulfilledItemsQuantities,
+    unfulfilledItemsQuantities
   }: Partial<OrderReturnFormData>,
   id: string,
   isFulfillment: boolean
@@ -62,12 +62,12 @@ const selectItemPriceAndQuantity = (
   isFulfillment
     ? getItemPriceAndQuantity({
         id,
-        itemsQuantities: fulfiledItemsQuantities,
+        itemsQuantities: fulfilledItemsQuantities,
         orderLines: getAllOrderFulfilledLines(order)
       })
     : getItemPriceAndQuantity({
         id,
-        itemsQuantities: unfulfiledItemsQuantities,
+        itemsQuantities: unfulfilledItemsQuantities,
         orderLines: order.lines
       });
 
@@ -75,8 +75,8 @@ export const getReplacedProductsAmount = (
   order: OrderDetails_order,
   {
     itemsToBeReplaced,
-    unfulfiledItemsQuantities,
-    fulfiledItemsQuantities
+    unfulfilledItemsQuantities,
+    fulfilledItemsQuantities
   }: Partial<OrderReturnFormData>
 ) => {
   if (!order || !itemsToBeReplaced.length) {
@@ -94,7 +94,7 @@ export const getReplacedProductsAmount = (
 
       const { unitPrice, selectedQuantity } = selectItemPriceAndQuantity(
         order,
-        { fulfiledItemsQuantities, unfulfiledItemsQuantities },
+        { fulfilledItemsQuantities, unfulfilledItemsQuantities },
         id,
         isFulfillment
       );
@@ -107,20 +107,20 @@ export const getReplacedProductsAmount = (
 
 export const getReturnSelectedProductsAmount = (
   order: OrderDetails_order,
-  { itemsToBeReplaced, unfulfiledItemsQuantities, fulfiledItemsQuantities }
+  { itemsToBeReplaced, unfulfilledItemsQuantities, fulfilledItemsQuantities }
 ) => {
   if (!order) {
     return 0;
   }
 
   const unfulfilledItemsValue = getPartialProductsValue({
-    itemsQuantities: unfulfiledItemsQuantities,
+    itemsQuantities: unfulfilledItemsQuantities,
     itemsToBeReplaced,
     orderLines: order.lines
   });
 
   const fulfiledItemsValue = getPartialProductsValue({
-    itemsQuantities: fulfiledItemsQuantities,
+    itemsQuantities: fulfilledItemsQuantities,
     itemsToBeReplaced,
     orderLines: getAllOrderFulfilledLines(order)
   });
@@ -137,24 +137,24 @@ const getPartialProductsValue = ({
   itemsQuantities: FormsetData<LineItemData, number>;
   orderLines: OrderDetails_order_lines[];
 }) =>
-  itemsQuantities.reduce((resultAmount, { id, value: quantity }) => {
-    const {
-      value: isItemToBeReplaced,
-      data: { isRefunded }
-    } = itemsToBeReplaced.find(getById(id));
+  itemsQuantities.reduce(
+    (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
+      const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
 
-    if (quantity < 1 || isItemToBeReplaced || isRefunded) {
-      return resultAmount;
-    }
+      if (quantity < 1 || isItemToBeReplaced || isRefunded) {
+        return resultAmount;
+      }
 
-    const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
-      id,
-      itemsQuantities,
-      orderLines
-    });
+      const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
+        id,
+        itemsQuantities,
+        orderLines
+      });
 
-    return resultAmount + unitPrice.gross.amount * selectedQuantity;
-  }, 0);
+      return resultAmount + unitPrice.gross.amount * selectedQuantity;
+    },
+    0
+  );
 
 export function getRefundedLinesPriceSum(
   lines: OrderRefundData_order_lines[],

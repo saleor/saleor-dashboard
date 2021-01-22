@@ -47,8 +47,8 @@ export interface OrderReturnHandlers {
 
 export interface OrderReturnFormData extends OrderReturnData {
   itemsToBeReplaced: FormsetReplacementData;
-  fulfiledItemsQuantities: FormsetQuantityData;
-  unfulfiledItemsQuantities: FormsetQuantityData;
+  fulfilledItemsQuantities: FormsetQuantityData;
+  unfulfilledItemsQuantities: FormsetQuantityData;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -184,9 +184,9 @@ function useOrderReturnForm(
   };
 
   const data: OrderReturnFormData = {
-    fulfiledItemsQuantities: fulfiledItemsQuatities.data,
+    fulfilledItemsQuantities: fulfiledItemsQuatities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
-    unfulfiledItemsQuantities: unfulfiledItemsQuantites.data,
+    unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
     ...form.data
   };
 

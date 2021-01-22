@@ -25,7 +25,6 @@ const useStyles = makeStyles(
         paddingTop: theme.spacing(2)
       },
       "&.Mui-expanded": {
-        borderColor: "red",
         margin: 0,
         minHeight: 0
       },
@@ -48,7 +47,7 @@ const useStyles = makeStyles(
       "&> .MuiExpansionPanelSummary-expandIcon": {
         padding: 0,
         position: "absolute",
-        right: theme.spacing(18)
+        right: theme.spacing(20)
       },
       margin: 0,
       minHeight: 0,
