@@ -1,5 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { FormHelperTextProps } from "@material-ui/core/FormHelperText";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -20,6 +21,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
+import { ExtendedFormHelperTextProps } from "./types";
 
 export interface FormData {
   name: string;
@@ -80,6 +82,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
             disabled={disabled}
             fullWidth
+            FormHelperTextProps={
+              {
+                "data-testid": "slug-text-input-helper-text"
+              } as ExtendedFormHelperTextProps
+            }
             label={intl.formatMessage({
               defaultMessage: "Slug",
               description: "channel slug"
@@ -127,6 +134,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               data-test-id="channel-currency-select-input"
               allowCustomValues
               error={!!formErrors.currencyCode}
+              FormHelperTextProps={
+                {
+                  "data-testid": "currency-text-input-helper-text"
+                } as ExtendedFormHelperTextProps
+              }
               helperText={getChannelsErrorMessage(
                 formErrors?.currencyCode,
                 intl
