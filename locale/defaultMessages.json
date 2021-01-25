@@ -70,6 +70,10 @@
     "context": "draft created from replace event title",
     "string": "Draft was reissued from order "
   },
+  "event title marked as paid": {
+    "context": "order marked as paid event title",
+    "string": "Order was marked as paid by"
+  },
   "event title refunded": {
     "context": "refunded event title",
     "string": "Products were refunded by "
@@ -6884,6 +6888,10 @@
   "tableColQuantity": {
     "context": "table column header",
     "string": "Quantity"
+  },
+  "transaction reference subtitle": {
+    "context": "transaction reference subtitle",
+    "string": "Transaction reference"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
