@@ -214,14 +214,14 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="isPublished" displayColumns={settings.columns}>
             <col className={classes.colPublished} />
           </DisplayColumn>
+          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
+            <col className={classes.colUpdatedAt} />
+          </DisplayColumn>
           {gridAttributesFromSettings.map(gridAttribute => (
             <col className={classes.colAttribute} key={gridAttribute} />
           ))}
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <col className={classes.colPrice} />
-          </DisplayColumn>
-          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
-            <col className={classes.colupdatedAt} />
           </DisplayColumn>
         </colgroup>
         <TableHead
