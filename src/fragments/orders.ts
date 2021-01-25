@@ -50,6 +50,7 @@ export const fragmentOrderLine = gql`
     quantity
     quantityFulfilled
     unitPrice {
+      currency
       gross {
         amount
         currency

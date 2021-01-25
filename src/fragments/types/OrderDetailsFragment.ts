@@ -107,6 +107,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice_net
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -125,7 +126,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDetailsFragment_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -172,6 +173,7 @@ export interface OrderDetailsFragment_lines_unitPrice_net {
 
 export interface OrderDetailsFragment_lines_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderDetailsFragment_lines_unitPrice_gross;
   net: OrderDetailsFragment_lines_unitPrice_net;
 }
@@ -190,7 +192,7 @@ export interface OrderDetailsFragment_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDetailsFragment_lines_unitPrice | null;
+  unitPrice: OrderDetailsFragment_lines_unitPrice;
   thumbnail: OrderDetailsFragment_lines_thumbnail | null;
 }
 
@@ -328,22 +330,22 @@ export interface OrderDetailsFragment {
   fulfillments: (OrderDetailsFragment_fulfillments | null)[];
   lines: (OrderDetailsFragment_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetailsFragment_shippingAddress | null;
   shippingMethod: OrderDetailsFragment_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderDetailsFragment_shippingPrice | null;
+  shippingPrice: OrderDetailsFragment_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderDetailsFragment_subtotal | null;
-  total: OrderDetailsFragment_total | null;
+  subtotal: OrderDetailsFragment_subtotal;
+  total: OrderDetailsFragment_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderDetailsFragment_totalAuthorized | null;
-  totalCaptured: OrderDetailsFragment_totalCaptured | null;
+  totalAuthorized: OrderDetailsFragment_totalAuthorized;
+  totalCaptured: OrderDetailsFragment_totalCaptured;
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
   discount: OrderDetailsFragment_discount | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }

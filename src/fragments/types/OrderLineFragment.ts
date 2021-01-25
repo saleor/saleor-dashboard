@@ -26,6 +26,7 @@ export interface OrderLineFragment_unitPrice_net {
 
 export interface OrderLineFragment_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderLineFragment_unitPrice_gross;
   net: OrderLineFragment_unitPrice_net;
 }
@@ -44,6 +45,6 @@ export interface OrderLineFragment {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLineFragment_unitPrice | null;
+  unitPrice: OrderLineFragment_unitPrice;
   thumbnail: OrderLineFragment_thumbnail | null;
 }

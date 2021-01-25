@@ -34,6 +34,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice_net;
 }
@@ -52,7 +53,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice | null;
+  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_thumbnail | null;
 }
 
@@ -178,6 +179,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -196,7 +198,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -243,6 +245,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice_net;
 }
@@ -261,7 +264,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice | null;
+  unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_thumbnail | null;
 }
 
@@ -399,24 +402,24 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   fulfillments: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments | null)[];
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingPrice | null;
+  shippingPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal | null;
-  total: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total | null;
+  subtotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal;
+  total: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalAuthorized | null;
-  totalCaptured: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalCaptured | null;
+  totalAuthorized: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalAuthorized;
+  totalCaptured: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalCaptured;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discount | null;
   invoices: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices | null)[] | null;
   channel: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts {

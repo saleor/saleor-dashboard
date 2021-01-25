@@ -27,6 +27,6 @@ export interface RefundOrderLineFragment {
   id: string;
   productName: string;
   quantity: number;
-  unitPrice: RefundOrderLineFragment_unitPrice | null;
+  unitPrice: RefundOrderLineFragment_unitPrice;
   thumbnail: RefundOrderLineFragment_thumbnail | null;
 }

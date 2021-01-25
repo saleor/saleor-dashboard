@@ -113,6 +113,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_o
 
 export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -131,7 +132,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderLineDelete_draftOrderLineDelete_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -178,6 +179,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice_net 
 
 export interface OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice {
   __typename: "TaxedMoney";
+  currency: string;
   gross: OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice_gross;
   net: OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice_net;
 }
@@ -196,7 +198,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice | null;
+  unitPrice: OrderLineDelete_draftOrderLineDelete_order_lines_unitPrice;
   thumbnail: OrderLineDelete_draftOrderLineDelete_order_lines_thumbnail | null;
 }
 
@@ -334,24 +336,24 @@ export interface OrderLineDelete_draftOrderLineDelete_order {
   fulfillments: (OrderLineDelete_draftOrderLineDelete_order_fulfillments | null)[];
   lines: (OrderLineDelete_draftOrderLineDelete_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineDelete_draftOrderLineDelete_order_shippingAddress | null;
   shippingMethod: OrderLineDelete_draftOrderLineDelete_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderLineDelete_draftOrderLineDelete_order_shippingPrice | null;
+  shippingPrice: OrderLineDelete_draftOrderLineDelete_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderLineDelete_draftOrderLineDelete_order_subtotal | null;
-  total: OrderLineDelete_draftOrderLineDelete_order_total | null;
+  subtotal: OrderLineDelete_draftOrderLineDelete_order_subtotal;
+  total: OrderLineDelete_draftOrderLineDelete_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderLineDelete_draftOrderLineDelete_order_totalAuthorized | null;
-  totalCaptured: OrderLineDelete_draftOrderLineDelete_order_totalCaptured | null;
+  totalAuthorized: OrderLineDelete_draftOrderLineDelete_order_totalAuthorized;
+  totalCaptured: OrderLineDelete_draftOrderLineDelete_order_totalCaptured;
   user: OrderLineDelete_draftOrderLineDelete_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLineDelete_draftOrderLineDelete_order_availableShippingMethods | null)[] | null;
   discount: OrderLineDelete_draftOrderLineDelete_order_discount | null;
   invoices: (OrderLineDelete_draftOrderLineDelete_order_invoices | null)[] | null;
   channel: OrderLineDelete_draftOrderLineDelete_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderLineDelete_draftOrderLineDelete {
