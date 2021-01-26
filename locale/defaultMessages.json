@@ -1016,12 +1016,23 @@
   "src_dot_auth_dot_components_dot_LoginPage_dot_2237029987": {
     "string": "Password"
   },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_2981302356": {
+    "context": "link",
+    "string": "Use this link to recover it"
+  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3476994590": {
     "string": "Sorry, your username and/or password are incorrect. Please try again."
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_4028609483": {
-    "context": "button",
-    "string": "Reset your password"
+  "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
+    "context": "description",
+    "string": "or login using"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_534894384": {
+    "string": "Sorry, login went wrong. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
+    "context": "description",
+    "string": "Forgot password? {resetPasswordLink}"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"

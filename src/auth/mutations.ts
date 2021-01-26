@@ -82,3 +82,52 @@ export const SetPasswordMutation = TypedMutation<
   SetPassword,
   SetPasswordVariables
 >(setPassword);
+
+export const externalAuthenticationUrlMutation = gql`
+  ${accountErrorFragment}
+  mutation ExternalAuthenticationUrl($pluginId: String!, $input: JSONString!) {
+    externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
+      authenticationData
+      errors: accountErrors {
+        ...AccountErrorFragment
+      }
+    }
+  }
+`;
+
+export const externalObtainAccessTokensMutation = gql`
+  ${accountErrorFragment}
+  ${fragmentUser}
+  mutation ExternalObtainAccessTokens($pluginId: String!, $input: JSONString!) {
+    externalObtainAccessTokens(pluginId: $pluginId, input: $input) {
+      token
+      csrfToken
+      user {
+        ...User
+      }
+      errors: accountErrors {
+        ...AccountErrorFragment
+      }
+    }
+  }
+`;
+
+export const externalTokenRefreshMutation = gql`
+  mutation ExternalRefreshToken($pluginId: String!, $input: JSONString!) {
+    externalRefresh(pluginId: $pluginId, input: $input) {
+      token
+    }
+  }
+`;
+
+export const externalTokenVerifyMutation = gql`
+  ${fragmentUser}
+  mutation ExternalVerifyToken($pluginId: String!, $input: JSONString!) {
+    externalVerify(pluginId: $pluginId, input: $input) {
+      verifyData
+      user {
+        ...User
+      }
+    }
+  }
+`;
