@@ -24,6 +24,11 @@ import OrderRefundForm, {
   OrderRefundType
 } from "./form";
 
+export const refundFulfilledStatuses = [
+  FulfillmentStatus.FULFILLED,
+  FulfillmentStatus.RETURNED
+];
+
 export interface OrderRefundPageProps {
   order: OrderRefundData_order;
   defaultType?: OrderRefundType;
@@ -48,9 +53,10 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
   const unfulfilledLines = order?.lines.filter(
     line => line.quantity !== line.quantityFulfilled
   );
+
   const fulfilledFulfillemnts =
-    order?.fulfillments.filter(
-      fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
+    order?.fulfillments.filter(({ status }) =>
+      refundFulfilledStatuses.includes(status)
     ) || [];
 
   return (
