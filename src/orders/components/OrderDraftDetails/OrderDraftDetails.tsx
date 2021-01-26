@@ -44,7 +44,12 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         toolbar={
           !disabled &&
           order?.channel?.isActive && (
-            <Button color="primary" variant="text" onClick={onOrderLineAdd}>
+            <Button
+              color="primary"
+              variant="text"
+              onClick={onOrderLineAdd}
+              data-test-id="add-products-button"
+            >
               <FormattedMessage
                 defaultMessage="Add products"
                 description="button"
