@@ -14,6 +14,7 @@ export const PRODUCTS_SELECTORS = {
   confirmationMsg: "[data-test='notification-success']",
   channelAvailabilityItem: "[data-test='channel-availability-item']",
   availableManageButton:
-    "div[class*='Grid-root'] > div:nth-child(2) > div[class='MuiPaper-root MuiPaper-elevation0 MuiCard-root MuiPaper-rounded'] > div > div[class*='CardTitle-toolbar'] > button",
-  channelsAvailabilityForm: "[class*='ChannelsAvailabilityContent-scroll']"
+    "[data-test-id='channels-availiability-manage-button']",
+  channelsAvailabilityForm:
+    "[data-test-id='manage-products-channels-availiability-list']"
 };

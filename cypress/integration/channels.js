@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import Channels from "../apiRequests/Channels";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
 import { ADD_CHANNEL_FORM_SELECTOS } from "../elements/channels/add-channel-form-selectors";
@@ -15,9 +16,10 @@ import { URL_LIST } from "../url/url-list";
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
+  const channels = new Channels();
 
   before(() => {
-    cy.deleteTestChannels(channelStartsWith);
+    channels.deleteTestChannels(channelStartsWith);
   });
 
   beforeEach(() => {
@@ -50,6 +52,7 @@ describe("Channels", () => {
       .click()
       .get(ADD_CHANNEL_FORM_SELECTOS.saveButton)
       .click()
+      .waitForGraph("ChannelCreate")
       .get(ADD_CHANNEL_FORM_SELECTOS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
@@ -73,23 +76,27 @@ describe("Channels", () => {
 
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.createChannelByApi(false, randomChannel, randomChannel, currency);
+    channels.createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(URL_LIST.channels);
     createChannel(randomChannel);
-    cy.get(ADD_CHANNEL_FORM_SELECTOS.validationMassege).should("be.visible");
+    cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
+      "be.visible"
+    );
   });
 
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(URL_LIST.channels);
     createChannel(randomChannel, randomChannel, "notExistingCurrency");
-    cy.get(ADD_CHANNEL_FORM_SELECTOS.validationMassege).should("be.visible");
+    cy.get(ADD_CHANNEL_FORM_SELECTOS.currencyValidationMassege).should(
+      "be.visible"
+    );
   });
 
   it("should delete channel and move orders", () => {
     const randomChannelToDelete = `${channelStartsWith} ${faker.random.number()}`;
     const randomTargetChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.createChannelByApi(
+    cy.createChannel(
       false,
       randomChannelToDelete,
       randomChannelToDelete,
@@ -121,7 +128,7 @@ describe("Channels", () => {
 
   it("should not be possible to add products to order with inactive channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.createChannelByApi(false, randomChannel, randomChannel, currency)
+    cy.createChannel(false, randomChannel, randomChannel, currency)
       .visit(URL_LIST.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click()

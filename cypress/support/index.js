@@ -1,4 +1,3 @@
-import "./channels";
 import "./user";
 
 Cypress.Commands.add("clearSessionData", () => {
