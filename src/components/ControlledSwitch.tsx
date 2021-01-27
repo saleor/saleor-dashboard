@@ -4,10 +4,7 @@ import Switch from "@material-ui/core/Switch";
 import React from "react";
 
 const useStyles = makeStyles(
-  theme => ({
-    label: {
-      marginLeft: theme.spacing(3.5)
-    },
+  () => ({
     labelText: {
       fontSize: 14
     }
@@ -51,7 +48,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
         />
       }
       label={
-        <div className={classes.label}>
+        <div>
           {uncheckedLabel ? (
             checked ? (
               label

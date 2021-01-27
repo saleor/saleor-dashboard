@@ -1,5 +1,5 @@
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import { ShippingErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

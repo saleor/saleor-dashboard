@@ -1,10 +1,10 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,

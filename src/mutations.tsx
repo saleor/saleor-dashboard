@@ -39,6 +39,7 @@ export function TypedMutation<TData, TVariables>(
         onError={(err: ApolloError) => {
           if (err.networkError) {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }
@@ -47,15 +48,18 @@ export function TypedMutation<TData, TVariables>(
             "ReadOnlyException"
           ) {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.readOnly)
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
             user.logout();
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired)
             });
           } else {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }

@@ -8,8 +8,9 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,
@@ -56,7 +57,7 @@ export interface PermissionGroupDetailsPageProps
   onAssign: () => void;
   onBack: () => void;
   onUnassign: (ids: string[]) => void;
-  onSubmit(data: PermissionGroupDetailsPageFormData);
+  onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
 const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({

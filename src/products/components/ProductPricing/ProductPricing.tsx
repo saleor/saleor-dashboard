@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,7 +23,6 @@ const useStyles = makeStyles(
 interface ProductPricingProps {
   currency?: string;
   data: {
-    chargeTaxes: boolean;
     basePrice: number;
   };
   disabled: boolean;
@@ -39,6 +38,8 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
 
   const formErrors = getFormErrors(["basePrice"], errors);
 
+  const handlePriceChange = createNonNegativeValueChangeHandler(onChange);
+
   return (
     <Card>
       <CardTitle
@@ -46,17 +47,7 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
           defaultMessage: "Pricing",
           description: "product pricing"
         })}
-      >
-        <ControlledCheckbox
-          name="chargeTaxes"
-          label={intl.formatMessage({
-            defaultMessage: "Charge taxes for this item"
-          })}
-          checked={data.chargeTaxes}
-          onChange={onChange}
-          disabled={disabled}
-        />
-      </CardTitle>
+      />
       <CardContent>
         <div className={classes.root}>
           <PriceField
@@ -70,12 +61,7 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
             name="basePrice"
             value={data.basePrice}
             currencySymbol={currency}
-            onChange={onChange}
-            InputProps={{
-              inputProps: {
-                min: 0
-              }
-            }}
+            onChange={handlePriceChange}
           />
         </div>
       </CardContent>

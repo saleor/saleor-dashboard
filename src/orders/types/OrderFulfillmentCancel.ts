@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentCancelInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { FulfillmentCancelInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentCancel
@@ -12,6 +12,18 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress_country {
@@ -49,10 +61,25 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events {
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
+  invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_user | null;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant_product;
+  quantityAvailable: number;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -82,6 +109,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -113,6 +141,20 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   warehouse: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -140,6 +182,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -252,9 +295,20 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_discount {
   currency: string;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata | null)[];
+  privateMetadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
@@ -278,6 +332,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
+  invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

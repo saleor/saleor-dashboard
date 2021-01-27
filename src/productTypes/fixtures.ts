@@ -3,7 +3,7 @@ import {
   SearchProductTypes_search_edges_node_productAttributes
 } from "@saleor/searches/types/SearchProductTypes";
 
-import { AttributeInputTypeEnum } from "../types/globalTypes";
+import { AttributeInputTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
@@ -550,7 +550,15 @@ export const productType: ProductTypeDetails_productType = {
   hasVariants: false,
   id: "UHJvZHVjdFR5cGU6NQ==",
   isShippingRequired: false,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "E-books",
+  privateMetadata: [],
   productAttributes: [
     {
       __typename: "Attribute" as "Attribute",
@@ -601,7 +609,7 @@ export const productType: ProductTypeDetails_productType = {
   ],
   weight: {
     __typename: "Weight",
-    unit: "kg",
+    unit: WeightUnitsEnum.KG,
     value: 7.82
   }
 };

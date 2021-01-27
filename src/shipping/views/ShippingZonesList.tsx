@@ -70,6 +70,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     onCompleted: data => {
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -85,6 +86,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     onCompleted: data => {
       if (data.shopSettingsUpdate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
       }
@@ -98,6 +100,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     onCompleted: data => {
       if (data.shippingZoneBulkDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();

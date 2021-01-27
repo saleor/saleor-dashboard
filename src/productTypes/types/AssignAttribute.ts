@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeAssignInput } from "./../../types/globalTypes";
+import { AttributeAssignInput, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AssignAttribute
@@ -18,6 +18,18 @@ export interface AssignAttribute_attributeAssign_productType_taxType {
   __typename: "TaxType";
   description: string | null;
   taxCode: string | null;
+}
+
+export interface AssignAttribute_attributeAssign_productType_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface AssignAttribute_attributeAssign_productType_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface AssignAttribute_attributeAssign_productType_productAttributes {
@@ -42,7 +54,7 @@ export interface AssignAttribute_attributeAssign_productType_variantAttributes {
 
 export interface AssignAttribute_attributeAssign_productType_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -53,6 +65,8 @@ export interface AssignAttribute_attributeAssign_productType {
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: AssignAttribute_attributeAssign_productType_taxType | null;
+  metadata: (AssignAttribute_attributeAssign_productType_metadata | null)[];
+  privateMetadata: (AssignAttribute_attributeAssign_productType_privateMetadata | null)[];
   productAttributes: (AssignAttribute_attributeAssign_productType_productAttributes | null)[] | null;
   variantAttributes: (AssignAttribute_attributeAssign_productType_variantAttributes | null)[] | null;
   weight: AssignAttribute_attributeAssign_productType_weight | null;

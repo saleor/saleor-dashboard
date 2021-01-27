@@ -19,6 +19,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
@@ -31,7 +32,6 @@ import {
   OrderFulfillStockInput
 } from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -257,10 +257,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <TableBody>
                   {renderCollection(
                     order?.lines.filter(line => getRemainingQuantity(line) > 0),
-                    (line, lineIndex) => {
+                    (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
-                          <TableRow>
+                          <TableRow key={lineIndex}>
                             <TableCellAvatar className={classes.colName}>
                               <Skeleton />
                             </TableCellAvatar>
@@ -326,6 +326,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             if (!warehouseStock) {
                               return (
                                 <TableCell
+                                  key="skeleton"
                                   className={classNames(
                                     classes.colQuantity,
                                     classes.error
@@ -339,9 +340,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
+                            const warehouseAllocation = line.allocations.find(
+                              allocation =>
+                                allocation.warehouse.id === warehouse.id
+                            );
+                            const allocatedQuantityForLine =
+                              warehouseAllocation?.quantity || 0;
                             const availableQuantity =
                               warehouseStock.quantity -
-                              warehouseStock.quantityAllocated;
+                              warehouseStock.quantityAllocated +
+                              allocatedQuantityForLine;
 
                             return (
                               <TableCell
@@ -358,9 +366,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           .variant.trackInventory
                                       }
                                     ),
-                                    max:
+                                    max: (
                                       line.variant.trackInventory &&
-                                      warehouseStock.quantity,
+                                      availableQuantity
+                                    ).toString(),
                                     min: 0,
                                     style: { textAlign: "right" }
                                   }}
@@ -409,7 +418,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               </TableCell>
                             );
                           })}
-                          <TableCell className={classes.colQuantityTotal}>
+
+                          <TableCell
+                            className={classes.colQuantityTotal}
+                            key="total"
+                          >
                             <span
                               className={classNames({
                                 [classes.error]: overfulfill,

@@ -94,7 +94,7 @@ const TablePagination: React.FC<TablePaginationProps> = props => {
         <div className={classes.spacer}>
           {maybe(() => settings.rowNumber) && (
             <RowNumberSelect
-              choices={[20, 30, 50, 100]}
+              choices={[10, 20, 30, 50, 100]}
               settings={settings}
               onChange={onUpdateListSettings}
             />

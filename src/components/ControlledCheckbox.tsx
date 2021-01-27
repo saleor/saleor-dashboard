@@ -1,7 +1,6 @@
+import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import React from "react";
-
-import Checkbox from "./Checkbox";
 
 interface ControlledCheckboxProps {
   className?: string;
@@ -24,10 +23,9 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
     disabled={disabled}
     control={
       <Checkbox
-        checked={checked}
+        checked={!!checked}
         disabled={disabled}
         name={name}
-        disableClickPropagation
         onChange={() => onChange({ target: { name, value: !checked } })}
       />
     }

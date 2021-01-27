@@ -14,11 +14,6 @@ export interface StaffMemberUpdate_staffUpdate_errors {
   field: string | null;
 }
 
-export interface StaffMemberUpdate_staffUpdate_user_avatar {
-  __typename: "Image";
-  url: string;
-}
-
 export interface StaffMemberUpdate_staffUpdate_user_permissionGroups {
   __typename: "Group";
   id: string;
@@ -32,6 +27,11 @@ export interface StaffMemberUpdate_staffUpdate_user_userPermissions {
   name: string;
 }
 
+export interface StaffMemberUpdate_staffUpdate_user_avatar {
+  __typename: "Image";
+  url: string;
+}
+
 export interface StaffMemberUpdate_staffUpdate_user {
   __typename: "User";
   id: string;
@@ -39,9 +39,9 @@ export interface StaffMemberUpdate_staffUpdate_user {
   firstName: string;
   isActive: boolean;
   lastName: string;
-  avatar: StaffMemberUpdate_staffUpdate_user_avatar | null;
   permissionGroups: (StaffMemberUpdate_staffUpdate_user_permissionGroups | null)[] | null;
   userPermissions: (StaffMemberUpdate_staffUpdate_user_userPermissions | null)[] | null;
+  avatar: StaffMemberUpdate_staffUpdate_user_avatar | null;
 }
 
 export interface StaffMemberUpdate_staffUpdate {

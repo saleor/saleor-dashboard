@@ -1,6 +1,6 @@
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import TableCell from "@material-ui/core/TableCell";
+import TableCell, { TableCellProps } from "@material-ui/core/TableCell";
 import Cached from "@material-ui/icons/Cached";
 import classNames from "classnames";
 import React from "react";
@@ -11,6 +11,9 @@ export const AVATAR_MARGIN = 32;
 
 const useStyles = makeStyles(
   theme => ({
+    alignRight: {
+      justifyContent: "flex-end"
+    },
     avatar: {
       background: "none",
       border: `1px solid ${theme.palette.divider}`,
@@ -39,21 +42,33 @@ const useStyles = makeStyles(
   { name: "TableCellAvatar" }
 );
 
-interface TableCellAvatarProps {
+interface TableCellAvatarProps extends TableCellProps {
   className?: string;
   thumbnail?: string;
+  alignRight?: boolean;
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNodeArray;
 }
 
 const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
-  const { children, className, thumbnail, avatarProps, ...rest } = props;
+  const {
+    children,
+    className,
+    alignRight,
+    thumbnail,
+    avatarProps,
+    ...rest
+  } = props;
 
   const classes = useStyles(props);
 
   return (
     <TableCell className={classNames(classes.root, className)} {...rest}>
-      <div className={classes.content}>
+      <div
+        className={classNames(classes.content, {
+          [classes.alignRight]: alignRight
+        })}
+      >
         {thumbnail === undefined ? (
           <Avatar className={classNames(classes.avatar, avatarProps)}>
             <Cached color="primary" />
@@ -68,7 +83,7 @@ const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
             src={thumbnail}
           />
         )}
-        <div className={classes.children}>{children}</div>
+        {!alignRight && <div className={classes.children}>{children}</div>}
       </div>
     </TableCell>
   );

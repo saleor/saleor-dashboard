@@ -4,6 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { CSSProperties } from "@material-ui/styles";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -26,35 +27,42 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 
 const useStyles = makeStyles(
-  theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colCustomer: {
-        width: 220
+  theme => {
+    const overflowing: CSSProperties = {
+      overflow: "hidden",
+      textOverflow: "ellipsis"
+    };
+
+    return {
+      [theme.breakpoints.up("lg")]: {
+        colCustomer: {
+          width: 220
+        },
+        colDate: {},
+        colFulfillment: {
+          width: 230
+        },
+        colNumber: {
+          width: 120
+        },
+        colPayment: {
+          width: 220
+        },
+        colTotal: {}
       },
+      colCustomer: overflowing,
       colDate: {},
-      colFulfillment: {
-        width: 230
+      colFulfillment: overflowing,
+      colNumber: {},
+      colPayment: overflowing,
+      colTotal: {
+        textAlign: "right"
       },
-      colNumber: {
-        width: 120
-      },
-      colPayment: {
-        width: 220
-      },
-      colTotal: {}
-    },
-    colCustomer: {},
-    colDate: {},
-    colFulfillment: {},
-    colNumber: {},
-    colPayment: {},
-    colTotal: {
-      textAlign: "right"
-    },
-    link: {
-      cursor: "pointer"
-    }
-  }),
+      link: {
+        cursor: "pointer"
+      }
+    };
+  },
   { name: "OrderList" }
 );
 

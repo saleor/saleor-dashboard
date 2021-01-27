@@ -9,8 +9,9 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
-import PluginsDetailsPage from "../components/PluginsDetailsPage";
+import PluginsDetailsPage, {
+  PluginDetailsPageFormData
+} from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
@@ -61,6 +62,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
   const handleUpdate = (data: PluginUpdate) => {
     if (data.pluginUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
@@ -72,10 +74,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       {pluginDetails => (
         <TypedPluginUpdate onCompleted={handleUpdate}>
           {(pluginUpdate, pluginUpdateOpts) => {
-            const formErrors = maybe(
-              () => pluginUpdateOpts.data.pluginUpdate.errors,
-              []
-            );
+            const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
 
             const handleFieldUpdate = (value: string) =>
               pluginUpdate({
@@ -92,18 +91,35 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                 }
               });
 
+            const handleSubmit = async (
+              formData: PluginDetailsPageFormData
+            ) => {
+              const result = await pluginUpdate({
+                variables: {
+                  id,
+                  input: {
+                    active: formData.active,
+                    configuration: getConfigurationInput(
+                      pluginDetails.data.plugin.configuration,
+                      formData.configuration
+                    )
+                  }
+                }
+              });
+
+              return result.data.pluginUpdate.errors;
+            };
+
             return (
               <>
-                <WindowTitle
-                  title={maybe(() => pluginDetails.data.plugin.name)}
-                />
+                <WindowTitle title={pluginDetails.data?.plugin?.name} />
                 <PluginsDetailsPage
                   disabled={pluginDetails.loading}
                   errors={formErrors}
                   saveButtonBarState={
                     !params.action ? pluginUpdateOpts.status : "default"
                   }
-                  plugin={maybe(() => pluginDetails.data.plugin)}
+                  plugin={pluginDetails.data?.plugin}
                   onBack={() => navigate(pluginListUrl())}
                   onClear={id =>
                     openModal("clear", {
@@ -115,22 +131,9 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                       id
                     })
                   }
-                  onSubmit={formData =>
-                    pluginUpdate({
-                      variables: {
-                        id,
-                        input: {
-                          active: formData.active,
-                          configuration: getConfigurationInput(
-                            pluginDetails.data.plugin.configuration,
-                            formData.configuration
-                          )
-                        }
-                      }
-                    })
-                  }
+                  onSubmit={handleSubmit}
                 />
-                {maybe(() => pluginDetails.data.plugin.configuration) && (
+                {pluginDetails.data?.plugin?.configuration && (
                   <>
                     <ActionDialog
                       confirmButtonState={
@@ -152,10 +155,8 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                       confirmButtonState={
                         !!params.action ? pluginUpdateOpts.status : "default"
                       }
-                      field={maybe(() =>
-                        pluginDetails.data.plugin.configuration.find(
-                          field => field.name === params.id
-                        )
+                      field={pluginDetails.data?.plugin?.configuration.find(
+                        field => field.name === params.id
                       )}
                       onClose={closeModal}
                       onConfirm={formData => handleFieldUpdate(formData.value)}

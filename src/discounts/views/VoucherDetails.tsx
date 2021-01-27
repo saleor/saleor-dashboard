@@ -31,6 +31,7 @@ import {
 } from "../../types/globalTypes";
 import DiscountCountrySelectDialog from "../components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
+  VoucherDetailsPageFormData,
   VoucherDetailsPageTab
 } from "../components/VoucherDetailsPage";
 import {
@@ -70,18 +71,21 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   );
   const intl = useIntl();
   const {
+    loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
+    loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
@@ -101,6 +105,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Deleted voucher"
         })
@@ -113,6 +118,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     if (data.voucherUpdate.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -192,6 +198,54 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               }
                             }
                           });
+
+                        const handleSubmit = async (
+                          data: VoucherDetailsPageFormData
+                        ) => {
+                          const result = await voucherUpdate({
+                            variables: {
+                              id,
+                              input: {
+                                applyOncePerCustomer: data.applyOncePerCustomer,
+                                applyOncePerOrder: data.applyOncePerOrder,
+                                discountValue:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? 100
+                                    : decimal(data.value),
+                                discountValueType:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? DiscountValueTypeEnum.PERCENTAGE
+                                    : data.discountType,
+                                endDate: data.hasEndDate
+                                  ? joinDateTime(data.endDate, data.endTime)
+                                  : null,
+                                minAmountSpent:
+                                  data.requirementsPicker !==
+                                  RequirementsPicker.ORDER
+                                    ? 0
+                                    : parseFloat(data.minSpent),
+                                minCheckoutItemsQuantity:
+                                  data.requirementsPicker !==
+                                  RequirementsPicker.ITEM
+                                    ? 0
+                                    : parseFloat(data.minCheckoutItemsQuantity),
+                                startDate: joinDateTime(
+                                  data.startDate,
+                                  data.startTime
+                                ),
+                                type:
+                                  data.discountType.toString() === "SHIPPING"
+                                    ? VoucherTypeEnum.SHIPPING
+                                    : data.type,
+                                usageLimit: data.hasUsageLimit
+                                  ? parseInt(data.usageLimit, 10)
+                                  : null
+                              }
+                            }
+                          });
+
+                          return result.data.voucherUpdate.errors;
+                        };
 
                         const {
                           loadNextPage,
@@ -289,59 +343,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               activeTab={params.activeTab}
                               onBack={() => navigate(voucherListUrl())}
                               onTabClick={changeTab}
-                              onSubmit={formData =>
-                                voucherUpdate({
-                                  variables: {
-                                    id,
-                                    input: {
-                                      applyOncePerCustomer:
-                                        formData.applyOncePerCustomer,
-                                      applyOncePerOrder:
-                                        formData.applyOncePerOrder,
-                                      discountValue:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? 100
-                                          : decimal(formData.value),
-                                      discountValueType:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? DiscountValueTypeEnum.PERCENTAGE
-                                          : formData.discountType,
-                                      endDate: formData.hasEndDate
-                                        ? joinDateTime(
-                                            formData.endDate,
-                                            formData.endTime
-                                          )
-                                        : null,
-                                      minAmountSpent:
-                                        formData.requirementsPicker !==
-                                        RequirementsPicker.ORDER
-                                          ? 0
-                                          : parseFloat(formData.minSpent),
-                                      minCheckoutItemsQuantity:
-                                        formData.requirementsPicker !==
-                                        RequirementsPicker.ITEM
-                                          ? 0
-                                          : parseFloat(
-                                              formData.minCheckoutItemsQuantity
-                                            ),
-                                      startDate: joinDateTime(
-                                        formData.startDate,
-                                        formData.startTime
-                                      ),
-                                      type:
-                                        formData.discountType.toString() ===
-                                        "SHIPPING"
-                                          ? VoucherTypeEnum.SHIPPING
-                                          : formData.type,
-                                      usageLimit: formData.hasUsageLimit
-                                        ? parseInt(formData.usageLimit, 10)
-                                        : null
-                                    }
-                                  }
-                                })
-                              }
+                              onSubmit={handleSubmit}
                               onRemove={() => openModal("remove")}
                               saveButtonBarState={voucherUpdateOpts.status}
                               categoryListToolbar={
@@ -408,8 +410,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchCategoriesOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
+                              onFetchMore={loadMoreCategories}
                               loading={searchCategoriesOpts.loading}
                               onClose={closeModal}
                               onSubmit={categories =>
@@ -418,9 +425,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     ...paginationState,
                                     id,
                                     input: {
-                                      categories: categories.map(
-                                        product => product.id
-                                      )
+                                      categories
                                     }
                                   }
                                 })
@@ -437,8 +442,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchCollectionsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
+                              onFetchMore={loadMoreCollections}
                               loading={searchCollectionsOpts.loading}
                               onClose={closeModal}
                               onSubmit={collections =>
@@ -447,9 +457,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     ...paginationState,
                                     id,
                                     input: {
-                                      collections: collections.map(
-                                        product => product.id
-                                      )
+                                      collections
                                     }
                                   }
                                 })
@@ -482,8 +490,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               confirmButtonState={
                                 voucherCataloguesAddOpts.status
                               }
+                              hasMore={
+                                searchProductsOpts.data?.search.pageInfo
+                                  .hasNextPage
+                              }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
+                              onFetchMore={loadMoreProducts}
                               loading={searchProductsOpts.loading}
                               onClose={closeModal}
                               onSubmit={products =>

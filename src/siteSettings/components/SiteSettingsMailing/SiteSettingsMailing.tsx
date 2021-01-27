@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
 import React from "react";
@@ -114,6 +114,8 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
           disabled={disabled}
           error={!!formErrors.customerSetPasswordUrl}
           fullWidth
+          autoComplete="off"
+          type="url"
           name="customerSetPasswordUrl"
           label={intl.formatMessage({
             defaultMessage: "Customer password reset URL"

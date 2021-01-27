@@ -7,6 +7,9 @@ const messages = defineMessages({
   draft: {
     defaultMessage: "Order #{orderId} was placed from draft by {userEmail}"
   },
+  draft_no_email: {
+    defaultMessage: "Order #{orderId} was placed from draft"
+  },
   paid: {
     defaultMessage: "Order #{orderId} was fully paid"
   },
@@ -29,10 +32,17 @@ export const getActivityMessage = (
         orderId: activity.orderNumber
       });
     case OrderEventsEnum.PLACED_FROM_DRAFT:
-      return intl.formatMessage(messages.draft, {
-        orderId: activity.orderNumber,
-        userEmail: activity.user.email
-      });
+      if (!!activity.user?.email) {
+        return intl.formatMessage(messages.draft, {
+          orderId: activity.orderNumber,
+          userEmail: activity.user?.email
+        });
+      } else {
+        return intl.formatMessage(messages.draft_no_email, {
+          orderId: activity.orderNumber
+        });
+      }
+
     default:
       return activity.message;
   }

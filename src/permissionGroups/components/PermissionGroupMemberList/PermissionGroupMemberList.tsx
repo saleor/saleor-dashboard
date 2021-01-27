@@ -52,8 +52,8 @@ const useStyles = makeStyles(
       width: 47
     },
     avatarDefault: {
-      "& p": {
-        color: "#fff",
+      "& div": {
+        color: theme.palette.primary.contrastText,
         lineHeight: "47px"
       },
       background: theme.palette.primary.main,

@@ -83,9 +83,6 @@ const useStyles = makeStyles(
     imageUploadActive: {
       zIndex: 1
     },
-    imageUploadIcon: {
-      display: "none"
-    },
     imageUploadIconActive: {
       display: "block"
     },
@@ -222,7 +219,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
               disabled={loading}
               variant="text"
               color="primary"
-              data-tc="button-upload-image"
+              data-test="button-upload-image"
             >
               {intl.formatMessage(commonMessages.uploadImage)}
             </Button>
@@ -253,7 +250,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
               className={classes.imageUpload}
               isActiveClassName={classes.imageUploadActive}
               disableClick={true}
-              iconContainerClassName={classes.imageUploadIcon}
+              hideUploadIcon={true}
               iconContainerActiveClassName={classes.imageUploadIconActive}
               onImageUpload={handleImageUpload}
             >

@@ -28,23 +28,6 @@ const useStyles = makeStyles(
     cell: {
       padding: 0
     },
-    checkboxPartialSelect: {
-      "& input": {
-        "&:before": {
-          background: [theme.palette.background.paper, "!important"] as any,
-          border: `solid 1px ${theme.palette.primary.main}`,
-          content: "''"
-        },
-        background: theme.palette.background.paper
-      },
-      "&:after": {
-        background: theme.palette.primary.main,
-        content: "''",
-        height: 2,
-        position: "absolute",
-        width: 6
-      }
-    },
     checkboxSelected: {
       backgroundColor: fade(theme.palette.primary.main, 0.05)
     },
@@ -80,6 +63,14 @@ const useStyles = makeStyles(
   { name: "TableHead" }
 );
 
+function getColSpan(colSpan: number, dragRows: boolean): number {
+  if (dragRows) {
+    return colSpan - 2;
+  }
+
+  return colSpan - 1;
+}
+
 const TableHead: React.FC<TableHeadProps> = props => {
   const {
     children,
@@ -113,10 +104,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             })}
           >
             <Checkbox
-              className={classNames({
-                [classes.checkboxPartialSelect]:
-                  items && items.length > selected && selected > 0
-              })}
+              indeterminate={items && items.length > selected && selected > 0}
               checked={selected === 0 ? false : true}
               disabled={disabled}
               onChange={() => toggleAll(items, selected)}
@@ -127,7 +115,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
           <>
             <TableCell
               className={classNames(classes.root)}
-              colSpan={colSpan - 1}
+              colSpan={getColSpan(colSpan, dragRows)}
             >
               <div className={classes.container}>
                 {selected && (

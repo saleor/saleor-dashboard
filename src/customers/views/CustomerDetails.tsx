@@ -10,7 +10,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
-import CustomerDetailsPage from "../components/CustomerDetailsPage/CustomerDetailsPage";
+import CustomerDetailsPage, {
+  CustomerDetailsPageFormData
+} from "../components/CustomerDetailsPage/CustomerDetailsPage";
 import {
   TypedRemoveCustomerMutation,
   TypedUpdateCustomerMutation
@@ -41,6 +43,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
   const handleCustomerUpdateSuccess = (data: UpdateCustomer) => {
     if (data.customerUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -48,6 +51,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
   const handleCustomerRemoveSuccess = (data: RemoveCustomer) => {
     if (data.customerDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Customer Removed"
         })
@@ -74,6 +78,25 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                   return <NotFoundPage onBack={handleBack} />;
                 }
 
+                const handleSubmit = async (
+                  data: CustomerDetailsPageFormData
+                ) => {
+                  const result = await updateCustomer({
+                    variables: {
+                      id,
+                      input: {
+                        email: data.email,
+                        firstName: data.firstName,
+                        isActive: data.isActive,
+                        lastName: data.lastName,
+                        note: data.note
+                      }
+                    }
+                  });
+
+                  return result.data.customerUpdate.errors;
+                };
+
                 return (
                   <>
                     <WindowTitle
@@ -95,20 +118,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                       }
                       onBack={handleBack}
                       onRowClick={id => navigate(orderUrl(id))}
-                      onSubmit={formData =>
-                        updateCustomer({
-                          variables: {
-                            id,
-                            input: {
-                              email: formData.email,
-                              firstName: formData.firstName,
-                              isActive: formData.isActive,
-                              lastName: formData.lastName,
-                              note: formData.note
-                            }
-                          }
-                        })
-                      }
+                      onSubmit={handleSubmit}
                       onDelete={() =>
                         navigate(
                           customerUrl(id, {

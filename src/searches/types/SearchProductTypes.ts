@@ -25,12 +25,19 @@ export interface SearchProductTypes_search_edges_node_productAttributes {
   values: (SearchProductTypes_search_edges_node_productAttributes_values | null)[] | null;
 }
 
+export interface SearchProductTypes_search_edges_node_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface SearchProductTypes_search_edges_node {
   __typename: "ProductType";
   id: string;
   name: string;
   hasVariants: boolean;
   productAttributes: (SearchProductTypes_search_edges_node_productAttributes | null)[] | null;
+  taxType: SearchProductTypes_search_edges_node_taxType | null;
 }
 
 export interface SearchProductTypes_search_edges {

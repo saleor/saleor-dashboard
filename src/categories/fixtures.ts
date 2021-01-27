@@ -1,6 +1,7 @@
+import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
+
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { CategoryDetails_category } from "./types/CategoryDetails";
-import { CategoryFragment } from "./types/CategoryFragment";
 
 export const categories: CategoryFragment[] = [
   {
@@ -104,11 +105,19 @@ export const category: (
   },
   descriptionJson: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Coffees",
   parent: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6Mw=="
   },
+  privateMetadata: [],
   products: {
     __typename: "ProductCountableConnection",
     edges: [
@@ -502,7 +511,8 @@ export const category: (
     }
   },
   seoDescription: null,
-  seoTitle: null
+  seoTitle: null,
+  slug: "coffees"
 });
 export const errors = [
   {

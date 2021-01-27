@@ -43,6 +43,7 @@ jobs:
       - name: Run lint
         run: |
           npm run lint
+          git diff --exit-code ./src
 
   jest-tests:
     runs-on: ubuntu-latest
@@ -69,6 +70,29 @@ jobs:
       - name: Run jest
         run: |
           npm run test
+
+  cypress-run:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: ${{ secrets.API_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+        with:
+          build: npm run build
+          start: npx http-server -a localhost -p 9000 build/dashboard
+          wait-on: http://localhost:9000/
+          wait-on-timeout: 120
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   translation-messages:
     runs-on: ubuntu-latest

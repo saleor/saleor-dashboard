@@ -14,8 +14,8 @@ export interface WebhookCreate_webhookCreate_errors {
   field: string | null;
 }
 
-export interface WebhookCreate_webhookCreate_webhook_serviceAccount {
-  __typename: "ServiceAccount";
+export interface WebhookCreate_webhookCreate_webhook_app {
+  __typename: "App";
   id: string;
   name: string | null;
 }
@@ -25,7 +25,7 @@ export interface WebhookCreate_webhookCreate_webhook {
   id: string;
   name: string;
   isActive: boolean;
-  serviceAccount: WebhookCreate_webhookCreate_webhook_serviceAccount;
+  app: WebhookCreate_webhookCreate_webhook_app;
 }
 
 export interface WebhookCreate_webhookCreate {

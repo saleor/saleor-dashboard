@@ -11,10 +11,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { WarehouseWithShippingFragment } from "@saleor/warehouses/types/WarehouseWithShippingFragment";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -83,7 +83,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable data-test="warehouseList">
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -130,13 +130,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-tc="id"
-              data-tc-id={maybe(() => warehouse.id)}
+              data-test="warehouseEntry"
+              data-testid={warehouse?.name.toLowerCase().replace(" ", "")}
             >
-              <TableCell className={classes.colName} data-tc="name">
+              <TableCell className={classes.colName} data-test="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
-              <TableCell className={classes.colZones} data-tc="zones">
+              <TableCell className={classes.colZones} data-test="zones">
                 {maybe<React.ReactNode>(
                   () =>
                     warehouse.shippingZones.edges
@@ -147,7 +147,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton color="primary">
+                  <IconButton color="primary" data-test="editButton">
                     <EditIcon />
                   </IconButton>
                   <IconButton
@@ -161,7 +161,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             </TableRow>
           ),
           () => (
-            <TableRow>
+            <TableRow data-test="emptyListMessage">
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No warehouses found" />
               </TableCell>

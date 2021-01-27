@@ -140,6 +140,17 @@ storiesOf(
       step={ProductVariantCreatorStep.prices}
       warehouses={[props.warehouses[0]]}
     />
+  ))
+  .add("ship when no warehouses", () => (
+    <ProductVariantCreatorContent
+      {...props}
+      data={{
+        ...data,
+        warehouses: []
+      }}
+      step={ProductVariantCreatorStep.prices}
+      warehouses={[]}
+    />
   ));
 
 storiesOf("Views / Products / Create multiple variants / summary", module)

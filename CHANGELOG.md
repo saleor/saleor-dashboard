@@ -4,8 +4,66 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+# 2.11.1
+
+- Support multiline text in plugin configuration secret field - #829 by @karolinakuzniewicz
+
+## 2.11.0
+
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
 - Migrate product base price to variant prices - #555 by @orzechdev
+- Migrate old notifications to the new ones - #587 by @AlicjaSzu
+- Add background task manager - #574 by @dominik-zeglen
+- Handle task failure and fix task duplication - #588 by @dominik-zeglen
+- Move fragments to separate directory to avoid circular imports - #592 by @dominik-zeglen
+- Add order invoices management - #570 by @orzechdev
+- Add Cypress e2e runner - #584 by @krzysztofwolski
+- create Apps - #599 by @AlicjaSzu
+- Refactor authorization - #624 by @dominik-zeglen
+- Fix minor bugs - #628 by @dominik-zeglen
+- Add navigator button - #635 by @dominik-zeglen
+- Update to newest schema - #638 by @dominik-zeglen
+- Fix missing save button - #636 by @dominik-zeglen
+- Fix user avatars - #639 by @dominik-zeglen
+- Reset modal state after closing - #644 by @dominik-zeglen
+- Fix incorrect messages - #643 by @dominik-zeglen
+- Do not use devserver to run cypress tests - #650 by @dominik-zeglen
+- Fix updating product that has no variants - #649 by @dominik-zeglen
+- Update checkbox design - #651 by @dominik-zeglen
+- Add warehouse choice - #646 by @dominik-zeglen
+- Fix user management modal actions - #637 by @eaglesemanation
+- Fix navigator button rendering on safari browser - #656 by @dominik-zeglen
+- Use hooks instead of containers with render props in product mutations - #667 by @dominik-zeglen
+- Add apps and permission groups to navigator - #678 by @dominik-zeglen
+- Add metadata - #670 by @dominik-zeglen
+- Update order history information - #680 by @dominik-zeglen
+- Add metadata editor to creator views - #684 by @dominik-zeglen
+- Update product visibility card component - #679 by @AlicjaSzu
+- Update savebar design - #690 by @dominik-zeglen
+- Add metadata to orders - #688 by @dominik-zeglen
+- Add lazyload to locales - #692 by @eaglesemanation
+- Fix not closed address update modal with two confirmations - #699 by @orzechdev
+- Update schema with PositiveDecimal type - #695 by @AlicjaSzu
+- Add error info when fetching taxes - #701 by @dominik-zeglen
+- Fix return to previous page on screen size change - #710 by @orzechdev
+- Add variants reordering possibility - #716 by @orzechdev
+- Fix avatar change button - #719 by @orzechdev
+- Add slug field to product, collection, category & page details (update and create) - #720 by @mmarkusik
+- Allow product variant to be set as default - #721 by @tomaszszymanski129
+- Change plural form of "informations" to "information" strings across the app #722 by @mmarkusik
+- Fix misaligned rich text draft controls - #725 by @orzechdev
+- Allow taxes to be configured per product - #728 by @dominik-zeglen
+- Add default variant indicator for variant nav - #741 by @krzysztofwolski
+- Fix style of product type attributes empty table - #744 by @orzechdev
+- Fix order draft back button redirect - #753 by @orzechdev
+- Add manage product types and attributes permission - #768 by @orzechdev
+- Fix isPublished and isAvailable behaviour for products, collections and pages - #780 by @mmarkusik
+
+## 2.10.1
+
+- Add weight field and fix warehouse country selection - #597 by @dominik-zeglen
+- Fix weight based rate update - #604 by @dominik-zeglen
+- Add product export - #620 by @dominik-zeglen
 
 ## 2.10.0
 

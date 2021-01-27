@@ -1,4 +1,5 @@
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { StaffMemberDetails_user_permissionGroups } from "@saleor/staff/types/StaffMemberDetails";
 /* eslint-disable sort-keys */
@@ -8,7 +9,6 @@ import {
 } from "@saleor/types/globalTypes";
 
 import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
-import { PermissionGroupErrorFragment } from "./types/PermissionGroupErrorFragment";
 import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
 
 export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[] = [

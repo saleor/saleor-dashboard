@@ -2,8 +2,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -43,8 +43,8 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
       {errors.length > 0 && (
         <>
           <FormSpacer />
-          {errors.map(err => (
-            <DialogContentText color="error">
+          {errors.map((err, index) => (
+            <DialogContentText color="error" key={index}>
               {getOrderErrorMessage(err, intl)}
             </DialogContentText>
           ))}

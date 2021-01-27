@@ -68,6 +68,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
+      status: "success",
       text: intl.formatMessage({
         defaultMessage: "Order draft successfully created"
       })
@@ -149,6 +150,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const handleOrderDraftBulkCancel = (data: OrderDraftBulkCancel) => {
     if (data.draftOrderBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Deleted draft orders"
         })

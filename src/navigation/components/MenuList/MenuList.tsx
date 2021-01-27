@@ -16,6 +16,7 @@ import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
+import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -37,6 +38,9 @@ const useStyles = makeStyles(
       },
       colTitle: {}
     },
+    colAction: {
+      width: 80
+    },
     colItems: {
       textAlign: "right"
     },
@@ -50,7 +54,7 @@ const useStyles = makeStyles(
   { name: "MenuList" }
 );
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const MenuList: React.FC<MenuListProps> = props => {
   const {
@@ -116,12 +120,12 @@ const MenuList: React.FC<MenuListProps> = props => {
               id="menuListItems"
             />
           </TableCellHeader>
-          <TableCell />
+          <TableCell className={classes.colAction} />
         </TableHead>
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={numberOfColumns}
+              colSpan={getFooterColSpanWithBulkActions(menus, numberOfColumns)}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
@@ -165,6 +169,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                     )}
                   </TableCell>
                   <IconButtonTableCell
+                    className={classes.colAction}
                     disabled={disabled}
                     onClick={() => onDelete(menu.id)}
                   >

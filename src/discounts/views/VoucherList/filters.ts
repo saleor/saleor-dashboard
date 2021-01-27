@@ -149,4 +149,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   VoucherListUrlQueryParams,
   VoucherListUrlFilters
->(VoucherListUrlFiltersEnum);
+>({
+  ...VoucherListUrlFiltersEnum,
+  ...VoucherListUrlFiltersWithMultipleValues
+});

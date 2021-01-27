@@ -10,12 +10,12 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { AddressTypeInput } from "@saleor/customers/types";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -49,9 +49,9 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
     address,
     confirmButtonState,
     open,
-    errors,
+    errors = [],
     variant,
-    countries,
+    countries = [],
     onClose,
     onConfirm
   } = props;
@@ -80,7 +80,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }}>
       <Form initial={address} onSubmit={handleSubmit}>
-        {({ change, data, submit }) => {
+        {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
@@ -118,7 +118,6 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
                   transitionState={confirmButtonState}
                   color="primary"
                   variant="contained"
-                  onClick={submit}
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.confirm} />

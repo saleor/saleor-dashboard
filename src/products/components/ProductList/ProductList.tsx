@@ -1,4 +1,4 @@
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -24,11 +24,8 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import ProductPublishReportDialog from "@saleor/products/components/ProductPublishReportDialog";
-import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
-import {
-  ProductList_products_edges_node,
-  ProductList_products_edges_node_pricing_priceRangeUndiscounted
-} from "@saleor/products/types/ProductList";
+import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
+import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -110,8 +107,9 @@ interface ProductListProps
     ListActions,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
-  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
+  gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
@@ -124,6 +122,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     pageInfo,
     products,
     selected,
+    loading,
     sort,
     toggle,
     toggleAll,
@@ -141,13 +140,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
-  const numberOfColumns = 3 + settings.columns.length;
+  const numberOfColumns = 2 + settings.columns.length;
 
-  const getProductPrice = (
-    priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
-  ) => {
+  const getProductPrice = product => {
+    const priceRangeUndiscounted = product?.pricing?.priceRangeUndiscounted;
+
     if (!priceRangeUndiscounted) {
-      return null;
+      return "-";
     }
 
     const { start, stop } = priceRangeUndiscounted;
@@ -191,8 +190,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
   const [reportOpen, setReportOpen] = React.useState(false);
   const [privateMetadataMap, setPrivateMetadataMap] = React.useState(null);
   const [isPublished, setIsPublished] = React.useState(false);
-  const handleReportOpen = (privateMetadataMapVal: string, isPublishedVal: boolean) => {
-    setPrivateMetadataMap(privateMetadataMapVal)
+  const handleReportOpen = (
+    privateMetadataMapVal: string,
+    isPublishedVal: boolean
+  ) => {
+    setPrivateMetadataMap(privateMetadataMapVal);
     setReportOpen(true);
     setIsPublished(isPublishedVal);
   };
@@ -212,17 +214,14 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="isPublished" displayColumns={settings.columns}>
             <col className={classes.colPublished} />
           </DisplayColumn>
+          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
+            <col className={classes.colUpdatedAt} />
+          </DisplayColumn>
           {gridAttributesFromSettings.map(gridAttribute => (
             <col className={classes.colAttribute} key={gridAttribute} />
           ))}
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <col className={classes.colPrice} />
-          </DisplayColumn>
-          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
-            <col className={classes.colupdatedAt} />
-          </DisplayColumn>
-          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
-            <col className={classes.colupdatedAt} />
           </DisplayColumn>
         </colgroup>
         <TableHead
@@ -365,7 +364,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
             product => {
               const isSelected = product ? isChecked(product.id) : false;
 
-              const rowPrivateMetadataMap = product ? JSON.parse(product.jsonPrivateMetadata) : null;
+              const rowPrivateMetadataMap = product
+                ? JSON.parse(product.jsonPrivateMetadata)
+                : null;
 
               return (
                 <TableRow
@@ -374,8 +375,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   key={product ? product.id : "skeleton"}
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
-                  data-tc="id"
-                  data-tc-id={maybe(() => product.id)}
+                  data-test="id"
+                  data-test-id={maybe(() => product.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -388,7 +389,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
-                    data-tc="name"
+                    data-test="name"
                   >
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
@@ -419,7 +420,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colType}
-                      data-tc="product-type"
+                      data-test="product-type"
                     >
                       {product && product.productType ? (
                         product.productType.name
@@ -434,33 +435,48 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-tc="isPublished"
-                      data-tc-is-published={maybe(() => product.isPublished)}
+                      data-test="isPublished"
+                      data-test-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
                       maybe(() => product.isPublished !== undefined) ? (
-                        <Button onClick={event => {
-                          event.stopPropagation();
-                          handleReportOpen(rowPrivateMetadataMap, product.isPublished);
-                        }}>
-                          {rowPrivateMetadataMap['publish.allegro.errors'] !== undefined && rowPrivateMetadataMap['publish.allegro.errors'].length > 0 &&
-                            <WarningIcon color="error" />
-                          }
+                        <Button
+                          onClick={event => {
+                            event.stopPropagation();
+                            handleReportOpen(
+                              rowPrivateMetadataMap,
+                              product.isPublished
+                            );
+                          }}
+                        >
+                          {rowPrivateMetadataMap["publish.allegro.errors"] !==
+                            undefined &&
+                            rowPrivateMetadataMap["publish.allegro.errors"]
+                              .length > 0 && <WarningIcon color="error" />}
                           <StatusLabel
                             label={
                               product.isPublished
                                 ? intl.formatMessage({
-                                  defaultMessage: "Published",
-                                  description: "product status"
-                                })
+                                    defaultMessage: "Published",
+                                    description: "product status"
+                                  })
                                 : intl.formatMessage({
-                                  defaultMessage: "Not published",
-                                  description: "product status"
-                                })
+                                    defaultMessage: "Not published",
+                                    description: "product status"
+                                  })
                             }
-                            status={product.isPublished ? "success" : (
-                              (rowPrivateMetadataMap['publish.allegro.errors'] !== undefined
-                                && rowPrivateMetadataMap['publish.allegro.errors'].length > 0) ? "" : "error")}
+                            status={
+                              product.isPublished
+                                ? "success"
+                                : rowPrivateMetadataMap[
+                                    "publish.allegro.errors"
+                                  ] !== undefined &&
+                                  rowPrivateMetadataMap[
+                                    "publish.allegro.errors"
+                                  ].length > 0
+                                ? ""
+                                : "error"
+                            }
                           />
                         </Button>
                       ) : (
@@ -488,8 +504,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colAttribute}
                       key={gridAttribute}
-                      data-tc="attribute"
-                      data-tc-attribute={getAttributeIdFromColumnValue(
+                      data-test="attribute"
+                      data-test-attribute={getAttributeIdFromColumnValue(
                         gridAttribute
                       )}
                     >
@@ -513,13 +529,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {product?.pricing?.priceRangeUndiscounted ? (
-                        getProductPrice(
-                          product?.pricing?.priceRangeUndiscounted
-                        )
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {loading ? <Skeleton /> : getProductPrice(product)}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>
@@ -535,10 +545,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-      <ProductPublishReportDialog privateMetadataMap={privateMetadataMap}
-                                  isPublished={isPublished}
-                                  open={reportOpen}
-                                  onClose={handleReportClose} />
+      <ProductPublishReportDialog
+        privateMetadataMap={privateMetadataMap}
+        isPublished={isPublished}
+        open={reportOpen}
+        onClose={handleReportClose}
+      />
     </div>
   );
 };

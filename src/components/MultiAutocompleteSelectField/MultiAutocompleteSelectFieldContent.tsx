@@ -210,7 +210,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="multiautocomplete-select-option-add"
+                data-test="multiautocomplete-select-option-add"
                 onClick={add.onClick}
               >
                 <AddIcon color="primary" className={classes.addIcon} />
@@ -225,7 +225,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-tc="multiautocomplete-select-option"
+                data-test="multiautocomplete-select-option"
               >
                 <AddIcon className={classes.addIcon} color="primary" />
                 <FormattedMessage
@@ -249,7 +249,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: value.value
                 })}
-                data-tc="multiautocomplete-select-option"
+                data-test="multiautocomplete-select-option"
               >
                 <Checkbox
                   className={classes.checkbox}
@@ -282,7 +282,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-tc="multiautocomplete-select-option"
+                  data-test="multiautocomplete-select-option"
                 >
                   <Checkbox
                     checked={false}
@@ -309,7 +309,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
           <MenuItem
             disabled={true}
             component="div"
-            data-tc="multiautocomplete-select-no-options"
+            data-test="multiautocomplete-select-no-options"
           >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>

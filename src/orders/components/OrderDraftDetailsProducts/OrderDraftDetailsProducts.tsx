@@ -15,6 +15,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -50,6 +51,9 @@ const useStyles = makeStyles(
     colTotal: {
       textAlign: "right",
       width: 150
+    },
+    errorInfo: {
+      color: theme.palette.error.main
     },
     quantityField: {
       "& input": {
@@ -126,6 +130,30 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                   <>
                     <Typography variant="body2">{line.productName}</Typography>
                     <Typography variant="caption">{line.productSku}</Typography>
+                    {!line.variant.quantityAvailable ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.errorInfo}
+                      >
+                        <FormattedMessage defaultMessage="Product is out of stock" />
+                      </Typography>
+                    ) : !line.variant.product.isAvailableForPurchase ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.errorInfo}
+                      >
+                        <FormattedMessage defaultMessage="Product is unavailable to purchase" />
+                      </Typography>
+                    ) : (
+                      !line.variant.product.isPublished && (
+                        <Typography
+                          variant="caption"
+                          className={classes.errorInfo}
+                        >
+                          <FormattedMessage defaultMessage="Product is hidden" />
+                        </Typography>
+                      )
+                    )}
                   </>
                 ) : (
                   <Skeleton />
@@ -137,24 +165,34 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                     initial={{ quantity: line.quantity }}
                     onSubmit={data => onOrderLineChange(line.id, data)}
                   >
-                    {({ change, data, hasChanged, submit }) => (
-                      <DebounceForm
-                        change={change}
-                        submit={hasChanged ? submit : undefined}
-                        time={200}
-                      >
-                        {debounce => (
-                          <TextField
-                            className={classes.quantityField}
-                            fullWidth
-                            name="quantity"
-                            type="number"
-                            value={data.quantity}
-                            onChange={debounce}
-                          />
-                        )}
-                      </DebounceForm>
-                    )}
+                    {({ change, data, hasChanged, submit }) => {
+                      const handleQuantityChange = createNonNegativeValueChangeHandler(
+                        change
+                      );
+
+                      return (
+                        <DebounceForm
+                          change={handleQuantityChange}
+                          submit={hasChanged ? submit : undefined}
+                          time={200}
+                        >
+                          {debounce => (
+                            <TextField
+                              className={classes.quantityField}
+                              fullWidth
+                              name="quantity"
+                              type="number"
+                              value={data.quantity}
+                              onChange={debounce}
+                              onBlur={submit}
+                              inputProps={{
+                                min: 1
+                              }}
+                            />
+                          )}
+                        </DebounceForm>
+                      );
+                    }}
                   </Form>
                 ) : (
                   <Skeleton />

@@ -1,7 +1,7 @@
+import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import PermissionGroupDeleteDialog, {
   PermissionDeleteDialogProps
 } from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
-import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
 import Decorator from "@saleor/storybook/Decorator";
 import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";

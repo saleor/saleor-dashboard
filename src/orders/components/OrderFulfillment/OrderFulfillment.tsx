@@ -82,7 +82,7 @@ interface OrderFulfillmentProps {
   onTrackingCodeAdd: () => void;
 }
 
-const numberOfColumns = 4;
+const numberOfColumns = 5;
 
 const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
   const {
@@ -287,6 +287,16 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
           <Button color="primary" onClick={onTrackingCodeAdd}>
             <FormattedMessage
               defaultMessage="Add tracking"
+              description="fulfillment group tracking number"
+            />
+          </Button>
+        </CardActions>
+      )}
+      {status === FulfillmentStatus.FULFILLED && fulfillment.trackingNumber && (
+        <CardActions>
+          <Button color="primary" onClick={onTrackingCodeAdd}>
+            <FormattedMessage
+              defaultMessage="Edit tracking"
               description="fulfillment group tracking number"
             />
           </Button>

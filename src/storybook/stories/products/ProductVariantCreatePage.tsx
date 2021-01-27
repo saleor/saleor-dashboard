@@ -15,6 +15,7 @@ storiesOf("Views / Products / Create product variant", module)
   .add("default", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
@@ -22,24 +23,30 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("with errors", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[
         {
+          attributes: [product.productType.variantAttributes[0].id],
           code: ProductErrorCode.REQUIRED,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.UNIQUE,
           field: "attributes"
         },
         {
+          attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
           field: "sku"
         }
@@ -52,13 +59,16 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("when loading data", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={true}
       errors={[]}
       header="Add variant"
@@ -66,13 +76,16 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
     />
   ))
   .add("add first variant", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
@@ -83,7 +96,26 @@ storiesOf("Views / Products / Create product variant", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
+      onVariantReorder={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
+      onWarehouseConfigure={() => undefined}
+    />
+  ))
+  .add("no warehouses", () => (
+    <ProductVariantCreatePage
+      currencySymbol="USD"
+      weightUnit="kg"
+      disabled={false}
+      errors={[]}
+      header="Add variant"
+      product={product}
+      onBack={() => undefined}
+      onSubmit={() => undefined}
+      onVariantClick={undefined}
+      onVariantReorder={() => undefined}
+      saveButtonBarState="default"
+      warehouses={[]}
+      onWarehouseConfigure={() => undefined}
     />
   ));

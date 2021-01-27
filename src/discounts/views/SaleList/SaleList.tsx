@@ -137,6 +137,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const handleSaleBulkDelete = (data: SaleBulkDelete) => {
     if (data.saleBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();

@@ -34,6 +34,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       if (data.orderFulfill.errors.length === 0) {
         navigate(orderUrl(orderId), true);
         notify({
+          status: "success",
           text: intl.formatMessage({
             defaultMessage: "Fulfilled Items",
             description: "order fulfilled success message"

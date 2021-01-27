@@ -28,23 +28,24 @@ export interface DiscountCategoriesProps extends ListProps, ListActions {
 }
 
 const useStyles = makeStyles(
-  theme => ({
-    iconCell: {
+  {
+    colActions: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing(0.5)
+      width: 80
+    },
+    colName: {
+      width: "auto"
+    },
+    colProducts: {
+      textAlign: "right",
+      width: 140
     },
     tableRow: {
       cursor: "pointer"
-    },
-    textRight: {
-      textAlign: "right"
-    },
-    wideColumn: {
-      width: "60%"
     }
-  }),
+  },
   { name: "DiscountCategories" }
 );
 
@@ -52,8 +53,7 @@ const numberOfColumns = 4;
 
 const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   const {
-    discount: sale,
-
+    discount,
     disabled,
     pageInfo,
     onCategoryAssign,
@@ -88,19 +88,25 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colProducts} />
+          <col className={classes.colActions} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={maybe(() => sale.categories.edges.map(edge => edge.node))}
+          items={maybe(() => discount.categories.edges.map(edge => edge.node))}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <>
-            <TableCell className={classes.wideColumn}>
+            <TableCell className={classes.colName}>
               <FormattedMessage defaultMessage="Category name" />
             </TableCell>
-            <TableCell className={classes.textRight}>
+            <TableCell className={classes.colProducts}>
               <FormattedMessage
                 defaultMessage="Products"
                 description="number of products"
@@ -124,7 +130,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            maybe(() => sale.categories.edges.map(edge => edge.node)),
+            maybe(() => discount.categories.edges.map(edge => edge.node)),
             category => {
               const isSelected = category ? isChecked(category.id) : false;
 
@@ -147,13 +153,13 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                   <TableCell>
                     {maybe<React.ReactNode>(() => category.name, <Skeleton />)}
                   </TableCell>
-                  <TableCell className={classes.textRight}>
+                  <TableCell className={classes.colProducts}>
                     {maybe<React.ReactNode>(
                       () => category.products.totalCount,
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.iconCell}>
+                  <TableCell className={classes.colActions}>
                     <IconButton
                       disabled={!category || disabled}
                       onClick={event => {

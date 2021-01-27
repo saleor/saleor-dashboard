@@ -1,8 +1,12 @@
+import { fragmentAddress } from "@saleor/fragments/address";
+import {
+  customerAddressesFragment,
+  customerDetailsFragment
+} from "@saleor/fragments/customers";
+import { accountErrorFragment } from "@saleor/fragments/errors";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { fragmentAddress } from "../orders/queries";
-import { customerAddressesFragment, customerDetailsFragment } from "./queries";
 import {
   BulkRemoveCustomers,
   BulkRemoveCustomersVariables
@@ -35,13 +39,6 @@ import {
   UpdateCustomerAddress,
   UpdateCustomerAddressVariables
 } from "./types/UpdateCustomerAddress";
-
-export const accountErrorFragment = gql`
-  fragment AccountErrorFragment on AccountError {
-    code
-    field
-  }
-`;
 
 const updateCustomer = gql`
   ${accountErrorFragment}

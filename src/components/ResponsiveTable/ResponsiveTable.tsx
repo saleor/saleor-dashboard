@@ -5,8 +5,8 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     root: {
-      [theme.breakpoints.up("sm")]: {
-        "& table": {
+      [theme.breakpoints.up("md")]: {
+        "&& table": {
           tableLayout: "fixed"
         }
       },

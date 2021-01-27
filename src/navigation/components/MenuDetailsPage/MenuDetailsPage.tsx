@@ -6,8 +6,9 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,7 +37,7 @@ export interface MenuDetailsPageProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
-  onSubmit: (data: MenuDetailsSubmitData) => Promise<boolean>;
+  onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
@@ -62,14 +63,16 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   );
 
   const handleSubmit = async (data: MenuDetailsFormData) => {
-    if (
-      await onSubmit({
-        name: data.name,
-        operations: treeOperations
-      })
-    ) {
+    const result = await onSubmit({
+      name: data.name,
+      operations: treeOperations
+    });
+
+    if (result) {
       setTreeOperations([]);
     }
+
+    return result;
   };
 
   const handleChange = (operation: TreeOperation) => {

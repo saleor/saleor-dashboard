@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductDetails
@@ -52,12 +52,19 @@ export interface ProductDetails_product_productType_variantAttributes {
   values: (ProductDetails_product_productType_variantAttributes_values | null)[] | null;
 }
 
+export interface ProductDetails_product_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductDetails_product_productType {
   __typename: "ProductType";
   id: string;
   variantAttributes: (ProductDetails_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
+  taxType: ProductDetails_product_productType_taxType | null;
 }
 
 export interface ProductDetails_product_pricing_priceRangeUndiscounted_start_gross {
@@ -91,6 +98,23 @@ export interface ProductDetails_product_pricing_priceRangeUndiscounted {
 export interface ProductDetails_product_pricing {
   __typename: "ProductPricingInfo";
   priceRangeUndiscounted: ProductDetails_product_pricing_priceRangeUndiscounted | null;
+}
+
+export interface ProductDetails_product_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductDetails_product_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ProductDetails_product_defaultVariant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface ProductDetails_product_category {
@@ -168,31 +192,59 @@ export interface ProductDetails_product_variants {
   trackInventory: boolean;
 }
 
+export interface ProductDetails_product_weight {
+  __typename: "Weight";
+  unit: WeightUnitsEnum;
+  value: number;
+}
+
+export interface ProductDetails_product_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
+}
+
 export interface ProductDetails_product {
   __typename: "Product";
   id: string;
   attributes: ProductDetails_product_attributes[];
   productType: ProductDetails_product_productType;
   pricing: ProductDetails_product_pricing | null;
+  metadata: (ProductDetails_product_metadata | null)[];
+  privateMetadata: (ProductDetails_product_privateMetadata | null)[];
   name: string;
+  slug: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
+  defaultVariant: ProductDetails_product_defaultVariant | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
   margin: ProductDetails_product_margin | null;
   purchaseCost: ProductDetails_product_purchaseCost | null;
+  isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
-  jsonPrivateMetadata?: any;
+  weight: ProductDetails_product_weight | null;
+  taxType: ProductDetails_product_taxType | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  jsonPrivateMetadata: any;
+}
+
+export interface ProductDetails_taxTypes {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
 }
 
 export interface ProductDetails {
   product: ProductDetails_product | null;
+  taxTypes: (ProductDetails_taxTypes | null)[] | null;
 }
 
 export interface ProductDetailsVariables {

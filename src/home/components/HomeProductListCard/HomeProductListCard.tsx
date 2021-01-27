@@ -22,10 +22,14 @@ const useStyles = makeStyles(
       height: 64,
       width: 64
     },
-    avatarSpacing: {
+    colAvatar: {
       paddingBottom: theme.spacing(2),
       paddingRight: theme.spacing(),
-      paddingTop: theme.spacing(2)
+      paddingTop: theme.spacing(2),
+      width: 112
+    },
+    colName: {
+      width: "auto"
     },
     label: {
       paddingLeft: 0
@@ -62,6 +66,11 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
         })}
       />
       <ResponsiveTable>
+        <colgroup>
+          <col className={classes.colAvatar} />
+          <col className={classes.colName} />
+          <col />
+        </colgroup>
         <TableBody>
           {renderCollection(
             topProducts,
@@ -79,7 +88,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                 }
               >
                 <TableCellAvatar
-                  className={classes.avatarSpacing}
+                  className={classes.colAvatar}
                   thumbnail={maybe(() => variant.product.thumbnail.url)}
                   avatarProps={classes.avatarProps}
                 />
@@ -127,7 +136,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
             ),
             () => (
               <TableRow>
-                <TableCell className={classes.noProducts}>
+                <TableCell colSpan={3} className={classes.noProducts}>
                   <Typography>
                     <FormattedMessage
                       defaultMessage="No products found"

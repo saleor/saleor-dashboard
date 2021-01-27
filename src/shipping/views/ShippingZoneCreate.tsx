@@ -19,6 +19,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
     onCompleted: data => {
       if (data.shippingZoneCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));

@@ -74,6 +74,10 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         ) : (
           <span />
         ),
+        inputProps: {
+          min: 0,
+          ...InputProps?.inputProps
+        },
         type: "number"
       }}
       name={name}

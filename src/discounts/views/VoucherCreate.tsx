@@ -26,6 +26,7 @@ export const VoucherDetails: React.FC = () => {
   const handleVoucherCreate = (data: VoucherCreate) => {
     if (data.voucherCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully created voucher"
         })

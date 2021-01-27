@@ -1,6 +1,10 @@
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
 import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React from "react";
@@ -8,7 +12,9 @@ import React from "react";
 const ITEM_HEIGHT = 48;
 
 export interface CardMenuItem {
+  disabled?: boolean;
   label: string;
+  testId?: string;
   onSelect: () => void;
 }
 
@@ -26,34 +32,58 @@ const useStyles = makeStyles(
       height: 32,
       padding: 0,
       width: 32
+    },
+    paper: {
+      marginTop: theme.spacing(2),
+      maxHeight: ITEM_HEIGHT * 4.5
     }
   }),
   { name: "CardMenu" }
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const { className, disabled, menuItems } = props;
+  const { className, disabled, menuItems, ...rest } = props;
   const classes = useStyles(props);
 
-  const [anchorEl, setAnchor] = React.useState<HTMLElement | null>(null);
+  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
+  const [open, setOpen] = React.useState(false);
 
-  const handleClick = (event: React.MouseEvent<any>) => {
-    setAnchor(event.currentTarget);
+  const handleToggle = () => setOpen(prevOpen => !prevOpen);
+
+  const handleClose = (event: React.MouseEvent<EventTarget>) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+
+    setOpen(false);
   };
 
-  const handleClose = () => {
-    setAnchor(null);
+  const handleListKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    }
   };
 
-  const handleMenuClick = (menuItemIndex: number) => {
-    menuItems[menuItemIndex].onSelect();
-    handleClose();
-  };
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current!.focus();
+    }
 
-  const open = !!anchorEl;
+    prevOpen.current = open;
+  }, [open]);
+
+  const handleMenuClick = (index: number) => {
+    menuItems[index].onSelect();
+    setOpen(false);
+  };
 
   return (
-    <div className={className}>
+    <div className={className} {...rest}>
       <IconButton
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
@@ -61,31 +91,48 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         className={classes.iconButton}
         color="primary"
         disabled={disabled}
-        onClick={handleClick}
+        ref={anchorRef}
+        onClick={handleToggle}
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id="long-menu"
-        anchorEl={anchorEl}
+      <Popper
+        placement="bottom-end"
         open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5
-            // width: 200
-          }
-        }}
+        anchorEl={anchorRef.current}
+        transition
       >
-        {menuItems.map((menuItem, menuItemIndex) => (
-          <MenuItem
-            onClick={() => handleMenuClick(menuItemIndex)}
-            key={menuItem.label}
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "right top" : "right bottom"
+            }}
           >
-            {menuItem.label}
-          </MenuItem>
-        ))}
-      </Menu>
+            <Paper className={classes.paper}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  id="menu-list-grow"
+                  onKeyDown={handleListKeyDown}
+                >
+                  {menuItems.map((menuItem, menuItemIndex) => (
+                    <MenuItem
+                      disabled={menuItem.disabled}
+                      onClick={() => handleMenuClick(menuItemIndex)}
+                      key={menuItem.label}
+                      data-test={menuItem.testId}
+                    >
+                      {menuItem.label}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     </div>
   );
 };

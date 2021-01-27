@@ -20,7 +20,10 @@ const WarehouseCreate: React.FC = () => {
     onCompleted: data => {
       if (data.createWarehouse.errors.length === 0) {
         navigate(warehouseUrl(data.createWarehouse.warehouse.id));
-        notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
       }
     }
   });
@@ -54,6 +57,7 @@ const WarehouseCreate: React.FC = () => {
                   streetAddress1: data.streetAddress1,
                   streetAddress2: data.streetAddress2
                 },
+                companyName: data.companyName,
                 name: data.name
               }
             }

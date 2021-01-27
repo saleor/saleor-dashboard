@@ -1,0 +1,114 @@
+name: TEST-ENV-DEPLOYMENT
+# Build and deploy test instance for every pull request
+
+on:
+  pull_request:
+    # trigger on "edited" to update instance when configuration changes in PR description
+    types: [opened, reopened, synchronize]
+    branches: ["*"]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: rlespinasse/github-slug-action@2.0.0
+
+      - name: Start deployment
+        uses: bobheadxi/deployments@v0.4.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          ref: ${{ github.head_ref }}
+
+      - name: Start storybook deployment
+        uses: bobheadxi/deployments@v0.4.2
+        id: storybook-deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          ref: ${{ github.head_ref }}
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: |
+          npm ci
+
+      - name: Get custom API_URI
+        id: api_uri
+        # Search for API_URI in PR description
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+          prefix: API_URI=
+          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
+        run: |
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+
+      - name: Run build
+        env:
+          # Use custom API_URI or the default one
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://master.staging.saleor.rocks/graphql/' }}
+          APP_MOUNT_URI: /
+          STATIC_URL: /
+        run: |
+          npm run build
+
+      - name: Run build storybook
+        run: |
+          npm run build-storybook
+
+      - name: Set domain
+        # Set test instance domain based on branch name slug
+        run: |
+          echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
+          aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}/storybook
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
+
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v0.4.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ env.domain }}/
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update storybook deployment status
+        uses: bobheadxi/deployments@v0.4.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ env.domain }}/storybook/index.html
+          deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}

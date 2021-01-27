@@ -1,10 +1,10 @@
+import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
   AttributeValueType
 } from "@saleor/types/globalTypes";
 
-import { AttributeDetailsFragment } from "./types/AttributeDetailsFragment";
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
 
 export const attribute: AttributeDetailsFragment = {
@@ -14,7 +14,15 @@ export const attribute: AttributeDetailsFragment = {
   filterableInStorefront: true,
   id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
   inputType: AttributeInputTypeEnum.DROPDOWN,
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.id",
+      value: "100023123"
+    }
+  ],
   name: "Author",
+  privateMetadata: [],
   slug: "author",
   storefrontSearchPosition: 2,
   valueRequired: true,

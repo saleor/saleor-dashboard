@@ -1,4 +1,4 @@
-import { User_userPermissions } from "@saleor/auth/types/User";
+import { User_userPermissions } from "@saleor/fragments/types/User";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 

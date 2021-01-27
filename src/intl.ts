@@ -7,6 +7,9 @@ export const commonMessages = defineMessages({
   catalog: {
     defaultMessage: "Catalog"
   },
+  customApps: {
+    defaultMessage: "Local Apps"
+  },
   dashboard: {
     defaultMessage: "Dashboard"
   },
@@ -37,7 +40,7 @@ export const commonMessages = defineMessages({
     defaultMessage: "First Name"
   },
   generalInformations: {
-    defaultMessage: "General Informations"
+    defaultMessage: "General Information"
   },
   lastName: {
     defaultMessage: "Last Name"
@@ -129,6 +132,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button"
   },
+  nextStep: {
+    defaultMessage: "Next",
+    description: "go to next step, button"
+  },
   ok: {
     defaultMessage: "OK",
     description: "button"
@@ -139,6 +146,14 @@ export const buttonMessages = defineMessages({
   },
   save: {
     defaultMessage: "Save",
+    description: "button"
+  },
+  selectAll: {
+    defaultMessage: "Select All",
+    description: "select all options, button"
+  },
+  send: {
+    defaultMessage: "Send",
     description: "button"
   },
   show: {
@@ -152,6 +167,10 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  apps: {
+    defaultMessage: "Apps",
+    description: "apps section name"
+  },
   attributes: {
     defaultMessage: "Attributes",
     description: "attributes section name"

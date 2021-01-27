@@ -3,14 +3,14 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { ProductTypeTranslationFragment } from "@saleor/fragments/types/ProductTypeTranslationFragment";
 import { sectionNames } from "@saleor/intl";
+import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
-import { ProductTypeTranslationFragment } from "../../types/ProductTypeTranslationFragment";
-import { TranslationsEntitiesPageProps } from "../../types/TranslationsEntitiesPage";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductTypesPageProps

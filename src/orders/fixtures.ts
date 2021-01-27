@@ -1,3 +1,4 @@
+import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -5,7 +6,9 @@ import { MessageDescriptor } from "react-intl";
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
   FulfillmentStatus,
+  JobStatusEnum,
   OrderAction,
+  OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderStatus,
   PaymentChargeStatusEnum
@@ -819,6 +822,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDoyMQ==",
+      invoiceNumber: null,
       message: null,
       quantity: 1,
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
@@ -827,6 +831,84 @@ export const order = (placeholder: string): OrderDetails_order => ({
         email: "admin@example.com",
         id: "QWRkcmVzczoxNQ=="
       }
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo0",
+      invoiceNumber: null,
+      message: "This is note",
+      quantity: null,
+      type: OrderEventsEnum.NOTE_ADDED,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo1",
+      invoiceNumber: null,
+      message: "This is note",
+      quantity: null,
+      type: OrderEventsEnum.NOTE_ADDED,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo2",
+      invoiceNumber: null,
+      message: "Note from external service",
+      quantity: null,
+      type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: OrderEventsEmailsEnum.ORDER_CANCEL,
+      id: "T3JkZXJFdmVudDo3",
+      invoiceNumber: null,
+      message: null,
+      quantity: null,
+      type: OrderEventsEnum.EMAIL_SENT,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: OrderEventsEmailsEnum.ORDER_REFUND,
+      id: "T3JkZXJFdmVudDo4",
+      invoiceNumber: null,
+      message: null,
+      quantity: null,
+      type: OrderEventsEnum.EMAIL_SENT,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo5",
+      invoiceNumber: null,
+      message: null,
+      quantity: null,
+      type: OrderEventsEnum.PAYMENT_AUTHORIZED,
+      user: null
     }
   ],
   fulfillments: [
@@ -862,6 +944,17 @@ export const order = (placeholder: string): OrderDetails_order => ({
                 amount: 79.71,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "dsfsfuhb",
+              product: {
+                __typename: "Product",
+                id: "345678393",
+                isAvailableForPurchase: true,
+                isPublished: true
+              },
+              quantityAvailable: 10
             }
           },
           quantity: 1
@@ -903,6 +996,17 @@ export const order = (placeholder: string): OrderDetails_order => ({
                 amount: 79.71,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "dsfsfuhb",
+              product: {
+                __typename: "Product",
+                id: "345678393",
+                isAvailableForPurchase: true,
+                isPublished: true
+              },
+              quantityAvailable: 10
             }
           },
           quantity: 1
@@ -914,6 +1018,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   id: "T3JkZXI6OQ==",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      status: JobStatusEnum.SUCCESS,
+      url: "invoice1"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine",
@@ -939,6 +1053,17 @@ export const order = (placeholder: string): OrderDetails_order => ({
           amount: 18.51,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "dsfsfuhb",
+        product: {
+          __typename: "Product",
+          id: "345678393",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     },
     {
@@ -965,11 +1090,30 @@ export const order = (placeholder: string): OrderDetails_order => ({
           amount: 79.71,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "dsfsfuhb",
+        product: {
+          __typename: "Product",
+          id: "345678393",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
+    }
+  ],
+  metadata: [
+    {
+      __typename: "MetadataItem",
+      key: "integration.key",
+      value: "some-value"
     }
   ],
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+  privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
     city: "West Patriciastad",
@@ -1046,6 +1190,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      status: JobStatusEnum.SUCCESS,
+      url: "invoice1"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",
@@ -1071,6 +1225,17 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
           amount: 65.95,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "dsfsfuhb",
+        product: {
+          __typename: "Product",
+          id: "345678393",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     },
     {
@@ -1097,11 +1262,24 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
           amount: 68.2,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "dsfsfuhb",
+        product: {
+          __typename: "Product",
+          id: "345678393",
+          isAvailableForPurchase: true,
+          isPublished: true
+        },
+        quantityAvailable: 10
       }
     }
   ],
+  metadata: [],
   number: "24",
   paymentStatus: null,
+  privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
@@ -1296,5 +1474,44 @@ export const orderLineSearch = (
         sku: "75799450"
       }
     ]
+  }
+];
+
+export const invoices: InvoiceFragment[] = [
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T12:13:56.901097+00:00",
+    id: "SW52b2ljZTo0",
+    number: "1/07/2020",
+    status: JobStatusEnum.PENDING,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-1fef611b-7514-4dc6-aee3-09a8232b1d6a.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:06:17.059412+00:00",
+    id: "SW52b2ljZToz",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-8df26967-ad21-4075-a446-cef44ae05197.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:05:58.300952+00:00",
+    id: "SW52b2ljZToy",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-5ebc85e0-e587-4386-8292-9b85839281e6.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:04:27.257562+00:00",
+    id: "SW52b2ljZTox",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-0e449e10-ef4b-4066-bebe-361f670b6820.pdf"
   }
 ];

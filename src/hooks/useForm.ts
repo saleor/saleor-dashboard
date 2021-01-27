@@ -10,6 +10,7 @@ export interface ChangeEvent<TData = any> {
     value: TData;
   };
 }
+export type SubmitPromise = Promise<any[]>;
 
 export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
@@ -51,7 +52,7 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initial: T,
-  onSubmit: (data: T) => void
+  onSubmit?: (data: T) => SubmitPromise | void
 ): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
   const [data, setData] = useStateFromProps(initial, {
@@ -106,8 +107,16 @@ function useForm<T extends FormData>(
     }));
   }
 
-  function submit() {
-    return onSubmit(data);
+  async function submit() {
+    if (typeof onSubmit === "function") {
+      const result = onSubmit(data);
+      if (result) {
+        const errors = await result;
+        if (errors.length === 0) {
+          setChanged(false);
+        }
+      }
+    }
   }
 
   function triggerChange() {

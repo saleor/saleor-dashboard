@@ -6,7 +6,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
 import { AddressInput } from "@saleor/types/globalTypes";
@@ -76,7 +76,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   const {
     errors: validationErrors,
     submit: handleSubmitWithAddress
-  } = useAddressValidation<CustomerCreatePageFormData>(formData =>
+  } = useAddressValidation<CustomerCreatePageFormData, void>(formData =>
     onSubmit({
       address: {
         city: formData.city,

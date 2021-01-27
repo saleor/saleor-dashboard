@@ -1,12 +1,13 @@
-import gql from "graphql-tag";
-
-import { TypedMutation } from "../mutations";
 import {
   saleDetailsFragment,
   saleFragment,
   voucherDetailsFragment,
   voucherFragment
-} from "./queries";
+} from "@saleor/fragments/discounts";
+import { discountErrorFragment } from "@saleor/fragments/errors";
+import gql from "graphql-tag";
+
+import { TypedMutation } from "../mutations";
 import {
   SaleBulkDelete,
   SaleBulkDeleteVariables
@@ -37,13 +38,6 @@ import {
 import { VoucherCreate, VoucherCreateVariables } from "./types/VoucherCreate";
 import { VoucherDelete, VoucherDeleteVariables } from "./types/VoucherDelete";
 import { VoucherUpdate, VoucherUpdateVariables } from "./types/VoucherUpdate";
-
-const discountErrorFragment = gql`
-  fragment DiscountErrorFragment on DiscountError {
-    code
-    field
-  }
-`;
 
 const saleUpdate = gql`
   ${discountErrorFragment}

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderMarkAsPaid
@@ -12,6 +12,18 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_billingAddress_country {
@@ -49,10 +61,25 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_events {
   date: any | null;
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
+  invoiceNumber: string | null;
   message: string | null;
   quantity: number | null;
   type: OrderEventsEnum | null;
   user: OrderMarkAsPaid_orderMarkAsPaid_order_events_user | null;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_product;
+  quantityAvailable: number;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -82,6 +109,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -113,6 +141,20 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments {
   warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_warehouse | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  isAvailableForPurchase: boolean | null;
+  isPublished: boolean;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_product;
+  quantityAvailable: number;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -140,6 +182,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  variant: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
@@ -252,9 +295,20 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_discount {
   currency: string;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   __typename: "Order";
   id: string;
+  metadata: (OrderMarkAsPaid_orderMarkAsPaid_order_metadata | null)[];
+  privateMetadata: (OrderMarkAsPaid_orderMarkAsPaid_order_privateMetadata | null)[];
   billingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
@@ -278,6 +332,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   userEmail: string | null;
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
   discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
+  invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {

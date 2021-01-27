@@ -1,9 +1,9 @@
 import { MutationResult } from "react-apollo";
 
-import { User_userPermissions } from "./auth/types/User";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { User_userPermissions } from "./fragments/types/User";
 
 export interface UserError {
   field: string | null;
@@ -21,6 +21,7 @@ export interface ListSettings<TColumn extends string = string> {
 }
 
 export enum ListViews {
+  APPS_LIST = "APPS_LIST",
   ATTRIBUTE_LIST = "ATTRIBUTE_LIST",
   CATEGORY_LIST = "CATEGORY_LIST",
   COLLECTION_LIST = "COLLECTION_LIST",
