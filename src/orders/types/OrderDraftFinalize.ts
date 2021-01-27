@@ -131,7 +131,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice | null;
+  unitPrice: OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice;
   thumbnail: OrderDraftFinalize_draftOrderComplete_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   fulfillments: (OrderDraftFinalize_draftOrderComplete_order_fulfillments | null)[];
   lines: (OrderDraftFinalize_draftOrderComplete_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDraftFinalize_draftOrderComplete_order_shippingAddress | null;
   shippingMethod: OrderDraftFinalize_draftOrderComplete_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderDraftFinalize_draftOrderComplete_order_shippingPrice | null;
+  shippingPrice: OrderDraftFinalize_draftOrderComplete_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderDraftFinalize_draftOrderComplete_order_subtotal | null;
-  total: OrderDraftFinalize_draftOrderComplete_order_total | null;
+  subtotal: OrderDraftFinalize_draftOrderComplete_order_subtotal;
+  total: OrderDraftFinalize_draftOrderComplete_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderDraftFinalize_draftOrderComplete_order_totalAuthorized | null;
-  totalCaptured: OrderDraftFinalize_draftOrderComplete_order_totalCaptured | null;
+  totalAuthorized: OrderDraftFinalize_draftOrderComplete_order_totalAuthorized;
+  totalCaptured: OrderDraftFinalize_draftOrderComplete_order_totalCaptured;
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods | null)[] | null;
   discount: OrderDraftFinalize_draftOrderComplete_order_discount | null;
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete {

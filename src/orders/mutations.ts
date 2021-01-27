@@ -473,7 +473,7 @@ const orderLineDeleteMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
   mutation OrderLineDelete($id: ID!) {
-    draftOrderLineDelete(id: $id) {
+    orderLineDelete(id: $id) {
       errors: orderErrors {
         ...OrderErrorFragment
       }
@@ -492,7 +492,7 @@ const orderLinesAddMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
   mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput]!) {
-    draftOrderLinesCreate(id: $id, input: $input) {
+    orderLinesCreate(id: $id, input: $input) {
       errors: orderErrors {
         ...OrderErrorFragment
       }
@@ -511,7 +511,7 @@ const orderLineUpdateMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
   mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
-    draftOrderLineUpdate(id: $id, input: $input) {
+    orderLineUpdate(id: $id, input: $input) {
       errors: orderErrors {
         ...OrderErrorFragment
       }

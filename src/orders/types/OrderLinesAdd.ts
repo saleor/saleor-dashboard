@@ -8,36 +8,36 @@ import { OrderLineCreateInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEvent
 // GraphQL mutation operation: OrderLinesAdd
 // ====================================================
 
-export interface OrderLinesAdd_draftOrderLinesCreate_errors {
+export interface OrderLinesAdd_orderLinesCreate_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_metadata {
+export interface OrderLinesAdd_orderLinesCreate_order_metadata {
   __typename: "MetadataItem";
   key: string;
   value: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_privateMetadata {
+export interface OrderLinesAdd_orderLinesCreate_order_privateMetadata {
   __typename: "MetadataItem";
   key: string;
   value: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_billingAddress_country {
+export interface OrderLinesAdd_orderLinesCreate_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
   country: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_billingAddress {
+export interface OrderLinesAdd_orderLinesCreate_order_billingAddress {
   __typename: "Address";
   city: string;
   cityArea: string;
   companyName: string;
-  country: OrderLinesAdd_draftOrderLinesCreate_order_billingAddress_country;
+  country: OrderLinesAdd_orderLinesCreate_order_billingAddress_country;
   countryArea: string;
   firstName: string;
   id: string;
@@ -48,13 +48,13 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_billingAddress {
   streetAddress2: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_events_relatedOrder {
+export interface OrderLinesAdd_orderLinesCreate_order_events_relatedOrder {
   __typename: "Order";
   id: string;
   number: string | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_events_user {
+export interface OrderLinesAdd_orderLinesCreate_order_events_user {
   __typename: "User";
   id: string;
   email: string;
@@ -62,20 +62,20 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events_user {
   lastName: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine {
+export interface OrderLinesAdd_orderLinesCreate_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   productName: string;
   variantName: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines {
+export interface OrderLinesAdd_orderLinesCreate_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
-  orderLine: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine | null;
+  orderLine: OrderLinesAdd_orderLinesCreate_order_events_lines_orderLine | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
+export interface OrderLinesAdd_orderLinesCreate_order_events {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
@@ -84,134 +84,134 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
-  relatedOrder: OrderLinesAdd_draftOrderLinesCreate_order_events_relatedOrder | null;
+  relatedOrder: OrderLinesAdd_orderLinesCreate_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;
-  user: OrderLinesAdd_draftOrderLinesCreate_order_events_user | null;
-  lines: (OrderLinesAdd_draftOrderLinesCreate_order_events_lines | null)[] | null;
+  user: OrderLinesAdd_orderLinesCreate_order_events_user | null;
+  lines: (OrderLinesAdd_orderLinesCreate_order_events_lines | null)[] | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_variant {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_net {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  gross: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross;
-  net: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_net;
+  gross: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross;
+  net: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_net;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_thumbnail {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
-  variant: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_variant | null;
+  variant: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice | null;
-  thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_thumbnail | null;
+  unitPrice: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitPrice;
+  thumbnail: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines {
   __typename: "FulfillmentLine";
   id: string;
   quantity: number;
-  orderLine: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine | null;
+  orderLine: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_warehouse {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_warehouse {
   __typename: "Warehouse";
   id: string;
   name: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments {
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
-  lines: (OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines | null)[] | null;
+  lines: (OrderLinesAdd_orderLinesCreate_order_fulfillments_lines | null)[] | null;
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
-  warehouse: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_warehouse | null;
+  warehouse: OrderLinesAdd_orderLinesCreate_order_fulfillments_warehouse | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_variant {
+export interface OrderLinesAdd_orderLinesCreate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_gross {
+export interface OrderLinesAdd_orderLinesCreate_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_net {
+export interface OrderLinesAdd_orderLinesCreate_order_lines_unitPrice_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice {
+export interface OrderLinesAdd_orderLinesCreate_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  gross: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_gross;
-  net: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_net;
+  gross: OrderLinesAdd_orderLinesCreate_order_lines_unitPrice_gross;
+  net: OrderLinesAdd_orderLinesCreate_order_lines_unitPrice_net;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_thumbnail {
+export interface OrderLinesAdd_orderLinesCreate_order_lines_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_lines {
+export interface OrderLinesAdd_orderLinesCreate_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
-  variant: OrderLinesAdd_draftOrderLinesCreate_order_lines_variant | null;
+  variant: OrderLinesAdd_orderLinesCreate_order_lines_variant | null;
   productName: string;
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice | null;
-  thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_lines_thumbnail | null;
+  unitPrice: OrderLinesAdd_orderLinesCreate_order_lines_unitPrice;
+  thumbnail: OrderLinesAdd_orderLinesCreate_order_lines_thumbnail | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress_country {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
   country: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingAddress {
   __typename: "Address";
   city: string;
   cityArea: string;
   companyName: string;
-  country: OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress_country;
+  country: OrderLinesAdd_orderLinesCreate_order_shippingAddress_country;
   countryArea: string;
   firstName: string;
   id: string;
@@ -222,89 +222,89 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress {
   streetAddress2: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingMethod {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice_gross {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingPrice {
   __typename: "TaxedMoney";
-  gross: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice_gross;
+  gross: OrderLinesAdd_orderLinesCreate_order_shippingPrice_gross;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_subtotal_gross {
+export interface OrderLinesAdd_orderLinesCreate_order_subtotal_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_subtotal {
+export interface OrderLinesAdd_orderLinesCreate_order_subtotal {
   __typename: "TaxedMoney";
-  gross: OrderLinesAdd_draftOrderLinesCreate_order_subtotal_gross;
+  gross: OrderLinesAdd_orderLinesCreate_order_subtotal_gross;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_total_gross {
+export interface OrderLinesAdd_orderLinesCreate_order_total_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_total_tax {
+export interface OrderLinesAdd_orderLinesCreate_order_total_tax {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_total {
+export interface OrderLinesAdd_orderLinesCreate_order_total {
   __typename: "TaxedMoney";
-  gross: OrderLinesAdd_draftOrderLinesCreate_order_total_gross;
-  tax: OrderLinesAdd_draftOrderLinesCreate_order_total_tax;
+  gross: OrderLinesAdd_orderLinesCreate_order_total_gross;
+  tax: OrderLinesAdd_orderLinesCreate_order_total_tax;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized {
+export interface OrderLinesAdd_orderLinesCreate_order_totalAuthorized {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured {
+export interface OrderLinesAdd_orderLinesCreate_order_totalCaptured {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_user {
+export interface OrderLinesAdd_orderLinesCreate_order_user {
   __typename: "User";
   id: string;
   email: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods_price {
+export interface OrderLinesAdd_orderLinesCreate_order_availableShippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods {
+export interface OrderLinesAdd_orderLinesCreate_order_availableShippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods_price | null;
+  price: OrderLinesAdd_orderLinesCreate_order_availableShippingMethods_price | null;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_discount {
+export interface OrderLinesAdd_orderLinesCreate_order_discount {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_invoices {
+export interface OrderLinesAdd_orderLinesCreate_order_invoices {
   __typename: "Invoice";
   id: string;
   number: string | null;
@@ -313,7 +313,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_invoices {
   status: JobStatusEnum;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order_channel {
+export interface OrderLinesAdd_orderLinesCreate_order_channel {
   __typename: "Channel";
   isActive: boolean;
   id: string;
@@ -321,47 +321,47 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_channel {
   currencyCode: string;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate_order {
+export interface OrderLinesAdd_orderLinesCreate_order {
   __typename: "Order";
   id: string;
-  metadata: (OrderLinesAdd_draftOrderLinesCreate_order_metadata | null)[];
-  privateMetadata: (OrderLinesAdd_draftOrderLinesCreate_order_privateMetadata | null)[];
-  billingAddress: OrderLinesAdd_draftOrderLinesCreate_order_billingAddress | null;
+  metadata: (OrderLinesAdd_orderLinesCreate_order_metadata | null)[];
+  privateMetadata: (OrderLinesAdd_orderLinesCreate_order_privateMetadata | null)[];
+  billingAddress: OrderLinesAdd_orderLinesCreate_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
   customerNote: string;
-  events: (OrderLinesAdd_draftOrderLinesCreate_order_events | null)[] | null;
-  fulfillments: (OrderLinesAdd_draftOrderLinesCreate_order_fulfillments | null)[];
-  lines: (OrderLinesAdd_draftOrderLinesCreate_order_lines | null)[];
+  events: (OrderLinesAdd_orderLinesCreate_order_events | null)[] | null;
+  fulfillments: (OrderLinesAdd_orderLinesCreate_order_fulfillments | null)[];
+  lines: (OrderLinesAdd_orderLinesCreate_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
-  shippingAddress: OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress | null;
-  shippingMethod: OrderLinesAdd_draftOrderLinesCreate_order_shippingMethod | null;
+  paymentStatus: PaymentChargeStatusEnum;
+  shippingAddress: OrderLinesAdd_orderLinesCreate_order_shippingAddress | null;
+  shippingMethod: OrderLinesAdd_orderLinesCreate_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice | null;
+  shippingPrice: OrderLinesAdd_orderLinesCreate_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderLinesAdd_draftOrderLinesCreate_order_subtotal | null;
-  total: OrderLinesAdd_draftOrderLinesCreate_order_total | null;
+  subtotal: OrderLinesAdd_orderLinesCreate_order_subtotal;
+  total: OrderLinesAdd_orderLinesCreate_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized | null;
-  totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured | null;
-  user: OrderLinesAdd_draftOrderLinesCreate_order_user | null;
+  totalAuthorized: OrderLinesAdd_orderLinesCreate_order_totalAuthorized;
+  totalCaptured: OrderLinesAdd_orderLinesCreate_order_totalCaptured;
+  user: OrderLinesAdd_orderLinesCreate_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
-  discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
-  invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
-  channel: OrderLinesAdd_draftOrderLinesCreate_order_channel;
-  isPaid: boolean | null;
+  availableShippingMethods: (OrderLinesAdd_orderLinesCreate_order_availableShippingMethods | null)[] | null;
+  discount: OrderLinesAdd_orderLinesCreate_order_discount | null;
+  invoices: (OrderLinesAdd_orderLinesCreate_order_invoices | null)[] | null;
+  channel: OrderLinesAdd_orderLinesCreate_order_channel;
+  isPaid: boolean;
 }
 
-export interface OrderLinesAdd_draftOrderLinesCreate {
-  __typename: "DraftOrderLinesCreate";
-  errors: OrderLinesAdd_draftOrderLinesCreate_errors[];
-  order: OrderLinesAdd_draftOrderLinesCreate_order | null;
+export interface OrderLinesAdd_orderLinesCreate {
+  __typename: "OrderLinesCreate";
+  errors: OrderLinesAdd_orderLinesCreate_errors[];
+  order: OrderLinesAdd_orderLinesCreate_order | null;
 }
 
 export interface OrderLinesAdd {
-  draftOrderLinesCreate: OrderLinesAdd_draftOrderLinesCreate | null;
+  orderLinesCreate: OrderLinesAdd_orderLinesCreate | null;
 }
 
 export interface OrderLinesAddVariables {

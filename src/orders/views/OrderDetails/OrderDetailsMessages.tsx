@@ -174,7 +174,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineDelete = (data: OrderLineDelete) => {
-    const errs = data.draftOrderLineDelete?.errors;
+    const errs = data.orderLineDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -185,7 +185,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
-    const errs = data.draftOrderLinesCreate?.errors;
+    const errs = data.orderLinesCreate?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -197,7 +197,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
-    const errs = data.draftOrderLineUpdate?.errors;
+    const errs = data.orderLineUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",

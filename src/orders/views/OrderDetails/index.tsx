@@ -559,8 +559,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         <OrderProductAddDialog
                           confirmButtonState={orderLinesAdd.opts.status}
                           errors={
-                            orderLinesAdd.opts.data?.draftOrderLinesCreate
-                              .errors || []
+                            orderLinesAdd.opts.data?.orderLinesCreate.errors ||
+                            []
                           }
                           loading={variantSearchOpts.loading}
                           open={params.action === "add-order-line"}

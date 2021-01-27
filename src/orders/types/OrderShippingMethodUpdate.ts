@@ -50,7 +50,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   id: string;
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice | null;
+  shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping {

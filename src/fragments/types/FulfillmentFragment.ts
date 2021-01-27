@@ -46,7 +46,7 @@ export interface FulfillmentFragment_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: FulfillmentFragment_lines_orderLine_unitPrice | null;
+  unitPrice: FulfillmentFragment_lines_orderLine_unitPrice;
   thumbnail: FulfillmentFragment_lines_orderLine_thumbnail | null;
 }
 

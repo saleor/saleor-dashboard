@@ -125,7 +125,7 @@ export interface OrderDetails_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDetails_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderDetails_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDetails_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -190,7 +190,7 @@ export interface OrderDetails_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderDetails_order_lines_unitPrice | null;
+  unitPrice: OrderDetails_order_lines_unitPrice;
   thumbnail: OrderDetails_order_lines_thumbnail | null;
 }
 
@@ -328,24 +328,24 @@ export interface OrderDetails_order {
   fulfillments: (OrderDetails_order_fulfillments | null)[];
   lines: (OrderDetails_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetails_order_shippingAddress | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderDetails_order_shippingPrice | null;
+  shippingPrice: OrderDetails_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderDetails_order_subtotal | null;
-  total: OrderDetails_order_total | null;
+  subtotal: OrderDetails_order_subtotal;
+  total: OrderDetails_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderDetails_order_totalAuthorized | null;
-  totalCaptured: OrderDetails_order_totalCaptured | null;
+  totalAuthorized: OrderDetails_order_totalAuthorized;
+  totalCaptured: OrderDetails_order_totalCaptured;
   user: OrderDetails_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
   discount: OrderDetails_order_discount | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderDetails_shop_countries {
