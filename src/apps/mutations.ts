@@ -79,6 +79,7 @@ export const appDeleteFailedInstallationMutation = gql`
 `;
 
 export const appFetchMutation = gql`
+  ${appErrorFragment}
   mutation AppFetch($manifestUrl: String!) {
     appFetchManifest(manifestUrl: $manifestUrl) {
       manifest {
