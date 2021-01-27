@@ -32,18 +32,22 @@ class Channels {
           }
           `;
     cy.sendRequestWithQuery(getChannelsInfoQuery).then(resp => {
-      const channels = resp.body.data.channels;
+      const channels = new Set(resp.body.data.channels);
       if (channels) {
         channels.forEach(element => {
           if (element.name.startsWith(nameStartsWith)) {
-            channels.forEach(targetElement => {
-              if (
-                element.currencyCode === targetElement.currencyCode &&
-                element.id !== targetElement.id
-              ) {
-                this.deleteChannel(element.id, targetElement.id);
-              }
+            const targetChannels = Array.from(channels).filter(function(
+              channel
+            ) {
+              return (
+                element.currencyCode === channel.currencyCode &&
+                element.id !== channel.id
+              );
             });
+            if (targetChannels[0]) {
+              this.deleteChannel(element.id, targetChannels[0].id);
+              channels.delete(element);
+            }
           }
         });
       }
@@ -55,12 +59,15 @@ class Channels {
             channelDelete(id: "${channelId}", input:{
               targetChannel: "${targetChennelId}"
             }){
+              channel{
+                name
+              }
               channelErrors{
                 message
               }
             }
           }`;
-    cy.sendRequestWithQuery(deleteChannelMutation);
+    return cy.sendRequestWithQuery(deleteChannelMutation);
   }
 }
 export default Channels;

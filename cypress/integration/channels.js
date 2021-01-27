@@ -6,11 +6,11 @@ import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
 import { ADD_CHANNEL_FORM_SELECTOS } from "../elements/channels/add-channel-form-selectors";
 import { CHANNEL_FORM_SELECTORS } from "../elements/channels/channel-form-selectors";
 import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
-import { DELETE_CHANNEL_FORM_SELECTORS } from "../elements/channels/delete-channel-form-selectors";
 import { CONFIGURATION_SELECTORS } from "../elements/configuration/configuration-selectors";
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
+import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { URL_LIST } from "../url/url-list";
 
 describe("Channels", () => {
@@ -19,6 +19,7 @@ describe("Channels", () => {
   const channels = new Channels();
 
   before(() => {
+    cy.clearSessionData().loginUserViaRequest();
     channels.deleteTestChannels(channelStartsWith);
   });
 
@@ -38,34 +39,24 @@ describe("Channels", () => {
 
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(URL_LIST.channels)
-      .get(CHANNELS_SELECTORS.createChannelButton)
-      .click()
-      .get(ADD_CHANNEL_FORM_SELECTOS.channelName)
-      .type(randomChannel)
-      .get(ADD_CHANNEL_FORM_SELECTOS.slug)
-      .type(randomChannel)
-      .get(ADD_CHANNEL_FORM_SELECTOS.currency)
-      .click()
-      .get(ADD_CHANNEL_FORM_SELECTOS.currencyOptions)
-      .first()
-      .click()
-      .get(ADD_CHANNEL_FORM_SELECTOS.saveButton)
-      .click()
-      .waitForGraph("ChannelCreate")
+    cy.visit(URL_LIST.channels);
+    createChannel(randomChannel);
+    cy.addAliasToRequest("Channel")
+      .wait("@Channel")
       .get(ADD_CHANNEL_FORM_SELECTOS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
-      .contains(randomChannel);
-    cy.visit(URL_LIST.dashbord)
+      .contains(randomChannel)
+      .visit(URL_LIST.dashbord)
       .get(HEADER_SELECTORS.channelSelect)
       .click()
       .get(HEADER_SELECTORS.channelSelectList)
       .contains(randomChannel)
-      .click();
-    cy.visit(URL_LIST.products)
-      .waitForGraph("ProductList")
-      .get(PRODUCTS_SELECTORS.productsList)
+      .click()
+      .visit(URL_LIST.products)
+      .addAliasToRequest("InitialProductFilterData")
+      .wait("@InitialProductFilterData");
+    cy.get(PRODUCTS_SELECTORS.productsList)
       .first()
       .click()
       .get(PRODUCTS_SELECTORS.availableManageButton)
@@ -87,49 +78,39 @@ describe("Channels", () => {
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(URL_LIST.channels);
-    createChannel(randomChannel, randomChannel, "notExistingCurrency");
+    createChannel(randomChannel, "notExistingCurrency");
     cy.get(ADD_CHANNEL_FORM_SELECTOS.currencyValidationMassege).should(
       "be.visible"
     );
   });
 
-  it("should delete channel and move orders", () => {
+  it("should delete channel", () => {
     const randomChannelToDelete = `${channelStartsWith} ${faker.random.number()}`;
-    const randomTargetChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.createChannel(
+    channels.createChannel(
       false,
       randomChannelToDelete,
       randomChannelToDelete,
       currency
-    )
-      .createChannelByApi(
-        false,
-        randomTargetChannel,
-        randomTargetChannel,
-        currency
-      )
-      .visit(URL_LIST.channels)
+    );
+    cy.visit(URL_LIST.channels)
       .get(CHANNELS_SELECTORS.channelName)
       .contains(randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)
       .find("button")
-      .click();
-    cy.get(DELETE_CHANNEL_FORM_SELECTORS.targetChannelSelect)
       .click()
-      .get(DELETE_CHANNEL_FORM_SELECTORS.targetChannelOption)
-      .contains(randomTargetChannel)
+      .get(BUTTON_SELECTORS.submit)
       .click()
-      .get(DELETE_CHANNEL_FORM_SELECTORS.confirmButton)
-      .click();
+      .addAliasToRequest("Channels")
+      .wait("@Channels");
     cy.get(CHANNELS_SELECTORS.channelName)
-      .not()
-      .contains(randomChannelToDelete);
+      .contains(randomChannelToDelete)
+      .should("not.exist");
   });
 
   it("should not be possible to add products to order with inactive channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.createChannel(false, randomChannel, randomChannel, currency)
-      .visit(URL_LIST.orders)
+    channels.createChannel(false, randomChannel, randomChannel, currency);
+    cy.visit(URL_LIST.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click()
       .get(CHANNEL_FORM_SELECTORS.channelSelect)
@@ -138,12 +119,17 @@ describe("Channels", () => {
       .contains(randomChannel)
       .click()
       .get(CHANNEL_FORM_SELECTORS.confirmButton)
-      .click()
+      .click();
+    cy.location()
+      .should(loc => {
+        const urlRegex = new RegExp(`${URL_LIST.orders}/.+`, "g");
+        expect(loc.pathname).to.match(urlRegex);
+      })
       .get(DRAFT_ORDER_SELECTORS.addProducts)
       .should("not.exist");
   });
 
-  function createChannel(name, slug = name, currency) {
+  function createChannel(name, otherCurrency, slug = name) {
     cy.get(CHANNELS_SELECTORS.createChannelButton)
       .click()
       .get(ADD_CHANNEL_FORM_SELECTOS.channelName)
@@ -152,13 +138,12 @@ describe("Channels", () => {
       .type(slug)
       .get(ADD_CHANNEL_FORM_SELECTOS.currency)
       .click();
-    if (!currency) {
-      cy.get(ADD_CHANNEL_FORM_SELECTOS.currencyOptions)
-        .first()
-        .click();
+    if (!otherCurrency) {
+      cy.get(ADD_CHANNEL_FORM_SELECTOS.currency).type(currency);
+      cy.get(`[data-test-value=${currency}]`).click();
     } else {
       cy.get(ADD_CHANNEL_FORM_SELECTOS.currency)
-        .type(currency)
+        .type(otherCurrency)
         .get(ADD_CHANNEL_FORM_SELECTOS.currencyAutocompliteDropdown)
         .click();
     }

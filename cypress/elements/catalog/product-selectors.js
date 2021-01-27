@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys */
 export const PRODUCTS_SELECTORS = {
-  productsList: "[data-test='id']",
+  productsList: "[data-test-id][data-test='id']",
   products: "[data-test='submenu-item-label'][data-test-id='products']",
   createProductBtn: "[data-test='add-product']",
   productNameInput: "[name='name']",
@@ -16,5 +16,6 @@ export const PRODUCTS_SELECTORS = {
   availableManageButton:
     "[data-test-id='channels-availiability-manage-button']",
   channelsAvailabilityForm:
-    "[data-test-id='manage-products-channels-availiability-list']"
+    "[data-test-id='manage-products-channels-availiability-list']",
+  emptyProductRow: "[class*='Skeleton']"
 };
