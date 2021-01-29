@@ -26,6 +26,8 @@ import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
+import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
+import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
@@ -77,6 +79,13 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onNoteAdd(data: HistoryFormData);
   onProfileView();
   onOrderReturn();
+  onOrderLineAdd: () => void;
+  onOrderLineChange: (
+    id: string,
+    data: OrderDraftDetailsProductsFormData
+  ) => void;
+  onOrderLineRemove: (id: string) => void;
+  onShippingMethodEdit();
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
@@ -121,6 +130,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onInvoiceGenerate,
     onInvoiceSend,
     onOrderReturn,
+    onOrderLineAdd,
+    onOrderLineChange,
+    onOrderLineRemove,
+    onShippingMethodEdit,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -214,11 +227,25 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div>
-                <OrderUnfulfilledProductsCard
-                  canFulfill={canFulfill}
-                  lines={unfulfilled}
-                  onFulfill={onOrderFulfill}
-                />
+                {order?.status !== OrderStatus.UNCONFIRMED ? (
+                  <OrderUnfulfilledProductsCard
+                    canFulfill={canFulfill}
+                    lines={unfulfilled}
+                    onFulfill={onOrderFulfill}
+                  />
+                ) : (
+                  <>
+                    <OrderDraftDetails
+                      disabled={!order?.channel}
+                      order={order}
+                      onOrderLineAdd={onOrderLineAdd}
+                      onOrderLineChange={onOrderLineChange}
+                      onOrderLineRemove={onOrderLineRemove}
+                      onShippingMethodEdit={onShippingMethodEdit}
+                    />
+                    <CardSpacer />
+                  </>
+                )}
                 {order?.fulfillments?.map(fulfillment => (
                   <React.Fragment key={fulfillment.id}>
                     <OrderFulfilledProductsCard
@@ -234,13 +261,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <OrderPayment
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
+                {order?.status !== OrderStatus.UNCONFIRMED && (
+                  <OrderPayment
+                    order={order}
+                    onCapture={onPaymentCapture}
+                    onMarkAsPaid={onPaymentPaid}
+                    onRefund={onPaymentRefund}
+                    onVoid={onPaymentVoid}
+                  />
+                )}
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory

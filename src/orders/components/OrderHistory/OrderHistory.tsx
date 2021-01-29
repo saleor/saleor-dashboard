@@ -36,7 +36,7 @@ export const getEventMessage = (
       });
     case OrderEventsEnum.ADDED_PRODUCTS:
       return intl.formatMessage({
-        defaultMessage: "Products were added to draft order",
+        defaultMessage: "Products were added to an order",
         description: "order history message"
       });
     case OrderEventsEnum.DRAFT_CREATED:
@@ -46,7 +46,7 @@ export const getEventMessage = (
       });
     case OrderEventsEnum.REMOVED_PRODUCTS:
       return intl.formatMessage({
-        defaultMessage: "Products were deleted from draft order",
+        defaultMessage: "Products were deleted from an order",
         description: "order history message"
       });
     case OrderEventsEnum.EMAIL_SENT:
