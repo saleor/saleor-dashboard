@@ -1453,8 +1453,7 @@ export interface PageTranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
 }
 
 export interface PageTypeCreateInput {

@@ -131,7 +131,7 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order_fulfillments_lines_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLineUpdate_draftOrderLineUpdate_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderLineUpdate_draftOrderLineUpdate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderLineUpdate_draftOrderLineUpdate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLineUpdate_draftOrderLineUpdate_order_lines_unitPrice | null;
+  unitPrice: OrderLineUpdate_draftOrderLineUpdate_order_lines_unitPrice;
   thumbnail: OrderLineUpdate_draftOrderLineUpdate_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order {
   fulfillments: (OrderLineUpdate_draftOrderLineUpdate_order_fulfillments | null)[];
   lines: (OrderLineUpdate_draftOrderLineUpdate_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineUpdate_draftOrderLineUpdate_order_shippingAddress | null;
   shippingMethod: OrderLineUpdate_draftOrderLineUpdate_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderLineUpdate_draftOrderLineUpdate_order_shippingPrice | null;
+  shippingPrice: OrderLineUpdate_draftOrderLineUpdate_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderLineUpdate_draftOrderLineUpdate_order_subtotal | null;
-  total: OrderLineUpdate_draftOrderLineUpdate_order_total | null;
+  subtotal: OrderLineUpdate_draftOrderLineUpdate_order_subtotal;
+  total: OrderLineUpdate_draftOrderLineUpdate_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderLineUpdate_draftOrderLineUpdate_order_totalAuthorized | null;
-  totalCaptured: OrderLineUpdate_draftOrderLineUpdate_order_totalCaptured | null;
+  totalAuthorized: OrderLineUpdate_draftOrderLineUpdate_order_totalAuthorized;
+  totalCaptured: OrderLineUpdate_draftOrderLineUpdate_order_totalCaptured;
   user: OrderLineUpdate_draftOrderLineUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLineUpdate_draftOrderLineUpdate_order_availableShippingMethods | null)[] | null;
   discount: OrderLineUpdate_draftOrderLineUpdate_order_discount | null;
   invoices: (OrderLineUpdate_draftOrderLineUpdate_order_invoices | null)[] | null;
   channel: OrderLineUpdate_draftOrderLineUpdate_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderLineUpdate_draftOrderLineUpdate {

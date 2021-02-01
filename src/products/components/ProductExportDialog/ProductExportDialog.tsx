@@ -4,12 +4,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -79,7 +79,7 @@ const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: SearchAttributes_search_edges_node[];
-  channels: Channels_channels[];
+  channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];
   productQuantity: ProductQuantity;
@@ -146,7 +146,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
     );
   };
 
-  const handleChannelSelect = (option: Channels_channels) => {
+  const handleChannelSelect = (option: ChannelFragment) => {
     change({
       target: {
         name: "exportInfo",
@@ -168,7 +168,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   };
 
   const handleToggleAllChannels = (
-    items: Channels_channels[],
+    items: ChannelFragment[],
     selected: number
   ) => {
     setSelectedChannels(selected === items.length ? [] : channels);

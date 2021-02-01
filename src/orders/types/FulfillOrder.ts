@@ -133,7 +133,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -198,7 +198,7 @@ export interface FulfillOrder_orderFulfill_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: FulfillOrder_orderFulfill_order_lines_unitPrice | null;
+  unitPrice: FulfillOrder_orderFulfill_order_lines_unitPrice;
   thumbnail: FulfillOrder_orderFulfill_order_lines_thumbnail | null;
 }
 
@@ -336,24 +336,24 @@ export interface FulfillOrder_orderFulfill_order {
   fulfillments: (FulfillOrder_orderFulfill_order_fulfillments | null)[];
   lines: (FulfillOrder_orderFulfill_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: FulfillOrder_orderFulfill_order_shippingAddress | null;
   shippingMethod: FulfillOrder_orderFulfill_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: FulfillOrder_orderFulfill_order_shippingPrice | null;
+  shippingPrice: FulfillOrder_orderFulfill_order_shippingPrice;
   status: OrderStatus;
-  subtotal: FulfillOrder_orderFulfill_order_subtotal | null;
-  total: FulfillOrder_orderFulfill_order_total | null;
+  subtotal: FulfillOrder_orderFulfill_order_subtotal;
+  total: FulfillOrder_orderFulfill_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: FulfillOrder_orderFulfill_order_totalAuthorized | null;
-  totalCaptured: FulfillOrder_orderFulfill_order_totalCaptured | null;
+  totalAuthorized: FulfillOrder_orderFulfill_order_totalAuthorized;
+  totalCaptured: FulfillOrder_orderFulfill_order_totalCaptured;
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
   discount: FulfillOrder_orderFulfill_order_discount | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface FulfillOrder_orderFulfill {

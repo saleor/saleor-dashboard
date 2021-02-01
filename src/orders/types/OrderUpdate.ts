@@ -131,7 +131,7 @@ export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderUpdate_orderUpdate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderUpdate_orderUpdate_order_lines_unitPrice | null;
+  unitPrice: OrderUpdate_orderUpdate_order_lines_unitPrice;
   thumbnail: OrderUpdate_orderUpdate_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderUpdate_orderUpdate_order {
   fulfillments: (OrderUpdate_orderUpdate_order_fulfillments | null)[];
   lines: (OrderUpdate_orderUpdate_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderUpdate_orderUpdate_order_shippingAddress | null;
   shippingMethod: OrderUpdate_orderUpdate_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderUpdate_orderUpdate_order_shippingPrice | null;
+  shippingPrice: OrderUpdate_orderUpdate_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderUpdate_orderUpdate_order_subtotal | null;
-  total: OrderUpdate_orderUpdate_order_total | null;
+  subtotal: OrderUpdate_orderUpdate_order_subtotal;
+  total: OrderUpdate_orderUpdate_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderUpdate_orderUpdate_order_totalAuthorized | null;
-  totalCaptured: OrderUpdate_orderUpdate_order_totalCaptured | null;
+  totalAuthorized: OrderUpdate_orderUpdate_order_totalAuthorized;
+  totalCaptured: OrderUpdate_orderUpdate_order_totalCaptured;
   user: OrderUpdate_orderUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderUpdate_orderUpdate_order_availableShippingMethods | null)[] | null;
   discount: OrderUpdate_orderUpdate_order_discount | null;
   invoices: (OrderUpdate_orderUpdate_order_invoices | null)[] | null;
   channel: OrderUpdate_orderUpdate_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderUpdate_orderUpdate {

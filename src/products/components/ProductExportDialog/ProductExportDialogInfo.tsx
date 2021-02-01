@@ -4,13 +4,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
 import ChannelsAvailabilityContent from "@saleor/components/ChannelsAvailabilityContent";
 import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
@@ -207,8 +207,8 @@ const FieldAccordion: React.FC<AccordionProps & {
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
   attributes: MultiAutocompleteChoiceType[];
-  channels: Channels_channels[];
-  selectedChannels: Channels_channels[];
+  channels: ChannelFragment[];
+  selectedChannels: ChannelFragment[];
   warehouses: MultiAutocompleteChoiceType[];
   data: ExportProductsInput;
   selectedAttributes: MultiAutocompleteChoiceType[];
@@ -217,8 +217,8 @@ export interface ProductExportDialogInfoProps extends FetchMoreProps {
   onChange: FormChange;
   onFetch: (query: string) => void;
   onSelectAllWarehouses: FormChange;
-  onSelectAllChannels: (items: Channels_channels[], selected: number) => void;
-  onChannelSelect: (option: Channels_channels) => void;
+  onSelectAllChannels: (items: ChannelFragment[], selected: number) => void;
+  onChannelSelect: (option: ChannelFragment) => void;
 }
 
 const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
