@@ -7,12 +7,12 @@ import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductImagePage from "../components/ProductImagePage";
+import ProductMediaPage from "../components/ProductMediaPage";
 import {
-  useProductImageDeleteMutation,
-  useProductImageUpdateMutation
+  useProductMediaDeleteMutation,
+  useProductMediaUpdateMutation
 } from "../mutations";
-import { useProductImageQuery } from "../queries";
+import { useProductMediaQuery } from "../queries";
 import {
   productImageUrl,
   ProductImageUrlQueryParams,
@@ -20,14 +20,14 @@ import {
   productUrl
 } from "../urls";
 
-interface ProductImageProps {
-  imageId: string;
+interface ProductMediaProps {
+  mediaId: string;
   productId: string;
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage: React.FC<ProductImageProps> = ({
-  imageId,
+export const ProductImage: React.FC<ProductMediaProps> = ({
+  mediaId,
   productId,
   params
 }) => {
@@ -37,18 +37,17 @@ export const ProductImage: React.FC<ProductImageProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
 
-  const { data, loading } = useProductImageQuery({
+  const { data, loading } = useProductMediaQuery({
     displayLoader: true,
     variables: {
-      imageId,
+      mediaId,
       productId
     }
   });
 
-  const [updateImage, updateResult] = useProductImageUpdateMutation({
+  const [updateImage, updateResult] = useProductMediaUpdateMutation({
     onCompleted: data => {
-      q;
-      if (data.productImageUpdate.errors.length === 0) {
+      if (data.productMediaUpdate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -57,7 +56,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
     }
   });
 
-  const [deleteImage, deleteResult] = useProductImageDeleteMutation({
+  const [deleteImage, deleteResult] = useProductMediaDeleteMutation({
     onCompleted: handleBack
   });
 
@@ -67,14 +66,14 @@ export const ProductImage: React.FC<ProductImageProps> = ({
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
   }
 
-  const handleDelete = () => deleteImage({ variables: { id: imageId } });
+  const handleDelete = () => deleteImage({ variables: { id: mediaId } });
   const handleImageClick = (id: string) => () =>
     navigate(productImageUrl(productId, id));
   const handleUpdate = (formData: { description: string }) => {
     updateImage({
       variables: {
         alt: formData.description,
-        id: imageId
+        id: mediaId
       }
     });
   };
@@ -82,15 +81,15 @@ export const ProductImage: React.FC<ProductImageProps> = ({
 
   return (
     <>
-      <ProductImagePage
+      <ProductMediaPage
         disabled={loading}
         product={data?.product?.name}
-        image={image || null}
-        images={data?.product?.images}
+        media_obj={image || null}
+        media={data?.product?.media}
         onBack={handleBack}
         onDelete={() =>
           navigate(
-            productImageUrl(productId, imageId, {
+            productImageUrl(productId, mediaId, {
               action: "remove"
             })
           )
@@ -100,7 +99,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
         saveButtonBarState={updateResult.status}
       />
       <ActionDialog
-        onClose={() => navigate(productImageUrl(productId, imageId), true)}
+        onClose={() => navigate(productImageUrl(productId, mediaId), true)}
         onConfirm={handleDelete}
         open={params.action === "remove"}
         title={intl.formatMessage({

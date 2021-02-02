@@ -18,6 +18,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
@@ -27,6 +28,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import ProductVideoUrlDialog from "@saleor/products/components/ProductVideoUrlDialog";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -42,12 +44,12 @@ import { useIntl } from "react-intl";
 
 import {
   ProductDetails_product,
-  ProductDetails_product_images,
+  ProductDetails_product_media,
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
 import ProductDetailsForm from "../ProductDetailsForm";
-import ProductImages from "../ProductImages";
+import ProductMedia from "../ProductMedia";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
@@ -71,8 +73,9 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
+  isVideoUrlModalVisible?: boolean;
   variants: ProductDetails_product_variants[];
-  images: ProductDetails_product_images[];
+  media: ProductDetails_product_media[];
   hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
@@ -97,11 +100,13 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
   onChannelsChange: (data: ChannelData[]) => void;
+  videoUrlUploadErrors?: ProductErrorFragment[];
   onBack?();
   onDelete();
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
+  onVideoUrlUpload(videoUrl: string);
   onSeoClick?();
   onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetails_product_variants);
@@ -133,7 +138,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchCollections,
   fetchMoreCategories,
   fetchMoreCollections,
-  images,
+  media,
   hasChannelChanged,
   header,
   placeholderImage,
@@ -159,8 +164,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
+  onVideoUrlUpload,
   onWarehouseConfigure,
   isChecked,
+  isVideoUrlModalVisible,
   selected,
   selectedChannelId,
   toggle,
@@ -172,12 +179,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
-  onCloseDialog
+  onCloseDialog,
+  videoUrlUploadErrors
 }) => {
   const intl = useIntl();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
+  );
+
+  const [videoUrlModalStatus, setVideoUrlModalStatus] = useStateFromProps(
+    isVideoUrlModalVisible || false
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
@@ -262,13 +274,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <ProductImages
-                  images={images}
+                <ProductMedia
+                  media={media}
                   placeholderImage={placeholderImage}
                   onImageDelete={onImageDelete}
                   onImageReorder={onImageReorder}
                   onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
+                  openVideoUrlModal={() => setVideoUrlModalStatus(true)}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -441,6 +454,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 }
               />
             )}
+
+            <ProductVideoUrlDialog
+              product={product}
+              onClose={() => setVideoUrlModalStatus(false)}
+              open={videoUrlModalStatus}
+              onSubmit={onVideoUrlUpload}
+              errors={videoUrlUploadErrors}
+            />
           </Container>
         </>
       )}

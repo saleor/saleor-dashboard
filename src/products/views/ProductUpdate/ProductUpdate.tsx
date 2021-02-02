@@ -27,9 +27,9 @@ import { commonMessages } from "@saleor/intl";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
-  useProductImageCreateMutation,
-  useProductImageDeleteMutation,
-  useProductImagesReorder,
+  useProductMediaCreateMutation,
+  useProductMediaDeleteMutation,
+  useProductMediaReorder,
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
@@ -55,7 +55,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
-import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
+import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
 import {
   productImageUrl,
@@ -159,7 +159,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     reorderProductImages,
     reorderProductImagesOpts
-  ] = useProductImagesReorder({});
+  ] = useProductMediaReorder({});
 
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
@@ -176,10 +176,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     createProductImage,
     createProductImageOpts
-  ] = useProductImageCreateMutation({
+  ] = useProductMediaCreateMutation({
     onCompleted: data => {
-      const imageError = data.productImageCreate.errors.find(
-        error => error.field === ("image" as keyof ProductImageCreateVariables)
+      const imageError = data.productMediaCreate.errors.find(
+        error => error.field === ("image" as keyof ProductMediaCreateVariables)
       );
       if (imageError) {
         notify({
@@ -190,7 +190,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
 
-  const [deleteProductImage] = useProductImageDeleteMutation({
+  const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
       notify({
         status: "success",
@@ -265,6 +265,24 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   }));
 
   const [
+    createProductMedia,
+    createProductMediaOpts
+  ] = useProductMediaCreateMutation({});
+
+  const handleVideoUrlUpload = (videoUrl: string) => {
+    const variables = {
+      alt: null,
+      image: null,
+      product: product.id,
+      videoUrl
+    };
+
+    createProductMedia({
+      variables
+    });
+  };
+
+  const [
     deleteAttributeValue,
     deleteAttributeValueOpts
   ] = useAttributeValueDeleteMutation({});
@@ -332,6 +350,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
     deleteAttributeValueOpts.loading ||
+    createProductMediaOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
@@ -339,7 +358,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateProductOpts.loading || updateSimpleProductOpts.loading,
     updateProductOpts.data?.productUpdate.errors,
     updateSimpleProductOpts.data?.productUpdate.errors,
-    updateSimpleProductOpts.data?.productVariantUpdate.errors
+    updateSimpleProductOpts.data?.productVariantUpdate.errors,
+    createProductMediaOpts.data?.productMediaCreate.errors
   );
 
   const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
@@ -353,6 +373,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
     ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
+
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
     null
@@ -421,7 +442,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         saveButtonBarState={formTransitionState}
-        images={data?.product?.images}
+        media={data?.product?.media}
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
@@ -443,6 +464,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
+        onVideoUrlUpload={handleVideoUrlUpload}
         toolbar={
           <IconButton
             color="primary"
@@ -479,6 +501,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productUrl(id))}
+        videoUrlUploadErrors={
+          createProductMediaOpts.data?.productMediaCreate.errors
+        }
       />
       <ActionDialog
         open={params.action === "remove"}

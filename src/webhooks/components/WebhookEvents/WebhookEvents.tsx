@@ -84,8 +84,20 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product updated",
       description: "event"
     }),
-    [WebhookEventTypeEnum.CHECKOUT_QUANTITY_CHANGED]: intl.formatMessage({
-      defaultMessage: "Changed quantity in checkout",
+    [WebhookEventTypeEnum.PRODUCT_DELETED]: intl.formatMessage({
+      defaultMessage: "Product deleted",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
+      defaultMessage: "Page created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_UPDATED]: intl.formatMessage({
+      defaultMessage: "Page updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_DELETED]: intl.formatMessage({
+      defaultMessage: "Page deleted",
       description: "event"
     }),
     [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({

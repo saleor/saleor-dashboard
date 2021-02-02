@@ -91,7 +91,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
   return (
     <ProductImageComponent
-      imageId={decodeURIComponent(match.params.imageId)}
+      mediaId={decodeURIComponent(match.params.imageId)}
       productId={decodeURIComponent(match.params.productId)}
       params={params}
     />
@@ -112,11 +112,9 @@ const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductVariantCreator: React.FC<
-  RouteComponentProps<{
-    id: string;
-  }>
-> = ({ match }) => (
+const ProductVariantCreator: React.FC<RouteComponentProps<{
+  id: string;
+}>> = ({ match }) => (
   <ProductVariantCreatorComponent id={decodeURIComponent(match.params.id)} />
 );
 
