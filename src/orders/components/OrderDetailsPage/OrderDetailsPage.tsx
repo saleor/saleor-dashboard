@@ -29,7 +29,6 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderLineDiscountModal from "../OrderLineDiscountModal";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
@@ -204,10 +203,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             >
               <CardMenu menuItems={selectCardMenuItems} />
             </PageHeader>
-            <OrderLineDiscountModal
-              {...order?.lines[0]?.unitPrice.gross}
-              maxAmount={order?.lines[0]?.unitPrice.gross.amount}
-            />
             <div className={classes.date}>
               {order && order.created ? (
                 <Typography variant="caption">

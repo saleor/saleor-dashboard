@@ -34,9 +34,13 @@ const messages = defineMessages({
     defaultMessage: "Add",
     description: "add button label"
   },
-  title: {
+  itemDiscountTitle: {
     defaultMessage: "Discount Item",
-    description: "dialog title"
+    description: "dialog title item discount"
+  },
+  orderDiscountTitle: {
+    defaultMessage: "Discount this Order by:",
+    description: "dialog title order discount"
   },
   percentageOption: {
     defaultMessage: "Percentage",
@@ -64,14 +68,23 @@ interface OrderLineDiscountModalProps {
   currency: string;
   maxAmount: number;
   onConfirm: (discount: OrderLineDiscount) => void;
+  isItemDiscount?: boolean;
 }
 
 const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
   currency = "",
   maxAmount = 0,
-  onConfirm
+  onConfirm,
+  isItemDiscount = false
 }) => {
   const initialType = OrderLineDiscountType.PERCENTAGE;
+
+  const [discountReason, setDiscountReason] = useState<string>("");
+  const [discountValue, setDiscountValue] = useState<string>("");
+  const [isValueError, setValueError] = useState<boolean>(false);
+  const [discountType, setDiscountType] = useState<OrderLineDiscountType>(
+    initialType
+  );
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -86,13 +99,6 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
       value: OrderLineDiscountType.FIXED_AMOUNT
     }
   ];
-
-  const [discountReason, setDiscountReason] = useState<string>("");
-  const [discountValue, setDiscountValue] = useState<string>("");
-  const [isValueError, setValueError] = useState<boolean>(false);
-  const [discountType, setDiscountType] = useState<OrderLineDiscountType>(
-    initialType
-  );
 
   const isDiscountTypePercentage =
     discountType === OrderLineDiscountType.PERCENTAGE;
@@ -129,6 +135,10 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
       value: getParsedDiscountValue()
     });
 
+  const dialogTitle = isItemDiscount
+    ? messages.itemDiscountTitle
+    : messages.orderDiscountTitle;
+
   const valueFieldSymbol =
     discountType === OrderLineDiscountType.FIXED_AMOUNT ? currency : "%";
 
@@ -142,7 +152,7 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
       confirmButtonLabel={intl.formatMessage(messages.buttonLabel)}
       open={true}
       onConfirm={handleConfirm}
-      title={intl.formatMessage(messages.title)}
+      title={intl.formatMessage(dialogTitle)}
     >
       <RadioGroupField
         innerContainerClassName={classes.radioContainer}
