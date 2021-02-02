@@ -131,7 +131,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice | null;
+  unitPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice;
   thumbnail: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   fulfillments: (OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments | null)[];
   lines: (OrderFulfillmentCancel_orderFulfillmentCancel_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingPrice | null;
+  shippingPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderFulfillmentCancel_orderFulfillmentCancel_order_subtotal | null;
-  total: OrderFulfillmentCancel_orderFulfillmentCancel_order_total | null;
+  subtotal: OrderFulfillmentCancel_orderFulfillmentCancel_order_subtotal;
+  total: OrderFulfillmentCancel_orderFulfillmentCancel_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderFulfillmentCancel_orderFulfillmentCancel_order_totalAuthorized | null;
-  totalCaptured: OrderFulfillmentCancel_orderFulfillmentCancel_order_totalCaptured | null;
+  totalAuthorized: OrderFulfillmentCancel_orderFulfillmentCancel_order_totalAuthorized;
+  totalCaptured: OrderFulfillmentCancel_orderFulfillmentCancel_order_totalCaptured;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

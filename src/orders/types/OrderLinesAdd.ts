@@ -131,7 +131,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice | null;
+  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   fulfillments: (OrderLinesAdd_draftOrderLinesCreate_order_fulfillments | null)[];
   lines: (OrderLinesAdd_draftOrderLinesCreate_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress | null;
   shippingMethod: OrderLinesAdd_draftOrderLinesCreate_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice | null;
+  shippingPrice: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderLinesAdd_draftOrderLinesCreate_order_subtotal | null;
-  total: OrderLinesAdd_draftOrderLinesCreate_order_total | null;
+  subtotal: OrderLinesAdd_draftOrderLinesCreate_order_subtotal;
+  total: OrderLinesAdd_draftOrderLinesCreate_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized | null;
-  totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured | null;
+  totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized;
+  totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured;
   user: OrderLinesAdd_draftOrderLinesCreate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
   discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
   invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_draftOrderLinesCreate_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

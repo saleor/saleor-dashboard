@@ -131,7 +131,7 @@ export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderRefund_orderRefund_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderRefund_orderRefund_order_lines_unitPrice | null;
+  unitPrice: OrderRefund_orderRefund_order_lines_unitPrice;
   thumbnail: OrderRefund_orderRefund_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderRefund_orderRefund_order {
   fulfillments: (OrderRefund_orderRefund_order_fulfillments | null)[];
   lines: (OrderRefund_orderRefund_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderRefund_orderRefund_order_shippingAddress | null;
   shippingMethod: OrderRefund_orderRefund_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderRefund_orderRefund_order_shippingPrice | null;
+  shippingPrice: OrderRefund_orderRefund_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderRefund_orderRefund_order_subtotal | null;
-  total: OrderRefund_orderRefund_order_total | null;
+  subtotal: OrderRefund_orderRefund_order_subtotal;
+  total: OrderRefund_orderRefund_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderRefund_orderRefund_order_totalAuthorized | null;
-  totalCaptured: OrderRefund_orderRefund_order_totalCaptured | null;
+  totalAuthorized: OrderRefund_orderRefund_order_totalAuthorized;
+  totalCaptured: OrderRefund_orderRefund_order_totalCaptured;
   user: OrderRefund_orderRefund_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
   discount: OrderRefund_orderRefund_order_discount | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
   channel: OrderRefund_orderRefund_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderRefund_orderRefund {

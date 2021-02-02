@@ -131,7 +131,7 @@ export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderVoid_orderVoid_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderVoid_orderVoid_order_lines_unitPrice | null;
+  unitPrice: OrderVoid_orderVoid_order_lines_unitPrice;
   thumbnail: OrderVoid_orderVoid_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderVoid_orderVoid_order {
   fulfillments: (OrderVoid_orderVoid_order_fulfillments | null)[];
   lines: (OrderVoid_orderVoid_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderVoid_orderVoid_order_shippingAddress | null;
   shippingMethod: OrderVoid_orderVoid_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderVoid_orderVoid_order_shippingPrice | null;
+  shippingPrice: OrderVoid_orderVoid_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderVoid_orderVoid_order_subtotal | null;
-  total: OrderVoid_orderVoid_order_total | null;
+  subtotal: OrderVoid_orderVoid_order_subtotal;
+  total: OrderVoid_orderVoid_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderVoid_orderVoid_order_totalAuthorized | null;
-  totalCaptured: OrderVoid_orderVoid_order_totalCaptured | null;
+  totalAuthorized: OrderVoid_orderVoid_order_totalAuthorized;
+  totalCaptured: OrderVoid_orderVoid_order_totalCaptured;
   user: OrderVoid_orderVoid_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   discount: OrderVoid_orderVoid_order_discount | null;
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
   channel: OrderVoid_orderVoid_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderVoid_orderVoid {
