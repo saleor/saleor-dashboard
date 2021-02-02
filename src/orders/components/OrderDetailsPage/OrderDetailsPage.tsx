@@ -64,6 +64,13 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  onOrderLineAdd?: () => void;
+  onOrderLineChange?: (
+    id: string,
+    data: OrderDraftDetailsProductsFormData
+  ) => void;
+  onOrderLineRemove?: (id: string) => void;
+  onShippingMethodEdit?: () => void;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -79,13 +86,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onNoteAdd(data: HistoryFormData);
   onProfileView();
   onOrderReturn();
-  onOrderLineAdd: () => void;
-  onOrderLineChange: (
-    id: string,
-    data: OrderDraftDetailsProductsFormData
-  ) => void;
-  onOrderLineRemove: (id: string) => void;
-  onShippingMethodEdit();
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
