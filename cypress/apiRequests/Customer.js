@@ -28,6 +28,7 @@ export class Customer {
         }){
             user{
                 id
+                email
               }
             accountErrors{
                 code

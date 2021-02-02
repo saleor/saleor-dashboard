@@ -7,6 +7,7 @@
         "postalCode": "53-346",
         "country": "PL",
         "countryArea": "Dolny Śląsk",
-        "phone": "123456787"
+        "phone": "123456787",
+        "currency": "PLN"
     }
 }

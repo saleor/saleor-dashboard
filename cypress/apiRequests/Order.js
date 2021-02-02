@@ -7,7 +7,7 @@ class Order {
               }
             }
           }`;
-    cy.sendRequestWithQuery(mutation);
+    return cy.sendRequestWithQuery(mutation);
   }
 
   addProductToOrder(orderId, variantId, quantity = 1) {

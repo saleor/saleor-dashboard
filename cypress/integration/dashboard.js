@@ -1,23 +1,29 @@
 import faker from "faker";
 
-import Customer from "../api/Customer";
-import Order from "../api/Order";
-import Product from "../api/Product";
-import ShippingMethod from "../api/ShippingMethod";
+import Channels from "../apiRequests/Channels";
+import Customer from "../apiRequests/Customer";
 import { DASHBOARD_SELECTORS } from "../elements/dashboard/dashboard-selectors";
+import { HEADER_SELECTORS } from "../elements/header/header-selectors";
+import OrdersUtils from "../utils/ordersUtils";
+import ProductsUtils from "../utils/productsUtils";
+import ShippingUtils from "../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("User authorization", () => {
   const startsWith = "Cy-";
 
   const customer = new Customer();
-  const product = new Product();
-  const order = new Order();
-  const shippingMethod = new ShippingMethod();
+  const channels = new Channels();
+  const productsUtils = new ProductsUtils();
+  const shippingUtils = new ShippingUtils();
+  const ordersUtils = new OrdersUtils();
 
   before(() => {
+    cy.clearSessionData().loginUserViaRequest();
     customer.deleteCustomers(startsWith);
-    shippingMethod.deleteShippingZones(startsWith);
+    shippingUtils.deleteShipping(startsWith);
+    productsUtils.deleteProducts(startsWith);
+    channels.deleteTestChannels(startsWith);
   });
 
   beforeEach(() => {
@@ -36,83 +42,86 @@ describe("User authorization", () => {
   });
 
   it("should correct amount of orders be displayed", () => {
-    faker = require("faker");
     const randomName = startsWith + faker.random.number();
     const randomEmail = randomName + "@example.com";
-    product.getFirstProducts(3).then(productsResp => {
-      const productsList = productsResp.body.data.products.edges;
-      productsList.forEach(productElement => {
-        product.updateChannelInProduct(
-          "Q2hhbm5lbDoxNzk=",
-          productElement.node.id
-        );
-        const variants = productElement.node.variants;
-        variants.forEach(variant => {
-          product.updateChannelPriceInVariant(variant.id, "Q2hhbm5lbDoxNzk=");
+    const randomNameProductOutOfStock = `${startsWith}${faker.random.number()}`;
+    const shippingPrice = 12;
+    const productPrice = 22;
+    cy.fixture("addresses").then(json => {
+      channels
+        .createChannel(true, randomName, randomName, json.plAddress.currency)
+        .then(channelsResp => {
+          const channelId = channelsResp.body.data.channelCreate.channel.id;
+          const channelSlug = channelsResp.body.data.channelCreate.channel.slug;
+          customer
+            .createCustomer(randomEmail, randomName, json.plAddress)
+            .then(resp => {
+              const customerId = resp.body.data.customerCreate.user.id;
+              const customerEmail = resp.body.data.customerCreate.user.email;
+              shippingUtils
+                .createShipping(
+                  channelId,
+                  randomName,
+                  json.plAddress,
+                  shippingPrice
+                )
+                .then(() => {
+                  const shippingId = shippingUtils.getShippingMethodId();
+                  const warehouseId = shippingUtils.getWarehouseId();
+                  productsUtils
+                    .createTypeAttributeAndCategoryForProduct(randomName)
+                    .then(() => {
+                      const productTypeId = productsUtils.getProductTypeId();
+                      const attributeId = productsUtils.getAttributeId();
+                      const categoryId = productsUtils.getCategoryId();
+                      productsUtils
+                        .createProductInChannel(
+                          randomName,
+                          channelId,
+                          warehouseId,
+                          10,
+                          productTypeId,
+                          attributeId,
+                          categoryId,
+                          productPrice
+                        )
+                        .then(() => {
+                          const variantsList = productsUtils.getCreatedVariants();
+                          ordersUtils.createReadyToFullfillOrder(
+                            customerId,
+                            shippingId,
+                            channelId,
+                            variantsList
+                          );
+                          ordersUtils.createWaitingForCaptureOrder(
+                            channelSlug,
+                            customerEmail,
+                            variantsList,
+                            shippingId
+                          );
+                        });
+                      productsUtils.createProductInChannel(
+                        randomNameProductOutOfStock,
+                        channelId,
+                        warehouseId,
+                        0,
+                        productTypeId,
+                        attributeId,
+                        categoryId,
+                        productPrice
+                      );
+                    });
+                });
+            });
         });
-      });
-      cy.fixture("addresses").then(json => {
-        customer
-          .createCustomer(randomEmail, randomName, json.plAddress)
-          .as("createCustomerResponse")
-          .then(resp => {
-            const customerId = resp.body.data.customerCreate.user.id;
-            shippingMethod
-              .createShippingZone(randomName, "PL")
-              .then(shippingZoneResp => {
-                shippingMethod
-                  .createShippingRate(
-                    randomName,
-                    shippingZoneResp.body.data.shippingZoneCreate.shippingZone
-                      .id
-                  )
-                  .then(rateResp => {
-                    const shippingMethodId =
-                      rateResp.body.data.shippingPriceCreate.shippingMethod.id;
-                    shippingMethod
-                      .addChannelToShippingMethod(
-                        shippingMethodId,
-                        "Q2hhbm5lbDoxNzk="
-                      )
-                      .then(shippingMethodResp => {
-                        createReadyToFullfillOrder(
-                          customerId,
-                          shippingMethodId,
-                          "Q2hhbm5lbDoxNzk=",
-                          productsList
-                        );
-                      });
-                  });
-              });
-          });
-      });
     });
     cy.visit("/");
-    softAssertMatch(DASHBOARD_SELECTORS.orders, /^0/);
-    softAssertMatch(DASHBOARD_SELECTORS.ordersReadyToFulfill, /^Brak/);
-    softAssertMatch(DASHBOARD_SELECTORS.paymentsWaitingForCapture, /^Brak/);
-    softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, /^Brak/);
+    cy.get(HEADER_SELECTORS.channelSelect)
+      .click()
+      .get(HEADER_SELECTORS.channelSelectList)
+      .contains(randomName)
+      .click();
   });
-
-  function createReadyToFullfillOrder(
-    customerId,
-    shippingMethodId,
-    channelId,
-    productsList
-  ) {
-    order
-      .createDraftOrder(customerId, shippingMethodId, channelId)
-      .then(draftOrderResp => {
-        const orderId = draftOrderResp.body.data.draftOrderCreate.order.id;
-        productsList.forEach(productElement => {
-          productElement.node.variants.forEach(variantElement => {
-            order.addProductToOrder(orderId, variantElement.id);
-          });
-        });
-        order.markOrderAsPaid(orderId);
-        order.completeOrder(orderId);
-      });
-  }
 
   function softAssertVisibility(selector) {
     cy.get(selector).then(element => chai.softExpect(element).to.be.visible);
