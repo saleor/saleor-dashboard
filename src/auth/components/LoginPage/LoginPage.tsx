@@ -1,18 +1,17 @@
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import Form from "@saleor/components/Form";
+import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import { DEMO_MODE } from "@saleor/config";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
-  email: string;
-  password: string;
-}
+import LoginForm, { LoginFormData } from "./form";
 
 const useStyles = makeStyles(
   theme => ({
@@ -23,7 +22,13 @@ const useStyles = makeStyles(
     link: {
       color: theme.palette.primary.main,
       cursor: "pointer",
-      textAlign: "center"
+      textDecoration: "underline"
+    },
+    loading: {
+      alignItems: "center",
+      display: "flex",
+      height: "100vh",
+      justifyContent: "center"
     },
     loginButton: {
       width: 140
@@ -43,33 +48,53 @@ const useStyles = makeStyles(
 
 export interface LoginCardProps {
   error: boolean;
-  disableLoginButton: boolean;
+  externalError: boolean;
+  disabled: boolean;
+  loading: boolean;
+  externalAuthentications?: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
+  onExternalAuthentication: (pluginId: string) => void;
   onPasswordRecovery: () => void;
-  onSubmit?(event: FormData);
+  onSubmit?: (event: LoginFormData) => SubmitPromise;
 }
 
 const LoginCard: React.FC<LoginCardProps> = props => {
-  const { error, disableLoginButton, onPasswordRecovery, onSubmit } = props;
+  const {
+    error,
+    externalError,
+    disabled,
+    loading,
+    externalAuthentications = [],
+    onExternalAuthentication,
+    onPasswordRecovery,
+    onSubmit
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
-  let initialFormData = { email: "", password: "" };
-  if (DEMO_MODE) {
-    initialFormData = {
-      email: "admin@example.com",
-      password: "admin"
-    };
+  if (loading) {
+    return (
+      <div className={classes.loading}>
+        <CircularProgress size={128} />
+      </div>
+    );
   }
 
   return (
-    <Form initial={initialFormData} onSubmit={onSubmit}>
+    <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
+              </Typography>
+            </div>
+          )}
+          {externalError && (
+            <div className={classes.panel} data-test="loginErrorMessage">
+              <Typography variant="caption">
+                <FormattedMessage defaultMessage="Sorry, login went wrong. Please try again." />
               </Typography>
             </div>
           )}
@@ -84,6 +109,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             inputProps={{
               "data-test": "email"
             }}
+            disabled={disabled}
           />
           <FormSpacer />
           <TextField
@@ -99,13 +125,14 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             inputProps={{
               "data-test": "password"
             }}
+            disabled={disabled}
           />
           <FormSpacer />
           <div className={classes.buttonContainer}>
             <Button
               className={classes.loginButton}
               color="primary"
-              disabled={disableLoginButton}
+              disabled={disabled}
               variant="contained"
               onClick={handleSubmit}
               type="submit"
@@ -115,15 +142,56 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             </Button>
           </div>
           <FormSpacer />
-          <Typography className={classes.link} onClick={onPasswordRecovery}>
+          <Typography>
             <FormattedMessage
-              defaultMessage="Reset your password"
-              description="button"
+              defaultMessage="Forgot password? {resetPasswordLink}"
+              description="description"
+              values={{
+                resetPasswordLink: (
+                  <a className={classes.link} onClick={onPasswordRecovery}>
+                    <FormattedMessage
+                      defaultMessage="Use this link to recover it"
+                      description="link"
+                    />
+                  </a>
+                )
+              }}
             />
           </Typography>
+          {externalAuthentications.length > 0 && (
+            <>
+              <FormSpacer />
+              <Divider />
+              <FormSpacer />
+              <Typography>
+                <FormattedMessage
+                  defaultMessage="or login using"
+                  description="description"
+                />
+              </Typography>
+            </>
+          )}
+          {externalAuthentications.map(externalAuthentication => (
+            <React.Fragment key={externalAuthentication.id}>
+              <FormSpacer />
+              <Button
+                color="primary"
+                fullWidth
+                variant="outlined"
+                size="large"
+                onClick={() =>
+                  onExternalAuthentication(externalAuthentication.id)
+                }
+                data-test="external-authentication"
+                disabled={disabled}
+              >
+                {externalAuthentication.name}
+              </Button>
+            </React.Fragment>
+          ))}
         </>
       )}
-    </Form>
+    </LoginForm>
   );
 };
 LoginCard.displayName = "LoginCard";

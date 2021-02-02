@@ -2,7 +2,7 @@ import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
 import ApolloClient from "apollo-client";
 
-import { useAuthProvider } from "./AuthProvider";
+import { useAuthProvider } from "./hooks/useAuthProvider";
 import { getTokens, setAuthToken } from "./utils";
 
 const apolloClient = setupApi();
@@ -14,7 +14,7 @@ function renderAuthProvider(apolloClient: ApolloClient<any>) {
   const notify = jest.fn();
 
   const { result } = renderHook(() =>
-    useAuthProvider(intl as any, notify, apolloClient)
+    useAuthProvider({ apolloClient, intl: intl as any, notify })
   );
 
   return result;
@@ -43,7 +43,7 @@ describe("User", () => {
     await act(() =>
       hook.current.login(adminCredentials.email, adminCredentials.password)
     );
-    expect(hook.current.userContext.email).toBe(adminCredentials.email);
+    expect(hook.current.user.email).toBe(adminCredentials.email);
     adminCredentials.token = getTokens().auth;
 
     done();
@@ -55,7 +55,7 @@ describe("User", () => {
     await act(() =>
       hook.current.login(adminCredentials.email, "NotAValidPassword123!")
     );
-    expect(hook.current.userContext).toBe(null);
+    expect(hook.current.user).toBe(null);
 
     done();
   });
@@ -69,7 +69,7 @@ describe("User", () => {
         nonStaffUserCredentials.password
       )
     );
-    expect(hook.current.userContext).toBe(undefined);
+    expect(hook.current.user).toBe(undefined);
 
     done();
   });
@@ -79,7 +79,7 @@ describe("User", () => {
     const hook = renderAuthProvider(apolloClient);
 
     await act(() => hook.current.autologinPromise.current);
-    expect(hook.current.userContext.email).toBe(adminCredentials.email);
+    expect(hook.current.user.email).toBe(adminCredentials.email);
 
     done();
   });
@@ -89,7 +89,7 @@ describe("User", () => {
     const hook = renderAuthProvider(apolloClient);
 
     await act(() => hook.current.autologinPromise.current);
-    expect(hook.current.userContext).toBe(undefined);
+    expect(hook.current.user).toBe(undefined);
 
     done();
   });

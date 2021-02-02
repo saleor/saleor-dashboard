@@ -44,10 +44,6 @@ function loadStories() {
   require("./stories/components/WeightRange");
   require("./stories/components/messages");
 
-  // Authentication
-  require("./stories/auth/LoginPage");
-  require("./stories/auth/LoginLoading");
-
   // Attributes
   require("./stories/attributes/AttributeBulkDeleteDialog");
   require("./stories/attributes/AttributeDeleteDialog");
