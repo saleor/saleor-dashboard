@@ -177,8 +177,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const allowSave = (hasChanged: boolean) => {
     if (order?.status !== OrderStatus.UNCONFIRMED) {
       return disabled || !hasChanged;
+    } else if (!order?.lines?.length) {
+      return true;
     }
-
     return disabled;
   };
 
