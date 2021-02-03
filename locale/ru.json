@@ -67,7 +67,7 @@
     "string": "{amount, plural,one {Один заказ готов к исполнению} few {{amount} заказа готовы к исполнению} many {{amount} заказов готовы к исполнению} other {{amount} заказов готовы к исполнению}}"
   },
   "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {Один платеж для получения } few {{amount} платежей для получения } many {{amount} платежей для получения } other {{amount} платежей для получения }}"
+    "string": "{amount, plural,one {Один заказ в ожидании оплаты} few {{amount} заказа в ожидании оплаты} many {{amount} заказов в ожидании оплаты} other {{amount} заказов в ожидании оплаты}}"
   },
   "homeNotificationTableProducts": {
     "string": "{amount, plural,one {Одного товара нет в наличии} few {{amount} товаров нет в наличии} many {{amount} товаров нет в наличии} other {{amount} товаров нет в наличии}}"
