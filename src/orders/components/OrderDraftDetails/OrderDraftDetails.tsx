@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardTitle from "@saleor/components/CardTitle";
+import { DiscountConsumer } from "@saleor/products/components/OrderDraftDiscountProvider/DiscountProvider";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -10,7 +11,7 @@ import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDraftDetailsProducts, {
   FormData as OrderDraftDetailsProductsFormData
 } from "../OrderDraftDetailsProducts";
-import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary/OrderDraftDetailsSummary";
+import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   disabled?: boolean;
@@ -60,11 +61,16 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       />
       {maybe(() => order.lines.length) !== 0 && (
         <CardContent>
-          <OrderDraftDetailsSummary
-            disabled={disabled}
-            order={order}
-            onShippingMethodEdit={onShippingMethodEdit}
-          />
+          <DiscountConsumer>
+            {discountProps => (
+              <OrderDraftDetailsSummary
+                disabled={disabled}
+                order={order}
+                onShippingMethodEdit={onShippingMethodEdit}
+                {...discountProps}
+              />
+            )}
+          </DiscountConsumer>
         </CardContent>
       )}
     </Card>

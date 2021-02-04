@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
+import { DiscountProvider } from "../products/components/OrderDraftDiscountProvider/DiscountProvider";
 import {
   orderDraftListPath,
   OrderDraftListUrlQueryParams,
@@ -58,10 +59,12 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   const params: OrderUrlQueryParams = qs;
 
   return (
-    <OrderDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
+    <DiscountProvider>
+      <OrderDetailsComponent
+        id={decodeURIComponent(match.params.id)}
+        params={params}
+      />
+    </DiscountProvider>
   );
 };
 
