@@ -3,6 +3,8 @@ import Channels from "../apiRequests/Channels";
 class ChannelsUtils {
   channels = new Channels();
 
+  defaultChannel;
+
   deleteChannels(nameStartsWith) {
     this.channels.getChannels().then(resp => {
       const channelsArray = new Set(resp.body.data.channels);
@@ -26,13 +28,18 @@ class ChannelsUtils {
       }
     });
   }
-  getDefaultChannel() {
+  findDefaultChannel() {
     return this.channels.getChannels().then(resp => {
       const channelsArray = resp.body.data.channels;
-      return channelsArray.find(function(channelElement) {
+      return (this.defaultChannel = channelsArray.find(function(
+        channelElement
+      ) {
         return channelElement.slug === "default-channel";
-      });
+      }));
     });
+  }
+  getDefaultChannel() {
+    return this.defaultChannel;
   }
 }
 export default ChannelsUtils;
