@@ -17,3 +17,38 @@ Cypress.Commands.add("clearSessionData", () => {
     }
   });
 });
+
+Cypress.Commands.add("sendRequestWithQuery", query =>
+  cy.request({
+    method: "POST",
+    body: {
+      method: "POST",
+      url: Cypress.env("API_URI"),
+      query
+    },
+    headers: {
+      Authorization: `JWT ${window.sessionStorage.getItem("auth")}`
+    },
+    url: Cypress.env("API_URI")
+  })
+);
+
+Cypress.Commands.add("waitForGraph", operationName => {
+  const GRAPH_URL = "/graphql";
+  cy.intercept("POST", GRAPH_URL, req => {
+    req.statusCode = 200;
+    const requestBody = req.body;
+    if (Array.isArray(requestBody)) {
+      requestBody.forEach(element => {
+        if (element.operationName === operationName) {
+          req.alias = operationName;
+        }
+      });
+    } else {
+      if (requestBody.operationName === operationName) {
+        req.alias = operationName;
+      }
+    }
+  });
+  cy.wait(`@${operationName}`);
+});
