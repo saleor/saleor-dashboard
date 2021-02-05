@@ -126,6 +126,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           return <NotFoundPage onBack={handleBack} />;
         }
 
+        const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
+        const isOrderDraft = order?.status === OrderStatus.DRAFT;
+
         const handleSubmit = async (data: MetadataFormData) => {
           if (order?.status === OrderStatus.UNCONFIRMED) {
             await orderConfirm({ variables: { id: order?.id } });
@@ -212,242 +215,239 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderInvoiceSend
                 }) => (
                   <>
-                    {order?.status !== OrderStatus.DRAFT &&
-                      order?.status !== OrderStatus.UNCONFIRMED && (
-                        <>
-                          <WindowTitle
-                            title={intl.formatMessage(
-                              {
-                                defaultMessage: "Order #{orderNumber}",
-                                description: "window title"
-                              },
-                              {
-                                orderNumber: getStringOrPlaceholder(
-                                  data?.order?.number
-                                )
-                              }
-                            )}
-                          />
-                          <OrderDetailsPage
-                            onOrderReturn={() => navigate(orderReturnPath(id))}
-                            disabled={
-                              updateMetadataOpts.loading ||
-                              updatePrivateMetadataOpts.loading
-                            }
-                            onNoteAdd={variables =>
-                              orderAddNote.mutate({
-                                input: variables,
-                                order: id
-                              })
-                            }
-                            onBack={handleBack}
-                            order={order}
-                            saveButtonBarState={getMutationState(
-                              updateMetadataOpts.called ||
-                                updatePrivateMetadataOpts.called,
-                              updateMetadataOpts.loading ||
-                                updatePrivateMetadataOpts.loading,
-                              [
-                                ...(updateMetadataOpts.data?.deleteMetadata
-                                  .errors || []),
-                                ...(updateMetadataOpts.data?.updateMetadata
-                                  .errors || []),
-                                ...(updatePrivateMetadataOpts.data
-                                  ?.deletePrivateMetadata.errors || []),
-                                ...(updatePrivateMetadataOpts.data
-                                  ?.updatePrivateMetadata.errors || [])
-                              ]
-                            )}
-                            shippingMethods={maybe(
-                              () => data.order.availableShippingMethods,
-                              []
-                            )}
-                            userPermissions={user?.userPermissions || []}
-                            onOrderCancel={() => openModal("cancel")}
-                            onOrderFulfill={() => navigate(orderFulfillUrl(id))}
-                            onFulfillmentCancel={fulfillmentId =>
-                              navigate(
-                                orderUrl(id, {
-                                  action: "cancel-fulfillment",
-                                  id: fulfillmentId
-                                })
+                    {!isOrderDraft && !isOrderUnconfirmed && (
+                      <>
+                        <WindowTitle
+                          title={intl.formatMessage(
+                            {
+                              defaultMessage: "Order #{orderNumber}",
+                              description: "window title"
+                            },
+                            {
+                              orderNumber: getStringOrPlaceholder(
+                                data?.order?.number
                               )
                             }
-                            onFulfillmentTrackingNumberUpdate={fulfillmentId =>
-                              navigate(
-                                orderUrl(id, {
-                                  action: "edit-fulfillment",
-                                  id: fulfillmentId
-                                })
-                              )
-                            }
-                            onPaymentCapture={() => openModal("capture")}
-                            onPaymentVoid={() => openModal("void")}
-                            onPaymentRefund={() => navigate(orderRefundUrl(id))}
-                            onProductClick={id => () =>
-                              navigate(productUrl(id))}
-                            onBillingAddressEdit={() =>
-                              openModal("edit-billing-address")
-                            }
-                            onShippingAddressEdit={() =>
-                              openModal("edit-shipping-address")
-                            }
-                            onPaymentPaid={() => openModal("mark-paid")}
-                            onProfileView={() =>
-                              navigate(customerUrl(order.user.id))
-                            }
-                            onInvoiceClick={id =>
-                              window.open(
-                                order.invoices.find(
-                                  invoice => invoice.id === id
-                                )?.url,
-                                "_blank"
-                              )
-                            }
-                            onInvoiceGenerate={() =>
-                              orderInvoiceRequest.mutate({
-                                orderId: id
+                          )}
+                        />
+                        <OrderDetailsPage
+                          onOrderReturn={() => navigate(orderReturnPath(id))}
+                          disabled={
+                            updateMetadataOpts.loading ||
+                            updatePrivateMetadataOpts.loading
+                          }
+                          onNoteAdd={variables =>
+                            orderAddNote.mutate({
+                              input: variables,
+                              order: id
+                            })
+                          }
+                          onBack={handleBack}
+                          order={order}
+                          saveButtonBarState={getMutationState(
+                            updateMetadataOpts.called ||
+                              updatePrivateMetadataOpts.called,
+                            updateMetadataOpts.loading ||
+                              updatePrivateMetadataOpts.loading,
+                            [
+                              ...(updateMetadataOpts.data?.deleteMetadata
+                                .errors || []),
+                              ...(updateMetadataOpts.data?.updateMetadata
+                                .errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.deletePrivateMetadata.errors || []),
+                              ...(updatePrivateMetadataOpts.data
+                                ?.updatePrivateMetadata.errors || [])
+                            ]
+                          )}
+                          shippingMethods={maybe(
+                            () => data.order.availableShippingMethods,
+                            []
+                          )}
+                          userPermissions={user?.userPermissions || []}
+                          onOrderCancel={() => openModal("cancel")}
+                          onOrderFulfill={() => navigate(orderFulfillUrl(id))}
+                          onFulfillmentCancel={fulfillmentId =>
+                            navigate(
+                              orderUrl(id, {
+                                action: "cancel-fulfillment",
+                                id: fulfillmentId
                               })
-                            }
-                            onInvoiceSend={id =>
-                              openModal("invoice-send", { id })
-                            }
-                            onSubmit={handleSubmit}
-                          />
-                          <OrderCannotCancelOrderDialog
-                            onClose={closeModal}
-                            open={
-                              params.action === "cancel" &&
-                              order?.fulfillments.some(
-                                fulfillment =>
-                                  fulfillment.status ===
-                                  FulfillmentStatus.FULFILLED
-                              )
-                            }
-                          />
-                          <OrderCancelDialog
-                            confirmButtonState={orderCancel.opts.status}
-                            errors={
-                              orderCancel.opts.data?.orderCancel.errors || []
-                            }
-                            number={order?.number}
-                            open={params.action === "cancel"}
-                            onClose={closeModal}
-                            onSubmit={() =>
-                              orderCancel.mutate({
-                                id
+                            )
+                          }
+                          onFulfillmentTrackingNumberUpdate={fulfillmentId =>
+                            navigate(
+                              orderUrl(id, {
+                                action: "edit-fulfillment",
+                                id: fulfillmentId
                               })
-                            }
-                          />
-                          <OrderMarkAsPaidDialog
-                            confirmButtonState={
-                              orderPaymentMarkAsPaid.opts.status
-                            }
-                            errors={
-                              orderPaymentMarkAsPaid.opts.data?.orderMarkAsPaid
-                                .errors || []
-                            }
-                            onClose={closeModal}
-                            onConfirm={() =>
-                              orderPaymentMarkAsPaid.mutate({
-                                id,
-                                transactionReference
-                              })
-                            }
-                            open={params.action === "mark-paid"}
-                            transactionReference={transactionReference}
-                            handleTransactionReference={({ target }) =>
-                              setTransactionReference(target.value)
-                            }
-                          />
-                          <OrderPaymentVoidDialog
-                            confirmButtonState={orderVoid.opts.status}
-                            errors={orderVoid.opts.data?.orderVoid.errors || []}
-                            open={params.action === "void"}
-                            onClose={closeModal}
-                            onConfirm={() => orderVoid.mutate({ id })}
-                          />
-                          <OrderPaymentDialog
-                            confirmButtonState={orderPaymentCapture.opts.status}
-                            errors={
-                              orderPaymentCapture.opts.data?.orderCapture
-                                .errors || []
-                            }
-                            initial={order?.total.gross.amount}
-                            open={params.action === "capture"}
-                            onClose={closeModal}
-                            onSubmit={variables =>
-                              orderPaymentCapture.mutate({
+                            )
+                          }
+                          onPaymentCapture={() => openModal("capture")}
+                          onPaymentVoid={() => openModal("void")}
+                          onPaymentRefund={() => navigate(orderRefundUrl(id))}
+                          onProductClick={id => () => navigate(productUrl(id))}
+                          onBillingAddressEdit={() =>
+                            openModal("edit-billing-address")
+                          }
+                          onShippingAddressEdit={() =>
+                            openModal("edit-shipping-address")
+                          }
+                          onPaymentPaid={() => openModal("mark-paid")}
+                          onProfileView={() =>
+                            navigate(customerUrl(order.user.id))
+                          }
+                          onInvoiceClick={id =>
+                            window.open(
+                              order.invoices.find(invoice => invoice.id === id)
+                                ?.url,
+                              "_blank"
+                            )
+                          }
+                          onInvoiceGenerate={() =>
+                            orderInvoiceRequest.mutate({
+                              orderId: id
+                            })
+                          }
+                          onInvoiceSend={id =>
+                            openModal("invoice-send", { id })
+                          }
+                          onSubmit={handleSubmit}
+                        />
+                        <OrderCannotCancelOrderDialog
+                          onClose={closeModal}
+                          open={
+                            params.action === "cancel" &&
+                            order?.fulfillments.some(
+                              fulfillment =>
+                                fulfillment.status ===
+                                FulfillmentStatus.FULFILLED
+                            )
+                          }
+                        />
+                        <OrderCancelDialog
+                          confirmButtonState={orderCancel.opts.status}
+                          errors={
+                            orderCancel.opts.data?.orderCancel.errors || []
+                          }
+                          number={order?.number}
+                          open={params.action === "cancel"}
+                          onClose={closeModal}
+                          onSubmit={() =>
+                            orderCancel.mutate({
+                              id
+                            })
+                          }
+                        />
+                        <OrderMarkAsPaidDialog
+                          confirmButtonState={
+                            orderPaymentMarkAsPaid.opts.status
+                          }
+                          errors={
+                            orderPaymentMarkAsPaid.opts.data?.orderMarkAsPaid
+                              .errors || []
+                          }
+                          onClose={closeModal}
+                          onConfirm={() =>
+                            orderPaymentMarkAsPaid.mutate({
+                              id,
+                              transactionReference
+                            })
+                          }
+                          open={params.action === "mark-paid"}
+                          transactionReference={transactionReference}
+                          handleTransactionReference={({ target }) =>
+                            setTransactionReference(target.value)
+                          }
+                        />
+                        <OrderPaymentVoidDialog
+                          confirmButtonState={orderVoid.opts.status}
+                          errors={orderVoid.opts.data?.orderVoid.errors || []}
+                          open={params.action === "void"}
+                          onClose={closeModal}
+                          onConfirm={() => orderVoid.mutate({ id })}
+                        />
+                        <OrderPaymentDialog
+                          confirmButtonState={orderPaymentCapture.opts.status}
+                          errors={
+                            orderPaymentCapture.opts.data?.orderCapture
+                              .errors || []
+                          }
+                          initial={order?.total.gross.amount}
+                          open={params.action === "capture"}
+                          onClose={closeModal}
+                          onSubmit={variables =>
+                            orderPaymentCapture.mutate({
+                              ...variables,
+                              id
+                            })
+                          }
+                        />
+                        <OrderFulfillmentCancelDialog
+                          confirmButtonState={
+                            orderFulfillmentCancel.opts.status
+                          }
+                          errors={
+                            orderFulfillmentCancel.opts.data
+                              ?.orderFulfillmentCancel.errors || []
+                          }
+                          open={params.action === "cancel-fulfillment"}
+                          warehouses={
+                            warehouses.data?.warehouses.edges.map(
+                              edge => edge.node
+                            ) || []
+                          }
+                          onConfirm={variables =>
+                            orderFulfillmentCancel.mutate({
+                              id: params.id,
+                              input: variables
+                            })
+                          }
+                          onClose={closeModal}
+                        />
+                        <OrderFulfillmentTrackingDialog
+                          confirmButtonState={
+                            orderFulfillmentUpdateTracking.opts.status
+                          }
+                          errors={
+                            orderFulfillmentUpdateTracking.opts.data
+                              ?.orderFulfillmentUpdateTracking.errors || []
+                          }
+                          open={params.action === "edit-fulfillment"}
+                          trackingNumber={getStringOrPlaceholder(
+                            data?.order?.fulfillments.find(
+                              fulfillment => fulfillment.id === params.id
+                            )?.trackingNumber
+                          )}
+                          onConfirm={variables =>
+                            orderFulfillmentUpdateTracking.mutate({
+                              id: params.id,
+                              input: {
                                 ...variables,
-                                id
-                              })
-                            }
-                          />
-                          <OrderFulfillmentCancelDialog
-                            confirmButtonState={
-                              orderFulfillmentCancel.opts.status
-                            }
-                            errors={
-                              orderFulfillmentCancel.opts.data
-                                ?.orderFulfillmentCancel.errors || []
-                            }
-                            open={params.action === "cancel-fulfillment"}
-                            warehouses={
-                              warehouses.data?.warehouses.edges.map(
-                                edge => edge.node
-                              ) || []
-                            }
-                            onConfirm={variables =>
-                              orderFulfillmentCancel.mutate({
-                                id: params.id,
-                                input: variables
-                              })
-                            }
-                            onClose={closeModal}
-                          />
-                          <OrderFulfillmentTrackingDialog
-                            confirmButtonState={
-                              orderFulfillmentUpdateTracking.opts.status
-                            }
-                            errors={
-                              orderFulfillmentUpdateTracking.opts.data
-                                ?.orderFulfillmentUpdateTracking.errors || []
-                            }
-                            open={params.action === "edit-fulfillment"}
-                            trackingNumber={getStringOrPlaceholder(
-                              data?.order?.fulfillments.find(
-                                fulfillment => fulfillment.id === params.id
-                              )?.trackingNumber
-                            )}
-                            onConfirm={variables =>
-                              orderFulfillmentUpdateTracking.mutate({
-                                id: params.id,
-                                input: {
-                                  ...variables,
-                                  notifyCustomer: true
-                                }
-                              })
-                            }
-                            onClose={closeModal}
-                          />
-                          <OrderInvoiceEmailSendDialog
-                            confirmButtonState={orderInvoiceSend.opts.status}
-                            errors={
-                              orderInvoiceSend.opts.data?.invoiceSendEmail
-                                .errors || []
-                            }
-                            open={params.action === "invoice-send"}
-                            invoice={order?.invoices?.find(
-                              invoice => invoice.id === params.id
-                            )}
-                            onClose={closeModal}
-                            onSend={() =>
-                              orderInvoiceSend.mutate({ id: params.id })
-                            }
-                          />
-                        </>
-                      )}
-                    {order?.status === OrderStatus.DRAFT && (
+                                notifyCustomer: true
+                              }
+                            })
+                          }
+                          onClose={closeModal}
+                        />
+                        <OrderInvoiceEmailSendDialog
+                          confirmButtonState={orderInvoiceSend.opts.status}
+                          errors={
+                            orderInvoiceSend.opts.data?.invoiceSendEmail
+                              .errors || []
+                          }
+                          open={params.action === "invoice-send"}
+                          invoice={order?.invoices?.find(
+                            invoice => invoice.id === params.id
+                          )}
+                          onClose={closeModal}
+                          onSend={() =>
+                            orderInvoiceSend.mutate({ id: params.id })
+                          }
+                        />
+                      </>
+                    )}
+                    {isOrderDraft && (
                       <>
                         <WindowTitle
                           title={intl.formatMessage(
@@ -590,7 +590,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         />
                       </>
                     )}
-                    {order?.status === OrderStatus.UNCONFIRMED && (
+                    {isOrderUnconfirmed && (
                       <>
                         <WindowTitle
                           title={intl.formatMessage(

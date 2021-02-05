@@ -181,18 +181,18 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                 )}
               </TableCell>
               <TableCell className={classes.colPrice}>
-                {maybe(() => line.unitPrice.net) ? (
-                  <Money money={line.unitPrice.net} />
+                {maybe(() => line.unitPrice.gross) ? (
+                  <Money money={line.unitPrice.gross} />
                 ) : (
                   <Skeleton />
                 )}
               </TableCell>
               <TableCell className={classes.colTotal}>
-                {maybe(() => line.unitPrice.net && line.quantity) ? (
+                {maybe(() => line.unitPrice.gross && line.quantity) ? (
                   <Money
                     money={{
-                      amount: line.unitPrice.net.amount * line.quantity,
-                      currency: line.unitPrice.net.currency
+                      amount: line.unitPrice.gross.amount * line.quantity,
+                      currency: line.unitPrice.gross.currency
                     }}
                   />
                 ) : (
