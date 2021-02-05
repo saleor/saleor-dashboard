@@ -4921,30 +4921,6 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
-  "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
-    "context": "section header",
-    "string": "All Photos"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_1905082483": {
-    "context": "field is optional",
-    "string": "Optional"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_2546267317": {
-    "context": "header",
-    "string": "Edit Photo"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_367472710": {
-    "context": "section header",
-    "string": "Photo View"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_3822382625": {
-    "context": "section header",
-    "string": "Photo Information"
-  },
-  "src_dot_products_dot_components_dot_ProductImages_dot_3240888698": {
-    "context": "section header",
-    "string": "Images"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
     "context": "product price",
     "string": "Price"
@@ -5021,6 +4997,42 @@
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_4168702846": {
+    "context": "section header",
+    "string": "All Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_1905082483": {
+    "context": "field is optional",
+    "string": "Optional"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_2143586538": {
+    "context": "header",
+    "string": "Edit Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_2223347669": {
+    "context": "section header",
+    "string": "Media Information"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_3439207912": {
+    "context": "section header",
+    "string": "Media View"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_1827290871": {
+    "context": "modal button images upload",
+    "string": "Upload Images"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_2339541858": {
+    "context": "section header",
+    "string": "Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_3049126728": {
+    "context": "modal button url upload",
+    "string": "Upload URL"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_3050254265": {
+    "context": "modal button upload",
+    "string": "Upload"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
     "context": "product is not configurable",
@@ -5225,20 +5237,20 @@
     "context": "dialog header",
     "string": "Delete Variant"
   },
-  "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_3196043669": {
+  "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_2015102342": {
     "context": "dialog header",
-    "string": "Image Selection"
+    "string": "Media Selection"
   },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_3240888698": {
-    "context": "section header",
-    "string": "Images"
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_1721720043": {
+    "string": "Select a specific variant media from product media"
   },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_3449133076": {
-    "string": "Select a specific variant image from product images"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_989683980": {
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_2040471824": {
     "context": "button",
-    "string": "Choose photos"
+    "string": "Choose media"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_2339541858": {
+    "context": "section header",
+    "string": "Media"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_1222345317": {
     "context": "default product variant indicator",
@@ -5355,6 +5367,18 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_2036436177": {
+    "context": "modal header",
+    "string": "Video you supply will be shown in media gallery. You will be able to define the order of gallery."
+  },
+  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_2537587783": {
+    "context": "button",
+    "string": "Upload video URL"
+  },
+  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_3936463653": {
+    "context": "dialog header",
+    "string": "Upload Video URL"
   },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
@@ -6767,6 +6791,10 @@
     "context": "event",
     "string": "All events"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2745028894": {
+    "context": "event",
+    "string": "Page deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
     "context": "event",
     "string": "Invoice sent"
@@ -6795,6 +6823,14 @@
     "context": "event",
     "string": "Order cancelled"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3618648517": {
+    "context": "event",
+    "string": "Page updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3671033983": {
+    "context": "event",
+    "string": "Product deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
     "string": "Order fulfilled"
@@ -6803,10 +6839,6 @@
     "context": "event",
     "string": "Customer created"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
-    "context": "event",
-    "string": "Changed quantity in checkout"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
     "context": "event",
     "string": "Invoice requested"
@@ -6814,6 +6846,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
     "context": "event",
     "string": "Fulfillment created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
+    "context": "event",
+    "string": "Page created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",
