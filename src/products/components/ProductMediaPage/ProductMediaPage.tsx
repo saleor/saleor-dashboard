@@ -12,10 +12,12 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
+import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductImageNavigation from "../ProductImageNavigation";
+import ProductMediaNavigation from "../ProductMediaNavigation";
 
 const useStyles = makeStyles(
   theme => ({
@@ -37,10 +39,11 @@ const useStyles = makeStyles(
 );
 
 interface ProductMediaPageProps {
-  media_obj?: {
+  mediaObj?: {
     id: string;
     alt: string;
     url: string;
+    type: string;
   };
   media?: Array<{
     id: string;
@@ -58,7 +61,7 @@ interface ProductMediaPageProps {
 const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
   const {
     disabled,
-    media_obj,
+    mediaObj,
     media,
     product,
     saveButtonBarState,
@@ -73,7 +76,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
 
   return (
     <Form
-      initial={{ description: media_obj ? media_obj.alt : "" }}
+      initial={{ description: mediaObj ? mediaObj.alt : "" }}
       onSubmit={onSubmit}
       confirmLeave
     >
@@ -82,22 +85,22 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
           <AppHeader onBack={onBack}>{product}</AppHeader>
           <PageHeader
             title={intl.formatMessage({
-              defaultMessage: "Edit Photo",
+              defaultMessage: "Edit Media",
               description: "header"
             })}
           />
           <Grid variant="inverted">
             <div>
-              <ProductImageNavigation
+              <ProductMediaNavigation
                 disabled={disabled}
-                images={media}
-                highlighted={media ? media_obj.id : undefined}
+                media={media}
+                highlighted={media ? mediaObj.id : undefined}
                 onRowClick={onRowClick}
               />
               <Card>
                 <CardTitle
                   title={intl.formatMessage({
-                    defaultMessage: "Photo Information",
+                    defaultMessage: "Media Information",
                     description: "section header"
                   })}
                 />
@@ -122,15 +125,27 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
               <Card>
                 <CardTitle
                   title={intl.formatMessage({
-                    defaultMessage: "Photo View",
+                    defaultMessage: "Media View",
                     description: "section header"
                   })}
                 />
                 <CardContent>
-                  {!!media ? (
-                    <div className={classes.imageContainer}>
-                      <img src={media_obj.url} className={classes.image} />
-                    </div>
+                  {!!mediaObj ? (
+                    mediaObj?.type !== ProductMediaType.IMAGE ? (
+                      <ProductMediaVideo
+                        className={classes.image}
+                        video={mediaObj}
+                        fullWidth
+                      />
+                    ) : (
+                      <div className={classes.imageContainer}>
+                        <img
+                          className={classes.image}
+                          src={mediaObj.url}
+                          alt={mediaObj.alt}
+                        />
+                      </div>
+                    )
                   ) : (
                     <Skeleton />
                   )}

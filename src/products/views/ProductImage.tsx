@@ -77,14 +77,14 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
       }
     });
   };
-  const image = data?.product?.mainImage;
+  const mediaObj = data?.product?.mainImage;
 
   return (
     <>
       <ProductMediaPage
         disabled={loading}
         product={data?.product?.name}
-        media_obj={image || null}
+        mediaObj={mediaObj || null}
         media={data?.product?.media}
         onBack={handleBack}
         onDelete={() =>

@@ -18,7 +18,6 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
@@ -100,7 +99,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
   onChannelsChange: (data: ChannelData[]) => void;
-  videoUrlUploadErrors?: ProductErrorFragment[];
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -179,8 +177,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
-  onCloseDialog,
-  videoUrlUploadErrors
+  onCloseDialog
 }) => {
   const intl = useIntl();
 
@@ -460,7 +457,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               onClose={() => setVideoUrlModalStatus(false)}
               open={videoUrlModalStatus}
               onSubmit={onVideoUrlUpload}
-              errors={videoUrlUploadErrors}
             />
           </Container>
         </>

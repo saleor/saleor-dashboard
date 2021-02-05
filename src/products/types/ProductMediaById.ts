@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ProductMediaType } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: ProductMediaById
 // ====================================================
@@ -11,12 +13,15 @@ export interface ProductMediaById_product_mainImage {
   id: string;
   alt: string;
   url: string;
+  type: ProductMediaType;
 }
 
 export interface ProductMediaById_product_media {
   __typename: "ProductMedia";
   id: string;
   url: string;
+  alt: string;
+  type: ProductMediaType;
 }
 
 export interface ProductMediaById_product {

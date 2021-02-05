@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
@@ -57,9 +58,9 @@ const useStyles = makeStyles(
 
 interface MediaTileProps {
   media: {
-    alt?: string;
-    type?: string;
+    alt: string;
     url: string;
+    type?: string;
   };
   loading?: boolean;
   onDelete?: () => void;
@@ -94,15 +95,8 @@ const MediaTile: React.FC<MediaTileProps> = props => {
           </div>
         )}
       </div>
-      {media.type === ProductMediaType.VIDEO_YOUTUBE ? (
-        <iframe
-          className={classes.media}
-          title={media.alt}
-          src={media.url.replace("/watch?v=", "/embed/")}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
+      {media?.type !== ProductMediaType.IMAGE ? (
+        <ProductMediaVideo video={media} className={classes.media} />
       ) : (
         <img className={classes.media} src={media.url} alt={media.alt} />
       )}

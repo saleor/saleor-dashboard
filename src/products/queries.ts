@@ -247,10 +247,13 @@ const productMediaQuery = gql`
         id
         alt
         url
+        type
       }
       media {
         id
         url(size: 48)
+        alt
+        type
       }
     }
   }

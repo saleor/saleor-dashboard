@@ -798,6 +798,7 @@ export enum ProductFieldEnum {
 
 export enum ProductMediaType {
   IMAGE = "IMAGE",
+  VIDEO_UNKNOWN = "VIDEO_UNKNOWN",
   VIDEO_YOUTUBE = "VIDEO_YOUTUBE",
 }
 

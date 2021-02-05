@@ -6,6 +6,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { buttonMessages } from "@saleor/intl";
+import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
@@ -43,16 +44,6 @@ const useStyles = makeStyles(
     },
     selectedImageContainer: {
       borderColor: theme.palette.primary.main
-    },
-    videoOverlay: {
-      background: "transparent",
-      cursor: "pointer",
-      height: "140px",
-      left: "50%",
-      position: "absolute",
-      top: "50%",
-      transform: "translate(-50%, -50%)",
-      width: "140px"
     }
   }),
   { name: "ProductVariantImageSelectDialog" }
@@ -94,18 +85,12 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                 onClick={onMediaSelect(mediaObj.id)}
                 key={mediaObj.id}
               >
-                {mediaObj.type === ProductMediaType.VIDEO_YOUTUBE ? (
-                  <>
-                    <div className={classes.videoOverlay} />
-                    <iframe
-                      className={classes.image}
-                      title={mediaObj.alt}
-                      src={mediaObj.url.replace("/watch?v=", "/embed/")}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </>
+                {mediaObj?.type !== ProductMediaType.IMAGE ? (
+                  <ProductMediaVideo
+                    className={classes.image}
+                    video={mediaObj}
+                    withOverlay
+                  />
                 ) : (
                   <img
                     className={classes.image}

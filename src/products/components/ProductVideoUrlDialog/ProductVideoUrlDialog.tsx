@@ -7,18 +7,14 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { buttonMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface ProductVideoUrlDialogProps {
   product: ProductDetails_product;
   open: boolean;
-  errors: ProductErrorFragment[];
   onClose();
   onSubmit(videoUrl: string);
 }
@@ -28,21 +24,15 @@ interface FormValues {
 }
 
 const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = props => {
-  const intl = useIntl();
-  const { errors, open, onClose, onSubmit } = props;
+  const { open, onClose, onSubmit } = props;
   const initialValues: FormValues = {
     videoUrl: ""
   };
 
-  let errorMessage;
-  if (errors?.length) {
-    const err = errors[0].code;
-    if (err === ProductErrorCode.INVALID) {
-      errorMessage = intl.formatMessage(commonErrorMessages.invalid);
-    } else {
-      errorMessage = intl.formatMessage(commonErrorMessages.unknownError);
-    }
-  }
+  const handleOnSubmit = values => {
+    onSubmit(values.videoUrl);
+    onClose();
+  };
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -52,10 +42,7 @@ const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <Form
-        initial={initialValues}
-        onSubmit={values => onSubmit(values.videoUrl)}
-      >
+      <Form initial={initialValues} onSubmit={handleOnSubmit}>
         {({ change, data, submit }) => (
           <>
             <DialogContent>
@@ -71,8 +58,6 @@ const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = props => {
                 value={data.videoUrl}
                 name="videoUrl"
                 type="url"
-                error={!!errorMessage}
-                helperText={errorMessage}
                 onChange={change}
                 autoFocus
                 fullWidth

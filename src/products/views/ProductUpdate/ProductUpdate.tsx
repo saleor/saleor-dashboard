@@ -267,12 +267,25 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     createProductMedia,
     createProductMediaOpts
-  ] = useProductMediaCreateMutation({});
+  ] = useProductMediaCreateMutation({
+    onCompleted: data => {
+      if (data.productMediaCreate.errors.length) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong)
+        });
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+      }
+    }
+  });
 
   const handleVideoUrlUpload = (videoUrl: string) => {
     const variables = {
-      alt: null,
-      image: null,
+      alt: "",
       product: product.id,
       videoUrl
     };
@@ -501,9 +514,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productUrl(id))}
-        videoUrlUploadErrors={
-          createProductMediaOpts.data?.productMediaCreate.errors
-        }
       />
       <ActionDialog
         open={params.action === "remove"}
