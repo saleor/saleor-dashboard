@@ -42,6 +42,7 @@ class ProductsUtils {
     channelId,
     isPublished,
     isAvailableForPurchase,
+    visibleInListings,
     warehouseId,
     quantityInWarehouse,
     price
@@ -57,7 +58,8 @@ class ProductsUtils {
             this.createdProductId,
             channelId,
             isPublished,
-            isAvailableForPurchase
+            isAvailableForPurchase,
+            visibleInListings
           )
           .then(() =>
             product

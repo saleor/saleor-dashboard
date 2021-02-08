@@ -39,7 +39,7 @@ describe("Products", () => {
       .its("body.data.shop.domain.url")
       .as("shopUrl");
   });
-  it("should display on frontend only published products", () => {
+  it("should display on frontend only visible in listings products", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     channelsUtils.getDefaultChannel().then(defaultChannel => {
       productsUtils
@@ -49,16 +49,16 @@ describe("Products", () => {
           attributeId,
           categoryId,
           defaultChannel.id,
+          true,
           false,
-          false,
-          true
+          false
         )
         .then(() => {
           cy.visit(`${URL_LIST.products}${productsUtils.getCreatedProductId()}`)
             .get(PRODUCTS_SELECTORS.assignedChannels)
             .click()
-            .get(PRODUCTS_SELECTORS.publishedRadioButton)
-            .contains("Opublikowany")
+            .get(PRODUCTS_SELECTORS.visibleInListingsButton)
+            .contains("Wyświetlaj na liście produktów")
             .click()
             .get(PRODUCTS_SELECTORS.saveBtn)
             .click()
@@ -72,7 +72,7 @@ describe("Products", () => {
         });
     });
   });
-  it("shouldn't display not published product for unlogged user", () => {
+  it("shouldn't display not visible in listing product for unlogged user", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     channelsUtils.getDefaultChannel().then(defaultChannel => {
       productsUtils
@@ -90,8 +90,8 @@ describe("Products", () => {
           cy.visit(`${URL_LIST.products}${productsUtils.getCreatedProductId()}`)
             .get(PRODUCTS_SELECTORS.assignedChannels)
             .click()
-            .get(PRODUCTS_SELECTORS.publishedRadioButton)
-            .contains("Nie opublikowano")
+            .get(PRODUCTS_SELECTORS.visibleInListingsButton)
+            .contains("Wyświetlaj na liście produktów")
             .click()
             .get(PRODUCTS_SELECTORS.saveBtn)
             .click()
@@ -105,7 +105,7 @@ describe("Products", () => {
         });
     });
   });
-  it("should display not published product for staff member", () => {
+  it("should display not visible in listing product for staff member", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     channelsUtils.getDefaultChannel().then(defaultChannel => {
       productsUtils
@@ -123,8 +123,8 @@ describe("Products", () => {
           cy.visit(`${URL_LIST.products}${productsUtils.getCreatedProductId()}`)
             .get(PRODUCTS_SELECTORS.assignedChannels)
             .click()
-            .get(PRODUCTS_SELECTORS.publishedRadioButton)
-            .contains("Nie opublikowano")
+            .get(PRODUCTS_SELECTORS.visibleInListingsButton)
+            .contains("Wyświetlaj na liście produktów")
             .click()
             .get(PRODUCTS_SELECTORS.saveBtn)
             .click()

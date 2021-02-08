@@ -33,8 +33,8 @@ describe("Products", () => {
     shippingUtils.deleteShipping(startsWith);
     productsUtils.deleteProducts(startsWith);
 
-    channelsUtils.findDefaultChannel().then(() => {
-      defaultChannel = channelsUtils.getDefaultChannel();
+    channelsUtils.getDefaultChannel().then(channel => {
+      defaultChannel = channel;
       cy.fixture("addresses").then(json => {
         shippingUtils
           .createShipping(defaultChannel, name, json.plAddress, 10)
@@ -66,15 +66,18 @@ describe("Products", () => {
         productTypeId,
         attributeId,
         categoryId,
-        defaultChannel,
+        defaultChannel.id,
         true,
         false,
+        true,
         warehouseId,
         10,
         10
       )
       .then(() => {
-        const productUrl = `${URL_LIST.products}${productsUtils.getCreatedProductId}`;
+        const productUrl = `${
+          URL_LIST.products
+        }${productsUtils.getCreatedProductId()}`;
         cy.visit(productUrl)
           .get(PRODUCTS_SELECTORS.assignedChannels)
           .click()
@@ -87,7 +90,7 @@ describe("Products", () => {
           .get("@shopUrl")
           .then(shopUrl => {
             cy.visit(shopUrl);
-            searchSteps.searchFor(name);
+            searchSteps.searchFor(productName);
             cy.get(SEARCH_SELECTORS.productItem)
               .contains(productName)
               .click()
@@ -95,6 +98,47 @@ describe("Products", () => {
               .click()
               .get(CART_SELECTORS.productInCart)
               .contains(productName);
+          });
+      });
+  });
+  it("shouldn't be possible to add to cart not available for purchase product", () => {
+    const productName = `${startsWith}${faker.random.number()}`;
+    productsUtils
+      .createProductInChannel(
+        productName,
+        productTypeId,
+        attributeId,
+        categoryId,
+        defaultChannel.id,
+        true,
+        true,
+        true,
+        warehouseId,
+        10,
+        10
+      )
+      .then(() => {
+        const productUrl = `${
+          URL_LIST.products
+        }${productsUtils.getCreatedProductId()}`;
+        cy.visit(productUrl)
+          .get(PRODUCTS_SELECTORS.assignedChannels)
+          .click()
+          .get(PRODUCTS_SELECTORS.publishedRadioButton)
+          .contains("Niedostępne do zakupu")
+          .click()
+          .get(PRODUCTS_SELECTORS.saveBtn)
+          .click()
+          .waitForGraph("ProductChannelListingUpdate")
+          .get("@shopUrl")
+          .then(shopUrl => {
+            cy.visit(shopUrl);
+            searchSteps.searchFor(productName);
+            cy.get(SEARCH_SELECTORS.productItem)
+              .contains(productName)
+              .click()
+              .get(PRODUCTS_DETAILS_SELECTORS.addToCartButton)
+              .should("be.disabled");
           });
       });
   });

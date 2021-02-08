@@ -23,5 +23,6 @@ export const PRODUCTS_SELECTORS = {
   channelAvailabilityList: "ul[role='menu']",
   goBackButton: "[data-test-id='app-header-back-button']",
   assignedChannels: "[data-test='channel-availability-item']",
-  publishedRadioButton: "[role=radiogroup]"
+  publishedRadioButton: "[role=radiogroup]",
+  visibleInListingsButton: "[class*='MuiFormControlLabel']"
 };

@@ -27,7 +27,8 @@ class Product {
     productId,
     channelId,
     isPublished,
-    isAvailableForPurchase
+    isAvailableForPurchase,
+    visibleInListings
   ) {
     const mutation = `mutation{
               productChannelListingUpdate(id:"${productId}",
@@ -36,7 +37,7 @@ class Product {
                 channelId:"${channelId}"
                 isPublished:${isPublished}
                 isAvailableForPurchase:${isAvailableForPurchase}
-                visibleInListings:true
+                visibleInListings:${visibleInListings}
                 }
               }){
                 product{
