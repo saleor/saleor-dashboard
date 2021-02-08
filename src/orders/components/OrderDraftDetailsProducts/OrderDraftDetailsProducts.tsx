@@ -19,7 +19,7 @@ import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegat
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
 export interface FormData {
@@ -82,7 +82,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
 
   return (
     <ResponsiveTable className={classes.table}>
-      {maybe(() => !!lines.length) && (
+      {!!lines?.length && (
         <TableHead>
           <TableRow>
             <TableCell className={classes.colName}>
@@ -113,7 +113,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         </TableHead>
       )}
       <TableBody>
-        {maybe(() => lines.length) === 0 ? (
+        {lines?.length === 0 ? (
           <TableRow>
             <TableCell colSpan={5}>
               <FormattedMessage defaultMessage="No Products added to Order" />
@@ -124,9 +124,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
             <TableRow key={line ? line.id : "skeleton"}>
               <TableCellAvatar
                 className={classes.colName}
-                thumbnail={maybe(() => line.thumbnail.url)}
+                thumbnail={line?.thumbnail?.url}
               >
-                {maybe(() => line.productName && line.productSku) ? (
+                {line?.productName && line?.productSku ? (
                   <>
                     <>
                       <Typography variant="body2">
@@ -142,7 +142,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                 )}
               </TableCellAvatar>
               <TableCell className={classes.colQuantity}>
-                {maybe(() => line.quantity) ? (
+                {line?.quantity ? (
                   <Form
                     initial={{ quantity: line.quantity }}
                     onSubmit={data => onOrderLineChange(line.id, data)}
@@ -181,14 +181,14 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                 )}
               </TableCell>
               <TableCell className={classes.colPrice}>
-                {maybe(() => line.unitPrice.gross) ? (
+                {line?.unitPrice?.gross ? (
                   <Money money={line.unitPrice.gross} />
                 ) : (
                   <Skeleton />
                 )}
               </TableCell>
               <TableCell className={classes.colTotal}>
-                {maybe(() => line.unitPrice.gross && line.quantity) ? (
+                {line?.unitPrice?.gross && line?.quantity ? (
                   <Money
                     money={{
                       amount: line.unitPrice.gross.amount * line.quantity,
