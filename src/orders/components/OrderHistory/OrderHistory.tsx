@@ -61,7 +61,7 @@ export const getEventMessage = (
             defaultMessage: "Fulfillment confirmation was sent to customer",
             description: "order history message"
           });
-        case OrderEventsEmailsEnum.ORDER_CONFIRMATION:
+        case OrderEventsEmailsEnum.CONFIRMED:
           return intl.formatMessage({
             defaultMessage: "Order confirmation was sent to customer",
             description: "order history message"
