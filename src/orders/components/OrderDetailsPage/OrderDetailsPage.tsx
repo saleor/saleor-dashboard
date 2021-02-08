@@ -145,10 +145,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const canCancel = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const canEditAddresses = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const canFulfill = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const unfulfilled = maybe(() => order.lines, []).filter(
+  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
+  const canCancel = order?.status !== OrderStatus.CANCELED;
+  const canEditAddresses = order?.status !== OrderStatus.CANCELED;
+  const canFulfill = order?.status !== OrderStatus.CANCELED;
+  const unfulfilled = (order?.lines || []).filter(
     line => line.quantityFulfilled < line.quantity
   );
 
@@ -169,13 +170,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const saveLabel =
-    order?.status === OrderStatus.UNCONFIRMED
-      ? intl.formatMessage(messages.confirmOrder)
-      : undefined;
+  const saveLabel = isOrderUnconfirmed
+    ? intl.formatMessage(messages.confirmOrder)
+    : undefined;
 
   const allowSave = (hasChanged: boolean) => {
-    if (order?.status !== OrderStatus.UNCONFIRMED) {
+    if (!isOrderUnconfirmed) {
       return disabled || !hasChanged;
     } else if (!order?.lines?.length) {
       return true;
@@ -228,7 +228,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div>
-                {order?.status !== OrderStatus.UNCONFIRMED ? (
+                {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     canFulfill={canFulfill}
                     lines={unfulfilled}
@@ -262,7 +262,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                {order?.status !== OrderStatus.UNCONFIRMED && (
+                {!isOrderUnconfirmed && (
                   <>
                     <OrderPayment
                       order={order}
@@ -296,7 +296,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   selectedChannelName={order?.channel?.name}
                 />
                 <CardSpacer />
-                {order?.status !== OrderStatus.UNCONFIRMED && (
+                {!isOrderUnconfirmed && (
                   <>
                     <OrderInvoiceList
                       invoices={order?.invoices}
