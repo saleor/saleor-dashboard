@@ -33,24 +33,20 @@ class Channels {
           `;
     cy.sendRequestWithQuery(getChannelsInfoQuery).then(resp => {
       const channels = new Set(resp.body.data.channels);
-      if (channels) {
-        channels.forEach(element => {
-          if (element.name.startsWith(nameStartsWith)) {
-            const targetChannels = Array.from(channels).filter(function(
-              channel
-            ) {
-              return (
-                element.currencyCode === channel.currencyCode &&
-                element.id !== channel.id
-              );
-            });
-            if (targetChannels[0]) {
-              this.deleteChannel(element.id, targetChannels[0].id);
-              channels.delete(element);
-            }
+      channels.forEach(element => {
+        if (element.name.startsWith(nameStartsWith)) {
+          const targetChannels = Array.from(channels).filter(function(channel) {
+            return (
+              element.currencyCode === channel.currencyCode &&
+              element.id !== channel.id
+            );
+          });
+          if (targetChannels[0]) {
+            this.deleteChannel(element.id, targetChannels[0].id);
+            channels.delete(element);
           }
-        });
-      }
+        }
+      });
     });
   }
 

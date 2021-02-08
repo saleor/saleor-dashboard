@@ -11,7 +11,7 @@ import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { URL_LIST } from "../url/url-list";
+import { urlList } from "../url/urlList";
 import ChannelsUtils from "../utils/channelsUtils";
 
 describe("Channels", () => {
@@ -36,25 +36,25 @@ describe("Channels", () => {
       .get(CONFIGURATION_SELECTORS.channels)
       .click()
       .location("pathname")
-      .should("contain", URL_LIST.channels);
+      .should("contain", urlList.channels);
   });
 
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(URL_LIST.channels).waitForGraph("Channels");
+    cy.visit(urlList.channels).waitForGraph("Channels");
     channelsUtils.createChannelByView(randomChannel, currency);
     cy.waitForGraph("Channel")
       .get(ADD_CHANNEL_FORM_SELECTOS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
       .contains(randomChannel)
-      .visit(URL_LIST.dashbord)
+      .visit(urlList.homePage)
       .get(HEADER_SELECTORS.channelSelect)
       .click()
       .get(HEADER_SELECTORS.channelSelectList)
       .contains(randomChannel)
       .click()
-      .visit(URL_LIST.products)
+      .visit(urlList.products)
       .waitForGraph("InitialProductFilterData");
     cy.get(PRODUCTS_SELECTORS.productsList)
       .first()
@@ -68,7 +68,7 @@ describe("Channels", () => {
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
-    cy.visit(URL_LIST.channels);
+    cy.visit(urlList.channels);
     channelsUtils.createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
       "be.visible"
@@ -77,7 +77,7 @@ describe("Channels", () => {
 
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(URL_LIST.channels);
+    cy.visit(urlList.channels);
     channelsUtils.createChannelByView(
       randomChannel,
       currency,
@@ -96,7 +96,7 @@ describe("Channels", () => {
       randomChannelToDelete,
       currency
     );
-    cy.visit(URL_LIST.channels).waitForGraph("Channels");
+    cy.visit(urlList.channels).waitForGraph("Channels");
     cy.get(CHANNELS_SELECTORS.channelName)
       .contains(randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)
@@ -113,7 +113,7 @@ describe("Channels", () => {
   it("should not be possible to add products to order with inactive channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
-    cy.visit(URL_LIST.orders)
+    cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click()
       .get(CHANNEL_FORM_SELECTORS.channelSelect)
@@ -125,7 +125,7 @@ describe("Channels", () => {
       .click();
     cy.location()
       .should(loc => {
-        const urlRegex = new RegExp(`${URL_LIST.orders}.+`, "g");
+        const urlRegex = new RegExp(`${urlList.orders}.+`, "g");
         expect(loc.pathname).to.match(urlRegex);
       })
       .get(DRAFT_ORDER_SELECTORS.addProducts)

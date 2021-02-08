@@ -1,5 +1,5 @@
-export const URL_LIST = {
-  dashbord: "/",
+export const urlList = {
+  homePage: "/",
   channels: "/channels/",
   products: "/products/",
   orders: "/orders/"
