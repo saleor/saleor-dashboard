@@ -24,5 +24,6 @@ export const PRODUCTS_SELECTORS = {
   goBackButton: "[data-test-id='app-header-back-button']",
   assignedChannels: "[data-test='channel-availability-item']",
   publishedRadioButton: "[role=radiogroup]",
-  visibleInListingsButton: "[class*='MuiFormControlLabel']"
+  visibleInListingsButton: "[class*='MuiFormControlLabel']",
+  addVariantsButton: "[data-test='button-add-variants']"
 };

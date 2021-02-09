@@ -1,4 +1,4 @@
-export const URL_LIST = {
+export const urlList = {
   dashbord: "/",
   channels: "/channels/",
   products: "/products/",
