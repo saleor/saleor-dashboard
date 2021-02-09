@@ -30,7 +30,8 @@ describe("Channels", () => {
   });
 
   it("should navigate to channels page", () => {
-    cy.get(LEFT_MENU_SELECTORS.configuration)
+    cy.visit("/")
+      .get(LEFT_MENU_SELECTORS.configuration)
       .click()
       .get(CONFIGURATION_SELECTORS.channels)
       .click()
@@ -41,10 +42,7 @@ describe("Channels", () => {
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit("/")
-      .visit(urlList.channels, {
-        timeout: 30000,
-        retryOnStatusCodeFailure: true
-      })
+      .visit("/channels/")
       .waitForGraph("Channels");
     channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
@@ -77,7 +75,7 @@ describe("Channels", () => {
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
-    cy.visit(urlList.channels);
+    cy.visit("http://localhost:9000/channels/");
     channelsSteps.createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
       "be.visible"
@@ -86,7 +84,9 @@ describe("Channels", () => {
 
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(urlList.channels);
+    cy.request(urlList.channels).then(() => {
+      cy.visit(urlList.channels);
+    });
     channelsSteps.createChannelByView(
       randomChannel,
       currency,
