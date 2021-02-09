@@ -1,7 +1,7 @@
 import { ADD_CHANNEL_FORM_SELECTOS } from "../elements/channels/add-channel-form-selectors";
 import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
 
-class ChannelsUtils {
+class ChannelsSteps {
   createChannelByView(name, currency, otherCurrency, slug = name) {
     cy.get(CHANNELS_SELECTORS.createChannelButton)
       .click()
@@ -23,4 +23,4 @@ class ChannelsUtils {
     cy.get(ADD_CHANNEL_FORM_SELECTOS.saveButton).click();
   }
 }
-export default ChannelsUtils;
+export default ChannelsSteps;

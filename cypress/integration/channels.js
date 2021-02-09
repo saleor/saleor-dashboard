@@ -11,14 +11,14 @@ import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import ChannelsSteps from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
-import ChannelsUtils from "../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
   const channels = new Channels();
-  const channelsUtils = new ChannelsUtils();
+  const channelsSteps = new ChannelsSteps();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -42,7 +42,7 @@ describe("Channels", () => {
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels).waitForGraph("Channels");
-    channelsUtils.createChannelByView(randomChannel, currency);
+    channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
     cy.waitForGraph("Channel")
       .get(ADD_CHANNEL_FORM_SELECTOS.backToChannelsList)
@@ -74,7 +74,7 @@ describe("Channels", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.channels);
-    channelsUtils.createChannelByView(randomChannel, currency);
+    channelsSteps.createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
       "be.visible"
     );
@@ -83,7 +83,7 @@ describe("Channels", () => {
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels);
-    channelsUtils.createChannelByView(
+    channelsSteps.createChannelByView(
       randomChannel,
       currency,
       "notExistingCurrency"
