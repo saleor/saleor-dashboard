@@ -26,9 +26,7 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .visit("/");
+    cy.clearSessionData().loginUserViaRequest();
   });
 
   it("should navigate to channels page", () => {
@@ -42,9 +40,12 @@ describe("Channels", () => {
 
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(urlList.channels, {
-      failOnStatusCode: false
-    }).waitForGraph("Channels");
+    cy.visit("/")
+      .visit(urlList.channels, {
+        timeout: 30000,
+        retryOnStatusCodeFailure: true
+      })
+      .waitForGraph("Channels");
     channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
     cy.waitForGraph("Channel")
