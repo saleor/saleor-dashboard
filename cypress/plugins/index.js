@@ -17,6 +17,9 @@
  */
 module.exports = (on, config) => {
   config.env.API_URI = process.env.API_URI;
-
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    launchOptions.args.push("--proxy-bypass-list=<-loopback>");
+    return launchOptions;
+  });
   return config;
 };

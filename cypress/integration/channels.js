@@ -42,7 +42,9 @@ describe("Channels", () => {
 
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(urlList.channels).waitForGraph("Channels");
+    cy.visit("aaa" + urlList.channels, {
+      failOnStatusCode: false
+    }).waitForGraph("Channels");
     channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
     cy.waitForGraph("Channel")
