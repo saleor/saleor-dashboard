@@ -26,12 +26,13 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData()
+      .loginUserViaRequest()
+      .visit("/");
   });
 
   it("should navigate to channels page", () => {
-    cy.visit("/")
-      .get(LEFT_MENU_SELECTORS.configuration)
+    cy.get(LEFT_MENU_SELECTORS.configuration)
       .click()
       .get(CONFIGURATION_SELECTORS.channels)
       .click()

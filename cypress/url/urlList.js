@@ -1,6 +1,6 @@
 export const urlList = {
   homePage: "/",
-  channels: "channels/",
-  products: "products/",
-  orders: "orders/"
+  channels: "/channels/",
+  products: "/products/",
+  orders: "/orders/"
 };
