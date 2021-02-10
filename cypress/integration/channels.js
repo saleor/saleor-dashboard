@@ -75,7 +75,7 @@ describe("Channels", () => {
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
-    cy.visit("http://localhost:9000/channels/");
+    cy.visit(urlList.channels);
     channelsSteps.createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
       "be.visible"
@@ -125,7 +125,6 @@ describe("Channels", () => {
       .click()
       .get(CHANNEL_FORM_SELECTORS.channelSelect)
       .click()
-      .get(CHANNEL_FORM_SELECTORS.channelOption)
       .contains(randomChannel)
       .click()
       .get(CHANNEL_FORM_SELECTORS.confirmButton)

@@ -4,7 +4,7 @@ describe("Warehouse settings", () => {
     cy.clearSessionData();
   });
 
-  it("Warehouse section visible in the configuration", () => {
+  xit("Warehouse section visible in the configuration", () => {
     cy.visit("/configuration/")
       .loginUser()
       .get("[data-test-id=warehouses][data-test=settingsSubsection]")
