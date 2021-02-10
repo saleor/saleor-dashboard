@@ -9,6 +9,9 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { urlList } = require("../url/urlList");
+
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
@@ -16,7 +19,7 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  config.env.API_URI = process.env.API_URI;
+  config.env.API_URI = urlList.apiUri;
   on("before:browser:launch", (browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;

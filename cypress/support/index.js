@@ -1,5 +1,7 @@
 import "./user";
 
+import { urlList } from "../url/urlList";
+
 Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.
   // Here is workaround to ensure tests have no side effects.
@@ -11,7 +13,7 @@ Cypress.Commands.add("clearSessionData", () => {
 
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.visit("/", {
+  cy.visit(urlList.homePage, {
     onBeforeLoad: win => {
       win.sessionStorage.clear();
     }
@@ -19,8 +21,7 @@ Cypress.Commands.add("clearSessionData", () => {
 });
 
 Cypress.Commands.add("waitForGraph", operationName => {
-  const GRAPH_URL = "/graphql";
-  cy.intercept("POST", GRAPH_URL, req => {
+  cy.intercept("POST", Cypress.env("API_URI"), req => {
     req.statusCode = 200;
     const requestBody = req.body;
     if (Array.isArray(requestBody)) {
@@ -43,12 +44,12 @@ Cypress.Commands.add("sendRequestWithQuery", query =>
     method: "POST",
     body: {
       method: "POST",
-      url: Cypress.env("API_URI"),
+      url: urlList.apiUri,
       query
     },
     headers: {
       Authorization: `JWT ${window.sessionStorage.getItem("auth")}`
     },
-    url: Cypress.env("API_URI")
+    url: urlList.apiUri
   })
 );

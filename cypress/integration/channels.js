@@ -1,3 +1,4 @@
+// <reference types="cypress" />
 import faker from "faker";
 
 import Channels from "../apiRequests/Channels";
@@ -30,7 +31,7 @@ describe("Channels", () => {
   });
 
   it("should navigate to channels page", () => {
-    cy.visit("/")
+    cy.visit(urlList.homePage)
       .get(LEFT_MENU_SELECTORS.configuration)
       .click()
       .get(CONFIGURATION_SELECTORS.channels)

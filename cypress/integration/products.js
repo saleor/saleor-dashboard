@@ -1,14 +1,15 @@
+// <reference types="cypress" />
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
+import { urlList } from "../url/urlList";
 
-// <reference types="cypress" />
 describe("Products", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
   it("should add new visible product", () => {
-    cy.visit("/")
+    cy.visit(urlList.homePage)
       .get(LEFT_MENU_SELECTORS.catalog)
       .click()
       .get(PRODUCTS_SELECTORS.products)
