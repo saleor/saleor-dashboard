@@ -1,4 +1,4 @@
-export const ADD_CHANNEL_FORM_SELECTOS = {
+export const ADD_CHANNEL_FORM_SELECTORS = {
   channelName: "[name='name']",
   slug: "[name='slug']",
   currency: "[data-test-id='channel-currency-select-input']",

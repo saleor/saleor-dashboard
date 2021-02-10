@@ -3,7 +3,7 @@ import faker from "faker";
 import Channels from "../apiRequests/Channels";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
-import { ADD_CHANNEL_FORM_SELECTOS } from "../elements/channels/add-channel-form-selectors";
+import { ADD_CHANNEL_FORM_SELECTORS } from "../elements/channels/add-channel-form-selectors";
 import { CHANNEL_FORM_SELECTORS } from "../elements/channels/channel-form-selectors";
 import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
 import { CONFIGURATION_SELECTORS } from "../elements/configuration/configuration-selectors";
@@ -45,7 +45,7 @@ describe("Channels", () => {
     channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
     cy.waitForGraph("Channel")
-      .get(ADD_CHANNEL_FORM_SELECTOS.backToChannelsList)
+      .get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
       .contains(randomChannel)
@@ -75,7 +75,7 @@ describe("Channels", () => {
     channels.createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.channels);
     channelsSteps.createChannelByView(randomChannel, currency);
-    cy.get(ADD_CHANNEL_FORM_SELECTOS.slugValidationMessage).should(
+    cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
       "be.visible"
     );
   });
@@ -88,7 +88,7 @@ describe("Channels", () => {
       currency,
       "notExistingCurrency"
     );
-    cy.get(ADD_CHANNEL_FORM_SELECTOS.currencyValidationMassege).should(
+    cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMassege).should(
       "be.visible"
     );
   });
