@@ -17,7 +17,7 @@ class ChannelsSteps {
     } else {
       cy.get(ADD_CHANNEL_FORM_SELECTORS.currency)
         .type(otherCurrency)
-        .get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompliteDropdown)
+        .get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown)
         .click();
     }
     cy.get(ADD_CHANNEL_FORM_SELECTORS.saveButton).click();

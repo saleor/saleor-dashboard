@@ -5,8 +5,8 @@ export const ADD_CHANNEL_FORM_SELECTORS = {
   currencyOptions: "[data-test='singleautocomplete-select-option']",
   saveButton: "[data-test='button-bar-confirm']",
   backToChannelsList: "[data-test-id='app-header-back-button']",
-  currencyValidationMassege: "[data-testid='currency-text-input-helper-text']",
+  currencyValidationMessage: "[data-testid='currency-text-input-helper-text']",
   slugValidationMessage: "[data-testid='slug-text-input-helper-text']",
-  currencyAutocompliteDropdown:
+  currencyAutocompleteDropdown:
     "[data-test='singleautocomplete-select-option'][data-test-type='custom']"
 };

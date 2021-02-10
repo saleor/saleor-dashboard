@@ -6,7 +6,6 @@ Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.
   // Here is workaround to ensure tests have no side effects.
   // Suggested usage:
-
   // beforeEach(() => {
   //   cy.clearSessionData();
   // });
@@ -41,15 +40,15 @@ Cypress.Commands.add("waitForGraph", operationName => {
 
 Cypress.Commands.add("sendRequestWithQuery", query =>
   cy.request({
-    method: "POST",
     body: {
       method: "POST",
+      query,
       url: urlList.apiUri,
-      query
     },
     headers: {
       Authorization: `JWT ${window.sessionStorage.getItem("auth")}`
     },
+    method: "POST",
     url: urlList.apiUri
   })
 );

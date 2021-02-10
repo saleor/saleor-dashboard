@@ -37,7 +37,7 @@ describe("Channels", () => {
       .get(CONFIGURATION_SELECTORS.channels)
       .click()
       .location("pathname")
-      .should("contain", urlList.channels);
+      .should("contain", "channels");
   });
 
   it("should create new channel", () => {
@@ -52,7 +52,7 @@ describe("Channels", () => {
       .contains(randomChannel)
       
     // new channel should be visible in channel selector
-    cy.visit(URL_LIST.dashbord)
+    cy.visit(urlList.homePage)
       .get(HEADER_SELECTORS.channelSelect)
       .click()
       .get(HEADER_SELECTORS.channelSelectList)
@@ -60,7 +60,7 @@ describe("Channels", () => {
       .click()
       
     // new channel should be visible at product availability form
-    cy.visit(URL_LIST.products)
+    cy.visit(urlList.products)
       .waitForGraph("InitialProductFilterData");
     cy.get(PRODUCTS_SELECTORS.productsList)
       .first()
@@ -89,7 +89,7 @@ describe("Channels", () => {
       currency,
       "notExistingCurrency"
     );
-    cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMassege).should(
+    cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
       "be.visible"
     );
   });

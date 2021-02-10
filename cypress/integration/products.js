@@ -8,12 +8,18 @@ describe("Products", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should add new visible product", () => {
+  it("should navigate to channels page", () => {
     cy.visit(urlList.homePage)
       .get(LEFT_MENU_SELECTORS.catalog)
       .click()
-      .get(PRODUCTS_SELECTORS.products)
+      .get(LEFT_MENU_SELECTORS.products)
       .click()
+      .location("pathname")
+      .should("contain", "/products");
+  });
+
+  it("should add new visible product", () => {
+    cy.visit(urlList.products)
       .get(PRODUCTS_SELECTORS.createProductBtn)
       .click()
       .get(PRODUCTS_SELECTORS.productNameInput)
