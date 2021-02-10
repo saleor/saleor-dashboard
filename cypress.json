@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:9000",
+  "baseUrl": "https://master.staging.saleor.cloud/dashboard",
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,
