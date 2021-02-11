@@ -130,8 +130,7 @@ describe("User authorization", () => {
       .get(HEADER_SELECTORS.channelSelectList)
       .contains(randomName)
       .click()
-      .get(DASHBOARD_SELECTORS.dataAreLoading)
-      .should("be.visible")
+      .waitForGraph("Home")
       .get(DASHBOARD_SELECTORS.dataAreLoading)
       .should("not.exist");
     const regex = /^1\D+/;
