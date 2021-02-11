@@ -11,15 +11,33 @@ import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
+import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { ReorderAction } from "@saleor/types";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import { ProductDetails_product_media } from "../../types/ProductDetails";
+const messages = defineMessages({
+  media: {
+    defaultMessage: "Media",
+    description: "section header"
+  },
+  upload: {
+    defaultMessage: "Upload",
+    description: "modal button upload"
+  },
+  uploadImages: {
+    defaultMessage: "Upload Images",
+    description: "modal button images upload"
+  },
+  uploadUrl: {
+    defaultMessage: "Upload URL",
+    description: "modal button url upload"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -133,8 +151,8 @@ const SortableMedia = SortableElement<SortableMediaProps>(
 
 interface MediaListContainerProps {
   className: string;
-  media: ProductDetails_product_media[];
-  preview: ProductDetails_product_media[];
+  media: ProductMediaFragment[];
+  preview: ProductMediaFragment[];
   onDelete: (id: string) => () => void;
   onEdit: (id: string) => () => void;
 }
@@ -162,7 +180,7 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
 
 interface ProductMediaProps {
   placeholderImage?: string;
-  media: ProductDetails_product_media[];
+  media: ProductMediaFragment[];
   loading?: boolean;
   onImageDelete: (id: string) => () => void;
   onImageEdit: (id: string) => () => void;
@@ -187,7 +205,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   const imagesUpload = React.useRef(null);
   const anchor = React.useRef();
   const [imagesToUpload, setImagesToUpload] = React.useState<
-    ProductDetails_product_media[]
+    ProductMediaFragment[]
   >([]);
   const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
 
@@ -218,10 +236,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   return (
     <Card className={classes.card}>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Media",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.media)}
         toolbar={
           <>
             <Button
@@ -231,10 +246,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               data-test="button-upload-image"
               ref={anchor}
             >
-              {intl.formatMessage({
-                defaultMessage: "Upload",
-                description: "modal button upload"
-              })}
+              {intl.formatMessage(messages.upload)}
             </Button>
 
             <Popper
@@ -256,20 +268,14 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                           data-test="uploadImages"
                           key="upload-images"
                         >
-                          {intl.formatMessage({
-                            defaultMessage: "Upload Images",
-                            description: "modal button images upload"
-                          })}
+                          {intl.formatMessage(messages.uploadImages)}
                         </MenuItem>
                         <MenuItem
                           onClick={openVideoUrlModal}
                           data-test="uploadVideoURL"
                           key="upload-video-url"
                         >
-                          {intl.formatMessage({
-                            defaultMessage: "Upload URL",
-                            description: "modal button url upload"
-                          })}
+                          {intl.formatMessage(messages.uploadUrl)}
                         </MenuItem>
                       </Menu>
                     </ClickAwayListener>

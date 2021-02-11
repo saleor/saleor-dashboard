@@ -8,9 +8,24 @@ import Skeleton from "@saleor/components/Skeleton";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ProductMediaVideo from "../ProductMediaVideo/ProductMediaVideo";
+
+const messages = defineMessages({
+  chooseMedia: {
+    defaultMessage: "Choose media",
+    description: "button"
+  },
+  media: {
+    defaultMessage: "Media",
+    description: "section header"
+  },
+  selectSpecificVariant: {
+    defaultMessage: "Select a specific variant media from product media",
+    description: "select variant media"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -59,10 +74,7 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Media",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.media)}
         toolbar={
           <Button
             color="primary"
@@ -70,10 +82,7 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
             disabled={disabled}
             onClick={onImageAdd}
           >
-            <FormattedMessage
-              defaultMessage="Choose media"
-              description="button"
-            />
+            {intl.formatMessage(messages.chooseMedia)}
           </Button>
         }
       />
@@ -102,7 +111,7 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
               )
           ) : (
             <Typography className={classes.helpText}>
-              <FormattedMessage defaultMessage="Select a specific variant media from product media" />
+              {intl.formatMessage(messages.selectSpecificVariant)}
             </Typography>
           )}
         </div>

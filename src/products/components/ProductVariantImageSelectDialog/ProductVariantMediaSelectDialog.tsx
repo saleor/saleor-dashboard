@@ -85,17 +85,17 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                 onClick={onMediaSelect(mediaObj.id)}
                 key={mediaObj.id}
               >
-                {mediaObj?.type !== ProductMediaType.IMAGE ? (
-                  <ProductMediaVideo
-                    className={classes.image}
-                    video={mediaObj}
-                    withOverlay
-                  />
-                ) : (
+                {mediaObj?.type === ProductMediaType.IMAGE ? (
                   <img
                     className={classes.image}
                     src={mediaObj.url}
                     alt={mediaObj.alt}
+                  />
+                ) : (
+                  <ProductMediaVideo
+                    className={classes.image}
+                    video={mediaObj}
+                    withOverlay
                   />
                 )}
               </div>

@@ -10,38 +10,48 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductVideoUrlDialogProps {
   product: ProductDetails_product;
   open: boolean;
-  onClose();
-  onSubmit(videoUrl: string);
+  onClose: () => void;
+  onSubmit: (videoUrl: string) => void;
 }
 
 interface FormValues {
   videoUrl: string;
 }
 
-const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = props => {
-  const { open, onClose, onSubmit } = props;
+const messages = defineMessages({
+  buttonMessage: {
+    defaultMessage: "Upload video URL",
+    description: "modal button"
+  },
+  uploadVideoUrl: {
+    defaultMessage: "Upload Video URL",
+    description: "dialog header"
+  }
+});
+
+const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = ({
+  open,
+  onClose,
+  onSubmit
+}) => {
+  const intl = useIntl();
   const initialValues: FormValues = {
     videoUrl: ""
   };
 
-  const handleOnSubmit = values => {
+  const handleOnSubmit = (values: FormValues) => {
     onSubmit(values.videoUrl);
     onClose();
   };
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Upload Video URL"
-          description="dialog header"
-        />
-      </DialogTitle>
+      <DialogTitle>{intl.formatMessage(messages.uploadVideoUrl)}</DialogTitle>
       <Form initial={initialValues} onSubmit={handleOnSubmit}>
         {({ change, data, submit }) => (
           <>
@@ -69,10 +79,7 @@ const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = props => {
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <Button onClick={submit}>
-                <FormattedMessage
-                  defaultMessage={"Upload video URL"}
-                  description={"button"}
-                />
+                {intl.formatMessage(messages.buttonMessage)}
               </Button>
             </DialogActions>
           </>

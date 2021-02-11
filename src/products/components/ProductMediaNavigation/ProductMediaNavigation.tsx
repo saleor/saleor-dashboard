@@ -6,9 +6,16 @@ import Skeleton from "@saleor/components/Skeleton";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import videoPlaceholderIcon from "../../../../assets/images/video-placeholder.svg";
+
+const messages = defineMessages({
+  allMedia: {
+    defaultMessage: "All Media",
+    description: "section header"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -60,19 +67,13 @@ interface ProductMediaNavigationProps {
 const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
   const { highlighted, media, onRowClick } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
     <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "All Media",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.allMedia)} />
       <CardContent>
-        {media === undefined ? (
+        {!media ? (
           <Skeleton />
         ) : (
           <div className={classes.root}>

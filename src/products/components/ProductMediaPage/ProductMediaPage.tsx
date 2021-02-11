@@ -15,9 +15,28 @@ import { commonMessages } from "@saleor/intl";
 import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ProductMediaNavigation from "../ProductMediaNavigation";
+
+const messages = defineMessages({
+  editMedia: {
+    defaultMessage: "Edit Media",
+    description: "header"
+  },
+  mediaInformation: {
+    defaultMessage: "Media Information",
+    description: "section header"
+  },
+  mediaView: {
+    defaultMessage: "Media View",
+    description: "section header"
+  },
+  optional: {
+    defaultMessage: "Optional",
+    description: "field is optional"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -83,12 +102,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
       {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>{product}</AppHeader>
-          <PageHeader
-            title={intl.formatMessage({
-              defaultMessage: "Edit Media",
-              description: "header"
-            })}
-          />
+          <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
               <ProductMediaNavigation
@@ -99,19 +113,13 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
               />
               <Card>
                 <CardTitle
-                  title={intl.formatMessage({
-                    defaultMessage: "Media Information",
-                    description: "section header"
-                  })}
+                  title={intl.formatMessage(messages.mediaInformation)}
                 />
                 <CardContent>
                   <TextField
                     name="description"
                     label={intl.formatMessage(commonMessages.description)}
-                    helperText={intl.formatMessage({
-                      defaultMessage: "Optional",
-                      description: "field is optional"
-                    })}
+                    helperText={intl.formatMessage(messages.optional)}
                     disabled={disabled}
                     onChange={change}
                     value={data.description}
@@ -123,21 +131,10 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
             </div>
             <div>
               <Card>
-                <CardTitle
-                  title={intl.formatMessage({
-                    defaultMessage: "Media View",
-                    description: "section header"
-                  })}
-                />
+                <CardTitle title={intl.formatMessage(messages.mediaView)} />
                 <CardContent>
                   {!!mediaObj ? (
-                    mediaObj?.type !== ProductMediaType.IMAGE ? (
-                      <ProductMediaVideo
-                        className={classes.image}
-                        video={mediaObj}
-                        fullWidth
-                      />
-                    ) : (
+                    mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
                         <img
                           className={classes.image}
@@ -145,6 +142,12 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                           alt={mediaObj.alt}
                         />
                       </div>
+                    ) : (
+                      <ProductMediaVideo
+                        className={classes.image}
+                        video={mediaObj}
+                        fullWidth
+                      />
                     )
                   ) : (
                     <Skeleton />
