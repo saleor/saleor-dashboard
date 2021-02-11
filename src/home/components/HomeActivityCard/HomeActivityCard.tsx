@@ -30,16 +30,17 @@ const useStyles = makeStyles(
 
 interface HomeActivityCardProps {
   activities: Home_activities_edges_node[];
+  testId?: string;
 }
 
 const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
-  const { activities } = props;
+  const { activities, testId } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card data-test-id={testId}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Activity",

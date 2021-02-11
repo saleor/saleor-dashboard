@@ -76,3 +76,14 @@ afterEach(() => {
   errors = [];
   isSoftAssertion = false;
 });
+
+Cypress.Commands.add("softAssertMatch", (selector, regexp) => {
+  cy.get(selector)
+    .invoke("text")
+    .then(text =>
+      chai.softExpect(assert.match(text, regexp, "regexp matches"))
+    );
+});
+Cypress.Commands.add("softAssertVisibility", selector => {
+  cy.get(selector).then(element => chai.softExpect(element).to.be.visible);
+});

@@ -50,7 +50,7 @@ class Checkout {
               }`;
     return cy.sendRequestWithQuery(mutation);
   }
-  compliteCheckout(checkoutId) {
+  completeCheckout(checkoutId) {
     const mutation = `mutation{
                 checkoutComplete(checkoutId:"${checkoutId}"){
                   order{

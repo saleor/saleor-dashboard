@@ -1,11 +1,10 @@
 export const DASHBOARD_SELECTORS = {
-  sales: "div:nth-child(1) > [class*='HomeAnalyticsCard-cardContent']",
-  orders: "div:nth-child(2) > [class*='HomeAnalyticsCard-cardContent']",
-  activity: "[class*='Grid-root'] > div:nth-child(2) > [class*='MuiPaper']",
-  topProducts:
-    "[class*='Grid-root'] > div:nth-child(1) > [class*='MuiPaper']:nth-child(4)",
-  ordersReadyToFulfill: "[class*='HomeNotificationTable'] > tr:nth-child(1)",
-  paymentsWaitingForCapture:
-    "[class*='HomeNotificationTable'] > tr:nth-child(2)",
-  productsOutOfStock: "[class*='HomeNotificationTable'] > tr:nth-child(3)"
+  sales: "[data-test-id='sales-analytics']",
+  orders: "[data-test-id='orders-analytics']",
+  activity: "[data-test-id='activity-card']",
+  topProducts: "[data-test-id='top-products']",
+  ordersReadyToFulfill: "[data-test-id='orders-to-fulfill']",
+  paymentsWaitingForCapture: "[data-test-id='orders-to-capture']",
+  productsOutOfStock: "[data-test-id='products-out-of-stock']",
+  dataAreLoading: "[class*='Skeleton-skeleton']"
 };

@@ -121,4 +121,4 @@ class ProductsUtils {
     });
   }
 }
-export default productsUtils;
+export default ProductsUtils;

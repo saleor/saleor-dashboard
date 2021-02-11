@@ -30,15 +30,15 @@ describe("User authorization", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit("should all elements be visible on the dashboard", () => {
-    cy.visit("/");
-    softAssertVisibility(DASHBOARD_SELECTORS.sales);
-    softAssertVisibility(DASHBOARD_SELECTORS.orders);
-    softAssertVisibility(DASHBOARD_SELECTORS.activity);
-    softAssertVisibility(DASHBOARD_SELECTORS.topProducts);
-    softAssertVisibility(DASHBOARD_SELECTORS.ordersReadyToFulfill);
-    softAssertVisibility(DASHBOARD_SELECTORS.paymentsWaitingForCapture);
-    softAssertVisibility(DASHBOARD_SELECTORS.productsOutOfStock);
+  it("should all elements be visible on the dashboard", () => {
+    cy.visit("/")
+      .softAssertVisibility(DASHBOARD_SELECTORS.sales)
+      .softAssertVisibility(DASHBOARD_SELECTORS.orders)
+      .softAssertVisibility(DASHBOARD_SELECTORS.activity)
+      .softAssertVisibility(DASHBOARD_SELECTORS.topProducts)
+      .softAssertVisibility(DASHBOARD_SELECTORS.ordersReadyToFulfill)
+      .softAssertVisibility(DASHBOARD_SELECTORS.paymentsWaitingForCapture)
+      .softAssertVisibility(DASHBOARD_SELECTORS.productsOutOfStock);
   });
 
   it("should correct amount of orders be displayed", () => {
@@ -47,6 +47,9 @@ describe("User authorization", () => {
     const randomNameProductOutOfStock = `${startsWith}${faker.random.number()}`;
     const shippingPrice = 12;
     const productPrice = 22;
+    let sales = productPrice * 2 + shippingPrice;
+
+    // Create channel, customer, product - everything needed to create order
     cy.fixture("addresses").then(json => {
       channels
         .createChannel(true, randomName, randomName, json.plAddress.currency)
@@ -87,12 +90,16 @@ describe("User authorization", () => {
                         )
                         .then(() => {
                           const variantsList = productsUtils.getCreatedVariants();
-                          ordersUtils.createReadyToFullfillOrder(
+
+                          // Create order ready to fulfill
+                          ordersUtils.createReadyToFulfillOrder(
                             customerId,
                             shippingId,
                             channelId,
                             variantsList
                           );
+
+                          // Create order waiting for capture
                           ordersUtils.createWaitingForCaptureOrder(
                             channelSlug,
                             customerEmail,
@@ -100,6 +107,8 @@ describe("User authorization", () => {
                             shippingId
                           );
                         });
+
+                      // Create product out of stock
                       productsUtils.createProductInChannel(
                         randomNameProductOutOfStock,
                         channelId,
@@ -120,18 +129,18 @@ describe("User authorization", () => {
       .click()
       .get(HEADER_SELECTORS.channelSelectList)
       .contains(randomName)
-      .click();
+      .click()
+      .get(DASHBOARD_SELECTORS.dataAreLoading)
+      .should("not.exist");
+    const regex = /^1\D+/;
+    sales = sales.toFixed(2).replace(".", ",");
+    cy.softAssertMatch(DASHBOARD_SELECTORS.ordersReadyToFulfill, regex)
+      .softAssertMatch(DASHBOARD_SELECTORS.paymentsWaitingForCapture, regex)
+      .softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, regex)
+      .softAssertMatch(
+        DASHBOARD_SELECTORS.sales,
+        new RegExp(`\\D+${sales}\\D+`)
+      )
+      .softAssertMatch(DASHBOARD_SELECTORS.orders, /\D+2\D*/);
   });
-
-  function softAssertVisibility(selector) {
-    cy.get(selector).then(element => chai.softExpect(element).to.be.visible);
-  }
-
-  function softAssertMatch(selector, regexp) {
-    cy.get(selector)
-      .invoke("text")
-      .then(text =>
-        chai.softExpect(assert.match(text, regexp, "regexp matches"))
-      );
-  }
 });

@@ -19,11 +19,11 @@ class OrdersUtils {
           .then(() =>
             checkout
               .addPayment(checkoutId, "mirumee.payments.dummy", "not-charged")
-              .then(() => checkout.compliteCheckout(checkoutId))
+              .then(() => checkout.completeCheckout(checkoutId))
           );
       });
   }
-  createReadyToFullfillOrder(
+  createReadyToFulfillOrder(
     customerId,
     shippingMethodId,
     channelId,

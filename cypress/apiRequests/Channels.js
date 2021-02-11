@@ -55,10 +55,10 @@ class Channels {
     });
   }
 
-  deleteChannel(channelId, targetChennelId) {
+  deleteChannel(channelId, targetChannelId) {
     const deleteChannelMutation = `mutation{
               channelDelete(id: "${channelId}", input:{
-                targetChannel: "${targetChennelId}"
+                targetChannel: "${targetChannelId}"
               }){
                 channel{
                   name
