@@ -1,5 +1,5 @@
 import "./user";
-import "./softAsserations";
+import "./softAssertions";
 
 import { urlList } from "../url/urlList";
 
