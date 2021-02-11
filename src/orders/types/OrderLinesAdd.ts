@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderLineCreateInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderLineCreateInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLinesAdd
@@ -46,6 +46,22 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderLinesAdd_draftOrderLinesCreate_order_discounts_amount;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_events_relatedOrder {
@@ -99,6 +115,31 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
   quantityAvailable: number;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -132,6 +173,11 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -163,6 +209,31 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_gross {
@@ -198,6 +269,11 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice;
   unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_lines_thumbnail | null;
 }
@@ -281,6 +357,24 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured {
   currency: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_net;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_gross;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_user {
   __typename: "User";
   id: string;
@@ -332,6 +426,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderLinesAdd_draftOrderLinesCreate_order_discounts[] | null;
   events: (OrderLinesAdd_draftOrderLinesCreate_order_events | null)[] | null;
   fulfillments: (OrderLinesAdd_draftOrderLinesCreate_order_fulfillments | null)[];
   lines: (OrderLinesAdd_draftOrderLinesCreate_order_lines | null)[];
@@ -347,6 +442,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   actions: (OrderAction | null)[];
   totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized;
   totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured;
+  undiscountedTotal: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal;
   user: OrderLinesAdd_draftOrderLinesCreate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;

@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import { fragmentAddress } from "./address";
 import { metadataFragment } from "./metadata";
+import { fragmentMoney } from "./products";
 
 export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {
@@ -49,6 +50,24 @@ export const fragmentOrderLine = gql`
     productSku
     quantity
     quantityFulfilled
+    unitDiscount {
+      amount
+      currency
+    }
+    unitDiscountValue
+    unitDiscountReason
+    unitDiscountType
+    undiscountedUnitPrice {
+      currency
+      gross {
+        amount
+        currency
+      }
+      net {
+        amount
+        currency
+      }
+    }
     unitPrice {
       currency
       gross {
@@ -120,6 +139,7 @@ export const fragmentOrderDetails = gql`
   ${fulfillmentFragment}
   ${invoiceFragment}
   ${metadataFragment}
+  ${fragmentMoney}
   fragment OrderDetailsFragment on Order {
     id
     ...MetadataFragment
@@ -129,6 +149,16 @@ export const fragmentOrderDetails = gql`
     canFinalize
     created
     customerNote
+    discounts {
+      id
+      type
+      calculationMode: valueType
+      value
+      reason
+      amount {
+        ...Money
+      }
+    }
     events {
       ...OrderEventFragment
     }
@@ -178,6 +208,16 @@ export const fragmentOrderDetails = gql`
     totalCaptured {
       amount
       currency
+    }
+    undiscountedTotal {
+      net {
+        amount
+        currency
+      }
+      gross {
+        amount
+        currency
+      }
     }
     user {
       id

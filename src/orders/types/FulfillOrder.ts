@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -48,6 +48,22 @@ export interface FulfillOrder_orderFulfill_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: FulfillOrder_orderFulfill_order_discounts_amount;
 }
 
 export interface FulfillOrder_orderFulfill_order_events_relatedOrder {
@@ -101,6 +117,31 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_va
   quantityAvailable: number;
 }
 
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
+}
+
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -134,6 +175,11 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -165,6 +211,31 @@ export interface FulfillOrder_orderFulfill_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice_gross;
+  net: FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_unitPrice_gross {
@@ -200,6 +271,11 @@ export interface FulfillOrder_orderFulfill_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: FulfillOrder_orderFulfill_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: FulfillOrder_orderFulfill_order_lines_undiscountedUnitPrice;
   unitPrice: FulfillOrder_orderFulfill_order_lines_unitPrice;
   thumbnail: FulfillOrder_orderFulfill_order_lines_thumbnail | null;
 }
@@ -283,6 +359,24 @@ export interface FulfillOrder_orderFulfill_order_totalCaptured {
   currency: string;
 }
 
+export interface FulfillOrder_orderFulfill_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: FulfillOrder_orderFulfill_order_undiscountedTotal_net;
+  gross: FulfillOrder_orderFulfill_order_undiscountedTotal_gross;
+}
+
 export interface FulfillOrder_orderFulfill_order_user {
   __typename: "User";
   id: string;
@@ -334,6 +428,7 @@ export interface FulfillOrder_orderFulfill_order {
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: FulfillOrder_orderFulfill_order_discounts[] | null;
   events: (FulfillOrder_orderFulfill_order_events | null)[] | null;
   fulfillments: (FulfillOrder_orderFulfill_order_fulfillments | null)[];
   lines: (FulfillOrder_orderFulfill_order_lines | null)[];
@@ -349,6 +444,7 @@ export interface FulfillOrder_orderFulfill_order {
   actions: (OrderAction | null)[];
   totalAuthorized: FulfillOrder_orderFulfill_order_totalAuthorized;
   totalCaptured: FulfillOrder_orderFulfill_order_totalCaptured;
+  undiscountedTotal: FulfillOrder_orderFulfill_order_undiscountedTotal;
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;

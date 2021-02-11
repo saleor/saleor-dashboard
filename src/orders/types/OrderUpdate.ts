@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderUpdateInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderUpdate
@@ -46,6 +46,22 @@ export interface OrderUpdate_orderUpdate_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderUpdate_orderUpdate_order_discounts_amount;
 }
 
 export interface OrderUpdate_orderUpdate_order_events_relatedOrder {
@@ -99,6 +115,31 @@ export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_vari
   quantityAvailable: number;
 }
 
+export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
+}
+
 export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -132,6 +173,11 @@ export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -163,6 +209,31 @@ export interface OrderUpdate_orderUpdate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderUpdate_orderUpdate_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice_gross;
+  net: OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderUpdate_orderUpdate_order_lines_unitPrice_gross {
@@ -198,6 +269,11 @@ export interface OrderUpdate_orderUpdate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderUpdate_orderUpdate_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderUpdate_orderUpdate_order_lines_undiscountedUnitPrice;
   unitPrice: OrderUpdate_orderUpdate_order_lines_unitPrice;
   thumbnail: OrderUpdate_orderUpdate_order_lines_thumbnail | null;
 }
@@ -281,6 +357,24 @@ export interface OrderUpdate_orderUpdate_order_totalCaptured {
   currency: string;
 }
 
+export interface OrderUpdate_orderUpdate_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderUpdate_orderUpdate_order_undiscountedTotal_net;
+  gross: OrderUpdate_orderUpdate_order_undiscountedTotal_gross;
+}
+
 export interface OrderUpdate_orderUpdate_order_user {
   __typename: "User";
   id: string;
@@ -332,6 +426,7 @@ export interface OrderUpdate_orderUpdate_order {
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderUpdate_orderUpdate_order_discounts[] | null;
   events: (OrderUpdate_orderUpdate_order_events | null)[] | null;
   fulfillments: (OrderUpdate_orderUpdate_order_fulfillments | null)[];
   lines: (OrderUpdate_orderUpdate_order_lines | null)[];
@@ -347,6 +442,7 @@ export interface OrderUpdate_orderUpdate_order {
   actions: (OrderAction | null)[];
   totalAuthorized: OrderUpdate_orderUpdate_order_totalAuthorized;
   totalCaptured: OrderUpdate_orderUpdate_order_totalCaptured;
+  undiscountedTotal: OrderUpdate_orderUpdate_order_undiscountedTotal;
   user: OrderUpdate_orderUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderUpdate_orderUpdate_order_availableShippingMethods | null)[] | null;

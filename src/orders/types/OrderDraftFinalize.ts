@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftFinalize
@@ -46,6 +46,22 @@ export interface OrderDraftFinalize_draftOrderComplete_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderDraftFinalize_draftOrderComplete_order_discounts_amount;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_events_relatedOrder {
@@ -99,6 +115,31 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
   quantityAvailable: number;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
+}
+
 export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -132,6 +173,11 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -163,6 +209,31 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice_gross;
+  net: OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice_gross {
@@ -198,6 +269,11 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderDraftFinalize_draftOrderComplete_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: OrderLineUnitDiscountType;
+  undiscountedUnitPrice: OrderDraftFinalize_draftOrderComplete_order_lines_undiscountedUnitPrice;
   unitPrice: OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice;
   thumbnail: OrderDraftFinalize_draftOrderComplete_order_lines_thumbnail | null;
 }
@@ -281,6 +357,24 @@ export interface OrderDraftFinalize_draftOrderComplete_order_totalCaptured {
   currency: string;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal_net;
+  gross: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal_gross;
+}
+
 export interface OrderDraftFinalize_draftOrderComplete_order_user {
   __typename: "User";
   id: string;
@@ -332,6 +426,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderDraftFinalize_draftOrderComplete_order_discounts[] | null;
   events: (OrderDraftFinalize_draftOrderComplete_order_events | null)[] | null;
   fulfillments: (OrderDraftFinalize_draftOrderComplete_order_fulfillments | null)[];
   lines: (OrderDraftFinalize_draftOrderComplete_order_lines | null)[];
@@ -347,6 +442,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   actions: (OrderAction | null)[];
   totalAuthorized: OrderDraftFinalize_draftOrderComplete_order_totalAuthorized;
   totalCaptured: OrderDraftFinalize_draftOrderComplete_order_totalCaptured;
+  undiscountedTotal: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal;
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods | null)[] | null;
