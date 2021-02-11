@@ -16,7 +16,13 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
+  // make env variables visible for cypress
   config.env.API_URI = process.env.API_URI;
+  config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
 
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    launchOptions.args.push("--proxy-bypass-list=<-loopback>");
+    return launchOptions;
+  });
   return config;
 };
