@@ -59,7 +59,6 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_orderLine_unitP
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderLineDiscountRemove_orderLineDiscountRemove_orderLine_unitPrice_gross;
   net: OrderLineDiscountRemove_orderLineDiscountRemove_orderLine_unitPrice_net;
 }

@@ -154,7 +154,6 @@ export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPric
 
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderVoid_orderVoid_order_lines_unitPrice_net {
 
 export interface OrderVoid_orderVoid_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderVoid_orderVoid_order_lines_unitPrice_gross;
   net: OrderVoid_orderVoid_order_lines_unitPrice_net;
 }

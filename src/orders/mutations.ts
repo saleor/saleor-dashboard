@@ -81,13 +81,9 @@ import {
   OrderLineDeleteVariables
 } from "./types/OrderLineDelete";
 import {
-  OrderLineDiscountAdd,
-  OrderLineDiscountAddVariables
-} from "./types/OrderLineDiscountAdd";
-import {
-  OrderLineDiscountDelete,
-  OrderLineDiscountDeleteVariables
-} from "./types/OrderLineDiscountDelete";
+  OrderLineDiscountRemove,
+  OrderLineDiscountRemoveVariables
+} from "./types/OrderLineDiscountRemove";
 import {
   OrderLineDiscountUpdate,
   OrderLineDiscountUpdateVariables

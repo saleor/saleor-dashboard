@@ -59,7 +59,6 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -346,7 +344,6 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice_gross;
   net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice_net;
 }

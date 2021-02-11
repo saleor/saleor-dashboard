@@ -154,7 +154,6 @@ export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_un
 
 export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderCapture_orderCapture_order_lines_unitPrice_net {
 
 export interface OrderCapture_orderCapture_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderCapture_orderCapture_order_lines_unitPrice_gross;
   net: OrderCapture_orderCapture_order_lines_unitPrice_net;
 }

@@ -154,7 +154,6 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_net {
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_gross;
   net: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_net;
 }

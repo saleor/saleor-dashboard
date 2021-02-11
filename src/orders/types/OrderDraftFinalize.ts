@@ -154,7 +154,6 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
 
 export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice_net
 
 export interface OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice_gross;
   net: OrderDraftFinalize_draftOrderComplete_order_lines_unitPrice_net;
 }

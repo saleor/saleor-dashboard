@@ -53,7 +53,6 @@ export interface OrderLineFragment_unitPrice_net {
 
 export interface OrderLineFragment_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderLineFragment_unitPrice_gross;
   net: OrderLineFragment_unitPrice_net;
 }

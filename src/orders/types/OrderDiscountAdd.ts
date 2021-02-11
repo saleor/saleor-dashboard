@@ -154,7 +154,6 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_fulfillments_lines_orde
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderDiscountAdd_orderDiscountAdd_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderDiscountAdd_orderDiscountAdd_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_lines_unitPrice_net {
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderDiscountAdd_orderDiscountAdd_order_lines_unitPrice_gross;
   net: OrderDiscountAdd_orderDiscountAdd_order_lines_unitPrice_net;
 }

@@ -154,7 +154,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice_gross;
   net: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitPrice_net;
 }
@@ -250,7 +249,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitP
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  currency: string;
   gross: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice_gross;
   net: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitPrice_net;
 }

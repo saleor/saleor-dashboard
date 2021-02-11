@@ -69,7 +69,6 @@ export const fragmentOrderLine = gql`
       }
     }
     unitPrice {
-      currency
       gross {
         amount
         currency
