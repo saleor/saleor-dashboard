@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, OrderLineUnitDiscountType, FulfillmentStatus, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -80,7 +80,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_thumbnail | null;
@@ -270,7 +270,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_thumbnail | null;
@@ -365,7 +365,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_thumbnail | null;

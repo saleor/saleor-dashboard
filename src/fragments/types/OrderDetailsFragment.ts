@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderDetailsFragment
@@ -169,7 +169,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine {
   unitDiscount: OrderDetailsFragment_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderDetailsFragment_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderDetailsFragment_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDetailsFragment_fulfillments_lines_orderLine_thumbnail | null;
@@ -264,7 +264,7 @@ export interface OrderDetailsFragment_lines {
   unitDiscount: OrderDetailsFragment_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderDetailsFragment_lines_undiscountedUnitPrice;
   unitPrice: OrderDetailsFragment_lines_unitPrice;
   thumbnail: OrderDetailsFragment_lines_thumbnail | null;

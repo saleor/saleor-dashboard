@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderLineUnitDiscountType } from "./../../types/globalTypes";
+import { DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderLineFragment
@@ -74,7 +74,7 @@ export interface OrderLineFragment {
   unitDiscount: OrderLineFragment_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderLineFragment_undiscountedUnitPrice;
   unitPrice: OrderLineFragment_unitPrice;
   thumbnail: OrderLineFragment_thumbnail | null;

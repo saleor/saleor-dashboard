@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, OrderLineUnitDiscountType, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountDelete
@@ -175,7 +175,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_fulfillments_line
   unitDiscount: OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_thumbnail | null;
@@ -270,7 +270,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_lines {
   unitDiscount: OrderDiscountDelete_orderDiscountDelete_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderDiscountDelete_orderDiscountDelete_order_lines_undiscountedUnitPrice;
   unitPrice: OrderDiscountDelete_orderDiscountDelete_order_lines_unitPrice;
   thumbnail: OrderDiscountDelete_orderDiscountDelete_order_lines_thumbnail | null;

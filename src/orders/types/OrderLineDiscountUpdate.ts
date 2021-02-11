@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, OrderLineUnitDiscountType } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountUpdate
@@ -80,7 +80,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_orderLine {
   unitDiscount: OrderLineDiscountUpdate_orderLineDiscountUpdate_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
-  unitDiscountType: OrderLineUnitDiscountType;
+  unitDiscountType: DiscountValueTypeEnum | null;
   undiscountedUnitPrice: OrderLineDiscountUpdate_orderLineDiscountUpdate_orderLine_undiscountedUnitPrice;
   unitPrice: OrderLineDiscountUpdate_orderLineDiscountUpdate_orderLine_unitPrice;
   thumbnail: OrderLineDiscountUpdate_orderLineDiscountUpdate_orderLine_thumbnail | null;
