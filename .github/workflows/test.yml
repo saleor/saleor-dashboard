@@ -95,7 +95,7 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
         with:
           build: npm run build
-          start: npx http-server -a localhost -p 9000 build/dashboard
+          start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
       - uses: actions/upload-artifact@v1
