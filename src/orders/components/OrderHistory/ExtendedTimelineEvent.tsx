@@ -78,6 +78,11 @@ export const titles = defineMessages({
     defaultMessage: "Products were returned by",
     description: "returned event title",
     id: "event title returned"
+  },
+  orderMarkedAsPaid: {
+    defaultMessage: "Order was marked as paid by",
+    description: "order marked as paid event title",
+    id: "event title marked as paid"
   }
 });
 
@@ -96,6 +101,11 @@ export const messages = defineMessages({
     defaultMessage: "Shipment was refunded",
     description: "shipment refund title",
     id: "shipment refund title"
+  },
+  transactionReference: {
+    defaultMessage: "Transaction reference",
+    description: "transaction reference subtitle",
+    id: "transaction reference subtitle"
   }
 });
 
@@ -115,6 +125,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     user,
     lines,
     amount,
+    transactionReference,
     shippingCostsIncluded,
     relatedOrder
   } = event;
@@ -202,6 +213,19 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
               {intl.formatMessage(messages.refundedShipment)}
             </Typography>
           )}
+        </>
+      )}
+
+      {!!transactionReference && (
+        <>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            className={classNames(classes.eventSubtitle)}
+          >
+            {intl.formatMessage(messages.transactionReference)}
+          </Typography>
+          <Typography>{transactionReference}</Typography>
         </>
       )}
     </TimelineEvent>

@@ -1,5 +1,5 @@
-/* eslint-disable sort-keys */
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
+import { urlList } from "../../url/urlList";
 
 Cypress.Commands.add("loginUser", () =>
   cy
@@ -31,16 +31,16 @@ Cypress.Commands.add("loginUserViaRequest", () => {
 
   return cy
     .request({
-      method: "POST",
-      url: Cypress.env("API_URI"),
       body: {
         operationName: "TokenAuth",
+        query: logInMutationQuery,
         variables: {
           email: Cypress.env("USER_NAME"),
           password: Cypress.env("USER_PASSWORD")
         },
-        query: logInMutationQuery
-      }
+      },
+      method: "POST",
+      url: urlList.apiUri,
     })
     .then(resp => {
       window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);

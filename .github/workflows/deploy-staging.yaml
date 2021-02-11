@@ -11,9 +11,9 @@ jobs:
       API_URI: https://master.staging.saleor.cloud/graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
-      SENTRY_ORG: sentry
+      SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard
-      SENTRY_URL_PREFIX: "~/static"
+      SENTRY_URL_PREFIX: "~/dashboard/static"
       ENVIRONMENT: master-staging
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
