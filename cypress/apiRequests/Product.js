@@ -136,6 +136,7 @@ class Product {
           slug: "${slug}"
           isShippingRequired:true
           productAttributes:"${attributeId}"
+          variantAttributes: "${attributeId}"
         }){
           productErrors{
             field

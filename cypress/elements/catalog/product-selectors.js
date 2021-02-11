@@ -25,5 +25,5 @@ export const PRODUCTS_SELECTORS = {
   assignedChannels: "[data-test='channel-availability-item']",
   publishedRadioButton: "[role=radiogroup]",
   visibleInListingsButton: "[class*='MuiFormControlLabel']",
-  addVariantsButton: "[data-test='button-add-variants']"
+  addVariantsButton: "[data-test*='button-add-variant']"
 };

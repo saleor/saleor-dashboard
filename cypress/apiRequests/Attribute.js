@@ -5,6 +5,7 @@ class Attribute {
                 name:"${name}"
                 valueRequired:false
                 type:PRODUCT_TYPE
+                values:[{name: "value1"}, {name: "value2"}]
               }){
                 attribute{
                   id

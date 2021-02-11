@@ -1,4 +1,5 @@
 import "./user";
+import "./frontshop";
 
 Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.
