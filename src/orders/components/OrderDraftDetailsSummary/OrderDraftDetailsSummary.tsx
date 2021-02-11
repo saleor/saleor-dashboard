@@ -2,19 +2,16 @@ import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import { DiscountProviderValues } from "@saleor/products/components/OrderDraftDiscountProvider/DiscountProvider";
+import { OrderDiscountConsumerProps } from "@saleor/products/components/OrderDiscountProvider/OrderDiscountProvider";
+import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProvider/types";
+import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
 import { OrderDetails_order } from "../../types/OrderDetails";
-import OrderLineDiscountModal from "../OrderLineDiscountModal";
-import useDiscountCalculator from "../OrderLineDiscountModal/DiscountCalculator";
-import {
-  ORDER_DISCOUNT,
-  OrderDiscountCalculationMode,
-  OrderDiscountData
-} from "../OrderLineDiscountModal/types";
+import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
+import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -76,7 +73,7 @@ const messages = defineMessages({
 
 const PRICE_PLACEHOLDER = "---";
 
-interface OrderDraftDetailsSummaryProps extends DiscountProviderValues {
+interface OrderDraftDetailsSummaryProps extends OrderDiscountConsumerProps {
   disabled?: boolean;
   order: OrderDetails_order;
   onShippingMethodEdit: () => void;
@@ -90,14 +87,15 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     orderDiscount,
     addOrderDiscount,
     removeOrderDiscount,
-    isDiscountDialogOpen,
     openDialog,
-    closeDialog
+    closeDialog,
+    isDiscountDialogOpen,
+    orderDiscountAddStatus,
+    orderDiscountRemoveStatus
   } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
-  const discountCalculator = useDiscountCalculator(order, orderDiscount);
 
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
 
@@ -111,7 +109,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     shippingMethod,
     shippingMethodName,
     availableShippingMethods,
-    shippingPrice
+    shippingPrice,
+    undiscountedTotal
   } = order;
 
   const hasChosenShippingMethod =
@@ -130,16 +129,20 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
       return PRICE_PLACEHOLDER;
     }
 
-    const { value: discountValue, type } = orderDiscountData;
+    const {
+      value: discountValue,
+      calculationMode,
+      amount: discountAmount
+    } = orderDiscountData;
     const currency = total.gross.currency;
 
-    if (type === OrderDiscountCalculationMode.PERCENTAGE) {
+    if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return (
         <div className={classes.percentDiscountLabelContainer}>
           <Typography
             className={classes.subtitle}
           >{`(${discountValue}%)`}</Typography>
-          <Money money={discountCalculator.getDiscountedMoney()} />
+          <Money money={discountAmount} />
         </div>
       );
     }
@@ -155,17 +158,19 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
             <Link onClick={openDialog}>
               {intl.formatMessage(discountTitle)}
             </Link>
-            <OrderLineDiscountModal
-              anchorRef={popperAnchorRef}
-              isOpen={isDiscountDialogOpen}
-              onClose={closeDialog}
-              currency={total.gross.currency}
-              modalType={ORDER_DISCOUNT}
-              maxAmount={total.gross.amount}
-              onConfirm={addOrderDiscount}
-              onRemove={removeOrderDiscount}
-              existingDiscount={orderDiscount}
+            <OrderDiscountCommonModal
               dialogPlacement="bottom-start"
+              modalType={ORDER_DISCOUNT}
+              anchorRef={popperAnchorRef}
+              existingDiscount={orderDiscount}
+              currency={undiscountedTotal.net.currency}
+              maxAmount={undiscountedTotal.net.amount}
+              isOpen={isDiscountDialogOpen}
+              onConfirm={addOrderDiscount}
+              onClose={closeDialog}
+              onRemove={removeOrderDiscount}
+              confirmStatus={orderDiscountAddStatus}
+              removeStatus={orderDiscountRemoveStatus}
             />
           </td>
           <td className={classes.textRight}>
@@ -210,9 +215,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
         <tr>
           <td>{intl.formatMessage(messages.total)}</td>
           <td className={classes.textRight}>
-            <Money
-              money={discountCalculator.getTotalMoneyIncludingDiscount()}
-            />
+            <Money money={total.gross} />
           </td>
         </tr>
       </tbody>
