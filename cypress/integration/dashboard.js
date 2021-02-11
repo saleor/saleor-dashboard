@@ -131,6 +131,8 @@ describe("User authorization", () => {
       .contains(randomName)
       .click()
       .get(DASHBOARD_SELECTORS.dataAreLoading)
+      .should("be.visible")
+      .get(DASHBOARD_SELECTORS.dataAreLoading)
       .should("not.exist");
     const regex = /^1\D+/;
     sales = sales.toFixed(2).replace(".", ",");
