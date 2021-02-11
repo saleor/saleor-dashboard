@@ -47,7 +47,7 @@ describe("User authorization", () => {
     const randomNameProductOutOfStock = `${startsWith}${faker.random.number()}`;
     const shippingPrice = 12;
     const productPrice = 22;
-    let sales = productPrice * 2 + shippingPrice;
+    const sales = productPrice * 2 + shippingPrice;
 
     // Create channel, customer, product - everything needed to create order
     cy.fixture("addresses").then(json => {
@@ -134,13 +134,12 @@ describe("User authorization", () => {
       .get(DASHBOARD_SELECTORS.dataAreLoading)
       .should("not.exist");
     const regex = /^1\D+/;
-    sales = sales.toFixed(2).replace(".", ",");
     cy.softAssertMatch(DASHBOARD_SELECTORS.ordersReadyToFulfill, regex)
       .softAssertMatch(DASHBOARD_SELECTORS.paymentsWaitingForCapture, regex)
       .softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, regex)
       .softAssertMatch(
         DASHBOARD_SELECTORS.sales,
-        new RegExp(`\\D+${sales}\\D+`)
+        new RegExp(`\\D+${sales}[\,\.]00\\D+`)
       )
       .softAssertMatch(DASHBOARD_SELECTORS.orders, /\D+2\D*/);
   });
