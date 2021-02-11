@@ -1,5 +1,5 @@
+/* eslint-disable sort-keys */
 import {
-  Button,
   Card,
   CardContent,
   Popper,
@@ -10,18 +10,26 @@ import { PopperPlacementType } from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
+import ConfirmButton, {
+  ConfirmButtonTransitionState
+} from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { buttonMessages } from "@saleor/intl";
-import React, { ChangeEvent, MutableRefObject, useState } from "react";
+import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
+import React, {
+  ChangeEvent,
+  MutableRefObject,
+  useEffect,
+  useState
+} from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
+import ModalTitle from "./ModalTitle";
 import {
   ORDER_LINE_DISCOUNT,
-  OrderDiscountCalculationMode,
-  OrderDiscountData,
+  OrderDiscountCommonInput,
   OrderDiscountType
 } from "./types";
 
@@ -98,14 +106,16 @@ const messages = defineMessages({
 interface OrderLineDiscountModalProps {
   currency: string;
   maxAmount: number;
-  onConfirm: (discount: OrderDiscountData) => void;
+  onConfirm: (discount: OrderDiscountCommonInput) => void;
   onClose: () => void;
   onRemove: () => void;
   modalType: OrderDiscountType;
-  isOpen: boolean;
   anchorRef: MutableRefObject<any>;
-  existingDiscount: OrderDiscountData;
+  existingDiscount: OrderDiscountCommonInput;
   dialogPlacement: PopperPlacementType;
+  isOpen: boolean;
+  confirmStatus: ConfirmButtonTransitionState;
+  removeStatus: ConfirmButtonTransitionState;
 }
 
 const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
@@ -113,21 +123,28 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
   maxAmount = 0,
   onConfirm,
   modalType,
-  isOpen,
   anchorRef,
   onClose,
   onRemove,
   existingDiscount,
-  dialogPlacement
+  dialogPlacement,
+  isOpen,
+  confirmStatus,
+  removeStatus
 }) => {
-  const initialType = OrderDiscountCalculationMode.PERCENTAGE;
+  const initialData = {
+    calculationMode:
+      existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE,
+    value: existingDiscount?.value.toString() || "",
+    reason: existingDiscount?.reason || ""
+  };
 
-  const [discountReason, setDiscountReason] = useState<string>("");
-  const [discountValue, setDiscountValue] = useState<string>("");
   const [isValueError, setValueError] = useState<boolean>(false);
-  const [discountType, setDiscountType] = useState<
-    OrderDiscountCalculationMode
-  >(initialType);
+  const [reason, setReason] = useState<string>(initialData.reason);
+  const [value, setValue] = useState<string>(initialData.value);
+  const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
+    initialData.calculationMode
+  );
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -135,16 +152,16 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
   const discountTypeChoices = [
     {
       label: intl.formatMessage(messages.percentageOption),
-      value: OrderDiscountCalculationMode.PERCENTAGE
+      value: DiscountValueTypeEnum.PERCENTAGE
     },
     {
       label: intl.formatMessage(messages.fixedAmountOption),
-      value: OrderDiscountCalculationMode.FIXED_AMOUNT
+      value: DiscountValueTypeEnum.FIXED
     }
   ];
 
   const isDiscountTypePercentage =
-    discountType === OrderDiscountCalculationMode.PERCENTAGE;
+    calculationMode === DiscountValueTypeEnum.PERCENTAGE;
 
   const handleSetDiscountValue = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -152,10 +169,10 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
     const value = event.target.value;
 
     handleSetError(value);
-    setDiscountValue(value);
+    setValue(value);
   };
 
-  const getParsedDiscountValue = () => parseFloat(discountValue) || 0;
+  const getParsedDiscountValue = () => parseFloat(value) || 0;
 
   const isAmountTooLarge = () => {
     const topAmount = isDiscountTypePercentage ? 100 : maxAmount;
@@ -173,19 +190,20 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
 
   const handleConfirm = () => {
     onConfirm({
-      type: discountType,
-      reason: discountReason,
+      calculationMode,
+      reason,
       value: getParsedDiscountValue()
     });
-    setDefaultValues();
   };
 
   const setDefaultValues = () => {
-    setDiscountReason("");
-    setDiscountValue("");
-    setDiscountType(initialType);
+    setReason(initialData.reason);
+    setValue(initialData.value);
+    setCalculationMode(initialData.calculationMode);
     setValueError(false);
   };
+
+  useEffect(setDefaultValues, [existingDiscount]);
 
   const dialogTitle =
     modalType === ORDER_LINE_DISCOUNT
@@ -193,12 +211,10 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
       : messages.orderDiscountTitle;
 
   const valueFieldSymbol =
-    discountType === OrderDiscountCalculationMode.FIXED_AMOUNT ? currency : "%";
+    calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
 
   const isSubmitDisabled =
     !getParsedDiscountValue() || isValueError || isAmountTooLarge();
-
-  const displayRemoveButton = !!existingDiscount;
 
   return (
     <Popper
@@ -208,22 +224,22 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
       placement={dialogPlacement}
     >
       <Card>
-        <CardTitle title={intl.formatMessage(dialogTitle)} />
+        <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
         <CardContent>
           <RadioGroupField
             innerContainerClassName={classes.radioContainer}
             choices={discountTypeChoices}
             name="discountType"
             variant="inlineJustify"
-            value={discountType}
-            onChange={event => setDiscountType(event.target.value)}
+            value={calculationMode}
+            onChange={event => setCalculationMode(event.target.value)}
           />
           <CardSpacer />
           <PriceField
             label={intl.formatMessage(messages.discountValueLabel)}
             error={isValueError}
             hint={isValueError && intl.formatMessage(messages.invalidValue)}
-            value={discountValue}
+            value={value}
             onChange={handleSetDiscountValue}
             currencySymbol={valueFieldSymbol}
           />
@@ -234,9 +250,9 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
           <TextField
             className={classes.reasonInput}
             label={intl.formatMessage(messages.discountReasonLabel)}
-            value={discountReason}
+            value={reason}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setDiscountReason(event.target.value)
+              setReason(event.target.value)
             }
           />
         </CardContent>
@@ -244,18 +260,20 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
           onConfirm={handleConfirm}
           onClose={onClose}
           disabled={isSubmitDisabled}
-          showBackButton={!displayRemoveButton}
+          showBackButton={false}
+          confirmButtonState={confirmStatus}
         >
-          {displayRemoveButton && (
+          {existingDiscount && (
             <div className={classes.buttonWrapper}>
-              <Button
+              <ConfirmButton
                 data-test="button-remove"
                 onClick={onRemove}
                 variant="contained"
                 className={classes.removeButton}
+                transitionState={removeStatus}
               >
                 {intl.formatMessage(buttonMessages.remove)}
-              </Button>
+              </ConfirmButton>
             </div>
           )}
         </DialogButtons>
