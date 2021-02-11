@@ -16,7 +16,7 @@ export interface ProductTranslations_translations_edges_node_ProductTranslatable
   __typename: "Product";
   id: string;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -30,7 +30,7 @@ export interface ProductTranslations_translations_edges_node_ProductTranslatable
 export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_translation {
   __typename: "ProductTranslation";
   id: string;
-  descriptionJson: any;
+  description: any;
   language: ProductTranslations_translations_edges_node_ProductTranslatableContent_translation_language;
   name: string;
   seoDescription: string | null;

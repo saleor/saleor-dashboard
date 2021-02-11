@@ -11,6 +11,12 @@ jobs:
       API_URI: https://master.staging.saleor.cloud/graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      ENVIRONMENT: master-staging
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Package
@@ -41,4 +47,3 @@ jobs:
           aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/static/
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
-

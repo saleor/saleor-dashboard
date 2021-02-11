@@ -48,10 +48,18 @@ export interface OrderConfirm_orderConfirm_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderConfirm_orderConfirm_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderConfirm_orderConfirm_order_events_lines_orderLine {
@@ -76,6 +84,7 @@ export interface OrderConfirm_orderConfirm_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderConfirm_orderConfirm_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;
@@ -122,7 +131,7 @@ export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -187,7 +196,7 @@ export interface OrderConfirm_orderConfirm_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderConfirm_orderConfirm_order_lines_unitPrice | null;
+  unitPrice: OrderConfirm_orderConfirm_order_lines_unitPrice;
   thumbnail: OrderConfirm_orderConfirm_order_lines_thumbnail | null;
 }
 
@@ -325,24 +334,24 @@ export interface OrderConfirm_orderConfirm_order {
   fulfillments: (OrderConfirm_orderConfirm_order_fulfillments | null)[];
   lines: (OrderConfirm_orderConfirm_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderConfirm_orderConfirm_order_shippingPrice | null;
+  shippingPrice: OrderConfirm_orderConfirm_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderConfirm_orderConfirm_order_subtotal | null;
-  total: OrderConfirm_orderConfirm_order_total | null;
+  subtotal: OrderConfirm_orderConfirm_order_subtotal;
+  total: OrderConfirm_orderConfirm_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderConfirm_orderConfirm_order_totalAuthorized | null;
-  totalCaptured: OrderConfirm_orderConfirm_order_totalCaptured | null;
+  totalAuthorized: OrderConfirm_orderConfirm_order_totalAuthorized;
+  totalCaptured: OrderConfirm_orderConfirm_order_totalCaptured;
   user: OrderConfirm_orderConfirm_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderConfirm_orderConfirm_order_availableShippingMethods | null)[] | null;
   discount: OrderConfirm_orderConfirm_order_discount | null;
   invoices: (OrderConfirm_orderConfirm_order_invoices | null)[] | null;
   channel: OrderConfirm_orderConfirm_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderConfirm_orderConfirm {

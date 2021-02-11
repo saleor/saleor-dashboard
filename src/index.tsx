@@ -54,6 +54,7 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
+import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -66,6 +67,8 @@ import { warehouseSection } from "./warehouses/urls";
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
+
+errorTracker.init();
 
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
@@ -159,14 +162,17 @@ const Routes: React.FC = () => {
       {homePageLoaded ? (
         <AppLayout>
           <ErrorBoundary
-            onError={() =>
+            onError={e => {
+              const errorId = errorTracker.captureException(e);
+
               dispatchAppState({
                 payload: {
+                  errorId,
                   error: "unhandled"
                 },
                 type: "displayError"
-              })
-            }
+              });
+            }}
           >
             <Switch>
               <SectionRoute exact path="/" component={HomePage} />

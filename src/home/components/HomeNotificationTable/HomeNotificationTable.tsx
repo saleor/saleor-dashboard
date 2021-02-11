@@ -95,16 +95,21 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
       <ResponsiveTable>
         <TableBody className={classes.tableRow}>
           {noChannel && (
-            <TableRow hover={true} onClick={onCreateNewChannelClick}>
-              <TableCell>
-                <Typography>
-                  {intl.formatMessage(messages.createNewChannel)}
-                </Typography>
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRow>
+            <RequirePermissions
+              userPermissions={userPermissions}
+              requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+            >
+              <TableRow hover={true} onClick={onCreateNewChannelClick}>
+                <TableCell>
+                  <Typography>
+                    {intl.formatMessage(messages.createNewChannel)}
+                  </Typography>
+                </TableCell>
+                <TableCell className={classes.arrowIcon}>
+                  <KeyboardArrowRight />
+                </TableCell>
+              </TableRow>
+            </RequirePermissions>
           )}
           <RequirePermissions
             userPermissions={userPermissions}

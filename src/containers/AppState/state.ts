@@ -1,4 +1,7 @@
-export type AppError = "unhandled";
+export interface AppError {
+  type: "unhandled";
+  id: string | null | undefined;
+}
 
 interface IAppState {
   error: AppError | null;

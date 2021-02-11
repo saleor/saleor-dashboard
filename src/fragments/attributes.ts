@@ -12,6 +12,7 @@ export const attributeValueFragment = gql`
     file {
       ...FileFragment
     }
+    reference
   }
 `;
 
@@ -36,6 +37,7 @@ export const attributeDetailsFragment = gql`
     ...MetadataFragment
     availableInGrid
     inputType
+    entityType
     storefrontSearchPosition
     valueRequired
     values {

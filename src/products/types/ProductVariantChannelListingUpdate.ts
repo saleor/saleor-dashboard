@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantChannelListingAddInput, AttributeInputTypeEnum, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantChannelListingAddInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantChannelListingUpdate
@@ -32,6 +32,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute {
@@ -40,6 +41,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values | null)[] | null;
 }
@@ -56,6 +58,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes {
@@ -76,6 +79,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute {
@@ -84,6 +88,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
@@ -100,6 +105,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   name: string | null;
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes {

@@ -16,7 +16,7 @@ export interface CollectionTranslations_translations_edges_node_CollectionTransl
   __typename: "Collection";
   id: string;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -29,7 +29,7 @@ export interface CollectionTranslations_translations_edges_node_CollectionTransl
 export interface CollectionTranslations_translations_edges_node_CollectionTranslatableContent_translation {
   __typename: "CollectionTranslation";
   id: string;
-  descriptionJson: any;
+  description: any;
   language: CollectionTranslations_translations_edges_node_CollectionTranslatableContent_translation_language;
   name: string;
   seoDescription: string | null;

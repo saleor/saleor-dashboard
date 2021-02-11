@@ -47,9 +47,9 @@ export interface OrderDraftList_draftOrders_edges_node {
   created: any;
   id: string;
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   status: OrderStatus;
-  total: OrderDraftList_draftOrders_edges_node_total | null;
+  total: OrderDraftList_draftOrders_edges_node_total;
   userEmail: string | null;
 }
 

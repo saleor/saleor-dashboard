@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: Product
@@ -20,6 +20,7 @@ export interface Product_attributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: Product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface Product_attributes_attribute {
@@ -28,6 +29,7 @@ export interface Product_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (Product_attributes_attribute_values | null)[] | null;
 }
@@ -44,6 +46,7 @@ export interface Product_attributes_values {
   name: string | null;
   slug: string | null;
   file: Product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface Product_attributes {
@@ -64,6 +67,7 @@ export interface Product_productType_variantAttributes_values {
   name: string | null;
   slug: string | null;
   file: Product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface Product_productType_variantAttributes {
@@ -249,7 +253,7 @@ export interface Product {
   privateMetadata: (Product_privateMetadata | null)[];
   name: string;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

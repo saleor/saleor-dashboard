@@ -18,7 +18,7 @@ export interface TranslationsPagesPageProps
 }
 
 export const fieldNames = {
-  contentJson: "content",
+  content: "content",
   seoDescription: "seoDescription",
   seoTitle: "seoTitle",
   title: "title"
@@ -82,10 +82,10 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               defaultMessage: "Content",
               description: "page content"
             }),
-            name: fieldNames.contentJson,
-            translation: data?.translation?.contentJson || null,
+            name: fieldNames.content,
+            translation: data?.translation?.content || null,
             type: "rich" as "rich",
-            value: data?.page?.contentJson
+            value: data?.page?.content
           }
         ]}
         saveButtonState={saveButtonState}

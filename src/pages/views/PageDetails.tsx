@@ -11,7 +11,9 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
@@ -19,6 +21,8 @@ import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -49,7 +53,7 @@ const createPageInput = (
     attributes: data.attributes,
     updatedFileAttributes
   }),
-  contentJson: JSON.stringify(data.content),
+  content: JSON.stringify(data.content),
   isPublished: data.isPublished,
   publicationDate: data.publicationDate,
   seo: {
@@ -93,6 +97,14 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       }
     }
   });
+
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
+    navigate(
+      pageUrl(id, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
 
   const handleUpdate = async (data: PageSubmitData) => {
     let errors: Array<
@@ -139,6 +151,34 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     variables => updatePrivateMetadata({ variables })
   );
 
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
+
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
+  };
+
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
@@ -161,6 +201,21 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           )
         }
         onSubmit={handleSubmit}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
+        referencePages={searchPagesOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        onCloseDialog={() => navigate(pageUrl(id))}
       />
       <ActionDialog
         open={params.action === "remove"}

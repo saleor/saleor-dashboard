@@ -59,7 +59,7 @@ jobs:
       - name: Run build
         env:
           # Use custom API_URI or the default one
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://master.staging.saleor.rocks/graphql/' }}
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://master.staging.saleor.cloud/graphql/' }}
           APP_MOUNT_URI: /
           STATIC_URL: /
         run: |
@@ -88,7 +88,7 @@ jobs:
           aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}/storybook
 
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
 
       - name: Update deployment status
         uses: bobheadxi/deployments@v0.4.2

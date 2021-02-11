@@ -1,4 +1,14 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler,
+  createFetchMoreReferencesHandler,
+  createFetchReferencesHandler
+} from "@saleor/attributes/utils/handlers";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -14,14 +24,10 @@ import useFormset, {
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
-  getAttributesDisplayData,
   getProductUpdatePageFormData,
   getStockInputFromProduct
 } from "@saleor/products/utils/data";
 import {
-  createAttributeChangeHandler,
-  createAttributeFileChangeHandler,
-  createAttributeMultiChangeHandler,
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
@@ -29,7 +35,10 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -85,7 +94,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   removeStocks: string[];
 }
 
-interface ProductUpdateHandlers
+export interface ProductUpdateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"
@@ -105,9 +114,13 @@ interface ProductUpdateHandlers
         data: Omit<ChannelData, "name" | "price" | "currency" | "id">
       ) => void
     >,
+    Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
+    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  fetchReferences: (value: string) => void;
+  fetchMoreReferences: FetchMoreProps;
 }
 export interface UseProductUpdateFormResult {
   change: FormChange;
@@ -134,6 +147,13 @@ export interface UseProductUpdateFormOpts
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
   hasVariants: boolean;
+  referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -185,7 +205,7 @@ function useProductUpdateForm(
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
   const [description, changeDescription] = useRichText({
-    initial: product?.descriptionJson,
+    initial: product?.description,
     triggerChange
   });
 
@@ -219,11 +239,32 @@ function useProductUpdateForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleFetchReferences = createFetchReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchReferencePages,
+    opts.fetchReferenceProducts
+  );
+  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchMoreReferencePages,
+    opts.fetchMoreReferenceProducts
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
+    triggerChange
+  );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
     triggerChange
   );
   const handleStockChange: FormsetChange<string> = (id, value) => {
@@ -233,7 +274,9 @@ function useProductUpdateForm(
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
-      data: null,
+      data: {
+        quantityAllocated: 0
+      },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
       value: "0"
@@ -264,7 +307,9 @@ function useProductUpdateForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages,
+      opts.referenceProducts
     ),
     description: description.current,
     stocks: stocks.data
@@ -274,7 +319,6 @@ function useProductUpdateForm(
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    addStocks: [],
     attributes: attributes.data,
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current
@@ -313,9 +357,13 @@ function useProductUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       deleteStock: handleStockDelete,
+      fetchMoreReferences: handleFetchMoreReferences,
+      fetchReferences: handleFetchReferences,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect

@@ -11,6 +11,7 @@ import {
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -38,6 +39,8 @@ import {
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import usePageSearch from "@saleor/searches/usePageSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -95,6 +98,20 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts
+  } = usePageSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const warehouses = useWarehouseList({
@@ -296,6 +313,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables })
   );
 
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
+    navigate(
+      productUrl(id, {
+        action: "assign-attribute-value",
+        id: attribute.id
+      })
+    );
+
   const disableFormSave =
     uploadFileOpts.loading ||
     createProductImageOpts.loading ||
@@ -337,6 +362,27 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
       ?.errors || [])
   ];
+
+  const fetchMoreCollections = {
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCollectionsOpts.loading,
+    onFetchMore: loadMoreCollections
+  };
+  const fetchMoreCategories = {
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCategoriesOpts.loading,
+    onFetchMore: loadMoreCategories
+  };
+  const fetchMoreReferencePages = {
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages
+  };
+  const fetchMoreReferenceProducts = {
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts
+  };
 
   return (
     <>
@@ -413,19 +459,26 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        fetchMoreCategories={{
-          hasMore: searchCategoriesOpts?.data?.search?.pageInfo?.hasNextPage,
-          loading: searchCategoriesOpts.loading,
-          onFetchMore: loadMoreCategories
-        }}
-        fetchMoreCollections={{
-          hasMore: searchCollectionsOpts?.data?.search?.pageInfo?.hasNextPage,
-          loading: searchCollectionsOpts.loading,
-          onFetchMore: loadMoreCollections
-        }}
+        fetchMoreCategories={fetchMoreCategories}
+        fetchMoreCollections={fetchMoreCollections}
         selectedChannelId={channel?.id}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id
+        }
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
+        referencePages={searchPagesOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        referenceProducts={searchProductsOpts.data?.search.edges.map(
+          edge => edge.node
+        )}
+        fetchReferencePages={searchPages}
+        fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchReferenceProducts={searchProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        onCloseDialog={() => navigate(productUrl(id))}
       />
       <ActionDialog
         open={params.action === "remove"}

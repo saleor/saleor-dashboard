@@ -31,7 +31,7 @@ storiesOf("Views / Categories / Create category", module)
         },
         {
           code: ProductErrorCode.REQUIRED,
-          field: "descriptionJson"
+          field: "description"
         }
       ].map(err => ({
         __typename: "ProductError",

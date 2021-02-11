@@ -4,30 +4,12 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import classNames from "classnames";
 import React from "react";
 
-import { DateTime } from "../Date";
+import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
 
 const useStyles = makeStyles(
   theme => ({
-    container: {
-      alignItems: "center",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      marginBottom: theme.spacing(),
-      marginLeft: theme.spacing(3),
-      width: "100%"
-    },
-    date: {
-      color: theme.typography.caption.color
-    },
-    dateExpander: {
-      color: theme.typography.caption.color,
-      position: "absolute",
-      right: 0
-    },
     dot: {
       backgroundColor: theme.palette.primary.main,
       borderRadius: "100%",
@@ -37,27 +19,26 @@ const useStyles = makeStyles(
       top: 6,
       width: 8
     },
-    expanded: {},
-    noExpander: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-      width: "100%"
-    },
     panel: {
-      "&$expanded": {
-        margin: 0
+      "& .MuiExpansionPanelDetails-root": {
+        padding: 0,
+        paddingTop: theme.spacing(2)
+      },
+      "&.Mui-expanded": {
+        margin: 0,
+        minHeight: 0
       },
       "&:before": {
         display: "none"
       },
       background: "none",
+      display: "",
       margin: 0,
+      minHeight: 0,
       width: "100%"
     },
     panelExpander: {
-      "&$expanded": {
-        margin: 0,
+      "&.MuiExpansionPanelSummary-root.Mui-expanded": {
         minHeight: 0
       },
       "&> .MuiExpansionPanelSummary-content": {
@@ -65,9 +46,12 @@ const useStyles = makeStyles(
       },
       "&> .MuiExpansionPanelSummary-expandIcon": {
         padding: 0,
-        right: theme.spacing(18)
+        position: "absolute",
+        right: theme.spacing(20)
       },
-      margin: 0
+      margin: 0,
+      minHeight: 0,
+      padding: 0
     },
     root: {
       "&:last-child:after": {
@@ -82,27 +66,24 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       marginBottom: theme.spacing(3),
+      marginTop: 0,
       position: "relative",
       width: "100%"
-    },
-    secondaryTitle: {
-      color: "#9e9e9e",
-      fontSize: 14,
-      marginTop: theme.spacing(2)
     }
   }),
   { name: "TimelineEvent" }
 );
 
-interface TimelineEventProps {
+export interface TimelineEventProps {
   children?: React.ReactNode;
   date: string;
   secondaryTitle?: string;
-  title: string;
+  title?: string;
+  titleElements?: TitleElement[];
 }
 
 export const TimelineEvent: React.FC<TimelineEventProps> = props => {
-  const { children, date, secondaryTitle, title } = props;
+  const { children, date, secondaryTitle, title, titleElements } = props;
 
   const classes = useStyles(props);
 
@@ -110,39 +91,28 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
     <div className={classes.root}>
       <span className={classes.dot} />
       {children ? (
-        <ExpansionPanel
-          className={classNames(classes.panel, classes.expanded)}
-          elevation={0}
-        >
+        <ExpansionPanel className={classes.panel} elevation={0}>
           <ExpansionPanelSummary
-            className={classNames(classes.panelExpander, classes.expanded)}
+            className={classes.panelExpander}
             expandIcon={<ExpandMoreIcon />}
           >
-            <Typography>{title}</Typography>
-            <Typography className={classes.dateExpander}>
-              <DateTime date={date} />
-            </Typography>
+            <TimelineEventHeader
+              title={title}
+              date={date}
+              titleElements={titleElements}
+            />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>{children}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ) : (
-        <div className={classes.container}>
-          <div className={classes.noExpander}>
-            <Typography>{title}</Typography>
-            <Typography className={classes.date}>
-              <DateTime date={date} />
-            </Typography>
-          </div>
-          {secondaryTitle && (
-            <div className={classes.noExpander}>
-              <Typography className={classes.secondaryTitle}>
-                {secondaryTitle}
-              </Typography>
-            </div>
-          )}
-        </div>
+        <TimelineEventHeader
+          title={title}
+          titleElements={titleElements}
+          secondaryTitle={secondaryTitle}
+          date={date}
+        />
       )}
     </div>
   );

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PageCreateInput, PageErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { PageCreateInput, PageErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PageCreate
@@ -28,6 +28,7 @@ export interface PageCreate_pageCreate_page_attributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes_attribute {
@@ -36,6 +37,7 @@ export interface PageCreate_pageCreate_page_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageCreate_pageCreate_page_attributes_attribute_values | null)[] | null;
 }
@@ -52,6 +54,7 @@ export interface PageCreate_pageCreate_page_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes {
@@ -72,6 +75,7 @@ export interface PageCreate_pageCreate_page_pageType_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageCreate_pageCreate_page_pageType_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageCreate_pageCreate_page_pageType_attributes {
@@ -79,6 +83,7 @@ export interface PageCreate_pageCreate_page_pageType_attributes {
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageCreate_pageCreate_page_pageType_attributes_values | null)[] | null;
 }
@@ -112,7 +117,7 @@ export interface PageCreate_pageCreate_page {
   pageType: PageCreate_pageCreate_page_pageType;
   metadata: (PageCreate_pageCreate_page_metadata | null)[];
   privateMetadata: (PageCreate_pageCreate_page_privateMetadata | null)[];
-  contentJson: any;
+  content: any;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;

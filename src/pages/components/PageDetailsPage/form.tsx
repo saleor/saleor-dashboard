@@ -1,4 +1,14 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  createAttributeChangeHandler,
+  createAttributeFileChangeHandler,
+  createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeValueReorderHandler,
+  createFetchMoreReferencesHandler,
+  createFetchReferencesHandler
+} from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -13,16 +23,11 @@ import {
   PageDetails_page,
   PageDetails_page_pageType
 } from "@saleor/pages/types/PageDetails";
-import {
-  getAttributeInputFromPage,
-  getAttributesDisplayData
-} from "@saleor/pages/utils/data";
+import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
-import {
-  createAttributeChangeHandler,
-  createAttributeFileChangeHandler,
-  createAttributeMultiChangeHandler
-} from "@saleor/products/utils/handlers";
+import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -51,13 +56,17 @@ export interface PageSubmitData extends PageFormData {
   content: OutputData;
 }
 
-interface PageUpdateHandlers {
+export interface PageUpdateHandlers {
   changeMetadata: FormChange;
   changeContent: RichTextEditorChange;
   selectPageType: FormChange;
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
+  selectAttributeReference: FormsetChange<string[]>;
   selectAttributeFile: FormsetChange<File>;
+  reorderAttributeValue: FormsetChange<ReorderEvent>;
+  fetchReferences: (value: string) => void;
+  fetchMoreReferences: FetchMoreProps;
 }
 export interface UsePageUpdateFormResult {
   change: FormChange;
@@ -68,7 +77,18 @@ export interface UsePageUpdateFormResult {
   submit: () => void;
 }
 
-export interface PageFormProps {
+export interface UsePageFormOpts {
+  pageTypes?: PageDetails_page_pageType[];
+  referencePages: SearchPages_search_edges_node[];
+  referenceProducts: SearchProducts_search_edges_node[];
+  fetchReferencePages?: (data: string) => void;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchReferenceProducts?: (data: string) => void;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  assignReferencesAttributeId?: string;
+}
+
+export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
   pageTypes?: PageDetails_page_pageType[];
@@ -78,7 +98,7 @@ export interface PageFormProps {
 function usePageForm(
   page: PageDetails_page,
   onSubmit: (data: PageData) => SubmitPromise,
-  pageTypes?: PageDetails_page_pageType[]
+  opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
@@ -102,7 +122,7 @@ function usePageForm(
     title: page?.title || ""
   });
   const [content, changeContent] = useRichText({
-    initial: pageExists ? page?.contentJson : null,
+    initial: pageExists ? page?.content : null,
     triggerChange
   });
 
@@ -125,7 +145,7 @@ function usePageForm(
     handleChange,
     attributes.set,
     setPageType,
-    pageTypes
+    opts.pageTypes
   );
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
@@ -136,11 +156,32 @@ function usePageForm(
     attributes.data,
     triggerChange
   );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange
+  );
+  const handleFetchReferences = createFetchReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchReferencePages,
+    opts.fetchReferenceProducts
+  );
+  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
+    attributes.data,
+    opts.assignReferencesAttributeId,
+    opts.fetchMoreReferencePages,
+    opts.fetchMoreReferenceProducts
+  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
+    triggerChange
+  );
+  const handleAttributeValueReorder = createAttributeValueReorderHandler(
+    attributes.change,
+    attributes.data,
     triggerChange
   );
 
@@ -149,7 +190,9 @@ function usePageForm(
     ...form.data,
     attributes: getAttributesDisplayData(
       attributes.data,
-      attributesWithNewFileValue.data
+      attributesWithNewFileValue.data,
+      opts.referencePages,
+      opts.referenceProducts
     ),
     content: content.current
   });
@@ -182,9 +225,13 @@ function usePageForm(
     handlers: {
       changeContent,
       changeMetadata,
+      fetchMoreReferences: handleFetchMoreReferences,
+      fetchReferences: handleFetchReferences,
+      reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
+      selectAttributeReference: handleAttributeReferenceChange,
       selectPageType
     },
     hasChanged: changed,
@@ -196,10 +243,10 @@ function usePageForm(
 const PageForm: React.FC<PageFormProps> = ({
   children,
   page,
-  pageTypes,
-  onSubmit
+  onSubmit,
+  ...rest
 }) => {
-  const props = usePageForm(page, onSubmit, pageTypes);
+  const props = usePageForm(page, onSubmit, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

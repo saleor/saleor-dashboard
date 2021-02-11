@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductVariantCreateData
@@ -39,6 +39,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   name: string | null;
   slug: string | null;
   file: ProductVariantCreateData_product_productType_selectionVariantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_selectionVariantAttributes {
@@ -47,6 +48,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantCreateData_product_productType_selectionVariantAttributes_values | null)[] | null;
 }
@@ -63,6 +65,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   name: string | null;
   slug: string | null;
   file: ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes {
@@ -71,6 +74,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   name: string | null;
   slug: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values | null)[] | null;
 }

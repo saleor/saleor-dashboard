@@ -123,6 +123,7 @@ export const productVariantAttributesFragment = gql`
         slug
         name
         inputType
+        entityType
         valueRequired
         values {
           ...AttributeValueFragment
@@ -171,7 +172,7 @@ export const productFragmentDetails = gql`
     ...MetadataFragment
     name
     slug
-    descriptionJson
+    description
     seoTitle
     seoDescription
     rating
@@ -231,6 +232,7 @@ export const variantAttributeFragment = gql`
     name
     slug
     inputType
+    entityType
     valueRequired
     values {
       ...AttributeValueFragment

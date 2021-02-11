@@ -33,6 +33,10 @@ storiesOf("Views / Products / Product variant details", module)
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
+      referencePages={[]}
+      referenceProducts={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -55,6 +59,10 @@ storiesOf("Views / Products / Product variant details", module)
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
+      referencePages={[]}
+      referenceProducts={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ))
   .add("no warehouses", () => (
@@ -76,6 +84,10 @@ storiesOf("Views / Products / Product variant details", module)
       saveButtonBarState="default"
       warehouses={[]}
       onWarehouseConfigure={() => undefined}
+      referencePages={[]}
+      referenceProducts={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -125,5 +137,9 @@ storiesOf("Views / Products / Product variant details", module)
       ]}
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
+      referencePages={[]}
+      referenceProducts={[]}
+      onAssignReferencesClick={() => undefined}
+      onCloseDialog={() => undefined}
     />
   ));

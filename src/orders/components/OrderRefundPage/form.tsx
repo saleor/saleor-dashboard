@@ -4,9 +4,10 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
+
+import { refundFulfilledStatuses } from "./OrderRefundPage";
 
 export enum OrderRefundType {
   MISCELLANEOUS = "miscellaneous",
@@ -14,7 +15,8 @@ export enum OrderRefundType {
 }
 export enum OrderRefundAmountCalculationMode {
   AUTOMATIC = "automatic",
-  MANUAL = "manual"
+  MANUAL = "manual",
+  NONE = "none"
 }
 
 export interface OrderRefundData {
@@ -86,7 +88,7 @@ function useOrderRefundForm(
   );
   const refundedFulfilledProductQuantities = useFormset<null, string>(
     order?.fulfillments
-      .filter(fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED)
+      .filter(({ status }) => refundFulfilledStatuses.includes(status))
       .reduce(
         (linesQty, fulfillemnt) =>
           linesQty.concat(

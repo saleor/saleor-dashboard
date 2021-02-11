@@ -1,6 +1,7 @@
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
@@ -42,6 +43,7 @@ export interface SingleAutocompleteSelectFieldProps
   InputProps?: InputProps;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  FormHelperTextProps?: ExtendedFormHelperTextProps;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -69,6 +71,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     fetchChoices,
     onChange,
     onFetchMore,
+    FormHelperTextProps,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -178,6 +181,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   error={error}
                   disabled={disabled}
                   helperText={helperText}
+                  FormHelperTextProps={FormHelperTextProps}
                   label={label}
                   fullWidth={true}
                 />

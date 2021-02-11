@@ -4,16 +4,24 @@ export type AppStateReducerActionType = "displayError" | "displayLoader";
 
 export interface AppStateReducerAction {
   payload: Partial<{
-    error: AppError;
+    error: AppError["type"];
+    errorId: AppError["id"];
     value: boolean;
   }>;
   type: AppStateReducerActionType;
 }
 
-function displayError(prevState: IAppState, error: AppError): IAppState {
+function displayError(
+  prevState: IAppState,
+  errorType: AppError["type"],
+  errorId?: AppError["id"]
+): IAppState {
   return {
     ...prevState,
-    error,
+    error: {
+      id: errorId,
+      type: errorType
+    },
     loading: false
   };
 }
@@ -31,7 +39,11 @@ function reduceAppState(
 ): IAppState {
   switch (action.type) {
     case "displayError":
-      return displayError(prevState, action.payload.error);
+      return displayError(
+        prevState,
+        action.payload.error,
+        action.payload.errorId
+      );
     case "displayLoader":
       return displayLoader(prevState, action.payload.value);
     default:

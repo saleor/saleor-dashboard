@@ -393,6 +393,7 @@ type Attribute implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   inputType: AttributeInputTypeEnum
+  entityType: AttributeEntityTypeEnum
   name: String
   slug: String
   type: AttributeTypeEnum
@@ -431,6 +432,7 @@ type AttributeCreate {
 
 input AttributeCreateInput {
   inputType: AttributeInputTypeEnum
+  entityType: AttributeEntityTypeEnum
   name: String!
   slug: String
   type: AttributeTypeEnum!
@@ -448,6 +450,11 @@ type AttributeDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attributeErrors: [AttributeError!]!
   attribute: Attribute
+}
+
+enum AttributeEntityTypeEnum {
+  PAGE
+  PRODUCT
 }
 
 type AttributeError {
@@ -490,6 +497,7 @@ enum AttributeInputTypeEnum {
   DROPDOWN
   MULTISELECT
   FILE
+  REFERENCE
 }
 
 type AttributeReorderValues {
@@ -563,9 +571,9 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
-  type: AttributeValueType @deprecated(reason: "Use the `inputType` field to determine the type of attribute's value. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
+  reference: ID
   file: File
 }
 
@@ -598,6 +606,7 @@ input AttributeValueInput {
   values: [String]
   file: String
   contentType: String
+  references: [ID!]
 }
 
 type AttributeValueTranslatableContent implements Node {
@@ -619,13 +628,6 @@ type AttributeValueTranslation implements Node {
   language: LanguageDisplay!
 }
 
-enum AttributeValueType {
-  COLOR
-  GRADIENT
-  URL
-  STRING
-}
-
 type AttributeValueUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
@@ -643,6 +645,7 @@ type BulkProductError {
   message: String
   code: ProductErrorCode!
   attributes: [ID!]
+  values: [ID!]
   index: Int
   warehouses: [ID!]
   channels: [ID!]
@@ -653,6 +656,7 @@ type BulkStockError {
   message: String
   code: ProductErrorCode!
   attributes: [ID!]
+  values: [ID!]
   index: Int
 }
 
@@ -667,13 +671,13 @@ type Category implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   slug: String!
   parent: Category
   level: Int!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   ancestors(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   url: String @deprecated(reason: "This field will be removed after 2020-07-31.")
@@ -717,8 +721,7 @@ input CategoryFilterInput {
 }
 
 input CategoryInput {
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
   name: String
   slug: String
   seo: SeoInput
@@ -743,8 +746,8 @@ type CategoryTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
   category: Category
 }
@@ -760,9 +763,9 @@ type CategoryTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   language: LanguageDisplay!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type CategoryUpdate {
@@ -1047,11 +1050,11 @@ type Collection implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
@@ -1082,6 +1085,7 @@ type CollectionChannelListingError {
   message: String
   code: ProductErrorCode!
   attributes: [ID!]
+  values: [ID!]
   channels: [ID!]
 }
 
@@ -1117,8 +1121,7 @@ input CollectionCreateInput {
   isPublished: Boolean
   name: String
   slug: String
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
   backgroundImage: Upload
   backgroundImageAlt: String
   seo: SeoInput
@@ -1160,8 +1163,7 @@ input CollectionInput {
   isPublished: Boolean
   name: String
   slug: String
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
   backgroundImage: Upload
   backgroundImageAlt: String
   seo: SeoInput
@@ -1203,8 +1205,8 @@ type CollectionTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   collection: Collection
 }
@@ -1220,9 +1222,9 @@ type CollectionTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   language: LanguageDisplay!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type CollectionUpdate {
@@ -1941,6 +1943,49 @@ enum ExportScope {
   FILTER
 }
 
+type ExternalAuthentication {
+  id: String!
+  name: String
+}
+
+type ExternalAuthenticationUrl {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  authenticationData: JSONString
+  accountErrors: [AccountError!]!
+}
+
+type ExternalLogout {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  logoutData: JSONString
+  accountErrors: [AccountError!]!
+}
+
+type ExternalObtainAccessTokens {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  token: String
+  refreshToken: String
+  csrfToken: String
+  user: User
+  accountErrors: [AccountError!]!
+}
+
+type ExternalRefresh {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  token: String
+  refreshToken: String
+  csrfToken: String
+  user: User
+  accountErrors: [AccountError!]!
+}
+
+type ExternalVerify {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  user: User
+  isValid: Boolean!
+  verifyData: JSONString
+  accountErrors: [AccountError!]!
+}
+
 type File {
   url: String!
   contentType: String
@@ -1994,9 +2039,21 @@ type FulfillmentRefundProducts {
   orderErrors: [OrderError!]!
 }
 
+type FulfillmentReturnProducts {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  returnFulfillment: Fulfillment
+  replaceFulfillment: Fulfillment
+  order: Order
+  replaceOrder: Order
+  orderErrors: [OrderError!]!
+}
+
 enum FulfillmentStatus {
   FULFILLED
   REFUNDED
+  RETURNED
+  REPLACED
+  REFUNDED_AND_RETURNED
   CANCELED
 }
 
@@ -2295,10 +2352,12 @@ type Margin {
   stop: Int
 }
 
-type Menu implements Node {
+type Menu implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   slug: String!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   items: [MenuItem]
 }
 
@@ -2365,7 +2424,7 @@ input MenuInput {
   slug: String
 }
 
-type MenuItem implements Node {
+type MenuItem implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   menu: Menu!
@@ -2374,6 +2433,8 @@ type MenuItem implements Node {
   collection: Collection
   page: Page
   level: Int!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   children: [MenuItem]
   url: String
   translation(languageCode: LanguageCodeEnum!): MenuItemTranslation
@@ -2596,6 +2657,7 @@ type Mutation {
   productTypeBulkDelete(ids: [ID]!): ProductTypeBulkDelete
   productTypeUpdate(id: ID!, input: ProductTypeInput!): ProductTypeUpdate
   productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: ProductAttributeType!): ProductTypeReorderAttributes
+  productReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, productId: ID!): ProductReorderAttributeValues
   digitalContentCreate(input: DigitalContentUploadInput!, variantId: ID!): DigitalContentCreate
   digitalContentDelete(variantId: ID!): DigitalContentDelete
   digitalContentUpdate(input: DigitalContentInput!, variantId: ID!): DigitalContentUpdate
@@ -2611,6 +2673,7 @@ type Mutation {
   productVariantSetDefault(productId: ID!, variantId: ID!): ProductVariantSetDefault
   productVariantTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ProductVariantTranslate
   productVariantChannelListingUpdate(id: ID!, input: [ProductVariantChannelListingAddInput!]!): ProductVariantChannelListingUpdate
+  productVariantReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, variantId: ID!): ProductVariantReorderAttributeValues
   variantImageAssign(imageId: ID!, variantId: ID!): VariantImageAssign
   variantImageUnassign(imageId: ID!, variantId: ID!): VariantImageUnassign
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
@@ -2630,6 +2693,7 @@ type Mutation {
   pageAttributeAssign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeAssign
   pageAttributeUnassign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeUnassign
   pageTypeReorderAttributes(moves: [ReorderInput!]!, pageTypeId: ID!): PageTypeReorderAttributes
+  pageReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, pageId: ID!): PageReorderAttributeValues
   draftOrderComplete(id: ID!): DraftOrderComplete
   draftOrderCreate(input: DraftOrderCreateInput!): DraftOrderCreate
   draftOrderDelete(id: ID!): DraftOrderDelete
@@ -2647,6 +2711,7 @@ type Mutation {
   orderFulfillmentCancel(id: ID!, input: FulfillmentCancelInput!): FulfillmentCancel
   orderFulfillmentUpdateTracking(id: ID!, input: FulfillmentUpdateTrackingInput!): FulfillmentUpdateTracking
   orderFulfillmentRefundProducts(input: OrderRefundProductsInput!, order: ID!): FulfillmentRefundProducts
+  orderFulfillmentReturnProducts(input: OrderReturnProductsInput!, order: ID!): FulfillmentReturnProducts
   orderMarkAsPaid(id: ID!, transactionReference: String): OrderMarkAsPaid
   orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
@@ -2743,6 +2808,11 @@ type Mutation {
   tokenRefresh(csrfToken: String, refreshToken: String): RefreshToken
   tokenVerify(token: String!): VerifyToken
   tokensDeactivateAll: DeactivateAllUserTokens
+  externalAuthenticationUrl(input: JSONString!, pluginId: String!): ExternalAuthenticationUrl
+  externalObtainAccessTokens(input: JSONString!, pluginId: String!): ExternalObtainAccessTokens
+  externalRefresh(input: JSONString!, pluginId: String!): ExternalRefresh
+  externalLogout(input: JSONString!, pluginId: String!): ExternalLogout
+  externalVerify(input: JSONString!, pluginId: String!): ExternalVerify
   requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
   confirmAccount(email: String!, token: String!): ConfirmAccount
   setPassword(email: String!, password: String!, token: String!): SetPassword
@@ -2812,7 +2882,8 @@ type Order implements Node & ObjectWithMetadata {
   shippingMethod: ShippingMethod
   shippingMethodName: String
   channel: Channel!
-  shippingPrice: TaxedMoney
+  shippingPrice: TaxedMoney!
+  shippingTaxRate: Float!
   token: String!
   voucher: Voucher
   giftCards: [GiftCard]
@@ -2831,16 +2902,16 @@ type Order implements Node & ObjectWithMetadata {
   availableShippingMethods: [ShippingMethod]
   invoices: [Invoice]
   number: String
-  isPaid: Boolean
-  paymentStatus: PaymentChargeStatusEnum
-  paymentStatusDisplay: String
+  isPaid: Boolean!
+  paymentStatus: PaymentChargeStatusEnum!
+  paymentStatusDisplay: String!
   payments: [Payment]
-  total: TaxedMoney
-  subtotal: TaxedMoney
+  total: TaxedMoney!
+  subtotal: TaxedMoney!
   statusDisplay: String
   canFinalize: Boolean!
-  totalAuthorized: Money
-  totalCaptured: Money
+  totalAuthorized: Money!
+  totalCaptured: Money!
   events: [OrderEvent]
   totalBalance: Money!
   userEmail: String
@@ -2909,6 +2980,7 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
+  channels: [ID]
 }
 
 type OrderError {
@@ -2944,8 +3016,7 @@ enum OrderErrorCode {
   UNIQUE
   VOID_INACTIVE_PAYMENT
   ZERO_QUANTITY
-  INVALID_REFUND_QUANTITY
-  CANNOT_REFUND_FULFILLMENT_LINE
+  INVALID_QUANTITY
   INSUFFICIENT_STOCK
   DUPLICATED_INPUT_ITEM
   NOT_AVAILABLE_IN_CHANNEL
@@ -2973,6 +3044,7 @@ type OrderEvent implements Node {
   warehouse: Warehouse
   transactionReference: String
   shippingCostsIncluded: Boolean
+  relatedOrder: Order
 }
 
 type OrderEventCountableConnection {
@@ -3006,6 +3078,7 @@ enum OrderEventsEmailsEnum {
 
 enum OrderEventsEnum {
   DRAFT_CREATED
+  DRAFT_CREATED_FROM_REPLACE
   DRAFT_ADDED_PRODUCTS
   DRAFT_REMOVED_PRODUCTS
   PLACED
@@ -3014,6 +3087,7 @@ enum OrderEventsEnum {
   CANCELED
   ORDER_MARKED_AS_PAID
   ORDER_FULLY_PAID
+  ORDER_REPLACEMENT_CREATED
   UPDATED_ADDRESS
   EMAIL_SENT
   CONFIRMED
@@ -3031,6 +3105,8 @@ enum OrderEventsEnum {
   FULFILLMENT_RESTOCKED_ITEMS
   FULFILLMENT_FULFILLED_ITEMS
   FULFILLMENT_REFUNDED
+  FULFILLMENT_RETURNED
+  FULFILLMENT_REPLACED
   TRACKING_UPDATED
   NOTE_ADDED
   OTHER
@@ -3078,8 +3154,8 @@ type OrderLine implements Node {
   taxRate: Float!
   digitalContentUrl: DigitalContentUrl
   thumbnail(size: Int): Image
-  unitPrice: TaxedMoney
-  totalPrice: TaxedMoney
+  unitPrice: TaxedMoney!
+  totalPrice: TaxedMoney!
   variant: ProductVariant
   translatedProductName: String!
   translatedVariantName: String!
@@ -3124,6 +3200,26 @@ input OrderRefundProductsInput {
   includeShippingCosts: Boolean = false
 }
 
+input OrderReturnFulfillmentLineInput {
+  fulfillmentLineId: ID!
+  quantity: Int!
+  replace: Boolean = false
+}
+
+input OrderReturnLineInput {
+  orderLineId: ID!
+  quantity: Int!
+  replace: Boolean = false
+}
+
+input OrderReturnProductsInput {
+  orderLines: [OrderReturnLineInput!]
+  fulfillmentLines: [OrderReturnFulfillmentLineInput!]
+  amountToRefund: PositiveDecimal
+  includeShippingCosts: Boolean = false
+  refund: Boolean = false
+}
+
 type OrderSettings {
   automaticallyConfirmAllNewOrders: Boolean!
 }
@@ -3166,6 +3262,8 @@ enum OrderStatus {
   UNCONFIRMED
   UNFULFILLED
   PARTIALLY_FULFILLED
+  PARTIALLY_RETURNED
+  RETURNED
   FULFILLED
   CANCELED
 }
@@ -3213,8 +3311,7 @@ type Page implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
-  contentJson: JSONString!
+  content: JSONString!
   publicationDate: Date
   isPublished: Boolean!
   slug: String!
@@ -3222,6 +3319,7 @@ type Page implements Node & ObjectWithMetadata {
   created: DateTime!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  contentJson: String! @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   attributes: [SelectedAttribute!]!
 }
@@ -3270,8 +3368,7 @@ type PageCreate {
 input PageCreateInput {
   slug: String
   title: String
-  content: String
-  contentJson: JSONString
+  content: JSONString
   attributes: [AttributeValueInput!]
   isPublished: Boolean
   publicationDate: String
@@ -3290,6 +3387,7 @@ type PageError {
   message: String
   code: PageErrorCode!
   attributes: [ID!]
+  values: [ID!]
 }
 
 enum PageErrorCode {
@@ -3316,12 +3414,17 @@ type PageInfo {
 input PageInput {
   slug: String
   title: String
-  content: String
-  contentJson: JSONString
+  content: JSONString
   attributes: [AttributeValueInput!]
   isPublished: Boolean
   publicationDate: String
   seo: SeoInput
+}
+
+type PageReorderAttributeValues {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  page: Page
+  pageErrors: [PageError!]!
 }
 
 enum PageSortField {
@@ -3342,8 +3445,8 @@ type PageTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
-  contentJson: JSONString!
+  content: JSONString!
+  contentJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   page: Page
 }
@@ -3359,17 +3462,16 @@ type PageTranslation implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
-  contentJson: JSONString!
+  content: JSONString!
   language: LanguageDisplay!
+  contentJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
 }
 
 input PageTranslationInput {
   seoTitle: String
   seoDescription: String
   title: String
-  content: String
-  contentJson: JSONString
+  content: JSONString
 }
 
 type PageType implements Node & ObjectWithMetadata {
@@ -3737,8 +3839,7 @@ type Product implements Node & ObjectWithMetadata {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   productType: ProductType!
   slug: String!
   category: Category
@@ -3749,6 +3850,7 @@ type Product implements Node & ObjectWithMetadata {
   rating: Float
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   url: String! @deprecated(reason: "This field will be removed after 2020-07-31.")
   thumbnail(size: Int): Image
   pricing: ProductPricingInfo
@@ -3821,6 +3923,7 @@ type ProductChannelListingError {
   message: String
   code: ProductErrorCode!
   attributes: [ID!]
+  values: [ID!]
   channels: [ID!]
 }
 
@@ -3857,8 +3960,7 @@ input ProductCreateInput {
   category: ID
   chargeTaxes: Boolean
   collections: [ID]
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
   name: String
   slug: String
   taxCode: String
@@ -3879,6 +3981,7 @@ type ProductError {
   message: String
   code: ProductErrorCode!
   attributes: [ID!]
+  values: [ID!]
 }
 
 enum ProductErrorCode {
@@ -3988,8 +4091,7 @@ input ProductInput {
   category: ID
   chargeTaxes: Boolean
   collections: [ID]
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
   name: String
   slug: String
   taxCode: String
@@ -4026,6 +4128,12 @@ type ProductPricingInfo {
   priceRangeLocalCurrency: TaxedMoneyRange
 }
 
+type ProductReorderAttributeValues {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  product: Product
+  productErrors: [ProductError!]!
+}
+
 input ProductStockFilterInput {
   warehouseIds: [ID!]
   quantity: IntRangeInput
@@ -4036,8 +4144,8 @@ type ProductTranslatableContent implements Node {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   product: Product
 }
@@ -4053,9 +4161,9 @@ type ProductTranslation implements Node {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
-  descriptionJson: JSONString!
+  description: JSONString!
   language: LanguageDisplay!
+  descriptionJson: String @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type ProductType implements Node & ObjectWithMetadata {
@@ -4278,6 +4386,12 @@ type ProductVariantReorder {
   productErrors: [ProductError!]!
 }
 
+type ProductVariantReorderAttributeValues {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  productVariant: ProductVariant
+  productErrors: [ProductError!]!
+}
+
 type ProductVariantSetDefault {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
@@ -4405,7 +4519,7 @@ type Query {
   permissionGroup(id: ID!): Group
   me: User
   staffUsers(filter: StaffUserInput, sortBy: UserSortingInput, before: String, after: String, first: Int, last: Int): UserCountableConnection
-  user(id: ID!): User
+  user(id: ID, email: String): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
 }
@@ -4840,6 +4954,7 @@ input ShippingZoneUpdateInput {
 
 type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
+  availableExternalAuthentications: [ExternalAuthentication!]!
   availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
   geolocalization: Geolocalization
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
@@ -5215,8 +5330,7 @@ input TranslationInput {
   seoTitle: String
   seoDescription: String
   name: String
-  description: String
-  descriptionJson: JSONString
+  description: JSONString
 }
 
 scalar UUID
@@ -5547,7 +5661,7 @@ type VoucherUpdate {
   voucher: Voucher
 }
 
-type Warehouse implements Node {
+type Warehouse implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   slug: String!
@@ -5555,6 +5669,8 @@ type Warehouse implements Node {
   shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection!
   address: Address!
   email: String!
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
 }
 
 input WarehouseAddressInput {

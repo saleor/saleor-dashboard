@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: PageDetails
@@ -20,6 +20,7 @@ export interface PageDetails_page_attributes_attribute_values {
   name: string | null;
   slug: string | null;
   file: PageDetails_page_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface PageDetails_page_attributes_attribute {
@@ -28,6 +29,7 @@ export interface PageDetails_page_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageDetails_page_attributes_attribute_values | null)[] | null;
 }
@@ -44,6 +46,7 @@ export interface PageDetails_page_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageDetails_page_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageDetails_page_attributes {
@@ -64,6 +67,7 @@ export interface PageDetails_page_pageType_attributes_values {
   name: string | null;
   slug: string | null;
   file: PageDetails_page_pageType_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface PageDetails_page_pageType_attributes {
@@ -71,6 +75,7 @@ export interface PageDetails_page_pageType_attributes {
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (PageDetails_page_pageType_attributes_values | null)[] | null;
 }
@@ -104,7 +109,7 @@ export interface PageDetails_page {
   pageType: PageDetails_page_pageType;
   metadata: (PageDetails_page_metadata | null)[];
   privateMetadata: (PageDetails_page_privateMetadata | null)[];
-  contentJson: any;
+  content: any;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;

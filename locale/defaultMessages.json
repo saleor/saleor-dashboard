@@ -3,6 +3,14 @@
     "context": "dialog header",
     "string": "Cancel Order"
   },
+  "amount title": {
+    "context": "amount title",
+    "string": "Refunded amount"
+  },
+  "by preposition": {
+    "context": "by preposition",
+    "string": "by"
+  },
   "configurationMenuAttributes": {
     "string": "Determine attributes used to create product types"
   },
@@ -41,6 +49,42 @@
   },
   "configurationPluginsPages": {
     "string": "View and update your plugins and their settings."
+  },
+  "event products list title refunded": {
+    "context": "refunded products list title",
+    "string": "Products refunded"
+  },
+  "event products list title replaced": {
+    "context": "replaced products list title",
+    "string": "Products replaced"
+  },
+  "event products list title returned": {
+    "context": "returned products list title",
+    "string": "Products returned"
+  },
+  "event products title draft reissued": {
+    "context": "draft created from replace products list title",
+    "string": "Products replaced"
+  },
+  "event title draft reissued": {
+    "context": "draft created from replace event title",
+    "string": "Draft was reissued from order "
+  },
+  "event title marked as paid": {
+    "context": "order marked as paid event title",
+    "string": "Order was marked as paid by"
+  },
+  "event title refunded": {
+    "context": "refunded event title",
+    "string": "Products were refunded by "
+  },
+  "event title replaced": {
+    "context": "replaced event title",
+    "string": "Products were replaced by "
+  },
+  "event title returned": {
+    "context": "returned event title",
+    "string": "Products were returned by"
   },
   "homeActivityCardHeader": {
     "context": "header",
@@ -335,6 +379,10 @@
   "saleDetailsUnassignProduct": {
     "context": "unassign product from sale, button",
     "string": "Unassign"
+  },
+  "shipment refund title": {
+    "context": "shipment refund title",
+    "string": "Shipment was refunded"
   },
   "shippingZoneDetailsDialogsDeleteShippingMethod": {
     "context": "delete shipping method",
@@ -733,37 +781,53 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
-    "context": "attribute's editor component",
-    "string": "Catalog Input type for Store Owner"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeLabel": {
+    "context": "attribute's label",
+    "string": "Default Label"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
-    "context": "product attribute type",
-    "string": "Dropdown"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1376373679": {
-    "context": "file attribute type",
-    "string": "File"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
-    "context": "check to require attribute to have value",
-    "string": "Value Required"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
-    "context": "product attribute type",
-    "string": "Multiple Select"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3605174225": {
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeSlug": {
     "context": "attribute's slug short code label",
     "string": "Attribute Code"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_4107478955": {
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeSlugHelperText": {
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_691600601": {
-    "context": "attribute's label",
-    "string": "Default Label"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_dropdown": {
+    "context": "product attribute type",
+    "string": "Dropdown"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_entityType": {
+    "context": "attribute's editor component entity",
+    "string": "Entity"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_file": {
+    "context": "file attribute type",
+    "string": "File"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_inputType": {
+    "context": "attribute's editor component",
+    "string": "Catalog Input type for Store Owner"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_multiselect": {
+    "context": "product attribute type",
+    "string": "Multiple Select"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_page": {
+    "context": "page attribute entity type",
+    "string": "Pages"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_product": {
+    "context": "product attribute entity type",
+    "string": "Products"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_references": {
+    "context": "references attribute type",
+    "string": "References"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
+    "context": "check to require attribute to have value",
+    "string": "Value Required"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
@@ -844,42 +908,45 @@
     "context": "page title",
     "string": "Create New Attribute"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1318123158": {
-    "context": "attribute is filterable in storefront",
-    "string": "Use in Faceted Navigation"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1877630205": {
-    "context": "attribute properties regarding storefront",
-    "string": "Storefront Properties"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_26409543": {
-    "context": "attribute properties regarding dashboard",
-    "string": "Dashboard Properties"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3135366329": {
-    "context": "attribute visibility in storefront",
-    "string": "Public"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
-    "context": "attribute position in storefront filters",
-    "string": "Position in faceted navigation"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3758203740": {
-    "string": "If enabled, attribute will be accessible to customers."
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
-    "string": "If enabled this attribute can be used as a column in product table."
-  },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_673770329": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_availableInGrid": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_714335445": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_availableInGridCaption": {
+    "context": "caption",
+    "string": "If enabled this attribute can be used as a column in product table."
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_dashboardPropertiesTitle": {
+    "context": "attribute properties regarding dashboard",
+    "string": "Dashboard Properties"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInDashboard": {
     "context": "use attribute in filtering",
     "string": "Use in Filtering"
   },
-  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_787251583": {
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInDashboardCaption": {
+    "context": "caption",
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInStorefront": {
+    "context": "attribute is filterable in storefront",
+    "string": "Use in Faceted Navigation"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontPropertiesTitle": {
+    "context": "attribute properties regarding storefront",
+    "string": "Storefront Properties"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontSearchPosition": {
+    "context": "attribute position in storefront filters",
+    "string": "Position in faceted navigation"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_visibleInStorefront": {
+    "context": "attribute visibility in storefront",
+    "string": "Public"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeProperties_dot_visibleInStorefrontCaption": {
+    "context": "caption",
+    "string": "If enabled, attribute will be accessible to customers."
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
@@ -949,12 +1016,23 @@
   "src_dot_auth_dot_components_dot_LoginPage_dot_2237029987": {
     "string": "Password"
   },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_2981302356": {
+    "context": "link",
+    "string": "Use this link to recover it"
+  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3476994590": {
     "string": "Sorry, your username and/or password are incorrect. Please try again."
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_4028609483": {
-    "context": "button",
-    "string": "Reset your password"
+  "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
+    "context": "description",
+    "string": "or login using"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_534894384": {
+    "string": "Sorry, login went wrong. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
+    "context": "description",
+    "string": "Forgot password? {resetPasswordLink}"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"
@@ -1502,6 +1580,18 @@
   "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
     "string": "Search Attributes"
   },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_header": {
+    "context": "dialog header",
+    "string": "Assign Attribute Value"
+  },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_searchLabel": {
+    "context": "label",
+    "string": "Search Attribute Value"
+  },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_searchPlaceholder": {
+    "context": "placeholder",
+    "string": "Search by value name, etc..."
+  },
   "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
     "context": "dialog header",
     "string": "Assign Category"
@@ -1542,6 +1632,10 @@
   },
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "src_dot_components_dot_Attributes_dot_3824528779": {
+    "context": "button label",
+    "string": "Assign references"
   },
   "src_dot_components_dot_Attributes_dot_attributesNumber": {
     "context": "number of attributes",
@@ -3032,6 +3126,9 @@
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
+  "src_dot_insufficientPermissions": {
+    "string": "Insufficient permissions"
+  },
   "src_dot_lastName": {
     "string": "Last Name"
   },
@@ -3130,13 +3227,17 @@
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
     "string": "Billing Address"
   },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_1854613983": {
-    "context": "button",
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_cancelOrder": {
+    "context": "cancel button",
     "string": "Cancel order"
   },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_3086420445": {
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_confirmOrder": {
     "context": "save button",
-    "string": "confirm order"
+    "string": "Confirm order"
+  },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_returnOrder": {
+    "context": "return button",
+    "string": "Return / Replace order"
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
@@ -3272,6 +3373,37 @@
     "context": "product's sku",
     "string": "SKU"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_1119771899": {
+    "context": "add tracking button",
+    "string": "Add tracking"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2211099657": {
+    "context": "edit tracking button",
+    "string": "Edit tracking"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2845258362": {
+    "context": "refund button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_3254150098": {
+    "string": "Tracking Number: {trackingNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_732594284": {
+    "context": "button",
+    "string": "Cancel Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_fulfilled": {
+    "context": "fulfillment group",
+    "string": "Fulfilled from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_restocked": {
+    "context": "restocked group",
+    "string": "Restocked from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_tracking": {
+    "context": "tracking number",
+    "string": "Tracking Number: {trackingNumber}"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_1097287358": {
     "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
   },
@@ -3309,70 +3441,9 @@
     "context": "dialog header",
     "string": "Add Tracking Code"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
-    "context": "fulfillment group tracking number",
-    "string": "Add tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1895667608": {
-    "context": "product name",
-    "string": "Product"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2211099657": {
-    "context": "fulfillment group tracking number",
-    "string": "Edit tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2567258278": {
-    "context": "refunded fulfillment, section header",
-    "string": "Refunded ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_2796503714": {
-    "context": "ordered product quantity",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3254150098": {
-    "string": "Tracking Number: {trackingNumber}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3494686506": {
-    "context": "section header",
-    "string": "Fulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_4039425374": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
-    "context": "ordered product sku",
-    "string": "SKU"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
-    "context": "button",
-    "string": "Cancel Fulfillment"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_77179533": {
-    "context": "fulfillment group",
-    "string": "Fulfilled from: {warehouseName}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_878013594": {
-    "context": "order line total price",
-    "string": "Total"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_1154330234": {
-    "context": "transaction reference",
-    "string": "Transaction Reference {transactionReference}"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1230178536": {
     "context": "order history message",
     "string": "Order address was updated"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_123236698": {
-    "string": "Shipment was refunded"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_1322321687": {
-    "string": "Refunded amount"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1463685940": {
     "context": "order history message",
@@ -3489,9 +3560,6 @@
     "context": "order history message",
     "string": "Payment failed"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_492197448": {
-    "string": "Products refunded"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_493321552": {
     "context": "order history message",
     "string": "Order cancel information was sent to customer"
@@ -3511,6 +3579,14 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_950782935": {
     "context": "order history message",
     "string": "Order was cancelled"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
+    "context": "replacement created order history message description",
+    "string": "was created for replaced products"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_draftNumber": {
+    "context": "replacement created order history message draft number",
+    "string": "Draft #{orderNumber} "
   },
   "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
@@ -3695,71 +3771,29 @@
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
     "string": "No products matching given query"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1580639738": {
-    "context": "order refund amount",
-    "string": "Proposed refund amount"
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_1134347598": {
+    "context": "product price",
+    "string": "Price"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1705174606": {
-    "context": "order refund amount",
-    "string": "Max Refund"
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_1895667608": {
+    "context": "product name",
+    "string": "Product"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_1734445951": {
-    "context": "order refund amount",
-    "string": "Refund total amount"
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_2796503714": {
+    "context": "ordered product quantity",
+    "string": "Quantity"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2045860028": {
-    "context": "order refund amount",
-    "string": "Authorized Amount"
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2854815744": {
-    "context": "order refund amount",
-    "string": "Previously refunded"
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_878013594": {
+    "context": "order line total price",
+    "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_2907874606": {
-    "context": "order refund amount",
-    "string": "Selected products value"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmountValues_dot_79173946": {
-    "context": "order refund amount",
-    "string": "Shipment cost"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_120912052": {
-    "context": "order refund amount",
-    "string": "Refunded items can’t be fulfilled"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_159210811": {
-    "string": "Amount must be bigger than 0"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2256869831": {
-    "context": "section header",
-    "string": "Refunded Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_2845258362": {
-    "context": "order refund amount, input button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4033685232": {
-    "string": "Amount cannot be bigger than max refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_40513382": {
-    "context": "order refund amount, input button",
-    "string": "Refund {currency} {amount}"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_4224226791": {
-    "context": "label",
-    "string": "Automatic Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_508357513": {
-    "context": "label",
-    "string": "Manual Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_553737700": {
-    "context": "checkbox",
-    "string": "Refund shipment costs"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundAmount_dot_75546233": {
-    "context": "order refund amount, input label",
-    "string": "Amount"
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1097582574": {
+    "context": "section header returned",
+    "string": "Fulfillment returned"
   },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
@@ -3803,6 +3837,90 @@
   "src_dot_orders_dot_components_dot_OrderRefundPage_dot_580490159": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2256869831": {
+    "context": "section header",
+    "string": "Refunded Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_40513382": {
+    "context": "order refund amount, input button",
+    "string": "Refund {currency} {amount}"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_4224226791": {
+    "context": "label",
+    "string": "Automatic Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_508357513": {
+    "context": "label",
+    "string": "Manual Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_553737700": {
+    "context": "checkbox",
+    "string": "Refund shipment costs"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_982301568": {
+    "context": "label",
+    "string": "No refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooBig": {
+    "context": "Amount error message",
+    "string": "Amount cannot be bigger than max refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooSmall": {
+    "context": "Amount error message",
+    "string": "Amount must be bigger than 0"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_authorizedAmount": {
+    "context": "order refund amount",
+    "string": "Authorized Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_label": {
+    "context": "order refund amount, input label",
+    "string": "Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_maxRefund": {
+    "context": "order refund amount",
+    "string": "Max Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_previouslyRefunded": {
+    "context": "order refund amount",
+    "string": "Previously refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_proposedRefundAmount": {
+    "context": "order refund amount",
+    "string": "Proposed refund amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundButton": {
+    "context": "order refund amount button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundCannotBeFulfilled": {
+    "context": "order refund subtitle",
+    "string": "Refunded items can't be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_refundTotalAmount": {
+    "context": "order refund amount",
+    "string": "Refund total amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_replacedProductsValue": {
+    "context": "order refund amount",
+    "string": "Replaced Products Value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnButton": {
+    "context": "order return amount button",
+    "string": "Return & Replace products"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnCannotBeFulfilled": {
+    "context": "order return subtitle",
+    "string": "Returned items can't be fulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_selectedProductsValue": {
+    "context": "order refund amount",
+    "string": "Selected Products Value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_shipmentCost": {
+    "context": "order refund amount",
+    "string": "Shipment Cost"
   },
   "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
@@ -3851,6 +3969,82 @@
     "context": "refund type",
     "string": "Refund Products"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1134347598": {
+    "context": "table column header",
+    "string": "Price"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1784788864": {
+    "context": "table column header",
+    "string": "Return"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_1895667608": {
+    "context": "table column header",
+    "string": "Product"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_2049070632": {
+    "context": "table column header",
+    "string": "Replace"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_3988345170": {
+    "context": "button",
+    "string": "Set maximal quantities"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_cancelled": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_description": {
+    "context": "product no longer exists error description",
+    "string": "This product is no longer in database so it can’t be replaced, nor returned"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilled": {
+    "context": "section header",
+    "string": "Fulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
+    "context": "error message",
+    "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunded": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refundedAndReturned": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Refunded and Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_replaced": {
+    "context": "refunded fulfillment, section header",
+    "string": "Replaced ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
+    "context": "refunded fulfillment, section header",
+    "string": "Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_title": {
+    "context": "product no longer exists error title",
+    "string": "Product no longer exists"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
+    "context": "section header",
+    "string": "Fulfillment - #{fulfilmentId}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled Items"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
+    "context": "page header with order number",
+    "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_pageTitle": {
+    "context": "page header",
+    "string": "Order no. {orderNumber} - Replace/Return"
+  },
   "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
     "context": "header",
     "string": "Order settings"
@@ -3874,33 +4068,9 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1134347598": {
-    "context": "product unit price",
-    "string": "Price"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_1895667608": {
-    "context": "product name",
-    "string": "Product"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2095687440": {
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_2095687440": {
     "context": "button",
     "string": "Fulfill"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2796503714": {
-    "context": "ordered products",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
-    "context": "section header",
-    "string": "Unfulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
-    "context": "ordered product sku",
-    "string": "SKU"
-  },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
-    "context": "order line total price",
-    "string": "Total"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
@@ -3990,6 +4160,18 @@
   "src_dot_orders_dot_views_dot_OrderRefund_dot_1366101924": {
     "context": "order refunded success message",
     "string": "Refunded Items"
+  },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_cannotRefundDescription": {
+    "context": "order return error description when cannot refund",
+    "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
+  },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_cannotRefundTitle": {
+    "context": "order return error title when cannot refund",
+    "string": "Couldn't refund products"
+  },
+  "src_dot_orders_dot_views_dot_OrderReturn_dot_successAlert": {
+    "context": "order returned success message",
+    "string": "Successfully returned products!"
   },
   "src_dot_pageTypes": {
     "context": "page types section name",
@@ -4236,6 +4418,10 @@
   "src_dot_partiallyRefunded": {
     "context": "payment status",
     "string": "Partially refunded"
+  },
+  "src_dot_partiallyReturned": {
+    "context": "order status",
+    "string": "Partially returned"
   },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
@@ -5272,6 +5458,10 @@
   "src_dot_requiredField": {
     "string": "This field is required"
   },
+  "src_dot_returned": {
+    "context": "order status",
+    "string": "Returned"
+  },
   "src_dot_sales": {
     "context": "sales section name",
     "string": "Sales"
@@ -6251,6 +6441,9 @@
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2599922713": {
     "string": "Voucher Name"
   },
+  "src_dot_unauthorizedDashboardAccess": {
+    "string": "Only staff users can access the dashboard"
+  },
   "src_dot_unconfirmed": {
     "context": "order status",
     "string": "Unconfirmed"
@@ -6706,6 +6899,10 @@
   "tableColQuantity": {
     "context": "table column header",
     "string": "Quantity"
+  },
+  "transaction reference subtitle": {
+    "context": "transaction reference subtitle",
+    "string": "Transaction reference"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",

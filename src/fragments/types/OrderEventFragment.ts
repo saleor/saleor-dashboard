@@ -8,10 +8,18 @@ import { OrderEventsEmailsEnum, OrderEventsEnum } from "./../../types/globalType
 // GraphQL fragment: OrderEventFragment
 // ====================================================
 
+export interface OrderEventFragment_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderEventFragment_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderEventFragment_lines_orderLine {
@@ -36,6 +44,7 @@ export interface OrderEventFragment {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderEventFragment_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

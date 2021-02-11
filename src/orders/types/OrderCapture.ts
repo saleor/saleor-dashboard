@@ -48,10 +48,18 @@ export interface OrderCapture_orderCapture_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderCapture_orderCapture_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderCapture_orderCapture_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface OrderCapture_orderCapture_order_events_lines_orderLine {
@@ -76,6 +84,7 @@ export interface OrderCapture_orderCapture_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  relatedOrder: OrderCapture_orderCapture_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;
@@ -122,7 +131,7 @@ export interface OrderCapture_orderCapture_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderCapture_orderCapture_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -187,7 +196,7 @@ export interface OrderCapture_orderCapture_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderCapture_orderCapture_order_lines_unitPrice | null;
+  unitPrice: OrderCapture_orderCapture_order_lines_unitPrice;
   thumbnail: OrderCapture_orderCapture_order_lines_thumbnail | null;
 }
 
@@ -325,24 +334,24 @@ export interface OrderCapture_orderCapture_order {
   fulfillments: (OrderCapture_orderCapture_order_fulfillments | null)[];
   lines: (OrderCapture_orderCapture_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderCapture_orderCapture_order_shippingAddress | null;
   shippingMethod: OrderCapture_orderCapture_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderCapture_orderCapture_order_shippingPrice | null;
+  shippingPrice: OrderCapture_orderCapture_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderCapture_orderCapture_order_subtotal | null;
-  total: OrderCapture_orderCapture_order_total | null;
+  subtotal: OrderCapture_orderCapture_order_subtotal;
+  total: OrderCapture_orderCapture_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderCapture_orderCapture_order_totalAuthorized | null;
-  totalCaptured: OrderCapture_orderCapture_order_totalCaptured | null;
+  totalAuthorized: OrderCapture_orderCapture_order_totalAuthorized;
+  totalCaptured: OrderCapture_orderCapture_order_totalCaptured;
   user: OrderCapture_orderCapture_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
   discount: OrderCapture_orderCapture_order_discount | null;
   invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
   channel: OrderCapture_orderCapture_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderCapture_orderCapture {

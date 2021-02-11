@@ -17,7 +17,7 @@
     "npm": ">=6.11.0"
   },
   "dependencies": {
-    "@editorjs/editorjs": "^2.19.0",
+    "@editorjs/editorjs": "^2.19.1",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
     "@editorjs/list": "^1.6.1",
@@ -27,6 +27,7 @@
     "@material-ui/styles": "^4.5.2",
     "@saleor/macaw-ui": "^0.1.1-9",
     "@types/faker": "^5.1.6",
+    "@sentry/react": "^6.0.0",
     "apollo": "^2.21.2",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
@@ -94,6 +95,7 @@
     "@pollyjs/adapter-node-http": "^5.0.0",
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
+    "@sentry/webpack-plugin": "^1.14.0",
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
     "@testing-library/react-hooks": "^1.1.0",
@@ -228,6 +230,7 @@
     "test:e2e:dev": "start-server-and-test start http://localhost:9000 cy:open",
     "test": "jest src/",
     "transpile-messages": "node scripts/transpile-tx.js",
-    "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write"
+    "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
+    "postbuild": "rimraf ./build/**/*.js.map"
   }
 }

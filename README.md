@@ -61,7 +61,7 @@ $ npm i
 
 ### Configuration
 
-There are two environment variables available for configuration:
+There following environment variables are available for configuration:
 
 - `API_URI` (required) - URI of a running instance of Saleor GraphQL API.
   If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
@@ -86,6 +86,45 @@ To build the application bundle run:
 
 ```
 $ npm run build
+```
+
+### Error Tracking
+
+Saleor Dashboard is using a generic error tracking wrapper function that takes care of the most popular use cases:
+
+- initializing the tracker
+- capturing exceptions and (optionally) displaying the event id
+- setting basic user data (this is opt-in and disabled by default)
+
+By default it ships with a Sentry adapter but any kind of error tracking software can be used by creating a custom adapter (using Sentry and TS types as an example).
+
+Example:
+
+```javascript
+// src/services/errorTracking/index.ts
+
+import { CustomAdapter } from "./adapters/";
+
+const errorTracker = ErrorTrackerFactory(CustomAdapter(config));
+```
+
+##### Usage with Sentry adapter:
+
+Sentry is used as the default tracker so no changes in code are necessary and the configuration is done via environment variables.
+
+The following environment variables are available:
+
+```
+# Required
+SENTRY_DSN=
+
+# Optional
+# https://docs.sentry.io/product/cli/configuration/
+SENTRY_AUTH_TOKEN=
+SENTRY_ORG=
+SENTRY_PROJECT=
+SENTRY_URL_PREFIX=
+ENVIRONMENT=
 ```
 
 #### Crafted with ❤️ by [Mirumee Software](https://mirumee.com)

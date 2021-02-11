@@ -21,6 +21,7 @@ export const pageAttributesFragment = gql`
         slug
         name
         inputType
+        entityType
         valueRequired
         values {
           ...AttributeValueFragment
@@ -37,6 +38,7 @@ export const pageAttributesFragment = gql`
         id
         name
         inputType
+        entityType
         valueRequired
         values {
           ...AttributeValueFragment
@@ -54,7 +56,7 @@ export const pageDetailsFragment = gql`
     ...PageFragment
     ...PageAttributesFragment
     ...MetadataFragment
-    contentJson
+    content
     seoTitle
     seoDescription
     publicationDate

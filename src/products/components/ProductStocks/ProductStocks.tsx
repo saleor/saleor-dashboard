@@ -268,7 +268,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                     {stock.label}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
-                    {stock.data.quantityAllocated}
+                    {stock.data?.quantityAllocated || 0}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     <TextField

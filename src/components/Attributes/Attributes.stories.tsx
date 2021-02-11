@@ -12,7 +12,10 @@ const props: AttributesProps = {
   loading: false,
   onChange: () => undefined,
   onFileChange: () => undefined,
-  onMultiChange: () => undefined
+  onMultiChange: () => undefined,
+  onReferencesAddClick: () => undefined,
+  onReferencesRemove: () => undefined,
+  onReferencesReorder: () => undefined
 };
 
 storiesOf("Attributes / Attributes", module)

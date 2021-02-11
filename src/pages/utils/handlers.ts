@@ -1,7 +1,6 @@
 import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { toggle } from "@saleor/utils/lists";
+import { FormsetData } from "@saleor/hooks/useFormset";
 
 import { PageDetails_page_pageType } from "../types/PageDetails";
 import { getAttributeInputFromPageType } from "./data";
@@ -21,36 +20,5 @@ export function createPageTypeSelectHandler(
     change(event);
 
     setAttributes(getAttributeInputFromPageType(selectedPageType));
-  };
-}
-
-export function createAttributeChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
-  triggerChange: () => void
-): FormsetChange {
-  return (attributeId: string, value: string) => {
-    triggerChange();
-    changeAttributeData(attributeId, value === "" ? [] : [value]);
-  };
-}
-
-export function createAttributeMultiChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
-  attributes: FormsetData<AttributeInputData, string[]>,
-  triggerChange: () => void
-): FormsetChange {
-  return (attributeId: string, value: string) => {
-    const attribute = attributes.find(
-      attribute => attribute.id === attributeId
-    );
-
-    const newAttributeValues = toggle(
-      value,
-      attribute.value,
-      (a, b) => a === b
-    );
-
-    triggerChange();
-    changeAttributeData(attributeId, newAttributeValues);
   };
 }

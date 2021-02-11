@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductUpdate
@@ -27,6 +27,7 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute_values
   name: string | null;
   slug: string | null;
   file: ProductUpdate_productUpdate_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_attribute {
@@ -35,6 +36,7 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
 }
@@ -51,6 +53,7 @@ export interface ProductUpdate_productUpdate_product_attributes_values {
   name: string | null;
   slug: string | null;
   file: ProductUpdate_productUpdate_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes {
@@ -71,6 +74,7 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   name: string | null;
   slug: string | null;
   file: ProductUpdate_productUpdate_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductUpdate_productUpdate_product_productType_variantAttributes {
@@ -256,7 +260,7 @@ export interface ProductUpdate_productUpdate_product {
   privateMetadata: (ProductUpdate_productUpdate_product_privateMetadata | null)[];
   name: string;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

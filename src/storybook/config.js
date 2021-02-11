@@ -16,7 +16,6 @@ function loadStories() {
   require("./stories/components/AutocompleteSelectMenu");
   require("./stories/components/CardMenu");
   require("./stories/components/Checkbox");
-  require("./stories/components/Chip");
   require("./stories/components/ColumnPicker");
   require("./stories/components/Date");
   require("./stories/components/DateTime");
@@ -44,10 +43,6 @@ function loadStories() {
   require("./stories/components/Weight");
   require("./stories/components/WeightRange");
   require("./stories/components/messages");
-
-  // Authentication
-  require("./stories/auth/LoginPage");
-  require("./stories/auth/LoginLoading");
 
   // Attributes
   require("./stories/attributes/AttributeBulkDeleteDialog");

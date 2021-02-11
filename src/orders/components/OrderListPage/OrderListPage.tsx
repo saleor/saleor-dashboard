@@ -72,7 +72,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             ]}
           />
         )}
-        <Button color="primary" variant="contained" onClick={onAdd}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onAdd}
+          data-test-id="create-order-button"
+        >
           <FormattedMessage
             defaultMessage="Create order"
             description="button"

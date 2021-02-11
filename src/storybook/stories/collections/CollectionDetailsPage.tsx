@@ -57,7 +57,7 @@ storiesOf("Views / Collections / Collection details", module)
         },
         {
           code: CollectionErrorCode.REQUIRED,
-          field: "descriptionJson"
+          field: "description"
         }
       ].map(err => ({
         __typename: "CollectionError",

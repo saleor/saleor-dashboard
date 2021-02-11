@@ -21,10 +21,12 @@ greatly reduce the amount of work needed to review your work. -->
 1. [ ] Data-test are added for new elements.
 1. [ ] Type definitions are up to date.
 1. [ ] Changes are mentioned in the changelog.
+1. [ ] The changes are tested in different browsers (Chrome, Firefox, Safari).
+1. [ ] The changes are tested in light and dark mode.
 
 ### Test environment config
 
 <!-- Do not remove this section. It is required to properly setup test instance.
 Modify API_URI if you want test instance to use custom backend. -->
 
-API_URI=https://master.staging.saleor.rocks/graphql/
+API_URI=https://master.staging.saleor.cloud/graphql/

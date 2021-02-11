@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: CreateMultipleVariantsData
@@ -20,6 +20,7 @@ export interface CreateMultipleVariantsData_product_attributes_attribute_values 
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes_attribute {
@@ -28,6 +29,7 @@ export interface CreateMultipleVariantsData_product_attributes_attribute {
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (CreateMultipleVariantsData_product_attributes_attribute_values | null)[] | null;
 }
@@ -44,6 +46,7 @@ export interface CreateMultipleVariantsData_product_attributes_values {
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes {
@@ -64,6 +67,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   name: string | null;
   slug: string | null;
   file: CreateMultipleVariantsData_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_productType_variantAttributes {

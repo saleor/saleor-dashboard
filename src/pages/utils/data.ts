@@ -1,5 +1,5 @@
+import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { FormsetData } from "@saleor/hooks/useFormset";
 
 import {
   PageDetails_page,
@@ -11,6 +11,7 @@ export function getAttributeInputFromPage(
 ): AttributeInput[] {
   return page?.attributes.map(attribute => ({
     data: {
+      entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
@@ -18,7 +19,7 @@ export function getAttributeInputFromPage(
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,
-    value: attribute.values.map(value => value.slug)
+    value: getSelectedAttributeValues(attribute)
   }));
 }
 
@@ -27,6 +28,7 @@ export function getAttributeInputFromPageType(
 ): AttributeInput[] {
   return pageType?.attributes.map(attribute => ({
     data: {
+      entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values
@@ -36,23 +38,3 @@ export function getAttributeInputFromPageType(
     value: []
   }));
 }
-
-export const getAttributesDisplayData = (
-  attributes: AttributeInput[],
-  attributesWithNewFileValue: FormsetData<null, File>
-) =>
-  attributes.map(attribute => {
-    const attributeWithNewFileValue = attributesWithNewFileValue.find(
-      attributeWithNewFile => attribute.id === attributeWithNewFile.id
-    );
-
-    if (attributeWithNewFileValue) {
-      return {
-        ...attribute,
-        value: attributeWithNewFileValue?.value?.name
-          ? [attributeWithNewFileValue.value.name]
-          : []
-      };
-    }
-    return attribute;
-  });

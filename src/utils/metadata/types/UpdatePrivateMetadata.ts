@@ -38,7 +38,7 @@ export interface UpdatePrivateMetadata_deletePrivateMetadata_item_privateMetadat
 }
 
 export interface UpdatePrivateMetadata_deletePrivateMetadata_item {
-  __typename: "App" | "ShippingZone" | "ShippingMethod" | "Product" | "ProductType" | "Attribute" | "Category" | "ProductVariant" | "DigitalContent" | "Collection" | "Page" | "PageType" | "User" | "Checkout" | "Order" | "Fulfillment" | "Invoice";
+  __typename: "App" | "Warehouse" | "ShippingZone" | "ShippingMethod" | "Product" | "ProductType" | "Attribute" | "Category" | "ProductVariant" | "DigitalContent" | "Collection" | "Page" | "PageType" | "MenuItem" | "Menu" | "User" | "Checkout" | "Order" | "Fulfillment" | "Invoice";
   metadata: (UpdatePrivateMetadata_deletePrivateMetadata_item_metadata | null)[];
   privateMetadata: (UpdatePrivateMetadata_deletePrivateMetadata_item_privateMetadata | null)[];
   id: string;

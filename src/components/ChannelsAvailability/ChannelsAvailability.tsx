@@ -417,7 +417,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
               userPermissions={user?.userPermissions || []}
               requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
             >
-              <Button color="primary" onClick={openModal}>
+              <Button
+                color="primary"
+                onClick={openModal}
+                data-test-id="channels-availiability-manage-button"
+              >
                 {intl.formatMessage({
                   defaultMessage: "Manage",
                   description: "section header button"

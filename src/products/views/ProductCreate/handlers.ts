@@ -108,7 +108,7 @@ export function createHandler(
         category: formData.category,
         chargeTaxes: formData.chargeTaxes,
         collections: formData.collections,
-        descriptionJson: JSON.stringify(formData.description),
+        description: JSON.stringify(formData.description),
         name: formData.name,
         productType: formData.productType?.id,
         rating: formData.rating,

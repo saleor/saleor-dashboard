@@ -147,7 +147,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         completion: {
                           current: node.translation
                             ? [
-                                node.translation.descriptionJson,
+                                node.translation.description,
                                 node.translation.name,
                                 node.translation.seoDescription,
                                 node.translation.seoTitle
@@ -197,7 +197,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         completion: {
                           current: node.translation
                             ? [
-                                node.translation.descriptionJson,
+                                node.translation.description,
                                 node.translation.name,
                                 node.translation.seoDescription,
                                 node.translation.seoTitle
@@ -248,7 +248,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         completion: {
                           current: node.translation
                             ? [
-                                node.translation.descriptionJson,
+                                node.translation.description,
                                 node.translation.name,
                                 node.translation.seoDescription,
                                 node.translation.seoTitle
@@ -385,7 +385,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         completion: {
                           current: node.translation
                             ? [
-                                node.translation.contentJson,
+                                node.translation.content,
                                 node.translation.seoDescription,
                                 node.translation.seoTitle,
                                 node.translation.title

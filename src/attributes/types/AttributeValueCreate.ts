@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeValueCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueCreate
@@ -32,6 +32,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   name: string | null;
   slug: string | null;
   file: AttributeValueCreate_attributeValueCreate_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {
@@ -47,6 +48,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
   privateMetadata: (AttributeValueCreate_attributeValueCreate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
   values: (AttributeValueCreate_attributeValueCreate_attribute_values | null)[] | null;

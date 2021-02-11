@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantReorder
@@ -26,6 +26,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_attribute_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute {
@@ -34,6 +35,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   slug: string | null;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   values: (ProductVariantReorder_productVariantReorder_product_attributes_attribute_values | null)[] | null;
 }
@@ -50,6 +52,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes {
@@ -70,6 +73,7 @@ export interface ProductVariantReorder_productVariantReorder_product_productType
   name: string | null;
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values_file | null;
+  reference: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes {
@@ -255,7 +259,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   privateMetadata: (ProductVariantReorder_productVariantReorder_product_privateMetadata | null)[];
   name: string;
   slug: string;
-  descriptionJson: any;
+  description: any;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

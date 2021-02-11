@@ -37,10 +37,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(
-    ["name", "descriptionJson", "rating"],
-    errors
-  );
+  const formErrors = getFormErrors(["name", "description", "rating"], errors);
 
   return (
     <Card>
@@ -65,8 +62,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         <RichTextEditor
           data={data.description}
           disabled={disabled}
-          error={!!formErrors.descriptionJson}
-          helperText={getProductErrorMessage(formErrors.descriptionJson, intl)}
+          error={!!formErrors.description}
+          helperText={getProductErrorMessage(formErrors.description, intl)}
           label={intl.formatMessage(commonMessages.description)}
           name="description"
           onChange={onDescriptionChange}

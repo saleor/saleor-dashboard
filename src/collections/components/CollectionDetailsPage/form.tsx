@@ -68,7 +68,7 @@ function useCollectionUpdateForm(
     slug: collection?.slug || ""
   });
   const [description, changeDescription] = useRichText({
-    initial: collection?.descriptionJson,
+    initial: collection?.description,
     triggerChange
   });
 
