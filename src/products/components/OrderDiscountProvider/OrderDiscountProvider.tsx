@@ -40,8 +40,6 @@ interface OrderDiscountProviderProps {
   order?: OrderDetails_order;
 }
 
-const DiscountContext = createContext<OrderDiscountConsumerProps>(null);
-
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   children,
   order
@@ -128,20 +126,12 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   };
 
   return (
-    <DiscountContext.Provider value={discountProviderValues}>
+    <OrderDiscountContext.Provider value={discountProviderValues}>
       {children}
-    </DiscountContext.Provider>
+    </OrderDiscountContext.Provider>
   );
 };
 
-interface DiscountConsumerProps {
-  children: React.ReactNode;
-}
-
-export const OrderDiscountConsumer: React.FC<DiscountConsumerProps> = ({
-  children
-}) => (
-  <DiscountContext.Consumer>
-    {(values: OrderDiscountConsumerProps) => children(values)}
-  </DiscountContext.Consumer>
+export const OrderDiscountContext = createContext<OrderDiscountConsumerProps>(
+  null
 );
