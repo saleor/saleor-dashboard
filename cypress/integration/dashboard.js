@@ -139,7 +139,7 @@ describe("User authorization", () => {
       .softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, regex)
       .softAssertMatch(
         DASHBOARD_SELECTORS.sales,
-        new RegExp(`\\D+${sales}[\,\.]00\\D+`)
+        new RegExp(`\\D+${sales}[\,\.]00\\D*`)
       )
       .softAssertMatch(DASHBOARD_SELECTORS.orders, /\D+2\D*/);
   });
