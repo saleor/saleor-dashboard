@@ -332,10 +332,12 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                                 </div>
                               </TableCell>
                               <TableCell className={classes.textRight}>
-                                {variant?.channelListings[0]?.price && (
-                                  <Money
-                                    money={variant.channelListings[0].price}
-                                  />
+                                {variant.channelListings.map(
+                                  listing =>
+                                    listing.channel.id ===
+                                      selectedChannelId && (
+                                      <Money money={listing.price} />
+                                    )
                                 )}
                               </TableCell>
                             </TableRow>
