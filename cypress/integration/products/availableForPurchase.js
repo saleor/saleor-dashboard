@@ -69,8 +69,9 @@ describe("Products", () => {
         cy.visit(productUrl)
           .get(PRODUCTS_SELECTORS.assignedChannels)
           .click()
-          .get(PRODUCTS_SELECTORS.publishedRadioButton)
-          .contains("Dostępne do zakupu")
+          .get(
+            `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${PRODUCTS_SELECTORS.radioButtonsValueTrue}`
+          )
           .click()
           .get(PRODUCTS_SELECTORS.saveBtn)
           .click()
@@ -83,7 +84,9 @@ describe("Products", () => {
             expect(productDetailsResp.body[0].data.product.name).to.equal(
               productName
             );
-            // expect(productDetailsResp.body[0].data.product.isAvailableForPurchase).to.be.true
+            expect(
+              productDetailsResp.body[0].data.product.isAvailableForPurchase
+            ).to.be.eq(true);
           });
       });
   });
@@ -110,8 +113,9 @@ describe("Products", () => {
         cy.visit(productUrl)
           .get(PRODUCTS_SELECTORS.assignedChannels)
           .click()
-          .get(PRODUCTS_SELECTORS.publishedRadioButton)
-          .contains("Niedostępne do zakupu")
+          .get(
+            `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${PRODUCTS_SELECTORS.radioButtonsValueFalse}`
+          )
           .click()
           .get(PRODUCTS_SELECTORS.saveBtn)
           .click()
@@ -125,7 +129,9 @@ describe("Products", () => {
             expect(productDetailsResp.body[0].data.product.name).to.equal(
               productName
             );
-            // expect(productDetailsResp.body[0].data.product.isAvailableForPurchase).to.be.false;
+            expect(
+              productDetailsResp.body[0].data.product.isAvailableForPurchase
+            ).to.be.eq(false);
           });
       });
   });
