@@ -12,7 +12,7 @@ import Money from "@saleor/components/Money";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import { OrderLineDiscountProviderValues } from "@saleor/products/components/OrderLineDiscountProvider/OrderLineDiscountProvider";
+import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React, { useRef } from "react";
 
@@ -72,7 +72,7 @@ const useStyles = makeStyles(
   { name: "OrderDraftDetailsProducts" }
 );
 
-interface TableLineProps extends OrderLineDiscountProviderValues {
+interface TableLineProps extends OrderLineDiscountContextConsumerProps {
   line: OrderDetails_order_lines;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
@@ -85,38 +85,27 @@ const TableLine: React.FC<TableLineProps> = ({
   orderLineDiscount,
   addOrderLineDiscount,
   removeOrderLineDiscount,
-  shouldUseGross,
   openDialog,
   closeDialog,
   orderLineDiscountRemoveStatus,
   isDialogOpen,
+  undiscountedPrice,
+  discountedPrice,
   orderLineDiscountUpdateStatus
 }) => {
   const classes = useStyles({});
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
-  const {
-    id,
-    thumbnail,
-    productName,
-    productSku,
-    quantity,
-    unitPrice,
-    undiscountedUnitPrice
-  } = line;
-
-  const discountMaxAmount = shouldUseGross
-    ? undiscountedUnitPrice.gross
-    : undiscountedUnitPrice.net;
+  const { id, thumbnail, productName, productSku, quantity, unitPrice } = line;
 
   const getUnitPriceLabel = () => {
-    const money = <Money money={discountMaxAmount} />;
+    const money = <Money money={undiscountedPrice} />;
 
     if (!!orderLineDiscount) {
       return (
         <>
           <Typography className={classes.strike}>{money}</Typography>
           <Link onClick={openDialog}>
-            <Money money={orderLineDiscount.moneyValue} />
+            <Money money={discountedPrice} />
           </Link>
         </>
       );
@@ -175,9 +164,8 @@ const TableLine: React.FC<TableLineProps> = ({
           isOpen={isDialogOpen}
           anchorRef={popperAnchorRef}
           onClose={closeDialog}
-          currency={undiscountedUnitPrice.gross.currency}
           modalType={ORDER_LINE_DISCOUNT}
-          maxAmount={discountMaxAmount.amount}
+          maxPrice={undiscountedPrice}
           onConfirm={addOrderLineDiscount}
           onRemove={removeOrderLineDiscount}
           existingDiscount={orderLineDiscount}

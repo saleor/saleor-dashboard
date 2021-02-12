@@ -15,6 +15,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { Money } from "@saleor/fragments/types/Money";
 import { buttonMessages } from "@saleor/intl";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, {
@@ -104,8 +105,7 @@ const messages = defineMessages({
 });
 
 interface OrderLineDiscountModalProps {
-  currency: string;
-  maxAmount: number;
+  maxPrice: Money;
   onConfirm: (discount: OrderDiscountCommonInput) => void;
   onClose: () => void;
   onRemove: () => void;
@@ -119,8 +119,7 @@ interface OrderLineDiscountModalProps {
 }
 
 const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
-  currency = "",
-  maxAmount = 0,
+  maxPrice = { amount: null, currency: "" },
   onConfirm,
   modalType,
   anchorRef,
@@ -132,10 +131,12 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
   confirmStatus,
   removeStatus
 }) => {
+  const { currency, amount: maxAmount } = maxPrice;
+
   const initialData = {
     calculationMode:
       existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE,
-    value: existingDiscount?.value.toString() || "",
+    value: existingDiscount?.value?.toString() || "",
     reason: existingDiscount?.reason || ""
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -14,25 +15,21 @@ import { OrderDiscountUpdate } from "@saleor/orders/types/OrderDiscountUpdate";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
+import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
 import {
   getDiscountNotifierData,
-  getParsedMoneyData,
+  getProperPrice,
   useDiscountDialog
-} from "../OrderLineDiscountProvider/utils";
-import { OrderDiscountData } from "./types";
+} from "./utils";
 import { getManualOrderDiscount, getParsedDiscountData } from "./utils";
 
-export interface OrderDiscountConsumerProps {
-  discountCurrency: string;
-  discountMaxAmount: number;
+export interface OrderDiscountContextConsumerProps
+  extends OrderDiscountConsumerCommonProps {
   orderDiscountAddStatus: ConfirmButtonTransitionState;
   orderDiscountRemoveStatus: ConfirmButtonTransitionState;
   orderDiscount?: OrderDiscountData;
   addOrderDiscount: (data: OrderDiscountCommonInput) => void;
   removeOrderDiscount: () => void;
-  isDiscountDialogOpen: boolean;
-  openDialog: () => void;
-  closeDialog: () => void;
 }
 
 interface OrderDiscountProviderProps {
@@ -48,7 +45,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   const notify = useNotifier();
   const shop = useShop();
 
-  const { id: orderId, undiscountedTotal } = order;
+  const { id: orderId } = order;
 
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
 
@@ -109,20 +106,19 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     ? orderDiscountUpdateOpts.status
     : orderDiscountAddOpts.status;
 
-  const moneyData = getParsedMoneyData(
-    shop.includeTaxesInPrices ? undiscountedTotal.gross : undiscountedTotal.net
-  );
+  const getProperDiscountPrice = getProperPrice(shop);
 
-  const discountProviderValues: OrderDiscountConsumerProps = {
+  const discountProviderValues: OrderDiscountContextConsumerProps = {
     orderDiscountAddStatus,
     orderDiscountRemoveStatus: orderDiscountRemoveOpts.status,
     orderDiscount,
     addOrderDiscount: orderDiscountAction,
     removeOrderDiscount,
-    isDiscountDialogOpen: isDialogOpen,
+    isDialogOpen,
     closeDialog,
     openDialog,
-    ...moneyData
+    discountedPrice: getProperDiscountPrice(order.total),
+    undiscountedPrice: getProperDiscountPrice(order.undiscountedTotal)
   };
 
   return (
@@ -132,6 +128,6 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   );
 };
 
-export const OrderDiscountContext = createContext<OrderDiscountConsumerProps>(
-  null
-);
+export const OrderDiscountContext = createContext<
+  OrderDiscountContextConsumerProps
+>(null);

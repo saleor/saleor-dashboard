@@ -7,8 +7,8 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar";
 import {
   OrderLineDiscountConsumer,
-  OrderLineDiscountProviderValues
-} from "@saleor/products/components/OrderLineDiscountProvider/OrderLineDiscountProvider";
+  OrderLineDiscountContextConsumerProps
+} from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -110,7 +110,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         {!!lines.length ? (
           renderCollection(lines, line => (
             <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
-              {(orderLineDiscountProps: OrderLineDiscountProviderValues) => (
+              {(
+                orderLineDiscountProps: OrderLineDiscountContextConsumerProps
+              ) => (
                 <TableLine
                   {...orderLineDiscountProps}
                   line={line}

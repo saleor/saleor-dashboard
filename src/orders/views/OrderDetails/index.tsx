@@ -12,8 +12,8 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { useOrderConfirmMutation } from "@saleor/orders/mutations";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
-import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProvider/OrderDiscountProvider";
-import { OrderLineDiscountProvider } from "@saleor/products/components/OrderLineDiscountProvider/OrderLineDiscountProvider";
+import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";

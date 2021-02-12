@@ -2,8 +2,8 @@ import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import { OrderDiscountConsumerProps } from "@saleor/products/components/OrderDiscountProvider/OrderDiscountProvider";
-import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProvider/types";
+import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
@@ -73,7 +73,8 @@ const messages = defineMessages({
 
 const PRICE_PLACEHOLDER = "---";
 
-interface OrderDraftDetailsSummaryProps extends OrderDiscountConsumerProps {
+interface OrderDraftDetailsSummaryProps
+  extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
   order: OrderDetails_order;
   onShippingMethodEdit: () => void;
@@ -89,9 +90,10 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     removeOrderDiscount,
     openDialog,
     closeDialog,
-    isDiscountDialogOpen,
+    isDialogOpen,
     orderDiscountAddStatus,
-    orderDiscountRemoveStatus
+    orderDiscountRemoveStatus,
+    undiscountedPrice
   } = props;
 
   const intl = useIntl();
@@ -109,8 +111,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     shippingMethod,
     shippingMethodName,
     availableShippingMethods,
-    shippingPrice,
-    undiscountedTotal
+    shippingPrice
   } = order;
 
   const hasChosenShippingMethod =
@@ -163,9 +164,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
               modalType={ORDER_DISCOUNT}
               anchorRef={popperAnchorRef}
               existingDiscount={orderDiscount}
-              currency={undiscountedTotal.net.currency}
-              maxAmount={undiscountedTotal.net.amount}
-              isOpen={isDiscountDialogOpen}
+              maxPrice={undiscountedPrice}
+              isOpen={isDialogOpen}
               onConfirm={addOrderDiscount}
               onClose={closeDialog}
               onRemove={removeOrderDiscount}
