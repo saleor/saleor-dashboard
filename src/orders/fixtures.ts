@@ -1307,6 +1307,11 @@ export const order = (placeholder: string): OrderDetails_order => ({
       amount: 234.93,
       currency: "USD"
     },
+    net: {
+      __typename: "Money",
+      amount: 234.93,
+      currency: "USD"
+    },
     tax: {
       __typename: "Money",
       amount: 0,
@@ -1508,6 +1513,11 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
     gross: {
       __typename: "Money" as "Money",
       amount: 168.3,
+      currency: "USD"
+    },
+    net: {
+      __typename: "Money" as "Money",
+      amount: 100,
       currency: "USD"
     },
     tax: {
