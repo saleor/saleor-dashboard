@@ -331,6 +331,12 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_total_gross
   currency: string;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_total_tax {
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_total {
   __typename: "TaxedMoney";
   gross: OrderFulfillmentCancel_orderFulfillmentCancel_order_total_gross;
+  net: OrderFulfillmentCancel_orderFulfillmentCancel_order_total_net;
   tax: OrderFulfillmentCancel_orderFulfillmentCancel_order_total_tax;
 }
 

@@ -194,6 +194,10 @@ export const fragmentOrderDetails = gql`
         amount
         currency
       }
+      net {
+        amount
+        currency
+      }
       tax {
         amount
         currency

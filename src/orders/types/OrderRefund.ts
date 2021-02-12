@@ -331,6 +331,12 @@ export interface OrderRefund_orderRefund_order_total_gross {
   currency: string;
 }
 
+export interface OrderRefund_orderRefund_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderRefund_orderRefund_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderRefund_orderRefund_order_total_tax {
 export interface OrderRefund_orderRefund_order_total {
   __typename: "TaxedMoney";
   gross: OrderRefund_orderRefund_order_total_gross;
+  net: OrderRefund_orderRefund_order_total_net;
   tax: OrderRefund_orderRefund_order_total_tax;
 }
 

@@ -331,6 +331,12 @@ export interface OrderCapture_orderCapture_order_total_gross {
   currency: string;
 }
 
+export interface OrderCapture_orderCapture_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderCapture_orderCapture_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderCapture_orderCapture_order_total_tax {
 export interface OrderCapture_orderCapture_order_total {
   __typename: "TaxedMoney";
   gross: OrderCapture_orderCapture_order_total_gross;
+  net: OrderCapture_orderCapture_order_total_net;
   tax: OrderCapture_orderCapture_order_total_tax;
 }
 

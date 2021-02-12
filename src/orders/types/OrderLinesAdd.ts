@@ -331,6 +331,12 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_total_gross {
   currency: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_total_tax {
 export interface OrderLinesAdd_draftOrderLinesCreate_order_total {
   __typename: "TaxedMoney";
   gross: OrderLinesAdd_draftOrderLinesCreate_order_total_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_total_net;
   tax: OrderLinesAdd_draftOrderLinesCreate_order_total_tax;
 }
 

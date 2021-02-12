@@ -331,6 +331,12 @@ export interface OrderVoid_orderVoid_order_total_gross {
   currency: string;
 }
 
+export interface OrderVoid_orderVoid_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderVoid_orderVoid_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderVoid_orderVoid_order_total_tax {
 export interface OrderVoid_orderVoid_order_total {
   __typename: "TaxedMoney";
   gross: OrderVoid_orderVoid_order_total_gross;
+  net: OrderVoid_orderVoid_order_total_net;
   tax: OrderVoid_orderVoid_order_total_tax;
 }
 

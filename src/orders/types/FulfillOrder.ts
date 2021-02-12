@@ -333,6 +333,12 @@ export interface FulfillOrder_orderFulfill_order_total_gross {
   currency: string;
 }
 
+export interface FulfillOrder_orderFulfill_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -342,6 +348,7 @@ export interface FulfillOrder_orderFulfill_order_total_tax {
 export interface FulfillOrder_orderFulfill_order_total {
   __typename: "TaxedMoney";
   gross: FulfillOrder_orderFulfill_order_total_gross;
+  net: FulfillOrder_orderFulfill_order_total_net;
   tax: FulfillOrder_orderFulfill_order_total_tax;
 }
 

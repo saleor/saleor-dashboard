@@ -426,6 +426,12 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   currency: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -435,6 +441,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total {
   __typename: "TaxedMoney";
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_net;
   tax: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_tax;
 }
 

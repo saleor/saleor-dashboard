@@ -325,6 +325,12 @@ export interface OrderDetailsFragment_total_gross {
   currency: string;
 }
 
+export interface OrderDetailsFragment_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDetailsFragment_total_tax {
   __typename: "Money";
   amount: number;
@@ -334,6 +340,7 @@ export interface OrderDetailsFragment_total_tax {
 export interface OrderDetailsFragment_total {
   __typename: "TaxedMoney";
   gross: OrderDetailsFragment_total_gross;
+  net: OrderDetailsFragment_total_net;
   tax: OrderDetailsFragment_total_tax;
 }
 

@@ -331,6 +331,12 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_total_gross {
   currency: string;
 }
 
+export interface OrderDiscountUpdate_orderDiscountUpdate_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDiscountUpdate_orderDiscountUpdate_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_total_tax {
 export interface OrderDiscountUpdate_orderDiscountUpdate_order_total {
   __typename: "TaxedMoney";
   gross: OrderDiscountUpdate_orderDiscountUpdate_order_total_gross;
+  net: OrderDiscountUpdate_orderDiscountUpdate_order_total_net;
   tax: OrderDiscountUpdate_orderDiscountUpdate_order_total_tax;
 }
 

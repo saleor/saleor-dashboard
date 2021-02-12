@@ -331,6 +331,12 @@ export interface OrderConfirm_orderConfirm_order_total_gross {
   currency: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderConfirm_orderConfirm_order_total_tax {
   __typename: "Money";
   amount: number;
@@ -340,6 +346,7 @@ export interface OrderConfirm_orderConfirm_order_total_tax {
 export interface OrderConfirm_orderConfirm_order_total {
   __typename: "TaxedMoney";
   gross: OrderConfirm_orderConfirm_order_total_gross;
+  net: OrderConfirm_orderConfirm_order_total_net;
   tax: OrderConfirm_orderConfirm_order_total_tax;
 }
 
