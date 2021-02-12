@@ -27,5 +27,6 @@ export const PRODUCTS_SELECTORS = {
   availableForPurchaseRadioButtons: "[name*='isAvailableForPurchase']",
   radioButtonsValueTrue: "[value:'true']",
   radioButtonsValueFalse: "[value:'false']",
-  visibleInListingsButton: "[name*='visibleInListings']"
+  visibleInListingsButton: "[name*='visibleInListings']",
+  emptyProductRow: "[class*='Skeleton']"
 };

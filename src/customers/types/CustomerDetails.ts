@@ -80,8 +80,8 @@ export interface CustomerDetails_user_orders_edges_node {
   id: string;
   created: any;
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
-  total: CustomerDetails_user_orders_edges_node_total | null;
+  paymentStatus: PaymentChargeStatusEnum;
+  total: CustomerDetails_user_orders_edges_node_total;
 }
 
 export interface CustomerDetails_user_orders_edges {

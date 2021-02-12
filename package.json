@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.0.0-a.0",
+  "version": "3.0.0-a.5",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -42,7 +42,9 @@
     "downshift": "^1.31.16",
     "editorjs-inline-tool": "^0.4.0",
     "editorjs-undo": "^0.1.4",
+    "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
+    "fsevents": "^1.2.9",
     "fuzzaldrin": "^2.1.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.11.0",
@@ -130,7 +132,7 @@
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
-    "cypress": "^4.9.0",
+    "cypress": "^6.4.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "enzyme-to-json": "^3.6.1",

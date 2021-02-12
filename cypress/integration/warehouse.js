@@ -1,11 +1,13 @@
 // <reference types="cypress" />
+import { urlList } from "../url/urlList";
+
 describe("Warehouse settings", () => {
   beforeEach(() => {
     cy.clearSessionData();
   });
 
   xit("Warehouse section visible in the configuration", () => {
-    cy.visit("/configuration/")
+    cy.visit(urlList.configuration)
       .loginUser()
       .get("[data-test-id=warehouses][data-test=settingsSubsection]")
       .click();
@@ -13,7 +15,7 @@ describe("Warehouse settings", () => {
   });
 
   xit("Editing warehouse is available", () => {
-    cy.visit(`/warehouses`)
+    cy.visit(urlList.warehouses)
       .loginUser()
       .get("[data-test=editButton]")
       .first()
