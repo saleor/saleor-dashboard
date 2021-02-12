@@ -131,16 +131,23 @@ describe("User authorization", () => {
       .contains(randomName)
       .click()
       .waitForGraph("Home")
-      .get(DASHBOARD_SELECTORS.dataAreLoading)
-      .should("not.exist");
-    const regex = /^1\D+/;
-    cy.softAssertMatch(DASHBOARD_SELECTORS.ordersReadyToFulfill, regex)
-      .softAssertMatch(DASHBOARD_SELECTORS.paymentsWaitingForCapture, regex)
-      .softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, regex)
-      .softAssertMatch(
-        DASHBOARD_SELECTORS.sales,
-        new RegExp(`\\D+${sales}[\,.]00\\D*`)
-      )
-      .softAssertMatch(DASHBOARD_SELECTORS.orders, /\D+2\D*/);
+      .then(() => {
+        cy.get(DASHBOARD_SELECTORS.dataAreLoading)
+          .should("not.exist")
+          .then(() => {
+            const regex = /^1\D+/;
+            cy.softAssertMatch(DASHBOARD_SELECTORS.ordersReadyToFulfill, regex)
+              .softAssertMatch(
+                DASHBOARD_SELECTORS.paymentsWaitingForCapture,
+                regex
+              )
+              .softAssertMatch(DASHBOARD_SELECTORS.productsOutOfStock, regex)
+              .softAssertMatch(
+                DASHBOARD_SELECTORS.sales,
+                new RegExp(`\\D+${sales}[\,.]00\\D*`)
+              )
+              .softAssertMatch(DASHBOARD_SELECTORS.orders, /\D+2\D*/);
+          });
+      });
   });
 });
