@@ -5,6 +5,5 @@ export const DASHBOARD_SELECTORS = {
   topProducts: "[data-test-id='top-products']",
   ordersReadyToFulfill: "[data-test-id='orders-to-fulfill']",
   paymentsWaitingForCapture: "[data-test-id='orders-to-capture']",
-  productsOutOfStock: "[data-test-id='products-out-of-stock']",
-  dataAreLoading: "[class*='Skeleton-skeleton']"
+  productsOutOfStock: "[data-test-id='products-out-of-stock']"
 };
