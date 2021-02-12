@@ -1,5 +1,4 @@
 import "./user";
-import "./frontShop";
 
 import { urlList } from "../url/urlList";
 

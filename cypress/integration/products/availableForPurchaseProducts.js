@@ -1,17 +1,19 @@
 import faker from "faker";
 
-import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
+import ProductSteps from "../../steps/productSteps";
 import { URL_LIST } from "../../url/url-list";
 import ChannelsUtils from "../../utils/channelsUtils";
+import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../utils/productsUtils";
 import ShippingUtils from "../../utils/shippingUtils";
 
 // <reference types="cypress" />
-describe("Products", () => {
+describe("Products available in listings", () => {
   const shippingUtils = new ShippingUtils();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
-
+  const productSteps = new ProductSteps();
+  const frontShopProductUtils = new FrontShopProductUtils();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productTypeId;
@@ -46,7 +48,7 @@ describe("Products", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should be possible to add to cart available for purchase product", () => {
+  it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
       .createProductInChannel(
@@ -66,31 +68,19 @@ describe("Products", () => {
         const productUrl = `${
           URL_LIST.products
         }${productsUtils.getCreatedProductId()}`;
-        cy.visit(productUrl)
-          .get(PRODUCTS_SELECTORS.assignedChannels)
-          .click()
-          .get(
-            `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${PRODUCTS_SELECTORS.radioButtonsValueTrue}`
-          )
-          .click()
-          .get(PRODUCTS_SELECTORS.saveBtn)
-          .click()
-          .waitForGraph("ProductChannelListingUpdate")
-          .getProductDetails(
+        productSteps.updateProductIsAvailableForPurchase(productUrl, true);
+        frontShopProductUtils
+          .isProductAvailableForPurchase(
             productsUtils.getCreatedProductId(),
-            defaultChannel.slug
+            defaultChannel.slug,
+            productName
           )
-          .then(productDetailsResp => {
-            expect(productDetailsResp.body[0].data.product.name).to.equal(
-              productName
-            );
-            expect(
-              productDetailsResp.body[0].data.product.isAvailableForPurchase
-            ).to.be.eq(true);
+          .then(isProductVisible => {
+            expect(isProductVisible).to.be.eq(true);
           });
       });
   });
-  xit("shouldn't be possible to add to cart not available for purchase product", () => {
+  it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
       .createProductInChannel(
@@ -110,28 +100,15 @@ describe("Products", () => {
         const productUrl = `${
           URL_LIST.products
         }${productsUtils.getCreatedProductId()}`;
-        cy.visit(productUrl)
-          .get(PRODUCTS_SELECTORS.assignedChannels)
-          .click()
-          .get(
-            `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${PRODUCTS_SELECTORS.radioButtonsValueFalse}`
-          )
-          .click()
-          .get(PRODUCTS_SELECTORS.saveBtn)
-          .click()
-          .waitForGraph("ProductChannelListingUpdate")
-          .get("@shopUrl")
-          .getProductDetails(
+        productSteps.updateProductIsAvailableForPurchase(productUrl, false);
+        frontShopProductUtils
+          .isProductAvailableForPurchase(
             productsUtils.getCreatedProductId(),
-            defaultChannel.slug
+            defaultChannel.slug,
+            productName
           )
-          .then(productDetailsResp => {
-            expect(productDetailsResp.body[0].data.product.name).to.equal(
-              productName
-            );
-            expect(
-              productDetailsResp.body[0].data.product.isAvailableForPurchase
-            ).to.be.eq(false);
+          .then(isProductVisible => {
+            expect(isProductVisible).to.be.eq(false);
           });
       });
   });

@@ -25,8 +25,8 @@ export const PRODUCTS_SELECTORS = {
   assignedChannels: "[data-test='channel-availability-item']",
   publishedRadioButtons: "[name*='isPublished']",
   availableForPurchaseRadioButtons: "[name*='isAvailableForPurchase']",
-  radioButtonsValueTrue: "[value:'true']",
-  radioButtonsValueFalse: "[value:'false']",
+  radioButtonsValueTrue: "[value='true']",
+  radioButtonsValueFalse: "[value='false']",
   visibleInListingsButton: "[name*='visibleInListings']",
   emptyProductRow: "[class*='Skeleton']"
 };
