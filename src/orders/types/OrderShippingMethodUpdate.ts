@@ -20,6 +20,24 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableSh
   name: string;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total {
+  __typename: "TaxedMoney";
+  tax: OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax;
+  gross: OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod_price {
   __typename: "Money";
   amount: number;
@@ -47,6 +65,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPri
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   __typename: "Order";
   availableShippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods | null)[] | null;
+  total: OrderShippingMethodUpdate_orderUpdateShipping_order_total;
   id: string;
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
   shippingMethodName: string | null;

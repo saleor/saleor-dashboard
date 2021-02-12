@@ -163,9 +163,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onPaymentCapture={orderMessages.handlePaymentCapture}
                 onUpdate={orderMessages.handleUpdate}
                 onDraftUpdate={orderMessages.handleDraftUpdate}
-                onShippingMethodUpdate={
-                  orderMessages.handleShippingMethodUpdate
-                }
+                onShippingMethodUpdate={data => {
+                  orderMessages.handleShippingMethodUpdate(data);
+                  order.total = data.orderUpdateShipping.order.total;
+                }}
                 onOrderLineDelete={orderMessages.handleOrderLineDelete}
                 onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
                 onOrderLineUpdate={orderMessages.handleOrderLineUpdate}

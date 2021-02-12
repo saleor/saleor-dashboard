@@ -426,6 +426,16 @@ const orderShippingMethodUpdateMutation = gql`
           id
           name
         }
+        total {
+          tax {
+            amount
+            currency
+          }
+          gross {
+            amount
+            currency
+          }
+        }
         id
         shippingMethod {
           id
