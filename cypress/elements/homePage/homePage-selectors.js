@@ -1,4 +1,4 @@
-export const DASHBOARD_SELECTORS = {
+export const HOMEPAGE_SELECTORS = {
   sales: "[data-test-id='sales-analytics']",
   orders: "[data-test-id='orders-analytics']",
   activity: "[data-test-id='activity-card']",
