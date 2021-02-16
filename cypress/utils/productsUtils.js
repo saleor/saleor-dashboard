@@ -1,10 +1,8 @@
 import Attribute from "../apiRequests/Attribute";
 import Category from "../apiRequests/Category";
 import Product from "../apiRequests/Product";
-import Promises from "../support/promises/promises.js";
 
 class ProductsUtils {
-  promises = new Promises();
   productRequest = new Product();
   attributeRequest = new Attribute();
   categoryRequest = new Category();
@@ -15,7 +13,7 @@ class ProductsUtils {
   attribute;
   category;
 
-  async createProductInChannel(
+  createProductInChannel(
     name,
     channelId,
     warehouseId,
@@ -25,58 +23,53 @@ class ProductsUtils {
     categoryId,
     price
   ) {
-    await this.createProduct(attributeId, name, productTypeId, categoryId);
-    this.updateChannelInProduct(this.product.id, channelId);
-    await this.createVariant(
-      this.product.id,
-      name,
-      warehouseId,
-      quantityInWarehouse,
-      channelId,
-      price
-    );
+    return this.createProduct(attributeId, name, productTypeId, categoryId)
+      .then(() =>
+        this.productRequest.updateChannelInProduct(this.product.id, channelId)
+      )
+      .then(() => {
+        this.createVariant(
+          this.product.id,
+          name,
+          warehouseId,
+          quantityInWarehouse,
+          channelId,
+          price
+        );
+      });
   }
 
-  async createTypeAttributeAndCategoryForProduct(name) {
-    await this.createAttribute(name);
-    await this.createTypeProduct(name, this.attribute.id);
-    await this.createCategory(name);
+  createTypeAttributeAndCategoryForProduct(name) {
+    return this.createAttribute(name)
+      .then(() => this.createTypeProduct(name, this.attribute.id))
+      .then(() => this.createCategory(name));
   }
-  async createAttribute(name) {
-    const respProm = await this.promises.createPromise(
-      this.attributeRequest.createAttribute(name)
-    );
-    this.attribute = respProm.attributeCreate.attribute;
+  createAttribute(name) {
+    return this.attributeRequest
+      .createAttribute(name)
+      .then(
+        resp => (this.attribute = resp.body.data.attributeCreate.attribute)
+      );
   }
-  async createTypeProduct(name, attributeId) {
-    const respProm = await this.promises.createPromise(
-      this.productRequest.createTypeProduct(name, attributeId)
-    );
-    this.productType = respProm.productTypeCreate.productType;
+  createTypeProduct(name, attributeId) {
+    return this.productRequest
+      .createTypeProduct(name, attributeId)
+      .then(
+        resp =>
+          (this.productType = resp.body.data.productTypeCreate.productType)
+      );
   }
-  async createCategory(name) {
-    const respProm = await this.promises.createPromise(
-      this.categoryRequest.createCategory(name)
-    );
-    this.category = respProm.categoryCreate.category;
+  createCategory(name) {
+    return this.categoryRequest
+      .createCategory(name)
+      .then(resp => (this.category = resp.body.data.categoryCreate.category));
   }
-  async createProduct(attributeId, name, productTypeId, categoryId) {
-    const respProm = await this.promises.createPromise(
-      this.productRequest.createProduct(
-        attributeId,
-        name,
-        productTypeId,
-        categoryId
-      )
-    );
-    this.product = respProm.productCreate.product;
+  createProduct(attributeId, name, productTypeId, categoryId) {
+    return this.productRequest
+      .createProduct(attributeId, name, productTypeId, categoryId)
+      .then(resp => (this.product = resp.body.data.productCreate.product));
   }
-  async updateChannelInProduct(productId, channelId) {
-    await this.promises.createPromise(
-      this.productRequest.updateChannelInProduct(productId, channelId)
-    );
-  }
-  async createVariant(
+  createVariant(
     productId,
     name,
     warehouseId,
@@ -84,8 +77,8 @@ class ProductsUtils {
     channelId,
     price
   ) {
-    const respProm = await this.promises.createPromise(
-      this.productRequest.createVariant(
+    return this.productRequest
+      .createVariant(
         productId,
         name,
         warehouseId,
@@ -93,8 +86,11 @@ class ProductsUtils {
         channelId,
         price
       )
-    );
-    this.variants = respProm.productVariantBulkCreate.productVariants;
+      .then(
+        resp =>
+          (this.variants =
+            resp.body.data.productVariantBulkCreate.productVariants)
+      );
   }
 
   getCreatedVariants() {

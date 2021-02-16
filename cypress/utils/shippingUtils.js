@@ -1,8 +1,6 @@
 import ShippingMethod from "../apiRequests/ShippingMethod";
 import Warehouse from "../apiRequests/Warehouse";
-import Promises from "../support/promises/promises.js";
 class ShippingUtils {
-  promises = new Promises();
   shippingMethodRequest = new ShippingMethod();
   warehouseRequest = new Warehouse();
 
@@ -10,39 +8,41 @@ class ShippingUtils {
   shippingZone;
   warehouse;
 
-  async createShipping(channelId, name, address, price) {
-    await this.createShippingZone(name, address.country);
-    await this.createWarehouse(name, this.shippingZone.id, address);
-    await this.createShippingRate(name, this.shippingZone.id);
-    this.addChannelToShippingMethod(this.shippingMethod.id, channelId, price);
+  createShipping(channelId, name, address, price) {
+    return this.createShippingZone(name, address.country)
+      .then(() => this.createWarehouse(name, this.shippingZone.id, address))
+      .then(() => this.createShippingRate(name, this.shippingZone.id))
+      .then(() =>
+        this.shippingMethodRequest.addChannelToShippingMethod(
+          this.shippingMethod.id,
+          channelId,
+          price
+        )
+      );
   }
 
-  async createShippingZone(name, country) {
-    const respProm = await this.promises.createPromise(
-      this.shippingMethodRequest.createShippingZone(name, country)
-    );
-    this.shippingZone = respProm.shippingZoneCreate.shippingZone;
+  createShippingZone(name, country) {
+    return this.shippingMethodRequest
+      .createShippingZone(name, country)
+      .then(resp => {
+        this.shippingZone = resp.body.data.shippingZoneCreate.shippingZone;
+      });
   }
-  async createWarehouse(name, shippingZoneId, address) {
-    const respProm = await this.promises.createPromise(
-      this.warehouseRequest.createWarehouse(name, shippingZoneId, address)
-    );
-    this.warehouse = respProm.createWarehouse.warehouse;
+  createWarehouse(name, shippingZoneId, address) {
+    return this.warehouseRequest
+      .createWarehouse(name, shippingZoneId, address)
+      .then(resp => {
+        this.warehouse = resp.body.data.createWarehouse.warehouse;
+      });
   }
-  async createShippingRate(name, shippingZoneId) {
-    const respProm = await this.promises.createPromise(
-      this.shippingMethodRequest.createShippingRate(name, shippingZoneId)
-    );
-    this.shippingMethod = respProm.shippingPriceCreate.shippingMethod;
-  }
-  async addChannelToShippingMethod(shippingMethodId, channelId, price) {
-    await this.promises.createPromise(
-      this.shippingMethodRequest.addChannelToShippingMethod(
-        shippingMethodId,
-        channelId,
-        price
-      )
-    );
+  createShippingRate(name, shippingZoneId) {
+    return this.shippingMethodRequest
+      .createShippingRate(name, shippingZoneId)
+      .then(
+        resp =>
+          (this.shippingMethod =
+            resp.body.data.shippingPriceCreate.shippingMethod)
+      );
   }
 
   getShippingMethod() {

@@ -34,44 +34,46 @@ describe("User authorization", () => {
     productsUtils.deleteProperProducts(startsWith);
     customer.deleteCustomers(startsWith);
     shippingUtils.deleteShipping(startsWith);
+    let addresses;
 
-    channelsUtils.getDefaultChannel().then(channel => {
-      defaultChannel = channel;
-      cy.fixture("addresses").then(addressesFixture => {
-        customer
-          .createCustomer(randomEmail, randomName, addressesFixture.plAddress)
-          .then(resp => {
-            customerId = resp.body.data.customerCreate.user.id;
-            shippingUtils
-              .createShipping(
-                defaultChannel.id,
-                randomName,
-                addressesFixture.plAddress,
-                shippingPrice
-              )
-              .then(() => {
-                const warehouse = shippingUtils.getWarehouse();
-                productsUtils
-                  .createTypeAttributeAndCategoryForProduct(randomName)
-                  .then(() => {
-                    const productType = productsUtils.getProductType();
-                    const attribute = productsUtils.getAttribute();
-                    const category = productsUtils.getCategory();
-                    productsUtils.createProductInChannel(
-                      randomName,
-                      defaultChannel.id,
-                      warehouse.id,
-                      20,
-                      productType.id,
-                      attribute.id,
-                      category.id,
-                      productPrice
-                    );
-                  });
-              });
-          });
+    channelsUtils
+      .getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addressesFixture => (addresses = addressesFixture))
+      .then(() =>
+        customer.createCustomer(randomEmail, randomName, addresses.plAddress)
+      )
+      .then(resp => {
+        customerId = resp.body.data.customerCreate.user.id;
+        shippingUtils.createShipping(
+          defaultChannel.id,
+          randomName,
+          addresses.plAddress,
+          shippingPrice
+        );
+      })
+      .then(() => {
+        productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+      })
+      .then(() => {
+        const warehouse = shippingUtils.getWarehouse();
+        const productType = productsUtils.getProductType();
+        const attribute = productsUtils.getAttribute();
+        const category = productsUtils.getCategory();
+        productsUtils.createProductInChannel(
+          randomName,
+          defaultChannel.id,
+          warehouse.id,
+          20,
+          productType.id,
+          attribute.id,
+          category.id,
+          productPrice
+        );
       });
-    });
   });
 
   beforeEach(() => {
