@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     env:
-      API_URI: https://master.staging.saleor.cloud/graphql/
+      API_URI: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
