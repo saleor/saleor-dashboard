@@ -104,7 +104,7 @@ const messages = defineMessages({
   }
 });
 
-interface OrderLineDiscountModalProps {
+export interface OrderDiscountCommonModalProps {
   maxPrice: Money;
   onConfirm: (discount: OrderDiscountCommonInput) => void;
   onClose: () => void;
@@ -118,7 +118,7 @@ interface OrderLineDiscountModalProps {
   removeStatus: ConfirmButtonTransitionState;
 }
 
-const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
+const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   maxPrice = { amount: null, currency: "" },
   onConfirm,
   modalType,
@@ -133,12 +133,32 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
 }) => {
   const { currency, amount: maxAmount } = maxPrice;
 
-  const initialData = {
-    calculationMode:
-      existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE,
-    value: existingDiscount?.value?.toString() || "",
-    reason: existingDiscount?.reason || ""
+  const getInitialDiscountValue = (calculationMode: DiscountValueTypeEnum) => {
+    if (!existingDiscount?.value) {
+      return "";
+    }
+
+    const stringifiedValue = existingDiscount.value.toString();
+
+    if (calculationMode === DiscountValueTypeEnum.FIXED) {
+      return parseFloat(stringifiedValue).toFixed(2);
+    }
+
+    return stringifiedValue;
   };
+
+  const getInitialData = () => {
+    const calculationMode =
+      existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE;
+
+    return {
+      calculationMode,
+      reason: existingDiscount?.reason || "",
+      value: getInitialDiscountValue(calculationMode)
+    };
+  };
+
+  const initialData = getInitialData();
 
   const [isValueError, setValueError] = useState<boolean>(false);
   const [reason, setReason] = useState<string>(initialData.reason);
@@ -283,4 +303,4 @@ const OrderLineDiscountModal: React.FC<OrderLineDiscountModalProps> = ({
   );
 };
 
-export default OrderLineDiscountModal;
+export default OrderDiscountCommonModal;
