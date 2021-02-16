@@ -26,8 +26,8 @@ export interface ShippingZoneDetailsFragment_countries {
   country: string;
 }
 
-export interface ShippingZoneDetailsFragment_shippingMethods_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingZoneDetailsFragment_shippingMethods_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -94,7 +94,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods_channelListings {
 export interface ShippingZoneDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingZoneDetailsFragment_shippingMethods_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingZoneDetailsFragment_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (ShippingZoneDetailsFragment_shippingMethods_metadata | null)[];
   privateMetadata: (ShippingZoneDetailsFragment_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight | null;

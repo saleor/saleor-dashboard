@@ -32,8 +32,8 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   country: string;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -100,7 +100,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
+  postalCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_metadata | null)[];
   privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;

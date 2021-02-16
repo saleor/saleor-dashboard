@@ -15,8 +15,8 @@ export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCrea
   channels: string[] | null;
 }
 
-export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
   start: string | null;
   end: string | null;
@@ -25,7 +25,7 @@ export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCrea
 export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod_postalCodeRules | null)[] | null;
 }
 
 export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate {

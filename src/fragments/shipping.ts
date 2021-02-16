@@ -20,7 +20,7 @@ export const shippingZoneFragment = gql`
 export const shippingMethodWithZipCodesFragment = gql`
   fragment ShippingMethodWithZipCodesFragment on ShippingMethod {
     id
-    zipCodeRules {
+    postalCodeRules {
       id
       start
       end
