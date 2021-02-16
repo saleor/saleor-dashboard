@@ -27,13 +27,13 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import ShippingZoneZipCodes, {
-  ZipCodeInclusion
-} from "../ShippingZoneZipCodes";
+import ShippingZonePostalCodes, {
+  PostalCodeInclusion
+} from "../ShippingZonePostalCodes";
 
 export interface FormData extends MetadataFormData {
   channelListings: ChannelShippingData[];
-  includeZipCodes: ZipCodeInclusion;
+  includePostalCodes: PostalCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -57,8 +57,8 @@ export interface ShippingZoneRatesPageProps
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
-  onZipCodeAssign: () => void;
-  onZipCodeUnassign: (id: string) => void;
+  onPostalCodeAssign: () => void;
+  onPostalCodeUnassign: (id: string) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   onProductAssign: () => void;
@@ -77,8 +77,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onDelete,
   onSubmit,
   onChannelsChange,
-  onZipCodeAssign,
-  onZipCodeUnassign,
+  onPostalCodeAssign,
+  onPostalCodeUnassign,
   onProductAssign,
   onProductUnassign,
   openChannelsModal,
@@ -90,7 +90,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includeZipCodes: ZipCodeInclusion.Exclude,
+    includePostalCodes: PostalCodeInclusion.Exclude,
     maxDays: rate?.maximumDeliveryDays?.toString() || "",
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     metadata: rate?.metadata.map(mapMetadataItemToInput),
@@ -162,13 +162,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   errors={channelErrors}
                 />
                 <CardSpacer />
-                <ShippingZoneZipCodes
+                <ShippingZonePostalCodes
                   data={data}
                   disabled={disabled}
-                  onZipCodeDelete={onZipCodeUnassign}
-                  onZipCodeInclusionChange={() => undefined}
-                  onZipCodeRangeAdd={onZipCodeAssign}
-                  zipCodes={rate?.zipCodeRules}
+                  onPostalCodeDelete={onPostalCodeUnassign}
+                  onPostalCodeInclusionChange={() => undefined}
+                  onPostalCodeRangeAdd={onPostalCodeAssign}
+                  postalCodes={rate?.postalCodeRules}
                 />
                 <CardSpacer />
                 <ShippingMethodProducts

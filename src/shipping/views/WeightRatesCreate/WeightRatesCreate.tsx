@@ -5,13 +5,13 @@ import {
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
+import ShippingRatePostalCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRatePostalCodeRangeRemoveDialog";
+import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
-import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
 import {
   ShippingRateCreateUrlDialog,
@@ -38,8 +38,8 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [zipCodes, setZipCodes] = React.useState<
-    ShippingMethodFragment_zipCodeRules[]
+  const [postalCodes, setPostalCodes] = React.useState<
+    ShippingMethodFragment_postalCodeRules[]
   >([]);
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
@@ -70,27 +70,27 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     createShippingRate,
     errors,
     status
-  } = useShippingRateCreator(id, ShippingMethodTypeEnum.WEIGHT, zipCodes);
+  } = useShippingRateCreator(id, ShippingMethodTypeEnum.WEIGHT, postalCodes);
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
-  const handleZipCodeRangeAdd = (data: MinMax) => {
-    setZipCodes(zipCodes => [
-      ...zipCodes,
+  const handlePostalCodeRangeAdd = (data: MinMax) => {
+    setPostalCodes(postalCodes => [
+      ...postalCodes,
       {
-        __typename: "ShippingMethodZipCodeRule",
+        __typename: "ShippingMethodPostalCodeRule",
         end: data.max,
-        id: zipCodes.length.toString(),
+        id: postalCodes.length.toString(),
         start: data.min
       }
     ]);
     closeModal();
   };
-  const handleZipCodeRangeDelete = (id: string) => {
-    setZipCodes(zipCodes =>
+  const handlePostalCodeRangeDelete = (id: string) => {
+    setPostalCodes(postalCodes =>
       remove(
-        zipCodes.find(zipCode => zipCode.id === id),
-        zipCodes,
+        postalCodes.find(postalCode => postalCode.id === id),
+        postalCodes,
         (a, b) => a.id === b.id
       )
     );
@@ -126,27 +126,27 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        zipCodes={zipCodes}
+        postalCodes={postalCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onZipCodeAssign={() => openModal("add-range")}
-        onZipCodeUnassign={id =>
+        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeUnassign={id =>
           openModal("remove-range", {
             id
           })
         }
         variant={ShippingMethodTypeEnum.WEIGHT}
       />
-      <ShippingZoneZipCodeRangeDialog
+      <ShippingZonePostalCodeRangeDialog
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleZipCodeRangeAdd}
+        onSubmit={handlePostalCodeRangeAdd}
         open={params.action === "add-range"}
       />
-      <ShippingRateZipCodeRangeRemoveDialog
+      <ShippingRatePostalCodeRangeRemoveDialog
         confirmButtonState="default"
         onClose={closeModal}
-        onConfirm={() => handleZipCodeRangeDelete(params.id)}
+        onConfirm={() => handlePostalCodeRangeDelete(params.id)}
         open={params.action === "remove-range"}
       />
     </>

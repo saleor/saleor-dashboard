@@ -1,5 +1,5 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
-import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -156,7 +156,7 @@ export function getShippingMethodChannelVariables(
 export function useShippingRateCreator(
   shippingZoneId: string,
   type: ShippingMethodTypeEnum,
-  zipCodes: ShippingMethodFragment_zipCodeRules[]
+  postalCodes: ShippingMethodFragment_postalCodeRules[]
 ) {
   const intl = useIntl();
   const notify = useNotifier();
@@ -205,9 +205,9 @@ export function useShippingRateCreator(
           variables: {
             id: rateId,
             input: {
-              zipCodeRules: zipCodes.map(zipCodeRule => ({
-                end: zipCodeRule.end || null,
-                start: zipCodeRule.start
+              postalCodeRules: postalCodes.map(postalCodeRule => ({
+                end: postalCodeRule.end || null,
+                start: postalCodeRule.start
               }))
             }
           }

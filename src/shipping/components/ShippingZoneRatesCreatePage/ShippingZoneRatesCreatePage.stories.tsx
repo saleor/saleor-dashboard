@@ -46,21 +46,21 @@ const props: ShippingZoneRatesCreatePageProps = {
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
-  onZipCodeAssign: () => undefined,
-  onZipCodeUnassign: () => undefined,
+  onPostalCodeAssign: () => undefined,
+  onPostalCodeUnassign: () => undefined,
   openChannelsModal: () => undefined,
   saveButtonBarState: "default",
   shippingChannels: defaultChannels,
   variant: ShippingMethodTypeEnum.PRICE,
-  zipCodes: [
+  postalCodes: [
     {
-      __typename: "ShippingMethodZipCodeRule",
+      __typename: "ShippingMethodPostalCodeRule",
       end: "51-200",
       id: "1",
       start: "51-220"
     },
     {
-      __typename: "ShippingMethodZipCodeRule",
+      __typename: "ShippingMethodPostalCodeRule",
       end: "31-101",
       id: "1",
       start: "44-205"

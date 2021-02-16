@@ -16,7 +16,7 @@ import { DialogProps, MinMax } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZoneZipCodeRangeDialogProps extends DialogProps {
+export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit: (range: MinMax) => void;
 }
@@ -28,11 +28,11 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "ShippingZoneZipCodeRangeDialog"
+    name: "ShippingZonePostalCodeRangeDialog"
   }
 );
 
-const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogProps> = ({
+const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
   confirmButtonState,
   open,
   onClose,
@@ -105,5 +105,6 @@ const ShippingZoneZipCodeRangeDialog: React.FC<ShippingZoneZipCodeRangeDialogPro
   );
 };
 
-ShippingZoneZipCodeRangeDialog.displayName = "ShippingZoneZipCodeRangeDialog";
-export default ShippingZoneZipCodeRangeDialog;
+ShippingZonePostalCodeRangeDialog.displayName =
+  "ShippingZonePostalCodeRangeDialog";
+export default ShippingZonePostalCodeRangeDialog;

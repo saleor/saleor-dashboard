@@ -5,12 +5,13 @@ import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingRateZipCodeRangeRemoveDialogProps extends DialogProps {
+export interface ShippingRatePostalCodeRangeRemoveDialogProps
+  extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   onConfirm: () => void;
 }
 
-const ShippingRateZipCodeRangeRemoveDialog: React.FC<ShippingRateZipCodeRangeRemoveDialogProps> = ({
+const ShippingRatePostalCodeRangeRemoveDialog: React.FC<ShippingRatePostalCodeRangeRemoveDialogProps> = ({
   confirmButtonState,
   open,
   onClose,
@@ -37,6 +38,6 @@ const ShippingRateZipCodeRangeRemoveDialog: React.FC<ShippingRateZipCodeRangeRem
   );
 };
 
-ShippingRateZipCodeRangeRemoveDialog.displayName =
-  "ShippingRateZipCodeRangeRemoveDialog";
-export default ShippingRateZipCodeRangeRemoveDialog;
+ShippingRatePostalCodeRangeRemoveDialog.displayName =
+  "ShippingRatePostalCodeRangeRemoveDialog";
+export default ShippingRatePostalCodeRangeRemoveDialog;

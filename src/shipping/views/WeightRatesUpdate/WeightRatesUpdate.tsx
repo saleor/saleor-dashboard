@@ -20,11 +20,11 @@ import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
+import ShippingRatePostalCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRatePostalCodeRangeRemoveDialog";
+import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
-import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
@@ -32,8 +32,8 @@ import {
 } from "@saleor/shipping/handlers";
 import {
   useShippingMethodChannelListingUpdate,
-  useShippingMethodZipCodeRangeAssign,
-  useShippingMethodZipCodeRangeUnassign,
+  useShippingMethodPostalCodeRangeAssign,
+  useShippingMethodPostalCodeRangeUnassign,
   useShippingPriceExcludeProduct,
   useShippingPriceRemoveProductsFromExclude,
   useShippingRateDelete,
@@ -172,11 +172,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   });
 
   const [
-    assignZipCodeRange,
-    assignZipCodeRangeOpts
-  ] = useShippingMethodZipCodeRangeAssign({
+    assignPostalCodeRange,
+    assignPostalCodeRangeOpts
+  ] = useShippingMethodPostalCodeRangeAssign({
     onCompleted: data => {
-      if (data.shippingMethodZipCodeRulesCreate.errors.length === 0) {
+      if (data.shippingMethodPostalCodeRulesCreate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -194,11 +194,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
   });
   const [
-    unassignZipCodeRange,
-    unassignZipCodeRangeOpts
-  ] = useShippingMethodZipCodeRangeUnassign({
+    unassignPostalCodeRange,
+    unassignPostalCodeRangeOpts
+  ] = useShippingMethodPostalCodeRangeUnassign({
     onCompleted: data => {
-      if (data.shippingMethodZipCodeRulesDelete.errors.length === 0) {
+      if (data.shippingMethodPostalCodeRulesDelete.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -346,22 +346,22 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
             />
           </Button>
         }
-        onZipCodeAssign={() => openModal("add-range")}
-        onZipCodeUnassign={id =>
+        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeUnassign={id =>
           openModal("remove-range", {
             id
           })
         }
       />
-      <ShippingZoneZipCodeRangeDialog
-        confirmButtonState={assignZipCodeRangeOpts.status}
+      <ShippingZonePostalCodeRangeDialog
+        confirmButtonState={assignPostalCodeRangeOpts.status}
         onClose={closeModal}
         onSubmit={data =>
-          assignZipCodeRange({
+          assignPostalCodeRange({
             variables: {
               id: rateId,
               input: {
-                zipCodeRules: [
+                postalCodeRules: [
                   {
                     end: data.max || null,
                     start: data.min
@@ -373,11 +373,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         }
         open={params.action === "add-range"}
       />
-      <ShippingRateZipCodeRangeRemoveDialog
-        confirmButtonState={unassignZipCodeRangeOpts.status}
+      <ShippingRatePostalCodeRangeRemoveDialog
+        confirmButtonState={unassignPostalCodeRangeOpts.status}
         onClose={closeModal}
         onConfirm={() =>
-          unassignZipCodeRange({
+          unassignPostalCodeRange({
             variables: {
               id: params.id
             }

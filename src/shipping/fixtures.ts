@@ -1634,21 +1634,21 @@ export const shippingZone: ShippingZone_shippingZone = {
       name: "DB Schenker",
       privateMetadata: [],
       type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1695,21 +1695,21 @@ export const shippingZone: ShippingZone_shippingZone = {
       name: "Registred priority",
       privateMetadata: [],
       type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1756,21 +1756,21 @@ export const shippingZone: ShippingZone_shippingZone = {
       name: "UPS",
       privateMetadata: [],
       type: ShippingMethodTypeEnum.PRICE,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           start: "51-274"
@@ -1804,21 +1804,21 @@ export const shippingZone: ShippingZone_shippingZone = {
       name: "DHL",
       privateMetadata: [],
       type: ShippingMethodTypeEnum.PRICE,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           start: "51-274"

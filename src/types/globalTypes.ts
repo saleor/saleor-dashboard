@@ -1747,7 +1747,7 @@ export interface ShippingPriceInput {
 }
 
 export interface ShippingZipCodeRulesCreateInput {
-  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
+  postalCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
 }
 
 export interface ShippingZipCodeRulesCreateInputRange {
