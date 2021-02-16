@@ -1,10 +1,9 @@
 class Checkout {
   createCheckout(channelSlug, email, productQuantity, variantsList) {
-    const lines = [];
-    variantsList.forEach(variant => {
-      lines.push(`{quantity:${productQuantity}
-                    variantId:"${variant.id}"}`);
-    });
+    const lines = variantsList.map(
+      variant => `{quantity:${productQuantity}
+                    variantId:"${variant.id}"}`
+    );
     const mutation = `mutation{
                 checkoutCreate(input:{
                   channel:"${channelSlug}"

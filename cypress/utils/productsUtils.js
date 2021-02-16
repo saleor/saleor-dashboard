@@ -1,24 +1,21 @@
 import Attribute from "../apiRequests/Attribute";
 import Category from "../apiRequests/Category";
 import Product from "../apiRequests/Product";
+import Promises from "../support/promises/promises.js";
 
 class ProductsUtils {
-  createdVariantId;
-  productTypeId;
-  attributeId;
-  categoryId;
+  promises = new Promises();
+  productRequest = new Product();
+  attributeRequest = new Attribute();
+  categoryRequest = new Category();
 
-  updateChannelInProduct(productsList, channelId) {
-    const product = new Product();
-    productsList.forEach(productElement => {
-      product.updateChannelInProduct(productElement.node.id, channelId);
-      const variants = productElement.node.variants;
-      variants.forEach(variant => {
-        product.updateChannelPriceInVariant(variant.id, channelId);
-      });
-    });
-  }
-  createProductInChannel(
+  product;
+  variants;
+  productType;
+  attribute;
+  category;
+
+  async createProductInChannel(
     name,
     channelId,
     warehouseId,
@@ -28,97 +25,112 @@ class ProductsUtils {
     categoryId,
     price
   ) {
-    const product = new Product();
-    return product
-      .createProduct(attributeId, name, productTypeId, categoryId)
-      .then(createProductResp => {
-        const productId = createProductResp.body.data.productCreate.product.id;
-        return product.updateChannelInProduct(productId, channelId).then(() =>
-          product
-            .createVariant(
-              productId,
-              name,
-              warehouseId,
-              quantityInWarehouse,
-              channelId,
-              price
-            )
-            .then(createVariantResp => {
-              this.createdVariantId =
-                createVariantResp.body.data.productVariantBulkCreate.productVariants;
-            })
-        );
-      });
+    await this.createProduct(attributeId, name, productTypeId, categoryId);
+    this.updateChannelInProduct(this.product.id, channelId);
+    await this.createVariant(
+      this.product.id,
+      name,
+      warehouseId,
+      quantityInWarehouse,
+      channelId,
+      price
+    );
   }
 
-  createTypeAttributeAndCategoryForProduct(name) {
-    const attribute = new Attribute();
-    const category = new Category();
-    const product = new Product();
-    return attribute.createAttribute(name).then(createAttributeResp => {
-      this.attributeId =
-        createAttributeResp.body.data.attributeCreate.attribute.id;
-      return product
-        .createTypeProduct(name, this.attributeId)
-        .then(createTypeProductResp => {
-          this.productTypeId =
-            createTypeProductResp.body.data.productTypeCreate.productType.id;
-          return category.createCategory(name).then(categoryResp => {
-            this.categoryId = categoryResp.body.data.categoryCreate.category.id;
-          });
-        });
-    });
+  async createTypeAttributeAndCategoryForProduct(name) {
+    await this.createAttribute(name);
+    await this.createTypeProduct(name, this.attribute.id);
+    await this.createCategory(name);
+  }
+  async createAttribute(name) {
+    const respProm = await this.promises.createPromise(
+      this.attributeRequest.createAttribute(name)
+    );
+    this.attribute = respProm.attributeCreate.attribute;
+  }
+  async createTypeProduct(name, attributeId) {
+    const respProm = await this.promises.createPromise(
+      this.productRequest.createTypeProduct(name, attributeId)
+    );
+    this.productType = respProm.productTypeCreate.productType;
+  }
+  async createCategory(name) {
+    const respProm = await this.promises.createPromise(
+      this.categoryRequest.createCategory(name)
+    );
+    this.category = respProm.categoryCreate.category;
+  }
+  async createProduct(attributeId, name, productTypeId, categoryId) {
+    const respProm = await this.promises.createPromise(
+      this.productRequest.createProduct(
+        attributeId,
+        name,
+        productTypeId,
+        categoryId
+      )
+    );
+    this.product = respProm.productCreate.product;
+  }
+  async updateChannelInProduct(productId, channelId) {
+    await this.promises.createPromise(
+      this.productRequest.updateChannelInProduct(productId, channelId)
+    );
+  }
+  async createVariant(
+    productId,
+    name,
+    warehouseId,
+    quantityInWarehouse,
+    channelId,
+    price
+  ) {
+    const respProm = await this.promises.createPromise(
+      this.productRequest.createVariant(
+        productId,
+        name,
+        warehouseId,
+        quantityInWarehouse,
+        channelId,
+        price
+      )
+    );
+    this.variants = respProm.productVariantBulkCreate.productVariants;
   }
 
   getCreatedVariants() {
-    return this.createdVariantId;
+    return this.variants;
   }
-  getProductTypeId() {
-    return this.productTypeId;
+  getProductType() {
+    return this.productType;
   }
-  getAttributeId() {
-    return this.attributeId;
+  getAttribute() {
+    return this.attribute;
   }
-  getCategoryId() {
-    return this.categoryId;
+  getCategory() {
+    return this.category;
   }
-
-  deleteProducts(startsWith) {
+  deleteProperProducts(startsWith) {
     const product = new Product();
     const attribute = new Attribute();
     const category = new Category();
-    product.getProductTypes(100, startsWith).then(resp => {
-      const productTypes = resp.body.data.productTypes.edges;
-      productTypes.forEach(productType => {
-        if (productType.node.name.includes(startsWith)) {
-          product.deleteProductType(productType.node.id);
-        }
-      });
-    });
-    attribute.getAttributes(100, startsWith).then(resp => {
-      const attributes = resp.body.data.attributes.edges;
-      attributes.forEach(attributeElement => {
-        if (attributeElement.node.name.includes(startsWith)) {
-          attribute.deleteAttribute(attributeElement.node.id);
-        }
-      });
-    });
-    category.getCategories(100, startsWith).then(resp => {
-      const categories = resp.body.data.categories.edges;
-      categories.forEach(categoryElement => {
-        if (categoryElement.node.name.includes(startsWith)) {
-          category.deleteCategory(categoryElement.node.id);
-        }
-      });
-    });
-    product.getFirstProducts(100, startsWith).then(getProductResp => {
-      const products = getProductResp.body.data.products.edges;
-      products.forEach(productElement => {
-        if (productElement.node.name.includes(startsWith)) {
-          product.deleteProducts(productElement.node.id);
-        }
-      });
-    });
+    cy.deleteProperElements(
+      product.deleteProductType,
+      product.getProductTypes,
+      startsWith,
+      "productType"
+    );
+    cy.deleteProperElements(
+      attribute.deleteAttribute,
+      attribute.getAttributes,
+      startsWith,
+      "attributes"
+    );
+    cy.deleteProperElements(
+      category.deleteCategory,
+      category.getCategories,
+      startsWith,
+      "categories"
+    );
   }
 }
 export default ProductsUtils;

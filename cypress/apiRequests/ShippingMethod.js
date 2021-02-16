@@ -78,7 +78,9 @@ class ShippingMethod {
           }
         }
         `;
-    return cy.sendRequestWithQuery(query);
+    return cy
+      .sendRequestWithQuery(query)
+      .then(resp => resp.body.data.shippingZones.edges);
   }
 }
 export default ShippingMethod;

@@ -31,9 +31,9 @@ describe("User authorization", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    productsUtils.deleteProperProducts(startsWith);
     customer.deleteCustomers(startsWith);
     shippingUtils.deleteShipping(startsWith);
-    productsUtils.deleteProducts(startsWith);
 
     channelsUtils.getDefaultChannel().then(channel => {
       defaultChannel = channel;
@@ -50,21 +50,21 @@ describe("User authorization", () => {
                 shippingPrice
               )
               .then(() => {
-                const warehouseId = shippingUtils.getWarehouseId();
+                const warehouse = shippingUtils.getWarehouse();
                 productsUtils
                   .createTypeAttributeAndCategoryForProduct(randomName)
                   .then(() => {
-                    const productTypeId = productsUtils.getProductTypeId();
-                    const attributeId = productsUtils.getAttributeId();
-                    const categoryId = productsUtils.getCategoryId();
+                    const productType = productsUtils.getProductType();
+                    const attribute = productsUtils.getAttribute();
+                    const category = productsUtils.getCategory();
                     productsUtils.createProductInChannel(
                       randomName,
                       defaultChannel.id,
-                      warehouseId,
+                      warehouse.id,
                       20,
-                      productTypeId,
-                      attributeId,
-                      categoryId,
+                      productType.id,
+                      attribute.id,
+                      category.id,
                       productPrice
                     );
                   });
@@ -96,7 +96,7 @@ describe("User authorization", () => {
 
     ordersUtils.createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethodId(),
+      shippingUtils.getShippingMethod().id,
       defaultChannel.id,
       productsUtils.getCreatedVariants()
     );
@@ -113,14 +113,13 @@ describe("User authorization", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
       .as("ordersReadyForCapture");
-    const shippingId = shippingUtils.getShippingMethodId();
     const variantsList = productsUtils.getCreatedVariants();
 
     ordersUtils.createWaitingForCaptureOrder(
       defaultChannel.slug,
       randomEmail,
       variantsList,
-      shippingId
+      shippingUtils.getShippingMethod().id
     );
 
     cy.get("@ordersReadyForCapture").then(ordersReadyForCapture => {
@@ -138,19 +137,19 @@ describe("User authorization", () => {
       .as("productsOutOfStock");
     const productOutOfStockRandomName = startsWith + faker.random.number();
     const productsOutOfStockUtils = new ProductsUtils();
-    const warehouseId = shippingUtils.getWarehouseId();
-    const productTypeId = productsUtils.getProductTypeId();
-    const attributeId = productsUtils.getAttributeId();
-    const categoryId = productsUtils.getCategoryId();
+    const warehouse = shippingUtils.getWarehouse();
+    const productType = productsUtils.getProductType();
+    const attribute = productsUtils.getAttribute();
+    const category = productsUtils.getCategory();
 
     productsOutOfStockUtils.createProductInChannel(
       productOutOfStockRandomName,
       defaultChannel.id,
-      warehouseId,
+      warehouse.id,
       0,
-      productTypeId,
-      attributeId,
-      categoryId,
+      productType.id,
+      attribute.id,
+      category.id,
       productPrice
     );
 
@@ -168,7 +167,7 @@ describe("User authorization", () => {
 
     ordersUtils.createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethodId(),
+      shippingUtils.getShippingMethod().id,
       defaultChannel.id,
       productsUtils.getCreatedVariants()
     );
@@ -190,7 +189,7 @@ describe("User authorization", () => {
 
     ordersUtils.createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethodId(),
+      shippingUtils.getShippingMethod().id,
       defaultChannel.id,
       productsUtils.getCreatedVariants()
     );

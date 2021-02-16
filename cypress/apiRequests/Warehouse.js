@@ -38,7 +38,9 @@ class Warehouse {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(query);
+    return cy
+      .sendRequestWithQuery(query)
+      .then(resp => resp.body.data.warehouses.edges);
   }
   deleteWarehouse(warehouseId) {
     const mutation = `mutation{

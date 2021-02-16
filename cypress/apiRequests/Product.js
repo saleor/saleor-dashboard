@@ -1,11 +1,10 @@
 class Product {
   getFirstProducts(first, search) {
-    let filter = "";
-    if (search) {
-      filter = `, filter:{
-        search:"${search}"
-      }`;
-    }
+    const filter = search
+      ? `, filter:{
+      search:"${search}"
+    }`
+      : "";
     const query = `query{
             products(first:${first}${filter}){
               edges{
@@ -20,7 +19,9 @@ class Product {
             }
           }
         `;
-    return cy.sendRequestWithQuery(query);
+    return cy
+      .sendRequestWithQuery(query)
+      .then(resp => resp.body.data.products.edges);
   }
 
   updateChannelInProduct(productId, channelId) {
@@ -159,7 +160,9 @@ class Product {
         }
       }
     }`;
-    return cy.sendRequestWithQuery(query);
+    return cy
+      .sendRequestWithQuery(query)
+      .then(resp => resp.body.data.productTypes.edges);
   }
 
   deleteProductType(productTypeId) {

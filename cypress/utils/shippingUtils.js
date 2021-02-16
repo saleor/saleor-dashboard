@@ -1,71 +1,77 @@
 import ShippingMethod from "../apiRequests/ShippingMethod";
 import Warehouse from "../apiRequests/Warehouse";
+import Promises from "../support/promises/promises.js";
 class ShippingUtils {
-  shippingMethodId;
-  shippingZoneId;
-  warehouseId;
+  promises = new Promises();
+  shippingMethodRequest = new ShippingMethod();
+  warehouseRequest = new Warehouse();
 
-  createShipping(channelId, name, address, price) {
-    const shippingMethod = new ShippingMethod();
-    const warehouse = new Warehouse();
-    return shippingMethod
-      .createShippingZone(name, address.country)
-      .then(shippingZoneResp => {
-        this.shippingZoneId =
-          shippingZoneResp.body.data.shippingZoneCreate.shippingZone.id;
-        return warehouse
-          .createWarehouse(name, this.shippingZoneId, address)
-          .then(createWarehouseResp => {
-            this.warehouseId =
-              createWarehouseResp.body.data.createWarehouse.warehouse.id;
-            return shippingMethod
-              .createShippingRate(name, this.shippingZoneId)
-              .then(rateResp => {
-                this.shippingMethodId =
-                  rateResp.body.data.shippingPriceCreate.shippingMethod.id;
-                return shippingMethod.addChannelToShippingMethod(
-                  this.shippingMethodId,
-                  channelId,
-                  price
-                );
-              });
-          });
-      });
+  shippingMethod;
+  shippingZone;
+  warehouse;
+
+  async createShipping(channelId, name, address, price) {
+    await this.createShippingZone(name, address.country);
+    await this.createWarehouse(name, this.shippingZone.id, address);
+    await this.createShippingRate(name, this.shippingZone.id);
+    this.addChannelToShippingMethod(this.shippingMethod.id, channelId, price);
   }
 
-  getShippingMethodId() {
-    return this.shippingMethodId;
+  async createShippingZone(name, country) {
+    const respProm = await this.promises.createPromise(
+      this.shippingMethodRequest.createShippingZone(name, country)
+    );
+    this.shippingZone = respProm.shippingZoneCreate.shippingZone;
+  }
+  async createWarehouse(name, shippingZoneId, address) {
+    const respProm = await this.promises.createPromise(
+      this.warehouseRequest.createWarehouse(name, shippingZoneId, address)
+    );
+    this.warehouse = respProm.createWarehouse.warehouse;
+  }
+  async createShippingRate(name, shippingZoneId) {
+    const respProm = await this.promises.createPromise(
+      this.shippingMethodRequest.createShippingRate(name, shippingZoneId)
+    );
+    this.shippingMethod = respProm.shippingPriceCreate.shippingMethod;
+  }
+  async addChannelToShippingMethod(shippingMethodId, channelId, price) {
+    await this.promises.createPromise(
+      this.shippingMethodRequest.addChannelToShippingMethod(
+        shippingMethodId,
+        channelId,
+        price
+      )
+    );
   }
 
-  getShippingZoneId() {
-    return this.shippingZoneId;
+  getShippingMethod() {
+    return this.shippingMethod;
   }
 
-  getWarehouseId() {
-    return this.warehouseId;
+  getShippingZone() {
+    return this.shippingZone;
+  }
+
+  getWarehouse() {
+    return this.warehouse;
   }
 
   deleteShipping(startsWith) {
     const shippingMethod = new ShippingMethod();
     const warehouse = new Warehouse();
-    shippingMethod.getShippingZones().then(resp => {
-      if (resp.body.data.shippingZones) {
-        const shippingZone = resp.body.data.shippingZones.edges;
-        shippingZone.forEach(element => {
-          if (element.node.name.includes(startsWith)) {
-            shippingMethod.deleteShippingZone(element.node.id);
-          }
-        });
-      }
-    });
-    warehouse.getWarehouses(100, startsWith).then(resp => {
-      const warehouses = resp.body.data.warehouses.edges;
-      warehouses.forEach(warehouseElement => {
-        if (warehouseElement.node.name.includes(startsWith)) {
-          warehouse.deleteWarehouse(warehouseElement.node.id);
-        }
-      });
-    });
+    cy.deleteProperElements(
+      shippingMethod.deleteShippingZone,
+      shippingMethod.getShippingZones,
+      startsWith,
+      "shippingZONE"
+    );
+    cy.deleteProperElements(
+      warehouse.deleteWarehouse,
+      warehouse.getWarehouses,
+      startsWith,
+      "Warehouse"
+    );
   }
 }
 export default ShippingUtils;

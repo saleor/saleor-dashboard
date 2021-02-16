@@ -26,7 +26,9 @@ class Category {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
+    return cy
+      .sendRequestWithQuery(mutation)
+      .then(resp => resp.body.data.categories.edges);
   }
   deleteCategory(categoryId) {
     const mutation = `mutation{

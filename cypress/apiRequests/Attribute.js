@@ -31,7 +31,9 @@ class Attribute {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(mutation);
+    return cy
+      .sendRequestWithQuery(mutation)
+      .then(resp => resp.body.data.attributes.edges);
   }
 
   deleteAttribute(attributeId) {
