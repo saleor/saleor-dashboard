@@ -6,7 +6,6 @@ import {
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
-  fragmentOrderLine,
   fragmentOrderSettings,
   fulfillmentFragment,
   invoiceFragment

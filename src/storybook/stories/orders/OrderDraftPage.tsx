@@ -5,7 +5,6 @@ import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscount
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import { ApolloProvider } from "react-apollo";
 
 import OrderDraftPage, {
   OrderDraftPageProps
