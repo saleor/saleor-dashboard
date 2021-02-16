@@ -13,7 +13,7 @@ import Label from "../Label";
 import MoneySection, { MoneySectionType } from "./MoneySection";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     horizontalContainer: {
       display: "flex",
       flexDirection: "row",

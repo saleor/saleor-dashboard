@@ -9,7 +9,7 @@ import { defineMessages, useIntl } from "react-intl";
 import Label from "../Label";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     container: {
       display: "flex",
       flexDirection: "column"
