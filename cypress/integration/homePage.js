@@ -179,8 +179,12 @@ describe("User authorization", () => {
       totalAmount = totalAmount
         .toFixed(2)
         .toString()
-        .replace(".", "[,.]");
-      const regexp = new RegExp(`\\D*${totalAmount}\\D*`);
+        .split(".");
+      totalAmount = `\\D*${totalAmount[0].replace(
+        /(\d)(?=(\d{3})+(?!\d))/g,
+        "$1[,.]*"
+      )}[,.]${totalAmount[1]}\\D*`;
+      const regexp = new RegExp(totalAmount);
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.sales, regexp).should("be.visible");
