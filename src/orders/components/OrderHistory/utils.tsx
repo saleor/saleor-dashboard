@@ -71,9 +71,10 @@ export const getEmployeeNameLink = (event: OrderDetails_order_events) => {
     return null;
   }
 
-  const { id, firstName, lastName } = event.user;
+  const { id, firstName, lastName, email } = event.user;
 
-  const employeeName = `${firstName} ${lastName}`;
+  const employeeName =
+    firstName && lastName ? `${firstName} ${lastName}` : email;
 
   return { link: staffMemberDetailsUrl(id), text: employeeName };
 };
