@@ -159,6 +159,29 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts_amount;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_oldAmount | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder {
   __typename: "Order";
   id: string;
@@ -173,6 +196,29 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lastName: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_oldAmount | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -183,6 +229,8 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount | null;
   orderLine: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_orderLine | null;
 }
 
@@ -195,6 +243,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount | null;
   relatedOrder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;

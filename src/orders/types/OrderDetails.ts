@@ -58,6 +58,29 @@ export interface OrderDetails_order_discounts {
   amount: OrderDetails_order_discounts_amount;
 }
 
+export interface OrderDetails_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderDetails_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderDetails_order_events_discount_oldAmount | null;
+}
+
 export interface OrderDetails_order_events_relatedOrder {
   __typename: "Order";
   id: string;
@@ -72,6 +95,29 @@ export interface OrderDetails_order_events_user {
   lastName: string;
 }
 
+export interface OrderDetails_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderDetails_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderDetails_order_events_lines_discount_oldAmount | null;
+}
+
 export interface OrderDetails_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -82,6 +128,8 @@ export interface OrderDetails_order_events_lines_orderLine {
 export interface OrderDetails_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderDetails_order_events_lines_discount | null;
   orderLine: OrderDetails_order_events_lines_orderLine | null;
 }
 
@@ -94,6 +142,7 @@ export interface OrderDetails_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderDetails_order_events_discount | null;
   relatedOrder: OrderDetails_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;

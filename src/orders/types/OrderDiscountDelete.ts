@@ -64,6 +64,29 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_discounts {
   amount: OrderDiscountDelete_orderDiscountDelete_order_discounts_amount;
 }
 
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderDiscountDelete_orderDiscountDelete_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderDiscountDelete_orderDiscountDelete_order_events_discount_oldAmount | null;
+}
+
 export interface OrderDiscountDelete_orderDiscountDelete_order_events_relatedOrder {
   __typename: "Order";
   id: string;
@@ -78,6 +101,29 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_events_user {
   lastName: string;
 }
 
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount_oldAmount | null;
+}
+
 export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -88,6 +134,8 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines_orde
 export interface OrderDiscountDelete_orderDiscountDelete_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderDiscountDelete_orderDiscountDelete_order_events_lines_discount | null;
   orderLine: OrderDiscountDelete_orderDiscountDelete_order_events_lines_orderLine | null;
 }
 
@@ -100,6 +148,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderDiscountDelete_orderDiscountDelete_order_events_discount | null;
   relatedOrder: OrderDiscountDelete_orderDiscountDelete_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;

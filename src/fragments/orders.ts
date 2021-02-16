@@ -13,6 +13,21 @@ export const fragmentOrderEvent = gql`
     email
     emailType
     invoiceNumber
+    discount {
+      valueType
+      value
+      reason
+      amount {
+        amount
+        currency
+      }
+      oldValueType
+      oldValue
+      oldAmount {
+        amount
+        currency
+      }
+    }
     relatedOrder {
       id
       number
@@ -29,6 +44,22 @@ export const fragmentOrderEvent = gql`
     }
     lines {
       quantity
+      itemName
+      discount {
+        valueType
+        value
+        reason
+        amount {
+          amount
+          currency
+        }
+        oldValueType
+        oldValue
+        oldAmount {
+          amount
+          currency
+        }
+      }
       orderLine {
         id
         productName
