@@ -45,7 +45,7 @@ export interface TitleElement {
 export interface TimelineEventHeaderProps {
   title?: string;
   date: string;
-  titleElements?: TitleElement[];
+  titleElements?: Array<TitleElement | null>;
   secondaryTitle?: string;
 }
 
@@ -60,22 +60,24 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
       {title && <Typography>{title}</Typography>}
       {titleElements && (
         <div className={classes.elementsContainer}>
-          {titleElements.map(({ text, link }) => {
-            if (link) {
-              return (
-                <Link
-                  className={classes.titleElement}
-                  onClick={() => navigate(link)}
-                >
-                  {text}
-                </Link>
-              );
-            }
+          {titleElements
+            .filter((element: TitleElement | null) => !!element)
+            .map(({ text, link }) => {
+              if (link) {
+                return (
+                  <Link
+                    className={classes.titleElement}
+                    onClick={() => navigate(link)}
+                  >
+                    {text}
+                  </Link>
+                );
+              }
 
-            return (
-              <Typography className={classes.titleElement}>{text}</Typography>
-            );
-          })}
+              return (
+                <Typography className={classes.titleElement}>{text}</Typography>
+              );
+            })}
         </div>
       )}
       <Typography className={classes.date}>
