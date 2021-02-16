@@ -118,7 +118,6 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               value: PostalCodeInclusion.Exclude
             },
             {
-              disabled: true,
               label: (
                 <div className={classes.option}>
                   <Typography color="textSecondary" variant="body1">

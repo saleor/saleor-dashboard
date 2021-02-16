@@ -6,7 +6,6 @@ import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import ShippingRatePostalCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRatePostalCodeRangeRemoveDialog";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
@@ -19,7 +18,6 @@ import {
 import { MinMax } from "@saleor/types";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { remove } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -82,16 +80,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     ]);
     closeModal();
   };
-  const handlePostalCodeRangeDelete = (id: string) => {
-    setPostalCodes(postalCodes =>
-      remove(
-        postalCodes.find(postalCode => postalCode.id === id),
-        postalCodes,
-        (a, b) => a.id === b.id
-      )
-    );
-    closeModal();
-  };
 
   return (
     <>
@@ -128,9 +116,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         onChannelsChange={setCurrentChannels}
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={id =>
-          openModal("remove-range", {
-            id
-          })
+          console.log("unassign postcode")
         }
         variant={ShippingMethodTypeEnum.PRICE}
       />
@@ -139,12 +125,6 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         onClose={closeModal}
         onSubmit={handlePostalCodeRangeAdd}
         open={params.action === "add-range"}
-      />
-      <ShippingRatePostalCodeRangeRemoveDialog
-        confirmButtonState="default"
-        onClose={closeModal}
-        onConfirm={() => handlePostalCodeRangeDelete(params.id)}
-        open={params.action === "remove-range"}
       />
     </>
   );

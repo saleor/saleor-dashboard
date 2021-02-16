@@ -20,7 +20,6 @@ import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingRatePostalCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRatePostalCodeRangeRemoveDialog";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage, {
   FormData
@@ -32,8 +31,6 @@ import {
 } from "@saleor/shipping/handlers";
 import {
   useShippingMethodChannelListingUpdate,
-  useShippingMethodPostalCodeRangeAssign,
-  useShippingMethodPostalCodeRangeUnassign,
   useShippingPriceExcludeProduct,
   useShippingPriceRemoveProductsFromExclude,
   useShippingRateDelete,
@@ -109,43 +106,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
   ] = useShippingMethodChannelListingUpdate({});
-
-  const [
-    assignPostalCodeRange,
-    assignPostalCodeRangeOpts
-  ] = useShippingMethodPostalCodeRangeAssign({
-    onCompleted: data => {
-      if (data.shippingMethodPostalCodeRulesCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      } else {
-        notify({
-          status: "error",
-          text: intl.formatMessage({
-            defaultMessage: "Cannot add specified postal codes range.",
-            description: "postal code range add error text"
-          })
-        });
-      }
-    }
-  });
-
-  const [
-    unassignPostalCodeRange,
-    unassignPostalCodeRangeOpts
-  ] = useShippingMethodPostalCodeRangeUnassign({
-    onCompleted: data => {
-      if (data.shippingMethodPostalCodeRulesDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-      }
-    }
-  });
 
   const [
     unassignProduct,
@@ -352,36 +312,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         }
       />
       <ShippingZonePostalCodeRangeDialog
-        confirmButtonState={assignPostalCodeRangeOpts.status}
+        confirmButtonState={"default"}
         onClose={closeModal}
         onSubmit={data =>
-          assignPostalCodeRange({
-            variables: {
-              id: rateId,
-              input: {
-                postalCodeRules: [
-                  {
-                    end: data.max || null,
-                    start: data.min
-                  }
-                ]
-              }
-            }
-          })
+          console.log(data)
         }
         open={params.action === "add-range"}
-      />
-      <ShippingRatePostalCodeRangeRemoveDialog
-        confirmButtonState={unassignPostalCodeRangeOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          unassignPostalCodeRange({
-            variables: {
-              id: params.id
-            }
-          })
-        }
-        open={params.action === "remove-range"}
       />
     </>
   );
