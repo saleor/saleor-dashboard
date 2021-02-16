@@ -93,8 +93,12 @@ const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       )}
 
       <CardSpacer />
-      <Label text={intl.formatMessage(messages.reasonLabel)} />
-      <Typography>{reason}</Typography>
+      {!!reason && (
+        <>
+          <Label text={intl.formatMessage(messages.reasonLabel)} />
+          <Typography>{reason}</Typography>
+        </>
+      )}
     </TimelineEvent>
   );
 };
