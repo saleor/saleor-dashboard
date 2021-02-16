@@ -44,7 +44,7 @@ export const getProperPrice = (shop: ShopInfo_shop) => ({
 }: {
   net: Money;
   gross: Money;
-}): Money => (shop.includeTaxesInPrices ? gross : net);
+}): Money => (shop?.includeTaxesInPrices ? gross : net);
 
 export const getManualOrderDiscount = (order: OrderDetails_order) =>
   order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;

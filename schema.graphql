@@ -3972,6 +3972,7 @@ type OrderLineDiscountRemove {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   orderLine: OrderLine
+  order: Order
   orderErrors: [OrderError!]!
 }
 
@@ -3981,6 +3982,7 @@ type OrderLineDiscountUpdate {
       reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
     )
   orderLine: OrderLine
+  order: Order
   orderErrors: [OrderError!]!
 }
 

@@ -82,7 +82,6 @@ interface OrderDraftDetailsSummaryProps
 
 const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
   const {
-    disabled,
     order,
     onShippingMethodEdit,
     orderDiscount,
@@ -184,7 +183,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           </td>
         </tr>
         <tr>
-          {!hasChosenShippingMethod && !disabled && (
+          {hasAvailableShippingMethods && (
             <td>
               <Link onClick={onShippingMethodEdit}>
                 {intl.formatMessage(messages.addShippingCarrier)}
@@ -192,7 +191,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
             </td>
           )}
 
-          {(!hasAvailableShippingMethods || hasNoneShippingChosen) && (
+          {!hasAvailableShippingMethods && (
             <td>{intl.formatMessage(messages.noShippingCarriers)}</td>
           )}
 
