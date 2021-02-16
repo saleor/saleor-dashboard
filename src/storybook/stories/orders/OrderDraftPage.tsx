@@ -1,8 +1,11 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
 import { adminUserPermissions, fetchMoreProps } from "@saleor/fixtures";
+import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+import { ApolloProvider } from "react-apollo";
 
 import OrderDraftPage, {
   OrderDraftPageProps
@@ -37,15 +40,35 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   usersLoading: false
 };
 
+const DiscountWrapper: React.FC<{ children: React.ReactNode }> = ({
+  children
+}) => (
+  <OrderDiscountProvider order={order}>
+    <OrderLineDiscountProvider order={order}>
+      {children}
+    </OrderLineDiscountProvider>
+  </OrderDiscountProvider>
+);
+
 storiesOf("Views / Orders / Order draft", module)
   .addDecorator(Decorator)
-  .add("default", () => <OrderDraftPage {...props} />)
+  .add("default", () => (
+    <DiscountWrapper>
+      <OrderDraftPage {...props} />
+    </DiscountWrapper>
+  ))
   .add("loading", () => (
-    <OrderDraftPage {...props} disabled={true} order={undefined} />
+    <DiscountWrapper>
+      <OrderDraftPage {...props} disabled={true} order={undefined} />
+    </DiscountWrapper>
   ))
   .add("without lines", () => (
-    <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
+    <DiscountWrapper>
+      <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
+    </DiscountWrapper>
   ))
   .add("no user permissions", () => (
-    <OrderDraftPage {...props} userPermissions={[]} />
+    <DiscountWrapper>
+      <OrderDraftPage {...props} userPermissions={[]} />
+    </DiscountWrapper>
   ));

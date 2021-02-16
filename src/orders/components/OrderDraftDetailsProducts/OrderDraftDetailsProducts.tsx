@@ -107,7 +107,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         </TableHead>
       )}
       <TableBody>
-        {!!lines.length ? (
+        {!!lines?.length ? (
           renderCollection(lines, line => (
             <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
               {(
