@@ -1222,6 +1222,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Image" as "Image",
         url: placeholder
       },
+
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",
         currency: "USD",
