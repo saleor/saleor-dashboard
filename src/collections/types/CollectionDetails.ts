@@ -102,7 +102,7 @@ export interface CollectionDetails_collection {
   privateMetadata: (CollectionDetails_collection_privateMetadata | null)[];
   backgroundImage: CollectionDetails_collection_backgroundImage | null;
   slug: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   products: CollectionDetails_collection_products | null;

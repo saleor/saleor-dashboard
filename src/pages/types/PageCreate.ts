@@ -117,7 +117,7 @@ export interface PageCreate_pageCreate_page {
   pageType: PageCreate_pageCreate_page_pageType;
   metadata: (PageCreate_pageCreate_page_metadata | null)[];
   privateMetadata: (PageCreate_pageCreate_page_privateMetadata | null)[];
-  content: any;
+  content: any | null;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;
