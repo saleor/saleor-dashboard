@@ -1,10 +1,9 @@
 import faker from "faker";
+import { visit } from "graphql";
 
 import Channels from "../apiRequests/Channels";
 import Product from "../apiRequests/Product";
 import ShopInfo from "../apiRequests/ShopInfo";
-import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
-import { VARIANTS_SELECTORS } from "../elements/catalog/variants-selectors";
 import VariantsSteps from "../steps/products/VariantsSteps";
 import { urlList } from "../url/url-list";
 import ChannelsUtils from "../utils/channelsUtils";
@@ -84,24 +83,6 @@ describe("creating variants", () => {
         );
         cy.visit(`${urlList.products}${productId}`);
         variantsSteps.createFirstVariant(warehouse.id);
-        // .get(PRODUCTS_SELECTORS.addVariantsButton)
-        // .click()
-        // .get(VARIANTS_SELECTORS.attributeCheckbox)
-        // .first()
-        // .click()
-        // .get(VARIANTS_SELECTORS.nextButton)
-        // .click()
-        // .get(VARIANTS_SELECTORS.priceInput)
-        // .type(10)
-        // .get(`[name*='${warehouseId}']`)
-        // .click()
-        // .get(VARIANTS_SELECTORS.nextButton)
-        // .click()
-        // .get(VARIANTS_SELECTORS.skuInput)
-        // .type(name)
-        // .get(VARIANTS_SELECTORS.nextButton)
-        // .click()
-        // .waitForGraph("ProductVariantBulkCreate")
         cy.getProductDetails(product.id, defaultChannel.slug).then(
           productDetailsResp => {
             expect(productDetailsResp.body[0].data.product.name).to.equal(name);
@@ -133,24 +114,6 @@ describe("creating variants", () => {
       .then(() => {
         cy.visit(`${urlList.products}${productId}`);
         variantsSteps.createVariant(secondVariantSku, warehouse.name);
-        // .get(PRODUCTS_SELECTORS.addVariantsButton)
-        // .click()
-        // .get(VARIANTS_SELECTORS.attributeSelector)
-        // .click()
-        // .get(VARIANTS_SELECTORS.attributeOption)
-        // .first()
-        // .click()
-        // .get(VARIANTS_SELECTORS.priceInput)
-        // .type(10)
-        // .get(VARIANTS_SELECTORS.skuInputInAddVariant)
-        // .type(secondVariantSku)
-        // .get(VARIANTS_SELECTORS.addWarehouseButton)
-        // .click()
-        // .get(VARIANTS_SELECTORS.warehouseOption)
-        // .contains(name)
-        // .click()
-        // .get(VARIANTS_SELECTORS.saveButton)
-        // .click()
       })
       .then(() => cy.getProductDetails(productId, defaultChannel.slug))
       .then(productDetailsResp => {
@@ -194,5 +157,25 @@ describe("creating variants", () => {
           true
         );
       });
+    visit(`${urlList.products}${productId}`);
+    variantsSteps.createFirstVariant(warehouse.id);
+    cy.getProductDetails(product.id, defaultChannel.slug).then(
+      productDetailsResp => {
+        expect(productDetailsResp.body[0].data.product.name).to.equal(name);
+        expect(
+          productDetailsResp.body[0].data.product.variants[0].pricing.price
+            .gross.amount
+        ).to.equal(10);
+      }
+    );
+    cy.getProductDetails(product.id, newChannel.slug).then(
+      productDetailsResp => {
+        expect(productDetailsResp.body[0].data.product.name).to.equal(name);
+        expect(
+          productDetailsResp.body[0].data.product.variants[0].pricing.price
+            .gross.amount
+        ).to.equal(10);
+      }
+    );
   });
 });
