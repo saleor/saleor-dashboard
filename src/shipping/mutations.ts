@@ -4,7 +4,6 @@ import {
 } from "@saleor/fragments/errors";
 import {
   shippingMethodFragment,
-  shippingMethodWithZipCodesFragment,
   shippingZoneDetailsFragment
 } from "@saleor/fragments/shipping";
 import { countryFragment } from "@saleor/fragments/taxes";
@@ -39,14 +38,6 @@ import {
   ShippingMethodChannelListingUpdate,
   ShippingMethodChannelListingUpdateVariables
 } from "./types/ShippingMethodChannelListingUpdate";
-import {
-  ShippingMethodZipCodeRangeAssign,
-  ShippingMethodZipCodeRangeAssignVariables
-} from "./types/ShippingMethodZipCodeRangeAssign";
-import {
-  ShippingMethodZipCodeRangeUnassign,
-  ShippingMethodZipCodeRangeUnassignVariables
-} from "./types/ShippingMethodZipCodeRangeUnassign";
 import {
   ShippingPriceExcludeProduct,
   ShippingPriceExcludeProductVariables
@@ -262,49 +253,6 @@ export const useShippingMethodChannelListingUpdate = makeMutation<
   ShippingMethodChannelListingUpdate,
   ShippingMethodChannelListingUpdateVariables
 >(shippingMethodChannelListingUpdate);
-
-export const shippingMethodZipCodeRangeAssign = gql`
-  ${shippingChannelsErrorFragment}
-  ${shippingMethodWithZipCodesFragment}
-  mutation ShippingMethodZipCodeRangeAssign(
-    $id: ID!
-    $input: ShippingZipCodeRulesCreateInput!
-  ) {
-    shippingMethodZipCodeRulesCreate(shippingMethodId: $id, input: $input) {
-      errors: shippingErrors {
-        ...ShippingChannelsErrorFragment
-      }
-      shippingMethod {
-        ...ShippingMethodWithZipCodesFragment
-      }
-    }
-  }
-`;
-
-export const useShippingMethodZipCodeRangeAssign = makeMutation<
-  ShippingMethodZipCodeRangeAssign,
-  ShippingMethodZipCodeRangeAssignVariables
->(shippingMethodZipCodeRangeAssign);
-
-export const shippingMethodZipCodeRulesDelete = gql`
-  ${shippingChannelsErrorFragment}
-  ${shippingMethodWithZipCodesFragment}
-  mutation ShippingMethodZipCodeRangeUnassign($id: ID!) {
-    shippingMethodZipCodeRulesDelete(id: $id) {
-      errors: shippingErrors {
-        ...ShippingChannelsErrorFragment
-      }
-      shippingMethod {
-        ...ShippingMethodWithZipCodesFragment
-      }
-    }
-  }
-`;
-
-export const useShippingMethodZipCodeRangeUnassign = makeMutation<
-  ShippingMethodZipCodeRangeUnassign,
-  ShippingMethodZipCodeRangeUnassignVariables
->(shippingMethodZipCodeRulesDelete);
 
 export const shippingPriceExcludeProducts = gql`
   ${shippingErrorFragment}

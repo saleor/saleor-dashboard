@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 
 import {
   useShippingMethodChannelListingUpdate,
-  useShippingMethodZipCodeRangeAssign,
   useShippingRateCreate,
   useShippingRateDelete
 } from "./mutations";
@@ -166,10 +165,6 @@ export function useShippingRateCreator(
     createBaseShippingRateOpts
   ] = useShippingRateCreate({});
   const [
-    assignZipCodeRules,
-    assignZipCodeRulesOpts
-  ] = useShippingMethodZipCodeRangeAssign({});
-  const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
   ] = useShippingMethodChannelListingUpdate({});
@@ -200,17 +195,6 @@ export function useShippingRateCreator(
             data.noLimits,
             data.channelListings
           )
-        }),
-        assignZipCodeRules({
-          variables: {
-            id: rateId,
-            input: {
-              postalCodeRules: postalCodes.map(postalCodeRule => ({
-                end: postalCodeRule.end || null,
-                start: postalCodeRule.start
-              }))
-            }
-          }
         })
       ]);
 
@@ -236,16 +220,12 @@ export function useShippingRateCreator(
 
   const called =
     createBaseShippingRateOpts.called ||
-    updateShippingMethodChannelListingOpts.called ||
-    assignZipCodeRulesOpts.called;
+    updateShippingMethodChannelListingOpts.called
   const loading =
     createBaseShippingRateOpts.loading ||
-    updateShippingMethodChannelListingOpts.loading ||
-    assignZipCodeRulesOpts.loading;
+    updateShippingMethodChannelListingOpts.loading
   const errors = [
-    ...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || []),
-    ...(assignZipCodeRulesOpts.data?.shippingMethodZipCodeRulesCreate.errors ||
-      [])
+    ...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || [])
   ];
   const channelErrors =
     updateShippingMethodChannelListingOpts.data

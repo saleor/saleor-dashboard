@@ -2,7 +2,7 @@ import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragme
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
-import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {
@@ -1639,18 +1639,21 @@ export const shippingZone: ShippingZone_shippingZone = {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
       ]
@@ -1700,18 +1703,21 @@ export const shippingZone: ShippingZone_shippingZone = {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
       ]
@@ -1761,18 +1767,21 @@ export const shippingZone: ShippingZone_shippingZone = {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
       ]
@@ -1809,18 +1818,21 @@ export const shippingZone: ShippingZone_shippingZone = {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
       ]

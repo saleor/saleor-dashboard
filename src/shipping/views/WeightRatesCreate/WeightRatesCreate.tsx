@@ -79,6 +79,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         __typename: "ShippingMethodPostalCodeRule",
         end: data.max,
         id: postalCodes.length.toString(),
+        inclusionType: postalCodes[0]?.inclusionType,
         start: data.min
       }
     ]);

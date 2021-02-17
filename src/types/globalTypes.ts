@@ -1746,15 +1746,6 @@ export interface ShippingPriceInput {
   inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
-export interface ShippingZipCodeRulesCreateInput {
-  postalCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
-}
-
-export interface ShippingZipCodeRulesCreateInputRange {
-  start: string;
-  end?: string | null;
-}
-
 export interface ShippingZoneCreateInput {
   name?: string | null;
   description?: string | null;

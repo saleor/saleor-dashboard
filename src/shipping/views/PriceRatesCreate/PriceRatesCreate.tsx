@@ -75,6 +75,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         __typename: "ShippingMethodPostalCodeRule",
         end: data.max,
         id: postalCodes.length.toString(),
+        inclusionType: postalCodes[0]?.inclusionType,
         start: data.min
       }
     ]);
