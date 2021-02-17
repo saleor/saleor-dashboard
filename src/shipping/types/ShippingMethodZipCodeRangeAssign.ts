@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingZipCodeRulesCreateInput, ShippingErrorCode } from "./../../types/globalTypes";
+import { ShippingZipCodeRulesCreateInput, ShippingErrorCode, PostalCodeRuleInclusionTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShippingMethodZipCodeRangeAssign
@@ -18,6 +18,7 @@ export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCrea
 export interface ShippingMethodZipCodeRangeAssign_shippingMethodZipCodeRulesCreate_shippingMethod_postalCodeRules {
   __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }

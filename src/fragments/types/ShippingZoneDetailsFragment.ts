@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ShippingZoneDetailsFragment
@@ -29,6 +29,7 @@ export interface ShippingZoneDetailsFragment_countries {
 export interface ShippingZoneDetailsFragment_shippingMethods_postalCodeRules {
   __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }

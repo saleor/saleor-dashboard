@@ -22,6 +22,7 @@ export const shippingMethodWithZipCodesFragment = gql`
     id
     postalCodeRules {
       id
+      inclusionType
       start
       end
     }

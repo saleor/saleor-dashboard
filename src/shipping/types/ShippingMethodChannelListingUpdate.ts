@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingMethodChannelListingInput, WeightUnitsEnum, ShippingMethodTypeEnum, ShippingErrorCode } from "./../../types/globalTypes";
+import { ShippingMethodChannelListingInput, PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum, ShippingErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShippingMethodChannelListingUpdate
@@ -11,6 +11,7 @@ import { ShippingMethodChannelListingInput, WeightUnitsEnum, ShippingMethodTypeE
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_postalCodeRules {
   __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
