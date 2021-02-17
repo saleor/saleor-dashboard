@@ -102,13 +102,18 @@ describe("User authorization", () => {
       defaultChannel.id,
       productsUtils.getCreatedVariants()
     );
-    cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfill => {
-      const regexp = new RegExp(`^${ordersReadyToFulfill + 1}\D*`);
+    cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
+      const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
+      const notANumberRegex = "\\D*";
+      const ordersReadyToFulfillRegexp = new RegExp(
+        `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`
+      );
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.ordersReadyToFulfill, regexp).should(
-        "be.visible"
-      );
+      cy.contains(
+        HOMEPAGE_SELECTORS.ordersReadyToFulfill,
+        ordersReadyToFulfillRegexp
+      ).should("be.visible");
     });
   });
   it("should correct amount of payments waiting for capture be displayed", () => {
@@ -124,13 +129,18 @@ describe("User authorization", () => {
       shippingUtils.getShippingMethod().id
     );
 
-    cy.get("@ordersReadyForCapture").then(ordersReadyForCapture => {
-      const regexp = new RegExp(`^${ordersReadyForCapture + 1}\D*`);
+    cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
+      const allOrdersReadyForCapture = ordersReadyForCaptureBefore + 1;
+      const notANumberRegex = "\\D*";
+      const ordersReadyForCaptureRegexp = new RegExp(
+        `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`
+      );
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.ordersReadyForCapture, regexp).should(
-        "be.visible"
-      );
+      cy.contains(
+        HOMEPAGE_SELECTORS.ordersReadyForCapture,
+        ordersReadyForCaptureRegexp
+      ).should("be.visible");
     });
   });
   it("should correct amount of products out of stock be displayed", () => {
@@ -155,13 +165,18 @@ describe("User authorization", () => {
       productPrice
     );
 
-    cy.get("@productsOutOfStock").then(productsOutOfStock => {
-      const regexp = new RegExp(`^${productsOutOfStock + 1}\\D*`);
+    cy.get("@productsOutOfStock").then(productsOutOfStockBefore => {
+      const allProductsOutOfStock = productsOutOfStockBefore + 1;
+      const notANumberRegex = "\\D*";
+      const productsOutOfStockRegexp = new RegExp(
+        `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`
+      );
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.productsOutOfStock, regexp).should(
-        "be.visible"
-      );
+      cy.contains(
+        HOMEPAGE_SELECTORS.productsOutOfStock,
+        productsOutOfStockRegexp
+      ).should("be.visible");
     });
   });
   it("should correct amount of sales be displayed", () => {
@@ -175,19 +190,25 @@ describe("User authorization", () => {
     );
 
     cy.get("@salesAmount").then(salesAmount => {
-      let totalAmount = salesAmount + productPrice;
-      totalAmount = totalAmount
-        .toFixed(2)
-        .toString()
-        .split(".");
-      totalAmount = `\\D*${totalAmount[0].replace(
+      const totalAmount = salesAmount + productPrice;
+      const totalAmountString = totalAmount.toFixed(2);
+      const totalAmountIntegerValue = totalAmountString.split(".")[0];
+      const totalAmountDecimalValue = totalAmountString.split(".")[1];
+      const decimalSeparator = "[,.]";
+      const totalAmountIntegerWithThousandsSeparator = totalAmountIntegerValue.replace(
         /(\d)(?=(\d{3})+(?!\d))/g,
-        "$1[,.]*"
-      )}[,.]${totalAmount[1]}\\D*`;
-      const regexp = new RegExp(totalAmount);
+        "1[,.]*"
+      );
+      const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
+      const notANumberRegex = "\\D*";
+      const salesAmountRegexp = new RegExp(
+        `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`
+      );
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.sales, regexp).should("be.visible");
+      cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
+        "be.visible"
+      );
     });
   });
   it("should correct amount of orders be displayed", () => {
@@ -200,11 +221,15 @@ describe("User authorization", () => {
       productsUtils.getCreatedVariants()
     );
 
-    cy.get("@todaysOrders").then(todaysOrders => {
-      const regexp = new RegExp(`\\D*${todaysOrders + 1}\\D*`);
+    cy.get("@todaysOrders").then(ordersBefore => {
+      const allOrders = ordersBefore + 1;
+      const notANumberRegex = "\\D*";
+      const ordersRegexp = new RegExp(
+        `${notANumberRegex}${allOrders}${notANumberRegex}`
+      );
       cy.visit(urlList.homePage);
       homePageSteps.changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.orders, regexp).should("be.visible");
+      cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");
     });
   });
 });
