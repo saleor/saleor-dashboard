@@ -41,9 +41,9 @@ interface DiscountProviderProps {
   order: OrderDetails_order;
 }
 
-const DiscountContext = createContext<GetOrderLineDiscountContextConsumerProps>(
-  null
-);
+export const OrderLineDiscountContext = createContext<
+  GetOrderLineDiscountContextConsumerProps
+>(null);
 
 export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   children,
@@ -126,9 +126,9 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   });
 
   return (
-    <DiscountContext.Provider value={getDiscountProviderValues}>
+    <OrderLineDiscountContext.Provider value={getDiscountProviderValues}>
       {children}
-    </DiscountContext.Provider>
+    </OrderLineDiscountContext.Provider>
   );
 };
 
@@ -136,9 +136,9 @@ export const OrderLineDiscountConsumer: React.FC<OrderLineDiscountConsumerProps>
   children,
   orderLineId
 }) => (
-  <DiscountContext.Consumer>
+  <OrderLineDiscountContext.Consumer>
     {(getValues: GetOrderLineDiscountContextConsumerProps) =>
       children(getValues(orderLineId))
     }
-  </DiscountContext.Consumer>
+  </OrderLineDiscountContext.Consumer>
 );

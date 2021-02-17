@@ -115,7 +115,7 @@ function loadStories() {
   require("./stories/orders/OrderDetailsPage");
   require("./stories/orders/OrderDraftCancelDialog");
   require("./stories/orders/OrderDraftListPage");
-  require("./stories/orders/OrderDraftPage");
+  require("./stories/orders/OrderDraftPage/OrderDraftPage");
   require("./stories/orders/OrderFulfillmentCancelDialog");
   require("./stories/orders/OrderFulfillmentDialog");
   require("./stories/orders/OrderFulfillmentTrackingDialog");
