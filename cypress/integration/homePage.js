@@ -11,7 +11,7 @@ import ProductsUtils from "../utils/productsUtils";
 import ShippingUtils from "../utils/shippingUtils";
 
 // <reference types="cypress" />
-describe("User authorization", () => {
+describe("Homepage analytics", () => {
   const startsWith = "Cy-";
 
   const customer = new Customer();

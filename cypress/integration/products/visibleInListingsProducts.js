@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import ProductSteps from "../../steps/productSteps";
-import { URL_LIST } from "../../url/url-list";
+import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../utils/productsUtils";
@@ -55,7 +55,7 @@ describe("Products displayed in listings", () => {
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
-        const productUrl = `${URL_LIST.products}${product.id}`;
+        const productUrl = `${urlList.products}${product.id}`;
         productSteps.updateProductVisibleInListings(productUrl);
         frontShopProductUtils.isProductVisibleInSearchResult(
           productName,
@@ -89,7 +89,7 @@ describe("Products displayed in listings", () => {
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
-        const productUrl = `${URL_LIST.products}${product.id}`;
+        const productUrl = `${urlList.products}${product.id}`;
         productSteps.updateProductVisibleInListings(productUrl);
         frontShopProductUtils
           .isProductVisibleInSearchResult(productName, defaultChannel.slug)

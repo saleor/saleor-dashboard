@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import ProductSteps from "../../steps/productSteps";
-import { URL_LIST } from "../../url/url-list";
+import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../utils/productsUtils";
@@ -73,7 +73,7 @@ describe("Products available in listings", () => {
         true
       )
       .then(() => {
-        const productUrl = `${URL_LIST.products}${
+        const productUrl = `${urlList.products}${
           productsUtils.getCreatedProduct().id
         }`;
         productSteps.updateProductIsAvailableForPurchase(productUrl, true);
@@ -106,7 +106,7 @@ describe("Products available in listings", () => {
         true
       )
       .then(() => {
-        const productUrl = `${URL_LIST.products}${
+        const productUrl = `${urlList.products}${
           productsUtils.getCreatedProduct().id
         }`;
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);

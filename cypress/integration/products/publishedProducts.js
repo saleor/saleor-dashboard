@@ -1,13 +1,13 @@
 import faker from "faker";
 
 import ProductSteps from "../../steps/productSteps";
-import { URL_LIST } from "../../url/url-list";
+import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../utils/productsUtils";
 
 // <reference types="cypress" />
-describe("Publish products", () => {
+describe("Published products", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
@@ -55,7 +55,7 @@ describe("Publish products", () => {
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
-        const productUrl = `${URL_LIST.products}${product.id}`;
+        const productUrl = `${urlList.products}${product.id}`;
         productSteps.updateProductPublish(productUrl, true);
         frontShopProductUtils.isProductVisible(
           product.id,
@@ -88,7 +88,7 @@ describe("Publish products", () => {
       })
       .then(() => {
         product = productsUtils.getCreatedProduct();
-        const productUrl = `${URL_LIST.products}${product.id}`;
+        const productUrl = `${urlList.products}${product.id}`;
         productSteps.updateProductPublish(productUrl, false);
         frontShopProductUtils.isProductVisible(
           product.id,
