@@ -1,16 +1,23 @@
 import { OutputData } from "@editorjs/editorjs";
-import { TranslationInput } from "@saleor/types/globalTypes";
 
-import { TranslationInputFieldName } from "./types";
+import {
+  PageTranslationInputFieldName,
+  TranslationInputFieldName
+} from "./types";
 
 export const getParsedTranslationInputData = ({
   fieldName,
   data
 }: {
-  fieldName: keyof TranslationInput;
+  fieldName: TranslationInputFieldName | PageTranslationInputFieldName;
   data: string | OutputData;
 }): Record<string, string | null> => {
-  if (fieldName === TranslationInputFieldName.description) {
+  const fieldsToParse = [
+    TranslationInputFieldName.description,
+    PageTranslationInputFieldName.content
+  ];
+
+  if (fieldsToParse.includes(fieldName)) {
     return {
       description: getParsedDataForJsonStringField(data as OutputData)
     };

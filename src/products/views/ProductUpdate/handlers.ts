@@ -56,6 +56,7 @@ import {
 } from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { diff } from "fast-array-diff";
@@ -185,9 +186,7 @@ export function createUpdateHandler(
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
-        description: !!data.description?.blocks?.length
-          ? JSON.stringify(data.description)
-          : null,
+        description: getParsedDataForJsonStringField(data.description),
         name: data.name,
         rating: data.rating,
         seo: {
