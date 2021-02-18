@@ -38,20 +38,23 @@ describe("Publish products", () => {
       productsUtils
         .createProductInChannel(
           productName,
+          defaultChannel.id,
+          null,
+          null,
           productType.id,
           attribute.id,
           category.id,
-          defaultChannel.id,
+          null,
           false,
           false,
           true
         )
         .then(() => {
-          const productId = productsUtils.getCreatedProductId();
-          const productUrl = `${URL_LIST.products}${productId}`;
+          const product = productsUtils.getCreatedProduct();
+          const productUrl = `${URL_LIST.products}${product.id}`;
           productSteps.updateProductPublish(productUrl, true);
           frontShopProductUtils
-            .isProductVisible(productId, defaultChannel.slug, productName)
+            .isProductVisible(product.id, defaultChannel.slug, productName)
             .then(isVisible => {
               expect(isVisible).to.be.eq(true);
             });
@@ -68,13 +71,21 @@ describe("Publish products", () => {
           attribute.id,
           category.id,
           defaultChannel.id,
-          true,
+          productName,
+          defaultChannel.id,
+          null,
+          null,
+          productType.id,
+          attribute.id,
+          category.id,
+          null,
+          false,
           false,
           true
         )
         .then(() => {
-          const productId = productsUtils.getCreatedProductId();
-          const productUrl = `${URL_LIST.products}${productId}`;
+          const product = productsUtils.getCreatedProduct();
+          const productUrl = `${URL_LIST.products}${product.id}`;
           productSteps.updateProductPublish(productUrl, false);
           frontShopProductUtils
             .isProductVisible(productId, defaultChannel.slug, productName)
@@ -83,7 +94,7 @@ describe("Publish products", () => {
             });
           cy.loginInShop().then(() => {
             frontShopProductUtils
-              .isProductVisible(productId, defaultChannel.slug, productName)
+              .isProductVisible(product.id, defaultChannel.slug, productName)
               .then(isVisible => {
                 expect(isVisible).to.be.eq(true);
               });

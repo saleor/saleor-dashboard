@@ -46,6 +46,7 @@ class Product {
                 }
               }
             }`;
+    cy.sendRequestWithQuery(mutation);
   }
 
   updateChannelPriceInVariant(variantId, channelId) {
@@ -106,16 +107,16 @@ class Product {
             warehouse: "${warehouseId}"
             quantity: ${quantity}
           }
-}) {
-  productVariants{
-    id
-    name
-  }
-  bulkProductErrors{
-    field
-    message
-  }
-}
+        }) {
+          productVariants{
+            id
+            name
+          }
+          bulkProductErrors{
+            field
+            message
+          }
+        }
       }`;
     return cy.sendRequestWithQuery(mutation);
   }

@@ -27,16 +27,24 @@ describe("Products available in listings", () => {
     shippingUtils.deleteShipping(startsWith);
     productsUtils.deleteProperProducts(startsWith);
 
-    channelsUtils.getDefaultChannel().then(channel => {
-      defaultChannel = channel;
-      cy.fixture("addresses").then(json => {
-        shippingUtils
-          .createShipping(defaultChannel, name, json.plAddress, 10)
-          .then(() => {
-            warehouse = shippingUtils.getWarehouse();
-          });
+    channelsUtils
+      .getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addressesFixture => {
+        shippingUtils.createShipping(
+          defaultChannel,
+          name,
+          addressesFixture.plAddress,
+          10
+        );
+      })
+      .then(() => {
+        warehouse = shippingUtils.getWarehouse();
       });
-    });
+
     productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
       productType = productsUtils.getProductType();
       attribute = productsUtils.getAttribute();
@@ -50,7 +58,6 @@ describe("Products available in listings", () => {
 
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
-    productsUtils.createProductInChannel(productName);
     productsUtils
       .createProductInChannel(
         productName,
@@ -59,26 +66,27 @@ describe("Products available in listings", () => {
         10,
         productType.id,
         attribute.id,
-        category,
+        category.id,
+        1,
         true,
         false,
-        true,
-        1
+        true
       )
       .then(() => {
-        const productUrl = `${
-          URL_LIST.products
-        }${productsUtils.getCreatedProductId()}`;
+        const productUrl = `${URL_LIST.products}${
+          productsUtils.getCreatedProduct().id
+        }`;
         productSteps.updateProductIsAvailableForPurchase(productUrl, true);
-        frontShopProductUtils
-          .isProductAvailableForPurchase(
-            productsUtils.getCreatedProductId(),
-            defaultChannel.slug,
-            productName
-          )
-          .then(isProductVisible => {
-            expect(isProductVisible).to.be.eq(true);
-          });
+      })
+      .then(() => {
+        frontShopProductUtils.isProductAvailableForPurchase(
+          productsUtils.getCreatedProduct().id,
+          defaultChannel.slug,
+          productName
+        );
+      })
+      .then(isProductVisible => {
+        expect(isProductVisible).to.be.eq(true);
       });
   });
   it("should update product to not available for purchase", () => {
@@ -91,20 +99,20 @@ describe("Products available in listings", () => {
         10,
         productType.id,
         attribute.id,
-        category,
+        category.id,
+        1,
         true,
         true,
-        true,
-        1
+        true
       )
       .then(() => {
-        const productUrl = `${
-          URL_LIST.products
-        }${productsUtils.getCreatedProductId()}`;
+        const productUrl = `${URL_LIST.products}${
+          productsUtils.getCreatedProduct().id
+        }`;
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);
         frontShopProductUtils
           .isProductAvailableForPurchase(
-            productsUtils.getCreatedProductId(),
+            productsUtils.getCreatedProduct().id,
             defaultChannel.slug,
             productName
           )

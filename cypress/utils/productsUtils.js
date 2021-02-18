@@ -30,11 +30,20 @@ class ProductsUtils {
     productTypeId,
     attributeId,
     categoryId,
-    price
+    price,
+    isPublished = true,
+    isAvailableForPurchase = true,
+    visibleInListings = true
   ) {
     return this.createProduct(attributeId, name, productTypeId, categoryId)
       .then(() =>
-        this.productRequest.updateChannelInProduct(this.product.id, channelId)
+        this.productRequest.updateChannelInProduct(
+          this.product.id,
+          channelId,
+          isPublished,
+          isAvailableForPurchase,
+          visibleInListings
+        )
       )
       .then(() => {
         this.createVariant(
@@ -101,7 +110,9 @@ class ProductsUtils {
             resp.body.data.productVariantBulkCreate.productVariants)
       );
   }
-
+  getCreatedProduct() {
+    return this.product;
+  }
   getCreatedVariants() {
     return this.variants;
   }
