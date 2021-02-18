@@ -19,6 +19,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Drop descriptionJson and contentJson fields - #950 by @jwm0
 - Add error tracking with Sentry adapter - #956 by @jwm0
 - Add OAuth2 login with OpenID support - #963 by @orzechdev
+- Fix no channels crash - #984 by @dominik-zeglen
 
 # 2.11.1
 
