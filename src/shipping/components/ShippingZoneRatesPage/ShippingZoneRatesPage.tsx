@@ -51,6 +51,7 @@ export interface ShippingZoneRatesPageProps
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
+  havePostalCodesChanged?: boolean;
   rate: ShippingZone_shippingZone_shippingMethods;
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
@@ -58,7 +59,9 @@ export interface ShippingZoneRatesPageProps
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
-  onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (code: ShippingMethodFragment_postalCodeRules) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
@@ -75,6 +78,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   disabled,
   errors,
   hasChannelChanged,
+  havePostalCodesChanged,
   onBack,
   onDelete,
   onSubmit,
@@ -208,7 +212,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             </Grid>
             <SaveButtonBar
               disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
+                disabled ||
+                formDisabled ||
+                (!hasChanged && !hasChannelChanged && !havePostalCodesChanged)
               }
               onCancel={onBack}
               onDelete={onDelete}
