@@ -16,16 +16,16 @@ describe("Products available in listings", () => {
   const frontShopProductUtils = new FrontShopProductUtils();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
-  let productTypeId;
-  let attributeId;
-  let categoryId;
+  let productType;
+  let attribute;
+  let category;
   let defaultChannel;
-  let warehouseId;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     shippingUtils.deleteShipping(startsWith);
-    productsUtils.deleteProducts(startsWith);
+    productsUtils.deleteProperProducts(startsWith);
 
     channelsUtils.getDefaultChannel().then(channel => {
       defaultChannel = channel;
@@ -33,14 +33,14 @@ describe("Products available in listings", () => {
         shippingUtils
           .createShipping(defaultChannel, name, json.plAddress, 10)
           .then(() => {
-            warehouseId = shippingUtils.getWarehouseId();
+            warehouse = shippingUtils.getWarehouse();
           });
       });
     });
     productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productTypeId = productsUtils.getProductTypeId();
-      attributeId = productsUtils.getAttributeId();
-      categoryId = productsUtils.getCategoryId();
+      productType = productsUtils.getProductType();
+      attribute = productsUtils.getAttribute();
+      category = productsUtils.getCategory();
     });
   });
 
@@ -50,19 +50,20 @@ describe("Products available in listings", () => {
 
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
+    productsUtils.createProductInChannel(productName);
     productsUtils
       .createProductInChannel(
         productName,
-        productTypeId,
-        attributeId,
-        categoryId,
         defaultChannel.id,
+        warehouse.id,
+        10,
+        productType.id,
+        attribute.id,
+        category,
         true,
         false,
         true,
-        warehouseId,
-        10,
-        10
+        1
       )
       .then(() => {
         const productUrl = `${
@@ -85,16 +86,16 @@ describe("Products available in listings", () => {
     productsUtils
       .createProductInChannel(
         productName,
-        productTypeId,
-        attributeId,
-        categoryId,
         defaultChannel.id,
-        true,
-        true,
-        true,
-        warehouseId,
+        warehouse.id,
         10,
-        10
+        productType.id,
+        attribute.id,
+        category,
+        true,
+        true,
+        true,
+        1
       )
       .then(() => {
         const productUrl = `${

@@ -15,17 +15,17 @@ describe("Products displayed in listings", () => {
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
-  let productTypeId;
-  let attributeId;
-  let categoryId;
+  let productType;
+  let attribute;
+  let category;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProducts(startsWith);
+    productsUtils.deleteProperProducts(startsWith);
     productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productTypeId = productsUtils.getProductTypeId();
-      attributeId = productsUtils.getAttributeId();
-      categoryId = productsUtils.getCategoryId();
+      productType = productsUtils.getProductType();
+      attribute = productsUtils.getAttribute();
+      category = productsUtils.getCategory();
     });
   });
 
@@ -38,9 +38,9 @@ describe("Products displayed in listings", () => {
       productsUtils
         .createProductInChannel(
           productName,
-          productTypeId,
-          attributeId,
-          categoryId,
+          productType.id,
+          attribute.id,
+          category.id,
           defaultChannel.id,
           true,
           false,
@@ -64,9 +64,9 @@ describe("Products displayed in listings", () => {
       productsUtils
         .createProductInChannel(
           productName,
-          productTypeId,
-          attributeId,
-          categoryId,
+          productType.id,
+          attribute.id,
+          category.id,
           defaultChannel.id,
           true,
           false,

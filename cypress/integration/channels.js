@@ -20,8 +20,8 @@ describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
   const channels = new Channels();
-  const channelsSteps = new ChannelsSteps();
   const channelsUtils = new ChannelsUtils();
+  const channelsSteps = new ChannelsSteps();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
