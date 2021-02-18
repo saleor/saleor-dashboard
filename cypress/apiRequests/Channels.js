@@ -49,7 +49,19 @@ class Channels {
       });
     });
   }
-
+  getChannels() {
+    const getChannelsInfoQuery = `query{
+      channels{
+        name
+        id
+        isActive
+        slug
+        currencyCode
+      }
+    }
+    `;
+    return cy.sendRequestWithQuery(getChannelsInfoQuery);
+  }
   deleteChannel(channelId, targetChennelId) {
     const deleteChannelMutation = `mutation{
             channelDelete(id: "${channelId}", input:{

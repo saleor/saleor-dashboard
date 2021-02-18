@@ -35,7 +35,6 @@ Cypress.Commands.add("waitForGraph", operationName => {
       }
     }
   });
-  cy.wait(`@${operationName}`);
 });
 
 Cypress.Commands.add("sendRequestWithQuery", query =>
@@ -43,7 +42,7 @@ Cypress.Commands.add("sendRequestWithQuery", query =>
     body: {
       method: "POST",
       query,
-      url: urlList.apiUri,
+      url: urlList.apiUri
     },
     headers: {
       Authorization: `JWT ${window.sessionStorage.getItem("auth")}`
@@ -51,4 +50,22 @@ Cypress.Commands.add("sendRequestWithQuery", query =>
     method: "POST",
     url: urlList.apiUri
   })
+);
+Cypress.Commands.add(
+  "sendFrontShopRequest",
+  (operationName, query, variables) =>
+    cy.request({
+      method: "POST",
+      url: urlList.apiUri,
+      headers: {
+        authorization: `JWT ${window.localStorage.getItem("token")}`
+      },
+      body: [
+        {
+          operationName,
+          variables,
+          query
+        }
+      ]
+    })
 );

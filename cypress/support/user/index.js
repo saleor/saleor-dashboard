@@ -37,12 +37,31 @@ Cypress.Commands.add("loginUserViaRequest", () => {
         variables: {
           email: Cypress.env("USER_NAME"),
           password: Cypress.env("USER_PASSWORD")
-        },
+        }
       },
       method: "POST",
-      url: urlList.apiUri,
+      url: urlList.apiUri
     })
     .then(resp => {
       window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
     });
+});
+Cypress.Commands.add("loginInShop", () => {
+  cy.request({
+    method: "POST",
+    url: Cypress.env("API_URI"),
+    body: [
+      {
+        operationName: "TokenAuth",
+        variables: {
+          email: Cypress.env("USER_NAME"),
+          password: Cypress.env("USER_PASSWORD")
+        },
+        query:
+          "mutation TokenAuth($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    errors: accountErrors {\n      code\n      field\n      message\n      __typename\n    }\n    user {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"
+      }
+    ]
+  }).then(resp => {
+    window.localStorage.setItem("token", resp.body[0].data.tokenCreate.token);
+  });
 });
