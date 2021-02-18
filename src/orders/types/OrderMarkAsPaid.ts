@@ -131,7 +131,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -196,7 +196,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitPrice | null;
+  unitPrice: OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitPrice;
   thumbnail: OrderMarkAsPaid_orderMarkAsPaid_order_lines_thumbnail | null;
 }
 
@@ -334,24 +334,24 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   fulfillments: (OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments | null)[];
   lines: (OrderMarkAsPaid_orderMarkAsPaid_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_shippingAddress | null;
   shippingMethod: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderMarkAsPaid_orderMarkAsPaid_order_shippingPrice | null;
+  shippingPrice: OrderMarkAsPaid_orderMarkAsPaid_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderMarkAsPaid_orderMarkAsPaid_order_subtotal | null;
-  total: OrderMarkAsPaid_orderMarkAsPaid_order_total | null;
+  subtotal: OrderMarkAsPaid_orderMarkAsPaid_order_subtotal;
+  total: OrderMarkAsPaid_orderMarkAsPaid_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderMarkAsPaid_orderMarkAsPaid_order_totalAuthorized | null;
-  totalCaptured: OrderMarkAsPaid_orderMarkAsPaid_order_totalCaptured | null;
+  totalAuthorized: OrderMarkAsPaid_orderMarkAsPaid_order_totalAuthorized;
+  totalCaptured: OrderMarkAsPaid_orderMarkAsPaid_order_totalCaptured;
   user: OrderMarkAsPaid_orderMarkAsPaid_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
   discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
   channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {

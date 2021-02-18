@@ -116,7 +116,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <TableRow hover={true} onClick={onOrdersToFulfillClick}>
-              <TableCell>
+              <TableCell data-test-id="orders-to-fulfill">
                 {ordersToFulfill === undefined ? (
                   <Skeleton />
                 ) : ordersToFulfill === 0 ? (
@@ -136,7 +136,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
               </TableCell>
             </TableRow>
             <TableRow hover={true} onClick={onOrdersToCaptureClick}>
-              <TableCell>
+              <TableCell data-test-id="orders-to-capture">
                 {ordersToCapture === undefined ? (
                   <Skeleton />
                 ) : ordersToCapture === 0 ? (
@@ -161,7 +161,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
           >
             <TableRow hover={true} onClick={onProductsOutOfStockClick}>
-              <TableCell>
+              <TableCell data-test-id="products-out-of-stock">
                 {productsOutOfStock === undefined ? (
                   <Skeleton />
                 ) : productsOutOfStock === 0 ? (

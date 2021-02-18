@@ -804,6 +804,7 @@ export enum ProductOrderField {
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  RANK = "RANK",
   RATING = "RATING",
   TYPE = "TYPE",
 }
@@ -967,9 +968,9 @@ export enum WebhookErrorCode {
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
-  CHECKOUT_QUANTITY_CHANGED = "CHECKOUT_QUANTITY_CHANGED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -980,7 +981,11 @@ export enum WebhookEventTypeEnum {
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
+  PAGE_CREATED = "PAGE_CREATED",
+  PAGE_DELETED = "PAGE_DELETED",
+  PAGE_UPDATED = "PAGE_UPDATED",
   PRODUCT_CREATED = "PRODUCT_CREATED",
+  PRODUCT_DELETED = "PRODUCT_DELETED",
   PRODUCT_UPDATED = "PRODUCT_UPDATED",
 }
 
@@ -1453,8 +1458,7 @@ export interface PageTranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
 }
 
 export interface PageTypeCreateInput {

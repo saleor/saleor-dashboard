@@ -25,5 +25,11 @@ export const PRODUCTS_SELECTORS = {
   assignedChannels: "[data-test='channel-availability-item']",
   publishedRadioButton: "[role=radiogroup]",
   visibleInListingsButton: "[class*='MuiFormControlLabel']",
-  addVariantsButton: "[data-test*='button-add-variant']"
+  addVariantsButton: "[data-test*='button-add-variant']",
+  publishedRadioButtons: "[name*='isPublished']",
+  availableForPurchaseRadioButtons: "[name*='isAvailableForPurchase']",
+  radioButtonsValueTrue: "[value='true']",
+  radioButtonsValueFalse: "[value='false']",
+  visibleInListingButton: "[name*='visibleInListings']",
+  emptyProductRow: "[class*='Skeleton']"
 };

@@ -8,6 +8,7 @@ class Channels {
                   currencyCode: "${currencyCode}"
                 }){
                   channel{
+                    id
                     name
                     slug
                   }
@@ -19,34 +20,33 @@ class Channels {
               }`;
     return cy.sendRequestWithQuery(createChannelMutation);
   }
-
   getChannels() {
     const getChannelsInfoQuery = `query{
-        channels{
-          name
-          id
-          isActive
-          slug
-          currencyCode
-        }
+      channels{
+        name
+        id
+        isActive
+        slug
+        currencyCode
       }
-      `;
+    }
+    `;
     return cy.sendRequestWithQuery(getChannelsInfoQuery);
   }
 
-  deleteChannel(channelId, targetChennelId) {
+  deleteChannel(channelId, targetChannelId) {
     const deleteChannelMutation = `mutation{
-              channelDelete(id: "${channelId}", input:{
-                targetChannel: "${targetChennelId}"
-              }){
-                channel{
-                  name
-                }
-                channelErrors{
-                  message
-                }
+            channelDelete(id: "${channelId}", input:{
+              targetChannel: "${targetChannelId}"
+            }){
+              channel{
+                name
               }
-            }`;
+              channelErrors{
+                message
+              }
+            }
+          }`;
     return cy.sendRequestWithQuery(deleteChannelMutation);
   }
 }

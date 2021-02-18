@@ -57,7 +57,7 @@ export interface OrderRefundData_order_lines {
   id: string;
   productName: string;
   quantity: number;
-  unitPrice: OrderRefundData_order_lines_unitPrice | null;
+  unitPrice: OrderRefundData_order_lines_unitPrice;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
   quantityFulfilled: number;
 }
@@ -83,7 +83,7 @@ export interface OrderRefundData_order_fulfillments_lines_orderLine {
   id: string;
   productName: string;
   quantity: number;
-  unitPrice: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitPrice: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderRefundData_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -106,9 +106,9 @@ export interface OrderRefundData_order {
   __typename: "Order";
   id: string;
   number: string | null;
-  total: OrderRefundData_order_total | null;
-  totalCaptured: OrderRefundData_order_totalCaptured | null;
-  shippingPrice: OrderRefundData_order_shippingPrice | null;
+  total: OrderRefundData_order_total;
+  totalCaptured: OrderRefundData_order_totalCaptured;
+  shippingPrice: OrderRefundData_order_shippingPrice;
   lines: (OrderRefundData_order_lines | null)[];
   fulfillments: (OrderRefundData_order_fulfillments | null)[];
 }
