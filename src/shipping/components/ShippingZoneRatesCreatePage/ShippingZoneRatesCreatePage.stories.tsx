@@ -1,5 +1,8 @@
 import Decorator from "@saleor/storybook//Decorator";
-import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -45,13 +48,11 @@ const props: ShippingZoneRatesCreatePageProps = {
   onBack: () => undefined,
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
-  onSubmit: () => undefined,
   onPostalCodeAssign: () => undefined,
+  onPostalCodeInclusionChange: () => undefined,
   onPostalCodeUnassign: () => undefined,
+  onSubmit: () => undefined,
   openChannelsModal: () => undefined,
-  saveButtonBarState: "default",
-  shippingChannels: defaultChannels,
-  variant: ShippingMethodTypeEnum.PRICE,
   postalCodes: [
     {
       __typename: "ShippingMethodPostalCodeRule",
@@ -67,7 +68,10 @@ const props: ShippingZoneRatesCreatePageProps = {
       inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       start: "44-205"
     }
-  ]
+  ],
+  saveButtonBarState: "default",
+  shippingChannels: defaultChannels,
+  variant: ShippingMethodTypeEnum.PRICE
 };
 
 storiesOf("Shipping / ShippingZoneRatesCreatePage page", module)

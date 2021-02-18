@@ -12,6 +12,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -21,19 +22,19 @@ import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import ShippingZonePostalCodes, {
-  PostalCodeInclusion
-} from "../ShippingZonePostalCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 
 export interface FormData extends MetadataFormData {
   channelListings: ChannelShippingData[];
-  includePostalCodes: PostalCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -57,8 +58,9 @@ export interface ShippingZoneRatesPageProps
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
+  onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
   onPostalCodeAssign: () => void;
-  onPostalCodeUnassign: (id: string) => void;
+  onPostalCodeUnassign: (code: ShippingMethodFragment_postalCodeRules) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   onProductAssign: () => void;
@@ -76,6 +78,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   onBack,
   onDelete,
   onSubmit,
+  onPostalCodeInclusionChange,
   onChannelsChange,
   onPostalCodeAssign,
   onPostalCodeUnassign,
@@ -90,7 +93,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includePostalCodes: PostalCodeInclusion.Exclude,
     maxDays: rate?.maximumDeliveryDays?.toString() || "",
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     metadata: rate?.metadata.map(mapMetadataItemToInput),
@@ -100,6 +102,15 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     noLimits: false,
     privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
     type: rate?.type || null
+  };
+
+  let postalCodesInclusionType = rate?.postalCodeRules[0]?.inclusionType;
+
+  const postalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    postalCodesInclusionType = inclusion;
+    onPostalCodeInclusionChange(inclusion);
   };
 
   const {
@@ -163,12 +174,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 />
                 <CardSpacer />
                 <ShippingZonePostalCodes
-                  data={data}
                   disabled={disabled}
                   onPostalCodeDelete={onPostalCodeUnassign}
-                  onPostalCodeInclusionChange={() => undefined}
+                  onPostalCodeInclusionChange={postalCodeInclusionChange}
                   onPostalCodeRangeAdd={onPostalCodeAssign}
                   postalCodes={rate?.postalCodeRules}
+                  initialInclusionType={postalCodesInclusionType}
                 />
                 <CardSpacer />
                 <ShippingMethodProducts

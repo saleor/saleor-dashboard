@@ -19,7 +19,10 @@ import {
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import { MinMax } from "@saleor/types";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -36,9 +39,10 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [postalCodes, setPostalCodes] = React.useState<
-    ShippingMethodFragment_postalCodeRules[]
-  >([]);
+  const [postalCodes, setPostalCodes] = React.useState([]);
+  const [radioInclusionType, setRadioInclusionType] = React.useState(
+    PostalCodeRuleInclusionTypeEnum.EXCLUDE
+  );
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
 
@@ -68,7 +72,12 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     createShippingRate,
     errors,
     status
-  } = useShippingRateCreator(id, ShippingMethodTypeEnum.WEIGHT, postalCodes);
+  } = useShippingRateCreator(
+    id,
+    ShippingMethodTypeEnum.WEIGHT,
+    postalCodes,
+    radioInclusionType
+  );
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
@@ -79,11 +88,18 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         __typename: "ShippingMethodPostalCodeRule",
         end: data.max,
         id: postalCodes.length.toString(),
-        inclusionType: postalCodes[0]?.inclusionType,
+        inclusionType: postalCodes?.[0]?.inclusionType,
         start: data.min
       }
     ]);
     closeModal();
+  };
+
+  const onPostalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    setRadioInclusionType(inclusion);
+    setPostalCodes([]);
   };
 
   return (
@@ -119,9 +135,15 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onPostalCodeAssign={() => openModal("add-range")}
-        onPostalCodeUnassign={id =>
-          console.log("postal unassign")
-        }
+        onPostalCodeUnassign={code => {
+          setPostalCodes(
+            postalCodes.filter(
+              rule => rule.start !== code.start && rule.end !== code.end
+            )
+          );
+          closeModal();
+        }}
+        onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />
       <ShippingZonePostalCodeRangeDialog

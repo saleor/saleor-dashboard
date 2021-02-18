@@ -1632,8 +1632,6 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DB Schenker",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1656,7 +1654,9 @@ export const shippingZone: ShippingZone_shippingZone = {
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
@@ -1696,8 +1696,6 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "Registred priority",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1720,7 +1718,9 @@ export const shippingZone: ShippingZone_shippingZone = {
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
@@ -1760,8 +1760,6 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "UPS",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1784,7 +1782,9 @@ export const shippingZone: ShippingZone_shippingZone = {
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.PRICE
     },
     {
       __typename: "ShippingMethod",
@@ -1811,8 +1811,6 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DHL",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1835,7 +1833,9 @@ export const shippingZone: ShippingZone_shippingZone = {
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.PRICE
     }
   ],
   warehouses: [

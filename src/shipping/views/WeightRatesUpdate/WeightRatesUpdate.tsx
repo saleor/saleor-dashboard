@@ -43,7 +43,10 @@ import {
   shippingWeightRatesEditUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -80,6 +83,44 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     ShippingRateUrlDialog,
     ShippingRateUrlQueryParams
   >(navigate, params => shippingWeightRatesEditUrl(id, rateId, params), params);
+
+  let radioInclusionType;
+  let originalCodes = [];
+  const [codesToDelete, setCodesToDelete] = React.useState([]);
+
+  const onPostalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    radioInclusionType = inclusion;
+    setCodesToDelete(
+      rate.postalCodeRules
+        .filter(code => code.id !== undefined)
+        .map(code => code.id)
+    );
+    rate.postalCodeRules = [];
+  };
+
+  const onPostalCodeAssign = (newCode: any) => {
+    if (!originalCodes.length) {
+      originalCodes = [...rate.postalCodeRules];
+    }
+    if (
+      rate.postalCodeRules.filter(
+        item => item.start === newCode.min && item.end === newCode.max
+      ).length > 0
+    ) {
+      closeModal();
+      return;
+    }
+    const newEntry = {
+      end: newCode.max,
+      inclusionType:
+        radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
+      start: newCode.min
+    };
+    rate.postalCodeRules.push(newEntry);
+    closeModal();
+  };
 
   const {
     loadMore,
@@ -173,7 +214,13 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
 
   const updateData = async (data: FormData) => {
     const response = await updateShippingRate({
-      variables: getUpdateShippingWeightRateVariables(data, id, rateId)
+      variables: getUpdateShippingWeightRateVariables(
+        data,
+        id,
+        rateId,
+        rate.postalCodeRules,
+        codesToDelete
+      )
     });
     const errors = response.data.shippingPriceUpdate.errors;
     if (errors.length === 0) {
@@ -306,17 +353,26 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
             />
           </Button>
         }
+        onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         onPostalCodeAssign={() => openModal("add-range")}
-        onPostalCodeUnassign={id =>
-          console.log("unassign ID")
-        }
+        onPostalCodeUnassign={code => {
+          if (code.id !== undefined) {
+            setCodesToDelete([...codesToDelete, code.id]);
+            rate.postalCodeRules = rate.postalCodeRules.filter(
+              rule => rule.id !== code.id
+            );
+          } else {
+            rate.postalCodeRules = rate.postalCodeRules.filter(
+              rule => rule.start !== code.start && rule.end !== code.end
+            );
+          }
+          closeModal();
+        }}
       />
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState={"default"}
         onClose={closeModal}
-        onSubmit={data =>
-          console.log(data)
-        }
+        onSubmit={onPostalCodeAssign}
         open={params.action === "add-range"}
       />
     </>

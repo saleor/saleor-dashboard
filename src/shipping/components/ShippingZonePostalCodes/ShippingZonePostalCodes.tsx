@@ -14,25 +14,22 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
-import { FormChange } from "@saleor/hooks/useForm";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
+import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export enum PostalCodeInclusion {
-  Include,
-  Exclude
-}
-
 export interface ShippingZonePostalCodesProps {
-  data: Record<"includePostalCodes", PostalCodeInclusion>;
   disabled: boolean;
   initialExpanded?: boolean;
+  initialInclusionType?: PostalCodeRuleInclusionTypeEnum;
   postalCodes: ShippingMethodFragment_postalCodeRules[] | undefined;
-  onPostalCodeInclusionChange: FormChange;
-  onPostalCodeDelete: (id: string) => void;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
+  onPostalCodeDelete: (code: ShippingMethodFragment_postalCodeRules) => void;
   onPostalCodeRangeAdd: () => void;
 }
 
@@ -65,15 +62,18 @@ const useStyles = makeStyles(
 );
 
 const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
-  data,
   disabled,
   initialExpanded,
+  initialInclusionType,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
   onPostalCodeRangeAdd
 }) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
+  const [inclusionType, setInclusionType] = React.useState(
+    initialInclusionType
+  );
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -115,12 +115,12 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: PostalCodeInclusion.Exclude
+              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE
             },
             {
               label: (
                 <div className={classes.option}>
-                  <Typography color="textSecondary" variant="body1">
+                  <Typography variant="body1">
                     <FormattedMessage
                       defaultMessage="Include postal codes"
                       description="action"
@@ -131,12 +131,17 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: PostalCodeInclusion.Include
+              value: PostalCodeRuleInclusionTypeEnum.INCLUDE
             }
           ]}
           name="includePostalCodes"
-          value={data.includePostalCodes}
-          onChange={onPostalCodeInclusionChange}
+          value={inclusionType}
+          onChange={e => {
+            const value = e.target.value;
+            setInclusionType(value);
+            initialInclusionType = PostalCodeRuleInclusionTypeEnum.EXCLUDE;
+            onPostalCodeInclusionChange(value);
+          }}
         />
       </CardContent>
       <ResponsiveTable>
@@ -196,7 +201,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                     <IconButton
                       disabled={disabled}
                       color="primary"
-                      onClick={() => onPostalCodeDelete(postalCodeRange.id)}
+                      onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test="delete-postal-code"
                       data-test-id={postalCodeRange?.id}
                     >
@@ -224,6 +229,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
 
 ShippingZonePostalCodes.displayName = "ShippingZonePostalCodes";
 ShippingZonePostalCodes.defaultProps = {
-  initialExpanded: true
+  initialExpanded: true,
+  initialInclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE
 };
 export default ShippingZonePostalCodes;

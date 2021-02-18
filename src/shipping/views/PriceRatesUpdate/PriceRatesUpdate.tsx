@@ -43,7 +43,10 @@ import {
   ShippingRateUrlQueryParams,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -168,11 +171,33 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  let radioInclusionType;
+
+  const [codesToDelete, setCodesToDelete] = React.useState([]);
+
+  const onPostalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    radioInclusionType = inclusion;
+    setCodesToDelete(
+      rate.postalCodeRules
+        .filter(code => code.id !== undefined)
+        .map(code => code.id)
+    );
+    rate.postalCodeRules = [];
+  };
 
   const updateData = async (formData: FormData): Promise<unknown[]> => {
     const response = await updateShippingRate({
-      variables: getUpdateShippingPriceRateVariables(formData, id, rateId)
+      variables: getUpdateShippingPriceRateVariables(
+        formData,
+        id,
+        rateId,
+        rate.postalCodeRules,
+        codesToDelete
+      )
     });
+    setCodesToDelete([]);
     const errors = response.data.shippingPriceUpdate.errors;
     if (errors.length === 0) {
       handleSuccess();
@@ -206,6 +231,32 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       variables: { id: rateId, products: ids }
     });
     reset();
+  };
+
+  let originalCodes = [];
+
+  const onPostalCodeAssign = (newCode: any) => {
+    if (!originalCodes.length) {
+      originalCodes = [...rate.postalCodeRules];
+    }
+    if (
+      rate.postalCodeRules.filter(
+        item => item.start === newCode.min && item.end === newCode.max
+      ).length > 0
+    ) {
+      closeModal();
+      return;
+    }
+    const newEntry = {
+      end: newCode.max,
+      id: undefined,
+      inclusionType:
+      radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
+      start: newCode.min,
+      __typename: undefined,
+    };
+    rate.postalCodeRules.push(newEntry);
+    closeModal();
   };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
@@ -304,19 +355,26 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
             />
           </Button>
         }
+        onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         onPostalCodeAssign={() => openModal("add-range")}
-        onPostalCodeUnassign={id =>
-          openModal("remove-range", {
-            id
-          })
-        }
+        onPostalCodeUnassign={code => {
+          if (code.id !== undefined) {
+            setCodesToDelete([...codesToDelete, code.id]);
+            rate.postalCodeRules = rate.postalCodeRules.filter(
+              rule => rule.id !== code.id
+            );
+          } else {
+            rate.postalCodeRules = rate.postalCodeRules.filter(
+              rule => rule.start !== code.start && rule.end !== code.end
+            );
+          }
+          closeModal();
+        }}
       />
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState={"default"}
         onClose={closeModal}
-        onSubmit={data =>
-          console.log(data)
-        }
+        onSubmit={onPostalCodeAssign}
         open={params.action === "add-range"}
       />
     </>

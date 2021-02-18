@@ -17,17 +17,14 @@ import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ShippingZonePostalCodes, {
-  PostalCodeInclusion
-} from "../ShippingZonePostalCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 
 export interface FormData {
   channelListings: ChannelShippingData[];
-  includePostalCodes: PostalCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -49,8 +46,9 @@ export interface ShippingZoneRatesCreatePageProps {
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
+  onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
   onPostalCodeAssign: () => void;
-  onPostalCodeUnassign: (id: string) => void;
+  onPostalCodeUnassign: (code: any) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
@@ -66,6 +64,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   onBack,
   onDelete,
   onSubmit,
+  onPostalCodeInclusionChange,
   onChannelsChange,
   onPostalCodeAssign,
   onPostalCodeUnassign,
@@ -78,7 +77,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includePostalCodes: PostalCodeInclusion.Include,
     maxDays: "",
     maxValue: "",
     minDays: "",
@@ -86,6 +84,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     name: "",
     noLimits: false,
     type: null
+  };
+
+  const postalCodeInclusionChange = v => {
+    onPostalCodeInclusionChange(v);
   };
 
   return (
@@ -155,10 +157,9 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 />
                 <CardSpacer />
                 <ShippingZonePostalCodes
-                  data={data}
                   disabled={disabled}
                   onPostalCodeDelete={onPostalCodeUnassign}
-                  onPostalCodeInclusionChange={() => undefined}
+                  onPostalCodeInclusionChange={postalCodeInclusionChange}
                   onPostalCodeRangeAdd={onPostalCodeAssign}
                   postalCodes={postalCodes}
                 />

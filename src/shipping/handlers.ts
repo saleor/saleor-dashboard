@@ -8,7 +8,10 @@ import { FormData as ShippingZoneRatesPageFormData } from "@saleor/shipping/comp
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import { useIntl } from "react-intl";
 
@@ -44,12 +47,22 @@ export const createChannelsChangeHandler = (
 
 export function getCreateShippingPriceRateVariables(
   data: ShippingZoneRatesPageFormData,
-  id: string
+  id: string,
+  addPostalCodeRules: any,
+  radioInclusionType: PostalCodeRuleInclusionTypeEnum
 ): CreateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
+  const postalCodeRules = addPostalCodeRules
+    .filter(code => !code.id)
+    .map(code => ({
+      end: code.end,
+      start: code.start
+    }));
   return {
     input: {
+      addPostalCodeRules: postalCodeRules,
+      inclusionType: radioInclusionType,
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
@@ -61,15 +74,25 @@ export function getCreateShippingPriceRateVariables(
 
 export function getCreateShippingWeightRateVariables(
   data: ShippingZoneRatesPageFormData,
-  id: string
+  id: string,
+  addPostalCodeRules: any,
+  radioInclusionType: PostalCodeRuleInclusionTypeEnum
 ): CreateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
   const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
+  const postalCodeRules = addPostalCodeRules
+    .filter(code => !code.id)
+    .map(code => ({
+      end: code.end,
+      start: code.start
+    }));
   return {
     input: {
+      addPostalCodeRules: postalCodeRules,
+      inclusionType: radioInclusionType,
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
       minimumDeliveryDays: parsedMinDays,
@@ -84,13 +107,26 @@ export function getCreateShippingWeightRateVariables(
 export function getUpdateShippingPriceRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
-  rateId: string
+  rateId: string,
+  addPostalCodeRules: any,
+  deletePostalCodeRules: any
 ): UpdateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
+  const postalCodeRules = addPostalCodeRules
+    .filter(code => !code.id)
+    .map(code => ({
+      end: code.end,
+      start: code.start
+    }));
   return {
     id: rateId,
     input: {
+      addPostalCodeRules: postalCodeRules,
+      deletePostalCodeRules,
+      inclusionType:
+        addPostalCodeRules[0]?.inclusionType ||
+        PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
@@ -103,16 +139,29 @@ export function getUpdateShippingPriceRateVariables(
 export function getUpdateShippingWeightRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
-  rateId: string
+  rateId: string,
+  addPostalCodeRules: any,
+  deletePostalCodeRules: any
 ): UpdateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
   const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
+  const postalCodeRules = addPostalCodeRules
+    .filter(code => !code.id)
+    .map(code => ({
+      end: code.end,
+      start: code.start
+    }));
   return {
     id: rateId,
     input: {
+      addPostalCodeRules: postalCodeRules,
+      deletePostalCodeRules,
+      inclusionType:
+        addPostalCodeRules[0]?.inclusionType ||
+        PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
       minimumDeliveryDays: parsedMinDays,
@@ -155,7 +204,8 @@ export function getShippingMethodChannelVariables(
 export function useShippingRateCreator(
   shippingZoneId: string,
   type: ShippingMethodTypeEnum,
-  postalCodes: ShippingMethodFragment_postalCodeRules[]
+  postalCodes: ShippingMethodFragment_postalCodeRules[],
+  radioInclusionType: PostalCodeRuleInclusionTypeEnum
 ) {
   const intl = useIntl();
   const notify = useNotifier();
@@ -181,7 +231,12 @@ export function useShippingRateCreator(
 
   const createShippingRate = async (data: ShippingZoneRatesPageFormData) => {
     const response = await createBaseShippingRate({
-      variables: getVariables(data, shippingZoneId)
+      variables: getVariables(
+        data,
+        shippingZoneId,
+        postalCodes,
+        radioInclusionType
+      )
     });
 
     const createErrors = response.data.shippingPriceCreate.errors;
@@ -220,10 +275,10 @@ export function useShippingRateCreator(
 
   const called =
     createBaseShippingRateOpts.called ||
-    updateShippingMethodChannelListingOpts.called
+    updateShippingMethodChannelListingOpts.called;
   const loading =
     createBaseShippingRateOpts.loading ||
-    updateShippingMethodChannelListingOpts.loading
+    updateShippingMethodChannelListingOpts.loading;
   const errors = [
     ...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || [])
   ];
