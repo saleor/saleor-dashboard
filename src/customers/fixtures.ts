@@ -946,8 +946,6 @@ export const customerList: ListCustomers_customers_edges_node[] = [
 ];
 export const customer: CustomerDetails_user & CustomerAddresses_user = {
   __typename: "User",
-  metadata: [],
-  privateMetadata: [],
   addresses: [
     {
       __typename: "Address",
@@ -1046,6 +1044,7 @@ export const customer: CustomerDetails_user & CustomerAddresses_user = {
       }
     ]
   },
+  metadata: [],
   note: null,
   orders: {
     __typename: "OrderCountableConnection",
@@ -1069,5 +1068,6 @@ export const customer: CustomerDetails_user & CustomerAddresses_user = {
         }
       }
     ]
-  }
+  },
+  privateMetadata: []
 };

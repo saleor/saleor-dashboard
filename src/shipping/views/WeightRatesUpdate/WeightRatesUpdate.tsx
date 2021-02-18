@@ -104,27 +104,27 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     rate.postalCodeRules = [];
   };
 
-  const onPostalCodeAssign = (newCode: any) => {
+  const onPostalCodeAssign = (rule: any) => {
     if (!originalCodes.length) {
       originalCodes = [...rate.postalCodeRules];
     }
     if (
       rate.postalCodeRules.filter(
-        item => item.start === newCode.min && item.end === newCode.max
+        item => item.start === rule.min && item.end === rule.max
       ).length > 0
     ) {
       closeModal();
       return;
     }
-    const newEntry = {
+    const newCode = {
       __typename: undefined,
-      end: newCode.max,
+      end: rule.max,
       id: undefined,
       inclusionType:
         radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
-      start: newCode.min
+      start: rule.min
     };
-    rate.postalCodeRules.push(newEntry);
+    rate.postalCodeRules.push(newCode);
     closeModal();
   };
 
