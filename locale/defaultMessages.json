@@ -3493,6 +3493,10 @@
     "context": "order history message",
     "string": "Payment was voided"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_2607524598": {
+    "context": "order history message",
+    "string": "Products were deleted from an order"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2655541129": {
     "context": "order history message",
     "string": "Order was fully paid"
@@ -3525,13 +3529,13 @@
     "context": "order history message",
     "string": "Payment was refunded"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_3506022286": {
-    "context": "order history message",
-    "string": "Products were added to draft order"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3731274949": {
     "context": "order history message",
     "string": "Order was refunded by {refundedBy}"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3796744261": {
+    "context": "order history message",
+    "string": "Products were added to an order"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
     "context": "order history message",
@@ -3543,10 +3547,6 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4015160303": {
     "context": "order history message",
     "string": "Oversold {quantity} items"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_4067959693": {
-    "context": "order history message",
-    "string": "Products were deleted from draft order"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4121987561": {
     "context": "order history message",
