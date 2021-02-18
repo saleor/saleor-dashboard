@@ -248,12 +248,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       return;
     }
     const newEntry = {
+      __typename: undefined,
       end: newCode.max,
       id: undefined,
       inclusionType:
-      radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
-      start: newCode.min,
-      __typename: undefined,
+        radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
+      start: newCode.min
     };
     rate.postalCodeRules.push(newEntry);
     closeModal();

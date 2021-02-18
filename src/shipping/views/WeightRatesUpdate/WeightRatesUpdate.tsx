@@ -113,7 +113,9 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       return;
     }
     const newEntry = {
+      __typename: undefined,
       end: newCode.max,
+      id: undefined,
       inclusionType:
         radioInclusionType || rate.postalCodeRules[0]?.inclusionType,
       start: newCode.min
