@@ -14,3 +14,17 @@ export interface TranslationsEntitiesPageProps {
   onLanguageChange: (lang: string) => void;
   onSubmit: (field: string, data: string | OutputData) => void;
 }
+
+export enum TranslationInputFieldName {
+  description = "description",
+  name = "name",
+  seoDescription = "seoDescription",
+  seoTitle = "seoTitle"
+}
+
+export enum PageTranslationInputFieldName {
+  content = "content",
+  title = "title",
+  seoDescription = "seoDescription",
+  seoTitle = "seoTitle"
+}

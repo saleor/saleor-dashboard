@@ -185,7 +185,9 @@ export function createUpdateHandler(
         category: data.category,
         chargeTaxes: data.chargeTaxes,
         collections: data.collections,
-        description: JSON.stringify(data.description),
+        description: !!data.description?.blocks?.length
+          ? JSON.stringify(data.description)
+          : null,
         name: data.name,
         rating: data.rating,
         seo: {

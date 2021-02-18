@@ -7,6 +7,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
@@ -102,7 +103,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         input: {
           backgroundImage: formData.backgroundImage.value,
           backgroundImageAlt: formData.backgroundImageAlt,
-          description: JSON.stringify(formData.description),
+          description: getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,

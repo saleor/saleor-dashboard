@@ -7,18 +7,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
-import { LanguageCodeEnum, TranslationInput } from "../../types/globalTypes";
-import TranslationsCollectionsPage, {
-  fieldNames
-} from "../components/TranslationsCollectionsPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TypedUpdateCollectionTranslations } from "../mutations";
 import { useCollectionTranslationDetails } from "../queries";
+import { TranslationInputFieldName } from "../types";
 import { UpdateCollectionTranslations } from "../types/UpdateCollectionTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsCollectionsQueryParams {
   activeField: string;
@@ -69,21 +69,14 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
   return (
     <TypedUpdateCollectionTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: TranslationInput = {};
-          if (field === fieldNames.description) {
-            input.description = JSON.stringify(data);
-          } else if (field === fieldNames.name) {
-            input.name = data;
-          } else if (field === fieldNames.seoDescription) {
-            input.seoDescription = data;
-          } else if (field === fieldNames.seoTitle) {
-            input.seoTitle = data;
-          }
+        const handleSubmit = (
+          fieldName: TranslationInputFieldName,
+          data: string
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({ data, fieldName }),
               language: languageCode
             }
           });
