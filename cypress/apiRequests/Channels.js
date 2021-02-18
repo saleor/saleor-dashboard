@@ -45,7 +45,8 @@ class Channels {
               channelErrors{
                 message
               }
-            }`;
+            }
+          }`;
     return cy.sendRequestWithQuery(deleteChannelMutation);
   }
 }
