@@ -25,11 +25,14 @@ class Collections {
         edges{
           node{
             id
+            name
           }
         }
       }
     }`;
-    return cy.sendRequestWithQuery(query);
+    return cy
+      .sendRequestWithQuery(query)
+      .then(resp => resp.body.data.collections.edges);
   }
   deleteCollection(collectionId) {
     const mutation = `mutation{

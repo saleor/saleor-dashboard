@@ -9,11 +9,13 @@ import { urlList } from "../url/urlList";
 import ChannelsUtils from "../utils/channelsUtils";
 import CollectionsUtils from "../utils/collectionsUtils";
 import ProductsUtils from "../utils/productsUtils";
+import ShippingUtils from "../utils/shippingUtils";
 
 describe("Collections", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const collectionsUtils = new CollectionsUtils();
+  const shippingUtils = new ShippingUtils();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
@@ -23,7 +25,8 @@ describe("Collections", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productsUtils.deleteProperProducts(startsWith);
-    // collectionsUtils.deleteProperCollections(startsWith);
+    collectionsUtils.deleteProperCollections(startsWith);
+    shippingUtils.deleteShipping(startsWith);
 
     channelsUtils
       .getDefaultChannel()
@@ -31,6 +34,7 @@ describe("Collections", () => {
         defaultChannel = channel;
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
+      // .then(() => shippingUtils.createShipping(defaultChannel.id, name, ))
       .then(() => {
         const attribute = productsUtils.getAttribute();
         const productType = productsUtils.getProductType();
