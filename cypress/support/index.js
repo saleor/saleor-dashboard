@@ -1,4 +1,6 @@
 import "./user";
+import "./softAssertions";
+import "./deleteElement/index.js";
 
 import { urlList } from "../url/urlList";
 
@@ -20,7 +22,7 @@ Cypress.Commands.add("clearSessionData", () => {
 });
 
 Cypress.Commands.add("waitForGraph", operationName => {
-  cy.intercept("POST", Cypress.env("API_URI"), req => {
+  cy.intercept("POST", urlList.apiUri, req => {
     req.statusCode = 200;
     const requestBody = req.body;
     if (Array.isArray(requestBody)) {
@@ -43,7 +45,7 @@ Cypress.Commands.add("sendRequestWithQuery", query =>
     body: {
       method: "POST",
       query,
-      url: urlList.apiUri,
+      url: urlList.apiUri
     },
     headers: {
       Authorization: `JWT ${window.sessionStorage.getItem("auth")}`

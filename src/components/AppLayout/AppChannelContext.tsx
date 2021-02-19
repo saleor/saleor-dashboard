@@ -33,7 +33,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
-    if (!selectedChannel && channelData?.channels) {
+    if (!selectedChannel && channelData?.channels?.length > 0) {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData]);

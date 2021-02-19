@@ -26,6 +26,7 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.5.2",
     "@saleor/macaw-ui": "^0.1.1-9",
+    "@types/faker": "^5.1.6",
     "@sentry/react": "^6.0.0",
     "apollo": "^2.21.2",
     "apollo-cache-inmemory": "^1.6.5",

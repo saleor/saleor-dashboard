@@ -44,6 +44,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Customer created",
       description: "event"
     }),
+    [WebhookEventTypeEnum.CUSTOMER_UPDATED]: intl.formatMessage({
+      defaultMessage: "Customer updated",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.CHECKOUT_CREATED]: intl.formatMessage({
       defaultMessage: "Checkout created",
       description: "event"
@@ -114,6 +118,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     }),
     [WebhookEventTypeEnum.INVOICE_DELETED]: intl.formatMessage({
       defaultMessage: "Invoice deleted",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
+      defaultMessage: "Page created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_UPDATED]: intl.formatMessage({
+      defaultMessage: "Page updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PAGE_DELETED]: intl.formatMessage({
+      defaultMessage: "Page deleted",
       description: "event"
     })
   };
