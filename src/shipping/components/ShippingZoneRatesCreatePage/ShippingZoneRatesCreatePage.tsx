@@ -17,7 +17,10 @@ import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -46,7 +49,9 @@ export interface ShippingZoneRatesCreatePageProps {
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
-  onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (code: any) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;

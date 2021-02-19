@@ -2,7 +2,11 @@ import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragme
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
-import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum,
+  WeightUnitsEnum
+} from "../types/globalTypes";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {
