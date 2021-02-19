@@ -46,7 +46,7 @@ class Product {
                 }
               }
             }`;
-    cy.sendRequestWithQuery(mutation);
+    return cy.sendRequestWithQuery(mutation);
   }
 
   updateChannelPriceInVariant(variantId, channelId) {
@@ -135,6 +135,7 @@ class Product {
         slug: "${slug}"
         isShippingRequired: true
         productAttributes: "${attributeId}"
+        variantAttributes: "${attributeId}"
   }){
     productErrors{
       field

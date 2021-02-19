@@ -37,7 +37,6 @@ Cypress.Commands.add("waitForGraph", operationName => {
       }
     }
   });
-  cy.wait(`@${operationName}`);
 });
 
 Cypress.Commands.add("sendRequestWithQuery", query =>

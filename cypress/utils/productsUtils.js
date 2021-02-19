@@ -19,7 +19,7 @@ class ProductsUtils {
       name,
       productTypeId,
       categoryId
-    ).then(() => this.createVariant(this.product.id, name));
+    ).then(() => this.createVariant(this.product.id, name, attributeId));
   }
 
   createProductInChannel(
