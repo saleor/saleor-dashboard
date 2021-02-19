@@ -1,11 +1,11 @@
 import faker from "faker";
 
-import ProductSteps from "../../steps/productSteps";
-import { urlList } from "../../url/urlList";
-import ChannelsUtils from "../../utils/channelsUtils";
-import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
-import ProductsUtils from "../../utils/productsUtils";
-import ShippingUtils from "../../utils/shippingUtils";
+import ProductSteps from "../../../steps/productSteps";
+import { urlList } from "../../../url/urlList";
+import ChannelsUtils from "../../../utils/channelsUtils";
+import FrontShopProductUtils from "../../../utils/frontShop/frontShopProductUtils";
+import ProductsUtils from "../../../utils/productsUtils";
+import ShippingUtils from "../../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {

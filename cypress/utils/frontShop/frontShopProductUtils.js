@@ -6,23 +6,29 @@ class FrontShopProductUtils {
     const productDetails = new ProductDetails();
     return productDetails
       .getProductDetails(productId, channelSlug)
-      .then(productDetailsResp =>
-        productDetails.isProductExist(productDetailsResp, name)
-      );
+      .then(productDetailsResp => {
+        const product = productDetailsResp.body.data.product;
+        return product !== null && product.name === name;
+      });
   }
   isProductAvailableForPurchase(productId, channelSlug) {
     const productDetails = new ProductDetails();
     return productDetails
       .getProductDetails(productId, channelSlug)
-      .then(productDetailsResp =>
-        productDetails.isAvailableForPurchaseFromResp(productDetailsResp)
+      .then(
+        productDetailsResp =>
+          productDetailsResp.body.data.product.isAvailableForPurchase
       );
   }
   isProductVisibleInSearchResult(productName, channelSlug) {
     const search = new Search();
     return search
       .searchInShop(productName, channelSlug)
-      .then(resp => search.isProductExist(resp, productName));
+      .then(
+        resp =>
+          resp.body.data.products.totalCount !== 0 &&
+          resp.body.data.products.edges[0].node.name === productName
+      );
   }
 }
 export default FrontShopProductUtils;

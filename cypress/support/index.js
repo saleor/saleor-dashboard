@@ -40,15 +40,31 @@ Cypress.Commands.add("waitForGraph", operationName => {
   cy.wait(`@${operationName}`);
 });
 
-Cypress.Commands.add("sendRequestWithQuery", query =>
-  cy.request({
-    body: {
-      method: "POST",
+Cypress.Commands.add("sendRequestWithQuery", query => {
+  const body = {
+    method: "POST",
+    query,
+    url: urlList.apiUri
+  };
+  return cy.sendRequest(body, "auth");
+});
+
+Cypress.Commands.add(
+  "sendFrontShopRequestWithQuery",
+  (operationName, variables, query) => {
+    const body = {
+      operationName,
       query,
-      url: urlList.apiUri
-    },
+      variables
+    };
+    return cy.sendRequest(body, "token");
+  }
+);
+Cypress.Commands.add("sendRequest", (body, authorization) =>
+  cy.request({
+    body,
     headers: {
-      Authorization: `JWT ${window.sessionStorage.getItem("auth")}`
+      Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
     },
     method: "POST",
     url: urlList.apiUri

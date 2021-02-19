@@ -63,6 +63,6 @@ Cypress.Commands.add("loginInShop", () => {
       }
     ]
   }).then(resp => {
-    window.localStorage.setItem("token", resp.body[0].data.tokenCreate.token);
+    window.sessionStorage.setItem("token", resp.body[0].data.tokenCreate.token);
   });
 });

@@ -1,13 +1,13 @@
 import faker from "faker";
 
-import ProductSteps from "../../steps/productSteps";
-import { urlList } from "../../url/urlList";
-import ChannelsUtils from "../../utils/channelsUtils";
-import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
-import ProductsUtils from "../../utils/productsUtils";
+import ProductSteps from "../../../steps/productSteps";
+import { urlList } from "../../../url/urlList";
+import ChannelsUtils from "../../../utils/channelsUtils";
+import FrontShopProductUtils from "../../../utils/frontShop/frontShopProductUtils";
+import ProductsUtils from "../../../utils/productsUtils";
 
 // <reference types="cypress" />
-describe("Published products", () => {
+describe("Products displayed in listings", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
@@ -32,7 +32,7 @@ describe("Published products", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
   });
-  it("should update product to published", () => {
+  it("should update product to visible in listings", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     let defaultChannel;
     channelsUtils
@@ -48,30 +48,27 @@ describe("Published products", () => {
           attribute.id,
           category.id,
           1,
+          true,
           false,
-          false,
-          true
+          false
         );
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = `${urlList.products}${product.id}`;
-        productSteps.updateProductPublish(productUrl, true);
-        frontShopProductUtils.isProductVisible(
-          product.id,
-          defaultChannel.slug,
-          productName
+        productSteps.updateProductVisibleInListings(productUrl);
+        frontShopProductUtils.isProductVisibleInSearchResult(
+          productName,
+          defaultChannel.slug
         );
       })
-      .then(isVisible => {
-        expect(isVisible).to.be.eq(true);
+      .then(isProductVisible => {
+        expect(isProductVisible).to.be.eq(true);
       });
   });
-  it("should update product to not published", () => {
+  it("should update product to not visible in listings", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     let defaultChannel;
-    let product;
-
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -83,32 +80,32 @@ describe("Published products", () => {
           null,
           productType.id,
           attribute.id,
-          category.id
+          category.id,
+          1,
+          true,
+          false,
+          true
         );
       })
       .then(() => {
-        product = productsUtils.getCreatedProduct();
+        const product = productsUtils.getCreatedProduct();
         const productUrl = `${urlList.products}${product.id}`;
-        productSteps.updateProductPublish(productUrl, false);
-        frontShopProductUtils.isProductVisible(
-          product.id,
-          defaultChannel.slug,
-          productName
-        );
-      })
-      .then(isVisible => {
-        expect(isVisible).to.be.eq(false);
+        productSteps.updateProductVisibleInListings(productUrl);
+        frontShopProductUtils
+          .isProductVisibleInSearchResult(productName, defaultChannel.slug)
+          .then(isProductVisible => {
+            expect(isProductVisible).to.be.eq(false);
+          });
         cy.loginInShop();
       })
       .then(() => {
-        frontShopProductUtils.isProductVisible(
-          product.id,
-          defaultChannel.slug,
-          productName
+        frontShopProductUtils.isProductVisibleInSearchResult(
+          productName,
+          defaultChannel.slug
         );
       })
-      .then(isVisible => {
-        expect(isVisible).to.be.eq(true);
+      .then(isProductVisible => {
+        expect(isProductVisible).to.be.eq(true);
       });
   });
 });
