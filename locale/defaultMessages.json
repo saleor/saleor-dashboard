@@ -6767,6 +6767,10 @@
     "context": "event",
     "string": "All events"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2745028894": {
+    "context": "event",
+    "string": "Page deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
     "context": "event",
     "string": "Invoice sent"
@@ -6795,6 +6799,14 @@
     "context": "event",
     "string": "Order cancelled"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3618648517": {
+    "context": "event",
+    "string": "Page updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3671033983": {
+    "context": "event",
+    "string": "Product deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
     "string": "Order fulfilled"
@@ -6803,10 +6815,6 @@
     "context": "event",
     "string": "Customer created"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
-    "context": "event",
-    "string": "Changed quantity in checkout"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
     "context": "event",
     "string": "Invoice requested"
@@ -6814,6 +6822,14 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
     "context": "event",
     "string": "Fulfillment created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
+    "context": "event",
+    "string": "Page created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_787792649": {
+    "context": "event",
+    "string": "Customer updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",

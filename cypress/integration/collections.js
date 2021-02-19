@@ -13,7 +13,7 @@ import ProductsUtils from "../utils/productsUtils";
 describe("Collections", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
-  const collectionsFrontUtils = new CollectionsUtils();
+  const collectionsUtils = new CollectionsUtils();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
@@ -22,6 +22,9 @@ describe("Collections", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    productsUtils.deleteProperProducts(startsWith);
+    // collectionsUtils.deleteProperCollections(startsWith);
+
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -78,7 +81,7 @@ describe("Collections", () => {
       .waitForGraph("CreateCollection")
       .get(COLLECTION_SELECTORS.saveButton)
       .click();
-    collectionsFrontUtils.getCreatedCollection().then(collection => {
+    collectionsUtils.getCreatedCollection().then(collection => {
       cy.get(COLLECTION_SELECTORS.addProductButton)
         .click()
         .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
@@ -89,10 +92,9 @@ describe("Collections", () => {
         .get(ASSIGN_PRODUCTS_SELECTORS.submitButton)
         .click()
         .loginInShop();
-      collectionsFrontUtils.isCollectionVisible(
-        collection.id,
-        defaultChannel.slug
-      );
+      collectionsUtils
+        .isCollectionVisible(collection.id, defaultChannel.slug)
+        .then(isVisible => expect(isVisible).to.equal(true));
     });
   });
   // xit("should display collections", () => {

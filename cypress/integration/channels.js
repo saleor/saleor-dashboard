@@ -14,16 +14,18 @@ import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import ChannelsSteps from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
+import ChannelsUtils from "../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
   const channels = new Channels();
+  const channelsUtils = new ChannelsUtils();
   const channelsSteps = new ChannelsSteps();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channels.deleteTestChannels(channelStartsWith);
+    channelsUtils.deleteChannels(channelStartsWith);
   });
 
   beforeEach(() => {
@@ -49,19 +51,18 @@ describe("Channels", () => {
       .get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
-      .contains(randomChannel)
-      
+      .contains(randomChannel);
+
     // new channel should be visible in channel selector
     cy.visit(urlList.homePage)
       .get(HEADER_SELECTORS.channelSelect)
       .click()
       .get(HEADER_SELECTORS.channelSelectList)
       .contains(randomChannel)
-      .click()
-      
+      .click();
+
     // new channel should be visible at product availability form
-    cy.visit(urlList.products)
-      .waitForGraph("InitialProductFilterData");
+    cy.visit(urlList.products).waitForGraph("InitialProductFilterData");
     cy.get(PRODUCTS_SELECTORS.productsList)
       .first()
       .click()

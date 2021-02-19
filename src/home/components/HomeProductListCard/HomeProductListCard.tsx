@@ -46,18 +46,19 @@ const useStyles = makeStyles(
 );
 
 interface HomeProductListProps {
+  testId?: string;
   topProducts: Home_productTopToday_edges_node[];
   onRowClick: (productId: string, variantId: string) => void;
 }
 
 export const HomeProductList: React.FC<HomeProductListProps> = props => {
-  const { topProducts, onRowClick } = props;
+  const { topProducts, onRowClick, testId } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card data-test-id={testId}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Top Products",
