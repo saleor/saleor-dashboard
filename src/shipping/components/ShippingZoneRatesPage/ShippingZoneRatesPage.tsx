@@ -134,6 +134,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
+        const formIsUnchanged =
+          !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
         return (
           <Container>
@@ -211,11 +213,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={
-                disabled ||
-                formDisabled ||
-                (!hasChanged && !hasChannelChanged && !havePostalCodesChanged)
-              }
+              disabled={disabled || formDisabled || formIsUnchanged}
               onCancel={onBack}
               onDelete={onDelete}
               onSave={submit}

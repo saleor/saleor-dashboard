@@ -91,8 +91,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     type: null
   };
 
-  const postalCodeInclusionChange = v => {
-    onPostalCodeInclusionChange(v);
+  const postalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    onPostalCodeInclusionChange(inclusion);
   };
 
   return (

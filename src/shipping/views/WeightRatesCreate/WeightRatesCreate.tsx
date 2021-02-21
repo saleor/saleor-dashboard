@@ -17,6 +17,7 @@ import {
   shippingWeightRatesUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
+import filterPostalCodes from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
 import {
   PostalCodeRuleInclusionTypeEnum,
@@ -101,6 +102,11 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     setPostalCodes([]);
   };
 
+  const onPostalCodeUnassign = code => {
+    setPostalCodes(filterPostalCodes(postalCodes, code));
+    closeModal();
+  };
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
@@ -134,14 +140,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onPostalCodeAssign={() => openModal("add-range")}
-        onPostalCodeUnassign={code => {
-          setPostalCodes(
-            postalCodes.filter(
-              rule => rule.start !== code.start && rule.end !== code.end
-            )
-          );
-          closeModal();
-        }}
+        onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         variant={ShippingMethodTypeEnum.WEIGHT}
       />

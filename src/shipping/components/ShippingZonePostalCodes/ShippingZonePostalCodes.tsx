@@ -77,6 +77,24 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
+  const onInclusionRadioChange = (event: React.ChangeEvent<any>) => {
+    const value = event.target.value;
+    setInclusionType(value);
+    onPostalCodeInclusionChange(value);
+  };
+
+  const getPostalCodeRangeLabel = (
+    postalCodeRange: ShippingMethodFragment_postalCodeRules
+  ) => {
+    if (!postalCodeRange?.start) {
+      return <Skeleton />;
+    }
+    if (postalCodeRange?.end) {
+      return `${postalCodeRange.start} - ${postalCodeRange.end}`;
+    }
+    return postalCodeRange.start;
+  };
+
   return (
     <Card>
       <CardTitle
@@ -136,12 +154,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           ]}
           name="includePostalCodes"
           value={inclusionType}
-          onChange={e => {
-            const value = e.target.value;
-            setInclusionType(value);
-            initialInclusionType = PostalCodeRuleInclusionTypeEnum.EXCLUDE;
-            onPostalCodeInclusionChange(value);
-          }}
+          onChange={onInclusionRadioChange}
         />
       </CardContent>
       <ResponsiveTable>
@@ -149,37 +162,34 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           <col />
           <col className={classes.colAction} />
         </colgroup>
-        {postalCodes === undefined ||
-          (postalCodes.length > 0 && (
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {postalCodes === undefined ? (
-                    <Skeleton className={classes.skeleton} />
-                  ) : (
-                    <Typography variant="caption">
-                      <FormattedMessage
-                        defaultMessage="{number} postal code ranges"
-                        description="number of postal code ranges"
-                        values={{
-                          number: postalCodes.length
-                        }}
-                      />
-                    </Typography>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <IconButton onClick={() => setExpanded(!expanded)}>
-                    <ArrowDropdown
-                      className={classNames(classes.arrow, {
-                        [classes.arrowRotate]: expanded
-                      })}
-                    />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-          ))}
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              {postalCodes === undefined ? (
+                <Skeleton className={classes.skeleton} />
+              ) : (
+                <Typography variant="caption">
+                  <FormattedMessage
+                    defaultMessage="{number} postal code ranges"
+                    description="number of postal code ranges"
+                    values={{
+                      number: postalCodes.length
+                    }}
+                  />
+                </Typography>
+              )}
+            </TableCell>
+            <TableCell>
+              <IconButton onClick={() => setExpanded(!expanded)}>
+                <ArrowDropdown
+                  className={classNames(classes.arrow, {
+                    [classes.arrowRotate]: expanded
+                  })}
+                />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableHead>
         {expanded && (
           <TableBody>
             {renderCollection(
@@ -187,15 +197,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               postalCodeRange => (
                 <TableRow key={postalCodeRange?.id}>
                   <TableCell>
-                    {postalCodeRange?.start ? (
-                      postalCodeRange?.end ? (
-                        `${postalCodeRange.start} - ${postalCodeRange.end}`
-                      ) : (
-                        postalCodeRange.start
-                      )
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {getPostalCodeRangeLabel(postalCodeRange)}
                   </TableCell>
                   <TableCell>
                     <IconButton
