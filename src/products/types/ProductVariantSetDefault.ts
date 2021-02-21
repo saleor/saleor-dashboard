@@ -185,6 +185,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_media
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks_warehouse {

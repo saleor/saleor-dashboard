@@ -14,6 +14,7 @@ export interface ProductMediaById_product_mainImage {
   alt: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductMediaById_product_media {
@@ -22,6 +23,7 @@ export interface ProductMediaById_product_media {
   url: string;
   alt: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductMediaById_product {

@@ -3,8 +3,6 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
-import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 
@@ -61,6 +59,7 @@ interface MediaTileProps {
     alt: string;
     url: string;
     type?: string;
+    oembedData?: string;
   };
   loading?: boolean;
   onDelete?: () => void;
@@ -70,6 +69,8 @@ interface MediaTileProps {
 const MediaTile: React.FC<MediaTileProps> = props => {
   const { loading, onDelete, onEdit, media } = props;
   const classes = useStyles(props);
+  const parsedMediaOembedData = JSON.parse(media?.oembedData);
+  const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
     <div className={classes.mediaContainer} data-test="product-image">
@@ -95,11 +96,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
           </div>
         )}
       </div>
-      {media?.type !== ProductMediaType.IMAGE ? (
-        <ProductMediaVideo video={media} className={classes.media} />
-      ) : (
-        <img className={classes.media} src={media.url} alt={media.alt} />
-      )}
+      <img className={classes.media} src={mediaUrl} alt={media.alt} />
     </div>
   );
 };

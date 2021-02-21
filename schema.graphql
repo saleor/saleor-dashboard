@@ -2076,10 +2076,6 @@ type GatewayConfigLine {
 
 scalar GenericScalar
 
-type Geolocalization {
-  country: CountryDisplay
-}
-
 type GiftCard implements Node {
   code: String
   user: User
@@ -3657,7 +3653,6 @@ input PaymentInput {
   gateway: String!
   token: String
   amount: PositiveDecimal
-  billingAddress: AddressInput
   returnUrl: String
 }
 
@@ -3853,14 +3848,16 @@ type Product implements Node & ObjectWithMetadata {
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   url: String! @deprecated(reason: "This field will be removed after 2020-07-31.")
   thumbnail(size: Int): Image
-  pricing: ProductPricingInfo
-  isAvailable: Boolean
+  pricing(address: AddressInput): ProductPricingInfo
+  isAvailable(address: AddressInput): Boolean
   taxType: TaxType
   attributes: [SelectedAttribute!]!
   channelListings: [ProductChannelListing!]
   mediaById(id: ID): ProductMedia
+  imageById(id: ID): ProductImage @deprecated(reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead.")
   variants: [ProductVariant]
   media: [ProductMedia]
+  images: [ProductImage] @deprecated(reason: "Will be removed in Saleor 4.0. Use the `media` field instead.")
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   availableForPurchase: Date
@@ -3906,7 +3903,7 @@ type ProductChannelListing implements Node {
   purchaseCost: MoneyRange
   margin: Margin
   isAvailableForPurchase: Boolean
-  pricing: ProductPricingInfo
+  pricing(address: AddressInput): ProductPricingInfo
 }
 
 input ProductChannelListingAddInput {
@@ -4035,6 +4032,13 @@ input ProductFilterInput {
   channel: String
 }
 
+type ProductImage {
+  id: ID!
+  alt: String
+  sortOrder: Int
+  url(size: Int): String!
+}
+
 input ProductInput {
   attributes: [AttributeValueInput]
   category: ID
@@ -4054,6 +4058,7 @@ type ProductMedia implements Node {
   sortOrder: Int
   alt: String!
   type: ProductMediaType!
+  oembedData: JSONString!
   url(size: Int): String!
 }
 
@@ -4074,7 +4079,7 @@ input ProductMediaCreateInput {
   alt: String
   image: Upload
   product: ID!
-  videoUrl: String
+  mediaUrl: String
 }
 
 type ProductMediaDelete {
@@ -4093,8 +4098,7 @@ type ProductMediaReorder {
 
 enum ProductMediaType {
   IMAGE
-  VIDEO_YOUTUBE
-  VIDEO_UNKNOWN
+  VIDEO
 }
 
 type ProductMediaUpdate {
@@ -4117,6 +4121,7 @@ input ProductOrder {
 
 enum ProductOrderField {
   NAME
+  RANK
   PRICE
   MINIMAL_PRICE
   DATE
@@ -4288,17 +4293,18 @@ type ProductVariant implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   channelListings: [ProductVariantChannelListing!]
-  pricing: VariantPricingInfo
+  pricing(address: AddressInput): VariantPricingInfo
   attributes(variantSelection: VariantAttributeScope): [SelectedAttribute!]!
   costPrice: Money
   margin: Int
   quantityOrdered: Int
   revenue(period: ReportingPeriod): TaxedMoney
+  images: [ProductImage] @deprecated(reason: "Will be removed in Saleor 4.0. Use the `media` instead.")
   media: [ProductMedia]
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   digitalContent: DigitalContent
-  stocks(countryCode: CountryCode): [Stock]
-  quantityAvailable(countryCode: CountryCode): Int!
+  stocks(address: AddressInput, countryCode: CountryCode): [Stock]
+  quantityAvailable(address: AddressInput, countryCode: CountryCode): Int!
 }
 
 type ProductVariantBulkCreate {
@@ -4963,7 +4969,6 @@ type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
   availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
-  geolocalization: Geolocalization
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
@@ -5904,7 +5909,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | PageType
+union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
 
 type _Service {
   sdl: String

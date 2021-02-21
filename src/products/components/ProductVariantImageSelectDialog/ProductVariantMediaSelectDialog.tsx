@@ -6,8 +6,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { buttonMessages } from "@saleor/intl";
-import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
-import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -73,33 +71,30 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
         <div className={classes.root}>
           {media
             .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
-            .map(mediaObj => (
-              <div
-                className={classNames([
-                  classes.imageContainer,
-                  {
-                    [classes.selectedImageContainer]:
-                      selectedMedia.indexOf(mediaObj.id) !== -1
-                  }
-                ])}
-                onClick={onMediaSelect(mediaObj.id)}
-                key={mediaObj.id}
-              >
-                {mediaObj?.type === ProductMediaType.IMAGE ? (
+            .map(mediaObj => {
+              const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
+              const mediaUrl =
+                parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+              return (
+                <div
+                  className={classNames([
+                    classes.imageContainer,
+                    {
+                      [classes.selectedImageContainer]:
+                        selectedMedia.indexOf(mediaObj.id) !== -1
+                    }
+                  ])}
+                  onClick={onMediaSelect(mediaObj.id)}
+                  key={mediaObj.id}
+                >
                   <img
                     className={classes.image}
-                    src={mediaObj.url}
+                    src={mediaUrl}
                     alt={mediaObj.alt}
                   />
-                ) : (
-                  <ProductMediaVideo
-                    className={classes.image}
-                    video={mediaObj}
-                    withOverlay
-                  />
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
         </div>
       </DialogContent>
       <DialogActions>

@@ -185,6 +185,7 @@ export interface ProductMediaCreate_productMediaCreate_product_media {
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_variants_stocks_warehouse {
@@ -289,5 +290,5 @@ export interface ProductMediaCreateVariables {
   product: string;
   image?: any | null;
   alt?: string | null;
-  videoUrl?: string | null;
+  mediaUrl?: string | null;
 }

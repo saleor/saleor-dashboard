@@ -186,7 +186,7 @@ interface ProductMediaProps {
   onImageEdit: (id: string) => () => void;
   onImageReorder?: ReorderAction;
   onImageUpload(file: File);
-  openVideoUrlModal();
+  openMediaUrlModal();
 }
 
 const ProductMedia: React.FC<ProductMediaProps> = props => {
@@ -197,7 +197,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     onImageDelete,
     onImageReorder,
     onImageUpload,
-    openVideoUrlModal
+    openMediaUrlModal
   } = props;
 
   const classes = useStyles(props);
@@ -271,9 +271,9 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                           {intl.formatMessage(messages.uploadImages)}
                         </MenuItem>
                         <MenuItem
-                          onClick={openVideoUrlModal}
-                          data-test="uploadVideoURL"
-                          key="upload-video-url"
+                          onClick={openMediaUrlModal}
+                          data-test="uploadMediaUrl"
+                          key="upload-media-url"
                         >
                           {intl.formatMessage(messages.uploadUrl)}
                         </MenuItem>

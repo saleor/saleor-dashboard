@@ -12,61 +12,57 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-interface ProductVideoUrlDialogProps {
+interface ProductExternalMediaDialogProps {
   product: ProductDetails_product;
   open: boolean;
   onClose: () => void;
-  onSubmit: (videoUrl: string) => void;
+  onSubmit: (mediaUrl: string) => void;
 }
 
 interface FormValues {
-  videoUrl: string;
+  mediaUrl: string;
 }
 
 const messages = defineMessages({
   buttonMessage: {
-    defaultMessage: "Upload video URL",
+    defaultMessage: "Upload URL",
     description: "modal button"
-  },
-  uploadVideoUrl: {
-    defaultMessage: "Upload Video URL",
-    description: "dialog header"
   }
 });
 
-const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = ({
+const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   open,
   onClose,
   onSubmit
 }) => {
   const intl = useIntl();
   const initialValues: FormValues = {
-    videoUrl: ""
+    mediaUrl: ""
   };
 
   const handleOnSubmit = (values: FormValues) => {
-    onSubmit(values.videoUrl);
+    onSubmit(values.mediaUrl);
     onClose();
   };
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>{intl.formatMessage(messages.uploadVideoUrl)}</DialogTitle>
+      <DialogTitle>{intl.formatMessage(messages.buttonMessage)}</DialogTitle>
       <Form initial={initialValues} onSubmit={handleOnSubmit}>
         {({ change, data, submit }) => (
           <>
             <DialogContent>
               <Typography>
                 <FormattedMessage
-                  defaultMessage="Video you supply will be shown in media gallery. You will be able to define the order of gallery."
+                  defaultMessage="Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
                   description="modal header"
                 />
               </Typography>
               <FormSpacer />
               <TextField
-                label="Video URL"
-                value={data.videoUrl}
-                name="videoUrl"
+                label="URL"
+                value={data.mediaUrl}
+                name="mediaUrl"
                 type="url"
                 onChange={change}
                 autoFocus
@@ -89,4 +85,4 @@ const ProductVideoUrlDialog: React.FC<ProductVideoUrlDialogProps> = ({
   );
 };
 
-export default ProductVideoUrlDialog;
+export default ProductExternalMediaDialog;

@@ -4921,6 +4921,14 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_4146081479": {
+    "context": "modal header",
+    "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
+  },
+  "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_buttonMessage": {
+    "context": "modal button",
+    "string": "Upload URL"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
     "context": "product price",
     "string": "Price"
@@ -4998,41 +5006,41 @@
     "context": "product",
     "string": "Name"
   },
-  "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_4168702846": {
+  "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_allMedia": {
     "context": "section header",
     "string": "All Media"
   },
-  "src_dot_products_dot_components_dot_ProductMediaPage_dot_1905082483": {
-    "context": "field is optional",
-    "string": "Optional"
-  },
-  "src_dot_products_dot_components_dot_ProductMediaPage_dot_2143586538": {
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_editMedia": {
     "context": "header",
     "string": "Edit Media"
   },
-  "src_dot_products_dot_components_dot_ProductMediaPage_dot_2223347669": {
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_mediaInformation": {
     "context": "section header",
     "string": "Media Information"
   },
-  "src_dot_products_dot_components_dot_ProductMediaPage_dot_3439207912": {
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_mediaView": {
     "context": "section header",
     "string": "Media View"
   },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_1827290871": {
-    "context": "modal button images upload",
-    "string": "Upload Images"
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_optional": {
+    "context": "field is optional",
+    "string": "Optional"
   },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_2339541858": {
+  "src_dot_products_dot_components_dot_ProductMedia_dot_media": {
     "context": "section header",
     "string": "Media"
   },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_3049126728": {
-    "context": "modal button url upload",
-    "string": "Upload URL"
-  },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_3050254265": {
+  "src_dot_products_dot_components_dot_ProductMedia_dot_upload": {
     "context": "modal button upload",
     "string": "Upload"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_uploadImages": {
+    "context": "modal button images upload",
+    "string": "Upload Images"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_uploadUrl": {
+    "context": "modal button url upload",
+    "string": "Upload URL"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
     "context": "product is not configurable",
@@ -5241,16 +5249,17 @@
     "context": "dialog header",
     "string": "Media Selection"
   },
-  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_1721720043": {
-    "string": "Select a specific variant media from product media"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_2040471824": {
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_chooseMedia": {
     "context": "button",
     "string": "Choose media"
   },
-  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_2339541858": {
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_media": {
     "context": "section header",
     "string": "Media"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_selectSpecificVariant": {
+    "context": "select variant media",
+    "string": "Select a specific variant media from product media"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_1222345317": {
     "context": "default product variant indicator",
@@ -5368,18 +5377,6 @@
     "context": "product variant name",
     "string": "Variant"
   },
-  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_2036436177": {
-    "context": "modal header",
-    "string": "Video you supply will be shown in media gallery. You will be able to define the order of gallery."
-  },
-  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_2537587783": {
-    "context": "button",
-    "string": "Upload video URL"
-  },
-  "src_dot_products_dot_components_dot_ProductVideoUrlDialog_dot_3936463653": {
-    "context": "dialog header",
-    "string": "Upload Video URL"
-  },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -5434,6 +5431,9 @@
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
     "string": "Delete Product Variants"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_194038240": {
+    "string": "Incorrect media URL or unsupported media provider"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",

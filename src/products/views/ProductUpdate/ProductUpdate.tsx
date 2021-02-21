@@ -41,6 +41,8 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -269,11 +271,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductMediaOpts
   ] = useProductMediaCreateMutation({
     onCompleted: data => {
-      if (data.productMediaCreate.errors.length) {
-        notify({
-          status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
-        });
+      const errors = data.productMediaCreate.errors;
+
+      if (errors.length) {
+        errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       } else {
         notify({
           status: "success",
@@ -283,11 +289,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
 
-  const handleVideoUrlUpload = (videoUrl: string) => {
+  const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
       alt: "",
-      product: product.id,
-      videoUrl
+      mediaUrl,
+      product: product.id
     };
 
     createProductMedia({
@@ -467,6 +473,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
+        onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
@@ -477,7 +484,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
-        onVideoUrlUpload={handleVideoUrlUpload}
         toolbar={
           <IconButton
             color="primary"

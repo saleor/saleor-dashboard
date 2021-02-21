@@ -125,6 +125,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_media {
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_product_defaultVariant {
@@ -139,6 +140,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_product_me
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_product_thumbnail {
@@ -197,6 +199,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_product_va
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_product_variants {

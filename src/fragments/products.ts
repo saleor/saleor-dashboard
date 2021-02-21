@@ -47,6 +47,7 @@ export const fragmentProductMedia = gql`
     sortOrder
     url
     type
+    oembedData
   }
 `;
 
@@ -277,6 +278,7 @@ export const fragmentVariant = gql`
       id
       url
       type
+      oembedData
     }
     name
     product {
@@ -311,6 +313,7 @@ export const fragmentVariant = gql`
           id
           url
           type
+          oembedData
         }
       }
       defaultVariant {

@@ -186,6 +186,7 @@ export interface ProductCreate_productCreate_product_media {
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductCreate_productCreate_product_variants_stocks_warehouse {

@@ -12,7 +12,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
-import ProductMediaVideo from "@saleor/products/components/ProductMediaVideo/ProductMediaVideo";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -46,6 +45,9 @@ const useStyles = makeStyles(
       width: "100%"
     },
     imageContainer: {
+      "& iframe": {
+        width: "100%"
+      },
       background: "#ffffff",
       border: "1px solid #eaeaea",
       borderRadius: theme.spacing(),
@@ -63,6 +65,7 @@ interface ProductMediaPageProps {
     alt: string;
     url: string;
     type: string;
+    oembedData?: string;
   };
   media?: Array<{
     id: string;
@@ -143,10 +146,11 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                         />
                       </div>
                     ) : (
-                      <ProductMediaVideo
-                        className={classes.image}
-                        video={mediaObj}
-                        fullWidth
+                      <div
+                        className={classes.imageContainer}
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.parse(mediaObj?.oembedData)?.html
+                        }}
                       />
                     )
                   ) : (

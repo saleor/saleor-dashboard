@@ -86,14 +86,14 @@ export const productMediaCreateMutation = gql`
     $product: ID!
     $image: Upload
     $alt: String
-    $videoUrl: String
+    $mediaUrl: String
   ) {
     productMediaCreate(
       input: {
         alt: $alt
         image: $image
         product: $product
-        videoUrl: $videoUrl
+        mediaUrl: $mediaUrl
       }
     ) {
       errors: productErrors {

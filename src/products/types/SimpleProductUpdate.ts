@@ -186,6 +186,7 @@ export interface SimpleProductUpdate_productUpdate_product_media {
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse {
@@ -400,6 +401,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_media {
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant {
@@ -414,6 +416,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_thumbnail {
@@ -472,6 +475,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_variants {
@@ -680,6 +684,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_m
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant {
@@ -694,6 +699,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_thumbnail {
@@ -752,6 +758,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_variants {
@@ -959,6 +966,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_m
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant {
@@ -973,6 +981,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_thumbnail {
@@ -1031,6 +1040,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_variants {
@@ -1239,6 +1249,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_m
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {
@@ -1253,6 +1264,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_thumbnail {
@@ -1311,6 +1323,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   id: string;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_variants {

@@ -26,8 +26,8 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import ProductVideoUrlDialog from "@saleor/products/components/ProductVideoUrlDialog";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -72,7 +72,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
-  isVideoUrlModalVisible?: boolean;
+  isMediaUrlModalVisible?: boolean;
   variants: ProductDetails_product_variants[];
   media: ProductDetails_product_media[];
   hasChannelChanged: boolean;
@@ -104,7 +104,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
-  onVideoUrlUpload(videoUrl: string);
+  onMediaUrlUpload(mediaUrl: string);
   onSeoClick?();
   onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetails_product_variants);
@@ -153,6 +153,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  onMediaUrlUpload,
   onChannelsChange,
   openChannelsModal,
   onSeoClick,
@@ -162,10 +163,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
-  onVideoUrlUpload,
   onWarehouseConfigure,
   isChecked,
-  isVideoUrlModalVisible,
+  isMediaUrlModalVisible,
   selected,
   selectedChannelId,
   toggle,
@@ -185,8 +185,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     product?.category?.name || ""
   );
 
-  const [videoUrlModalStatus, setVideoUrlModalStatus] = useStateFromProps(
-    isVideoUrlModalVisible || false
+  const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
+    isMediaUrlModalVisible || false
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
@@ -278,7 +278,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onImageReorder={onImageReorder}
                   onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
-                  openVideoUrlModal={() => setVideoUrlModalStatus(true)}
+                  openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -452,11 +452,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               />
             )}
 
-            <ProductVideoUrlDialog
+            <ProductExternalMediaDialog
               product={product}
-              onClose={() => setVideoUrlModalStatus(false)}
-              open={videoUrlModalStatus}
-              onSubmit={onVideoUrlUpload}
+              onClose={() => setMediaUrlModalStatus(false)}
+              open={mediaUrlModalStatus}
+              onSubmit={onMediaUrlUpload}
             />
           </Container>
         </>

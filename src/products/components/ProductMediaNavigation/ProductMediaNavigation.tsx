@@ -3,12 +3,9 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductMediaType } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
-
-import videoPlaceholderIcon from "../../../../assets/images/video-placeholder.svg";
 
 const messages = defineMessages({
   allMedia: {
@@ -59,6 +56,7 @@ interface ProductMediaNavigationProps {
     url: string;
     alt?: string;
     type?: string;
+    oembedData?: string;
   }>;
   highlighted?: string;
   onRowClick: (id: string) => () => void;
@@ -77,27 +75,29 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
           <Skeleton />
         ) : (
           <div className={classes.root}>
-            {media.map(mediaObj => (
-              <div
-                className={classNames({
-                  [classes.imageContainer]: true,
-                  [classes.highlightedImageContainer]:
-                    mediaObj.id === highlighted
-                })}
-                onClick={onRowClick(mediaObj.id)}
-                key={mediaObj.id}
-              >
-                <img
-                  className={classes.image}
-                  src={
-                    mediaObj.type && mediaObj.type !== ProductMediaType.IMAGE
-                      ? videoPlaceholderIcon
-                      : mediaObj.url
-                  }
-                  alt={mediaObj.alt}
-                />
-              </div>
-            ))}
+            {media.map(mediaObj => {
+              const mediaObjOembedData = JSON.parse(mediaObj?.oembedData);
+              const mediaUrl =
+                mediaObjOembedData?.thumbnail_url || mediaObj.url;
+
+              return (
+                <div
+                  className={classNames({
+                    [classes.imageContainer]: true,
+                    [classes.highlightedImageContainer]:
+                      mediaObj.id === highlighted
+                  })}
+                  onClick={onRowClick(mediaObj.id)}
+                  key={mediaObj.id}
+                >
+                  <img
+                    className={classes.image}
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
       </CardContent>

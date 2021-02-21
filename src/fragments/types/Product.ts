@@ -179,6 +179,7 @@ export interface Product_media {
   sortOrder: number | null;
   url: string;
   type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface Product_variants_stocks_warehouse {

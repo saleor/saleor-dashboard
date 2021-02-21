@@ -6,11 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
-import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
-
-import ProductMediaVideo from "../ProductMediaVideo/ProductMediaVideo";
 
 const messages = defineMessages({
   chooseMedia: {
@@ -93,22 +90,19 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
           ) : media.length > 0 ? (
             media
               .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
-              .map(mediaObj =>
-                mediaObj.type !== ProductMediaType.IMAGE ? (
-                  <ProductMediaVideo
-                    className={classes.image}
-                    video={mediaObj}
-                    key={mediaObj.id}
-                  />
-                ) : (
+              .map(mediaObj => {
+                const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
+                const mediaUrl =
+                  parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+                return (
                   <img
                     key={mediaObj.id}
                     className={classes.image}
-                    src={mediaObj.url}
+                    src={mediaUrl}
                     alt={mediaObj.alt}
                   />
-                )
-              )
+                );
+              })
           ) : (
             <Typography className={classes.helpText}>
               {intl.formatMessage(messages.selectSpecificVariant)}

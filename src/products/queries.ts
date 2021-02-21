@@ -248,12 +248,14 @@ const productMediaQuery = gql`
         alt
         url
         type
+        oembedData
       }
       media {
         id
         url(size: 48)
         alt
         type
+        oembedData
       }
     }
   }

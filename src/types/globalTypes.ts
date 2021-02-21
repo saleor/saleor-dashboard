@@ -798,8 +798,7 @@ export enum ProductFieldEnum {
 
 export enum ProductMediaType {
   IMAGE = "IMAGE",
-  VIDEO_UNKNOWN = "VIDEO_UNKNOWN",
-  VIDEO_YOUTUBE = "VIDEO_YOUTUBE",
+  VIDEO = "VIDEO",
 }
 
 export enum ProductOrderField {
@@ -810,6 +809,7 @@ export enum ProductOrderField {
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  RANK = "RANK",
   RATING = "RATING",
   TYPE = "TYPE",
 }
