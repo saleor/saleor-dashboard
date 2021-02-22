@@ -50,7 +50,7 @@ const getPostalCodeRulesToAdd = (
   rules: ShippingMethodFragment_postalCodeRules[]
 ) =>
   rules
-    .filter(code => !code.id)
+    .filter(code => !code.id || code.id === "0")
     .map(
       code =>
         ({
