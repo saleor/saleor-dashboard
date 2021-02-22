@@ -3332,6 +3332,10 @@
     "context": "total price of ordered products",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addCustomerInfo": {
+    "context": "add customer first label",
+    "string": "Add customer first"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
     "context": "add discount button",
     "string": "Add Discount"
