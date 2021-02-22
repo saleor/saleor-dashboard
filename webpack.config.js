@@ -44,8 +44,8 @@ module.exports = (env, argv) => {
     throw new Error("Environment variable API_URI not set");
   }
 
+  const publicPath = process.env.STATIC_URL || "/";
   if (!devMode) {
-    const publicPath = process.env.STATIC_URL || "/";
     output = {
       chunkFilename: "[name].[chunkhash].js",
       filename: "[name].[chunkhash].js",
@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
       chunkFilename: "[name].js",
       filename: "[name].js",
       path: resolve(dashboardBuildPath),
-      publicPath: "/"
+      publicPath
     };
     fileLoaderPath = "file-loader?name=[name].[ext]";
   }
