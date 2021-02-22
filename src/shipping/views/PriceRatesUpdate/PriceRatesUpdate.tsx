@@ -55,6 +55,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
+import postalCodesReducer, { postalCodesReducerActionType } from "@saleor/shipping/views/reducer";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -174,26 +175,25 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const [codesToDelete, setCodesToDelete] = React.useState([]);
-  const [havePostalCodesChanged, setHavePostalCodesChanged] = React.useState(
-    false
-  );
-  const [originalCodes, setOriginalCodes] = React.useState([]);
-  const [inclusionType, setInclusionType] = React.useState(
-    rate?.postalCodeRules[0]?.inclusionType
+  const [state, dispatch] = React.useReducer(
+    postalCodesReducer,
+    {
+      codesToDelete: [],
+      havePostalCodesChanged: false,
+      inclusionType: rate?.postalCodeRules[0]?.inclusionType,
+      originalCodes: [],
+      postalCodeRules: rate?.postalCodeRules
+    }
   );
 
   const onPostalCodeInclusionChange = (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
-    setInclusionType(inclusion);
-    setCodesToDelete(
-      rate.postalCodeRules
+    dispatch({ inclusion, type: postalCodesReducerActionType.setInclusionType });
+    dispatch({
+      "codes": rate.postalCodeRules
         .filter(code => code.id !== undefined)
-        .map(code => code.id)
-    );
-    setHavePostalCodesChanged(true);
-    rate.postalCodeRules = [];
+        .map(code => code.id), "type": postalCodesReducerActionType.setCodesToDelete})
   };
 
   const updateData = async (formData: FormData): Promise<unknown[]> => {
@@ -203,11 +203,10 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         id,
         rateId,
         rate.postalCodeRules,
-        codesToDelete
+        state.codesToDelete
       )
     });
-    setCodesToDelete([]);
-    setHavePostalCodesChanged(false);
+    dispatch({ "codes": [], "type": postalCodesReducerActionType.setCodesToDelete });
     const errors = response.data.shippingPriceUpdate.errors;
     if (errors.length === 0) {
       handleSuccess();
@@ -244,8 +243,8 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   };
 
   const onPostalCodeAssign = (rule: MinMax) => {
-    if (!originalCodes.length) {
-      setOriginalCodes([...rate.postalCodeRules]);
+    if (!state.originalCodes.length) {
+      dispatch({ "codes": [...rate.postalCodeRules], "type": postalCodesReducerActionType.setOriginalCodes });
     }
     if (
       rate.postalCodeRules.filter(
@@ -259,7 +258,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       __typename: undefined,
       end: rule.max,
       id: undefined,
-      inclusionType,
+      inclusionType: state.inclusionType,
       start: rule.min
     };
     rate.postalCodeRules.push(newCode);
@@ -268,14 +267,13 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
 
   const onPostalCodeUnassign = code => {
     if (code.id !== undefined) {
-      setCodesToDelete([...codesToDelete, code.id]);
+      dispatch({ "codes": [...state.codesToDelete, code.id], "type": postalCodesReducerActionType.setCodesToDelete });
       rate.postalCodeRules = rate.postalCodeRules.filter(
         rule => rule.id !== code.id
       );
     } else {
       rate.postalCodeRules = filterPostalCodes(rate.postalCodeRules, code);
     }
-    setHavePostalCodesChanged(true);
   };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
@@ -344,7 +342,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           assignProductOpts?.status === "loading"
         }
         hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
-        havePostalCodesChanged={havePostalCodesChanged}
+        havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
@@ -378,13 +376,13 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
+        postalCodeRules={state.postalCodeRules}
       />
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState={"default"}
         onClose={closeModal}
         onSubmit={code => {
           onPostalCodeAssign(code);
-          setHavePostalCodesChanged(true);
         }}
         open={params.action === "add-range"}
       />

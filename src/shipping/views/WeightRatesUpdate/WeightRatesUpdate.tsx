@@ -29,6 +29,7 @@ import {
   getShippingMethodChannelVariables,
   getUpdateShippingWeightRateVariables
 } from "@saleor/shipping/handlers";
+import postalCodesReducer, { postalCodesReducerActionType } from "@saleor/shipping/views/reducer";
 import {
   useShippingMethodChannelListingUpdate,
   useShippingPriceExcludeProduct,
@@ -86,18 +87,27 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     ShippingRateUrlQueryParams
   >(navigate, params => shippingWeightRatesEditUrl(id, rateId, params), params);
 
-  const [codesToDelete, setCodesToDelete] = React.useState([]);
-  const [havePostalCodesChanged, setHavePostalCodesChanged] = React.useState(
-    false
+  const rate = data?.shippingZone?.shippingMethods.find(
+    rate => rate.id === rateId
   );
-  const [originalCodes, setOriginalCodes] = React.useState([]);
-  const [inclusionType, setInclusionType] = React.useState(
-    PostalCodeRuleInclusionTypeEnum.EXCLUDE
+
+  const getPostcodeRules = () => rate?.postalCodeRules;
+
+  const [state, dispatch] = React.useReducer(
+    postalCodesReducer,
+    {
+      codesToDelete: [],
+      havePostalCodesChanged: false,
+      inclusionType: rate?.postalCodeRules[0]?.inclusionType,
+      originalCodes: [],
+      postalCodeRules: getPostcodeRules()
+    }
   );
 
   const onPostalCodeInclusionChange = (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
+    dispatch({ inclusion, type: postalCodesReducerActionType.setInclusionType });
     setInclusionType(inclusion);
     setCodesToDelete(
       rate.postalCodeRules
@@ -136,10 +146,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     search: productsSearch,
     result: productsSearchOpts
   } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
-
-  const rate = data?.shippingZone?.shippingMethods.find(
-    rate => rate.id === rateId
-  );
 
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     []

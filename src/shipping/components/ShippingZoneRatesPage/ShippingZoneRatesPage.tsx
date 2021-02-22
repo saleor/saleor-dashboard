@@ -56,6 +56,7 @@ export interface ShippingZoneRatesPageProps
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
+  postalCodeRules: any;
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
@@ -91,6 +92,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   openChannelsModal,
   rate,
   saveButtonBarState,
+  postalCodeRules,
   variant,
   ...listProps
 }) => {
@@ -115,6 +117,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   ) => {
     onPostalCodeInclusionChange(inclusion);
   };
+
+  console.log("postalCodeRules", postalCodeRules)
 
   const {
     makeChangeHandler: makeMetadataChangeHandler
@@ -183,7 +187,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   onPostalCodeDelete={onPostalCodeUnassign}
                   onPostalCodeInclusionChange={postalCodeInclusionChange}
                   onPostalCodeRangeAdd={onPostalCodeAssign}
-                  postalCodes={rate?.postalCodeRules}
+                  postalCodes={postalCodeRules}
                   initialInclusionType={postalCodesInclusionType}
                 />
                 <CardSpacer />
