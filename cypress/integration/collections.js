@@ -1,10 +1,8 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { COLLECTION_SELECTORS } from "../elements/catalog/collection-selectors";
-import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/products/assign-products-selectors";
-import { MENAGE_CHANNEL_AVAILABILITY_FORM } from "../elements/channels/menage-channel-availability-form";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import Product from "../apiRequests/Product";
+import CollectionsSteps from "../steps/collectionsSteps";
 import { urlList } from "../url/urlList";
 import ChannelsUtils from "../utils/channelsUtils";
 import CollectionsUtils from "../utils/collectionsUtils";
@@ -12,10 +10,12 @@ import ProductsUtils from "../utils/productsUtils";
 import ShippingUtils from "../utils/shippingUtils";
 
 describe("Collections", () => {
+  const productRequest = new Product();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const collectionsUtils = new CollectionsUtils();
   const shippingUtils = new ShippingUtils();
+  const collectionsSteps = new CollectionsSteps();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
@@ -34,7 +34,6 @@ describe("Collections", () => {
         defaultChannel = channel;
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
-      // .then(() => shippingUtils.createShipping(defaultChannel.id, name, ))
       .then(() => {
         const attribute = productsUtils.getAttribute();
         const productType = productsUtils.getProductType();
@@ -54,67 +53,81 @@ describe("Collections", () => {
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
-    cy.visit(urlList.collections);
   });
 
   it("should not display hidden collections", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
+    cy.visit(urlList.collections);
 
-    cy.get(COLLECTION_SELECTORS.createCollectionButton)
-      .click()
-      .get(COLLECTION_SELECTORS.nameInput)
-      .type(collectionName)
-      .get(MENAGE_CHANNEL_AVAILABILITY_FORM.channelsMenageButton)
-      .click()
-      .get(MENAGE_CHANNEL_AVAILABILITY_FORM.allChannelsCheckbox)
-      .click();
-    cy.contains(
-      MENAGE_CHANNEL_AVAILABILITY_FORM.channelRow,
-      defaultChannel.name
-    )
-      .find(MENAGE_CHANNEL_AVAILABILITY_FORM.channelCheckbox)
-      .click()
-      .get(BUTTON_SELECTORS.submit)
-      .click()
-      .get(MENAGE_CHANNEL_AVAILABILITY_FORM.channelsAvailabilityItem)
-      .click()
-      .get(
-        `${MENAGE_CHANNEL_AVAILABILITY_FORM.publishedCheckbox}${MENAGE_CHANNEL_AVAILABILITY_FORM.radioButtonsValueFalse}`
-      )
-      .click()
-      .waitForGraph("CreateCollection")
-      .get(COLLECTION_SELECTORS.saveButton)
-      .click();
-    collectionsUtils.getCreatedCollection().then(collection => {
-      cy.get(COLLECTION_SELECTORS.addProductButton)
-        .click()
-        .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
-        .type(name);
-      cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, name)
-        .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
-        .click()
-        .get(ASSIGN_PRODUCTS_SELECTORS.submitButton)
-        .click()
-        .loginInShop();
-      collectionsUtils
-        .isCollectionVisible(collection.id, defaultChannel.slug)
-        .then(isVisible => expect(isVisible).to.equal(true));
-    });
+    collectionsSteps
+      .createCollection(collectionName, false, defaultChannel)
+      .then(collection => {
+        collectionsSteps.assignProductsToCollection(name);
+        collectionsUtils.isCollectionVisible(
+          collection.id,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => expect(isVisible).to.equal(false));
   });
-  // xit("should display collections", () => {
-  //     createVisibleCollection
-  //     addProductToCollection
-  //     checkIfCollectionIsNotDisplayed
-  // });
-  // xit("should not display unavailable collections", () => {
-  //     createunavailableCollection
-  //     addProductToCollection
-  //     checkIfCollectionIsNotDisplayed
-  // });
-  // xit("should display products hidden in listing only in collection", () => {
-  //     createHiddenInListingsProduct
-  //     createVisibleCollection
-  //     addProductToCollection
-  //     checkIfCollectionIsNotDisplayed
-  // });
+
+  it("should display collections", () => {
+    const collectionName = `${startsWith}${faker.random.number()}`;
+    cy.visit(urlList.collections);
+
+    collectionsSteps
+      .createCollection(collectionName, true, defaultChannel)
+      .then(collection => {
+        collectionsSteps.assignProductsToCollection(name);
+        collectionsUtils.isCollectionVisible(
+          collection.id,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => expect(isVisible).to.equal(true));
+  });
+  xit("should not display unavailable in channel collections", () => {
+    channelsUtils.createChannel(true, name, name, "PLN").then(() => {
+      productRequest.updateChannelInProduct(
+        productsUtils.getCreatedProduct().id,
+        channelsUtils.getCreatedChannel().id
+      );
+    });
+    cy.visit(urlList.collections);
+    collectionsSteps
+      .createCollection(collectionName, true, channelsUtils.getCreatedChannel())
+      .then(collection => {
+        collectionsSteps.assignProductsToCollection(name);
+        collectionsUtils.isCollectionVisible(
+          collection.id,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => expect(isVisible).to.equal(true));
+  });
+  xit("should display products hidden in listing, only in collection", () => {
+    productsUtils.createProductInChannel(
+      name,
+      defaultChannel.id,
+      null,
+      null,
+      productsUtils.getProductType().id,
+      productsUtils.getAttribute().id,
+      productsUtils.getCategory().id,
+      1
+    );
+    collectionsSteps
+      .createCollection(collectionName, true, defaultChannel)
+      .then(collection => {
+        collectionsSteps.assignProductsToCollection(name);
+        collectionsUtils.isProductInCollectionVisible(
+          collection.id,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => {
+        expect(isVisible).to.equal(true);
+        // productsUtils.searchForProduct
+      });
+  });
 });

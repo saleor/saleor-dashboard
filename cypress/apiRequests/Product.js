@@ -88,19 +88,26 @@ class Product {
     price = 1,
     costPrice = 1
   ) {
+    const channelListings = channelId
+      ? `channelListings:{
+      channelId:"${channelId}"
+      price:"${price}"
+      costPrice:"${costPrice}"
+    }`
+      : "";
+    const stocks = warehouseId
+      ? `stocks:{
+      warehouse:"${warehouseId}"
+      quantity:${quantity}
+    }`
+      : "";
+
     const mutation = `mutation{
         productVariantBulkCreate(product:"${productId}", variants:{
           attributes:[]
           sku:"${sku}"
-          channelListings:{
-            channelId:"${channelId}"
-            price:"${price}"
-            costPrice:"${costPrice}"
-          }
-          stocks:{
-            warehouse:"${warehouseId}"
-            quantity:${quantity}
-          }
+          ${channelListings}
+          ${stocks}
         }){
           productVariants{
             id

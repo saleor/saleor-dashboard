@@ -2,6 +2,7 @@ import Channels from "../apiRequests/Channels";
 
 class ChannelsUtils {
   channels = new Channels();
+  createdChannel;
 
   deleteChannels(nameStartsWith) {
     this.channels.getChannels().then(resp => {
@@ -36,6 +37,16 @@ class ChannelsUtils {
         return channelElement.slug === "default-channel";
       }));
     });
+  }
+  createChannel(isActive, name, slug, currencyCode) {
+    return this.channels
+      .createChannel(isActive, name, slug, currencyCode)
+      .then(
+        resp => (this.createdChannel = resp.body.data.channelCreate.channel)
+      );
+  }
+  getCreatedChannel() {
+    return channel;
   }
 }
 export default ChannelsUtils;

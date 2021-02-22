@@ -8,10 +8,10 @@ class CollectionsUtils {
       .getCollection(collectionId, channelSlug)
       .then(resp => {
         const collection = resp.body[0].data.collection;
-        return collection && collection.id === collectionId;
+        return collection !== null && collection.id === collectionId;
       });
   }
-  getCreatedCollection() {
+  waitForCreateCollectionRequest() {
     return cy
       .wait(`@CreateCollection`)
       .its("response.body.data.collectionCreate.collection");
