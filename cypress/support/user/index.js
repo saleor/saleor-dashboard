@@ -37,10 +37,10 @@ Cypress.Commands.add("loginUserViaRequest", () => {
         variables: {
           email: Cypress.env("USER_NAME"),
           password: Cypress.env("USER_PASSWORD")
-        },
+        }
       },
       method: "POST",
-      url: urlList.apiUri,
+      url: urlList.apiUri
     })
     .then(resp => {
       window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
