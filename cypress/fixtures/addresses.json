@@ -1,0 +1,13 @@
+{
+    "plAddress": {
+        "companyName": "Test3",
+        "streetAddress1": "Smolna",
+        "streetAddress2": "13/1",
+        "city": "Wrocław",
+        "postalCode": "53-346",
+        "country": "PL",
+        "countryArea": "Dolny Śląsk",
+        "phone": "123456787",
+        "currency": "PLN"
+    }
+}
