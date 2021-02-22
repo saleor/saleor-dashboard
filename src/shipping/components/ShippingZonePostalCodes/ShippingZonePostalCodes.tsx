@@ -63,17 +63,15 @@ const useStyles = makeStyles(
 
 const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   disabled,
-  initialExpanded,
-  initialInclusionType,
+  initialExpanded = true,
+  initialInclusionType = PostalCodeRuleInclusionTypeEnum.EXCLUDE,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
   onPostalCodeRangeAdd
 }) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
-  const [inclusionType, setInclusionType] = React.useState(
-    initialInclusionType
-  );
+  const [inclusionType, setInclusionType] = React.useState(null);
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -94,6 +92,9 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     }
     return postalCodeRange.start;
   };
+
+  const getInlcusionType = () =>
+    inclusionType === null ? initialInclusionType : inclusionType;
 
   return (
     <Card>
@@ -153,7 +154,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
             }
           ]}
           name="includePostalCodes"
-          value={inclusionType}
+          value={getInlcusionType()}
           onChange={onInclusionRadioChange}
         />
       </CardContent>
@@ -230,8 +231,4 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
 };
 
 ShippingZonePostalCodes.displayName = "ShippingZonePostalCodes";
-ShippingZonePostalCodes.defaultProps = {
-  initialExpanded: true,
-  initialInclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE
-};
 export default ShippingZonePostalCodes;

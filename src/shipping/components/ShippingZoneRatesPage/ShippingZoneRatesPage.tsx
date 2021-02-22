@@ -108,12 +108,11 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     type: rate?.type || null
   };
 
-  let postalCodesInclusionType = rate?.postalCodeRules[0]?.inclusionType;
+  const postalCodesInclusionType = rate?.postalCodeRules[0]?.inclusionType;
 
   const postalCodeInclusionChange = (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
-    postalCodesInclusionType = inclusion;
     onPostalCodeInclusionChange(inclusion);
   };
 

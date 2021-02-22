@@ -259,7 +259,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       rate.postalCodeRules = filterPostalCodes(rate.postalCodeRules, code);
     }
     setHavePostalCodesChanged(true);
-    closeModal();
   };
 
   const handleSubmit = createMetadataUpdateHandler(

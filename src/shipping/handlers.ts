@@ -46,7 +46,7 @@ export const createChannelsChangeHandler = (
   triggerChange();
 };
 
-const getaddPostalCodeRules = (
+const getPostalCodeRulesToAdd = (
   rules: ShippingMethodFragment_postalCodeRules[]
 ) =>
   rules
@@ -67,7 +67,7 @@ export function getCreateShippingPriceRateVariables(
 ): CreateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const postalCodeRules = getaddPostalCodeRules(addPostalCodeRules);
+  const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     input: {
       addPostalCodeRules: postalCodeRules,
@@ -92,7 +92,7 @@ export function getCreateShippingWeightRateVariables(
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
-  const postalCodeRules = getaddPostalCodeRules(addPostalCodeRules);
+  const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     input: {
       addPostalCodeRules: postalCodeRules,
@@ -117,7 +117,7 @@ export function getUpdateShippingPriceRateVariables(
 ): UpdateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const postalCodeRules = getaddPostalCodeRules(addPostalCodeRules);
+  const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     id: rateId,
     input: {
@@ -147,7 +147,7 @@ export function getUpdateShippingWeightRateVariables(
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = !data.noLimits;
-  const postalCodeRules = getaddPostalCodeRules(addPostalCodeRules);
+  const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     id: rateId,
     input: {

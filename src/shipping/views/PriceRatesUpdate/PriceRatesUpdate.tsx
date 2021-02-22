@@ -180,7 +180,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   );
   const [originalCodes, setOriginalCodes] = React.useState([]);
   const [inclusionType, setInclusionType] = React.useState(
-    PostalCodeRuleInclusionTypeEnum.EXCLUDE
+    rate?.postalCodeRules[0]?.inclusionType
   );
 
   const onPostalCodeInclusionChange = (
@@ -276,7 +276,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       rate.postalCodeRules = filterPostalCodes(rate.postalCodeRules, code);
     }
     setHavePostalCodesChanged(true);
-    closeModal();
   };
 
   const handleBack = () => navigate(shippingZoneUrl(id));
