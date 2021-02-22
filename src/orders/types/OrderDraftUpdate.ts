@@ -477,6 +477,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   metadata: (OrderDraftUpdate_draftOrderUpdate_order_metadata | null)[];
   privateMetadata: (OrderDraftUpdate_draftOrderUpdate_order_privateMetadata | null)[];
   billingAddress: OrderDraftUpdate_draftOrderUpdate_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

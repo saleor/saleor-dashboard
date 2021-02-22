@@ -479,6 +479,7 @@ export interface FulfillOrder_orderFulfill_order {
   metadata: (FulfillOrder_orderFulfill_order_metadata | null)[];
   privateMetadata: (FulfillOrder_orderFulfill_order_privateMetadata | null)[];
   billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

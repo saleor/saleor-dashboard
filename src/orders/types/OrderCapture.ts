@@ -477,6 +477,7 @@ export interface OrderCapture_orderCapture_order {
   metadata: (OrderCapture_orderCapture_order_metadata | null)[];
   privateMetadata: (OrderCapture_orderCapture_order_privateMetadata | null)[];
   billingAddress: OrderCapture_orderCapture_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

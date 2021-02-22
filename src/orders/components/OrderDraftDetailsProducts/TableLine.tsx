@@ -2,28 +2,21 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { DebounceForm } from "@saleor/components/DebounceForm";
-import Form from "@saleor/components/Form";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React, { useRef } from "react";
 
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
-
-export interface FormData {
-  quantity: number;
-}
+import TableLineForm, { FormData } from "./TableLineForm";
 
 const useStyles = makeStyles(
   theme => ({
@@ -95,7 +88,7 @@ const TableLine: React.FC<TableLineProps> = ({
 }) => {
   const classes = useStyles({});
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
-  const { id, thumbnail, productName, productSku, quantity, unitPrice } = line;
+  const { id, thumbnail, productName, productSku, quantity } = line;
 
   const getUnitPriceLabel = () => {
     const money = <Money money={undiscountedPrice} />;
@@ -123,41 +116,8 @@ const TableLine: React.FC<TableLineProps> = ({
         <Typography variant="body2">{productName}</Typography>
         <Typography variant="caption">{productSku}</Typography>
       </TableCellAvatar>
-      <TableCell className={classes.colQuantity}>
-        <Form
-          initial={{ quantity }}
-          onSubmit={data => onOrderLineChange(id, data)}
-        >
-          {({ change, data, hasChanged, submit }) => {
-            const handleQuantityChange = createNonNegativeValueChangeHandler(
-              change
-            );
-
-            return (
-              <DebounceForm
-                change={handleQuantityChange}
-                submit={hasChanged ? submit : undefined}
-                time={200}
-              >
-                {debounce => (
-                  <TextField
-                    className={classes.quantityField}
-                    fullWidth
-                    name="quantity"
-                    type="number"
-                    value={data.quantity}
-                    onChange={debounce}
-                    onBlur={submit}
-                    inputProps={{
-                      min: 1
-                    }}
-                  />
-                )}
-              </DebounceForm>
-            );
-          }}
-        </Form>
-      </TableCell>
+      <TableLineForm line={line} onOrderLineChange={onOrderLineChange} />
+      <TableCell className={classes.colQuantity}></TableCell>
       <TableCell className={classes.colPrice} ref={popperAnchorRef}>
         {getUnitPriceLabel()}
         <OrderDiscountCommonModal
@@ -177,8 +137,8 @@ const TableLine: React.FC<TableLineProps> = ({
       <TableCell className={classes.colTotal}>
         <Money
           money={{
-            amount: unitPrice.net.amount * quantity,
-            currency: unitPrice.net.currency
+            amount: discountedPrice.amount * quantity,
+            currency: discountedPrice.currency
           }}
         />
       </TableCell>

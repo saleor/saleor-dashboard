@@ -471,6 +471,7 @@ export interface OrderDetailsFragment {
   metadata: (OrderDetailsFragment_metadata | null)[];
   privateMetadata: (OrderDetailsFragment_privateMetadata | null)[];
   billingAddress: OrderDetailsFragment_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

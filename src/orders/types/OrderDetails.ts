@@ -471,6 +471,7 @@ export interface OrderDetails_order {
   metadata: (OrderDetails_order_metadata | null)[];
   privateMetadata: (OrderDetails_order_privateMetadata | null)[];
   billingAddress: OrderDetails_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

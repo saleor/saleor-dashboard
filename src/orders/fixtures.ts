@@ -1156,6 +1156,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   isPaid: true,
+  isShippingRequired: false,
   lines: [
     {
       __typename: "OrderLine",
@@ -1389,6 +1390,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
     }
   ],
   isPaid: false,
+  isShippingRequired: false,
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",

@@ -41,6 +41,10 @@ const useStyles = makeStyles(
 );
 
 const messages = defineMessages({
+  addCustomerInfo: {
+    defaultMessage: "Add customer first",
+    description: "add customer first label"
+  },
   subtotal: {
     defaultMessage: "Subtotal",
     description: "subtotal price"
@@ -110,7 +114,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     shippingMethod,
     shippingMethodName,
     availableShippingMethods,
-    shippingPrice
+    shippingPrice,
+    shippingAddress,
+    isShippingRequired
   } = order;
 
   const hasChosenShippingMethod =
@@ -118,9 +124,10 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
   const hasNoneShippingChosen = shippingMethod === null;
 
-  const hasAvailableShippingMethods = !!availableShippingMethods?.length;
+  const hasAvailableShippingMethods =
+    !!availableShippingMethods?.length || !isShippingRequired;
 
-  const discountTitle = !!orderDiscount
+  const discountTitle = orderDiscount
     ? messages.discount
     : messages.addDiscount;
 
@@ -148,6 +155,16 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     }
 
     return <Money money={{ amount: discountValue, currency }} />;
+  };
+
+  const getShippingMethodLabel = () => {
+    const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
+
+    const addCustomerInfo = intl.formatMessage(messages.addCustomerInfo);
+
+    return !!shippingAddress
+      ? shippingCarrierBase
+      : `${shippingCarrierBase} ${addCustomerInfo}`;
   };
 
   return (
@@ -186,7 +203,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           {hasAvailableShippingMethods && (
             <td>
               <Link onClick={onShippingMethodEdit}>
-                {intl.formatMessage(messages.addShippingCarrier)}
+                {getShippingMethodLabel()}
               </Link>
             </td>
           )}

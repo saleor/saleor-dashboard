@@ -157,14 +157,11 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   const eventTypeInCamelCase = camelCase(type);
 
   const getTitleProps = () => {
-    switch (type) {
-      case OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED: {
-        return { productName: lines[0]?.itemName };
-      }
-      default: {
-        return {};
-      }
+    if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
+      return { productName: lines[0]?.itemName };
     }
+
+    return {};
   };
 
   const titleElements = {

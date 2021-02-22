@@ -477,6 +477,7 @@ export interface OrderCancel_orderCancel_order {
   metadata: (OrderCancel_orderCancel_order_metadata | null)[];
   privateMetadata: (OrderCancel_orderCancel_order_privateMetadata | null)[];
   billingAddress: OrderCancel_orderCancel_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

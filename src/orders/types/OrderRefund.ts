@@ -477,6 +477,7 @@ export interface OrderRefund_orderRefund_order {
   metadata: (OrderRefund_orderRefund_order_metadata | null)[];
   privateMetadata: (OrderRefund_orderRefund_order_privateMetadata | null)[];
   billingAddress: OrderRefund_orderRefund_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

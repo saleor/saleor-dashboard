@@ -477,6 +477,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   metadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_metadata | null)[];
   privateMetadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_privateMetadata | null)[];
   billingAddress: OrderLineDiscountRemove_orderLineDiscountRemove_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

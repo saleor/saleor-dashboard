@@ -477,6 +477,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   metadata: (OrderDiscountAdd_orderDiscountAdd_order_metadata | null)[];
   privateMetadata: (OrderDiscountAdd_orderDiscountAdd_order_privateMetadata | null)[];
   billingAddress: OrderDiscountAdd_orderDiscountAdd_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

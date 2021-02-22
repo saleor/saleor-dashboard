@@ -477,6 +477,7 @@ export interface OrderConfirm_orderConfirm_order {
   metadata: (OrderConfirm_orderConfirm_order_metadata | null)[];
   privateMetadata: (OrderConfirm_orderConfirm_order_privateMetadata | null)[];
   billingAddress: OrderConfirm_orderConfirm_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

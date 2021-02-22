@@ -477,6 +477,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   metadata: (OrderMarkAsPaid_orderMarkAsPaid_order_metadata | null)[];
   privateMetadata: (OrderMarkAsPaid_orderMarkAsPaid_order_privateMetadata | null)[];
   billingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;

@@ -176,6 +176,7 @@ export const fragmentOrderDetails = gql`
     billingAddress {
       ...AddressFragment
     }
+    isShippingRequired
     canFinalize
     created
     customerNote
@@ -216,41 +217,33 @@ export const fragmentOrderDetails = gql`
     status
     subtotal {
       gross {
-        amount
-        currency
+        ...Money
       }
     }
     total {
       gross {
-        amount
-        currency
+        ...Money
       }
       net {
-        amount
-        currency
+        ...Money
       }
       tax {
-        amount
-        currency
+        ...Money
       }
     }
     actions
     totalAuthorized {
-      amount
-      currency
+      ...Money
     }
     totalCaptured {
-      amount
-      currency
+      ...Money
     }
     undiscountedTotal {
       net {
-        amount
-        currency
+        ...Money
       }
       gross {
-        amount
-        currency
+        ...Money
       }
     }
     user {
@@ -262,13 +255,11 @@ export const fragmentOrderDetails = gql`
       id
       name
       price {
-        amount
-        currency
+        ...Money
       }
     }
     discount {
-      amount
-      currency
+      ...Money
     }
     invoices {
       ...InvoiceFragment

@@ -477,6 +477,7 @@ export interface OrderVoid_orderVoid_order {
   metadata: (OrderVoid_orderVoid_order_metadata | null)[];
   privateMetadata: (OrderVoid_orderVoid_order_privateMetadata | null)[];
   billingAddress: OrderVoid_orderVoid_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;
