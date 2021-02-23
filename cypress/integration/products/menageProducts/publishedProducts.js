@@ -39,19 +39,15 @@ describe("Published products", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        productsUtils.createProductInChannel(
-          productName,
-          defaultChannel.id,
-          null,
-          null,
-          productType.id,
-          attribute.id,
-          category.id,
-          1,
-          false,
-          false,
-          true
-        );
+        productsUtils.createProductInChannel({
+          name: productName,
+          channelId: defaultChannel.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+          isPublished: false,
+          isAvailableForPurchase: false
+        });
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
@@ -76,15 +72,13 @@ describe("Published products", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        productsUtils.createProductInChannel(
-          productName,
-          defaultChannel.id,
-          null,
-          null,
-          productType.id,
-          attribute.id,
-          category.id
-        );
+        productsUtils.createProductInChannel({
+          name: productName,
+          channelId: defaultChannel.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id
+        });
       })
       .then(() => {
         product = productsUtils.getCreatedProduct();

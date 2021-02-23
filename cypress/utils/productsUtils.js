@@ -22,28 +22,28 @@ class ProductsUtils {
     ).then(() => this.createVariant(this.product.id, name));
   }
 
-  createProductInChannel(
+  createProductInChannel({
     name,
     channelId,
-    warehouseId,
-    quantityInWarehouse,
+    warehouseId = null,
+    quantityInWarehouse = 10,
     productTypeId,
     attributeId,
     categoryId,
-    price,
+    price = 1,
     isPublished = true,
     isAvailableForPurchase = true,
     visibleInListings = true
-  ) {
+  }) {
     return this.createProduct(attributeId, name, productTypeId, categoryId)
       .then(() =>
-        this.productRequest.updateChannelInProduct(
-          this.product.id,
+        this.productRequest.updateChannelInProduct({
+          productId: this.product.id,
           channelId,
           isPublished,
           isAvailableForPurchase,
           visibleInListings
-        )
+        })
       )
       .then(() => {
         this.createVariant(

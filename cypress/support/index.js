@@ -21,7 +21,7 @@ Cypress.Commands.add("clearSessionData", () => {
   });
 });
 
-Cypress.Commands.add("waitForGraph", operationName => {
+Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   cy.intercept("POST", urlList.apiUri, req => {
     req.statusCode = 200;
     const requestBody = req.body;
@@ -37,7 +37,6 @@ Cypress.Commands.add("waitForGraph", operationName => {
       }
     }
   });
-  cy.wait(`@${operationName}`);
 });
 
 Cypress.Commands.add("sendRequestWithQuery", query => {

@@ -34,12 +34,11 @@ describe("Products available in listings", () => {
         cy.fixture("addresses");
       })
       .then(addressesFixture => {
-        shippingUtils.createShipping(
-          defaultChannel,
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
           name,
-          addressesFixture.plAddress,
-          10
-        );
+          address: addressesFixture.plAddress
+        });
       })
       .then(() => {
         warehouse = shippingUtils.getWarehouse();
@@ -59,19 +58,15 @@ describe("Products available in listings", () => {
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
-      .createProductInChannel(
-        productName,
-        defaultChannel.id,
-        warehouse.id,
-        10,
-        productType.id,
-        attribute.id,
-        category.id,
-        1,
-        true,
-        false,
-        true
-      )
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        isAvailableForPurchase: false
+      })
       .then(() => {
         const productUrl = `${urlList.products}${
           productsUtils.getCreatedProduct().id
@@ -92,33 +87,29 @@ describe("Products available in listings", () => {
   it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
-      .createProductInChannel(
-        productName,
-        defaultChannel.id,
-        warehouse.id,
-        10,
-        productType.id,
-        attribute.id,
-        category.id,
-        1,
-        true,
-        true,
-        true
-      )
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id
+      })
       .then(() => {
         const productUrl = `${urlList.products}${
           productsUtils.getCreatedProduct().id
         }`;
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);
-        frontShopProductUtils
-          .isProductAvailableForPurchase(
-            productsUtils.getCreatedProduct().id,
-            defaultChannel.slug,
-            productName
-          )
-          .then(isProductVisible => {
-            expect(isProductVisible).to.be.eq(false);
-          });
+      })
+      .then(() => {
+        frontShopProductUtils.isProductAvailableForPurchase(
+          productsUtils.getCreatedProduct().id,
+          defaultChannel.slug,
+          productName
+        );
+      })
+      .then(isProductVisible => {
+        expect(isProductVisible).to.be.eq(false);
       });
   });
 });

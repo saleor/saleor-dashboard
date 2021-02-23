@@ -1,4 +1,7 @@
+import Utils from "./utils/Utils";
+
 class Product {
+  utils = new Utils();
   getFirstProducts(first, search) {
     const filter = search
       ? `, filter:{
@@ -23,13 +26,13 @@ class Product {
       .then(resp => resp.body.data.products.edges);
   }
 
-  updateChannelInProduct(
+  updateChannelInProduct({
     productId,
     channelId,
     isPublished = true,
     isAvailableForPurchase = true,
     visibleInListings = true
-  ) {
+  }) {
     const mutation = `mutation{
               productChannelListingUpdate(id:"${productId}",
               input:{
@@ -94,19 +97,36 @@ class Product {
     price = 1,
     costPrice = 1
   ) {
-    const channelListings = channelId
-      ? `channelListings:{
+    // const channelListings = channelId
+    //   ? `channelListings:{
+    //   channelId:"${channelId}"
+    //   price:"${price}"
+    //   costPrice:"${costPrice}"
+    // }`
+    //   : "";
+
+    const channelListings = this.utils.getValueWithDefault(
+      channelId,
+      `channelListings:{
       channelId:"${channelId}"
       price:"${price}"
       costPrice:"${costPrice}"
     }`
-      : "";
-    const stocks = warehouseId
-      ? `stocks:{
+    );
+
+    const stocks = this.utils.getValueWithDefault(
+      warehouseId,
+      `stocks:{
       warehouse:"${warehouseId}"
       quantity:${quantity}
     }`
-      : "";
+    );
+    // warehouseId
+    //   ? `stocks:{
+    //   warehouse:"${warehouseId}"
+    //   quantity:${quantity}
+    // }`
+    //   : "";
 
     const mutation = `mutation{
         productVariantBulkCreate(product: "${productId}", variants: {

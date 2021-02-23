@@ -1,30 +1,20 @@
 import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
 
 class ProductSteps {
+  valueTrue = PRODUCTS_SELECTORS.radioButtonsValueTrue;
+  valueFalse = PRODUCTS_SELECTORS.radioButtonsValueFalse;
+
   updateProductIsAvailableForPurchase(productUrl, isAvailableForPurchase) {
-    let isAvailableForPurchaseSelector;
-    if (isAvailableForPurchase) {
-      isAvailableForPurchaseSelector = PRODUCTS_SELECTORS.radioButtonsValueTrue;
-    } else {
-      isAvailableForPurchaseSelector =
-        PRODUCTS_SELECTORS.radioButtonsValueFalse;
-    }
-    this.updateProductMenageInChannel(
-      productUrl,
-      `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`
-    );
+    const isAvailableForPurchaseSelector = isAvailableForPurchase
+      ? this.valueTrue
+      : this.valueFalse;
+    const availableForPurchaseSelector = `${PRODUCTS_SELECTORS.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`;
+    this.updateProductMenageInChannel(productUrl, availableForPurchaseSelector);
   }
   updateProductPublish(productUrl, isPublished) {
-    let isPublishedSelector;
-    if (isPublished) {
-      isPublishedSelector = PRODUCTS_SELECTORS.radioButtonsValueTrue;
-    } else {
-      isPublishedSelector = PRODUCTS_SELECTORS.radioButtonsValueFalse;
-    }
-    this.updateProductMenageInChannel(
-      productUrl,
-      `${PRODUCTS_SELECTORS.publishedRadioButtons}${isPublishedSelector}`
-    );
+    const isPublishedSelector = isPublished ? this.valueTrue : this.valueFalse;
+    const publishedSelector = `${PRODUCTS_SELECTORS.publishedRadioButtons}${isPublishedSelector}`;
+    this.updateProductMenageInChannel(productUrl, publishedSelector);
   }
   updateProductVisibleInListings(productUrl) {
     this.updateProductMenageInChannel(
@@ -37,10 +27,11 @@ class ProductSteps {
       .get(PRODUCTS_SELECTORS.assignedChannels)
       .click()
       .get(menageSelector)
+      .click();
+    cy.addAliasToGraphRequest("ProductChannelListingUpdate");
+    cy.get(PRODUCTS_SELECTORS.saveBtn)
       .click()
-      .get(PRODUCTS_SELECTORS.saveBtn)
-      .click()
-      .waitForGraph("ProductChannelListingUpdate");
+      .wait("@ProductChannelListingUpdate");
   }
 }
 export default ProductSteps;
