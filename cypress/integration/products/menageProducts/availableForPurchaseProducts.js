@@ -1,11 +1,11 @@
 import faker from "faker";
 
 import ProductSteps from "../../../steps/productSteps";
-import { urlList } from "../../../url/urlList";
+import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
-import FrontShopProductUtils from "../../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../../utils/productsUtils";
 import ShippingUtils from "../../../utils/shippingUtils";
+import StoreFrontProductUtils from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
@@ -13,7 +13,7 @@ describe("Products available in listings", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
-  const frontShopProductUtils = new FrontShopProductUtils();
+  const frontShopProductUtils = new StoreFrontProductUtils();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -68,9 +68,9 @@ describe("Products available in listings", () => {
         isAvailableForPurchase: false
       })
       .then(() => {
-        const productUrl = `${urlList.products}${
+        const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
-        }`;
+        );
         productSteps.updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
@@ -96,9 +96,9 @@ describe("Products available in listings", () => {
         categoryId: category.id
       })
       .then(() => {
-        const productUrl = `${urlList.products}${
+        const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
-        }`;
+        );
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);
       })
       .then(() => {

@@ -1,17 +1,17 @@
 import faker from "faker";
 
 import ProductSteps from "../../../steps/productSteps";
-import { urlList } from "../../../url/urlList";
+import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
-import FrontShopProductUtils from "../../../utils/frontShop/frontShopProductUtils";
 import ProductsUtils from "../../../utils/productsUtils";
+import StoreFrontProductUtils from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Published products", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
-  const frontShopProductUtils = new FrontShopProductUtils();
+  const frontShopProductUtils = new StoreFrontProductUtils();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
@@ -51,7 +51,7 @@ describe("Published products", () => {
       })
       .then(() => {
         const product = productsUtils.getCreatedProduct();
-        const productUrl = `${urlList.products}${product.id}`;
+        const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, true);
         frontShopProductUtils.isProductVisible(
           product.id,
@@ -82,7 +82,7 @@ describe("Published products", () => {
       })
       .then(() => {
         product = productsUtils.getCreatedProduct();
-        const productUrl = `${urlList.products}${product.id}`;
+        const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, false);
         frontShopProductUtils.isProductVisible(
           product.id,

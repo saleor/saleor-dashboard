@@ -39,29 +39,16 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   });
 });
 
-Cypress.Commands.add("sendRequestWithQuery", query => {
-  const body = {
-    method: "POST",
-    query,
-    url: urlList.apiUri
-  };
-  return cy.sendRequest(body, "auth");
-});
-
-Cypress.Commands.add(
-  "sendFrontShopRequestWithQuery",
-  (operationName, variables, query) => {
-    const body = {
-      operationName,
-      query,
-      variables
-    };
-    return cy.sendRequest(body, "token");
-  }
+Cypress.Commands.add("sendFrontShopRequestWithQuery", query =>
+  cy.sendRequestWithQuery(query, "token")
 );
-Cypress.Commands.add("sendRequest", (body, authorization) =>
+Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
   cy.request({
-    body,
+    body: {
+      method: "POST",
+      query,
+      url: urlList.apiUri
+    },
     headers: {
       Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
     },

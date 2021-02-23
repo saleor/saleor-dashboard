@@ -1,7 +1,7 @@
-import ProductDetails from "../../apiRequests/frontShop/ProductDetails";
-import Search from "../../apiRequests/frontShop/Search";
+import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
+import Search from "../../apiRequests/storeFront/Search";
 
-class FrontShopProductUtils {
+class StoreFrontProductUtils {
   isProductVisible(productId, channelSlug, name) {
     const productDetails = new ProductDetails();
     return productDetails
@@ -31,4 +31,4 @@ class FrontShopProductUtils {
       );
   }
 }
-export default FrontShopProductUtils;
+export default StoreFrontProductUtils;
