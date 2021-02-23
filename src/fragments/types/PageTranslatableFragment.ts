@@ -17,7 +17,7 @@ export interface PageTranslatableFragment_translation_language {
 export interface PageTranslatableFragment_translation {
   __typename: "PageTranslation";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
@@ -27,7 +27,7 @@ export interface PageTranslatableFragment_translation {
 export interface PageTranslatableFragment {
   __typename: "PageTranslatableContent";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;

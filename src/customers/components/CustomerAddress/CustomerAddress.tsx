@@ -26,26 +26,26 @@ const messages = defineMessages({
   defaultAddress: {
     defaultMessage: "Default Address"
   },
-  defaultShippingAddress: {
-    defaultMessage: "Default Shipping Address"
-  },
   defaultBillingAddress: {
     defaultMessage: "Default Billing Address"
   },
-  setDefaultShipping: {
-    defaultMessage: "Set as default shipping address",
-    description: "button"
+  defaultShippingAddress: {
+    defaultMessage: "Default Shipping Address"
   },
-  setDefaultBilling: {
-    defaultMessage: "Set as default billing address",
+  deleteAddress: {
+    defaultMessage: "Delete Address",
     description: "button"
   },
   editAddress: {
     defaultMessage: "Edit Address",
     description: "button"
   },
-  deleteAddress: {
-    defaultMessage: "Delete Address",
+  setDefaultBilling: {
+    defaultMessage: "Set as default billing address",
+    description: "button"
+  },
+  setDefaultShipping: {
+    defaultMessage: "Set as default shipping address",
     description: "button"
   }
 });

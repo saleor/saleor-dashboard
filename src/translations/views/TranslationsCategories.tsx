@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -6,18 +7,18 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum, TranslationInput } from "../../types/globalTypes";
-import TranslationsCategoriesPage, {
-  fieldNames
-} from "../components/TranslationsCategoriesPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
 import { TypedUpdateCategoryTranslations } from "../mutations";
 import { useCategoryTranslationDetails } from "../queries";
+import { TranslationInputFieldName } from "../types";
 import { UpdateCategoryTranslations } from "../types/UpdateCategoryTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsCategoriesQueryParams {
   activeField: string;
@@ -67,25 +68,19 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   return (
     <TypedUpdateCategoryTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: TranslationInput = {};
-          if (field === fieldNames.description) {
-            input.description = JSON.stringify(data);
-          } else if (field === fieldNames.name) {
-            input.name = data;
-          } else if (field === fieldNames.seoDescription) {
-            input.seoDescription = data;
-          } else if (field === fieldNames.seoTitle) {
-            input.seoTitle = data;
-          }
+        const handleSubmit = (
+          fieldName: TranslationInputFieldName,
+          data: string | OutputData
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({ data, fieldName }),
               language: languageCode
             }
           });
         };
+
         const translation = categoryTranslations?.data?.translation;
 
         return (

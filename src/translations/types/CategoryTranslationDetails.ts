@@ -20,7 +20,7 @@ export interface CategoryTranslationDetails_translation_CategoryTranslatableCont
 export interface CategoryTranslationDetails_translation_CategoryTranslatableContent_translation {
   __typename: "CategoryTranslation";
   id: string;
-  description: any;
+  description: any | null;
   language: CategoryTranslationDetails_translation_CategoryTranslatableContent_translation_language;
   name: string;
   seoDescription: string | null;
@@ -31,7 +31,7 @@ export interface CategoryTranslationDetails_translation_CategoryTranslatableCont
   __typename: "Category";
   id: string;
   name: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

@@ -6,18 +6,21 @@ function useRichText(opts: {
   initial: string | null;
   triggerChange: () => void;
 }): [MutableRefObject<OutputData>, RichTextEditorChange] {
-  const data = useRef<OutputData>(
-    opts.initial === null ? { blocks: [] } : undefined
-  );
+  const data = useRef<OutputData>();
   const [, setLoaded] = useState(false);
+
   useEffect(() => {
-    if (opts.initial !== null) {
-      try {
-        data.current = JSON.parse(opts.initial);
-        setLoaded(true);
-      } catch {
-        data.current = undefined;
-      }
+    if (opts.initial === null) {
+      data.current = { blocks: [] };
+      setLoaded(true);
+      return;
+    }
+
+    try {
+      data.current = JSON.parse(opts.initial);
+      setLoaded(true);
+    } catch {
+      data.current = undefined;
     }
   }, [opts.initial]);
 

@@ -11,7 +11,7 @@ import { LanguageCodeEnum } from "./../../types/globalTypes";
 export interface PageTranslationFragment_page {
   __typename: "Page";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
@@ -26,7 +26,7 @@ export interface PageTranslationFragment_translation_language {
 export interface PageTranslationFragment_translation {
   __typename: "PageTranslation";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
