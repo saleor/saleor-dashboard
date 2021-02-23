@@ -513,6 +513,7 @@ const createTheme = (colors: IThemeColors): Theme =>
       },
       text: {
         disabled: colors.font.gray,
+        highlightInactive: colors.highlightInactive.default,
         hint: colors.font.gray,
         primary: colors.font.default,
         secondary: colors.font.gray

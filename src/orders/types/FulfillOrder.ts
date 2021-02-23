@@ -371,9 +371,16 @@ export interface FulfillOrder_orderFulfill_order_subtotal_gross {
   currency: string;
 }
 
+export interface FulfillOrder_orderFulfill_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_subtotal {
   __typename: "TaxedMoney";
   gross: FulfillOrder_orderFulfill_order_subtotal_gross;
+  net: FulfillOrder_orderFulfill_order_subtotal_net;
 }
 
 export interface FulfillOrder_orderFulfill_order_total_gross {

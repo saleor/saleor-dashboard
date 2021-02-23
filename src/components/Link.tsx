@@ -17,6 +17,10 @@ const useStyles = makeStyles(
     },
     underline: {
       textDecoration: "underline"
+    },
+    disabled: {
+      cursor: "default",
+      color: theme.palette.text.highlightInactive
     }
   }),
   { name: "Link" }
@@ -27,6 +31,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   underline?: boolean;
   typographyProps?: TypographyProps;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const Link: React.FC<LinkProps> = props => {
@@ -36,6 +41,7 @@ const Link: React.FC<LinkProps> = props => {
     color = "primary",
     underline = false,
     onClick,
+    disabled,
     ...linkProps
   } = props;
 
@@ -47,9 +53,14 @@ const Link: React.FC<LinkProps> = props => {
       className={classNames(className, {
         [classes.root]: true,
         [classes[color]]: true,
-        [classes.underline]: underline
+        [classes.underline]: underline,
+        [classes.disabled]: disabled
       })}
       onClick={event => {
+        if (disabled) {
+          return;
+        }
+
         event.preventDefault();
         onClick();
       }}

@@ -369,9 +369,16 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_subtotal_gross {
   currency: string;
 }
 
+export interface OrderDiscountAdd_orderDiscountAdd_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDiscountAdd_orderDiscountAdd_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderDiscountAdd_orderDiscountAdd_order_subtotal_gross;
+  net: OrderDiscountAdd_orderDiscountAdd_order_subtotal_net;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_total_gross {

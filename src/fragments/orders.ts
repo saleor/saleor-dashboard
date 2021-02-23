@@ -219,6 +219,9 @@ export const fragmentOrderDetails = gql`
       gross {
         ...Money
       }
+      net {
+        ...Money
+      }
     }
     total {
       gross {

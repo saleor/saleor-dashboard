@@ -369,9 +369,16 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_gr
   currency: string;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_gross;
+  net: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_net;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross {

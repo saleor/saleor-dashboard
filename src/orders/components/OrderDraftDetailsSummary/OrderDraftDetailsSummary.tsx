@@ -1,7 +1,9 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
+import useShop from "@saleor/hooks/useShop";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
@@ -35,6 +37,11 @@ const useStyles = makeStyles(
       flexDirection: "row",
       alignItems: "baseline",
       justifyContent: "flex-end"
+    },
+    shippingMethodContainer: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "baseline"
     }
   }),
   { name: "OrderDraftDetailsSummary" }
@@ -42,7 +49,7 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   addCustomerInfo: {
-    defaultMessage: "Add customer first",
+    defaultMessage: "add customer first",
     description: "add customer first label"
   },
   subtotal: {
@@ -101,6 +108,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
   const intl = useIntl();
   const classes = useStyles(props);
+  const shop = useShop();
 
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
 
@@ -120,12 +128,10 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
   } = order;
 
   const hasChosenShippingMethod =
-    shippingMethod !== undefined && shippingMethodName !== undefined;
-
-  const hasNoneShippingChosen = shippingMethod === null;
+    shippingMethod !== null && shippingMethodName !== null;
 
   const hasAvailableShippingMethods =
-    !!availableShippingMethods?.length || !isShippingRequired;
+    !!availableShippingMethods?.length || isShippingRequired;
 
   const discountTitle = orderDiscount
     ? messages.discount
@@ -157,15 +163,35 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     return <Money money={{ amount: discountValue, currency }} />;
   };
 
-  const getShippingMethodLabel = () => {
+  const getShippingMethodComponent = () => {
+    if (hasChosenShippingMethod) {
+      return (
+        <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>
+      );
+    }
+
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
+
+    if (!!shippingAddress) {
+      return <Link onClick={onShippingMethodEdit}>{shippingCarrierBase}</Link>;
+    }
 
     const addCustomerInfo = intl.formatMessage(messages.addCustomerInfo);
 
-    return !!shippingAddress
-      ? shippingCarrierBase
-      : `${shippingCarrierBase} ${addCustomerInfo}`;
+    return (
+      <div className={classes.shippingMethodContainer}>
+        <Link underline disabled onClick={onShippingMethodEdit}>
+          {shippingCarrierBase}
+        </Link>
+        <HorizontalSpacer />
+        <Typography variant="caption">{`(${addCustomerInfo})`}</Typography>
+      </div>
+    );
   };
+
+  const subtotalToShow = shop.includeTaxesInPrices
+    ? subtotal.gross
+    : subtotal.net;
 
   return (
     <table className={classes.root}>
@@ -196,31 +222,25 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
         <tr>
           <td>{intl.formatMessage(messages.subtotal)}</td>
           <td className={classes.textRight}>
-            <Money money={subtotal.gross} />
+            <Money money={subtotalToShow} />
           </td>
         </tr>
         <tr>
           {hasAvailableShippingMethods && (
-            <td>
-              <Link onClick={onShippingMethodEdit}>
-                {getShippingMethodLabel()}
-              </Link>
-            </td>
+            <td>{getShippingMethodComponent()}</td>
           )}
 
           {!hasAvailableShippingMethods && (
             <td>{intl.formatMessage(messages.noShippingCarriers)}</td>
           )}
 
-          {hasChosenShippingMethod && (
-            <td className={classes.textRight}>
-              {hasNoneShippingChosen ? (
-                PRICE_PLACEHOLDER
-              ) : (
-                <Money money={shippingPrice.gross} />
-              )}
-            </td>
-          )}
+          <td className={classes.textRight}>
+            {hasChosenShippingMethod ? (
+              <Money money={shippingPrice.gross} />
+            ) : (
+              PRICE_PLACEHOLDER
+            )}
+          </td>
         </tr>
         <tr>
           <td>{intl.formatMessage(messages.taxes)}</td>

@@ -363,9 +363,16 @@ export interface OrderDetailsFragment_subtotal_gross {
   currency: string;
 }
 
+export interface OrderDetailsFragment_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDetailsFragment_subtotal {
   __typename: "TaxedMoney";
   gross: OrderDetailsFragment_subtotal_gross;
+  net: OrderDetailsFragment_subtotal_net;
 }
 
 export interface OrderDetailsFragment_total_gross {

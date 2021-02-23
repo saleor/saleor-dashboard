@@ -369,9 +369,16 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   currency: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal_gross;
+  net: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal_net;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_total_gross {
