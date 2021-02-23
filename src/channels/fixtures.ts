@@ -72,8 +72,8 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    id: "Q2hhbm5lbDo5w0z",
     hasOrders: false,
+    id: "Q2hhbm5lbDo5w0z",
     isActive: true,
     name: "Channel USD",
     slug: "channel-usd1"

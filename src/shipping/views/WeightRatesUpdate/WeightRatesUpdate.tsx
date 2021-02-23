@@ -20,11 +20,10 @@ import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
+import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage, {
   FormData
 } from "@saleor/shipping/components/ShippingZoneRatesPage";
-import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
@@ -32,8 +31,6 @@ import {
 } from "@saleor/shipping/handlers";
 import {
   useShippingMethodChannelListingUpdate,
-  useShippingMethodZipCodeRangeAssign,
-  useShippingMethodZipCodeRangeUnassign,
   useShippingPriceExcludeProduct,
   useShippingPriceRemoveProductsFromExclude,
   useShippingRateDelete,
@@ -46,7 +43,12 @@ import {
   shippingWeightRatesEditUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import filterPostalCodes from "@saleor/shipping/views/utils";
+import { MinMax } from "@saleor/types";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -83,6 +85,51 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     ShippingRateUrlDialog,
     ShippingRateUrlQueryParams
   >(navigate, params => shippingWeightRatesEditUrl(id, rateId, params), params);
+
+  const [codesToDelete, setCodesToDelete] = React.useState([]);
+  const [havePostalCodesChanged, setHavePostalCodesChanged] = React.useState(
+    false
+  );
+  const [originalCodes, setOriginalCodes] = React.useState([]);
+  const [inclusionType, setInclusionType] = React.useState(
+    PostalCodeRuleInclusionTypeEnum.EXCLUDE
+  );
+
+  const onPostalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    setInclusionType(inclusion);
+    setCodesToDelete(
+      rate.postalCodeRules
+        .filter(code => code.id !== undefined)
+        .map(code => code.id)
+    );
+    setHavePostalCodesChanged(true);
+    rate.postalCodeRules = [];
+  };
+
+  const onPostalCodeAssign = (rule: MinMax) => {
+    if (!originalCodes.length) {
+      setOriginalCodes([...rate.postalCodeRules]);
+    }
+    if (
+      rate.postalCodeRules.filter(
+        item => item.start === rule.min && item.end === rule.max
+      ).length > 0
+    ) {
+      closeModal();
+      return;
+    }
+    const newCode = {
+      __typename: undefined,
+      end: rule.max,
+      id: undefined,
+      inclusionType,
+      start: rule.min
+    };
+    rate.postalCodeRules.push(newCode);
+    closeModal();
+  };
 
   const {
     loadMore,
@@ -171,50 +218,21 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
   });
 
-  const [
-    assignZipCodeRange,
-    assignZipCodeRangeOpts
-  ] = useShippingMethodZipCodeRangeAssign({
-    onCompleted: data => {
-      if (data.shippingMethodZipCodeRulesCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      } else {
-        notify({
-          status: "error",
-          text: intl.formatMessage({
-            defaultMessage: "Cannot add specified postal codes range.",
-            description: "postal code range add error text"
-          })
-        });
-      }
-    }
-  });
-  const [
-    unassignZipCodeRange,
-    unassignZipCodeRangeOpts
-  ] = useShippingMethodZipCodeRangeUnassign({
-    onCompleted: data => {
-      if (data.shippingMethodZipCodeRulesDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      }
-    }
-  });
-
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const updateData = async (data: FormData) => {
     const response = await updateShippingRate({
-      variables: getUpdateShippingWeightRateVariables(data, id, rateId)
+      variables: getUpdateShippingWeightRateVariables(
+        data,
+        id,
+        rateId,
+        rate.postalCodeRules,
+        codesToDelete
+      )
     });
+    setCodesToDelete([]);
+    setHavePostalCodesChanged(false);
     const errors = response.data.shippingPriceUpdate.errors;
     if (errors.length === 0) {
       handleSuccess();
@@ -229,6 +247,18 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     }
 
     return errors;
+  };
+
+  const onPostalCodeUnassign = code => {
+    if (code.id !== undefined) {
+      setCodesToDelete([...codesToDelete, code.id]);
+      rate.postalCodeRules = rate.postalCodeRules.filter(
+        rule => rule.id !== code.id
+      );
+    } else {
+      rate.postalCodeRules = filterPostalCodes(rate.postalCodeRules, code);
+    }
+    setHavePostalCodesChanged(true);
   };
 
   const handleSubmit = createMetadataUpdateHandler(
@@ -316,6 +346,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           assignProductOpts?.status === "loading"
         }
         hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
+        havePostalCodesChanged={havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
@@ -346,44 +377,18 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
             />
           </Button>
         }
-        onZipCodeAssign={() => openModal("add-range")}
-        onZipCodeUnassign={id =>
-          openModal("remove-range", {
-            id
-          })
-        }
+        onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeUnassign={onPostalCodeUnassign}
       />
-      <ShippingZoneZipCodeRangeDialog
-        confirmButtonState={assignZipCodeRangeOpts.status}
+      <ShippingZonePostalCodeRangeDialog
+        confirmButtonState={"default"}
         onClose={closeModal}
-        onSubmit={data =>
-          assignZipCodeRange({
-            variables: {
-              id: rateId,
-              input: {
-                zipCodeRules: [
-                  {
-                    end: data.max || null,
-                    start: data.min
-                  }
-                ]
-              }
-            }
-          })
-        }
+        onSubmit={code => {
+          onPostalCodeAssign(code);
+          setHavePostalCodesChanged(true);
+        }}
         open={params.action === "add-range"}
-      />
-      <ShippingRateZipCodeRangeRemoveDialog
-        confirmButtonState={unassignZipCodeRangeOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          unassignZipCodeRange({
-            variables: {
-              id: params.id
-            }
-          })
-        }
-        open={params.action === "remove-range"}
       />
     </>
   );
