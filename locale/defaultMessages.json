@@ -3338,7 +3338,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addCustomerInfo": {
     "context": "add customer first label",
-    "string": "Add customer first"
+    "string": "add customer first"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
     "context": "add discount button",

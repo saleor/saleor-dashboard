@@ -189,7 +189,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     );
   };
 
-  const subtotalToShow = shop.includeTaxesInPrices
+  const subtotalToShow = shop?.includeTaxesInPrices
     ? subtotal.gross
     : subtotal.net;
 
