@@ -6,21 +6,18 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  LanguageCodeEnum,
-  PageTranslationInput
-} from "../../types/globalTypes";
-import TranslationsPagesPage, {
-  fieldNames
-} from "../components/TranslationsPagesPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import { TypedUpdatePageTranslations } from "../mutations";
 import { usePageTranslationDetails } from "../queries";
+import { TranslationInputFieldName } from "../types";
 import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsPagesQueryParams {
   activeField: string;
@@ -70,21 +67,14 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   return (
     <TypedUpdatePageTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: PageTranslationInput = {};
-          if (field === fieldNames.content) {
-            input.content = JSON.stringify(data);
-          } else if (field === fieldNames.title) {
-            input.title = data;
-          } else if (field === fieldNames.seoDescription) {
-            input.seoDescription = data;
-          } else if (field === fieldNames.seoTitle) {
-            input.seoTitle = data;
-          }
+        const handleSubmit = (
+          fieldName: TranslationInputFieldName,
+          data: string
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({ data, fieldName }),
               language: languageCode
             }
           });

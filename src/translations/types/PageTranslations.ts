@@ -15,7 +15,7 @@ export interface PageTranslations_translations_edges_node_ProductTranslatableCon
 export interface PageTranslations_translations_edges_node_PageTranslatableContent_page {
   __typename: "Page";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
@@ -30,7 +30,7 @@ export interface PageTranslations_translations_edges_node_PageTranslatableConten
 export interface PageTranslations_translations_edges_node_PageTranslatableContent_translation {
   __typename: "PageTranslation";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;

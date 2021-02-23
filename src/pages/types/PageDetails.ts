@@ -109,7 +109,7 @@ export interface PageDetails_page {
   pageType: PageDetails_page_pageType;
   metadata: (PageDetails_page_metadata | null)[];
   privateMetadata: (PageDetails_page_privateMetadata | null)[];
-  content: any;
+  content: any | null;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;

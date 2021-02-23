@@ -109,7 +109,7 @@ export interface PageDetailsFragment {
   pageType: PageDetailsFragment_pageType;
   metadata: (PageDetailsFragment_metadata | null)[];
   privateMetadata: (PageDetailsFragment_privateMetadata | null)[];
-  content: any;
+  content: any | null;
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;

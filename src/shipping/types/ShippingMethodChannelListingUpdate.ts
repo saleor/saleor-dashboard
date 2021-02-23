@@ -2,15 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingMethodChannelListingInput, WeightUnitsEnum, ShippingMethodTypeEnum, ShippingErrorCode } from "./../../types/globalTypes";
+import { ShippingMethodChannelListingInput, PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum, ShippingErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShippingMethodChannelListingUpdate
 // ====================================================
 
-export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -76,7 +77,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_postalCodeRules | null)[] | null;
   metadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_metadata | null)[];
   privateMetadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_minimumOrderWeight | null;

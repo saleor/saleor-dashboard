@@ -15,7 +15,7 @@ export interface PageTranslationDetails_translation_ProductTranslatableContent {
 export interface PageTranslationDetails_translation_PageTranslatableContent_page {
   __typename: "Page";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
@@ -30,7 +30,7 @@ export interface PageTranslationDetails_translation_PageTranslatableContent_tran
 export interface PageTranslationDetails_translation_PageTranslatableContent_translation {
   __typename: "PageTranslation";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;

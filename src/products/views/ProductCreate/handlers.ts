@@ -37,6 +37,7 @@ import {
 } from "@saleor/products/types/VariantCreate";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
@@ -108,7 +109,7 @@ export function createHandler(
         category: formData.category,
         chargeTaxes: formData.chargeTaxes,
         collections: formData.collections,
-        description: JSON.stringify(formData.description),
+        description: getParsedDataForJsonStringField(formData.description),
         name: formData.name,
         productType: formData.productType?.id,
         rating: formData.rating,

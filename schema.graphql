@@ -789,17 +789,37 @@ type Category implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
+  description: JSONString
   slug: String!
   parent: Category
   level: Int!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
-  ancestors(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
-  products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection
-  url: String @deprecated(reason: "This field will be removed after 2020-07-31.")
-  children(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
+  ancestors(
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): CategoryCountableConnection
+  products(
+    channel: String
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): ProductCountableConnection
+  url: String
+    @deprecated(reason: "This field will be removed after 2020-07-31.")
+  children(
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): CategoryCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
 }
@@ -873,8 +893,11 @@ type CategoryTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  description: JSONString
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
   category: Category
 }
@@ -893,9 +916,12 @@ type CategoryTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
+  description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
 }
 
 type CategoryUpdate {
@@ -1240,12 +1266,22 @@ type Collection implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
+  description: JSONString
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
-  products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
+  products(
+    filter: ProductFilterInput
+    sortBy: ProductOrder
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   channelListings: [CollectionChannelListing!]
@@ -1416,8 +1452,11 @@ type CollectionTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  description: JSONString
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   collection: Collection
 }
@@ -1436,9 +1475,12 @@ type CollectionTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: JSONString!
+  description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
 }
 
 type CollectionUpdate {
@@ -3010,11 +3052,6 @@ type Mutation {
     id: ID!
     input: ShippingMethodChannelListingInput!
   ): ShippingMethodChannelListingUpdate
-  shippingMethodZipCodeRulesCreate(
-    input: ShippingZipCodeRulesCreateInput!
-    shippingMethodId: ID!
-  ): ShippingZipCodeRulesCreate
-  shippingMethodZipCodeRulesDelete(id: ID!): ShippingZipCodeRulesDelete
   shippingPriceCreate(input: ShippingPriceInput!): ShippingPriceCreate
   shippingPriceDelete(id: ID!): ShippingPriceDelete
   shippingPriceBulkDelete(ids: [ID]!): ShippingPriceBulkDelete
@@ -4106,7 +4143,7 @@ type Page implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   title: String!
-  content: JSONString!
+  content: JSONString
   publicationDate: Date
   isPublished: Boolean!
   slug: String!
@@ -4114,7 +4151,10 @@ type Page implements Node & ObjectWithMetadata {
   created: DateTime!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  contentJson: JSONString! @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
+  contentJson: JSONString!
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
+    )
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   attributes: [SelectedAttribute!]!
 }
@@ -4261,8 +4301,11 @@ type PageTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: JSONString!
-  contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
+  content: JSONString
+  contentJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
+    )
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   page: Page
 }
@@ -4281,9 +4324,12 @@ type PageTranslation implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: JSONString!
+  content: JSONString
   language: LanguageDisplay!
-  contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
+  contentJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
+    )
 }
 
 input PageTranslationInput {
@@ -4698,6 +4744,11 @@ input PluginUpdateInput {
 
 scalar PositiveDecimal
 
+enum PostalCodeRuleInclusionTypeEnum {
+  INCLUDE
+  EXCLUDE
+}
+
 input PriceRangeInput {
   gte: Float
   lte: Float
@@ -4708,7 +4759,7 @@ type Product implements Node & ObjectWithMetadata {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: JSONString!
+  description: JSONString
   productType: ProductType!
   slug: String!
   category: Category
@@ -4719,8 +4770,12 @@ type Product implements Node & ObjectWithMetadata {
   rating: Float
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
-  url: String! @deprecated(reason: "This field will be removed after 2020-07-31.")
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
+  url: String!
+    @deprecated(reason: "This field will be removed after 2020-07-31.")
   thumbnail(size: Int): Image
   pricing(address: AddressInput): ProductPricingInfo
   isAvailable(address: AddressInput): Boolean
@@ -5050,8 +5105,11 @@ type ProductTranslatableContent implements Node {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: JSONString!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  description: JSONString
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   product: Product
 }
@@ -5070,9 +5128,12 @@ type ProductTranslation implements Node {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: JSONString!
+  description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  descriptionJson: JSONString
+    @deprecated(
+      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
+    )
 }
 
 type ProductType implements Node & ObjectWithMetadata {
@@ -5085,7 +5146,16 @@ type ProductType implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection @deprecated(reason: "Use the top-level `products` query with the `productTypes` filter.")
+  products(
+    channel: String
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): ProductCountableConnection
+    @deprecated(
+      reason: "Use the top-level `products` query with the `productTypes` filter."
+    )
   taxType: TaxType
   variantAttributes(variantSelection: VariantAttributeScope): [Attribute]
   productAttributes: [Attribute]
@@ -5996,7 +6066,7 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   price: Money
   maximumOrderPrice: Money
   minimumOrderPrice: Money
-  zipCodeRules: [ShippingMethodZipCodeRule]
+  postalCodeRules: [ShippingMethodPostalCodeRule]
   excludedProducts(
     before: String
     after: String
@@ -6034,6 +6104,13 @@ type ShippingMethodChannelListingUpdate {
   shippingErrors: [ShippingError!]!
 }
 
+type ShippingMethodPostalCodeRule implements Node {
+  start: String
+  end: String
+  inclusionType: PostalCodeRuleInclusionTypeEnum
+  id: ID!
+}
+
 type ShippingMethodTranslatableContent implements Node {
   id: ID!
   name: String!
@@ -6052,10 +6129,9 @@ enum ShippingMethodTypeEnum {
   WEIGHT
 }
 
-type ShippingMethodZipCodeRule implements Node {
-  start: String
+input ShippingPostalCodeRulesCreateInputRange {
+  start: String!
   end: String
-  id: ID!
 }
 
 type ShippingPriceBulkDelete {
@@ -6108,6 +6184,9 @@ input ShippingPriceInput {
   minimumDeliveryDays: Int
   type: ShippingMethodTypeEnum
   shippingZone: ID
+  addPostalCodeRules: [ShippingPostalCodeRulesCreateInputRange!]
+  deletePostalCodeRules: [ID!]
+  inclusionType: PostalCodeRuleInclusionTypeEnum
 }
 
 type ShippingPriceRemoveProductFromExclude {
@@ -6136,35 +6215,6 @@ type ShippingPriceUpdate {
   shippingZone: ShippingZone
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
-}
-
-type ShippingZipCodeRulesCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-  zipCodeRules: [ShippingMethodZipCodeRule]
-  shippingMethod: ShippingMethod
-  shippingErrors: [ShippingError!]!
-}
-
-input ShippingZipCodeRulesCreateInput {
-  zipCodeRules: [ShippingZipCodeRulesCreateInputRange]!
-}
-
-input ShippingZipCodeRulesCreateInputRange {
-  start: String!
-  end: String
-}
-
-type ShippingZipCodeRulesDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-  shippingMethod: ShippingMethod
-  shippingErrors: [ShippingError!]!
-  shippingMethodZipCodeRule: ShippingMethodZipCodeRule
 }
 
 type ShippingZone implements Node & ObjectWithMetadata {
@@ -6247,7 +6297,10 @@ input ShippingZoneUpdateInput {
 type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
-  availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
+  availableShippingMethods(
+    channel: String!
+    address: AddressInput
+  ): [ShippingMethod]
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   defaultCountry: CountryDisplay
   defaultMailSenderName: String

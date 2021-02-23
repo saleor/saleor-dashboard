@@ -2,13 +2,11 @@ import { useChannelsList } from "@saleor/channels/queries";
 import { createSortedShippingChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import ShippingRateZipCodeRangeRemoveDialog from "@saleor/shipping/components/ShippingRateZipCodeRangeRemoveDialog";
+import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
-import ShippingZoneZipCodeRangeDialog from "@saleor/shipping/components/ShippingZoneZipCodeRangeDialog";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
 import {
   shippingPriceRatesUrl,
@@ -16,10 +14,13 @@ import {
   ShippingRateCreateUrlQueryParams,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
+import filterPostalCodes from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { remove } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,9 +36,10 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [zipCodes, setZipCodes] = React.useState<
-    ShippingMethodFragment_zipCodeRules[]
-  >([]);
+  const [postalCodes, setPostalCodes] = React.useState([]);
+  const [radioInclusionType, setRadioInclusionType] = React.useState(
+    PostalCodeRuleInclusionTypeEnum.EXCLUDE
+  );
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
 
@@ -66,30 +68,35 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     createShippingRate,
     errors,
     status
-  } = useShippingRateCreator(id, ShippingMethodTypeEnum.PRICE, zipCodes);
+  } = useShippingRateCreator(
+    id,
+    ShippingMethodTypeEnum.PRICE,
+    postalCodes,
+    radioInclusionType
+  );
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
-  const handleZipCodeRangeAdd = (data: MinMax) => {
-    setZipCodes(zipCodes => [
-      ...zipCodes,
+  const handlePostalCodeRangeAdd = (data: MinMax) => {
+    setPostalCodes(postalCodes => [
+      ...postalCodes,
       {
-        __typename: "ShippingMethodZipCodeRule",
         end: data.max,
-        id: zipCodes.length.toString(),
         start: data.min
       }
     ]);
     closeModal();
   };
-  const handleZipCodeRangeDelete = (id: string) => {
-    setZipCodes(zipCodes =>
-      remove(
-        zipCodes.find(zipCode => zipCode.id === id),
-        zipCodes,
-        (a, b) => a.id === b.id
-      )
-    );
+
+  const onPostalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    setRadioInclusionType(inclusion);
+    setPostalCodes([]);
+  };
+
+  const onPostalCodeUnassign = code => {
+    setPostalCodes(filterPostalCodes(postalCodes, code));
     closeModal();
   };
 
@@ -123,28 +130,19 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        zipCodes={zipCodes}
+        postalCodes={postalCodes}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onZipCodeAssign={() => openModal("add-range")}
-        onZipCodeUnassign={id =>
-          openModal("remove-range", {
-            id
-          })
-        }
+        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeUnassign={onPostalCodeUnassign}
+        onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         variant={ShippingMethodTypeEnum.PRICE}
       />
-      <ShippingZoneZipCodeRangeDialog
+      <ShippingZonePostalCodeRangeDialog
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleZipCodeRangeAdd}
+        onSubmit={handlePostalCodeRangeAdd}
         open={params.action === "add-range"}
-      />
-      <ShippingRateZipCodeRangeRemoveDialog
-        confirmButtonState="default"
-        onClose={closeModal}
-        onConfirm={() => handleZipCodeRangeDelete(params.id)}
-        open={params.action === "remove-range"}
       />
     </>
   );

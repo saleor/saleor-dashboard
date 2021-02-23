@@ -253,7 +253,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   privateMetadata: (ProductChannelListingUpdate_productChannelListingUpdate_product_privateMetadata | null)[];
   name: string;
   slug: string;
-  description: any;
+  description: any | null;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

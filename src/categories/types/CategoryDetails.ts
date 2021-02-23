@@ -165,7 +165,7 @@ export interface CategoryDetails_category {
   backgroundImage: CategoryDetails_category_backgroundImage | null;
   name: string;
   slug: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryDetails_category_parent | null;

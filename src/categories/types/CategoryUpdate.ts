@@ -39,7 +39,7 @@ export interface CategoryUpdate_categoryUpdate_category {
   backgroundImage: CategoryUpdate_categoryUpdate_category_backgroundImage | null;
   name: string;
   slug: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryUpdate_categoryUpdate_category_parent | null;
