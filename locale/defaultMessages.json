@@ -98,6 +98,10 @@
     "context": "order was discounted event title",
     "string": "Order was discounted by"
   },
+  "event title order line discount added": {
+    "context": "order line discount added title",
+    "string": "{productName} discount was added by "
+  },
   "event title order line discount updated": {
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by "
@@ -3358,7 +3362,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_taxes": {
     "context": "taxes title",
-    "string": "Taxes (VAT in cluded)"
+    "string": "Taxes (VAT included)"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_total": {
     "context": "total price",

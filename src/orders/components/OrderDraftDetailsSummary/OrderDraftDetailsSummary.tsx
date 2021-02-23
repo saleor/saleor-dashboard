@@ -70,7 +70,7 @@ const messages = defineMessages({
     description: "total price"
   },
   taxes: {
-    defaultMessage: "Taxes (VAT in cluded)",
+    defaultMessage: "Taxes (VAT included)",
     description: "taxes title"
   }
 });

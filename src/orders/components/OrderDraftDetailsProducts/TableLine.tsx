@@ -116,8 +116,9 @@ const TableLine: React.FC<TableLineProps> = ({
         <Typography variant="body2">{productName}</Typography>
         <Typography variant="caption">{productSku}</Typography>
       </TableCellAvatar>
-      <TableLineForm line={line} onOrderLineChange={onOrderLineChange} />
-      <TableCell className={classes.colQuantity}></TableCell>
+      <TableCell className={classes.colQuantity}>
+        <TableLineForm line={line} onOrderLineChange={onOrderLineChange} />
+      </TableCell>
       <TableCell className={classes.colPrice} ref={popperAnchorRef}>
         {getUnitPriceLabel()}
         <OrderDiscountCommonModal

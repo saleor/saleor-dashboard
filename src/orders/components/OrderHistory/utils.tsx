@@ -79,6 +79,14 @@ export const getEmployeeNameLink = (event: OrderDetails_order_events) => {
   return { link: staffMemberDetailsUrl(id), text: employeeName };
 };
 
+export const hasOrderLineDiscountWithNoPreviousValue = ({
+  type,
+  lines
+}: OrderDetails_order_events) =>
+  type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
+  lines?.[0]?.discount &&
+  !lines?.[0].discount?.oldValue;
+
 export const getOrderNumberLink = (event: OrderDetails_order_events) => {
   if (!hasEnsuredOrderEventFields(event, ["relatedOrder"])) {
     return null;

@@ -12,6 +12,7 @@ import Label from "./Label";
 import {
   getEmployeeNameLink,
   getOrderNumberLink,
+  hasOrderLineDiscountWithNoPreviousValue,
   isTimelineEventOfDiscountType
 } from "./utils";
 
@@ -98,6 +99,11 @@ export const titles = defineMessages({
     description: "order discount was updated event title",
     id: "event title order discount updated"
   },
+  orderLineDiscountAdded: {
+    defaultMessage: "{productName} discount was added by ",
+    description: "order line discount added title",
+    id: "event title order line discount added"
+  },
   orderLineDiscountUpdated: {
     defaultMessage: "{productName} discount was updated by ",
     description: "order line discount updated title",
@@ -156,6 +162,14 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
 
   const eventTypeInCamelCase = camelCase(type);
 
+  const getEventTitleMessageInCamelCase = () => {
+    if (hasOrderLineDiscountWithNoPreviousValue(event)) {
+      return titles.orderLineDiscountAdded;
+    }
+
+    return titles[eventTypeInCamelCase];
+  };
+
   const getTitleProps = () => {
     if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
       return { productName: lines[0]?.itemName };
@@ -169,7 +183,10 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     employeeName: getEmployeeNameLink(event),
     orderNumber: getOrderNumberLink(event),
     title: {
-      text: intl.formatMessage(titles[eventTypeInCamelCase], getTitleProps())
+      text: intl.formatMessage(
+        getEventTitleMessageInCamelCase(),
+        getTitleProps()
+      )
     }
   };
 
