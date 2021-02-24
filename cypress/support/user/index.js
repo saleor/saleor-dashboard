@@ -10,12 +10,6 @@ Cypress.Commands.add("loginUser", () =>
     .click()
 );
 
-// Cypress.Commands.add("loginUserViaRequest", () => {
-//   cy.sendLoginRequest().then(resp => {
-//     window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
-//   });
-// });
-
 Cypress.Commands.add("loginInShop", () => {
   cy.loginUserViaRequest("token");
 });
