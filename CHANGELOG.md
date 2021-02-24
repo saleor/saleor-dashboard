@@ -21,6 +21,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add OAuth2 login with OpenID support - #963 by @orzechdev
 - Fix no channels crash - #984 by @dominik-zeglen
 - Update webhooks - #982 by @piotrgrundas
+- Fix homepage crash when member has no permissions - #989 by @dominik-zeglen
 
 # 2.11.1
 
