@@ -38,17 +38,19 @@ interface TabProps<T> {
   children?: React.ReactNode;
   isActive: boolean;
   changeTab: (index: T) => void;
+  testId?: string;
 }
 
 export function Tab<T>(value: T) {
   const Component: React.FC<TabProps<T>> = props => {
-    const { children, isActive, changeTab } = props;
+    const { children, isActive, changeTab, testId } = props;
 
     const classes = useStyles(props);
 
     return (
       <Typography
         component="span"
+        data-test-id={testId}
         className={classNames({
           [classes.root]: true,
           [classes.active]: isActive

@@ -78,6 +78,7 @@ class Product {
       }){
         product{
           id
+          name
         }
         productErrors{
           field

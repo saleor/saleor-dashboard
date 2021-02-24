@@ -1,22 +1,26 @@
 // <reference types="cypress" />
 
 import faker from "faker";
-import moment from "moment-timezone";
 
-import { MENAGE_CHANNEL_AVAILABILITY } from "../../elements/channels/menage-channel-availability";
-import { SALES_SELECTORS } from "../../elements/discounts/sales";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import ProductRequest from "../../apiRequests/Product";
+import SalesSteps from "../../steps/salesSteps";
 import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 import ProductsUtils from "../../utils/productsUtils";
+import SalesUtils from "../../utils/salesUtils";
 import ShippingUtils from "../../utils/shippingUtils";
+import StoreFrontProductsUtils from "../../utils/storeFront/storeFrontProductUtils";
 
 describe("Sales discounts", () => {
   const startsWith = "Cy-";
 
+  const productRequest = new ProductRequest();
   const productsUtils = new ProductsUtils();
   const channelsUtils = new ChannelsUtils();
   const shippingUtils = new ShippingUtils();
+  const salesUtils = new SalesUtils();
+  const storeFrontProductsUtils = new StoreFrontProductsUtils();
+  const salesSteps = new SalesSteps();
 
   let productType;
   let attribute;
@@ -26,11 +30,11 @@ describe("Sales discounts", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    /*
-        deleteSales
-        delete products
-        getDefaultChannel
-        */
+    channelsUtils.deleteChannels(startsWith);
+    salesUtils.deleteProperSales(startsWith);
+    productsUtils.deleteProperProducts(startsWith);
+    shippingUtils.deleteShipping(startsWith);
+
     const name = `${startsWith}${faker.random.number()}`;
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
@@ -65,60 +69,114 @@ describe("Sales discounts", () => {
   it("should create percentage discount", () => {
     const saleName = `${startsWith}${faker.random.number()}`;
     const discountValue = 50;
+    const productPrice = 100;
 
-    productsUtils.createProductInChannel({
-      name: saleName,
-      channel: defaultChannel.id,
-      warehouseId: warehouse.id,
-      productTypeId: productType.id,
-      attributeId: attribute.id,
-      categoryId: category.id,
-      price: 100
-    });
-    cy.visit(urlList.sales);
-    cy.get(SALES_SELECTORS.createSaleButton)
-      .click()
-      .get(SALES_SELECTORS.nameInput)
-      .type(saleName)
-      .get(SALES_SELECTORS.percentageOption)
-      .click()
-      .get(MENAGE_CHANNEL_AVAILABILITY.availableManageButton)
-      .click()
-      .get(MENAGE_CHANNEL_AVAILABILITY.allChannelsInput)
-      .click()
-      .get(MENAGE_CHANNEL_AVAILABILITY.channelsAvailabilityForm)
-      .contains(defaultChannel.name)
-      .click()
-      .get(BUTTON_SELECTORS.submit)
-      .click()
-      .get(SALES_SELECTORS.discountValue)
-      .type(discountValue)
-      .get(SALES_SELECTORS.startDateInput)
-      .type(moment().format("YYYY-MM-DD"))
-      .get(SALES_SELECTORS.saveButton)
-      .click();
-    /*
-        assign product to sale
-        check price on storeFront
-        */
+    productsUtils
+      .createProductInChannel({
+        name: saleName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice
+      })
+      .then(() => {
+        cy.visit(urlList.sales);
+        const product = productsUtils.getCreatedProduct();
+        salesSteps.createSale({
+          saleName,
+          channelName: defaultChannel.name,
+          discountValue,
+          discountOption: salesSteps.discountOptions.PERCENTAGE
+        });
+        salesSteps.assignProducts(product.name);
+        storeFrontProductsUtils.getProductPrice(
+          product.id,
+          defaultChannel.slug
+        );
+      })
+      .then(price => {
+        const expectedPrice = (productPrice * discountValue) / 100;
+        expect(expectedPrice).to.be.eq(price);
+      });
   });
 
-  xit("should create fixed price discount", () => {
-    /*
-        create new sale - fixed price
-        create product
-        assign product to sale
-        check price on storeFront
-        */
+  it("should create fixed price discount", () => {
+    const saleName = `${startsWith}${faker.random.number()}`;
+    const discountValue = 50;
+    const productPrice = 100;
+
+    productsUtils
+      .createProductInChannel({
+        name: saleName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice
+      })
+      .then(() => {
+        cy.visit(urlList.sales);
+        const product = productsUtils.getCreatedProduct();
+        salesSteps.createSale({
+          saleName,
+          channelName: defaultChannel.name,
+          discountValue,
+          discountOption: salesSteps.discountOptions.FIXED
+        });
+        salesSteps.assignProducts(product.name);
+        storeFrontProductsUtils.getProductPrice(
+          product.id,
+          defaultChannel.slug
+        );
+      })
+      .then(price => {
+        const expectedPrice = productPrice - discountValue;
+        expect(expectedPrice).to.be.eq(price);
+      });
   });
 
-  xit("should create not available for channel discount", () => {
-    /*
-        create new channel
-        create new sale - in new channel
-        create product
-        assign product to sale
-        check price on storeFront - in default channel
-        */
+  it("should not displayed discount not assign to channel", () => {
+    const saleName = `${startsWith}${faker.random.number()}`;
+    let channel;
+    let product;
+    const discountValue = 50;
+    const productPrice = 100;
+
+    channelsUtils.createChannel({ name: saleName });
+    productsUtils
+      .createProductInChannel({
+        name: saleName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice
+      })
+      .then(() => {
+        product = productsUtils.getCreatedProduct();
+        channel = channelsUtils.getCreatedChannel();
+        productRequest.updateChannelInProduct({
+          productId: product.id,
+          channelId: channel.id
+        });
+      })
+      .then(() => {
+        cy.visit(urlList.sales);
+        salesSteps.createSale({
+          saleName,
+          channelName: channel.name,
+          discountValue
+        });
+        salesSteps.assignProducts(product.name);
+        storeFrontProductsUtils.getProductPrice(
+          product.id,
+          defaultChannel.slug
+        );
+      })
+      .then(price => expect(price).to.equal(productPrice));
   });
 });

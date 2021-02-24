@@ -2,9 +2,10 @@ import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
 import Search from "../../apiRequests/storeFront/Search";
 
 class StoreFrontProductUtils {
+  productDetails = new ProductDetails();
+
   isProductVisible(productId, channelSlug, name) {
-    const productDetails = new ProductDetails();
-    return productDetails
+    return this.productDetails
       .getProductDetails(productId, channelSlug)
       .then(productDetailsResp => {
         const product = productDetailsResp.body.data.product;
@@ -12,8 +13,7 @@ class StoreFrontProductUtils {
       });
   }
   isProductAvailableForPurchase(productId, channelSlug) {
-    const productDetails = new ProductDetails();
-    return productDetails
+    return this.productDetails
       .getProductDetails(productId, channelSlug)
       .then(
         productDetailsResp =>
@@ -28,6 +28,13 @@ class StoreFrontProductUtils {
         resp =>
           resp.body.data.products.totalCount !== 0 &&
           resp.body.data.products.edges[0].node.name === productName
+      );
+  }
+  getProductPrice(productId, channelSlug) {
+    return this.productDetails
+      .getProductDetails(productId, channelSlug)
+      .then(
+        resp => resp.body.data.product.variants[0].pricing.price.gross.amount
       );
   }
 }

@@ -165,7 +165,10 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                     );
 
                     return (
-                      <TableRow key={product.id}>
+                      <TableRow
+                        key={product.id}
+                        data-test-id="assign-product-table-row"
+                      >
                         <TableCellAvatar
                           className={classes.avatar}
                           thumbnail={maybe(() => product.thumbnail.url)}
