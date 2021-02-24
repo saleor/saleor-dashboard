@@ -55,6 +55,9 @@ export const commonMessages = defineMessages({
   lastName: {
     defaultMessage: "Last Name"
   },
+  limitReached: {
+    defaultMessage: "Reached limit for this plan"
+  },
   no: {
     defaultMessage: "No"
   },

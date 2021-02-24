@@ -10,6 +10,7 @@ import useUser from "./hooks/useUser";
 import { commonMessages } from "./intl";
 import { getMutationStatus } from "./misc";
 import { MutationResultAdditionalProps } from "./types";
+import { hasError } from "./utils/api";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -43,13 +44,15 @@ export function TypedMutation<TData, TVariables>(
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }
-          if (
-            err.graphQLErrors[0].extensions.exception?.code ===
-            "ReadOnlyException"
-          ) {
+          if (hasError(err, "ReadOnlyException")) {
             notify({
               status: "error",
               text: intl.formatMessage(commonMessages.readOnly)
+            });
+          } else if (hasError(err, "LimitReachedException")) {
+            notify({
+              status: "error",
+              text: intl.formatMessage(commonMessages.limitReached)
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
             user.logout();

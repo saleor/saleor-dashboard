@@ -1,7 +1,8 @@
 import { isJwtError } from "@saleor/auth/errors";
 import { commonMessages } from "@saleor/intl";
-import { getMutationStatus, maybe } from "@saleor/misc";
+import { getMutationStatus } from "@saleor/misc";
 import { MutationResultAdditionalProps } from "@saleor/types";
+import { hasError } from "@saleor/utils/api";
 import { ApolloError } from "apollo-client";
 import { DocumentNode } from "graphql";
 import {
@@ -40,16 +41,15 @@ function makeMutation<TData, TVariables>(
     const [mutateFn, result] = useBaseMutation(mutation, {
       onCompleted,
       onError: (err: ApolloError) => {
-        if (
-          maybe(
-            () =>
-              err.graphQLErrors[0].extensions.exception.code ===
-              "ReadOnlyException"
-          )
-        ) {
+        if (hasError(err, "ReadOnlyException")) {
           notify({
             status: "error",
             text: intl.formatMessage(commonMessages.readOnly)
+          });
+        } else if (hasError(err, "LimitReachedException")) {
+          notify({
+            status: "error",
+            text: intl.formatMessage(commonMessages.limitReached)
           });
         } else if (err.graphQLErrors.some(isJwtError)) {
           user.logout();

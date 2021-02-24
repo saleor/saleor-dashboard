@@ -112,7 +112,7 @@ function useForm<T extends FormData>(
       const result = onSubmit(data);
       if (result) {
         const errors = await result;
-        if (errors.length === 0) {
+        if (errors?.length === 0) {
           setChanged(false);
         }
       }
