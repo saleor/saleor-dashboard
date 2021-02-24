@@ -224,7 +224,10 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     setValueError(false);
   };
 
-  useEffect(setDefaultValues, [existingDiscount]);
+  useEffect(setDefaultValues, [
+    existingDiscount?.value,
+    existingDiscount?.reason
+  ]);
 
   const dialogTitle =
     modalType === ORDER_LINE_DISCOUNT

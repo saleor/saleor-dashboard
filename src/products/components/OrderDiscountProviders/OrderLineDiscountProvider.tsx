@@ -1,7 +1,6 @@
 /* eslint-disable sort-keys */
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
@@ -20,11 +19,7 @@ import {
   OrderLineDiscountConsumerProps,
   OrderLineDiscountData
 } from "./types";
-import {
-  getDiscountNotifierData,
-  getProperPrice,
-  useDiscountDialog
-} from "./utils";
+import { getDiscountNotifierData, useDiscountDialog } from "./utils";
 import { getOrderLineDiscount, getParsedDiscountData } from "./utils";
 
 export interface OrderLineDiscountContextConsumerProps
@@ -51,7 +46,6 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const shop = useShop();
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
   const [currentLineId, setCurrentLineId] = useState<string | null>(null);
 
@@ -104,8 +98,6 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   const getOrderLine = (orderLineId: string) =>
     order?.lines.find(getById(orderLineId));
 
-  const getProperDiscountPrice = getProperPrice(shop);
-
   const getDiscountProviderValues = (
     orderLineId: string
   ): OrderLineDiscountContextConsumerProps => ({
@@ -117,12 +109,8 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
     closeDialog: handleCloseDialog,
     openDialog: handleOpenDialog(orderLineId),
-    discountedPrice: getProperDiscountPrice(
-      getOrderLine(orderLineId).unitPrice
-    ),
-    undiscountedPrice: getProperDiscountPrice(
-      getOrderLine(orderLineId).undiscountedUnitPrice
-    )
+    discountedPrice: getOrderLine(orderLineId).unitPrice.gross,
+    undiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross
   });
 
   return (

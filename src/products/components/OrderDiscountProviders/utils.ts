@@ -1,6 +1,4 @@
 import { IMessage } from "@saleor/components/messages";
-import { ShopInfo_shop } from "@saleor/components/Shop/types/ShopInfo";
-import { Money } from "@saleor/fragments/types/Money";
 import { commonMessages } from "@saleor/intl";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import {
@@ -37,14 +35,6 @@ export const getDiscountNotifierData = (
         status: "error",
         text: intl.formatMessage(commonErrorMessages.unknownError)
       };
-
-export const getProperPrice = (shop: ShopInfo_shop) => ({
-  gross,
-  net
-}: {
-  net: Money;
-  gross: Money;
-}): Money => (shop?.includeTaxesInPrices ? gross : net);
 
 export const getManualOrderDiscount = (order: OrderDetails_order) =>
   order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;

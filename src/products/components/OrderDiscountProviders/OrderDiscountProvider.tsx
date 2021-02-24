@@ -1,7 +1,6 @@
 /* eslint-disable sort-keys */
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import {
   useOrderDiscountAddMutation,
@@ -16,11 +15,7 @@ import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
-import {
-  getDiscountNotifierData,
-  getProperPrice,
-  useDiscountDialog
-} from "./utils";
+import { getDiscountNotifierData, useDiscountDialog } from "./utils";
 import { getManualOrderDiscount, getParsedDiscountData } from "./utils";
 
 export interface OrderDiscountContextConsumerProps
@@ -43,7 +38,6 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const shop = useShop();
 
   const { id: orderId } = order;
 
@@ -106,8 +100,6 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     ? orderDiscountUpdateOpts.status
     : orderDiscountAddOpts.status;
 
-  const getProperDiscountPrice = getProperPrice(shop);
-
   const discountProviderValues: OrderDiscountContextConsumerProps = {
     orderDiscountAddStatus,
     orderDiscountRemoveStatus: orderDiscountRemoveOpts.status,
@@ -117,8 +109,8 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     isDialogOpen,
     closeDialog,
     openDialog,
-    discountedPrice: getProperDiscountPrice(order.total),
-    undiscountedPrice: getProperDiscountPrice(order.undiscountedTotal)
+    discountedPrice: order.total.gross,
+    undiscountedPrice: order.undiscountedTotal.gross
   };
 
   return (

@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import useShop from "@saleor/hooks/useShop";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
@@ -108,7 +107,6 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
   const intl = useIntl();
   const classes = useStyles(props);
-  const shop = useShop();
 
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
 
@@ -189,10 +187,6 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     );
   };
 
-  const subtotalToShow = shop?.includeTaxesInPrices
-    ? subtotal.gross
-    : subtotal.net;
-
   return (
     <table className={classes.root}>
       <tbody>
@@ -222,7 +216,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
         <tr>
           <td>{intl.formatMessage(messages.subtotal)}</td>
           <td className={classes.textRight}>
-            <Money money={subtotalToShow} />
+            <Money money={subtotal.gross} />
           </td>
         </tr>
         <tr>
