@@ -1,11 +1,11 @@
 import faker from "faker";
 
-import ProductSteps from "../../steps/productSteps";
-import { urlList } from "../../url/urlList";
-import ChannelsUtils from "../../utils/channelsUtils";
-import FrontShopProductUtils from "../../utils/frontShop/frontShopProductUtils";
-import ProductsUtils from "../../utils/productsUtils";
-import ShippingUtils from "../../utils/shippingUtils";
+import ProductSteps from "../../../steps/productSteps";
+import { productDetailsUrl } from "../../../url/urlList";
+import ChannelsUtils from "../../../utils/channelsUtils";
+import ProductsUtils from "../../../utils/productsUtils";
+import ShippingUtils from "../../../utils/shippingUtils";
+import StoreFrontProductUtils from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
@@ -13,7 +13,7 @@ describe("Products available in listings", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
-  const frontShopProductUtils = new FrontShopProductUtils();
+  const frontShopProductUtils = new StoreFrontProductUtils();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -34,12 +34,11 @@ describe("Products available in listings", () => {
         cy.fixture("addresses");
       })
       .then(addressesFixture => {
-        shippingUtils.createShipping(
-          defaultChannel,
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
           name,
-          addressesFixture.plAddress,
-          10
-        );
+          address: addressesFixture.plAddress
+        });
       })
       .then(() => {
         warehouse = shippingUtils.getWarehouse();
@@ -59,23 +58,19 @@ describe("Products available in listings", () => {
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
-      .createProductInChannel(
-        productName,
-        defaultChannel.id,
-        warehouse.id,
-        10,
-        productType.id,
-        attribute.id,
-        category.id,
-        1,
-        true,
-        false,
-        true
-      )
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        isAvailableForPurchase: false
+      })
       .then(() => {
-        const productUrl = `${urlList.products}${
+        const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
-        }`;
+        );
         productSteps.updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
@@ -92,33 +87,29 @@ describe("Products available in listings", () => {
   it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     productsUtils
-      .createProductInChannel(
-        productName,
-        defaultChannel.id,
-        warehouse.id,
-        10,
-        productType.id,
-        attribute.id,
-        category.id,
-        1,
-        true,
-        true,
-        true
-      )
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id
+      })
       .then(() => {
-        const productUrl = `${urlList.products}${
+        const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
-        }`;
+        );
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);
-        frontShopProductUtils
-          .isProductAvailableForPurchase(
-            productsUtils.getCreatedProduct().id,
-            defaultChannel.slug,
-            productName
-          )
-          .then(isProductVisible => {
-            expect(isProductVisible).to.be.eq(false);
-          });
+      })
+      .then(() => {
+        frontShopProductUtils.isProductAvailableForPurchase(
+          productsUtils.getCreatedProduct().id,
+          defaultChannel.slug,
+          productName
+        );
+      })
+      .then(isProductVisible => {
+        expect(isProductVisible).to.be.eq(false);
       });
   });
 });

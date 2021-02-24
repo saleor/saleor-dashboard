@@ -8,16 +8,20 @@ class VariantsSteps {
       .first()
       .click()
       .get(VARIANTS_SELECTORS.nextButton)
-      .click()
-      .get(VARIANTS_SELECTORS.priceInput)
-      .forEach(priceInput => cy.priceInput.type(price));
+      .click();
+    const priceInput = cy.get(VARIANTS_SELECTORS.priceInput);
+    if (Array.isArray(priceInput)) {
+      priceInput.forEach(input => input.type(price));
+    } else {
+      priceInput.type(price);
+    }
     cy.get(`[name*='${warehouseId}']`)
       .click()
       .get(VARIANTS_SELECTORS.nextButton)
       .click()
       .get(VARIANTS_SELECTORS.skuInput)
       .type(sku);
-    cy.waitForGraph("ProductVariantBulkCreate");
+    cy.addAliasToGraphRequest("ProductVariantBulkCreate");
     cy.get(VARIANTS_SELECTORS.nextButton).click();
     cy.wait("@ProductVariantBulkCreate");
   }
@@ -38,7 +42,7 @@ class VariantsSteps {
       .get(VARIANTS_SELECTORS.addWarehouseButton)
       .click();
     cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click();
-    cy.waitForGraph("VariantCreate");
+    cy.addAliasToGraphRequest("VariantCreate");
     cy.get(VARIANTS_SELECTORS.saveButton).click();
     cy.wait("@VariantCreate");
   }

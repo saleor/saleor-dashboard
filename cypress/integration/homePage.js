@@ -48,12 +48,12 @@ describe("Homepage analytics", () => {
       )
       .then(resp => {
         customerId = resp.body.data.customerCreate.user.id;
-        shippingUtils.createShipping(
-          defaultChannel.id,
-          randomName,
-          addresses.plAddress,
-          shippingPrice
-        );
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
+          name: randomName,
+          address: addresses.plAddress,
+          price: shippingPrice
+        });
       })
       .then(() => {
         productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
@@ -63,16 +63,16 @@ describe("Homepage analytics", () => {
         const productType = productsUtils.getProductType();
         const attribute = productsUtils.getAttribute();
         const category = productsUtils.getCategory();
-        productsUtils.createProductInChannel(
-          randomName,
-          defaultChannel.id,
-          warehouse.id,
-          20,
-          productType.id,
-          attribute.id,
-          category.id,
-          productPrice
-        );
+        productsUtils.createProductInChannel({
+          name: randomName,
+          channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
+          quantityInWarehouse: 20,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+          price: productPrice
+        });
       });
   });
 
@@ -154,16 +154,16 @@ describe("Homepage analytics", () => {
     const attribute = productsUtils.getAttribute();
     const category = productsUtils.getCategory();
 
-    productsOutOfStockUtils.createProductInChannel(
-      productOutOfStockRandomName,
-      defaultChannel.id,
-      warehouse.id,
-      0,
-      productType.id,
-      attribute.id,
-      category.id,
-      productPrice
-    );
+    productsOutOfStockUtils.createProductInChannel({
+      name: productOutOfStockRandomName,
+      channelId: defaultChannel.id,
+      warehouseId: warehouse.id,
+      quantityInWarehouse: 0,
+      productTypeId: productType.id,
+      attributeId: attribute.id,
+      categoryId: category.id,
+      price: productPrice
+    });
 
     cy.get("@productsOutOfStock").then(productsOutOfStockBefore => {
       const allProductsOutOfStock = productsOutOfStockBefore + 1;
