@@ -10,19 +10,17 @@ Cypress.Commands.add("loginUser", () =>
     .click()
 );
 
-Cypress.Commands.add("loginUserViaRequest", () => {
-  cy.sendLoginRequest().then(resp => {
-    window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
-  });
-});
+// Cypress.Commands.add("loginUserViaRequest", () => {
+//   cy.sendLoginRequest().then(resp => {
+//     window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
+//   });
+// });
 
 Cypress.Commands.add("loginInShop", () => {
-  cy.sendLoginRequest("token").then(resp => {
-    window.sessionStorage.setItem("token", resp.body[0].data.tokenCreate.token);
-  });
+  cy.loginUserViaRequest("token");
 });
 
-Cypress.Commands.add("sendLoginRequest", (authorization = "auth") => {
+Cypress.Commands.add("loginUserViaRequest", (authorization = "auth") => {
   const mutation = `mutation TokenAuth{
     tokenCreate(email: "${Cypress.env("USER_NAME")}", password: "${Cypress.env(
     "USER_PASSWORD"
@@ -38,5 +36,10 @@ Cypress.Commands.add("sendLoginRequest", (authorization = "auth") => {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation, authorization);
+  return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
+    window.sessionStorage.setItem(
+      authorization,
+      resp.body.data.tokenCreate.token
+    );
+  });
 });
