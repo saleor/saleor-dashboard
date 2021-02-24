@@ -13,19 +13,37 @@ class ProductsUtils {
   attribute;
   category;
 
-  createProductInChannel(
+  createProductWithVariant(name, attributeId, productTypeId, categoryId) {
+    return this.createProduct(
+      attributeId,
+      name,
+      productTypeId,
+      categoryId
+    ).then(() => this.createVariant(this.product.id, name));
+  }
+
+  createProductInChannel({
     name,
     channelId,
-    warehouseId,
-    quantityInWarehouse,
+    warehouseId = null,
+    quantityInWarehouse = 10,
     productTypeId,
     attributeId,
     categoryId,
-    price
-  ) {
+    price = 1,
+    isPublished = true,
+    isAvailableForPurchase = true,
+    visibleInListings = true
+  }) {
     return this.createProduct(attributeId, name, productTypeId, categoryId)
       .then(() =>
-        this.productRequest.updateChannelInProduct(this.product.id, channelId)
+        this.productRequest.updateChannelInProduct({
+          productId: this.product.id,
+          channelId,
+          isPublished,
+          isAvailableForPurchase,
+          visibleInListings
+        })
       )
       .then(() => {
         this.createVariant(
@@ -92,7 +110,9 @@ class ProductsUtils {
             resp.body.data.productVariantBulkCreate.productVariants)
       );
   }
-
+  getCreatedProduct() {
+    return this.product;
+  }
   getCreatedVariants() {
     return this.variants;
   }

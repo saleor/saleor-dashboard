@@ -1,4 +1,7 @@
+import Utils from "./utils/Utils";
+
 class Product {
+  utils = new Utils();
   getFirstProducts(first, search) {
     const filter = search
       ? `, filter:{
@@ -17,44 +20,50 @@ class Product {
                 }
               }
             }
-          }
-        `;
+          `;
     return cy
       .sendRequestWithQuery(query)
       .then(resp => resp.body.data.products.edges);
   }
 
-  updateChannelInProduct(productId, channelId) {
+  updateChannelInProduct({
+    productId,
+    channelId,
+    isPublished = true,
+    isAvailableForPurchase = true,
+    visibleInListings = true
+  }) {
     const mutation = `mutation{
-            productChannelListingUpdate(id:"${productId}",
-            input:{
-              addChannels:{
-              channelId:"${channelId}"
-              isPublished:true
-              isAvailableForPurchase:true
+              productChannelListingUpdate(id:"${productId}",
+              input:{
+                addChannels:{
+                channelId:"${channelId}"
+                isPublished:${isPublished}
+                isAvailableForPurchase:${isAvailableForPurchase}
+                visibleInListings:${visibleInListings}
+                }
+              }){
+                product{
+                  id
+                  name
+                }
               }
-            }){
-              product{
-                id
-                name
-              }
-            }
-          }`;
-    return cy.sendRequestWithQuery(mutation);
+            }`;
+    cy.sendRequestWithQuery(mutation);
   }
 
   updateChannelPriceInVariant(variantId, channelId) {
     const mutation = `mutation{
-      productVariantChannelListingUpdate(id: "${variantId}", input:{
-        channelId: "${channelId}"
-        price: 10
-        costPrice: 10
-      }){
-        productChannelListingErrors{
-          message
-        }
-      }
-    }`;
+  productVariantChannelListingUpdate(id: "${variantId}", input: {
+    channelId: "${channelId}"
+          price: 10
+          costPrice: 10
+  }){
+    productChannelListingErrors{
+      message
+    }
+  }
+} `;
     return cy.sendRequestWithQuery(mutation);
   }
   createProduct(attributeId, name, productType, category) {
@@ -88,20 +97,30 @@ class Product {
     price = 1,
     costPrice = 1
   ) {
+    const channelListings = this.utils.getValueWithDefault(
+      channelId,
+      `channelListings:{
+      channelId:"${channelId}"
+      price:"${price}"
+      costPrice:"${costPrice}"
+    }`
+    );
+
+    const stocks = this.utils.getValueWithDefault(
+      warehouseId,
+      `stocks:{
+      warehouse:"${warehouseId}"
+      quantity:${quantity}
+    }`
+    );
+
     const mutation = `mutation{
-        productVariantBulkCreate(product:"${productId}", variants:{
-          attributes:[]
-          sku:"${sku}"
-          channelListings:{
-            channelId:"${channelId}"
-            price:"${price}"
-            costPrice:"${costPrice}"
-          }
-          stocks:{
-            warehouse:"${warehouseId}"
-            quantity:${quantity}
-          }
-        }){
+        productVariantBulkCreate(product: "${productId}", variants: {
+          attributes: []
+          sku: "${sku}"
+          ${channelListings}
+          ${stocks}
+        }) {
           productVariants{
             id
             name
@@ -117,33 +136,33 @@ class Product {
 
   createTypeProduct(name, attributeId, slug = name) {
     const mutation = `mutation{
-      productTypeCreate(input:{
-        name:"${name}"
+  productTypeCreate(input: {
+    name: "${name}"
         slug: "${slug}"
-        isShippingRequired:true
-        productAttributes:"${attributeId}"
-      }){
-        productErrors{
-          field
-          message
-        }
-        productType{
-          id
-        }
-      }
-    }`;
+        isShippingRequired: true
+        productAttributes: "${attributeId}"
+  }){
+    productErrors{
+      field
+      message
+    }
+    productType{
+      id
+    }
+  }
+} `;
     return cy.sendRequestWithQuery(mutation);
   }
 
   deleteProduct(productId) {
     const mutation = `mutation{
-      productDelete(id:"${productId}"){
-        productErrors{
-          field
-          message
-        }
-      }
-    }`;
+  productDelete(id: "${productId}"){
+    productErrors{
+      field
+      message
+    }
+  }
+} `;
     return cy.sendRequestWithQuery(mutation);
   }
 
