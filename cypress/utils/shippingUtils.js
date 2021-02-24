@@ -8,7 +8,7 @@ class ShippingUtils {
   shippingZone;
   warehouse;
 
-  createShipping(channelId, name, address, price) {
+  createShipping({ channelId, name, address, price = 1 }) {
     return this.createShippingZone(name, address.country)
       .then(() => this.createWarehouse(name, this.shippingZone.id, address))
       .then(() => this.createShippingRate(name, this.shippingZone.id))

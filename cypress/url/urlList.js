@@ -8,3 +8,4 @@ export const urlList = {
   warehouses: "warehouses/",
   collections: "collections/"
 };
+export const productDetailsUrl = productId => `${urlList.products}${productId}`;

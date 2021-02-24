@@ -8,17 +8,25 @@ import ChannelsUtils from "../utils/channelsUtils";
 import CollectionsUtils from "../utils/collectionsUtils";
 import ProductsUtils from "../utils/productsUtils";
 import ShippingUtils from "../utils/shippingUtils";
+import StoreFrontCollectionUtils from "../utils/storeFront/collectionsUtils";
+import StoreFrontProductUtils from "../utils/storeFront/storeFrontProductUtils";
 
 describe("Collections", () => {
   const productRequest = new Product();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
+  const storeFrontProductUtils = new StoreFrontProductUtils();
   const collectionsUtils = new CollectionsUtils();
+  const storeFrontCollectionUtils = new StoreFrontCollectionUtils();
   const shippingUtils = new ShippingUtils();
   const collectionsSteps = new CollectionsSteps();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
+
+  let attribute;
+  let productType;
+  let category;
 
   let defaultChannel;
 
@@ -35,19 +43,16 @@ describe("Collections", () => {
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
       .then(() => {
-        const attribute = productsUtils.getAttribute();
-        const productType = productsUtils.getProductType();
-        const category = productsUtils.getCategory();
-        productsUtils.createProductInChannel(
+        attribute = productsUtils.getAttribute();
+        productType = productsUtils.getProductType();
+        category = productsUtils.getCategory();
+        productsUtils.createProductInChannel({
           name,
-          defaultChannel.id,
-          null,
-          null,
-          productType.id,
-          attribute.id,
-          category.id,
-          1
-        );
+          channelId: defaultChannel.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id
+        });
       });
   });
 
@@ -63,7 +68,7 @@ describe("Collections", () => {
       .createCollection(collectionName, false, defaultChannel)
       .then(collection => {
         collectionsSteps.assignProductsToCollection(name);
-        collectionsUtils.isCollectionVisible(
+        storeFrontCollectionUtils.isCollectionVisible(
           collection.id,
           defaultChannel.slug
         );
@@ -79,55 +84,71 @@ describe("Collections", () => {
       .createCollection(collectionName, true, defaultChannel)
       .then(collection => {
         collectionsSteps.assignProductsToCollection(name);
-        collectionsUtils.isCollectionVisible(
+        storeFrontCollectionUtils.isCollectionVisible(
           collection.id,
           defaultChannel.slug
         );
       })
       .then(isVisible => expect(isVisible).to.equal(true));
   });
-  xit("should not display unavailable in channel collections", () => {
-    channelsUtils.createChannel(true, name, name, "PLN").then(() => {
-      productRequest.updateChannelInProduct(
-        productsUtils.getCreatedProduct().id,
-        channelsUtils.getCreatedChannel().id
-      );
+  it("should not display unavailable in channel collections", () => {
+    const collectionName = `${startsWith}${faker.random.number()}`;
+    channelsUtils
+      .createChannel({ name: collectionName })
+      .then(() => {
+        productRequest.updateChannelInProduct(
+          productsUtils.getCreatedProduct().id,
+          channelsUtils.getCreatedChannel().id
+        );
+      })
+      .then(() => {
+        cy.visit(urlList.collections);
+        collectionsSteps.createCollection(
+          collectionName,
+          true,
+          channelsUtils.getCreatedChannel()
+        );
+      })
+      .then(collection => {
+        collectionsSteps.assignProductsToCollection(name);
+        storeFrontCollectionUtils.isCollectionVisible(
+          collection.id,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => expect(isVisible).to.equal(false));
+  });
+  it("should display products hidden in listing, only in collection", () => {
+    const randomName = `${startsWith}${faker.random.number()}`;
+    const hiddenProductUtils = new ProductsUtils();
+    hiddenProductUtils.createProductInChannel({
+      name: randomName,
+      channelId: defaultChannel.id,
+      productTypeId: productType.id,
+      attributeId: attribute.id,
+      categoryId: category.id,
+      visibleInListings: false
     });
     cy.visit(urlList.collections);
     collectionsSteps
-      .createCollection(collectionName, true, channelsUtils.getCreatedChannel())
+      .createCollection(randomName, true, defaultChannel)
       .then(collection => {
-        collectionsSteps.assignProductsToCollection(name);
-        collectionsUtils.isCollectionVisible(
+        collectionsSteps.assignProductsToCollection(randomName);
+        storeFrontCollectionUtils.isProductInCollectionVisible(
           collection.id,
-          defaultChannel.slug
-        );
-      })
-      .then(isVisible => expect(isVisible).to.equal(true));
-  });
-  xit("should display products hidden in listing, only in collection", () => {
-    productsUtils.createProductInChannel(
-      name,
-      defaultChannel.id,
-      null,
-      null,
-      productsUtils.getProductType().id,
-      productsUtils.getAttribute().id,
-      productsUtils.getCategory().id,
-      1
-    );
-    collectionsSteps
-      .createCollection(collectionName, true, defaultChannel)
-      .then(collection => {
-        collectionsSteps.assignProductsToCollection(name);
-        collectionsUtils.isProductInCollectionVisible(
-          collection.id,
-          defaultChannel.slug
+          defaultChannel.slug,
+          hiddenProductUtils.getCreatedProduct().id
         );
       })
       .then(isVisible => {
         expect(isVisible).to.equal(true);
-        // productsUtils.searchForProduct
+        storeFrontProductUtils.isProductVisibleInSearchResult(
+          hiddenProductUtils.getCreatedProduct().name,
+          defaultChannel.slug
+        );
+      })
+      .then(isVisible => {
+        expect(isVisible).to.equal(false);
       });
   });
 });

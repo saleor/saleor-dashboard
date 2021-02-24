@@ -1,20 +1,20 @@
 class Attribute {
   createAttribute(name) {
     const mutation = `mutation{
-            attributeCreate(input:{
-              name:"${name}"
-              valueRequired:false
-              type:PRODUCT_TYPE
-            }){
-              attribute{
-                id
+              attributeCreate(input:{
+                name:"${name}"
+                valueRequired:false
+                type:PRODUCT_TYPE
+              }){
+                attribute{
+                  id
+                }
+                attributeErrors{
+                  field
+                  message
+                }
               }
-              attributeErrors{
-                field
-                message
-              }
-            }
-          }`;
+            }`;
     return cy.sendRequestWithQuery(mutation);
   }
 
