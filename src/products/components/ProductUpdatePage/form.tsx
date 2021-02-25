@@ -220,7 +220,7 @@ function useProductUpdateForm(
     triggerChange();
   };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    form.toggleValue,
+    event => form.toggleValue(event, triggerChange),
     opts.setSelectedCollections,
     opts.selectedCollections,
     opts.collections
