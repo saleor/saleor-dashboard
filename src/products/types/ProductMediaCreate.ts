@@ -261,7 +261,7 @@ export interface ProductMediaCreate_productMediaCreate_product {
   privateMetadata: (ProductMediaCreate_productMediaCreate_product_privateMetadata | null)[];
   name: string;
   slug: string;
-  description: any;
+  description: any | null;
   seoTitle: string | null;
   seoDescription: string | null;
   rating: number | null;

@@ -5432,9 +5432,6 @@
     "context": "dialog header",
     "string": "Delete Product Variants"
   },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_194038240": {
-    "string": "Incorrect media URL or unsupported media provider"
-  },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
@@ -6650,6 +6647,9 @@
   },
   "src_dot_utils_dot_errors_dot_unknownError": {
     "string": "Unknown error"
+  },
+  "src_dot_utils_dot_errors_dot_unsupportedMediaProvider": {
+    "string": "Unsupported media provider or incorrect URL"
   },
   "src_dot_utils_dot_errors_dot_urlNotSet": {
     "context": "error message",
