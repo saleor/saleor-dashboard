@@ -5,7 +5,10 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageTranslationFragment } from "@saleor/fragments/types/PageTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  PageTranslationInputFieldName,
+  TranslationsEntitiesPageProps
+} from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -16,13 +19,6 @@ export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
 }
-
-export const fieldNames = {
-  content: "content",
-  seoDescription: "seoDescription",
-  seoTitle: "seoTitle",
-  title: "title"
-};
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   activeField,
@@ -72,7 +68,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             displayName: intl.formatMessage({
               defaultMessage: "Page Title"
             }),
-            name: fieldNames.title,
+            name: PageTranslationInputFieldName.title,
             translation: data?.translation?.title || null,
             type: "short" as "short",
             value: data?.page?.title
@@ -82,7 +78,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               defaultMessage: "Content",
               description: "page content"
             }),
-            name: fieldNames.content,
+            name: PageTranslationInputFieldName.content,
             translation: data?.translation?.content || null,
             type: "rich" as "rich",
             value: data?.page?.content
@@ -106,7 +102,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             displayName: intl.formatMessage({
               defaultMessage: "Search Engine Title"
             }),
-            name: fieldNames.seoTitle,
+            name: PageTranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
             value: data?.page?.seoTitle
@@ -115,7 +111,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             displayName: intl.formatMessage({
               defaultMessage: "Search Engine Description"
             }),
-            name: fieldNames.seoDescription,
+            name: PageTranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
             value: data?.page?.seoDescription

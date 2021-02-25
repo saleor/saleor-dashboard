@@ -23,6 +23,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -53,7 +54,7 @@ const createPageInput = (
     attributes: data.attributes,
     updatedFileAttributes
   }),
-  content: JSON.stringify(data.content),
+  content: getParsedDataForJsonStringField(data.content),
   isPublished: data.isPublished,
   publicationDate: data.publicationDate,
   seo: {

@@ -10,7 +10,7 @@ export interface CollectionTranslationFragment_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
@@ -23,7 +23,7 @@ export interface CollectionTranslationFragment_translation_language {
 export interface CollectionTranslationFragment_translation {
   __typename: "CollectionTranslation";
   id: string;
-  description: any;
+  description: any | null;
   language: CollectionTranslationFragment_translation_language;
   name: string;
   seoDescription: string | null;

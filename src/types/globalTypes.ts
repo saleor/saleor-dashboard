@@ -757,6 +757,11 @@ export enum PluginSortField {
   NAME = "NAME",
 }
 
+export enum PostalCodeRuleInclusionTypeEnum {
+  EXCLUDE = "EXCLUDE",
+  INCLUDE = "INCLUDE",
+}
+
 export enum ProductAttributeType {
   PRODUCT = "PRODUCT",
   VARIANT = "VARIANT",
@@ -975,6 +980,7 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -1724,6 +1730,11 @@ export interface ShippingMethodChannelListingInput {
   removeChannels?: string[] | null;
 }
 
+export interface ShippingPostalCodeRulesCreateInputRange {
+  start: string;
+  end?: string | null;
+}
+
 export interface ShippingPriceExcludeProductsInput {
   products: (string | null)[];
 }
@@ -1736,15 +1747,9 @@ export interface ShippingPriceInput {
   minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
-}
-
-export interface ShippingZipCodeRulesCreateInput {
-  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
-}
-
-export interface ShippingZipCodeRulesCreateInputRange {
-  start: string;
-  end?: string | null;
+  addPostalCodeRules?: ShippingPostalCodeRulesCreateInputRange[] | null;
+  deletePostalCodeRules?: string[] | null;
+  inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
 export interface ShippingZoneCreateInput {

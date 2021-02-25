@@ -1,19 +1,20 @@
-import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-
 // <reference types="cypress" />
+import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { urlList } from "../url/urlList";
+
 describe("User authorization", () => {
   beforeEach(() => {
     cy.clearSessionData();
   });
 
   it("should successfully log in an user", () => {
-    cy.visit("/");
+    cy.visit(urlList.homePage);
     cy.loginUser();
     cy.get(LOGIN_SELECTORS.welcomePage);
   });
 
   it("should fail for wrong password", () => {
-    cy.visit("/")
+    cy.visit(urlList.homePage)
       .get(LOGIN_SELECTORS.emailAddressInput)
       .type("admin@example.com")
       .get(LOGIN_SELECTORS.emailPasswordInput)
@@ -27,7 +28,7 @@ describe("User authorization", () => {
     cy.window().then(win => {
       win.sessionStorage.clear();
     });
-    cy.visit("/");
+    cy.visit(urlList.homePage);
     cy.loginUser();
     cy.get(LOGIN_SELECTORS.userMenu)
       .click()

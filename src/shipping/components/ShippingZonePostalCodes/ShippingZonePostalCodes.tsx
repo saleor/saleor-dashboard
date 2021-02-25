@@ -13,27 +13,24 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
-import { FormChange } from "@saleor/hooks/useForm";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
+import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export enum ZipCodeInclusion {
-  Include,
-  Exclude
-}
-
-export interface ShippingZoneZipCodesProps {
-  data: Record<"includeZipCodes", ZipCodeInclusion>;
+export interface ShippingZonePostalCodesProps {
   disabled: boolean;
   initialExpanded?: boolean;
-  zipCodes: ShippingMethodFragment_zipCodeRules[] | undefined;
-  onZipCodeInclusionChange: FormChange;
-  onZipCodeDelete: (id: string) => void;
-  onZipCodeRangeAdd: () => void;
+  initialInclusionType?: PostalCodeRuleInclusionTypeEnum;
+  postalCodes: ShippingMethodFragment_postalCodeRules[] | undefined;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
+  onPostalCodeDelete: (code: ShippingMethodFragment_postalCodeRules) => void;
+  onPostalCodeRangeAdd: () => void;
 }
 
 const useStyles = makeStyles(
@@ -60,22 +57,44 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "ShippingZoneZipCodes"
+    name: "ShippingZonePostalCodes"
   }
 );
 
-const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
-  data,
+const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   disabled,
-  initialExpanded,
-  zipCodes,
-  onZipCodeDelete,
-  onZipCodeInclusionChange,
-  onZipCodeRangeAdd
+  initialExpanded = true,
+  initialInclusionType = PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+  postalCodes,
+  onPostalCodeDelete,
+  onPostalCodeInclusionChange,
+  onPostalCodeRangeAdd
 }) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
+  const [inclusionType, setInclusionType] = React.useState(null);
   const intl = useIntl();
   const classes = useStyles({});
+
+  const onInclusionRadioChange = (event: React.ChangeEvent<any>) => {
+    const value = event.target.value;
+    setInclusionType(value);
+    onPostalCodeInclusionChange(value);
+  };
+
+  const getPostalCodeRangeLabel = (
+    postalCodeRange: ShippingMethodFragment_postalCodeRules
+  ) => {
+    if (!postalCodeRange?.start) {
+      return <Skeleton />;
+    }
+    if (postalCodeRange?.end) {
+      return `${postalCodeRange.start} - ${postalCodeRange.end}`;
+    }
+    return postalCodeRange.start;
+  };
+
+  const getInlcusionType = () =>
+    inclusionType === null ? initialInclusionType : inclusionType;
 
   return (
     <Card>
@@ -87,8 +106,8 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
         toolbar={
           <Button
             color="primary"
-            onClick={onZipCodeRangeAdd}
-            data-test="add-zip-code-range"
+            onClick={onPostalCodeRangeAdd}
+            data-test="add-postal-code-range"
           >
             <FormattedMessage
               defaultMessage="Add postal code range"
@@ -115,13 +134,12 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: ZipCodeInclusion.Exclude
+              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE
             },
             {
-              disabled: true,
               label: (
                 <div className={classes.option}>
-                  <Typography color="textSecondary" variant="body1">
+                  <Typography variant="body1">
                     <FormattedMessage
                       defaultMessage="Include postal codes"
                       description="action"
@@ -132,12 +150,12 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: ZipCodeInclusion.Include
+              value: PostalCodeRuleInclusionTypeEnum.INCLUDE
             }
           ]}
-          name="includeZipCodes"
-          value={data.includeZipCodes}
-          onChange={onZipCodeInclusionChange}
+          name="includePostalCodes"
+          value={getInlcusionType()}
+          onChange={onInclusionRadioChange}
         />
       </CardContent>
       <ResponsiveTable>
@@ -145,61 +163,50 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
           <col />
           <col className={classes.colAction} />
         </colgroup>
-        {zipCodes === undefined ||
-          (zipCodes.length > 0 && (
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {zipCodes === undefined ? (
-                    <Skeleton className={classes.skeleton} />
-                  ) : (
-                    <Typography variant="caption">
-                      <FormattedMessage
-                        defaultMessage="{number} postal code ranges"
-                        description="number of postal code ranges"
-                        values={{
-                          number: zipCodes.length
-                        }}
-                      />
-                    </Typography>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <IconButton onClick={() => setExpanded(!expanded)}>
-                    <ArrowDropdown
-                      className={classNames(classes.arrow, {
-                        [classes.arrowRotate]: expanded
-                      })}
-                    />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-          ))}
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              {postalCodes === undefined ? (
+                <Skeleton className={classes.skeleton} />
+              ) : (
+                <Typography variant="caption">
+                  <FormattedMessage
+                    defaultMessage="{number} postal code ranges"
+                    description="number of postal code ranges"
+                    values={{
+                      number: postalCodes.length
+                    }}
+                  />
+                </Typography>
+              )}
+            </TableCell>
+            <TableCell>
+              <IconButton onClick={() => setExpanded(!expanded)}>
+                <ArrowDropdown
+                  className={classNames(classes.arrow, {
+                    [classes.arrowRotate]: expanded
+                  })}
+                />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableHead>
         {expanded && (
           <TableBody>
             {renderCollection(
-              zipCodes,
-              zipCodeRange => (
-                <TableRow key={zipCodeRange?.id}>
+              postalCodes,
+              postalCodeRange => (
+                <TableRow key={postalCodeRange?.id}>
                   <TableCell>
-                    {zipCodeRange?.start ? (
-                      zipCodeRange?.end ? (
-                        `${zipCodeRange.start} - ${zipCodeRange.end}`
-                      ) : (
-                        zipCodeRange.start
-                      )
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {getPostalCodeRangeLabel(postalCodeRange)}
                   </TableCell>
                   <TableCell>
                     <IconButton
                       disabled={disabled}
                       color="primary"
-                      onClick={() => onZipCodeDelete(zipCodeRange.id)}
-                      data-test="delete-zip-code"
-                      data-test-id={zipCodeRange?.id}
+                      onClick={() => onPostalCodeDelete(postalCodeRange)}
+                      data-test="delete-postal-code"
+                      data-test-id={postalCodeRange?.id}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -223,8 +230,5 @@ const ShippingZoneZipCodes: React.FC<ShippingZoneZipCodesProps> = ({
   );
 };
 
-ShippingZoneZipCodes.displayName = "ShippingZoneZipCodes";
-ShippingZoneZipCodes.defaultProps = {
-  initialExpanded: true
-};
-export default ShippingZoneZipCodes;
+ShippingZonePostalCodes.displayName = "ShippingZonePostalCodes";
+export default ShippingZonePostalCodes;

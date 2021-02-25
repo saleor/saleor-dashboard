@@ -12,6 +12,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -21,19 +22,19 @@ import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import ShippingZoneZipCodes, {
-  ZipCodeInclusion
-} from "../ShippingZoneZipCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 
 export interface FormData extends MetadataFormData {
   channelListings: ChannelShippingData[];
-  includeZipCodes: ZipCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
@@ -50,6 +51,7 @@ export interface ShippingZoneRatesPageProps
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
+  havePostalCodesChanged?: boolean;
   rate: ShippingZone_shippingZone_shippingMethods;
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
@@ -57,8 +59,11 @@ export interface ShippingZoneRatesPageProps
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
-  onZipCodeAssign: () => void;
-  onZipCodeUnassign: (id: string) => void;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
+  onPostalCodeAssign: () => void;
+  onPostalCodeUnassign: (code: ShippingMethodFragment_postalCodeRules) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   onProductAssign: () => void;
@@ -73,12 +78,14 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   disabled,
   errors,
   hasChannelChanged,
+  havePostalCodesChanged,
   onBack,
   onDelete,
   onSubmit,
+  onPostalCodeInclusionChange,
   onChannelsChange,
-  onZipCodeAssign,
-  onZipCodeUnassign,
+  onPostalCodeAssign,
+  onPostalCodeUnassign,
   onProductAssign,
   onProductUnassign,
   openChannelsModal,
@@ -90,7 +97,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includeZipCodes: ZipCodeInclusion.Exclude,
     maxDays: rate?.maximumDeliveryDays?.toString() || "",
     maxValue: rate?.maximumOrderWeight?.value.toString() || "",
     metadata: rate?.metadata.map(mapMetadataItemToInput),
@@ -100,6 +106,14 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     noLimits: false,
     privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
     type: rate?.type || null
+  };
+
+  const postalCodesInclusionType = rate?.postalCodeRules[0]?.inclusionType;
+
+  const postalCodeInclusionChange = (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => {
+    onPostalCodeInclusionChange(inclusion);
   };
 
   const {
@@ -119,6 +133,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
+        const formIsUnchanged =
+          !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
         return (
           <Container>
@@ -162,13 +178,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   errors={channelErrors}
                 />
                 <CardSpacer />
-                <ShippingZoneZipCodes
-                  data={data}
+                <ShippingZonePostalCodes
                   disabled={disabled}
-                  onZipCodeDelete={onZipCodeUnassign}
-                  onZipCodeInclusionChange={() => undefined}
-                  onZipCodeRangeAdd={onZipCodeAssign}
-                  zipCodes={rate?.zipCodeRules}
+                  onPostalCodeDelete={onPostalCodeUnassign}
+                  onPostalCodeInclusionChange={postalCodeInclusionChange}
+                  onPostalCodeRangeAdd={onPostalCodeAssign}
+                  postalCodes={rate?.postalCodeRules}
+                  initialInclusionType={postalCodesInclusionType}
                 />
                 <CardSpacer />
                 <ShippingMethodProducts
@@ -196,9 +212,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={disabled || formDisabled || formIsUnchanged}
               onCancel={onBack}
               onDelete={onDelete}
               onSave={submit}
