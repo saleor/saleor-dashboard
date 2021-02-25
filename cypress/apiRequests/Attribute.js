@@ -9,6 +9,8 @@ class Attribute {
               }){
                 attribute{
                   id
+                  name
+                  values{name}
                 }
                 attributeErrors{
                   field

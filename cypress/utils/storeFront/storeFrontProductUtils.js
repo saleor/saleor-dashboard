@@ -33,7 +33,7 @@ class StoreFrontProductUtils {
   getProductVariants(productId, channelSlug) {
     return this.productDetails
       .getProductDetails(productId, channelSlug)
-      .then(resp => resp.body.data.product.variants.edges);
+      .then(resp => resp.body.data.product.variants);
   }
 }
 export default StoreFrontProductUtils;

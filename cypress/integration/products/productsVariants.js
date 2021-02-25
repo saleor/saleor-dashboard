@@ -77,7 +77,12 @@ describe("creating variants", () => {
           channelId: defaultChannel.id
         });
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createFirstVariant(name, warehouse.id, price);
+        variantsSteps.createFirstVariant({
+          sku: name,
+          warehouseId: warehouse.id,
+          price,
+          attribute: attribute.values[0].name
+        });
         storeFrontProductUtils.getProductVariants(
           createdProduct.id,
           defaultChannel.slug
@@ -87,7 +92,7 @@ describe("creating variants", () => {
       })
       .then(variants => {
         // expect(productDetailsResp.body[0].data.product.name).to.equal(name);
-        expect(variants[0].name).to.equal(name);
+        expect(variants[0].name).to.equal(attribute.values[0]);
         expect(variants[0].pricing.price.gross.amount).to.equal(price);
         // expect(
         //   productDetailsResp.body[0].data.product.variants[0].pricing.price
