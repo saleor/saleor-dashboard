@@ -92,7 +92,7 @@ describe("creating variants", () => {
       })
       .then(variants => {
         // expect(productDetailsResp.body[0].data.product.name).to.equal(name);
-        expect(variants[0].name).to.equal(attribute.values[0]);
+        expect(variants[0].name).to.equal(attribute.values[0].name);
         expect(variants[0].pricing.price.gross.amount).to.equal(price);
         // expect(
         //   productDetailsResp.body[0].data.product.variants[0].pricing.price
@@ -109,6 +109,7 @@ describe("creating variants", () => {
     productUtils
       .createProductInChannel({
         name,
+        attributeId: attribute.id,
         channelId: defaultChannel.id,
         warehouseId: warehouse.id,
         productTypeId: productType.id,
@@ -118,11 +119,12 @@ describe("creating variants", () => {
       .then(() => {
         createdProduct = productUtils.getCreatedProduct();
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createVariant(
-          secondVariantSku,
-          warehouse.name,
-          variantsPrice
-        );
+        variantsSteps.createVariant({
+          sku: secondVariantSku,
+          warehouseName: warehouse.name,
+          attributeName: attribute.values[1].name,
+          price: variantsPrice
+        });
       })
       .then(
         () =>
@@ -181,7 +183,12 @@ describe("creating variants", () => {
       })
       .then(() => {
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createFirstVariant(name, warehouse.id, variantsPrice);
+        variantsSteps.createFirstVariant(
+          name,
+          warehouse.id,
+          variantsPrice,
+          attribute.name
+        );
         // productDetails.getProductDetails(product.id, defaultChannel.slug);
         storeFrontProductUtils.getProductVariants(
           product.id,
@@ -192,10 +199,7 @@ describe("creating variants", () => {
         expect(variants[0].pricing.price.gross.amount).to.equal(variantsPrice);
       })
       .then(() => {
-        storeFrontProductUtils.getProductVariants(
-          product.id,
-          defaultChannel.slug
-        );
+        storeFrontProductUtils.getProductVariants(product.id, newChannel.slug);
         // productDetails.getProductDetails(product.id, newChannel.slug);
       })
       .then(variants => {

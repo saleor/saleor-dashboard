@@ -1,5 +1,6 @@
 export const VARIANTS_SELECTORS = {
   attributeCheckbox: "[name*='value:']",
+  valueContainer: "[class*='valueContainer']",
   nextButton: "[class*='MuiButton-containedPrimary']",
   priceInput: "[name*='channel-price']",
   costPriceInput: "[name*='channel-costPrice']",

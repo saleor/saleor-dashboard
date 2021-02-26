@@ -3,7 +3,9 @@ import { VARIANTS_SELECTORS } from "../../elements/catalog/variants-selectors";
 class VariantsSteps {
   createFirstVariant({ sku, warehouseId, price, attribute }) {
     cy.get(PRODUCTS_SELECTORS.addVariantsButton).click();
-    cy.get(`${VARIANTS_SELECTORS.attributeCheckbox}`)
+    cy.get(VARIANTS_SELECTORS.valueContainer)
+      .contains(attribute)
+      .find(VARIANTS_SELECTORS.attributeCheckbox)
       .click()
       .get(VARIANTS_SELECTORS.nextButton)
       .click();
@@ -23,13 +25,19 @@ class VariantsSteps {
     cy.get(VARIANTS_SELECTORS.nextButton).click();
     cy.wait("@ProductVariantBulkCreate");
   }
-  createVariant(sku, warehouseName, price, costPrice = price) {
+  createVariant({
+    sku,
+    warehouseName,
+    attributeName,
+    price,
+    costPrice = price
+  }) {
     cy.get(PRODUCTS_SELECTORS.addVariantsButton)
       .click()
       .get(VARIANTS_SELECTORS.attributeSelector)
       .click()
       .get(VARIANTS_SELECTORS.attributeOption)
-      .first()
+      .contains(attributeName)
       .click()
       .get(VARIANTS_SELECTORS.priceInput)
       .type(price)
