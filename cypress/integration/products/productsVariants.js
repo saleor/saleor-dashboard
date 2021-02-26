@@ -1,9 +1,7 @@
 import faker from "faker";
-import { visit } from "graphql";
 
 import Channels from "../../apiRequests/Channels";
 import Product from "../../apiRequests/Product";
-import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
 import VariantsSteps from "../../steps/products/VariantsSteps";
 import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
@@ -14,6 +12,7 @@ import StoreFrontProductUtils from "../../utils/storeFront/storeFrontProductUtil
 // <reference types="cypress" />
 describe("creating variants", () => {
   const startsWith = "Cy-";
+  const attributeValues = ["value1", "value2"];
 
   const productUtils = new ProductsUtils();
   const channelsUtils = new ChannelsUtils();
@@ -21,7 +20,6 @@ describe("creating variants", () => {
   const storeFrontProductUtils = new StoreFrontProductUtils();
   const product = new Product();
   const channels = new Channels();
-  const productDetails = new ProductDetails();
 
   const variantsSteps = new VariantsSteps();
 
@@ -52,11 +50,13 @@ describe("creating variants", () => {
       )
       .then(() => (warehouse = shippingUtils.getWarehouse()));
 
-    productUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      attribute = productUtils.getAttribute();
-      productType = productUtils.getProductType();
-      category = productUtils.getCategory();
-    });
+    productUtils
+      .createTypeAttributeAndCategoryForProduct(name, attributeValues)
+      .then(() => {
+        attribute = productUtils.getAttribute();
+        productType = productUtils.getProductType();
+        category = productUtils.getCategory();
+      });
   });
 
   beforeEach(() => {
@@ -87,22 +87,17 @@ describe("creating variants", () => {
           createdProduct.id,
           defaultChannel.slug
         );
-        // productDetails
-        //   .getProductDetails(createdProduct.id, defaultChannel.slug)
       })
       .then(variants => {
-        // expect(productDetailsResp.body[0].data.product.name).to.equal(name);
         expect(variants[0].name).to.equal(attribute.values[0].name);
         expect(variants[0].pricing.price.gross.amount).to.equal(price);
-        // expect(
-        //   productDetailsResp.body[0].data.product.variants[0].pricing.price
-        //     .gross.amount
-        // ).to.equal(price);
       });
   });
   it("should create several variants", () => {
     const name = `${startsWith}${faker.random.number()}`;
     const secondVariantSku = `${startsWith}${faker.random.number()}`;
+    const firstVariant = { price: 5, attributeValue: attributeValues[0] };
+    const secondVariant = { price: 8, attributeValue: attributeValues[1] };
     const variantsPrice = 5;
     let createdProduct;
 
@@ -114,7 +109,7 @@ describe("creating variants", () => {
         warehouseId: warehouse.id,
         productTypeId: productType.id,
         categoryId: category.id,
-        price: variantsPrice
+        price: firstVariant.price
       })
       .then(() => {
         createdProduct = productUtils.getCreatedProduct();
@@ -123,33 +118,18 @@ describe("creating variants", () => {
           sku: secondVariantSku,
           warehouseName: warehouse.name,
           attributeName: attribute.values[1].name,
-          price: variantsPrice
+          price: secondVariant.price
         });
       })
-      .then(
-        () =>
-          storeFrontProductUtils.getProductVariants(
-            createdProduct.id,
-            defaultChannel.slug
-          )
-        // productDetails.getProductDetails(createdProduct.id, defaultChannel.slug)
+      .then(() =>
+        storeFrontProductUtils.getProductVariants(
+          createdProduct.id,
+          defaultChannel.slug
+        )
       )
       .then(variants => {
         expect(variants).to.have.length(2);
-        expect(variants[0].pricing.price.gross.amount).to.equal(variantsPrice);
-        expect(variants[1].pricing.price.gross.amount).to.equal(variantsPrice);
-        // expect(productDetailsResp.body[0].data.product.name).to.equal(name);
-        // expect(productDetailsResp.body[0].data.product.variants).to.have.length(
-        //   2
-        // );
-        // expect(
-        //   productDetailsResp.body[0].data.product.variants[0].pricing.price
-        //     .gross.amount
-        // ).to.equal(variantsPrice);
-        // expect(
-        //   productDetailsResp.body[0].data.product.variants[1].pricing.price
-        //     .gross.amount
-        // ).to.equal(variantsPrice);
+        expect(variants).includes(firstVariant, secondVariant);
       });
   });
   it("should create variant for many channels", () => {
@@ -183,13 +163,12 @@ describe("creating variants", () => {
       })
       .then(() => {
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createFirstVariant(
+        variantsSteps.createFirstVariant({
           name,
-          warehouse.id,
-          variantsPrice,
-          attribute.name
-        );
-        // productDetails.getProductDetails(product.id, defaultChannel.slug);
+          warehouseId: warehouse.id,
+          price: variantsPrice,
+          attribute: attribute.values[0].name
+        });
         storeFrontProductUtils.getProductVariants(
           product.id,
           defaultChannel.slug
@@ -200,7 +179,6 @@ describe("creating variants", () => {
       })
       .then(() => {
         storeFrontProductUtils.getProductVariants(product.id, newChannel.slug);
-        // productDetails.getProductDetails(product.id, newChannel.slug);
       })
       .then(variants => {
         expect(variants[0].pricing.price.gross.amount).to.equal(variantsPrice);

@@ -1,7 +1,6 @@
-import Utils from "./utils/Utils";
+import { getValueWithDefault } from "./utils/Utils";
 
 class Product {
-  utils = new Utils();
   getFirstProducts(first, search) {
     const filter = search
       ? `, filter:{
@@ -97,7 +96,7 @@ class Product {
     price = 1,
     costPrice = 1
   ) {
-    const channelListings = this.utils.getValueWithDefault(
+    const channelListings = getValueWithDefault(
       channelId,
       `channelListings:{
       channelId:"${channelId}"
@@ -106,7 +105,7 @@ class Product {
     }`
     );
 
-    const stocks = this.utils.getValueWithDefault(
+    const stocks = getValueWithDefault(
       warehouseId,
       `stocks:{
       warehouse:"${warehouseId}"

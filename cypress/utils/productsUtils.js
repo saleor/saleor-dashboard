@@ -57,14 +57,14 @@ class ProductsUtils {
       });
   }
 
-  createTypeAttributeAndCategoryForProduct(name) {
-    return this.createAttribute(name)
+  createTypeAttributeAndCategoryForProduct(name, attributeValues) {
+    return this.createAttribute(name, attributeValues)
       .then(() => this.createTypeProduct(name, this.attribute.id))
       .then(() => this.createCategory(name));
   }
-  createAttribute(name) {
+  createAttribute(name, attributeValues) {
     return this.attributeRequest
-      .createAttribute(name)
+      .createAttribute(name, attributeValues)
       .then(
         resp => (this.attribute = resp.body.data.attributeCreate.attribute)
       );

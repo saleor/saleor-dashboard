@@ -1,11 +1,12 @@
 class Attribute {
-  createAttribute(name) {
+  createAttribute(name, attributeValues = ["value"]) {
+    attributeValues = attributeValues.map(element => `{name:"${element}"}`);
     const mutation = `mutation{
               attributeCreate(input:{
                 name:"${name}"
                 valueRequired:false
                 type:PRODUCT_TYPE
-                values:[{name: "value1"}, {name: "value2"}]
+                values: [${attributeValues}]
               }){
                 attribute{
                   id
