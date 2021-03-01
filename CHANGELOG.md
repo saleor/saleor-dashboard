@@ -19,7 +19,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Drop descriptionJson and contentJson fields - #950 by @jwm0
 - Add error tracking with Sentry adapter - #956 by @jwm0
 - Add OAuth2 login with OpenID support - #963 by @orzechdev
-- Add order and order line discounts - #978 by @mmarkusik
+- Add order and order line discounts and modal - #978 by @mmarkusik
 - Fix no channels crash - #984 by @dominik-zeglen
 - Update webhooks - #982 by @piotrgrundas
 
