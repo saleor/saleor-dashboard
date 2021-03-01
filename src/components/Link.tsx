@@ -1,12 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
+import { ITheme } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
-  theme => ({
+  (theme: ITheme) => ({
     primary: {
-      color: theme.palette.primary.main
+      color: theme.palette.textHighlighted.active
     },
     root: {
       cursor: "pointer",
@@ -20,7 +21,7 @@ const useStyles = makeStyles(
     },
     disabled: {
       cursor: "default",
-      color: theme.palette.text.highlightInactive
+      color: theme.palette.textHighlighted.inactive
     }
   }),
   { name: "Link" }

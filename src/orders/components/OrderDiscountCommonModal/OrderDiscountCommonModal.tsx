@@ -22,6 +22,7 @@ import React, {
   ChangeEvent,
   MutableRefObject,
   useEffect,
+  useRef,
   useState
 } from "react";
 import { useIntl } from "react-intl";
@@ -36,6 +37,7 @@ import {
 
 const fullNumbersRegex = /^[0-9]*$/;
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
+const PERMIL = 0.01;
 
 const useStyles = makeStyles(
   theme => ({
@@ -166,6 +168,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
     initialData.calculationMode
   );
+  const previousCalculationMode = useRef(calculationMode);
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -228,6 +231,35 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     existingDiscount?.value,
     existingDiscount?.reason
   ]);
+
+  const handleValueConversion = () => {
+    if (getParsedDiscountValue() === 0) {
+      return;
+    }
+
+    const changedFromPercentageToFixed =
+      previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
+      calculationMode === DiscountValueTypeEnum.FIXED;
+
+    const recalculatedValueFromPercentageToFixed = (
+      getParsedDiscountValue() *
+      PERMIL *
+      maxPrice.amount
+    ).toFixed(2);
+
+    const recalculatedValueFromFixedToPercentage = Math.round(
+      (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount
+    ).toString();
+
+    const recalculatedValue = changedFromPercentageToFixed
+      ? recalculatedValueFromPercentageToFixed
+      : recalculatedValueFromFixedToPercentage;
+
+    handleSetError(recalculatedValue);
+    setValue(recalculatedValue);
+  };
+
+  useEffect(handleValueConversion, [calculationMode]);
 
   const dialogTitle =
     modalType === ORDER_LINE_DISCOUNT
