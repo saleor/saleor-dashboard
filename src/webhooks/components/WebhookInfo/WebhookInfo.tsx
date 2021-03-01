@@ -114,7 +114,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
             })
           }
           label={intl.formatMessage({
-            defaultMessage: "Secrect Key",
+            defaultMessage: "Secret Key",
             description: "webhook"
           })}
           fullWidth
