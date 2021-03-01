@@ -143,7 +143,6 @@
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
     "eslint-plugin-simple-import-sort": "^5.0.3",
-    "faker": "^5.3.1",
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^3.2.0",
