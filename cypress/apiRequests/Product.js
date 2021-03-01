@@ -87,7 +87,7 @@ class Product {
     return cy.sendRequestWithQuery(mutation);
   }
 
-  createVariant(
+  createVariant({
     productId,
     sku,
     warehouseId,
@@ -95,7 +95,7 @@ class Product {
     channelId,
     price = 1,
     costPrice = 1
-  ) {
+  }) {
     const channelListings = getValueWithDefault(
       channelId,
       `channelListings:{

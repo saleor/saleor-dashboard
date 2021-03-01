@@ -46,14 +46,14 @@ class ProductsUtils {
         })
       )
       .then(() => {
-        this.createVariant(
-          this.product.id,
-          name,
+        this.createVariant({
+          productId: this.product.id,
+          sku: name,
           warehouseId,
           quantityInWarehouse,
           channelId,
           price
-        );
+        });
       });
   }
 
@@ -87,23 +87,23 @@ class ProductsUtils {
       .createProduct(attributeId, name, productTypeId, categoryId)
       .then(resp => (this.product = resp.body.data.productCreate.product));
   }
-  createVariant(
+  createVariant({
     productId,
-    name,
+    sku,
     warehouseId,
     quantityInWarehouse,
     channelId,
     price
-  ) {
+  }) {
     return this.productRequest
-      .createVariant(
+      .createVariant({
         productId,
-        name,
+        sku,
         warehouseId,
-        quantityInWarehouse,
+        quantity: quantityInWarehouse,
         channelId,
         price
-      )
+      })
       .then(
         resp =>
           (this.variants =

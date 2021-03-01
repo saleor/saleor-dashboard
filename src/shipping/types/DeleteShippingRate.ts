@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingErrorCode, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { ShippingErrorCode, PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: DeleteShippingRate
@@ -32,9 +32,10 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {
   country: string;
 }
 
-export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -100,7 +101,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_zipCodeRules | null)[] | null;
+  postalCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_metadata | null)[];
   privateMetadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_privateMetadata | null)[];
   minimumOrderWeight: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_minimumOrderWeight | null;

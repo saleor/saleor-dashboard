@@ -22,7 +22,7 @@ export interface UpdateCollectionTranslations_collectionTranslate_collection_tra
 export interface UpdateCollectionTranslations_collectionTranslate_collection_translation {
   __typename: "CollectionTranslation";
   id: string;
-  description: any;
+  description: any | null;
   language: UpdateCollectionTranslations_collectionTranslate_collection_translation_language;
   name: string;
   seoDescription: string | null;
@@ -33,7 +33,7 @@ export interface UpdateCollectionTranslations_collectionTranslate_collection {
   __typename: "Collection";
   id: string;
   name: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   translation: UpdateCollectionTranslations_collectionTranslate_collection_translation | null;

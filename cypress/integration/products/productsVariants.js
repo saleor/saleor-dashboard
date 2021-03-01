@@ -7,7 +7,7 @@ import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 import ProductsUtils from "../../utils/productsUtils";
 import ShippingUtils from "../../utils/shippingUtils";
-import StoreFrontProductUtils from "../../utils/storeFront/storeFrontProductUtils";
+import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("creating variants", () => {
@@ -17,7 +17,6 @@ describe("creating variants", () => {
   const productUtils = new ProductsUtils();
   const channelsUtils = new ChannelsUtils();
   const shippingUtils = new ShippingUtils();
-  const storeFrontProductUtils = new StoreFrontProductUtils();
   const product = new Product();
   const channels = new Channels();
 
@@ -81,24 +80,22 @@ describe("creating variants", () => {
           sku: name,
           warehouseId: warehouse.id,
           price,
-          attribute: attribute.values[0].name
+          attribute: attributeValues[0]
         });
-        storeFrontProductUtils.getProductVariants(
-          createdProduct.id,
-          defaultChannel.slug
-        );
+        getProductVariants(createdProduct.id, defaultChannel.slug);
       })
       .then(variants => {
-        expect(variants[0].name).to.equal(attribute.values[0].name);
-        expect(variants[0].pricing.price.gross.amount).to.equal(price);
+        expect(variants[0]).to.have.property("name", attributeValues[0]);
+        expect(variants[0].pricing.price.gross).to.have.property(
+          "amount",
+          price
+        );
       });
   });
   it("should create several variants", () => {
     const name = `${startsWith}${faker.random.number()}`;
     const secondVariantSku = `${startsWith}${faker.random.number()}`;
-    const firstVariant = { price: 5, attributeValue: attributeValues[0] };
-    const secondVariant = { price: 8, attributeValue: attributeValues[1] };
-    const variantsPrice = 5;
+    const variants = [{ amount: 7 }, { name: attributeValues[1], amount: 16 }];
     let createdProduct;
 
     productUtils
@@ -109,7 +106,7 @@ describe("creating variants", () => {
         warehouseId: warehouse.id,
         productTypeId: productType.id,
         categoryId: category.id,
-        price: firstVariant.price
+        price: variants[0].amount
       })
       .then(() => {
         createdProduct = productUtils.getCreatedProduct();
@@ -117,19 +114,22 @@ describe("creating variants", () => {
         variantsSteps.createVariant({
           sku: secondVariantSku,
           warehouseName: warehouse.name,
-          attributeName: attribute.values[1].name,
-          price: secondVariant.price
+          attributeName: variants[1].name,
+          price: variants[1].amount
         });
       })
-      .then(() =>
-        storeFrontProductUtils.getProductVariants(
-          createdProduct.id,
-          defaultChannel.slug
-        )
-      )
-      .then(variants => {
-        expect(variants).to.have.length(2);
-        expect(variants).includes(firstVariant, secondVariant);
+      .then(() => getProductVariants(createdProduct.id, defaultChannel.slug))
+      .then(variantsResp => {
+        expect(variantsResp).to.have.length(2);
+        expect(variantsResp[0].pricing.price.gross).to.have.property(
+          "amount",
+          variants[0].amount
+        );
+        expect(variantsResp[1]).to.have.property("name", variants[1].name);
+        expect(variantsResp[1].pricing.price.gross).to.have.property(
+          "amount",
+          variants[1].amount
+        );
       });
   });
   it("should create variant for many channels", () => {
@@ -164,24 +164,27 @@ describe("creating variants", () => {
       .then(() => {
         cy.visit(`${urlList.products}${createdProduct.id}`);
         variantsSteps.createFirstVariant({
-          name,
+          sku: name,
           warehouseId: warehouse.id,
           price: variantsPrice,
-          attribute: attribute.values[0].name
+          attribute: attributeValues[0]
         });
-        storeFrontProductUtils.getProductVariants(
-          product.id,
-          defaultChannel.slug
+        getProductVariants(createdProduct.id, defaultChannel.slug);
+      })
+      .then(variants => {
+        expect(variants[0]).to.have.property("name", attributeValues[0]);
+        expect(variants[0].pricing.price.gross).to.have.property(
+          "amount",
+          variantsPrice
         );
+        getProductVariants(createdProduct.id, newChannel.slug);
       })
       .then(variants => {
-        expect(variants[0].pricing.price.gross.amount).to.equal(variantsPrice);
-      })
-      .then(() => {
-        storeFrontProductUtils.getProductVariants(product.id, newChannel.slug);
-      })
-      .then(variants => {
-        expect(variants[0].pricing.price.gross.amount).to.equal(variantsPrice);
+        expect(variants[0]).to.have.property("name", attributeValues[0]);
+        expect(variants[0].pricing.price.gross).to.have.property(
+          "amount",
+          variantsPrice
+        );
       });
   });
 });

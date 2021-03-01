@@ -7,18 +7,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
-import { LanguageCodeEnum, TranslationInput } from "../../types/globalTypes";
-import TranslationsProductsPage, {
-  fieldNames
-} from "../components/TranslationsProductsPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsProductsPage from "../components/TranslationsProductsPage";
 import { TypedUpdateProductTranslations } from "../mutations";
 import { useProductTranslationDetails } from "../queries";
+import { TranslationInputFieldName } from "../types";
 import { UpdateProductTranslations } from "../types/UpdateProductTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsProductsQueryParams {
   activeField: string;
@@ -68,21 +68,14 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   return (
     <TypedUpdateProductTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: TranslationInput = {};
-          if (field === fieldNames.description) {
-            input.description = JSON.stringify(data);
-          } else if (field === fieldNames.name) {
-            input.name = data;
-          } else if (field === fieldNames.seoDescription) {
-            input.seoDescription = data;
-          } else if (field === fieldNames.seoTitle) {
-            input.seoTitle = data;
-          }
+        const handleSubmit = (
+          fieldName: TranslationInputFieldName,
+          data: string
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({ data, fieldName }),
               language: languageCode
             }
           });

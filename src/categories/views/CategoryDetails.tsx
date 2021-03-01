@@ -13,6 +13,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapNodeToChoice } from "@saleor/utils/maps";
@@ -188,7 +189,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         id,
         input: {
           backgroundImageAlt: formData.backgroundImageAlt,
-          description: JSON.stringify(formData.description),
+          description: getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,

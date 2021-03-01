@@ -107,6 +107,7 @@ const updateCategoryTranslations = gql`
     }
   }
 `;
+
 export const TypedUpdateCategoryTranslations = TypedMutation<
   UpdateCategoryTranslations,
   UpdateCategoryTranslationsVariables
@@ -143,6 +144,7 @@ const updateCollectionTranslations = gql`
     }
   }
 `;
+
 export const TypedUpdateCollectionTranslations = TypedMutation<
   UpdateCollectionTranslations,
   UpdateCollectionTranslationsVariables

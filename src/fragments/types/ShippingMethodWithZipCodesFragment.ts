@@ -2,13 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { PostalCodeRuleInclusionTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: ShippingMethodWithZipCodesFragment
 // ====================================================
 
-export interface ShippingMethodWithZipCodesFragment_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingMethodWithZipCodesFragment_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -16,5 +19,5 @@ export interface ShippingMethodWithZipCodesFragment_zipCodeRules {
 export interface ShippingMethodWithZipCodesFragment {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingMethodWithZipCodesFragment_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingMethodWithZipCodesFragment_postalCodeRules | null)[] | null;
 }

@@ -14,7 +14,7 @@ class Search {
         }
       }`;
 
-    return cy.sendFrontShopRequestWithQuery(query);
+    return cy.sendRequestWithQuery(query, "token");
   }
 }
 export default Search;

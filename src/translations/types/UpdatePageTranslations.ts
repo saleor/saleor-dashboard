@@ -17,7 +17,7 @@ export interface UpdatePageTranslations_pageTranslate_errors {
 export interface UpdatePageTranslations_pageTranslate_page_page {
   __typename: "Page";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;
@@ -32,7 +32,7 @@ export interface UpdatePageTranslations_pageTranslate_page_translation_language 
 export interface UpdatePageTranslations_pageTranslate_page_translation {
   __typename: "PageTranslation";
   id: string;
-  content: any;
+  content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   title: string;

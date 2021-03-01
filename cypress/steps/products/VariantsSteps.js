@@ -8,13 +8,11 @@ class VariantsSteps {
       .find(VARIANTS_SELECTORS.attributeCheckbox)
       .click()
       .get(VARIANTS_SELECTORS.nextButton)
-      .click();
-    const priceInput = cy.get(VARIANTS_SELECTORS.priceInput);
-    if (Array.isArray(priceInput)) {
-      priceInput.forEach(input => input.type(price));
-    } else {
-      priceInput.type(price);
-    }
+      .click()
+      .get(VARIANTS_SELECTORS.priceInput)
+      .each($priceInput => {
+        cy.wrap($priceInput).type(price);
+      });
     cy.get(`[name*='${warehouseId}']`)
       .click()
       .get(VARIANTS_SELECTORS.nextButton)
