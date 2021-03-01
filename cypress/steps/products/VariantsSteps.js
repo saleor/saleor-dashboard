@@ -46,9 +46,9 @@ class VariantsSteps {
       .get(VARIANTS_SELECTORS.addWarehouseButton)
       .click();
     cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click();
-    cy.addAliasToGraphRequest("VariantCreate");
+    cy.addAliasToGraphRequest("ProductVariantDetails");
     cy.get(VARIANTS_SELECTORS.saveButton).click();
-    cy.wait("@VariantCreate");
+    cy.wait("@ProductVariantDetails");
   }
 }
 export default VariantsSteps;
