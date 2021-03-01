@@ -32,6 +32,7 @@ describe("creating variants", () => {
     cy.clearSessionData().loginUserViaRequest();
     shippingUtils.deleteShipping(startsWith);
     productUtils.deleteProperProducts(startsWith);
+    channelsUtils.deleteChannels(startsWith);
 
     const name = `${startsWith}${faker.random.number()}`;
     channelsUtils
