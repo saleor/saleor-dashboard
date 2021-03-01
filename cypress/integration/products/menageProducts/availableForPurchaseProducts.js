@@ -5,7 +5,7 @@ import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
 import ProductsUtils from "../../../utils/productsUtils";
 import ShippingUtils from "../../../utils/shippingUtils";
-import StoreFrontProductUtils from "../../../utils/storeFront/storeFrontProductUtils";
+import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
@@ -13,7 +13,6 @@ describe("Products available in listings", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
-  const frontShopProductUtils = new StoreFrontProductUtils();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -74,14 +73,14 @@ describe("Products available in listings", () => {
         productSteps.updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
-        frontShopProductUtils.isProductAvailableForPurchase(
+        isProductAvailableForPurchase(
           productsUtils.getCreatedProduct().id,
           defaultChannel.slug,
           productName
         );
       })
-      .then(isProductVisible => {
-        expect(isProductVisible).to.be.eq(true);
+      .then(isVisibleResp => {
+        expect(isVisibleResp).to.be.eq(true);
       });
   });
   it("should update product to not available for purchase", () => {
@@ -102,7 +101,7 @@ describe("Products available in listings", () => {
         productSteps.updateProductIsAvailableForPurchase(productUrl, false);
       })
       .then(() => {
-        frontShopProductUtils.isProductAvailableForPurchase(
+        isProductAvailableForPurchase(
           productsUtils.getCreatedProduct().id,
           defaultChannel.slug,
           productName

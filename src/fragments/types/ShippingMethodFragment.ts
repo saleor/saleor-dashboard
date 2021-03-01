@@ -2,15 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ShippingMethodFragment
 // ====================================================
 
-export interface ShippingMethodFragment_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingMethodFragment_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -76,7 +77,7 @@ export interface ShippingMethodFragment_channelListings {
 export interface ShippingMethodFragment {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingMethodFragment_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingMethodFragment_postalCodeRules | null)[] | null;
   metadata: (ShippingMethodFragment_metadata | null)[];
   privateMetadata: (ShippingMethodFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodFragment_minimumOrderWeight | null;

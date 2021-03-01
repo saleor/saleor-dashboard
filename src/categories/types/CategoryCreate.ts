@@ -39,7 +39,7 @@ export interface CategoryCreate_categoryCreate_category {
   backgroundImage: CategoryCreate_categoryCreate_category_backgroundImage | null;
   name: string;
   slug: string;
-  description: any;
+  description: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryCreate_categoryCreate_category_parent | null;

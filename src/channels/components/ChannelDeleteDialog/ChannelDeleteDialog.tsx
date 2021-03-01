@@ -13,14 +13,18 @@ import { defineMessages, useIntl } from "react-intl";
 import { useStyles } from "../styles";
 
 const messages = defineMessages({
-  needToBeMoved: {
-    defaultMessage:
-      "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:.",
-    description: "delete channel"
+  deleteChannel: {
+    defaultMessage: "Delete Channel",
+    description: "dialog header"
   },
   deletingAllProductData: {
     defaultMessage:
       "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?",
+    description: "delete channel"
+  },
+  needToBeMoved: {
+    defaultMessage:
+      "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:.",
     description: "delete channel"
   },
   noAvailableChannel: {
@@ -30,10 +34,6 @@ const messages = defineMessages({
   },
   selectChannel: {
     defaultMessage: "Select Channel",
-    description: "dialog header"
-  },
-  deleteChannel: {
-    defaultMessage: "Delete Channel",
     description: "dialog header"
   }
 });

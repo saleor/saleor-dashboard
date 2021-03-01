@@ -757,6 +757,11 @@ export enum PluginSortField {
   NAME = "NAME",
 }
 
+export enum PostalCodeRuleInclusionTypeEnum {
+  EXCLUDE = "EXCLUDE",
+  INCLUDE = "INCLUDE",
+}
+
 export enum ProductAttributeType {
   PRODUCT = "PRODUCT",
   VARIANT = "VARIANT",
@@ -1720,6 +1725,11 @@ export interface ShippingMethodChannelListingInput {
   removeChannels?: string[] | null;
 }
 
+export interface ShippingPostalCodeRulesCreateInputRange {
+  start: string;
+  end?: string | null;
+}
+
 export interface ShippingPriceExcludeProductsInput {
   products: (string | null)[];
 }
@@ -1732,15 +1742,9 @@ export interface ShippingPriceInput {
   minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
-}
-
-export interface ShippingZipCodeRulesCreateInput {
-  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
-}
-
-export interface ShippingZipCodeRulesCreateInputRange {
-  start: string;
-  end?: string | null;
+  addPostalCodeRules?: ShippingPostalCodeRulesCreateInputRange[] | null;
+  deletePostalCodeRules?: string[] | null;
+  inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
 export interface ShippingZoneCreateInput {

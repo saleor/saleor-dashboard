@@ -39,9 +39,6 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   });
 });
 
-Cypress.Commands.add("sendFrontShopRequestWithQuery", query =>
-  cy.sendRequestWithQuery(query, "token")
-);
 Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
   cy.request({
     body: {

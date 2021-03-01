@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingPriceInput, ShippingErrorCode, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { ShippingPriceInput, ShippingErrorCode, PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateShippingRate
@@ -14,9 +14,10 @@ export interface UpdateShippingRate_shippingPriceUpdate_errors {
   field: string | null;
 }
 
-export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -82,7 +83,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelLi
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_zipCodeRules | null)[] | null;
+  postalCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_postalCodeRules | null)[] | null;
   metadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_metadata | null)[];
   privateMetadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_privateMetadata | null)[];
   minimumOrderWeight: UpdateShippingRate_shippingPriceUpdate_shippingMethod_minimumOrderWeight | null;

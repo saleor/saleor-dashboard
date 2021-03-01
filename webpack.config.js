@@ -44,8 +44,8 @@ module.exports = (env, argv) => {
     throw new Error("Environment variable API_URI not set");
   }
 
+  const publicPath = process.env.STATIC_URL || "/";
   if (!devMode) {
-    const publicPath = process.env.STATIC_URL || "/";
     output = {
       chunkFilename: "[name].[chunkhash].js",
       filename: "[name].[chunkhash].js",
@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
       chunkFilename: "[name].js",
       filename: "[name].js",
       path: resolve(dashboardBuildPath),
-      publicPath: "/"
+      publicPath
     };
     fileLoaderPath = "file-loader?name=[name].[ext]";
   }
@@ -66,6 +66,7 @@ module.exports = (env, argv) => {
   // Create release if sentry config is set
   let sentryPlugin;
   if (
+    !devMode &&
     process.env.SENTRY_ORG &&
     process.env.SENTRY_PROJECT &&
     process.env.SENTRY_DSN &&
@@ -85,7 +86,7 @@ module.exports = (env, argv) => {
       hot: true,
       port: 9000
     },
-    devtool: "source-map",
+    devtool: devMode ? "cheap-module-source-map" : "source-map",
     entry: {
       dashboard: "./src/index.tsx"
     },

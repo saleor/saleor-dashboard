@@ -1,6 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -48,7 +49,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     const result = await createCategory({
       variables: {
         input: {
-          description: JSON.stringify(formData.description),
+          description: getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,

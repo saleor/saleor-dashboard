@@ -21,6 +21,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -198,7 +199,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
             backgroundImageAlt: formData.backgroundImageAlt,
-            description: JSON.stringify(formData.description),
+            description: getParsedDataForJsonStringField(formData.description),
             name: formData.name,
             seo: {
               description: formData.seoDescription,
