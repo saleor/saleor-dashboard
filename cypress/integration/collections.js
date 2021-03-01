@@ -8,16 +8,17 @@ import ChannelsUtils from "../utils/channelsUtils";
 import CollectionsUtils from "../utils/collectionsUtils";
 import ProductsUtils from "../utils/productsUtils";
 import ShippingUtils from "../utils/shippingUtils";
-import StoreFrontCollectionUtils from "../utils/storeFront/collectionsUtils";
-import StoreFrontProductUtils from "../utils/storeFront/storeFrontProductUtils";
+import {
+  isCollectionVisible,
+  isProductInCollectionVisible
+} from "../utils/storeFront/collectionsUtils";
+import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontProductUtils";
 
 describe("Collections", () => {
   const productRequest = new Product();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
-  const storeFrontProductUtils = new StoreFrontProductUtils();
   const collectionsUtils = new CollectionsUtils();
-  const storeFrontCollectionUtils = new StoreFrontCollectionUtils();
   const shippingUtils = new ShippingUtils();
   const collectionsSteps = new CollectionsSteps();
 
@@ -63,15 +64,16 @@ describe("Collections", () => {
   it("should not display hidden collections", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     cy.visit(urlList.collections);
+    let collection;
 
     collectionsSteps
       .createCollection(collectionName, false, defaultChannel)
-      .then(collection => {
+      .then(collectionResp => {
+        collection = collectionResp;
         collectionsSteps.assignProductsToCollection(name);
-        storeFrontCollectionUtils.isCollectionVisible(
-          collection.id,
-          defaultChannel.slug
-        );
+      })
+      .then(() => {
+        isCollectionVisible(collection.id, defaultChannel.slug);
       })
       .then(isVisible => expect(isVisible).to.equal(false));
   });
@@ -84,10 +86,7 @@ describe("Collections", () => {
       .createCollection(collectionName, true, defaultChannel)
       .then(collection => {
         collectionsSteps.assignProductsToCollection(name);
-        storeFrontCollectionUtils.isCollectionVisible(
-          collection.id,
-          defaultChannel.slug
-        );
+        isCollectionVisible(collection.id, defaultChannel.slug);
       })
       .then(isVisible => expect(isVisible).to.equal(true));
   });
@@ -111,16 +110,15 @@ describe("Collections", () => {
       })
       .then(collection => {
         collectionsSteps.assignProductsToCollection(name);
-        storeFrontCollectionUtils.isCollectionVisible(
-          collection.id,
-          defaultChannel.slug
-        );
+        isCollectionVisible(collection.id, defaultChannel.slug);
       })
       .then(isVisible => expect(isVisible).to.equal(false));
   });
   it("should display products hidden in listing, only in collection", () => {
     const randomName = `${startsWith}${faker.random.number()}`;
     const hiddenProductUtils = new ProductsUtils();
+    let collection;
+
     hiddenProductUtils.createProductInChannel({
       name: randomName,
       channelId: defaultChannel.id,
@@ -132,9 +130,12 @@ describe("Collections", () => {
     cy.visit(urlList.collections);
     collectionsSteps
       .createCollection(randomName, true, defaultChannel)
-      .then(collection => {
+      .then(collectionResp => {
+        collection = collectionResp;
         collectionsSteps.assignProductsToCollection(randomName);
-        storeFrontCollectionUtils.isProductInCollectionVisible(
+      })
+      .then(() => {
+        isProductInCollectionVisible(
           collection.id,
           defaultChannel.slug,
           hiddenProductUtils.getCreatedProduct().id
@@ -142,7 +143,7 @@ describe("Collections", () => {
       })
       .then(isVisible => {
         expect(isVisible).to.equal(true);
-        storeFrontProductUtils.isProductVisibleInSearchResult(
+        isProductVisibleInSearchResult(
           hiddenProductUtils.getCreatedProduct().name,
           defaultChannel.slug
         );
