@@ -1,7 +1,7 @@
 // <reference types="cypress" />
-import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
-import { urlList } from "../url/urlList";
+import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
+import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
+import { urlList } from "../../url/urlList";
 
 describe("Products", () => {
   beforeEach(() => {
