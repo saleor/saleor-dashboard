@@ -85,18 +85,15 @@ describe("creating variants", () => {
         });
         getProductVariants(createdProduct.id, defaultChannel.slug);
       })
-      .then(variants => {
-        expect(variants[0]).to.have.property("name", attributeValues[0]);
-        expect(variants[0].pricing.price.gross).to.have.property(
-          "amount",
-          price
-        );
+      .then(([variant]) => {
+        expect(variant).to.have.property("name", attributeValues[0]);
+        expect(variant).to.have.property("price", price);
       });
   });
   it("should create several variants", () => {
     const name = `${startsWith}${faker.random.number()}`;
     const secondVariantSku = `${startsWith}${faker.random.number()}`;
-    const variants = [{ amount: 7 }, { name: attributeValues[1], amount: 16 }];
+    const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
     let createdProduct;
 
     productUtils
@@ -107,7 +104,7 @@ describe("creating variants", () => {
         warehouseId: warehouse.id,
         productTypeId: productType.id,
         categoryId: category.id,
-        price: variants[0].amount
+        price: variants[0].price
       })
       .then(() => {
         createdProduct = productUtils.getCreatedProduct();
@@ -116,21 +113,14 @@ describe("creating variants", () => {
           sku: secondVariantSku,
           warehouseName: warehouse.name,
           attributeName: variants[1].name,
-          price: variants[1].amount
+          price: variants[1].price
         });
       })
       .then(() => getProductVariants(createdProduct.id, defaultChannel.slug))
-      .then(variantsResp => {
-        expect(variantsResp).to.have.length(2);
-        expect(variantsResp[0].pricing.price.gross).to.have.property(
-          "amount",
-          variants[0].amount
-        );
-        expect(variantsResp[1]).to.have.property("name", variants[1].name);
-        expect(variantsResp[1].pricing.price.gross).to.have.property(
-          "amount",
-          variants[1].amount
-        );
+      .then(([firstVariant, secondVariant]) => {
+        expect(firstVariant).to.have.property("price", variants[0].price);
+        expect(secondVariant).to.have.property("name", variants[1].name);
+        expect(secondVariant).to.have.property("price", variants[1].price);
       });
   });
   it("should create variant for many channels", () => {
@@ -172,20 +162,14 @@ describe("creating variants", () => {
         });
         getProductVariants(createdProduct.id, defaultChannel.slug);
       })
-      .then(variants => {
-        expect(variants[0]).to.have.property("name", attributeValues[0]);
-        expect(variants[0].pricing.price.gross).to.have.property(
-          "amount",
-          variantsPrice
-        );
+      .then(([variant]) => {
+        expect(variant).to.have.property("name", attributeValues[0]);
+        expect(variant).to.have.property("price", variantsPrice);
         getProductVariants(createdProduct.id, newChannel.slug);
       })
-      .then(variants => {
-        expect(variants[0]).to.have.property("name", attributeValues[0]);
-        expect(variants[0].pricing.price.gross).to.have.property(
-          "amount",
-          variantsPrice
-        );
+      .then(([variant]) => {
+        expect(variant).to.have.property("name", attributeValues[0]);
+        expect(variant).to.have.property("price", variantsPrice);
       });
   });
 });

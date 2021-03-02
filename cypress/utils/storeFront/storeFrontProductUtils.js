@@ -34,7 +34,11 @@ export const isProductVisibleInSearchResult = (productName, channelSlug) => {
 
 export const getProductVariants = (productId, channelSlug) => {
   const productDetails = new ProductDetails();
-  return productDetails
-    .getProductDetails(productId, channelSlug)
-    .then(resp => resp.body.data.product.variants);
+  return productDetails.getProductDetails(productId, channelSlug).then(resp => {
+    const variantsList = resp.body.data.product.variants;
+    return variantsList.map(element => ({
+      name: element.name,
+      price: element.pricing.price.gross.amount
+    }));
+  });
 };

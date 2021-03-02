@@ -1,5 +1,6 @@
 import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
 import { VARIANTS_SELECTORS } from "../../elements/catalog/variants-selectors";
+
 class VariantsSteps {
   createFirstVariant({ sku, warehouseId, price, attribute }) {
     cy.get(PRODUCTS_SELECTORS.addVariantsButton).click();
