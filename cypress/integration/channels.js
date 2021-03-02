@@ -111,8 +111,7 @@ describe("Channels", () => {
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
     cy.wait("@Channels");
-    cy.get(CHANNELS_SELECTORS.channelName)
-      .contains(randomChannelToDelete)
+    cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)
       .find("button")
       .click();

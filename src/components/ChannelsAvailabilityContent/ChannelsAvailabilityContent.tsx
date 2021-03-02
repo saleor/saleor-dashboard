@@ -83,7 +83,11 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
         >
           {filteredChannels?.length ? (
             filteredChannels.map(option => (
-              <div key={option.id} className={classes.option}>
+              <div
+                key={option.id}
+                className={classes.option}
+                data-test-id="channel-row"
+              >
                 <ControlledCheckbox
                   checked={isSelected(option)}
                   name={option.name}
