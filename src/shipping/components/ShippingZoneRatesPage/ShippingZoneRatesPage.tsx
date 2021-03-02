@@ -20,7 +20,10 @@ import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
+import {
+  ShippingZone_shippingZone_shippingMethods,
+  ShippingZone_shippingZone_shippingMethods_postalCodeRules
+} from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import {
   PostalCodeRuleInclusionTypeEnum,
@@ -56,6 +59,7 @@ export interface ShippingZoneRatesPageProps
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
+  postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
@@ -91,6 +95,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   openChannelsModal,
   rate,
   saveButtonBarState,
+  postalCodeRules,
   variant,
   ...listProps
 }) => {
@@ -106,14 +111,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     noLimits: false,
     privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
     type: rate?.type || null
-  };
-
-  const postalCodesInclusionType = rate?.postalCodeRules[0]?.inclusionType;
-
-  const postalCodeInclusionChange = (
-    inclusion: PostalCodeRuleInclusionTypeEnum
-  ) => {
-    onPostalCodeInclusionChange(inclusion);
   };
 
   const {
@@ -181,10 +178,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 <ShippingZonePostalCodes
                   disabled={disabled}
                   onPostalCodeDelete={onPostalCodeUnassign}
-                  onPostalCodeInclusionChange={postalCodeInclusionChange}
+                  onPostalCodeInclusionChange={onPostalCodeInclusionChange}
                   onPostalCodeRangeAdd={onPostalCodeAssign}
-                  postalCodes={rate?.postalCodeRules}
-                  initialInclusionType={postalCodesInclusionType}
+                  postalCodes={postalCodeRules}
                 />
                 <CardSpacer />
                 <ShippingMethodProducts

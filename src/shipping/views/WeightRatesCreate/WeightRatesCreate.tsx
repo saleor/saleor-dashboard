@@ -17,6 +17,7 @@ import {
   shippingWeightRatesUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
+import postalCodesReducer from "@saleor/shipping/views/reducer";
 import filterPostalCodes from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
 import {
@@ -38,11 +39,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
 }) => {
   const navigate = useNavigator();
   const intl = useIntl();
-
-  const [postalCodes, setPostalCodes] = React.useState([]);
-  const [radioInclusionType, setRadioInclusionType] = React.useState(
-    PostalCodeRuleInclusionTypeEnum.EXCLUDE
-  );
 
   const { data: channelsData, loading: channelsLoading } = useChannelsList({});
 
@@ -67,6 +63,14 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     toggleAllChannels
   } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
 
+  const [state, dispatch] = React.useReducer(postalCodesReducer, {
+    codesToDelete: [],
+    havePostalCodesChanged: false,
+    inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+    originalCodes: [],
+    postalCodeRules: []
+  });
+
   const {
     channelErrors,
     createShippingRate,
@@ -75,36 +79,56 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
   } = useShippingRateCreator(
     id,
     ShippingMethodTypeEnum.WEIGHT,
-    postalCodes,
-    radioInclusionType
+    state.postalCodeRules,
+    state.inclusionType
   );
 
   const handleBack = () => navigate(shippingZoneUrl(id));
 
-  const handlePostalCodeRangeAdd = (data: MinMax) => {
-    setPostalCodes(postalCodes => [
-      ...postalCodes,
-      {
-        __typename: "ShippingMethodPostalCodeRule",
-        end: data.max,
-        id: postalCodes.length.toString(),
-        inclusionType: postalCodes?.[0]?.inclusionType,
-        start: data.min
+  const onPostalCodeAssign = (rule: MinMax) => {
+    if (
+      state.postalCodeRules.filter(
+        item => item.start === rule.min && item.end === rule.max
+      ).length > 0
+    ) {
+      closeModal();
+      return;
+    }
+
+    const newCode = {
+      __typename: undefined,
+      end: rule.max,
+      id: undefined,
+      inclusionType: state.inclusionType,
+      start: rule.min
+    };
+    dispatch({
+      updateStateProps: {
+        havePostalCodesChanged: true,
+        postalCodeRules: [...state.postalCodeRules, newCode]
       }
-    ]);
+    });
     closeModal();
   };
 
   const onPostalCodeInclusionChange = (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
-    setRadioInclusionType(inclusion);
-    setPostalCodes([]);
+    dispatch({
+      updateStateProps: {
+        inclusionType: inclusion,
+        postalCodeRules: []
+      }
+    });
   };
 
   const onPostalCodeUnassign = code => {
-    setPostalCodes(filterPostalCodes(postalCodes, code));
-    closeModal();
+    dispatch({
+      updateStateProps: {
+        havePostalCodesChanged: true,
+        postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
+      }
+    });
   };
 
   return (
@@ -136,7 +160,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         onBack={handleBack}
         errors={errors}
         channelErrors={channelErrors}
-        postalCodes={postalCodes}
+        postalCodes={state.postalCodeRules}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onPostalCodeAssign={() => openModal("add-range")}
@@ -147,7 +171,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handlePostalCodeRangeAdd}
+        onSubmit={onPostalCodeAssign}
         open={params.action === "add-range"}
       />
     </>
