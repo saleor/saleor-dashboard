@@ -37,5 +37,13 @@ class ChannelsUtils {
       }));
     });
   }
+  createChannel({ isActive = true, name, slug = name, currencyCode = "PLN" }) {
+    return this.channels
+      .createChannel(isActive, name, slug, currencyCode)
+      .then(resp => (this.channel = resp.body.data.channelCreate.channel));
+  }
+  getCreatedChannel() {
+    return this.channel;
+  }
 }
 export default ChannelsUtils;
