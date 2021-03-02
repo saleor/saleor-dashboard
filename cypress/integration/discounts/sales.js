@@ -9,7 +9,7 @@ import ChannelsUtils from "../../utils/channelsUtils";
 import ProductsUtils from "../../utils/productsUtils";
 import SalesUtils from "../../utils/salesUtils";
 import ShippingUtils from "../../utils/shippingUtils";
-import StoreFrontProductsUtils from "../../utils/storeFront/storeFrontProductUtils";
+import { getProductPrice } from "../../utils/storeFront/storeFrontProductUtils";
 
 describe("Sales discounts", () => {
   const startsWith = "Cy-";
@@ -19,7 +19,6 @@ describe("Sales discounts", () => {
   const channelsUtils = new ChannelsUtils();
   const shippingUtils = new ShippingUtils();
   const salesUtils = new SalesUtils();
-  const storeFrontProductsUtils = new StoreFrontProductsUtils();
   const salesSteps = new SalesSteps();
 
   let productType;
@@ -91,10 +90,7 @@ describe("Sales discounts", () => {
           discountOption: salesSteps.discountOptions.PERCENTAGE
         });
         salesSteps.assignProducts(product.name);
-        storeFrontProductsUtils.getProductPrice(
-          product.id,
-          defaultChannel.slug
-        );
+        getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => {
         const expectedPrice = (productPrice * discountValue) / 100;
@@ -127,10 +123,7 @@ describe("Sales discounts", () => {
           discountOption: salesSteps.discountOptions.FIXED
         });
         salesSteps.assignProducts(product.name);
-        storeFrontProductsUtils.getProductPrice(
-          product.id,
-          defaultChannel.slug
-        );
+        getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => {
         const expectedPrice = productPrice - discountValue;
@@ -172,10 +165,7 @@ describe("Sales discounts", () => {
           discountValue
         });
         salesSteps.assignProducts(product.name);
-        storeFrontProductsUtils.getProductPrice(
-          product.id,
-          defaultChannel.slug
-        );
+        getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => expect(price).to.equal(productPrice));
   });

@@ -4,14 +4,13 @@ import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
 import ProductsUtils from "../../../utils/productsUtils";
-import StoreFrontProductUtils from "../../../utils/storeFront/storeFrontProductUtils";
+import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products displayed in listings", () => {
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
-  const frontShopProductUtils = new StoreFrontProductUtils();
 
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
@@ -53,10 +52,7 @@ describe("Products displayed in listings", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductVisibleInListings(productUrl);
-        frontShopProductUtils.isProductVisibleInSearchResult(
-          productName,
-          defaultChannel.slug
-        );
+        isProductVisibleInSearchResult(productName, defaultChannel.slug);
       })
       .then(isProductVisible => {
         expect(isProductVisible).to.be.eq(true);
@@ -82,18 +78,15 @@ describe("Products displayed in listings", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductVisibleInListings(productUrl);
-        frontShopProductUtils
-          .isProductVisibleInSearchResult(productName, defaultChannel.slug)
-          .then(isProductVisible => {
+        isProductVisibleInSearchResult(productName, defaultChannel.slug).then(
+          isProductVisible => {
             expect(isProductVisible).to.be.eq(false);
-          });
+          }
+        );
         cy.loginInShop();
       })
       .then(() => {
-        frontShopProductUtils.isProductVisibleInSearchResult(
-          productName,
-          defaultChannel.slug
-        );
+        isProductVisibleInSearchResult(productName, defaultChannel.slug);
       })
       .then(isProductVisible => {
         expect(isProductVisible).to.be.eq(true);

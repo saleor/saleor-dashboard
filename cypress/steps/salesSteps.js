@@ -50,9 +50,10 @@ class SalesSteps {
       .type(productName);
     cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, productName)
       .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
-      .click()
-      .get(ASSIGN_PRODUCTS_SELECTORS.submitButton)
       .click();
+    cy.addAliasToGraphRequest("SaleCataloguesAdd");
+    cy.get(ASSIGN_PRODUCTS_SELECTORS.submitButton).click();
+    cy.wait("@SaleCataloguesAdd");
   }
 }
 export default SalesSteps;
