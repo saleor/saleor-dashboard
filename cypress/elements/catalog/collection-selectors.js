@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 export const COLLECTION_SELECTORS = {
   createCollectionButton: "[data-test-id = 'create-collection']",
   nameInput: "[name='name']",

@@ -90,7 +90,7 @@ describe("Collections", () => {
       })
       .then(isVisible => expect(isVisible).to.equal(true));
   });
-  it("should not display unavailable in channel collections", () => {
+  it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     channelsUtils
       .createChannel({ name: collectionName })
