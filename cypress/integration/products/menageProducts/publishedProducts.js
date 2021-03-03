@@ -2,13 +2,12 @@ import faker from "faker";
 
 import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
-import ChannelsUtils from "../../../utils/channelsUtils";
+import * as channelsUtils from "../../../utils/channelsUtils";
 import ProductsUtils from "../../../utils/productsUtils";
 import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Published products", () => {
-  const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
 

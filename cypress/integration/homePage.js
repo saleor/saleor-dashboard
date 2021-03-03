@@ -4,7 +4,7 @@ import Customer from "../apiRequests/Customer";
 import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import HomePageSteps from "../steps/homePageSteps";
 import { urlList } from "../url/urlList";
-import ChannelsUtils from "../utils/channelsUtils";
+import * as channelsUtils from "../utils/channelsUtils";
 import HomePageUtils from "../utils/homePageUtils";
 import OrdersUtils from "../utils/ordersUtils";
 import ProductsUtils from "../utils/productsUtils";
@@ -18,7 +18,6 @@ describe("Homepage analytics", () => {
   const productsUtils = new ProductsUtils();
   const shippingUtils = new ShippingUtils();
   const ordersUtils = new OrdersUtils();
-  const channelsUtils = new ChannelsUtils();
   const homePageUtils = new HomePageUtils();
   const homePageSteps = new HomePageSteps();
 

@@ -14,13 +14,12 @@ import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { createChannelByView } from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
-import ChannelsUtils from "../utils/channelsUtils";
+import * as channelsUtils from "../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
   const channels = new Channels();
-  const channelsUtils = new ChannelsUtils();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();

@@ -10,13 +10,11 @@ import {
   selectChannelInPicker
 } from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
-import ChannelsUtils from "../../utils/channelsUtils";
+import * as channelsUtils from "../../utils/channelsUtils";
 
 describe("Channels in draft orders", () => {
   const startsWith = "Cy-";
   const randomName = startsWith + faker.random.number();
-
-  const channelsUtils = new ChannelsUtils();
 
   let defaultChannel;
   let otherChannel;

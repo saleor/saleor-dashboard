@@ -2,7 +2,7 @@ import faker from "faker";
 
 import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
-import ChannelsUtils from "../../../utils/channelsUtils";
+import * as channelsUtils from "../../../utils/channelsUtils";
 import ProductsUtils from "../../../utils/productsUtils";
 import ShippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
@@ -10,7 +10,6 @@ import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFr
 // <reference types="cypress" />
 describe("Products available in listings", () => {
   const shippingUtils = new ShippingUtils();
-  const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
   const startsWith = "Cy-";

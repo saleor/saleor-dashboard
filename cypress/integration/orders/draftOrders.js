@@ -1,17 +1,20 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import ChannelsUtils from "../../utils/channelsUtils";
+import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { urlList } from "../../url/urlList";
+import { getDefaultChannel } from "../../utils/channelsUtils";
 
 describe("Channels in draft orders", () => {
   const startsWith = "Cy-";
-  const channelsUtils = new ChannelsUtils();
+
+  let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    /*
-        get default channel
-        */
+    getDefaultChannel().then(channel => {
+      defaultChannel = channel;
+    });
   });
 
   beforeEach(() => {
@@ -19,6 +22,9 @@ describe("Channels in draft orders", () => {
   });
 
   it("should move draft order to orders", () => {
+    cy.visit(urlList.orders)
+      .get(ORDERS_SELECTORS.createOrder)
+      .click();
     /*
         visit orders
         create order
