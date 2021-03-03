@@ -95,6 +95,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             <div className={classes.cardContainer}>
               <HomeAnalyticsCard
                 title={"Sales"}
+                testId="sales-analytics"
                 icon={
                   <Sales
                     className={classes.icon}
@@ -113,6 +114,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
                 title={"Orders"}
+                testId="orders-analytics"
                 icon={
                   <Orders
                     className={classes.icon}
@@ -152,6 +154,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               ]}
             >
               <HomeProductListCard
+                testId="top-products"
                 onRowClick={onProductClick}
                 topProducts={topProducts}
               />
@@ -165,7 +168,10 @@ const HomePage: React.FC<HomePageProps> = props => {
               userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
             >
-              <HomeActivityCard activities={activities} />
+              <HomeActivityCard
+                activities={activities}
+                testId="activity-card"
+              />
             </RequirePermissions>
           </div>
         )}

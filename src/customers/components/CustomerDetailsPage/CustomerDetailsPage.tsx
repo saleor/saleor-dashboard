@@ -64,8 +64,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     firstName: customer?.firstName || "",
     isActive: customer?.isActive || false,
     lastName: customer?.lastName || "",
-    note: customer?.note || "",
     metadata: customer?.metadata.map(mapMetadataItemToInput),
+    note: customer?.note || "",
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput)
   };
 

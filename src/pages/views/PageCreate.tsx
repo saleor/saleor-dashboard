@@ -12,6 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -128,7 +129,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                   attributes: formData.attributes,
                   updatedFileAttributes
                 }),
-                content: JSON.stringify(formData.content),
+                content: getParsedDataForJsonStringField(formData.content),
                 isPublished: formData.isPublished,
                 pageType: formData.pageType,
                 publicationDate: formData.publicationDate,

@@ -1,18 +1,25 @@
-import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
-
 // <reference types="cypress" />
+import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
+import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
+import { urlList } from "../../url/urlList";
+
 describe("Products", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should add new visible product", () => {
-    cy.visit("/")
+  it("should navigate to channels page", () => {
+    cy.visit(urlList.homePage)
       .get(LEFT_MENU_SELECTORS.catalog)
       .click()
-      .get(PRODUCTS_SELECTORS.products)
+      .get(LEFT_MENU_SELECTORS.products)
       .click()
+      .location("pathname")
+      .should("contain", "/products");
+  });
+
+  it("should add new visible product", () => {
+    cy.visit(urlList.products)
       .get(PRODUCTS_SELECTORS.createProductBtn)
       .click()
       .get(PRODUCTS_SELECTORS.productNameInput)

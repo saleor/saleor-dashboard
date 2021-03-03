@@ -70,6 +70,7 @@ jobs:
           npm run test
 
   cypress-run:
+    if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
@@ -90,11 +91,12 @@ jobs:
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri || secrets.API_URI }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
         with:
           build: npm run build
-          start: npx http-server -a localhost -p 9000 build/dashboard
+          start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
       - uses: actions/upload-artifact@v1

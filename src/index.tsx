@@ -167,8 +167,8 @@ const Routes: React.FC = () => {
 
               dispatchAppState({
                 payload: {
-                  errorId,
-                  error: "unhandled"
+                  error: "unhandled",
+                  errorId
                 },
                 type: "displayError"
               });

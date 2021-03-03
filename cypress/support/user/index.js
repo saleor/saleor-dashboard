@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
 
 Cypress.Commands.add("loginUser", () =>
@@ -11,38 +10,30 @@ Cypress.Commands.add("loginUser", () =>
     .click()
 );
 
-Cypress.Commands.add("loginUserViaRequest", () => {
-  const logInMutationQuery = `mutation TokenAuth($email: String!, $password: String!) {
-    tokenCreate(email: $email, password: $password) {
+Cypress.Commands.add("loginInShop", () => {
+  cy.loginUserViaRequest("token");
+});
+
+Cypress.Commands.add("loginUserViaRequest", (authorization = "auth") => {
+  const mutation = `mutation TokenAuth{
+    tokenCreate(email: "${Cypress.env("USER_NAME")}", password: "${Cypress.env(
+    "USER_PASSWORD"
+  )}") {
       token
       errors: accountErrors {
         code
         field
         message
-        __typename
       }
       user {
         id
-        __typename
       }
-      __typename
     }
   }`;
-
-  return cy
-    .request({
-      method: "POST",
-      url: Cypress.env("API_URI"),
-      body: {
-        operationName: "TokenAuth",
-        variables: {
-          email: Cypress.env("USER_NAME"),
-          password: Cypress.env("USER_PASSWORD")
-        },
-        query: logInMutationQuery
-      }
-    })
-    .then(resp => {
-      window.sessionStorage.setItem("auth", resp.body.data.tokenCreate.token);
-    });
+  return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
+    window.sessionStorage.setItem(
+      authorization,
+      resp.body.data.tokenCreate.token
+    );
+  });
 });
