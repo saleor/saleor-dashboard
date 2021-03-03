@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 export const MENAGE_CHANNEL_AVAILABILITY = {
   availableManageButton:
     "[data-test-id='channels-availiability-manage-button']",
