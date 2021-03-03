@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 export const PRODUCTS_SELECTORS = {
   productsList: "[data-test-id][data-test='id']",
   products: "[data-test='submenu-item-label'][data-test-id='products']",

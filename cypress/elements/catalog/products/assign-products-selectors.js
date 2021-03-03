@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 export const ASSIGN_PRODUCTS_SELECTORS = {
   searchInput: "[name='query']",
   tableRow: "[class*='MuiTableRow']",

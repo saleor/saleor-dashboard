@@ -114,7 +114,9 @@ describe("Collections", () => {
       })
       .then(isVisible => expect(isVisible).to.equal(false));
   });
-  it("should display products hidden in listing, only in collection", () => {
+  it("should display products hidden in listing", () => {
+    // Products "hidden in listings" are not displayed in Category listings or search results,
+    // but are listed on Collections
     const randomName = `${startsWith}${faker.random.number()}`;
     const hiddenProductUtils = new ProductsUtils();
     let collection;
@@ -143,6 +145,8 @@ describe("Collections", () => {
       })
       .then(isVisible => {
         expect(isVisible).to.equal(true);
+      })
+      .then(() => {
         isProductVisibleInSearchResult(
           hiddenProductUtils.getCreatedProduct().name,
           defaultChannel.slug
