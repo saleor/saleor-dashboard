@@ -1,7 +1,9 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { selectChannelInPicker } from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 
@@ -25,9 +27,9 @@ describe("Channels in draft orders", () => {
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click();
+    selectChannelInPicker(defaultChannel.name);
+    cy.get(DRAFT_ORDER_SELECTORS.addProducts).click();
     /*
-        visit orders
-        create order
         fulfill mandatory fields
         complete order
         check orders
