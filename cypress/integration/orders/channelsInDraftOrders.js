@@ -5,6 +5,10 @@ import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-sel
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import {
+  selectChannelInHeader,
+  selectChannelInPicker
+} from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
 import ChannelsUtils from "../../utils/channelsUtils";
 
@@ -37,46 +41,59 @@ describe("Channels in draft orders", () => {
 
   it("Draft order channel should be taken from global channel picker", () => {
     let channelName;
-    cy.visit(urlList.homePage)
-      .get(HEADER_SELECTORS.channelSelect)
-      .invoke("text")
-      .then(text => {
-        channelName = text;
-        cy.visit(urlList.orders)
-          .get(ORDERS_SELECTORS.createOrder)
-          .click();
-        cy.get(CHANNEL_FORM_SELECTORS.channelSelect).invoke("text");
-      })
-      .then(selectedChannelName => {
+    cy.visit(urlList.homePage);
+    cy.getTextFromElement(HEADER_SELECTORS.channelSelect).then(
+      channelInHeader => {
+        channelName = channelInHeader;
+      }
+    );
+    cy.visit(urlList.orders)
+      .get(ORDERS_SELECTORS.createOrder)
+      .click();
+    cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
+      selectedChannelName => {
         expect(channelName).to.contains(selectedChannelName);
-        cy.get(CHANNEL_FORM_SELECTORS.confirmButton)
-          .click()
-          .get(DRAFT_ORDER_SELECTORS.salesChannel)
-          .invoke("text");
-      })
-      .then(channelNameInDraftOrder => {
+      }
+    );
+    cy.get(CHANNEL_FORM_SELECTORS.confirmButton).click();
+    cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
+      channelNameInDraftOrder => {
         expect(channelName).to.contains(channelNameInDraftOrder);
-      });
+      }
+    );
   });
   it("Draft order channel should be taken from global channel picker when changed", () => {
-    /*
-        visit home page
-        pick created channel
-        visit orders
-        expect created channel in picker
-        create order
-        expect order in created channel
-        */
+    cy.visit(urlList.homePage);
+    selectChannelInHeader(otherChannel.name);
+    cy.visit(urlList.orders);
+    cy.get(ORDERS_SELECTORS.createOrder).click();
+    cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
+      channelInSelect => {
+        expect(channelInSelect).to.be.eq(otherChannel.name);
+      }
+    );
+    cy.get(CHANNEL_FORM_SELECTORS.confirmButton).click();
+    cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
+      channelInDraftOrder => {
+        expect(channelInDraftOrder).to.be.eq(otherChannel.name);
+      }
+    );
   });
-  it("should create draft order with choosen channel", () => {
-    /*
-        visit home page
-        pick channel - default
-        visit orders
-        expect default channel in picker
-        pick created channel
-        create order
-        expect order in created channel
-        */
+  it("should create draft order with chosen channel", () => {
+    cy.visit(urlList.homePage);
+    selectChannelInHeader(defaultChannel.name);
+    cy.visit(urlList.orders);
+    cy.get(ORDERS_SELECTORS.createOrder).click();
+    cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
+      channelInSelect => {
+        expect(channelInSelect).to.be.eq(defaultChannel.name);
+      }
+    );
+    selectChannelInPicker(otherChannel.name);
+    cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
+      channelInDraftOrder => {
+        expect(channelInDraftOrder).to.be.eq(otherChannel.name);
+      }
+    );
   });
 });

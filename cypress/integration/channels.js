@@ -12,7 +12,7 @@ import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import ChannelsSteps from "../steps/channelsSteps";
+import { createChannelByView } from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
 import ChannelsUtils from "../utils/channelsUtils";
 
@@ -21,7 +21,6 @@ describe("Channels", () => {
   const currency = "PLN";
   const channels = new Channels();
   const channelsUtils = new ChannelsUtils();
-  const channelsSteps = new ChannelsSteps();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -48,7 +47,7 @@ describe("Channels", () => {
     cy.visit(urlList.channels);
     cy.wait("@Channels");
     cy.addAliasToGraphRequest("Channel");
-    channelsSteps.createChannelByView(randomChannel, currency);
+    createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
     cy.wait("@Channel")
       .get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
@@ -81,7 +80,7 @@ describe("Channels", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     channels.createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.channels);
-    channelsSteps.createChannelByView(randomChannel, currency);
+    createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
       "be.visible"
     );
@@ -90,11 +89,7 @@ describe("Channels", () => {
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels);
-    channelsSteps.createChannelByView(
-      randomChannel,
-      currency,
-      "notExistingCurrency"
-    );
+    createChannelByView(randomChannel, currency, "notExistingCurrency");
     cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
       "be.visible"
     );
