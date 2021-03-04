@@ -205,6 +205,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
+          data-test="submit"
           transitionState={confirmButtonState}
           color="primary"
           variant="contained"
