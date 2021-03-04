@@ -307,6 +307,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
               ))}
               <div className={classNames(classes.col, classes.colSku)}>
                 <TextField
+                  name="sku"
                   className={classes.input}
                   error={!!variantFormErrors.sku}
                   helperText={getBulkProductErrorMessage(

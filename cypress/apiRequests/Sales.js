@@ -1,8 +1,8 @@
-import Utils from "./utils/Utils";
+import { getValueWithDefault } from "./utils/Utils";
 
 class Sales {
   getSales(first, searchQuery) {
-    const filter = new Utils().getValueWithDefault(
+    const filter = getValueWithDefault(
       searchQuery,
       `, filter:{
         search:"${searchQuery}"

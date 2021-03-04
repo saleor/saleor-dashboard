@@ -20,6 +20,7 @@ class Warehouse {
                   }
                   warehouse{
                     id
+                    name
                   }
                 }
               }`;

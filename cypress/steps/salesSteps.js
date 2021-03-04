@@ -52,7 +52,7 @@ class SalesSteps {
       .find(BUTTON_SELECTORS.checkbox)
       .click();
     cy.addAliasToGraphRequest("SaleCataloguesAdd");
-    cy.get(BUTTON_SELECTORS.submitButton).click();
+    cy.get(BUTTON_SELECTORS.submit).click();
     cy.wait("@SaleCataloguesAdd");
   }
 }
