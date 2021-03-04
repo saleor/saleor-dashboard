@@ -7,7 +7,7 @@ import { urlList } from "../url/urlList";
 import * as channelsUtils from "../utils/channelsUtils";
 import HomePageUtils from "../utils/homePageUtils";
 import OrdersUtils from "../utils/ordersUtils";
-import ProductsUtils from "../utils/productsUtils";
+import * as productsUtils from "../utils/productsUtils";
 import ShippingUtils from "../utils/shippingUtils";
 
 // <reference types="cypress" />
@@ -15,7 +15,6 @@ describe("Homepage analytics", () => {
   const startsWith = "Cy-";
 
   const customer = new Customer();
-  const productsUtils = new ProductsUtils();
   const shippingUtils = new ShippingUtils();
   const ordersUtils = new OrdersUtils();
   const homePageUtils = new HomePageUtils();

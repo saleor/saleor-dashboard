@@ -3,14 +3,13 @@ import faker from "faker";
 import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import * as channelsUtils from "../../../utils/channelsUtils";
-import ProductsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/productsUtils";
 import ShippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
   const shippingUtils = new ShippingUtils();
-  const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;

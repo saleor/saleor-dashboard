@@ -100,11 +100,16 @@ describe("Channels in draft orders", () => {
       "draftOrderNumber"
     );
     cy.addAliasToGraphRequest("OrderDetails");
+
+    // Reload should be removed after resolving bug: SALEOR-1601
     cy.reload();
+
     cy.wait("@OrderDetails");
+    cy.addAliasToGraphRequest("OrderDraftFinalize");
     cy.get(DRAFT_ORDER_SELECTORS.finalizeButton)
       .should("be.enabled")
       .click();
+    cy.wait("@OrderDraftFinalize");
     cy.get("@draftOrderNumber").then(draftOrderNumber => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(

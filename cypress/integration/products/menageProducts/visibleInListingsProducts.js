@@ -3,12 +3,11 @@ import faker from "faker";
 import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import * as channelsUtils from "../../../utils/channelsUtils";
-import ProductsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/productsUtils";
 import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products displayed in listings", () => {
-  const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
 
   const startsWith = "Cy-";
