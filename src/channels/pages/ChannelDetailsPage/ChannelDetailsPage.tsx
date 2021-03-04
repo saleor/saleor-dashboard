@@ -1,3 +1,5 @@
+import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
+import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -75,6 +77,8 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
                     disabled={disabledStatus}
                     updateChannelStatus={updateChannelStatus}
                   />
+                  <CardSpacer />
+                  <ShippingZonesCard />
                 </div>
               )}
             </Grid>
