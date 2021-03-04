@@ -4,12 +4,11 @@ import ProductSteps from "../../../steps/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import * as channelsUtils from "../../../utils/channelsUtils";
 import * as productsUtils from "../../../utils/productsUtils";
-import ShippingUtils from "../../../utils/shippingUtils";
+import * as shippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
-  const shippingUtils = new ShippingUtils();
   const productSteps = new ProductSteps();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;

@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import Customer from "../apiRequests/Customer";
+import * as customer from "../apiRequests/Customer";
 import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import HomePageSteps from "../steps/homePageSteps";
 import { urlList } from "../url/urlList";
@@ -8,14 +8,12 @@ import * as channelsUtils from "../utils/channelsUtils";
 import HomePageUtils from "../utils/homePageUtils";
 import OrdersUtils from "../utils/ordersUtils";
 import * as productsUtils from "../utils/productsUtils";
-import ShippingUtils from "../utils/shippingUtils";
+import * as shippingUtils from "../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
   const startsWith = "Cy-";
 
-  const customer = new Customer();
-  const shippingUtils = new ShippingUtils();
   const ordersUtils = new OrdersUtils();
   const homePageUtils = new HomePageUtils();
   const homePageSteps = new HomePageSteps();
