@@ -64,7 +64,10 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
               order.availableShippingMethods.length > 0 &&
               !disabled ? (
                 <td>
-                  <Link onClick={onShippingMethodEdit}>
+                  <Link
+                    onClick={onShippingMethodEdit}
+                    data-test-id="add-shipping-carrier"
+                  >
                     <FormattedMessage
                       defaultMessage="Add shipping carrier"
                       description="button"
