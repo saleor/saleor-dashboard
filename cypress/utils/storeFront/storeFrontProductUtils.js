@@ -1,32 +1,28 @@
 import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
 import Search from "../../apiRequests/storeFront/Search";
+import { isVisible } from "./utils";
 
-export const isProductVisible = (productId, channelSlug, name) => {
-  const productDetails = new ProductDetails();
-  return productDetails
-    .getProductDetails(productId, channelSlug)
-    .then(productDetailsResp => {
-      const product = productDetailsResp.body.data.product;
-      return product !== null && product.name === name;
-    });
-};
+const productDetails = new ProductDetails();
+const search = new Search();
 
-export const isProductAvailableForPurchase = (productId, channelSlug) => {
-  const productDetails = new ProductDetails();
-  return productDetails
-    .getProductDetails(productId, channelSlug)
-    .then(
-      productDetailsResp =>
-        productDetailsResp.body.data.product.isAvailableForPurchase
-    );
-};
-export const isProductVisibleInSearchResult = (productName, channelSlug) => {
-  const search = new Search();
-  return search
-    .searchInShop(productName, channelSlug)
-    .then(
-      resp =>
-        resp.body.data.products.totalCount !== 0 &&
-        resp.body.data.products.edges[0].node.name === productName
-    );
-};
+export const isProductVisible = (productId, channelSlug, name) =>
+  isVisible({
+    request: productDetails.getProductDetails(productId, channelSlug),
+    respObjectKey: ["product"],
+    responseValueKey: ["name"],
+    value: name
+  });
+
+export const isProductAvailableForPurchase = (productId, channelSlug) =>
+  isVisible({
+    request: productDetails.getProductDetails(productId, channelSlug),
+    respObjectKey: ["product"],
+    responseValueKey: ["isAvailableForPurchase"]
+  });
+export const isProductVisibleInSearchResult = (productName, channelSlug) =>
+  isVisible({
+    request: search.searchInShop(productName, channelSlug),
+    respObjectKey: ["products"],
+    responseValueKey: ["edges", 0, "node", "name"],
+    value: productName
+  });

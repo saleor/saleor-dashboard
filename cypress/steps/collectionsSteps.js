@@ -40,9 +40,10 @@ class CollectionsSteps {
       .type(productName);
     cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, productName)
       .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
-      .click()
-      .get(ASSIGN_PRODUCTS_SELECTORS.submitButton)
       .click();
+    cy.addAliasToGraphRequest("CollectionAssignProduct");
+    cy.get(ASSIGN_PRODUCTS_SELECTORS.submitButton).click();
+    cy.wait("@CollectionAssignProduct");
   }
 }
 export default CollectionsSteps;

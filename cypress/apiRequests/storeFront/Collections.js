@@ -6,6 +6,7 @@ class Collections {
           slug
           name
           products(first:100){
+            totalCount
             edges{
               node{
                 id
