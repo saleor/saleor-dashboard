@@ -2,6 +2,8 @@
 import faker from "faker";
 
 import Product from "../apiRequests/Product";
+import Collections from "../apiRequests/storeFront/Collections";
+import Search from "../apiRequests/storeFront/Search";
 import CollectionsSteps from "../steps/collectionsSteps";
 import { urlList } from "../url/urlList";
 import ChannelsUtils from "../utils/channelsUtils";
@@ -16,6 +18,8 @@ import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontPr
 
 describe("Collections", () => {
   const productRequest = new Product();
+  const collectionsRequest = new Collections();
+  const search = new Search();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const collectionsUtils = new CollectionsUtils();
@@ -73,25 +77,34 @@ describe("Collections", () => {
         collectionsSteps.assignProductsToCollection(name);
       })
       .then(() => {
-        isCollectionVisible(collection.id, defaultChannel.slug);
+        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
       })
-      .then(isVisible => expect(isVisible).to.equal(false));
+      .then(resp => {
+        const isVisible = isCollectionVisible(resp, collection.id);
+        expect(isVisible).to.equal(false);
+      });
   });
 
   it("should display collections", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
+    let collection;
     cy.visit(urlList.collections);
-
     collectionsSteps
       .createCollection(collectionName, true, defaultChannel)
-      .then(collection => {
+      .then(collectionResp => {
+        collection = collectionResp;
         collectionsSteps.assignProductsToCollection(name);
-        isCollectionVisible(collection.id, defaultChannel.slug);
+        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
       })
-      .then(isVisible => expect(isVisible).to.equal(true));
+      .then(resp => {
+        const isVisible = isCollectionVisible(resp, collection.id);
+        expect(isVisible).to.equal(true);
+      });
   });
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
+    let collection;
+
     channelsUtils
       .createChannel({ name: collectionName })
       .then(() => {
@@ -108,11 +121,15 @@ describe("Collections", () => {
           channelsUtils.getCreatedChannel()
         );
       })
-      .then(collection => {
+      .then(collectionResp => {
+        collection = collectionResp;
         collectionsSteps.assignProductsToCollection(name);
-        isCollectionVisible(collection.id, defaultChannel.slug);
+        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
       })
-      .then(isVisible => expect(isVisible).to.equal(false));
+      .then(resp => {
+        const isVisible = isCollectionVisible(resp, collection.id);
+        expect(isVisible).to.equal(false);
+      });
   });
   it("should display products hidden in listing", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
@@ -137,22 +154,23 @@ describe("Collections", () => {
         collectionsSteps.assignProductsToCollection(randomName);
       })
       .then(() => {
-        isProductInCollectionVisible(
-          collection.id,
-          defaultChannel.slug,
+        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
+      })
+      .then(resp => {
+        const isVisible = isProductInCollectionVisible(
+          resp,
           hiddenProductUtils.getCreatedProduct().id
         );
-      })
-      .then(isVisible => {
         expect(isVisible).to.equal(true);
       })
       .then(() => {
-        isProductVisibleInSearchResult(
-          hiddenProductUtils.getCreatedProduct().name,
-          defaultChannel.slug
-        );
+        search.searchInShop(hiddenProductUtils.getCreatedProduct().name);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisibleInSearchResult(
+          resp,
+          hiddenProductUtils.getCreatedProduct().name
+        );
         expect(isVisible).to.equal(false);
       });
   });

@@ -1,23 +1,11 @@
-import Collections from "../../apiRequests/storeFront/Collections";
-import { isVisible } from "./utils";
+export const isCollectionVisible = (resp, collectionId) => {
+  const collection = resp.body.data.collection;
+  return collection !== null && collection.id === collectionId;
+};
 
-const collectionsRequest = new Collections();
-
-export const isCollectionVisible = (collectionId, channelSlug) =>
-  isVisible({
-    request: collectionsRequest.getCollection(collectionId, channelSlug),
-    respObjectKey: ["collection"],
-    responseValueKey: ["id"],
-    value: collectionId
-  });
-export const isProductInCollectionVisible = (
-  collectionId,
-  channelSlug,
-  productId
-) =>
-  isVisible({
-    request: collectionsRequest.getCollection(collectionId, channelSlug),
-    respObjectKey: ["collection", "products"],
-    responseValueKey: ["edges", 0, "node", "id"],
-    value: productId
-  });
+export const isProductInCollectionVisible = (resp, productId) => {
+  const productsList = resp.body.data.collection.products;
+  return (
+    productsList.totalCount !== 0 && productsList.edges[0].node.id === productId
+  );
+};

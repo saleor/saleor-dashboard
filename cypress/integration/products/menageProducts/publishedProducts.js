@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import ProductDetails from "../../../apiRequests/storeFront/ProductDetails";
 import ProductSteps from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
@@ -8,6 +9,7 @@ import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUti
 
 // <reference types="cypress" />
 describe("Published products", () => {
+  const productDetails = new ProductDetails();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
@@ -52,9 +54,10 @@ describe("Published products", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, true);
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(true);
       });
   });
@@ -79,16 +82,18 @@ describe("Published products", () => {
         product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, false);
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(false);
         cy.loginInShop();
       })
       .then(() => {
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(true);
       });
   });
