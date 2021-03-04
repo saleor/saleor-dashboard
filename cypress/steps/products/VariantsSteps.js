@@ -1,4 +1,4 @@
-import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
+import { PRODUCTS_SELECTORS } from "../../elements/catalog/products/product-selectors";
 import { VARIANTS_SELECTORS } from "../../elements/catalog/variants-selectors";
 
 class VariantsSteps {

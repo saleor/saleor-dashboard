@@ -55,6 +55,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           disabled={disabled}
           variant="contained"
           onClick={onAdd}
+          data-test-id="create-collection"
         >
           <FormattedMessage
             defaultMessage="Create collection"

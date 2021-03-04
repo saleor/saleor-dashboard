@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import Search from "../../../apiRequests/storeFront/Search";
 import ProductSteps from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
@@ -8,6 +9,7 @@ import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeF
 
 // <reference types="cypress" />
 describe("Products displayed in listings", () => {
+  const search = new Search();
   const channelsUtils = new ChannelsUtils();
   const productsUtils = new ProductsUtils();
   const productSteps = new ProductSteps();
@@ -52,9 +54,13 @@ describe("Products displayed in listings", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductVisibleInListings(productUrl);
-        isProductVisibleInSearchResult(productName, defaultChannel.slug);
+        search.searchInShop(productName);
       })
-      .then(isProductVisible => {
+      .then(resp => {
+        const isProductVisible = isProductVisibleInSearchResult(
+          resp,
+          productName
+        );
         expect(isProductVisible).to.be.eq(true);
       });
   });
@@ -78,17 +84,24 @@ describe("Products displayed in listings", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductVisibleInListings(productUrl);
-        isProductVisibleInSearchResult(productName, defaultChannel.slug).then(
-          isProductVisible => {
-            expect(isProductVisible).to.be.eq(false);
-          }
-        );
+
+        search.searchInShop(productName).then(resp => {
+          const isProductVisible = isProductVisibleInSearchResult(
+            resp,
+            productName
+          );
+          expect(isProductVisible).to.be.eq(false);
+        });
         cy.loginInShop();
       })
       .then(() => {
-        isProductVisibleInSearchResult(productName, defaultChannel.slug);
+        search.searchInShop(productName);
       })
-      .then(isProductVisible => {
+      .then(resp => {
+        const isProductVisible = isProductVisibleInSearchResult(
+          resp,
+          productName
+        );
         expect(isProductVisible).to.be.eq(true);
       });
   });

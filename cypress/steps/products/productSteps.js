@@ -1,4 +1,4 @@
-import { PRODUCTS_SELECTORS } from "../../elements/catalog/product-selectors";
+import { PRODUCTS_SELECTORS } from "../../elements/catalog/products/product-selectors";
 
 class ProductSteps {
   valueTrue = PRODUCTS_SELECTORS.radioButtonsValueTrue;
