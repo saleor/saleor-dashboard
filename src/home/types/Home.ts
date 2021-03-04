@@ -136,4 +136,6 @@ export interface Home {
 
 export interface HomeVariables {
   channel: string;
+  PERMISSION_MANAGE_PRODUCTS: boolean;
+  PERMISSION_MANAGE_ORDERS: boolean;
 }
