@@ -17,6 +17,10 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import {
+  getById,
+  getByUnmatchingId
+} from "@saleor/orders/components/OrderReturnPage/utils";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
@@ -44,7 +48,11 @@ import {
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import postalCodesReducer from "@saleor/shipping/views/reducer";
-import filterPostalCodes from "@saleor/shipping/views/utils";
+import {
+  filterPostalCodes,
+  getPostalCodeRuleByMinMax,
+  getRuleObject
+} from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
 import {
   PostalCodeRuleInclusionTypeEnum,
@@ -82,9 +90,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     variables: { id, ...paginationState }
   });
 
-  const rate = data?.shippingZone?.shippingMethods.find(
-    rate => rate.id === rateId
-  );
+  const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
 
   const {
     loadMore,
@@ -184,12 +190,13 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     postalCodeRules: rate?.postalCodeRules || []
   });
 
-  if (
+  const postalCodeRulesLoaded =
     !loading &&
     !state.postalCodeRules?.length &&
     !state.codesToDelete?.length &&
-    rate.postalCodeRules?.length
-  ) {
+    rate.postalCodeRules?.length;
+
+  if (postalCodeRulesLoaded) {
     dispatch({ updateStateProps: { postalCodeRules: rate.postalCodeRules } });
   }
 
@@ -259,21 +266,13 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     }
 
     if (
-      state.postalCodeRules.filter(
-        item => item.start === rule.min && item.end === rule.max
-      ).length > 0
+      state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0
     ) {
       closeModal();
       return;
     }
 
-    const newCode = {
-      __typename: undefined,
-      end: rule.max,
-      id: undefined,
-      inclusionType: state.inclusionType,
-      start: rule.min
-    };
+    const newCode = getRuleObject(rule, state.inclusionType);
     dispatch({
       updateStateProps: {
         havePostalCodesChanged: true,
@@ -290,7 +289,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           codesToDelete: [...state.codesToDelete, code.id],
           havePostalCodesChanged: true,
           postalCodeRules: state.postalCodeRules.filter(
-            rule => rule.id !== code.id
+            getByUnmatchingId(code.id)
           )
         }
       });
@@ -409,9 +408,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState={"default"}
         onClose={closeModal}
-        onSubmit={code => {
-          onPostalCodeAssign(code);
-        }}
+        onSubmit={code => onPostalCodeAssign(code)}
         open={params.action === "add-range"}
       />
     </>

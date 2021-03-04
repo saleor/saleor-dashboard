@@ -15,7 +15,11 @@ import {
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import postalCodesReducer from "@saleor/shipping/views/reducer";
-import filterPostalCodes from "@saleor/shipping/views/utils";
+import {
+  filterPostalCodes,
+  getPostalCodeRuleByMinMax,
+  getRuleObject
+} from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
 import {
   PostalCodeRuleInclusionTypeEnum,
@@ -83,21 +87,13 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
 
   const onPostalCodeAssign = (rule: MinMax) => {
     if (
-      state.postalCodeRules.filter(
-        item => item.start === rule.min && item.end === rule.max
-      ).length > 0
+      state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0
     ) {
       closeModal();
       return;
     }
 
-    const newCode = {
-      __typename: undefined,
-      end: rule.max,
-      id: undefined,
-      inclusionType: state.inclusionType,
-      start: rule.min
-    };
+    const newCode = getRuleObject(rule, state.inclusionType);
     dispatch({
       updateStateProps: {
         havePostalCodesChanged: true,
