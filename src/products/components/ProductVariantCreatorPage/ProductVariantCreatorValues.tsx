@@ -39,7 +39,10 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
         <React.Fragment key={attribute.id}>
           <Card>
             <CardTitle title={attribute?.name || <Skeleton />} />
-            <CardContent className={classes.valueContainer}>
+            <CardContent
+              className={classes.valueContainer}
+              data-test-id="value-container"
+            >
               {attribute.values.map(value => (
                 <Debounce
                   debounceFn={() => onValueClick(attribute.id, value.slug)}

@@ -20,6 +20,7 @@ export const isProductAvailableForPurchase = (productId, channelSlug) => {
         productDetailsResp.body.data.product.isAvailableForPurchase
     );
 };
+
 export const isProductVisibleInSearchResult = (productName, channelSlug) => {
   const search = new Search();
   return search
@@ -29,4 +30,15 @@ export const isProductVisibleInSearchResult = (productName, channelSlug) => {
         resp.body.data.products.totalCount !== 0 &&
         resp.body.data.products.edges[0].node.name === productName
     );
+};
+
+export const getProductVariants = (productId, channelSlug) => {
+  const productDetails = new ProductDetails();
+  return productDetails.getProductDetails(productId, channelSlug).then(resp => {
+    const variantsList = resp.body.data.product.variants;
+    return variantsList.map(element => ({
+      name: element.name,
+      price: element.pricing.price.gross.amount
+    }));
+  });
 };

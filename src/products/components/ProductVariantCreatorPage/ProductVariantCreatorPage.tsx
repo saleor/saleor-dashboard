@@ -200,6 +200,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
         )}
         {step !== ProductVariantCreatorStep.summary ? (
           <Button
+            data-test-id="next-step"
             className={classes.button}
             color="primary"
             disabled={!canHitNext(step, wizardData)}
