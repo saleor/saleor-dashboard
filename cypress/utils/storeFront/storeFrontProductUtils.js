@@ -26,3 +26,12 @@ export const isProductVisibleInSearchResult = (productName, channelSlug) =>
     responseValueKey: ["edges", 0, "node", "name"],
     value: productName
   });
+
+export const getProductVariants = (productId, channelSlug) =>
+  productDetails.getProductDetails(productId, channelSlug).then(resp => {
+    const variantsList = resp.body.data.product.variants;
+    return variantsList.map(element => ({
+      name: element.name,
+      price: element.pricing.price.gross.amount
+    }));
+  });

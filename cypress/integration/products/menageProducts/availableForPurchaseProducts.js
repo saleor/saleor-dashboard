@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import ProductSteps from "../../../steps/productSteps";
+import ProductSteps from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import ChannelsUtils from "../../../utils/channelsUtils";
 import ProductsUtils from "../../../utils/productsUtils";

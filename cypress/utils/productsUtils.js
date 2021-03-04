@@ -19,7 +19,7 @@ class ProductsUtils {
       name,
       productTypeId,
       categoryId
-    ).then(() => this.createVariant(this.product.id, name));
+    ).then(() => this.createVariant(this.product.id, name, attributeId));
   }
 
   createProductInChannel({
@@ -46,25 +46,25 @@ class ProductsUtils {
         })
       )
       .then(() => {
-        this.createVariant(
-          this.product.id,
-          name,
+        this.createVariant({
+          productId: this.product.id,
+          sku: name,
           warehouseId,
           quantityInWarehouse,
           channelId,
           price
-        );
+        });
       });
   }
 
-  createTypeAttributeAndCategoryForProduct(name) {
-    return this.createAttribute(name)
+  createTypeAttributeAndCategoryForProduct(name, attributeValues) {
+    return this.createAttribute(name, attributeValues)
       .then(() => this.createTypeProduct(name, this.attribute.id))
       .then(() => this.createCategory(name));
   }
-  createAttribute(name) {
+  createAttribute(name, attributeValues) {
     return this.attributeRequest
-      .createAttribute(name)
+      .createAttribute(name, attributeValues)
       .then(
         resp => (this.attribute = resp.body.data.attributeCreate.attribute)
       );
@@ -87,23 +87,23 @@ class ProductsUtils {
       .createProduct(attributeId, name, productTypeId, categoryId)
       .then(resp => (this.product = resp.body.data.productCreate.product));
   }
-  createVariant(
+  createVariant({
     productId,
-    name,
+    sku,
     warehouseId,
     quantityInWarehouse,
     channelId,
     price
-  ) {
+  }) {
     return this.productRequest
-      .createVariant(
+      .createVariant({
         productId,
-        name,
+        sku,
         warehouseId,
-        quantityInWarehouse,
+        quantity: quantityInWarehouse,
         channelId,
         price
-      )
+      })
       .then(
         resp =>
           (this.variants =
