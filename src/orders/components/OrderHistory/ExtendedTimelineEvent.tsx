@@ -224,10 +224,10 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
           />
           <table>
             <tbody>
-              {lines.map(({ orderLine, quantity }) => (
-                <tr key={orderLine.id}>
+              {lines.map(({ orderLine, quantity, itemName }, i) => (
+                <tr key={`${itemName}-${i}`}>
                   <td className={classes.linesTableCell}>
-                    {orderLine.productName}
+                    {orderLine?.productName || itemName}
                   </td>
                   <td className={classes.linesTableCell}>
                     <Label text={orderLine.variantName} />

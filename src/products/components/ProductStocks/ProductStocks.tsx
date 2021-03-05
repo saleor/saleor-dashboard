@@ -310,6 +310,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   >
                     <div ref={anchor}>
                       <IconButton
+                        data-test-id="add-warehouse"
                         color="primary"
                         onClick={() => setExpansionState(!isExpanded)}
                       >

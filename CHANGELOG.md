@@ -22,6 +22,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add order and order line discounts and modal - #978 by @mmarkusik
 - Fix no channels crash - #984 by @dominik-zeglen
 - Update webhooks - #982 by @piotrgrundas
+- Fix trigger form change when collections are being added to list of product collections - #987 by @gax97
 
 # 2.11.1
 
