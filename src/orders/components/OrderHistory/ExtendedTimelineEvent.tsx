@@ -230,7 +230,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
                     {orderLine?.productName || itemName}
                   </td>
                   <td className={classes.linesTableCell}>
-                    <Label text={orderLine.variantName} />
+                    <Label text={orderLine?.variantName} />
                   </td>
                   <td className={classes.linesTableCell}>
                     <Label text={`qty: ${quantity}`} />
