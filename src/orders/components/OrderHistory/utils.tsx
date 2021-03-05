@@ -1,4 +1,7 @@
-import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
+import {
+  OrderDetails_order_events,
+  OrderDetails_order_events_user
+} from "@saleor/orders/types/OrderDetails";
 import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { OrderEventsEnum } from "@saleor/types/globalTypes";
@@ -66,17 +69,36 @@ export const isTimelineEventOfType = (
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
   isTimelineEventOfType("discount", eventType);
 
+const selectEmployeeName = ({
+  firstName,
+  lastName,
+  email
+}: OrderDetails_order_events_user) => {
+  const hasFirstNameAndSurname = !!firstName && !!lastName;
+  const hasOnlyFirstName = !!firstName && !lastName;
+
+  if (hasFirstNameAndSurname) {
+    return `${firstName} ${lastName}`;
+  }
+
+  if (hasOnlyFirstName) {
+    return firstName;
+  }
+
+  return email;
+};
+
 export const getEmployeeNameLink = (event: OrderDetails_order_events) => {
   if (!hasEnsuredOrderEventFields(event, ["user"])) {
     return null;
   }
 
-  const { id, firstName, lastName, email } = event.user;
+  const { id } = event.user;
 
-  const employeeName =
-    firstName && lastName ? `${firstName} ${lastName}` : email;
-
-  return { link: staffMemberDetailsUrl(id), text: employeeName };
+  return {
+    link: staffMemberDetailsUrl(id),
+    text: selectEmployeeName(event.user)
+  };
 };
 
 export const hasOrderLineDiscountWithNoPreviousValue = ({
