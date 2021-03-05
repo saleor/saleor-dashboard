@@ -12,17 +12,6 @@ let productType;
 let attribute;
 let category;
 
-export function createProductWithVariant(
-  name,
-  attributeId,
-  productTypeId,
-  categoryId
-) {
-  return createProduct(attributeId, name, productTypeId, categoryId).then(() =>
-    createVariant(product.id, name)
-  );
-}
-
 export function createProductInChannel({
   name,
   channelId,
@@ -47,14 +36,14 @@ export function createProductInChannel({
       })
     )
     .then(() => {
-      createVariant(
-        product.id,
-        name,
+      createVariant({
+        productId: product.id,
+        sku: name,
         warehouseId,
         quantityInWarehouse,
         channelId,
         price
-      );
+      });
     });
 }
 
@@ -86,23 +75,23 @@ export function createProduct(attributeId, name, productTypeId, categoryId) {
     .createProduct(attributeId, name, productTypeId, categoryId)
     .then(resp => (product = resp.body.data.productCreate.product));
 }
-export function createVariant(
+export function createVariant({
   productId,
-  name,
+  sku,
   warehouseId,
   quantityInWarehouse,
   channelId,
   price
-) {
+}) {
   return productRequest
-    .createVariant(
+    .createVariant({
       productId,
-      name,
+      sku,
       warehouseId,
-      quantityInWarehouse,
+      quantity: quantityInWarehouse,
       channelId,
       price
-    )
+    })
     .then(
       resp =>
         (variants = resp.body.data.productVariantBulkCreate.productVariants)

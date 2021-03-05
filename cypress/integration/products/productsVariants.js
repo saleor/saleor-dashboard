@@ -10,7 +10,7 @@ import * as shippingUtils from "../../utils/shippingUtils";
 import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
-describe("creating variants", () => {
+describe("Creating variants", () => {
   const startsWith = "Cy-";
   const attributeValues = ["value1", "value2"];
 

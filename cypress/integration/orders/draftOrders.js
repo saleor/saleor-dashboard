@@ -13,7 +13,7 @@ import * as channelsUtils from "../../utils/channelsUtils";
 import * as productsUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 
-describe("Channels in draft orders", () => {
+describe("Draft orders", () => {
   const startsWith = "Cy-";
   const randomName = startsWith + faker.random.number();
 

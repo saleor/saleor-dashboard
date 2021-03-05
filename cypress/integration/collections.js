@@ -132,10 +132,9 @@ describe("Collections", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
     // but are listed on Collections
     const randomName = `${startsWith}${faker.random.number()}`;
-    const hiddenProductUtils = new ProductsUtils();
     let collection;
 
-    hiddenProductUtils.createProductInChannel({
+    productsUtils.createProductInChannel({
       name: randomName,
       channelId: defaultChannel.id,
       productTypeId: productType.id,
@@ -156,17 +155,17 @@ describe("Collections", () => {
       .then(resp => {
         const isVisible = isProductInCollectionVisible(
           resp,
-          hiddenProductUtils.getCreatedProduct().id
+          productsUtils.getCreatedProduct().id
         );
         expect(isVisible).to.equal(true);
       })
       .then(() => {
-        search.searchInShop(hiddenProductUtils.getCreatedProduct().name);
+        search.searchInShop(productsUtils.getCreatedProduct().name);
       })
       .then(resp => {
         const isVisible = isProductVisibleInSearchResult(
           resp,
-          hiddenProductUtils.getCreatedProduct().name
+          productsUtils.getCreatedProduct().name
         );
         expect(isVisible).to.equal(false);
       });

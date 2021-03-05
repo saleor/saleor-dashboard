@@ -20,6 +20,7 @@ describe("Homepage analytics", () => {
 
   let customerId;
   let defaultChannel;
+  let createdVariants;
   const productPrice = 22;
   const shippingPrice = 12;
   const randomName = startsWith + faker.random.number();
@@ -69,6 +70,9 @@ describe("Homepage analytics", () => {
           categoryId: category.id,
           price: productPrice
         });
+      })
+      .then(() => {
+        createdVariants = productsUtils.getCreatedVariants();
       });
   });
 
@@ -96,7 +100,7 @@ describe("Homepage analytics", () => {
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
@@ -116,12 +120,11 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
       .as("ordersReadyForCapture");
-    const variantsList = productsUtils.getCreatedVariants();
 
     ordersUtils.createWaitingForCaptureOrder(
       defaultChannel.slug,
       randomEmail,
-      variantsList,
+      createdVariants,
       shippingUtils.getShippingMethod().id
     );
 
@@ -144,13 +147,12 @@ describe("Homepage analytics", () => {
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
     const productOutOfStockRandomName = startsWith + faker.random.number();
-    const productsOutOfStockUtils = new ProductsUtils();
     const warehouse = shippingUtils.getWarehouse();
     const productType = productsUtils.getProductType();
     const attribute = productsUtils.getAttribute();
     const category = productsUtils.getCategory();
 
-    productsOutOfStockUtils.createProductInChannel({
+    productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,
       channelId: defaultChannel.id,
       warehouseId: warehouse.id,
@@ -182,7 +184,7 @@ describe("Homepage analytics", () => {
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
 
     cy.get("@salesAmount").then(salesAmount => {
@@ -214,7 +216,7 @@ describe("Homepage analytics", () => {
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
 
     cy.get("@todaysOrders").then(ordersBefore => {
