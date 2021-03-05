@@ -138,7 +138,10 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
 
   const titleElements = {
     by: { text: intl.formatMessage(messages.by) },
-    employeeName: { link: staffMemberDetailsUrl(user.id), text: employeeName },
+    employeeName: {
+      link: staffMemberDetailsUrl(user.id),
+      text: employeeName.trim() ? employeeName : user.email
+    },
     orderNumber: {
       link: orderUrl(relatedOrder?.id),
       text: `#${relatedOrder?.number}`
@@ -172,14 +175,14 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
           </Typography>
           <table>
             <tbody>
-              {lines.map(({ orderLine, quantity }) => (
-                <tr key={orderLine.id}>
+              {lines.map(({ orderLine, quantity, itemName }, i) => (
+                <tr key={`${itemName}-${i}`}>
                   <td className={classes.linesTableCell}>
-                    {orderLine.productName}
+                    {orderLine?.productName || itemName}
                   </td>
                   <td className={classes.linesTableCell}>
                     <Typography variant="caption" color="textSecondary">
-                      {orderLine.variantName}
+                      {orderLine?.variantName}
                     </Typography>
                   </td>
                   <td className={classes.linesTableCell}>

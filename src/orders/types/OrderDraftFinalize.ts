@@ -72,6 +72,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_events_lines_orderL
 export interface OrderDraftFinalize_draftOrderComplete_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderDraftFinalize_draftOrderComplete_order_events_lines_orderLine | null;
 }
 

@@ -72,6 +72,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines_orderLine | null;
 }
 

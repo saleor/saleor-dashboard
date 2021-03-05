@@ -72,6 +72,7 @@ export interface OrderCapture_orderCapture_order_events_lines_orderLine {
 export interface OrderCapture_orderCapture_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderCapture_orderCapture_order_events_lines_orderLine | null;
 }
 
