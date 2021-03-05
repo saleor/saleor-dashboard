@@ -245,7 +245,7 @@ export function only<T>(obj: T, key: keyof T): boolean {
   );
 }
 
-export function empty(obj: object): boolean {
+export function empty(obj: {}): boolean {
   return Object.keys(obj).every(key => obj[key] === undefined);
 }
 
@@ -376,10 +376,7 @@ export function generateCode(charNum: number) {
   return result;
 }
 
-export function findInEnum<TEnum extends object>(
-  needle: string,
-  haystack: TEnum
-) {
+export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
   if (!!match) {
     return haystack[needle as keyof TEnum];
@@ -388,7 +385,7 @@ export function findInEnum<TEnum extends object>(
   throw new Error(`Key ${needle} not found in enum`);
 }
 
-export function findValueInEnum<TEnum extends object>(
+export function findValueInEnum<TEnum extends {}>(
   needle: string,
   haystack: TEnum
 ): TEnum[keyof TEnum] {

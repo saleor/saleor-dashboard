@@ -13,7 +13,7 @@ declare module "react-intl" {
     MessageDescriptor
   >;
   type PrimitiveType = string | number | boolean | null | undefined | Date;
-  type FormatXMLElementFn = (...args: any[]) => string | object;
+  type FormatXMLElementFn = (...args: any[]) => string | {};
   export interface IntlFormatters
     extends Omit<ReactIntl.IntlFormatters, "formatMessage"> {
     formatMessage(

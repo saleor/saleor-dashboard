@@ -96,7 +96,7 @@ export interface SearchProps {
 export interface SearchPageProps extends SearchProps {
   initialSearch: string;
 }
-export interface FilterPageProps<TKeys extends string, TOpts extends object>
+export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   extends FilterProps<TKeys>,
     SearchPageProps,
     TabPageProps {
