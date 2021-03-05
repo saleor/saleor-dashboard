@@ -1,23 +1,23 @@
 class Channels {
   createChannel(isActive, name, slug, currencyCode) {
     const createChannelMutation = `mutation{
-                channelCreate(input: {
-                  isActive: ${isActive}
-                  name: "${name}"
-                  slug: "${slug}"
-                  currencyCode: "${currencyCode}"
-                }){
-                  channel{
-                    id
-                    name
-                    slug
-                  }
-                  channelErrors{
-                    code
-                    message
-                  }
-                }
-              }`;
+      channelCreate(input: {
+        isActive: ${isActive}
+        name: "${name}"
+        slug: "${slug}"
+        currencyCode: "${currencyCode}"
+      }){
+        channel{
+          id
+          name
+          slug
+        }
+        channelErrors{
+          code
+          message
+        }
+      }
+    }`;
     return cy.sendRequestWithQuery(createChannelMutation);
   }
   getChannels() {
@@ -36,17 +36,17 @@ class Channels {
 
   deleteChannel(channelId, targetChannelId) {
     const deleteChannelMutation = `mutation{
-            channelDelete(id: "${channelId}", input:{
-              targetChannel: "${targetChannelId}"
-            }){
-              channel{
-                name
-              }
-              channelErrors{
-                message
-              }
-            }
-          }`;
+      channelDelete(id: "${channelId}", input:{
+        targetChannel: "${targetChannelId}"
+      }){
+        channel{
+          name
+        }
+        channelErrors{
+          message
+        }
+      }
+    }`;
     return cy.sendRequestWithQuery(deleteChannelMutation);
   }
 }
