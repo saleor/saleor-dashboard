@@ -58,14 +58,17 @@ export function createProductInChannel({
     });
 }
 
-export function createTypeAttributeAndCategoryForProduct(name) {
-  return createAttribute(name)
+export function createTypeAttributeAndCategoryForProduct(
+  name,
+  attributeValues
+) {
+  return createAttribute(name, attributeValues)
     .then(() => createTypeProduct(name, attribute.id))
     .then(() => createCategory(name));
 }
-export function createAttribute(name) {
+export function createAttribute(name, attributeValues) {
   return attributeRequest
-    .createAttribute(name)
+    .createAttribute(name, attributeValues)
     .then(resp => (attribute = resp.body.data.attributeCreate.attribute));
 }
 export function createTypeProduct(name, attributeId) {

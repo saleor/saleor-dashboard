@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 export const PRODUCTS_SELECTORS = {
   productsList: "[data-test-id][data-test='id']",
   products: "[data-test='submenu-item-label'][data-test-id='products']",
@@ -23,6 +22,8 @@ export const PRODUCTS_SELECTORS = {
   channelAvailabilityList: "ul[role='menu']",
   goBackButton: "[data-test-id='app-header-back-button']",
   assignedChannels: "[data-test='channel-availability-item']",
+  publishedRadioButton: "[role=radiogroup]",
+  addVariantsButton: "[data-test*='button-add-variant']",
   publishedRadioButtons: "[name*='isPublished']",
   availableForPurchaseRadioButtons: "[name*='isAvailableForPurchase']",
   radioButtonsValueTrue: "[value='true']",

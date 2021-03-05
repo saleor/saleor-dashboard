@@ -1,6 +1,7 @@
 import Channels from "../apiRequests/Channels";
 
 const channels = new Channels();
+let channel;
 
 export function deleteChannels(nameStartsWith) {
   channels.getChannels().then(resp => {
@@ -29,9 +30,9 @@ export function deleteChannels(nameStartsWith) {
 export function getDefaultChannel() {
   return channels.getChannels().then(resp => {
     const channelsArray = resp.body.data.channels;
-    return (this.defaultChannel = channelsArray.find(function(channelElement) {
+    return channelsArray.find(function(channelElement) {
       return channelElement.slug === "default-channel";
-    }));
+    });
   });
 }
 export function createChannel({
@@ -41,9 +42,9 @@ export function createChannel({
   currencyCode = "PLN"
 }) {
   return channels
-    .createChannel(isActive, name, slug, currencyCode)
-    .then(resp => (this.channel = resp.body.data.channelCreate.channel));
+    .createChannel(true, name, name, currencyCode)
+    .then(resp => (channel = resp.body.data.channelCreate.channel));
 }
 export function getCreatedChannel() {
-  return this.channel;
+  return channel;
 }

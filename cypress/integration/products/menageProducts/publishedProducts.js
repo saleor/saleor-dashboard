@@ -1,6 +1,7 @@
 import faker from "faker";
 
-import ProductSteps from "../../../steps/productSteps";
+import ProductDetails from "../../../apiRequests/storeFront/ProductDetails";
+import ProductSteps from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import * as channelsUtils from "../../../utils/channelsUtils";
 import * as productsUtils from "../../../utils/productsUtils";
@@ -8,6 +9,7 @@ import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUti
 
 // <reference types="cypress" />
 describe("Published products", () => {
+  const productDetails = new ProductDetails();
   const productSteps = new ProductSteps();
 
   const startsWith = "Cy-";
@@ -50,9 +52,10 @@ describe("Published products", () => {
         const product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, true);
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(true);
       });
   });
@@ -77,16 +80,18 @@ describe("Published products", () => {
         product = productsUtils.getCreatedProduct();
         const productUrl = productDetailsUrl(product.id);
         productSteps.updateProductPublish(productUrl, false);
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(false);
         cy.loginInShop();
       })
       .then(() => {
-        isProductVisible(product.id, defaultChannel.slug, productName);
+        productDetails.getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisible => {
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
         expect(isVisible).to.be.eq(true);
       });
   });
