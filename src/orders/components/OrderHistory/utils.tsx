@@ -74,15 +74,8 @@ const selectEmployeeName = ({
   lastName,
   email
 }: OrderDetails_order_events_user) => {
-  const hasFirstNameAndSurname = !!firstName && !!lastName;
-  const hasOnlyFirstName = !!firstName && !lastName;
-
-  if (hasFirstNameAndSurname) {
-    return `${firstName} ${lastName}`;
-  }
-
-  if (hasOnlyFirstName) {
-    return firstName;
+  if (!!firstName) {
+    return `${firstName} ${lastName}`.trim();
   }
 
   return email;
