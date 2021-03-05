@@ -4,10 +4,6 @@ import Warehouse from "../apiRequests/Warehouse";
 const shippingMethodRequest = new ShippingMethod();
 const warehouseRequest = new Warehouse();
 
-// let shippingMethod;
-// let shippingZone;
-// let warehouse;
-
 export function createShipping({ channelId, name, address, price = 1 }) {
   return this.createShippingZone(name, address.country)
     .then(() => this.createWarehouse(name, this.shippingZone.id, address))
