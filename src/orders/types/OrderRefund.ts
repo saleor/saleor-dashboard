@@ -72,6 +72,7 @@ export interface OrderRefund_orderRefund_order_events_lines_orderLine {
 export interface OrderRefund_orderRefund_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderRefund_orderRefund_order_events_lines_orderLine | null;
 }
 

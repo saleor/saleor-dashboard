@@ -72,6 +72,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_line
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_lines_orderLine | null;
 }
 
