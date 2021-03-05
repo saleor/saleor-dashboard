@@ -857,6 +857,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [
         {
           __typename: "OrderEventOrderLineObject",
+          itemName: "Milk Cow's milk",
           orderLine: {
             __typename: "OrderLine",
             id: "h47gfncfgwegfehfhj",
@@ -867,6 +868,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         },
         {
           __typename: "OrderEventOrderLineObject",
+          itemName: "Milk Goat's milk",
           orderLine: {
             __typename: "OrderLine",
             id: "7846f857t4t84y8fgh",

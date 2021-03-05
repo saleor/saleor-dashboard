@@ -28,6 +28,7 @@ export const fragmentOrderEvent = gql`
     }
     lines {
       quantity
+      itemName
       orderLine {
         id
         productName

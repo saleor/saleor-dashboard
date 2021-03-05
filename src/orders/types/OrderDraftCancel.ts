@@ -72,6 +72,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_events_lines_orderLine 
 export interface OrderDraftCancel_draftOrderDelete_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderDraftCancel_draftOrderDelete_order_events_lines_orderLine | null;
 }
 

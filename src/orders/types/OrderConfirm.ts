@@ -72,6 +72,7 @@ export interface OrderConfirm_orderConfirm_order_events_lines_orderLine {
 export interface OrderConfirm_orderConfirm_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderConfirm_orderConfirm_order_events_lines_orderLine | null;
 }
 

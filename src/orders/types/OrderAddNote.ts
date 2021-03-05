@@ -38,6 +38,7 @@ export interface OrderAddNote_orderAddNote_order_events_lines_orderLine {
 export interface OrderAddNote_orderAddNote_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderAddNote_orderAddNote_order_events_lines_orderLine | null;
 }
 

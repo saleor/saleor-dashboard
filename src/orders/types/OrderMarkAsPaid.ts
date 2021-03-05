@@ -72,6 +72,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_events_lines_orderLine {
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderMarkAsPaid_orderMarkAsPaid_order_events_lines_orderLine | null;
 }
 
