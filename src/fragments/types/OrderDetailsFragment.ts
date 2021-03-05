@@ -66,6 +66,7 @@ export interface OrderDetailsFragment_events_lines_orderLine {
 export interface OrderDetailsFragment_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
   orderLine: OrderDetailsFragment_events_lines_orderLine | null;
 }
 

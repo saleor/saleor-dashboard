@@ -5,6 +5,7 @@ export const urlList = {
   homePage: "/",
   orders: "orders/",
   products: "products/",
-  warehouses: "warehouses/"
+  warehouses: "warehouses/",
+  collections: "collections/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
