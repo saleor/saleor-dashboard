@@ -1,6 +1,5 @@
-class Search {
-  searchInShop(searchQuery) {
-    const query = `query SearchProducts {
+export function searchInShop(searchQuery) {
+  const query = `query SearchProducts {
         products(channel: "default-channel", filter:{
           search: "${searchQuery}"
         }, first:10){
@@ -14,7 +13,5 @@ class Search {
         }
       }`;
 
-    return cy.sendRequestWithQuery(query, "token");
-  }
+  return cy.sendRequestWithQuery(query, "token");
 }
-export default Search;

@@ -1,10 +1,14 @@
-class Checkout {
-  createCheckout(channelSlug, email, productQuantity, variantsList) {
-    const lines = variantsList.map(
-      variant => `{quantity:${productQuantity}
+export function createCheckout(
+  channelSlug,
+  email,
+  productQuantity,
+  variantsList
+) {
+  const lines = variantsList.map(
+    variant => `{quantity:${productQuantity}
                     variantId:"${variant.id}"}`
-    );
-    const mutation = `mutation{
+  );
+  const mutation = `mutation{
                 checkoutCreate(input:{
                   channel:"${channelSlug}"
                   email:"${email}"
@@ -20,10 +24,10 @@ class Checkout {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  addShippingMethod(checkoutId, shippingMethodId) {
-    const mutation = `mutation{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function addShippingMethod(checkoutId, shippingMethodId) {
+  const mutation = `mutation{
                 checkoutShippingMethodUpdate(checkoutId:"${checkoutId}",
                 shippingMethodId:"${shippingMethodId}"){
                   checkoutErrors{
@@ -32,10 +36,10 @@ class Checkout {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  addPayment(checkoutId, gateway, token) {
-    const mutation = `mutation{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function addPayment(checkoutId, gateway, token) {
+  const mutation = `mutation{
                 checkoutPaymentCreate(checkoutId:"${checkoutId}",
                 input:{
                   gateway: "${gateway}"
@@ -47,10 +51,10 @@ class Checkout {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  completeCheckout(checkoutId) {
-    const mutation = `mutation{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function completeCheckout(checkoutId) {
+  const mutation = `mutation{
                 checkoutComplete(checkoutId:"${checkoutId}"){
                   order{
                     id
@@ -63,7 +67,5 @@ class Checkout {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-export default Checkout;

@@ -1,6 +1,5 @@
-class Warehouse {
-  createWarehouse(name, shippingZone, address, slug = name) {
-    const mutation = `mutation{
+export function createWarehouse(name, shippingZone, address, slug = name) {
+  const mutation = `mutation{
                 createWarehouse(input:{
                   name:"${name}"
                   slug:"${slug}"
@@ -24,10 +23,10 @@ class Warehouse {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  getWarehouses(first, search) {
-    const query = `query{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function getWarehouses(first, search) {
+  const query = `query{
             warehouses(first:${first}, filter:{
               search:"${search}"
             }){
@@ -39,12 +38,12 @@ class Warehouse {
               }
             }
           }`;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.warehouses.edges);
-  }
-  deleteWarehouse(warehouseId) {
-    const mutation = `mutation{
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.warehouses.edges);
+}
+export function deleteWarehouse(warehouseId) {
+  const mutation = `mutation{
             deleteWarehouse(id:"${warehouseId}"){
               warehouseErrors{
                 field
@@ -52,7 +51,5 @@ class Warehouse {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-export default Warehouse;

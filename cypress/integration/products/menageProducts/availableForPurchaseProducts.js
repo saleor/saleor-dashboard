@@ -1,20 +1,15 @@
 import faker from "faker";
 
-import ProductDetails from "../../../apiRequests/storeFront/ProductDetails";
-import ProductSteps from "../../../steps/products/productSteps";
+import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
+import { updateProductIsAvailableForPurchase } from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
-import ChannelsUtils from "../../../utils/channelsUtils";
-import ProductsUtils from "../../../utils/productsUtils";
-import ShippingUtils from "../../../utils/shippingUtils";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import * as productsUtils from "../../../utils/productsUtils";
+import * as shippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
-  const productDetails = new ProductDetails();
-  const shippingUtils = new ShippingUtils();
-  const channelsUtils = new ChannelsUtils();
-  const productsUtils = new ProductsUtils();
-  const productSteps = new ProductSteps();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -28,8 +23,7 @@ describe("Products available in listings", () => {
     shippingUtils.deleteShipping(startsWith);
     productsUtils.deleteProperProducts(startsWith);
 
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         cy.fixture("addresses");
@@ -72,10 +66,10 @@ describe("Products available in listings", () => {
         const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
         );
-        productSteps.updateProductIsAvailableForPurchase(productUrl, true);
+        updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
-        productDetails.getProductDetails(
+        getProductDetails(
           productsUtils.getCreatedProduct().id,
           defaultChannel.slug
         );
@@ -99,10 +93,10 @@ describe("Products available in listings", () => {
         const productUrl = productDetailsUrl(
           productsUtils.getCreatedProduct().id
         );
-        productSteps.updateProductIsAvailableForPurchase(productUrl, false);
+        updateProductIsAvailableForPurchase(productUrl, false);
       })
       .then(() => {
-        productDetails.getProductDetails(
+        getProductDetails(
           productsUtils.getCreatedProduct().id,
           defaultChannel.slug
         );
