@@ -6,5 +6,5 @@ export const DRAFT_ORDER_SELECTORS = {
   selectCustomerOption: "[data-test-type='option']",
   addShippingCarrierLink: "[data-test-id='add-shipping-carrier']",
   finalizeButton: "[data-test='button-bar-confirm']",
-  pageHeader: "[testId='page-header']"
+  pageHeader: "[data-test-id='page-header']"
 };
