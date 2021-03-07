@@ -822,11 +822,13 @@ export const order = (placeholder: string): OrderDetails_order => ({
   created: "2018-09-11T09:37:28.185874+00:00",
   customerNote: "Lorem ipsum dolor sit amet",
   discount: null,
+  discounts: [],
   events: [
     {
       __typename: "OrderEvent",
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDoyMQ==",
@@ -850,6 +852,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "UYgDNUnnfyiuyimuhd==",
@@ -857,7 +860,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       lines: [
         {
           __typename: "OrderEventOrderLineObject",
-          itemName: "Milk Cow's milk",
+          discount: null,
+          itemName: "Cow's milk",
           orderLine: {
             __typename: "OrderLine",
             id: "h47gfncfgwegfehfhj",
@@ -868,7 +872,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
         },
         {
           __typename: "OrderEventOrderLineObject",
-          itemName: "Milk Goat's milk",
+          discount: null,
+          itemName: "Goat's milk",
           orderLine: {
             __typename: "OrderLine",
             id: "7846f857t4t84y8fgh",
@@ -896,6 +901,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDo0",
@@ -913,6 +919,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDo1",
@@ -930,6 +937,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDo2",
@@ -947,6 +955,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: OrderEventsEmailsEnum.ORDER_CANCEL,
       id: "T3JkZXJFdmVudDo3",
@@ -964,6 +973,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: OrderEventsEmailsEnum.ORDER_REFUND,
       id: "T3JkZXJFdmVudDo4",
@@ -981,6 +991,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "OrderEvent",
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
+      discount: null,
       email: null,
       emailType: null,
       id: "T3JkZXJFdmVudDo5",
@@ -1016,6 +1027,28 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "Image" as "Image",
               url: placeholder
             },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
+              currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD"
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD"
+              }
+            },
+            unitDiscount: {
+              __typename: "Money",
+              amount: 79.71,
+              currency: "USD"
+            },
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
@@ -1062,6 +1095,28 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "Image" as "Image",
               url: placeholder
             },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
+              currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD"
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD"
+              }
+            },
+            unitDiscount: {
+              __typename: "Money",
+              amount: 79.71,
+              currency: "USD"
+            },
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
@@ -1101,6 +1156,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   isPaid: true,
+  isShippingRequired: false,
   lines: [
     {
       __typename: "OrderLine",
@@ -1114,6 +1170,28 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Image" as "Image",
         url: placeholder
       },
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 18.51,
+          currency: "USD"
+        },
+        net: {
+          __typename: "Money",
+          amount: 18.51,
+          currency: "USD"
+        }
+      },
+      unitDiscount: {
+        __typename: "Money",
+        amount: 79.71,
+        currency: "USD"
+      },
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -1145,6 +1223,29 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Image" as "Image",
         url: placeholder
       },
+
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        },
+        net: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        }
+      },
+      unitDiscount: {
+        __typename: "Money",
+        amount: 79.71,
+        currency: "USD"
+      },
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -1211,11 +1312,21 @@ export const order = (placeholder: string): OrderDetails_order => ({
       __typename: "Money",
       amount: 214.95,
       currency: "USD"
+    },
+    net: {
+      __typename: "Money",
+      amount: 214.95,
+      currency: "USD"
     }
   },
   total: {
     __typename: "TaxedMoney",
     gross: {
+      __typename: "Money",
+      amount: 234.93,
+      currency: "USD"
+    },
+    net: {
       __typename: "Money",
       amount: 234.93,
       currency: "USD"
@@ -1236,6 +1347,19 @@ export const order = (placeholder: string): OrderDetails_order => ({
     amount: 0,
     currency: "USD"
   },
+  undiscountedTotal: {
+    __typename: "TaxedMoney",
+    gross: {
+      __typename: "Money",
+      amount: 79.71,
+      currency: "USD"
+    },
+    net: {
+      __typename: "Money",
+      amount: 79.71,
+      currency: "USD"
+    }
+  },
   user: null,
   userEmail: "melissa.simon@example.com"
 });
@@ -1255,6 +1379,8 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   created: "2018-09-20T23:23:39.811428+00:00",
   customerNote: "Lorem ipsum dolor sit",
   discount: null,
+  discounts: [],
+
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
@@ -1269,6 +1395,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
     }
   ],
   isPaid: false,
+  isShippingRequired: false,
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",
@@ -1282,6 +1409,28 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "Image" as "Image",
         url: placeholder
       },
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        },
+        net: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        }
+      },
+      unitDiscount: {
+        __typename: "Money",
+        amount: 79.71,
+        currency: "USD"
+      },
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney" as "TaxedMoney",
         gross: {
@@ -1313,6 +1462,28 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "Image" as "Image",
         url: placeholder
       },
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        },
+        net: {
+          __typename: "Money",
+          amount: 79.71,
+          currency: "USD"
+        }
+      },
+      unitDiscount: {
+        __typename: "Money",
+        amount: 79.71,
+        currency: "USD"
+      },
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney" as "TaxedMoney",
         gross: {
@@ -1355,6 +1526,11 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       __typename: "Money" as "Money",
       amount: 168.3,
       currency: "USD"
+    },
+    net: {
+      __typename: "Money" as "Money",
+      amount: 168.3,
+      currency: "USD"
     }
   },
   total: {
@@ -1362,6 +1538,11 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
     gross: {
       __typename: "Money" as "Money",
       amount: 168.3,
+      currency: "USD"
+    },
+    net: {
+      __typename: "Money" as "Money",
+      amount: 100,
       currency: "USD"
     },
     tax: {
@@ -1372,6 +1553,19 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   },
   totalAuthorized: null,
   totalCaptured: null,
+  undiscountedTotal: {
+    __typename: "TaxedMoney",
+    gross: {
+      __typename: "Money",
+      amount: 79.71,
+      currency: "USD"
+    },
+    net: {
+      __typename: "Money",
+      amount: 79.71,
+      currency: "USD"
+    }
+  },
   user: null,
   userEmail: null
 });

@@ -3,6 +3,10 @@
     "context": "dialog header",
     "string": "Cancel Order"
   },
+  "Previous discount label id": {
+    "context": "Previous discount label",
+    "string": "Previous discount value"
+  },
   "amount title": {
     "context": "amount title",
     "string": "Refunded amount"
@@ -50,6 +54,14 @@
   "configurationPluginsPages": {
     "string": "View and update your plugins and their settings."
   },
+  "discount value id": {
+    "context": "discount value",
+    "string": "discount"
+  },
+  "discount value label id": {
+    "context": "discount value label",
+    "string": "discount value"
+  },
   "event products list title refunded": {
     "context": "refunded products list title",
     "string": "Products refunded"
@@ -74,6 +86,26 @@
     "context": "order marked as paid event title",
     "string": "Order was marked as paid by"
   },
+  "event title order discount auto updated": {
+    "context": "order discount was updated automatically event title",
+    "string": "Order discount was updated automatically updated"
+  },
+  "event title order discount updated": {
+    "context": "order discount was updated event title",
+    "string": "Order discount was updated by"
+  },
+  "event title order discounted": {
+    "context": "order was discounted event title",
+    "string": "Order was discounted by"
+  },
+  "event title order line discount added": {
+    "context": "order line discount added title",
+    "string": "{productName} discount was added by "
+  },
+  "event title order line discount updated": {
+    "context": "order line discount updated title",
+    "string": "{productName} discount was updated by "
+  },
   "event title refunded": {
     "context": "refunded event title",
     "string": "Products were refunded by "
@@ -85,6 +117,10 @@
   "event title returned": {
     "context": "returned event title",
     "string": "Products were returned by"
+  },
+  "fixed amount subtitle id": {
+    "context": "Fixed amount subtitle",
+    "string": "Fixed amount"
   },
   "homeActivityCardHeader": {
     "context": "header",
@@ -234,6 +270,10 @@
   },
   "menuPropertiesMenuTitle": {
     "string": "Menu Title"
+  },
+  "new discount label id": {
+    "context": "new discount label",
+    "string": "New discount value"
   },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
@@ -3239,6 +3279,38 @@
     "context": "return button",
     "string": "Return / Replace order"
   },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_buttonLabel": {
+    "context": "add button label",
+    "string": "Add"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_discountReasonLabel": {
+    "context": "discount reason input lavel",
+    "string": "Reason"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_discountValueLabel": {
+    "context": "value input label",
+    "string": "Discount value"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_fixedAmountOption": {
+    "context": "fixed amount",
+    "string": "Fixed Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_invalidValue": {
+    "context": "value input helper text",
+    "string": "Invalid value"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_itemDiscountTitle": {
+    "context": "dialog title item discount",
+    "string": "Discount Item"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_orderDiscountTitle": {
+    "context": "dialog title order discount",
+    "string": "Discount this Order by:"
+  },
+  "src_dot_orders_dot_components_dot_OrderDiscountCommonModal_dot_percentageOption": {
+    "context": "percentage option",
+    "string": "Percentage"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
     "string": "Delete Daft Order"
@@ -3264,22 +3336,36 @@
     "context": "total price of ordered products",
     "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_2429341469": {
-    "context": "button",
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addCustomerInfo": {
+    "context": "add customer first label",
+    "string": "add customer first"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
+    "context": "add discount button",
+    "string": "Add Discount"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addShippingCarrier": {
+    "context": "add shipping carrier button",
     "string": "Add shipping carrier"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_3202709354": {
-    "string": "Taxes (VAT included)"
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_discount": {
+    "context": "discount button",
+    "string": "Discount"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_3594442178": {
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_noShippingCarriers": {
+    "context": "no shipping carriers title",
     "string": "No applicable shipping carriers"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_781550514": {
-    "context": "subtotal price or an order",
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_subtotal": {
+    "context": "subtotal price",
     "string": "Subtotal"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_878013594": {
-    "context": "total price of an order",
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_taxes": {
+    "context": "taxes title",
+    "string": "Taxes (VAT included)"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_total": {
+    "context": "total price",
     "string": "Total"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2343989342": {
@@ -3580,6 +3666,10 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedDiscountTimelineEvent_dot_reasonLabel": {
+    "context": "reason for discount label",
+    "string": "Reason for discount"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
@@ -3587,6 +3677,14 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_draftNumber": {
     "context": "replacement created order history message draft number",
     "string": "Draft #{orderNumber} "
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_orderDiscountRemoved": {
+    "context": "order discount removed title",
+    "string": "Order discount was removed by "
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_productDiscountRemoved": {
+    "context": "product discount removed title",
+    "string": "{productName} discount was removed by"
   },
   "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"

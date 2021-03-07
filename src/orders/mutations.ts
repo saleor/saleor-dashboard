@@ -32,6 +32,18 @@ import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
 import { OrderConfirm, OrderConfirmVariables } from "./types/OrderConfirm";
 import {
+  OrderDiscountAdd,
+  OrderDiscountAddVariables
+} from "./types/OrderDiscountAdd";
+import {
+  OrderDiscountDelete,
+  OrderDiscountDeleteVariables
+} from "./types/OrderDiscountDelete";
+import {
+  OrderDiscountUpdate,
+  OrderDiscountUpdateVariables
+} from "./types/OrderDiscountUpdate";
+import {
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
 } from "./types/OrderDraftBulkCancel";
@@ -67,6 +79,14 @@ import {
   OrderLineDelete,
   OrderLineDeleteVariables
 } from "./types/OrderLineDelete";
+import {
+  OrderLineDiscountRemove,
+  OrderLineDiscountRemoveVariables
+} from "./types/OrderLineDiscountRemove";
+import {
+  OrderLineDiscountUpdate,
+  OrderLineDiscountUpdateVariables
+} from "./types/OrderLineDiscountUpdate";
 import { OrderLinesAdd, OrderLinesAddVariables } from "./types/OrderLinesAdd";
 import {
   OrderLineUpdate,
@@ -106,6 +126,115 @@ export const TypedOrderCancelMutation = TypedMutation<
   OrderCancel,
   OrderCancelVariables
 >(orderCancelMutation);
+
+// Discounts
+const orderDiscountAddMutation = gql`
+  ${orderErrorFragment}
+  ${fragmentOrderDetails}
+  mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
+    orderDiscountAdd(input: $input, orderId: $orderId) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderDiscountAddMutation = makeMutation<
+  OrderDiscountAdd,
+  OrderDiscountAddVariables
+>(orderDiscountAddMutation);
+
+const orderDiscountDeleteMutation = gql`
+  ${orderErrorFragment}
+  ${fragmentOrderDetails}
+  mutation OrderDiscountDelete($discountId: ID!) {
+    orderDiscountDelete(discountId: $discountId) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderDiscountDeleteMutation = makeMutation<
+  OrderDiscountDelete,
+  OrderDiscountDeleteVariables
+>(orderDiscountDeleteMutation);
+
+const orderLineDiscountRemoveMutation = gql`
+  ${orderErrorFragment}
+  ${fragmentOrderDetails}
+  mutation OrderLineDiscountRemove($orderLineId: ID!) {
+    orderLineDiscountRemove(orderLineId: $orderLineId) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderLineDiscountRemoveMutation = makeMutation<
+  OrderLineDiscountRemove,
+  OrderLineDiscountRemoveVariables
+>(orderLineDiscountRemoveMutation);
+
+const orderLineDiscountUpdateMutation = gql`
+  ${orderErrorFragment}
+  ${fragmentOrderDetails}
+  mutation OrderLineDiscountUpdate(
+    $input: OrderDiscountCommonInput!
+    $orderLineId: ID!
+  ) {
+    orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderLineDiscountUpdateMutation = makeMutation<
+  OrderLineDiscountUpdate,
+  OrderLineDiscountUpdateVariables
+>(orderLineDiscountUpdateMutation);
+
+const orderDiscountUpdateMutation = gql`
+  ${fragmentOrderDetails}
+  ${orderErrorFragment}
+  mutation OrderDiscountUpdate(
+    $input: OrderDiscountCommonInput!
+    $discountId: ID!
+  ) {
+    orderDiscountUpdate(input: $input, discountId: $discountId) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useOrderDiscountUpdateMutation = makeMutation<
+  OrderDiscountUpdate,
+  OrderDiscountUpdateVariables
+>(orderDiscountUpdateMutation);
+
+// -----
 
 const orderDraftCancelMutation = gql`
   ${fragmentOrderDetails}
@@ -413,6 +542,7 @@ export const TypedOrderDraftUpdateMutation = TypedMutation<
 
 const orderShippingMethodUpdateMutation = gql`
   ${orderErrorFragment}
+  ${fragmentOrderDetails}
   mutation OrderShippingMethodUpdate(
     $id: ID!
     $input: OrderUpdateShippingInput!
@@ -422,26 +552,7 @@ const orderShippingMethodUpdateMutation = gql`
         ...OrderErrorFragment
       }
       order {
-        availableShippingMethods {
-          id
-          name
-        }
-        id
-        shippingMethod {
-          id
-          name
-          price {
-            amount
-            currency
-          }
-        }
-        shippingMethodName
-        shippingPrice {
-          gross {
-            amount
-            currency
-          }
-        }
+        ...OrderDetailsFragment
       }
     }
   }
