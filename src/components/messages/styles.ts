@@ -42,7 +42,7 @@ export const useStyles = makeStyles(
       position: "fixed",
       top: 0,
       width: "100%",
-      zIndex: 1200
+      zIndex: 10000
     },
     error: {
       "& > div": {
