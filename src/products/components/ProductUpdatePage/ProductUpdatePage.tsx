@@ -4,6 +4,7 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
+import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
@@ -19,6 +20,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -38,8 +40,9 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
+import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductDetails_product,
@@ -73,6 +76,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   isMediaUrlModalVisible?: boolean;
+  limits: ShopFragment_limits;
   variants: ProductDetails_product_variants[];
   media: ProductDetails_product_media[];
   hasChannelChanged: boolean;
@@ -139,6 +143,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   media,
   hasChannelChanged,
   header,
+  limits,
   placeholderImage,
   product,
   saveButtonBarState,
@@ -224,6 +229,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
 
+  const limitReached = isLimitReached(limits, "productVariants");
+
   return (
     <ProductUpdateForm
       onSubmit={onSubmit}
@@ -261,6 +268,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               {intl.formatMessage(sectionNames.products)}
             </AppHeader>
             <PageHeader title={header} />
+            {hasVariants && (
+              <Alert
+                show={limitReached}
+                title={intl.formatMessage({
+                  defaultMessage: "SKU limit reached",
+                  description: "alert"
+                })}
+              >
+                <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+              </Alert>
+            )}
             <Grid>
               <div>
                 <ProductDetailsForm
@@ -309,6 +327,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 )}
                 {hasVariants ? (
                   <ProductVariants
+                    addButtonDisabled={limitReached}
                     disabled={disabled}
                     variants={variants}
                     product={product}
