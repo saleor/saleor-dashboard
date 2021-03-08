@@ -1,15 +1,13 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import * as customerRequests from "../../apiRequests/Customer";
-import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/products/assign-products-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
+import { createCustomer, deleteCustomers } from "../../apiRequests/Customer";
 import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { SELECT_SHIPPING_METHOD_FORM } from "../../elements/shipping/select-shipping-method-form";
 import { selectChannelInPicker } from "../../steps/channelsSteps";
+import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
 import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
+import { getDefaultChannel } from "../../utils/channelsUtils";
 import * as productsUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 
@@ -21,12 +19,11 @@ describe("Draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    customerRequests.deleteCustomers(startsWith);
+    deleteCustomers(startsWith);
     shippingUtils.deleteShipping(startsWith);
     productsUtils.deleteProperProducts(startsWith);
 
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
       })
@@ -34,7 +31,7 @@ describe("Draft orders", () => {
         cy.fixture("addresses");
       })
       .then(addresses => {
-        customerRequests.createCustomer(
+        createCustomer(
           `${randomName}@ex.pl`,
           randomName,
           addresses.plAddress,
@@ -70,41 +67,7 @@ describe("Draft orders", () => {
       .get(ORDERS_SELECTORS.createOrder)
       .click();
     selectChannelInPicker(defaultChannel.name);
-    cy.get(DRAFT_ORDER_SELECTORS.addProducts)
-      .click()
-      .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
-      .type(randomName);
-    cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, randomName)
-      .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
-      .click()
-      .get(ASSIGN_PRODUCTS_SELECTORS.submitButton)
-      .click()
-      .get(DRAFT_ORDER_SELECTORS.editCustomerButton)
-      .click()
-      .get(DRAFT_ORDER_SELECTORS.selectCustomer)
-      .type(randomName);
-    cy.contains(DRAFT_ORDER_SELECTORS.selectCustomerOption, randomName)
-      .click()
-      .get(DRAFT_ORDER_SELECTORS.addShippingCarrierLink)
-      .click()
-      .get(SELECT_SHIPPING_METHOD_FORM.selectShippingMethod)
-      .click()
-      .get(SELECT_SHIPPING_METHOD_FORM.shippingMethodOption)
-      .first()
-      .click();
-    cy.addAliasToGraphRequest("OrderShippingMethodUpdate")
-      .get(SELECT_SHIPPING_METHOD_FORM.submitButton)
-      .click();
-    cy.wait("@OrderShippingMethodUpdate");
-    cy.getTextFromElement(DRAFT_ORDER_SELECTORS.pageHeader).as(
-      "draftOrderNumber"
-    );
-    cy.addAliasToGraphRequest("OrderDraftFinalize");
-    cy.get(DRAFT_ORDER_SELECTORS.finalizeButton)
-      .should("be.enabled")
-      .click();
-    cy.wait("@OrderDraftFinalize");
-    cy.get("@draftOrderNumber").then(draftOrderNumber => {
+    finalizeDraftOrder(randomName).then(draftOrderNumber => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
         $order => {
