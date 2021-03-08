@@ -1,17 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/MenuList";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
+import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@saleor/types";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
@@ -28,14 +23,6 @@ const messages = defineMessages({
   upload: {
     defaultMessage: "Upload",
     description: "modal button upload"
-  },
-  uploadImages: {
-    defaultMessage: "Upload Images",
-    description: "modal button images upload"
-  },
-  uploadUrl: {
-    defaultMessage: "Upload URL",
-    description: "modal button url upload"
   }
 });
 
@@ -202,8 +189,8 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const imagesUpload = React.useRef(null);
-  const anchor = React.useRef();
+  const imagesUpload = React.useRef<HTMLInputElement>(null);
+  const anchor = React.useRef<HTMLButtonElement>();
   const [imagesToUpload, setImagesToUpload] = React.useState<
     ProductMediaFragment[]
   >([]);
@@ -224,7 +211,8 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               id: "",
               sortOrder: fileIndex,
               type: ProductMediaType.IMAGE,
-              url: event.target.result as string
+              url: event.target.result as string,
+              oembedData: null
             }
           ]);
         };
@@ -249,40 +237,13 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               {intl.formatMessage(messages.upload)}
             </Button>
 
-            <Popper
-              open={popperOpenStatus}
-              anchorEl={anchor.current}
-              transition
-              placement="bottom-end"
-            >
-              {({ TransitionProps }) => (
-                <Grow {...TransitionProps}>
-                  <Paper>
-                    <ClickAwayListener
-                      onClickAway={() => setPopperOpenStatus(false)}
-                      mouseEvent="onClick"
-                    >
-                      <Menu>
-                        <MenuItem
-                          onClick={() => imagesUpload.current.click()}
-                          data-test="uploadImages"
-                          key="upload-images"
-                        >
-                          {intl.formatMessage(messages.uploadImages)}
-                        </MenuItem>
-                        <MenuItem
-                          onClick={openMediaUrlModal}
-                          data-test="uploadMediaUrl"
-                          key="upload-media-url"
-                        >
-                          {intl.formatMessage(messages.uploadUrl)}
-                        </MenuItem>
-                      </Menu>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
+            <ProductMediaPopper
+              anchorRef={anchor.current}
+              imagesUploadRef={imagesUpload.current}
+              setPopperStatus={setPopperOpenStatus}
+              popperStatus={popperOpenStatus}
+              openMediaUrlModal={openMediaUrlModal}
+            />
 
             <input
               className={classes.fileField}
