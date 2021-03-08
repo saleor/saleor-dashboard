@@ -1,9 +1,11 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -12,6 +14,7 @@ import {
   SortPage,
   TabPageProps
 } from "@saleor/types";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,6 +26,7 @@ export interface WarehouseListPageProps
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     TabPageProps {
+  limits: ShopFragment_limits;
   warehouses: WarehouseWithShippingFragment[];
   onBack: () => void;
   onRemove: (id: string) => void;
@@ -32,6 +36,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   warehouses,
   currentTab,
   disabled,
+  limits,
   initialSearch,
   pageInfo,
   settings,
@@ -52,19 +57,44 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 }) => {
   const intl = useIntl();
 
+  const limitReached = isLimitReached(limits, "warehouses");
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
       </AppHeader>
-      <PageHeader title={intl.formatMessage(sectionNames.warehouses)}>
-        <Button color="primary" variant="contained" onClick={onAdd}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.warehouses)}
+        limit={
+          hasLimits(limits, "warehouses") && {
+            data: limits,
+            key: "warehouses",
+            text: "warehouses used"
+          }
+        }
+      >
+        <Button
+          color="primary"
+          disabled={limitReached}
+          variant="contained"
+          onClick={onAdd}
+        >
           <FormattedMessage
             defaultMessage="Create Warehouse"
             description="button"
           />
         </Button>
       </PageHeader>
+      <Alert
+        show={limitReached}
+        title={intl.formatMessage({
+          defaultMessage: "Warehouse limit reached",
+          description: "alert"
+        })}
+      >
+        <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+      </Alert>
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
