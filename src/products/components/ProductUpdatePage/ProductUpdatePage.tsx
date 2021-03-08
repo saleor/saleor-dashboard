@@ -268,17 +268,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               {intl.formatMessage(sectionNames.products)}
             </AppHeader>
             <PageHeader title={header} />
-            {hasVariants && (
-              <Alert
-                show={limitReached}
-                title={intl.formatMessage({
-                  defaultMessage: "SKU limit reached",
-                  description: "alert"
-                })}
-              >
-                <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-              </Alert>
-            )}
             <Grid>
               <div>
                 <ProductDetailsForm
@@ -326,23 +315,34 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   </>
                 )}
                 {hasVariants ? (
-                  <ProductVariants
-                    addButtonDisabled={limitReached}
-                    disabled={disabled}
-                    variants={variants}
-                    product={product}
-                    onRowClick={onVariantShow}
-                    onVariantAdd={onVariantAdd}
-                    onVariantsAdd={onVariantsAdd}
-                    onVariantReorder={onVariantReorder}
-                    onSetDefaultVariant={onSetDefaultVariant}
-                    toolbar={toolbar}
-                    isChecked={isChecked}
-                    selected={selected}
-                    selectedChannelId={selectedChannelId}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                  />
+                  <>
+                    <Alert
+                      show={limitReached}
+                      title={intl.formatMessage({
+                        defaultMessage: "SKU limit reached",
+                        description: "alert"
+                      })}
+                    >
+                      <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+                    </Alert>
+                    <ProductVariants
+                      addButtonDisabled={limitReached}
+                      disabled={disabled}
+                      variants={variants}
+                      product={product}
+                      onRowClick={onVariantShow}
+                      onVariantAdd={onVariantAdd}
+                      onVariantsAdd={onVariantsAdd}
+                      onVariantReorder={onVariantReorder}
+                      onSetDefaultVariant={onSetDefaultVariant}
+                      toolbar={toolbar}
+                      isChecked={isChecked}
+                      selected={selected}
+                      selectedChannelId={selectedChannelId}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                    />
+                  </>
                 ) : (
                   <>
                     <ProductShipping
