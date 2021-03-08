@@ -2,14 +2,17 @@ import { ShippingZone_shippingZone_shippingMethods_postalCodeRules } from "@sale
 import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 
 export interface PostalCodesState {
-  codesToDelete: string[];
-  havePostalCodesChanged: boolean;
-  inclusionType: PostalCodeRuleInclusionTypeEnum;
-  originalCodes: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
-  postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
+  codesToDelete?: string[];
+  havePostalCodesChanged?: boolean;
+  inclusionType?: PostalCodeRuleInclusionTypeEnum;
+  originalCodes?: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
+  postalCodeRules?: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
 }
 
-function postalCodesReducer(prevState: PostalCodesState, newState: any) {
+function postalCodesReducer(
+  prevState: PostalCodesState,
+  newState: PostalCodesState
+) {
   return { ...prevState, ...newState };
 }
 
