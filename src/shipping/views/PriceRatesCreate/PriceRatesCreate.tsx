@@ -95,10 +95,8 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
 
     const newCode = getRuleObject(rule, state.inclusionType);
     dispatch({
-      updateStateProps: {
-        havePostalCodesChanged: true,
-        postalCodeRules: [...state.postalCodeRules, newCode]
-      }
+      havePostalCodesChanged: true,
+      postalCodeRules: [...state.postalCodeRules, newCode]
     });
     closeModal();
   };
@@ -107,19 +105,15 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
     dispatch({
-      updateStateProps: {
-        inclusionType: inclusion,
-        postalCodeRules: []
-      }
+      inclusionType: inclusion,
+      postalCodeRules: []
     });
   };
 
   const onPostalCodeUnassign = code => {
     dispatch({
-      updateStateProps: {
-        havePostalCodesChanged: true,
-        postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
-      }
+      havePostalCodesChanged: true,
+      postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
     });
   };
 

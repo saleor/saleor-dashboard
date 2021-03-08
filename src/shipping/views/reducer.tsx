@@ -9,21 +9,8 @@ export interface PostalCodesState {
   postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
 }
 
-function setPostalCodes(
-  state: PostalCodesState,
-  newStateProps: any
-): PostalCodesState {
-  return {
-    ...state,
-    ...newStateProps
-  };
-}
-
-function postalCodesReducer(prevState: PostalCodesState, newProps: any) {
-  if (newProps?.updateStateProps) {
-    return setPostalCodes(prevState, newProps.updateStateProps);
-  }
-  return prevState;
+function postalCodesReducer(prevState: PostalCodesState, newState: any) {
+  return { ...prevState, ...newState };
 }
 
 export default postalCodesReducer;

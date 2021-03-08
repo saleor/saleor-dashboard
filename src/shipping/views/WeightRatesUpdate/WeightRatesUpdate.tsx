@@ -112,25 +112,23 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     rate.postalCodeRules?.length;
 
   if (postalCodeRulesLoaded) {
-    dispatch({ updateStateProps: { postalCodeRules: rate.postalCodeRules } });
+    dispatch({ postalCodeRules: rate.postalCodeRules });
   }
 
   const onPostalCodeInclusionChange = (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => {
     dispatch({
-      updateStateProps: {
-        codesToDelete: rate.postalCodeRules.map(code => code.id),
-        havePostalCodesChanged: true,
-        inclusionType: inclusion,
-        postalCodeRules: []
-      }
+      codesToDelete: rate.postalCodeRules.map(code => code.id),
+      havePostalCodesChanged: true,
+      inclusionType: inclusion,
+      postalCodeRules: []
     });
   };
 
   const onPostalCodeAssign = (rule: MinMax) => {
     if (!state.originalCodes.length) {
-      dispatch({ updateStateProps: { originalCodes: rate.postalCodeRules } });
+      dispatch({ originalCodes: rate.postalCodeRules });
     }
 
     if (
@@ -142,10 +140,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
 
     const newCode = getRuleObject(rule, state.inclusionType);
     dispatch({
-      updateStateProps: {
-        havePostalCodesChanged: true,
-        postalCodeRules: [...state.postalCodeRules, newCode]
-      }
+      havePostalCodesChanged: true,
+      postalCodeRules: [...state.postalCodeRules, newCode]
     });
     closeModal();
   };
@@ -249,7 +245,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     const errors = response.data.shippingPriceUpdate.errors;
     if (errors.length === 0) {
       handleSuccess();
-      dispatch({ updateStateProps: { havePostalCodesChanged: false } });
+      dispatch({ havePostalCodesChanged: false });
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
@@ -266,20 +262,16 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   const onPostalCodeUnassign = code => {
     if (code.id !== undefined) {
       dispatch({
-        updateStateProps: {
-          codesToDelete: [...state.codesToDelete, code.id],
-          havePostalCodesChanged: true,
-          postalCodeRules: state.postalCodeRules.filter(
-            getByUnmatchingId(code.id)
-          )
-        }
+        codesToDelete: [...state.codesToDelete, code.id],
+        havePostalCodesChanged: true,
+        postalCodeRules: state.postalCodeRules.filter(
+          getByUnmatchingId(code.id)
+        )
       });
     } else {
       dispatch({
-        updateStateProps: {
-          havePostalCodesChanged: true,
-          postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
-        }
+        havePostalCodesChanged: true,
+        postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
       });
     }
   };
