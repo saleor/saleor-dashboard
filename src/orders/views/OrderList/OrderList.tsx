@@ -4,6 +4,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -71,6 +72,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const { channel, availableChannels } = useAppChannel();
+  const limitOpts = useShopLimitsQuery({});
 
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels
@@ -150,6 +152,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         currentTab={currentTab}
         disabled={loading}
         filterOpts={getFilterOpts(params, channelOpts)}
+        limits={limitOpts.data?.shop.limits}
         orders={maybe(() => data.orders.edges.map(edge => edge.node))}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
