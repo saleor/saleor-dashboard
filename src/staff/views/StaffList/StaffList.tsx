@@ -6,7 +6,6 @@ import SaveFilterTabDialog, {
 import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -16,12 +15,10 @@ import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
 import { ListViews } from "@saleor/types";
-import { GqlErrors, hasError } from "@saleor/utils/api";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
-import { ApolloError } from "apollo-client";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
