@@ -6,14 +6,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { sectionNames } from "@saleor/intl";
 import { renderCollection, stopPropagation } from "@saleor/misc";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,6 +25,7 @@ import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
   channelsList: Channels_channels[] | undefined;
+  limits: ShopFragment_limits;
   navigateToChannelCreate: () => void;
   onBack: () => void;
   onRowClick: (id: string) => () => void;
@@ -32,6 +36,7 @@ const numberOfColumns = 2;
 
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
+  limits,
   navigateToChannelCreate,
   onBack,
   onRemove,
@@ -40,13 +45,25 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
+  const limitReached = isLimitReached(limits, "channels");
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
-      <PageHeader title={intl.formatMessage(sectionNames.channels)}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.channels)}
+        limit={
+          hasLimits(limits, "channels") && {
+            data: limits,
+            key: "channels",
+            text: "channels used"
+          }
+        }
+      >
         <Button
+          disabled={limitReached}
           onClick={navigateToChannelCreate}
           color="primary"
           variant="contained"
@@ -58,6 +75,15 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           />
         </Button>
       </PageHeader>
+      <Alert
+        show={limitReached}
+        title={intl.formatMessage({
+          defaultMessage: "Channel limit reached",
+          description: "alert"
+        })}
+      >
+        <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+      </Alert>
       <Card>
         <ResponsiveTable>
           <TableHead>

@@ -1,4 +1,5 @@
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -30,8 +31,9 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const intl = useIntl();
 
   const { data, refetch } = useChannelsList({ displayLoader: true });
+  const limitOpts = useShopLimitsQuery({});
 
-  const selectedChannel = data?.channels.find(
+  const selectedChannel = data?.channels?.find(
     channel => channel.id === params?.id
   );
 
@@ -89,6 +91,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     <>
       <ChannelsListPage
         channelsList={data?.channels}
+        limits={limitOpts.data?.shop.limits}
         navigateToChannelCreate={navigateToChannelCreate}
         onBack={() => navigate(configurationMenuUrl)}
         onRowClick={id => () => navigate(channelUrl(id))}
