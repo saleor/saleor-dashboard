@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, FulfillmentStatus, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -18,6 +18,31 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice_net;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice_gross {
@@ -52,6 +77,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_thumbnail | null;
 }
@@ -113,6 +143,45 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts_amount;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount_oldAmount | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder {
   __typename: "Order";
   id: string;
@@ -127,6 +196,29 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lastName: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_oldAmount | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -137,6 +229,8 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount | null;
   orderLine: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_orderLine | null;
 }
 
@@ -149,6 +243,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_discount | null;
   relatedOrder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
@@ -162,6 +257,31 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -196,6 +316,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -227,6 +352,31 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice_gross {
@@ -261,6 +411,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_undiscountedUnitPrice;
   unitPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitPrice;
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_thumbnail | null;
 }
@@ -309,12 +464,25 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   currency: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal_net;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_net {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -329,6 +497,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total {
   __typename: "TaxedMoney";
   gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_gross;
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_net;
   tax: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_total_tax;
 }
 
@@ -342,6 +511,24 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal_net;
+  gross: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal_gross;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_user {
@@ -392,9 +579,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   metadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts[] | null;
   events: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events | null)[] | null;
   fulfillments: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments | null)[];
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines | null)[];
@@ -410,6 +599,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   actions: (OrderAction | null)[];
   totalAuthorized: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalAuthorized;
   totalCaptured: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_totalCaptured;
+  undiscountedTotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods | null)[] | null;

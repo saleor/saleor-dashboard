@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderConfirm
@@ -48,6 +48,45 @@ export interface OrderConfirm_orderConfirm_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderConfirm_orderConfirm_order_discounts_amount;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderConfirm_orderConfirm_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderConfirm_orderConfirm_order_events_discount_oldAmount | null;
+}
+
 export interface OrderConfirm_orderConfirm_order_events_relatedOrder {
   __typename: "Order";
   id: string;
@@ -62,6 +101,29 @@ export interface OrderConfirm_orderConfirm_order_events_user {
   lastName: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderConfirm_orderConfirm_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderConfirm_orderConfirm_order_events_lines_discount_oldAmount | null;
+}
+
 export interface OrderConfirm_orderConfirm_order_events_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -72,6 +134,8 @@ export interface OrderConfirm_orderConfirm_order_events_lines_orderLine {
 export interface OrderConfirm_orderConfirm_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderConfirm_orderConfirm_order_events_lines_discount | null;
   orderLine: OrderConfirm_orderConfirm_order_events_lines_orderLine | null;
 }
 
@@ -84,6 +148,7 @@ export interface OrderConfirm_orderConfirm_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderConfirm_orderConfirm_order_events_discount | null;
   relatedOrder: OrderConfirm_orderConfirm_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
@@ -97,6 +162,31 @@ export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_va
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
 }
 
 export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -131,6 +221,11 @@ export interface OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
   unitPrice: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderConfirm_orderConfirm_order_fulfillments_lines_orderLine_thumbnail | null;
 }
@@ -162,6 +257,31 @@ export interface OrderConfirm_orderConfirm_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderConfirm_orderConfirm_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice_gross;
+  net: OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderConfirm_orderConfirm_order_lines_unitPrice_gross {
@@ -196,6 +316,11 @@ export interface OrderConfirm_orderConfirm_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: OrderConfirm_orderConfirm_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderConfirm_orderConfirm_order_lines_undiscountedUnitPrice;
   unitPrice: OrderConfirm_orderConfirm_order_lines_unitPrice;
   thumbnail: OrderConfirm_orderConfirm_order_lines_thumbnail | null;
 }
@@ -244,12 +369,25 @@ export interface OrderConfirm_orderConfirm_order_subtotal_gross {
   currency: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderConfirm_orderConfirm_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderConfirm_orderConfirm_order_subtotal_gross;
+  net: OrderConfirm_orderConfirm_order_subtotal_net;
 }
 
 export interface OrderConfirm_orderConfirm_order_total_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_total_net {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -264,6 +402,7 @@ export interface OrderConfirm_orderConfirm_order_total_tax {
 export interface OrderConfirm_orderConfirm_order_total {
   __typename: "TaxedMoney";
   gross: OrderConfirm_orderConfirm_order_total_gross;
+  net: OrderConfirm_orderConfirm_order_total_net;
   tax: OrderConfirm_orderConfirm_order_total_tax;
 }
 
@@ -277,6 +416,24 @@ export interface OrderConfirm_orderConfirm_order_totalCaptured {
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderConfirm_orderConfirm_order_undiscountedTotal_net;
+  gross: OrderConfirm_orderConfirm_order_undiscountedTotal_gross;
 }
 
 export interface OrderConfirm_orderConfirm_order_user {
@@ -327,9 +484,11 @@ export interface OrderConfirm_orderConfirm_order {
   metadata: (OrderConfirm_orderConfirm_order_metadata | null)[];
   privateMetadata: (OrderConfirm_orderConfirm_order_privateMetadata | null)[];
   billingAddress: OrderConfirm_orderConfirm_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderConfirm_orderConfirm_order_discounts[] | null;
   events: (OrderConfirm_orderConfirm_order_events | null)[] | null;
   fulfillments: (OrderConfirm_orderConfirm_order_fulfillments | null)[];
   lines: (OrderConfirm_orderConfirm_order_lines | null)[];
@@ -345,6 +504,7 @@ export interface OrderConfirm_orderConfirm_order {
   actions: (OrderAction | null)[];
   totalAuthorized: OrderConfirm_orderConfirm_order_totalAuthorized;
   totalCaptured: OrderConfirm_orderConfirm_order_totalCaptured;
+  undiscountedTotal: OrderConfirm_orderConfirm_order_undiscountedTotal;
   user: OrderConfirm_orderConfirm_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderConfirm_orderConfirm_order_availableShippingMethods | null)[] | null;

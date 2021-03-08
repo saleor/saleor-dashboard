@@ -122,7 +122,7 @@ function usePageForm(
     title: page?.title || ""
   });
   const [content, changeContent] = useRichText({
-    initial: page?.content,
+    initial: pageExists ? page?.content : null,
     triggerChange
   });
 

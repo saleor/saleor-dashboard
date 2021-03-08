@@ -111,16 +111,12 @@ const TableLine: React.FC<TableLineProps> = ({
         )}
       </TableCell>
       <TableCell className={classes.colTotal}>
-        {maybe(() => line.quantity * line.orderLine.unitPrice.gross.amount) ? (
-          <Money
-            money={{
-              amount: line.quantity * line.orderLine.unitPrice.gross.amount,
-              currency: line.orderLine.unitPrice.gross.currency
-            }}
-          />
-        ) : (
-          <Skeleton />
-        )}
+        <Money
+          money={{
+            amount: line.quantity * line.orderLine.unitPrice.gross.amount,
+            currency: line.orderLine.unitPrice.gross.currency
+          }}
+        />
       </TableCell>
     </TableRow>
   );

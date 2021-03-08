@@ -3,7 +3,7 @@ import faker from "faker";
 
 import Channels from "../apiRequests/Channels";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { PRODUCTS_SELECTORS } from "../elements/catalog/product-selectors";
+import { PRODUCTS_SELECTORS } from "../elements/catalog/products/product-selectors";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../elements/channels/add-channel-form-selectors";
 import { CHANNEL_FORM_SELECTORS } from "../elements/channels/channel-form-selectors";
 import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
@@ -44,10 +44,13 @@ describe("Channels", () => {
 
   it("should create new channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    cy.visit(urlList.channels).waitForGraph("Channels");
+    cy.addAliasToGraphRequest("Channels");
+    cy.visit(urlList.channels);
+    cy.wait("@Channels");
+    cy.addAliasToGraphRequest("Channel");
     channelsSteps.createChannelByView(randomChannel, currency);
     // New channel should be visible in channels list
-    cy.waitForGraph("Channel")
+    cy.wait("@Channel")
       .get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
@@ -62,7 +65,9 @@ describe("Channels", () => {
       .click();
 
     // new channel should be visible at product availability form
-    cy.visit(urlList.products).waitForGraph("InitialProductFilterData");
+    cy.addAliasToGraphRequest("InitialProductFilterData");
+    cy.visit(urlList.products);
+    cy.wait("@InitialProductFilterData");
     cy.get(PRODUCTS_SELECTORS.productsList)
       .first()
       .click()
@@ -103,15 +108,17 @@ describe("Channels", () => {
       randomChannelToDelete,
       currency
     );
-    cy.visit(urlList.channels).waitForGraph("Channels");
-    cy.get(CHANNELS_SELECTORS.channelName)
-      .contains(randomChannelToDelete)
+    cy.addAliasToGraphRequest("Channels");
+    cy.visit(urlList.channels);
+    cy.wait("@Channels");
+    cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)
       .find("button")
-      .click()
-      .get(BUTTON_SELECTORS.submit)
-      .click()
-      .waitForGraph("Channels");
+      .click();
+    cy.addAliasToGraphRequest("Channels");
+    cy.get(BUTTON_SELECTORS.submit).click();
+    cy.wait("@Channels");
+
     cy.get(CHANNELS_SELECTORS.channelName)
       .contains(randomChannelToDelete)
       .should("not.exist");

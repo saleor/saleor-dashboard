@@ -56,13 +56,9 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: OrderUrlQueryParams = qs;
+  const id = match.params.id;
 
-  return (
-    <OrderDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
+  return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
 };
 
 const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => (

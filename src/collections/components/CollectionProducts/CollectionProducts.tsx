@@ -108,6 +108,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         }
         toolbar={
           <Button
+            data-test-id="add-product"
             disabled={disabled}
             variant="text"
             color="primary"
