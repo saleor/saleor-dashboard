@@ -2,7 +2,7 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
+import { fetchMoreProps, limits, listActionsProps } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -42,6 +42,7 @@ const props: ProductUpdatePageProps = {
   hasChannelChanged: false,
   header: product.name,
   media: product.media,
+  limits,
   onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
   onChannelsChange: () => undefined,

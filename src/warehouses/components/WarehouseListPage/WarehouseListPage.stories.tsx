@@ -1,4 +1,6 @@
 import {
+  limits,
+  limitsReached,
   pageListProps,
   searchPageProps,
   sortPageProps,
@@ -19,6 +21,7 @@ const props: WarehouseListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
+  limits,
   onBack: () => undefined,
   onRemove: () => undefined,
   sort: {
@@ -34,4 +37,8 @@ storiesOf("Views / Warehouses / Warehouse list", module)
   .add("loading", () => (
     <WarehouseListPage {...props} disabled={true} warehouses={undefined} />
   ))
-  .add("no data", () => <WarehouseListPage {...props} warehouses={[]} />);
+  .add("no data", () => <WarehouseListPage {...props} warehouses={[]} />)
+  .add("no limits", () => <WarehouseListPage {...props} limits={undefined} />)
+  .add("limits reached", () => (
+    <WarehouseListPage {...props} limits={limitsReached} />
+  ));
