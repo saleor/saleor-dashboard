@@ -162,7 +162,7 @@
     "radix": "error",
     "simple-import-sort/sort": ["error"],
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
-    "sort-keys": "warn",
+    "sort-keys": "off",
     "space-before-function-paren": "off",
     "spaced-comment": "error",
     "use-isnan": "error",
