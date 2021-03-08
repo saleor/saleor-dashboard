@@ -1,12 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
+import { ITheme } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
-  theme => ({
+  (theme: ITheme) => ({
     primary: {
-      color: theme.palette.primary.main
+      color: theme.palette.textHighlighted.active
     },
     root: {
       cursor: "pointer",
@@ -17,6 +18,10 @@ const useStyles = makeStyles(
     },
     underline: {
       textDecoration: "underline"
+    },
+    disabled: {
+      cursor: "default",
+      color: theme.palette.textHighlighted.inactive
     }
   }),
   { name: "Link" }
@@ -27,6 +32,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   underline?: boolean;
   typographyProps?: TypographyProps;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const Link: React.FC<LinkProps> = props => {
@@ -36,6 +42,7 @@ const Link: React.FC<LinkProps> = props => {
     color = "primary",
     underline = false,
     onClick,
+    disabled,
     ...linkProps
   } = props;
 
@@ -47,9 +54,14 @@ const Link: React.FC<LinkProps> = props => {
       className={classNames(className, {
         [classes.root]: true,
         [classes[color]]: true,
-        [classes.underline]: underline
+        [classes.underline]: underline,
+        [classes.disabled]: disabled
       })}
       onClick={event => {
+        if (disabled) {
+          return;
+        }
+
         event.preventDefault();
         onClick();
       }}

@@ -99,12 +99,6 @@ describe("Draft orders", () => {
     cy.getTextFromElement(DRAFT_ORDER_SELECTORS.pageHeader).as(
       "draftOrderNumber"
     );
-    cy.addAliasToGraphRequest("OrderDetails");
-
-    // Reload should be removed after resolving bug: SALEOR-1601
-    cy.reload();
-
-    cy.wait("@OrderDetails");
     cy.addAliasToGraphRequest("OrderDraftFinalize");
     cy.get(DRAFT_ORDER_SELECTORS.finalizeButton)
       .should("be.enabled")

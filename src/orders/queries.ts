@@ -139,6 +139,7 @@ export const useOrderDraftListQuery = makeQuery<
 
 export const orderDetailsQuery = gql`
   ${fragmentOrderDetails}
+  ${fragmentMoney}
   query OrderDetails($id: ID!) {
     order(id: $id) {
       ...OrderDetailsFragment
@@ -152,6 +153,7 @@ export const orderDetailsQuery = gql`
     }
   }
 `;
+
 export const TypedOrderDetailsQuery = TypedQuery<
   OrderDetails,
   OrderDetailsVariables
