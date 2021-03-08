@@ -43,7 +43,7 @@ const staffMemberAddMutation = gql`
     }
   }
 `;
-export const TypedStaffMemberAddMutation = TypedMutation<
+export const useStaffMemberAddMutation = makeMutation<
   StaffMemberAdd,
   StaffMemberAddVariables
 >(staffMemberAddMutation);
