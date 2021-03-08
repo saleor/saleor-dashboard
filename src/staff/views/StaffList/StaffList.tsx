@@ -3,6 +3,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -73,6 +74,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables
   });
+  const limitOpts = useShopLimitsQuery({});
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
@@ -176,7 +178,8 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
-        disabled={loading || addStaffMemberData.loading}
+        disabled={loading || addStaffMemberData.loading || limitOpts.loading}
+        limits={limitOpts.data?.shop.limits}
         settings={settings}
         pageInfo={pageInfo}
         sort={getSortParams(params)}

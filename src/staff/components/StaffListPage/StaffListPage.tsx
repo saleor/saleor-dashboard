@@ -1,9 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import {
@@ -12,6 +15,7 @@ import {
   SortPage,
   TabPageProps
 } from "@saleor/types";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,6 +32,7 @@ export interface StaffListPageProps
     FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField>,
     TabPageProps {
+  limits: RefreshLimits_shop_limits;
   staffMembers: StaffList_staffUsers_edges_node[];
   onAdd: () => void;
   onBack: () => void;
@@ -37,6 +42,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
+  limits,
   onAdd,
   onAll,
   onBack,
@@ -51,20 +57,44 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   const intl = useIntl();
 
   const structure = createFilterStructure(intl, filterOpts);
+  const reachedLimit = isLimitReached(limits, "staffUsers");
 
   return (
     <Container>
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
-      <PageHeader title={intl.formatMessage(sectionNames.staff)}>
-        <Button color="primary" variant="contained" onClick={onAdd}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.staff)}
+        limit={
+          hasLimits(limits, "staffUsers") && {
+            data: limits,
+            key: "staffUsers",
+            text: "members"
+          }
+        }
+      >
+        <Button
+          color="primary"
+          disabled={reachedLimit}
+          variant="contained"
+          onClick={onAdd}
+        >
           <FormattedMessage
             defaultMessage="Invite staff member"
             description="button"
           />
         </Button>
       </PageHeader>
+      <Alert
+        title={intl.formatMessage({
+          defaultMessage: "Staff Member limit reached",
+          description: "alert"
+        })}
+        show={reachedLimit}
+      >
+        <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+      </Alert>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
