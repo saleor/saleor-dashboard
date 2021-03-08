@@ -218,7 +218,8 @@ export const product: (
       id: "UHJvZHVjdEltYWdlOjE=",
       sortOrder: 0,
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
@@ -226,7 +227,8 @@ export const product: (
       id: "UHJvZHVjdEltYWdlOaE=",
       sortOrder: 2,
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
@@ -234,7 +236,8 @@ export const product: (
       id: "UPJvZHVjdEltYWdlOjV=",
       sortOrder: 1,
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
@@ -242,7 +245,8 @@ export const product: (
       id: "UHJvZHVjdEltYHdlOjX=",
       sortOrder: 3,
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
@@ -250,7 +254,8 @@ export const product: (
       id: "UHJvZHVjdIlnYWdlOjX=",
       sortOrder: 4,
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     }
   ],
   metadata: [
@@ -2694,25 +2699,29 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "ProductMedia",
       id: "img1",
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
       id: "img2",
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
       id: "img7",
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     },
     {
       __typename: "ProductMedia",
       id: "img8",
       type: ProductMediaType.IMAGE,
-      url: placeholderImage
+      url: placeholderImage,
+      oembedData: "{}"
     }
   ],
   metadata: [
@@ -2844,7 +2853,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img1",
         sortOrder: 1,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2852,7 +2862,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img2",
         sortOrder: 4,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2860,7 +2871,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img3",
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2868,7 +2880,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img4",
         sortOrder: 3,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2876,7 +2889,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img5",
         sortOrder: 0,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2884,7 +2898,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img6",
         sortOrder: 1,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2892,7 +2907,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img7",
         sortOrder: 0,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2900,7 +2916,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img8",
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       },
       {
         __typename: "ProductMedia",
@@ -2908,7 +2925,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         id: "img9",
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
-        url: placeholderImage
+        url: placeholderImage,
+        oembedData: "{}"
       }
     ],
     name: "Our Awesome Book",
@@ -2922,7 +2940,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             __typename: "ProductMedia",
             id: "23123",
             type: ProductMediaType.IMAGE,
-            url: placeholderImage
+            url: placeholderImage,
+            oembedData: "{}"
           }
         ],
         name: "Extended Hard",
@@ -2936,7 +2955,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             __typename: "ProductMedia",
             id: "23123",
             type: ProductMediaType.IMAGE,
-            url: placeholderImage
+            url: placeholderImage,
+            oembedData: "{}"
           }
         ],
         name: "Extended Soft",
@@ -2950,7 +2970,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             __typename: "ProductMedia",
             id: "23123",
             type: ProductMediaType.IMAGE,
-            url: placeholderImage
+            url: placeholderImage,
+            oembedData: "{}"
           }
         ],
         name: "Normal Hard",
@@ -2964,7 +2985,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             __typename: "ProductMedia",
             id: "23123",
             type: ProductMediaType.IMAGE,
-            url: placeholderImage
+            url: placeholderImage,
+            oembedData: "{}"
           }
         ],
         name: "Normal Soft",
