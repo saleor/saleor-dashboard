@@ -2,7 +2,12 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
+import {
+  fetchMoreProps,
+  limits,
+  limitsReached,
+  listActionsProps
+} from "@saleor/fixtures";
 import ProductUpdatePage, {
   ProductUpdatePageProps
 } from "@saleor/products/components/ProductUpdatePage";
@@ -42,6 +47,7 @@ const props: ProductUpdatePageProps = {
   hasChannelChanged: false,
   header: product.name,
   media: product.media,
+  limits,
   onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
   onChannelsChange: () => undefined,
@@ -184,4 +190,8 @@ storiesOf("Views / Products / Product edit", module)
   ))
   .add("with channels", () => (
     <ProductUpdatePage {...props} currentChannels={channels} />
+  ))
+  .add("no limits", () => <ProductUpdatePage {...props} limits={undefined} />)
+  .add("limits reached", () => (
+    <ProductUpdatePage {...props} limits={limitsReached} />
   ));
