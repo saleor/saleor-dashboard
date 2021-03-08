@@ -1,5 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Alert from "@saleor/components/Alert/Alert";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -8,6 +9,7 @@ import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
+import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { sectionNames } from "@saleor/intl";
 import {
   GridAttributes_availableInGrid_edges_node,
@@ -23,6 +25,7 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -46,6 +49,7 @@ export interface ProductListPageProps
   channelsCount: number;
   currencySymbol: string;
   gridAttributes: GridAttributes_grid_edges_node[];
+  limits: ShopFragment_limits;
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;
@@ -70,6 +74,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     currentTab,
     defaultSettings,
     gridAttributes,
+    limits,
     availableInGridAttributes,
     filterOpts,
     hasMore,
@@ -120,9 +125,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     }))
   ];
 
+  const limitReached = isLimitReached(limits, "productVariants");
+
   return (
     <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.products)}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.products)}
+        limit={
+          hasLimits(limits, "productVariants") && {
+            data: limits,
+            key: "productVariants",
+            text: "SKUs used"
+          }
+        }
+      >
         <CardMenu
           className={classes.settings}
           menuItems={[
@@ -153,6 +169,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onSave={handleSave}
         />
         <Button
+          disabled={limitReached}
           onClick={onAdd}
           color="primary"
           variant="contained"
@@ -164,6 +181,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           />
         </Button>
       </PageHeader>
+      <Alert
+        show={limitReached}
+        title={intl.formatMessage({
+          defaultMessage: "SKU limit reached",
+          description: "alert"
+        })}
+      >
+        <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+      </Alert>
       <Card>
         <FilterBar
           currencySymbol={currencySymbol}

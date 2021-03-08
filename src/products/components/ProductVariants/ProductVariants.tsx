@@ -179,6 +179,7 @@ function getAvailabilityLabel(
 }
 
 interface ProductVariantsProps extends ListActions, ChannelProps {
+  addButtonDisabled: boolean;
   disabled: boolean;
   product: ProductDetails_product;
   variants: ProductDetails_product_variants[];
@@ -193,6 +194,7 @@ const numberOfColumns = 7;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
+    addButtonDisabled,
     disabled,
     variants,
     product,
@@ -224,6 +226,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         toolbar={
           hasVariants ? (
             <Button
+              disabled={addButtonDisabled}
               onClick={onVariantAdd}
               variant="text"
               color="primary"
@@ -236,6 +239,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             </Button>
           ) : (
             <Button
+              disabled={addButtonDisabled}
               onClick={onVariantsAdd}
               variant="text"
               color="primary"
