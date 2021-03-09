@@ -1,9 +1,8 @@
-import moment from "moment-timezone";
-
 import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/assign-products";
 import { MENAGE_CHANNEL_AVAILABILITY } from "../elements/channels/menage-channel-availability";
 import { SALES_SELECTORS } from "../elements/discounts/sales";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { formatDate } from "../support/formatDate";
 
 class SalesSteps {
   discountOptions = {
@@ -17,6 +16,8 @@ class SalesSteps {
     discountValue = 10,
     discountOption = this.discountOptions.PERCENTAGE
   }) {
+    const todaysDate = formatDate(new Date());
+
     cy.get(SALES_SELECTORS.createSaleButton)
       .click()
       .get(SALES_SELECTORS.nameInput)
@@ -35,7 +36,7 @@ class SalesSteps {
       .get(SALES_SELECTORS.discountValue)
       .type(discountValue)
       .get(SALES_SELECTORS.startDateInput)
-      .type(moment().format("YYYY-MM-DD"));
+      .type(todaysDate);
     cy.addAliasToGraphRequest("SaleCreate");
     cy.get(SALES_SELECTORS.saveButton).click();
     cy.wait("@SaleCreate");
