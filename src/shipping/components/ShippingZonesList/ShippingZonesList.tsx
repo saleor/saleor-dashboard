@@ -80,7 +80,11 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
-          <Button color="primary" onClick={onAdd}>
+          <Button
+            color="primary"
+            onClick={onAdd}
+            data-test-id="add-shipping-zone"
+          >
             <FormattedMessage
               defaultMessage="Create shipping zone"
               description="button"

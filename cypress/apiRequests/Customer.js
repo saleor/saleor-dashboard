@@ -1,6 +1,5 @@
-export class Customer {
-  createCustomer(email, customerName, address, isActive = false) {
-    const mutation = `
+export function createCustomer(email, customerName, address, isActive = false) {
+  const mutation = `
     mutation{
         customerCreate(input:{
         firstName: "${customerName}"
@@ -37,24 +36,24 @@ export class Customer {
         }
     }
     `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  deleteCustomers(startsWith) {
-    this.getCustomers(startsWith).then(resp => {
-      if (resp.body.data.customers) {
-        const customers = resp.body.data.customers.edges;
-        customers.forEach(element => {
-          if (element.node.email.includes(startsWith)) {
-            this.deleteCustomer(element.node.id);
-          }
-        });
-      }
-    });
-  }
+export function deleteCustomers(startsWith) {
+  getCustomers(startsWith).then(resp => {
+    if (resp.body.data.customers) {
+      const customers = resp.body.data.customers.edges;
+      customers.forEach(element => {
+        if (element.node.email.includes(startsWith)) {
+          deleteCustomer(element.node.id);
+        }
+      });
+    }
+  });
+}
 
-  deleteCustomer(customerId) {
-    const mutation = `mutation{
+export function deleteCustomer(customerId) {
+  const mutation = `mutation{
           customerDelete(id:"${customerId}"){
             accountErrors{
               code
@@ -62,11 +61,11 @@ export class Customer {
             }
           }
         }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  getCustomers(startsWith) {
-    const query = `query{
+export function getCustomers(startsWith) {
+  const query = `query{
             customers(first:100, filter: {
                 search: "${startsWith}"
               }){
@@ -79,7 +78,5 @@ export class Customer {
             }
           }
           `;
-    return cy.sendRequestWithQuery(query);
-  }
+  return cy.sendRequestWithQuery(query);
 }
-export default Customer;

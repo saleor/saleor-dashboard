@@ -1,6 +1,5 @@
-class Collections {
-  getCollection(collectionId, channelSlug) {
-    const query = `query Collection{
+export function getCollection(collectionId, channelSlug) {
+  const query = `query Collection{
         collection(id: "${collectionId}", channel: "${channelSlug}") {
           id
           slug
@@ -16,7 +15,5 @@ class Collections {
           }
         }
       }`;
-    return cy.sendRequestWithQuery(query, "token");
-  }
+  return cy.sendRequestWithQuery(query, "token");
 }
-export default Collections;

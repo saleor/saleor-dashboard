@@ -1,29 +1,26 @@
 import faker from "faker";
 
-import Customer from "../apiRequests/Customer";
+import { createCustomer, deleteCustomers } from "../apiRequests/Customer";
 import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
-import HomePageSteps from "../steps/homePageSteps";
+import { changeChannel } from "../steps/homePageSteps";
 import { urlList } from "../url/urlList";
-import ChannelsUtils from "../utils/channelsUtils";
-import HomePageUtils from "../utils/homePageUtils";
-import OrdersUtils from "../utils/ordersUtils";
-import ProductsUtils from "../utils/productsUtils";
-import ShippingUtils from "../utils/shippingUtils";
+import { getDefaultChannel } from "../utils/channelsUtils";
+import * as homePageUtils from "../utils/homePageUtils";
+import {
+  createReadyToFulfillOrder,
+  createWaitingForCaptureOrder
+} from "../utils/ordersUtils";
+import * as productsUtils from "../utils/productsUtils";
+import * as shippingUtils from "../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
   const startsWith = "Cy-";
 
-  const customer = new Customer();
-  const productsUtils = new ProductsUtils();
-  const shippingUtils = new ShippingUtils();
-  const ordersUtils = new OrdersUtils();
-  const channelsUtils = new ChannelsUtils();
-  const homePageUtils = new HomePageUtils();
-  const homePageSteps = new HomePageSteps();
-
   let customerId;
   let defaultChannel;
+  let createdVariants;
+
   const productPrice = 22;
   const shippingPrice = 12;
   const randomName = startsWith + faker.random.number();
@@ -32,20 +29,17 @@ describe("Homepage analytics", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productsUtils.deleteProperProducts(startsWith);
-    customer.deleteCustomers(startsWith);
+    deleteCustomers(startsWith);
     shippingUtils.deleteShipping(startsWith);
     let addresses;
 
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         cy.fixture("addresses");
       })
       .then(addressesFixture => (addresses = addressesFixture))
-      .then(() =>
-        customer.createCustomer(randomEmail, randomName, addresses.plAddress)
-      )
+      .then(() => createCustomer(randomEmail, randomName, addresses.plAddress))
       .then(resp => {
         customerId = resp.body.data.customerCreate.user.id;
         shippingUtils.createShipping({
@@ -73,6 +67,9 @@ describe("Homepage analytics", () => {
           categoryId: category.id,
           price: productPrice
         });
+      })
+      .then(() => {
+        createdVariants = productsUtils.getCreatedVariants();
       });
   });
 
@@ -96,11 +93,11 @@ describe("Homepage analytics", () => {
       .getOrdersReadyToFulfill(defaultChannel.slug)
       .as("ordersReadyToFulfill");
 
-    ordersUtils.createReadyToFulfillOrder(
+    createReadyToFulfillOrder(
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
@@ -109,7 +106,7 @@ describe("Homepage analytics", () => {
         `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`
       );
       cy.visit(urlList.homePage);
-      homePageSteps.changeChannel(defaultChannel.name);
+      changeChannel(defaultChannel.name);
       cy.contains(
         HOMEPAGE_SELECTORS.ordersReadyToFulfill,
         ordersReadyToFulfillRegexp
@@ -120,12 +117,11 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
       .as("ordersReadyForCapture");
-    const variantsList = productsUtils.getCreatedVariants();
 
-    ordersUtils.createWaitingForCaptureOrder(
+    createWaitingForCaptureOrder(
       defaultChannel.slug,
       randomEmail,
-      variantsList,
+      createdVariants,
       shippingUtils.getShippingMethod().id
     );
 
@@ -136,7 +132,7 @@ describe("Homepage analytics", () => {
         `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`
       );
       cy.visit(urlList.homePage);
-      homePageSteps.changeChannel(defaultChannel.name);
+      changeChannel(defaultChannel.name);
       cy.contains(
         HOMEPAGE_SELECTORS.ordersReadyForCapture,
         ordersReadyForCaptureRegexp
@@ -148,13 +144,12 @@ describe("Homepage analytics", () => {
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
     const productOutOfStockRandomName = startsWith + faker.random.number();
-    const productsOutOfStockUtils = new ProductsUtils();
     const warehouse = shippingUtils.getWarehouse();
     const productType = productsUtils.getProductType();
     const attribute = productsUtils.getAttribute();
     const category = productsUtils.getCategory();
 
-    productsOutOfStockUtils.createProductInChannel({
+    productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,
       channelId: defaultChannel.id,
       warehouseId: warehouse.id,
@@ -172,7 +167,7 @@ describe("Homepage analytics", () => {
         `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`
       );
       cy.visit(urlList.homePage);
-      homePageSteps.changeChannel(defaultChannel.name);
+      changeChannel(defaultChannel.name);
       cy.contains(
         HOMEPAGE_SELECTORS.productsOutOfStock,
         productsOutOfStockRegexp
@@ -182,11 +177,11 @@ describe("Homepage analytics", () => {
   it("should correct amount of sales be displayed", () => {
     homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
 
-    ordersUtils.createReadyToFulfillOrder(
+    createReadyToFulfillOrder(
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
 
     cy.get("@salesAmount").then(salesAmount => {
@@ -205,7 +200,7 @@ describe("Homepage analytics", () => {
         `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`
       );
       cy.visit(urlList.homePage);
-      homePageSteps.changeChannel(defaultChannel.name);
+      changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
         "be.visible"
       );
@@ -214,11 +209,11 @@ describe("Homepage analytics", () => {
   it("should correct amount of orders be displayed", () => {
     homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
 
-    ordersUtils.createReadyToFulfillOrder(
+    createReadyToFulfillOrder(
       customerId,
       shippingUtils.getShippingMethod().id,
       defaultChannel.id,
-      productsUtils.getCreatedVariants()
+      createdVariants
     );
 
     cy.get("@todaysOrders").then(ordersBefore => {
@@ -228,7 +223,7 @@ describe("Homepage analytics", () => {
         `${notANumberRegex}${allOrders}${notANumberRegex}`
       );
       cy.visit(urlList.homePage);
-      homePageSteps.changeChannel(defaultChannel.name);
+      changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");
     });
   });

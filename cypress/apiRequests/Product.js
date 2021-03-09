@@ -1,13 +1,12 @@
 import { getValueWithDefault } from "./utils/Utils";
 
-class Product {
-  getFirstProducts(first, search) {
-    const filter = search
-      ? `, filter:{
+export function getFirstProducts(first, search) {
+  const filter = search
+    ? `, filter:{
       search:"${search}"
     }`
-      : "";
-    const query = `query{
+    : "";
+  const query = `query{
             products(first:${first}${filter}){
               edges{
                 node{
@@ -20,19 +19,19 @@ class Product {
               }
             }
           `;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.products.edges);
-  }
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.products.edges);
+}
 
-  updateChannelInProduct({
-    productId,
-    channelId,
-    isPublished = true,
-    isAvailableForPurchase = true,
-    visibleInListings = true
-  }) {
-    const mutation = `mutation{
+export function updateChannelInProduct({
+  productId,
+  channelId,
+  isPublished = true,
+  isAvailableForPurchase = true,
+  visibleInListings = true
+}) {
+  const mutation = `mutation{
               productChannelListingUpdate(id:"${productId}",
               input:{
                 addChannels:{
@@ -48,11 +47,11 @@ class Product {
                 }
               }
             }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  updateChannelPriceInVariant(variantId, channelId) {
-    const mutation = `mutation{
+export function updateChannelPriceInVariant(variantId, channelId) {
+  const mutation = `mutation{
   productVariantChannelListingUpdate(id: "${variantId}", input: {
     channelId: "${channelId}"
           price: 10
@@ -63,10 +62,10 @@ class Product {
     }
   }
 } `;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  createProduct(attributeId, name, productType, category) {
-    const mutation = `mutation{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function createProduct(attributeId, name, productType, category) {
+  const mutation = `mutation{
       productCreate(input:{
         attributes:[{
           id:"${attributeId}"
@@ -84,36 +83,36 @@ class Product {
         }
       }
     }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  createVariant({
-    productId,
-    sku,
-    warehouseId,
-    quantity,
+export function createVariant({
+  productId,
+  sku,
+  warehouseId,
+  quantity,
+  channelId,
+  price = 1,
+  costPrice = 1
+}) {
+  const channelListings = getValueWithDefault(
     channelId,
-    price = 1,
-    costPrice = 1
-  }) {
-    const channelListings = getValueWithDefault(
-      channelId,
-      `channelListings:{
+    `channelListings:{
       channelId:"${channelId}"
       price:"${price}"
       costPrice:"${costPrice}"
     }`
-    );
+  );
 
-    const stocks = getValueWithDefault(
-      warehouseId,
-      `stocks:{
+  const stocks = getValueWithDefault(
+    warehouseId,
+    `stocks:{
       warehouse:"${warehouseId}"
       quantity:${quantity}
     }`
-    );
+  );
 
-    const mutation = `mutation{
+  const mutation = `mutation{
         productVariantBulkCreate(product: "${productId}", variants: {
           attributes: []
           sku: "${sku}"
@@ -130,11 +129,11 @@ class Product {
           }
         }
       }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  createTypeProduct(name, attributeId, slug = name) {
-    const mutation = `mutation{
+export function createTypeProduct(name, attributeId, slug = name) {
+  const mutation = `mutation{
   productTypeCreate(input: {
     name: "${name}"
         slug: "${slug}"
@@ -151,11 +150,11 @@ class Product {
     }
   }
 } `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  deleteProduct(productId) {
-    const mutation = `mutation{
+export function deleteProduct(productId) {
+  const mutation = `mutation{
   productDelete(id: "${productId}"){
     productErrors{
       field
@@ -163,11 +162,11 @@ class Product {
     }
   }
 } `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  getProductTypes(first, search) {
-    const query = `query{
+export function getProductTypes(first, search) {
+  const query = `query{
       productTypes(first:${first}, filter:{
         search:"${search}"
       }){
@@ -179,13 +178,13 @@ class Product {
         }
       }
     }`;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.productTypes.edges);
-  }
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.productTypes.edges);
+}
 
-  deleteProductType(productTypeId) {
-    const mutation = `mutation{
+export function deleteProductType(productTypeId) {
+  const mutation = `mutation{
       productTypeDelete(id:"${productTypeId}"){
         productErrors{
           field
@@ -193,8 +192,5 @@ class Product {
         }
       }
     }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-
-export default Product;

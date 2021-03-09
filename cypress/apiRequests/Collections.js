@@ -1,11 +1,10 @@
-class Collections {
-  getCollections(search) {
-    const filter = search
-      ? `, filter:{
+export function getCollections(search) {
+  const filter = search
+    ? `, filter:{
         search:""
       }`
-      : "";
-    const query = `query{
+    : "";
+  const query = `query{
         collections(first:100 ${filter}){
           edges{
             node{
@@ -15,12 +14,12 @@ class Collections {
           }
         }
       }`;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.collections.edges);
-  }
-  deleteCollection(collectionId) {
-    const mutation = `mutation{
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.collections.edges);
+}
+export function deleteCollection(collectionId) {
+  const mutation = `mutation{
         collectionDelete(id:"${collectionId}"){
           collection{
             id
@@ -31,7 +30,5 @@ class Collections {
           }
         }
       }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-export default Collections;

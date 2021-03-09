@@ -1,10 +1,14 @@
-class Warehouse {
-  createWarehouse(name, shippingZone, address, slug = name) {
-    const mutation = `mutation{
+import { getValueWithDefault } from "./utils/Utils";
+export function createWarehouse(name, address, shippingZone, slug = name) {
+  const shippingZones = getValueWithDefault(
+    shippingZone,
+    `shippingZones:"${shippingZone}"`
+  );
+  const mutation = `mutation{
                 createWarehouse(input:{
                   name:"${name}"
                   slug:"${slug}"
-                  shippingZones:"${shippingZone}"
+                  ${shippingZones}
                   address:{
                     streetAddress1: "${address.streetAddress1}"
                     streetAddress2: "${address.streetAddress2}"
@@ -24,10 +28,10 @@ class Warehouse {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
-  getWarehouses(first, search) {
-    const query = `query{
+  return cy.sendRequestWithQuery(mutation);
+}
+export function getWarehouses(first, search) {
+  const query = `query{
             warehouses(first:${first}, filter:{
               search:"${search}"
             }){
@@ -39,12 +43,12 @@ class Warehouse {
               }
             }
           }`;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.warehouses.edges);
-  }
-  deleteWarehouse(warehouseId) {
-    const mutation = `mutation{
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.warehouses.edges);
+}
+export function deleteWarehouse(warehouseId) {
+  const mutation = `mutation{
             deleteWarehouse(id:"${warehouseId}"){
               warehouseErrors{
                 field
@@ -52,7 +56,5 @@ class Warehouse {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-export default Warehouse;

@@ -1,12 +1,11 @@
-class Attribute {
-  createAttribute(name, attributeValues = ["value"]) {
-    attributeValues = attributeValues.map(element => `{name:"${element}"}`);
-    const mutation = `mutation{
+export function createAttribute(name, attributeValues = ["value"]) {
+  const values = attributeValues.map(element => `{name:"${element}"}`);
+  const mutation = `mutation{
               attributeCreate(input:{
                 name:"${name}"
                 valueRequired:false
                 type:PRODUCT_TYPE
-                values: [${attributeValues}]
+                values: [${values}]
               }){
                 attribute{
                   id
@@ -19,11 +18,11 @@ class Attribute {
                 }
               }
             }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  getAttributes(first, search) {
-    const mutation = `query{
+export function getAttributes(first, search) {
+  const mutation = `query{
             attributes(first:${first}, filter:{
               search:"${search}"
             }){
@@ -35,13 +34,13 @@ class Attribute {
               }
             }
           }`;
-    return cy
-      .sendRequestWithQuery(mutation)
-      .then(resp => resp.body.data.attributes.edges);
-  }
+  return cy
+    .sendRequestWithQuery(mutation)
+    .then(resp => resp.body.data.attributes.edges);
+}
 
-  deleteAttribute(attributeId) {
-    const mutation = `mutation{
+export function deleteAttribute(attributeId) {
+  const mutation = `mutation{
             attributeDelete(id:"${attributeId}"){
               attributeErrors{
                 field
@@ -49,7 +48,5 @@ class Attribute {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
 }
-export default Attribute;

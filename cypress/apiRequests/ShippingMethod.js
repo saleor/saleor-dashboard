@@ -1,6 +1,5 @@
-class ShippingMethod {
-  createShippingRate(name, shippingZone) {
-    const mutation = `
+export function createShippingRate(name, shippingZone) {
+  const mutation = `
           mutation{
             shippingPriceCreate(input:{
               name: "${name}"
@@ -13,11 +12,11 @@ class ShippingMethod {
             }
           }
           `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  createShippingZone(name, country) {
-    const mutation = `
+export function createShippingZone(name, country) {
+  const mutation = `
           mutation{
               shippingZoneCreate(input:{
                 name: "${name}"
@@ -25,15 +24,16 @@ class ShippingMethod {
               }){
                 shippingZone{
                   id
+                  name
                 }
               }
             }
           `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  addChannelToShippingMethod(shippingRateId, channelId, price) {
-    const mutation = `
+export function addChannelToShippingMethod(shippingRateId, channelId, price) {
+  const mutation = `
           mutation{
               shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
                 addChannels: {
@@ -51,11 +51,11 @@ class ShippingMethod {
               }
             }
           `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  deleteShippingZone(shippingZoneId) {
-    const mutation = `mutation{
+export function deleteShippingZone(shippingZoneId) {
+  const mutation = `mutation{
           shippingZoneDelete(id:"${shippingZoneId}"){
             shippingErrors{
               message
@@ -63,11 +63,11 @@ class ShippingMethod {
           }
         }
         `;
-    return cy.sendRequestWithQuery(mutation);
-  }
+  return cy.sendRequestWithQuery(mutation);
+}
 
-  getShippingZones() {
-    const query = `query{
+export function getShippingZones() {
+  const query = `query{
           shippingZones(first:100){
             edges{
               node{
@@ -78,9 +78,7 @@ class ShippingMethod {
           }
         }
         `;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.shippingZones.edges);
-  }
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.shippingZones.edges);
 }
-export default ShippingMethod;
