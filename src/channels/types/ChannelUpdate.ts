@@ -8,6 +8,34 @@ import { ChannelUpdateInput, ChannelErrorCode } from "./../../types/globalTypes"
 // GraphQL mutation operation: ChannelUpdate
 // ====================================================
 
+export interface ChannelUpdate_channelUpdate_channel_shippingZones_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ChannelUpdate_channelUpdate_channel_shippingZones_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface ChannelUpdate_channelUpdate_channel_shippingZones_countries {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
+}
+
+export interface ChannelUpdate_channelUpdate_channel_shippingZones {
+  __typename: "ShippingZone";
+  metadata: (ChannelUpdate_channelUpdate_channel_shippingZones_metadata | null)[];
+  privateMetadata: (ChannelUpdate_channelUpdate_channel_shippingZones_privateMetadata | null)[];
+  id: string;
+  countries: (ChannelUpdate_channelUpdate_channel_shippingZones_countries | null)[] | null;
+  name: string;
+  description: string | null;
+}
+
 export interface ChannelUpdate_channelUpdate_channel {
   __typename: "Channel";
   id: string;
@@ -16,6 +44,7 @@ export interface ChannelUpdate_channelUpdate_channel {
   slug: string;
   currencyCode: string;
   hasOrders: boolean;
+  shippingZones: ChannelUpdate_channelUpdate_channel_shippingZones[];
 }
 
 export interface ChannelUpdate_channelUpdate_errors {

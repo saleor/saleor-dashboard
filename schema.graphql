@@ -940,6 +940,7 @@ type Channel implements Node {
   slug: String!
   currencyCode: String!
   hasOrders: Boolean!
+  shippingZones: [ShippingZone!]!
 }
 
 type ChannelActivate {
@@ -965,6 +966,7 @@ input ChannelCreateInput {
   name: String!
   slug: String!
   currencyCode: String!
+  addShippingZones: [ID!]
 }
 
 type ChannelDeactivate {
@@ -993,6 +995,7 @@ type ChannelError {
   field: String
   message: String
   code: ChannelErrorCode!
+  shippingZones: [ID!]
 }
 
 enum ChannelErrorCode {
@@ -1005,6 +1008,7 @@ enum ChannelErrorCode {
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT
   CHANNELS_CURRENCY_MUST_BE_THE_SAME
   CHANNEL_WITH_ORDERS
+  DUPLICATED_INPUT_ITEM
 }
 
 type ChannelUpdate {
@@ -1020,6 +1024,8 @@ input ChannelUpdateInput {
   isActive: Boolean
   name: String
   slug: String
+  addShippingZones: [ID!]
+  removeShippingZones: [ID!]
 }
 
 type Checkout implements Node & ObjectWithMetadata {
@@ -6226,7 +6232,8 @@ type ShippingZone implements Node & ObjectWithMetadata {
   priceRange: MoneyRange
   countries: [CountryDisplay]
   shippingMethods: [ShippingMethod]
-  warehouses: [Warehouse]
+  warehouses: [Warehouse!]!
+  channels: [Channel!]!
   description: String
 }
 
@@ -6265,6 +6272,7 @@ input ShippingZoneCreateInput {
   countries: [String]
   default: Boolean
   addWarehouses: [ID]
+  addChannels: [ID!]
 }
 
 type ShippingZoneDelete {
@@ -6291,7 +6299,9 @@ input ShippingZoneUpdateInput {
   countries: [String]
   default: Boolean
   addWarehouses: [ID]
+  addChannels: [ID!]
   removeWarehouses: [ID]
+  removeChannels: [ID!]
 }
 
 type Shop {

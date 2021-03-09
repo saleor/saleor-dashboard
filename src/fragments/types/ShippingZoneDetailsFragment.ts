@@ -123,5 +123,5 @@ export interface ShippingZoneDetailsFragment {
   description: string | null;
   default: boolean;
   shippingMethods: (ShippingZoneDetailsFragment_shippingMethods | null)[] | null;
-  warehouses: (ShippingZoneDetailsFragment_warehouses | null)[] | null;
+  warehouses: ShippingZoneDetailsFragment_warehouses[];
 }
