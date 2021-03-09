@@ -55,7 +55,6 @@
     "keycode": "^2.2.0",
     "lodash": "^4.17.20",
     "lodash-es": "^4.17.14",
-    "moment": "^2.24.0",
     "moment-timezone": "^0.5.32",
     "qs": "^6.9.0",
     "react": "^16.12.0",
