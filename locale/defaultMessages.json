@@ -1879,10 +1879,6 @@
   "src_dot_components_dot_ErrorPage_dot_3182212440": {
     "string": "We've encountered a problem..."
   },
-  "src_dot_components_dot_FileUpload_dot_3050254265": {
-    "context": "upload file, button",
-    "string": "Upload"
-  },
   "src_dot_components_dot_FilterBar_dot_2173195312": {
     "context": "button",
     "string": "Delete Search"

@@ -1,7 +1,7 @@
 import isArray from "lodash-es/isArray";
 import { stringify } from "qs";
 
-export function stringifyQs(params: object): string {
+export function stringifyQs(params: {}): string {
   return stringify(params, {
     indices: false
   });
