@@ -2,12 +2,6 @@ import * as attributeRequest from "../apiRequests/Attribute";
 import * as categoryRequest from "../apiRequests/Category";
 import * as productRequest from "../apiRequests/Product";
 
-let product;
-let variants;
-let productType;
-let attribute;
-let category;
-
 export function createProductInChannel({
   name,
   channelId,
@@ -21,16 +15,19 @@ export function createProductInChannel({
   isAvailableForPurchase = true,
   visibleInListings = true
 }) {
+  let product;
+  let variants;
   return createProduct(attributeId, name, productTypeId, categoryId)
-    .then(() =>
+    .then(productResp => {
+      product = productResp;
       productRequest.updateChannelInProduct({
         productId: product.id,
         channelId,
         isPublished,
         isAvailableForPurchase,
         visibleInListings
-      })
-    )
+      });
+    })
     .then(() => {
       createVariant({
         productId: product.id,
@@ -40,6 +37,10 @@ export function createProductInChannel({
         channelId,
         price
       });
+    })
+    .then(variantsResp => {
+      variants = variantsResp;
+      return { product, variants };
     });
 }
 
@@ -47,29 +48,42 @@ export function createTypeAttributeAndCategoryForProduct(
   name,
   attributeValues
 ) {
+  let attribute;
+  let productType;
+  let category;
   return createAttribute(name, attributeValues)
-    .then(() => createTypeProduct(name, attribute.id))
-    .then(() => createCategory(name));
+    .then(attributeResp => {
+      attribute = attributeResp;
+      createTypeProduct(name, attributeResp.id);
+    })
+    .then(productTypeResp => {
+      productType = productTypeResp;
+      createCategory(name);
+    })
+    .then(categoryResp => {
+      category = categoryResp;
+      return { attribute, category, productType };
+    });
 }
 export function createAttribute(name, attributeValues) {
   return attributeRequest
     .createAttribute(name, attributeValues)
-    .then(resp => (attribute = resp.body.data.attributeCreate.attribute));
+    .its("body.data.attributeCreate.attribute");
 }
 export function createTypeProduct(name, attributeId) {
   return productRequest
     .createTypeProduct(name, attributeId)
-    .then(resp => (productType = resp.body.data.productTypeCreate.productType));
+    .its("body.data.productTypeCreate.productType");
 }
 export function createCategory(name) {
   return categoryRequest
     .createCategory(name)
-    .then(resp => (category = resp.body.data.categoryCreate.category));
+    .its("body.data.categoryCreate.category");
 }
 export function createProduct(attributeId, name, productTypeId, categoryId) {
   return productRequest
     .createProduct(attributeId, name, productTypeId, categoryId)
-    .then(resp => (product = resp.body.data.productCreate.product));
+    .its("body.data.productCreate.product");
 }
 export function createVariant({
   productId,
@@ -88,26 +102,9 @@ export function createVariant({
       channelId,
       price
     })
-    .then(
-      resp =>
-        (variants = resp.body.data.productVariantBulkCreate.productVariants)
-    );
+    .its("body.data.productVariantBulkCreate.productVariants");
 }
-export function getCreatedProduct() {
-  return product;
-}
-export function getCreatedVariants() {
-  return variants;
-}
-export function getProductType() {
-  return productType;
-}
-export function getAttribute() {
-  return attribute;
-}
-export function getCategory() {
-  return category;
-}
+
 export function deleteProperProducts(startsWith) {
   cy.deleteProperElements(
     productRequest.deleteProductType,

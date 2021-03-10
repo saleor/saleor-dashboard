@@ -26,6 +26,7 @@ describe("Collections", () => {
   let attribute;
   let productType;
   let category;
+  let product;
 
   let defaultChannel;
 
@@ -41,18 +42,25 @@ describe("Collections", () => {
         defaultChannel = channel;
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
-      .then(() => {
-        attribute = productsUtils.getAttribute();
-        productType = productsUtils.getProductType();
-        category = productsUtils.getCategory();
-        productsUtils.createProductInChannel({
-          name,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id
-        });
-      });
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+          productsUtils.createProductInChannel({
+            name,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id
+          });
+        }
+      )
+      .then(({ product: productResp }) => (product = productResp));
   });
 
   beforeEach(() => {
@@ -102,7 +110,7 @@ describe("Collections", () => {
       .createChannel({ name: collectionName })
       .then(() => {
         updateChannelInProduct(
-          productsUtils.getCreatedProduct().id,
+          product.id,
           channelsUtils.getCreatedChannel().id
         );
       })
@@ -129,15 +137,18 @@ describe("Collections", () => {
     // but are listed on Collections
     const randomName = `${startsWith}${faker.random.number()}`;
     let collection;
+    let createdProduct;
 
-    productsUtils.createProductInChannel({
-      name: randomName,
-      channelId: defaultChannel.id,
-      productTypeId: productType.id,
-      attributeId: attribute.id,
-      categoryId: category.id,
-      visibleInListings: false
-    });
+    productsUtils
+      .createProductInChannel({
+        name: randomName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        visibleInListings: false
+      })
+      .then(({ product: productResp }) => (createdProduct = productResp));
     cy.visit(urlList.collections);
     createCollection(randomName, true, defaultChannel)
       .then(collectionResp => {
@@ -148,19 +159,16 @@ describe("Collections", () => {
         getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
-        const isVisible = isProductInCollectionVisible(
-          resp,
-          productsUtils.getCreatedProduct().id
-        );
+        const isVisible = isProductInCollectionVisible(resp, createdProduct.id);
         expect(isVisible).to.equal(true);
       })
       .then(() => {
-        searchInShop(productsUtils.getCreatedProduct().name);
+        searchInShop(createdProduct.name);
       })
       .then(resp => {
         const isVisible = isProductVisibleInSearchResult(
           resp,
-          productsUtils.getCreatedProduct().name
+          createdProduct.name
         );
         expect(isVisible).to.equal(false);
       });
