@@ -20,6 +20,11 @@ describe("Homepage analytics", () => {
   let customerId;
   let defaultChannel;
   let createdVariants;
+  let productType;
+  let attribute;
+  let category;
+  let warehouse;
+  let shippingMethod;
 
   const productPrice = 22;
   const shippingPrice = 12;
@@ -28,9 +33,9 @@ describe("Homepage analytics", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
     deleteCustomers(startsWith);
-    shippingUtils.deleteShipping(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
     let addresses;
 
     getDefaultChannel()
@@ -49,27 +54,36 @@ describe("Homepage analytics", () => {
           price: shippingPrice
         });
       })
-      .then(() => {
-        productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
-      })
-      .then(() => {
-        const warehouse = shippingUtils.getWarehouse();
-        const productType = productsUtils.getProductType();
-        const attribute = productsUtils.getAttribute();
-        const category = productsUtils.getCategory();
-        productsUtils.createProductInChannel({
-          name: randomName,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          quantityInWarehouse: 20,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          price: productPrice
-        });
-      })
-      .then(() => {
-        createdVariants = productsUtils.getCreatedVariants();
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+          productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+        }
+      )
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+          productsUtils.createProductInChannel({
+            name: randomName,
+            channelId: defaultChannel.id,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 20,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+            price: productPrice
+          });
+        }
+      )
+      .then(({ variants: variantsResp }) => {
+        createdVariants = variantsResp;
       });
   });
 
@@ -95,7 +109,7 @@ describe("Homepage analytics", () => {
 
     createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethod().id,
+      shippingMethod.id,
       defaultChannel.id,
       createdVariants
     );
@@ -122,7 +136,7 @@ describe("Homepage analytics", () => {
       defaultChannel.slug,
       randomEmail,
       createdVariants,
-      shippingUtils.getShippingMethod().id
+      shippingMethod.id
     );
 
     cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
@@ -144,10 +158,10 @@ describe("Homepage analytics", () => {
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
     const productOutOfStockRandomName = startsWith + faker.random.number();
-    const warehouse = shippingUtils.getWarehouse();
-    const productType = productsUtils.getProductType();
-    const attribute = productsUtils.getAttribute();
-    const category = productsUtils.getCategory();
+    // const warehouse = shippingUtils.getWarehouse();
+    // const productType = productsUtils.getProductType();
+    // const attribute = productsUtils.getAttribute();
+    // const category = productsUtils.getCategory();
 
     productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,
@@ -179,7 +193,7 @@ describe("Homepage analytics", () => {
 
     createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethod().id,
+      shippingMethod.id,
       defaultChannel.id,
       createdVariants
     );
@@ -211,7 +225,7 @@ describe("Homepage analytics", () => {
 
     createReadyToFulfillOrder(
       customerId,
-      shippingUtils.getShippingMethod().id,
+      shippingMethod.id,
       defaultChannel.id,
       createdVariants
     );

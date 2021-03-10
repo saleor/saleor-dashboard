@@ -17,12 +17,20 @@ describe("Products displayed in listings", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productType = productsUtils.getProductType();
-      attribute = productsUtils.getAttribute();
-      category = productsUtils.getCategory();
-    });
+    productsUtils.deleteProductsStartsWith(startsWith);
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct(name)
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -44,8 +52,8 @@ describe("Products displayed in listings", () => {
           isAvailableForPurchase: false
         });
       })
-      .then(() => {
-        const product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        const product = productResp;
         const productUrl = productDetailsUrl(product.id);
         updateProductVisibleInListings(productUrl);
         searchInShop(productName);
@@ -73,8 +81,8 @@ describe("Products displayed in listings", () => {
           visibleInListings: true
         });
       })
-      .then(() => {
-        const product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        const product = productResp;
         const productUrl = productDetailsUrl(product.id);
         updateProductVisibleInListings(productUrl);
 

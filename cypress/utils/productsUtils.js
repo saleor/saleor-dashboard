@@ -105,20 +105,20 @@ export function createVariant({
     .its("body.data.productVariantBulkCreate.productVariants");
 }
 
-export function deleteProperProducts(startsWith) {
-  cy.deleteProperElements(
+export function deleteProductsStartsWith(startsWith) {
+  cy.deleteElementsStartsWith(
     productRequest.deleteProductType,
     productRequest.getProductTypes,
     startsWith,
     "productType"
   );
-  cy.deleteProperElements(
+  cy.deleteElementsStartsWith(
     attributeRequest.deleteAttribute,
     attributeRequest.getAttributes,
     startsWith,
     "attributes"
   );
-  cy.deleteProperElements(
+  cy.deleteElementsStartsWith(
     categoryRequest.deleteCategory,
     categoryRequest.getCategories,
     startsWith,

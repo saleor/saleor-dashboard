@@ -10,9 +10,9 @@ import {
 } from "../steps/collectionsSteps";
 import { urlList } from "../url/urlList";
 import * as channelsUtils from "../utils/channelsUtils";
-import { deleteProperCollections } from "../utils/collectionsUtils";
+import { deleteCollectionsStartsWith } from "../utils/collectionsUtils";
 import * as productsUtils from "../utils/productsUtils";
-import { deleteShipping } from "../utils/shippingUtils";
+import { deleteShippingStartsWith } from "../utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
@@ -32,9 +32,9 @@ describe("Collections", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    deleteProperCollections(startsWith);
-    deleteShipping(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()
@@ -105,22 +105,17 @@ describe("Collections", () => {
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     let collection;
+    let channel;
 
     channelsUtils
       .createChannel({ name: collectionName })
-      .then(() => {
-        updateChannelInProduct(
-          product.id,
-          channelsUtils.getCreatedChannel().id
-        );
+      .then(channelResp => {
+        channel = channelResp;
+        updateChannelInProduct(product.id, channel.id);
       })
       .then(() => {
         cy.visit(urlList.collections);
-        createCollection(
-          collectionName,
-          true,
-          channelsUtils.getCreatedChannel()
-        );
+        createCollection(collectionName, true, channel);
       })
       .then(collectionResp => {
         collection = collectionResp;

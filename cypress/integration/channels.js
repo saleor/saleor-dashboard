@@ -14,7 +14,7 @@ import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { createChannelByView } from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
-import { deleteChannels } from "../utils/channelsUtils";
+import { deleteChannelsStartsWith } from "../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
@@ -22,7 +22,7 @@ describe("Channels", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteChannels(channelStartsWith);
+    deleteChannelsStartsWith(channelStartsWith);
   });
 
   beforeEach(() => {
@@ -87,7 +87,7 @@ describe("Channels", () => {
   it("should validate currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels);
-    createChannelByView(randomChannel, currency, "notExistingCurrency");
+    createChannelByView(randomChannel, "notExistingCurrency");
     cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
       "be.visible"
     );
