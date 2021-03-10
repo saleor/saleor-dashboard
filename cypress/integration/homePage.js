@@ -158,10 +158,6 @@ describe("Homepage analytics", () => {
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
     const productOutOfStockRandomName = startsWith + faker.random.number();
-    // const warehouse = shippingUtils.getWarehouse();
-    // const productType = productsUtils.getProductType();
-    // const attribute = productsUtils.getAttribute();
-    // const category = productsUtils.getCategory();
 
     productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,

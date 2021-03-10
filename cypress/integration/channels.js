@@ -84,7 +84,7 @@ describe("Channels", () => {
     );
   });
 
-  it("should validate currency", () => {
+  it("should validate duplicated currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels);
     createChannelByView(randomChannel, "notExistingCurrency");

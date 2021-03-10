@@ -30,39 +30,17 @@ export function createShippingZone(name, country) {
   return shippingMethodRequest
     .createShippingZone(name, country)
     .its("body.data.shippingZoneCreate.shippingZone");
-  // .then(resp => {
-  //   shippingZone = resp.body.data.shippingZoneCreate.shippingZone;
-  // });
 }
 export function createWarehouse(name, shippingZoneId, address) {
   return warehouseRequest
     .createWarehouse(name, shippingZoneId, address)
     .its("body.data.createWarehouse.warehouse");
-  // .then(resp => {
-  //   warehouse = resp.body.data.createWarehouse.warehouse;
-  // });
 }
 export function createShippingRate(name, shippingZoneId) {
   return shippingMethodRequest
     .createShippingRate(name, shippingZoneId)
     .its("body.data.shippingPriceCreate.shippingMethod");
-  // .then(
-  //   resp =>
-  //     (shippingMethod = resp.body.data.shippingPriceCreate.shippingMethod)
-  // );
 }
-
-// export function getShippingMethod() {
-//   return shippingMethod;
-// }
-
-// export function getShippingZone() {
-//   return shippingZone;
-// }
-
-// export function getWarehouse() {
-//   return warehouse;
-// }
 
 export function deleteShippingStartsWith(startsWith) {
   cy.deleteElementsStartsWith(

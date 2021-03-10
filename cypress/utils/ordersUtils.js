@@ -1,9 +1,6 @@
 import * as checkoutRequest from "../apiRequests/Checkout";
 import * as orderRequest from "../apiRequests/Order";
 
-// let checkout;
-// let order;
-
 export function createWaitingForCaptureOrder(
   channelSlug,
   email,
@@ -41,13 +38,11 @@ export function createDraftOrder(customerId, shippingMethodId, channelId) {
   return orderRequest
     .createDraftOrder(customerId, shippingMethodId, channelId)
     .its("body.data.draftOrderCreate.order");
-  // .then(resp => (order = resp.body.data.draftOrderCreate.order));
 }
 export function createCheckout(channelSlug, email, variantsList) {
   return checkoutRequest
     .createCheckout(channelSlug, email, 1, variantsList)
     .its("body.data.checkoutCreate.checkout");
-  // .then(resp => (checkout = resp.body.data.checkoutCreate.checkout));
 }
 export function addPayment(checkoutId) {
   return checkoutRequest.addPayment(

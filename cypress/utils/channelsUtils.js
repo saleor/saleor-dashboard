@@ -1,7 +1,5 @@
 import * as channels from "../apiRequests/Channels";
 
-// let createdChannel;
-
 export function deleteChannelsStartsWith(nameStartsWith) {
   channels.getChannels().then(resp => {
     const channelsArray = new Set(resp.body.data.channels);
@@ -43,8 +41,4 @@ export function createChannel({
   return channels
     .createChannel(isActive, name, slug, currencyCode)
     .its("body.data.channelCreate.channel");
-  // .then(resp => (createdChannel = resp.body.data.channelCreate.channel));
 }
-// export function getCreatedChannel() {
-//   return createdChannel;
-// }
