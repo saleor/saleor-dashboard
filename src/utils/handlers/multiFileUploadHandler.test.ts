@@ -16,7 +16,7 @@ describe("Multiple file upload handler", () => {
       onStart: jest.fn()
     };
     const handle = createMultiFileUploadHandler(() => {
-      const promise = new Promise(resolve => {
+      const promise = new Promise<void>(resolve => {
         expect(cbs.onBeforeUpload).toBeCalledTimes(
           cbs.onAfterUpload.mock.calls.length + 1
         );
@@ -46,7 +46,7 @@ describe("Multiple file upload handler", () => {
       onStart: jest.fn()
     };
     const handle = createMultiFileUploadHandler((_, fileIndex) => {
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise<void>((resolve, reject) => {
         if (fileIndex === 2) {
           reject();
         } else {
