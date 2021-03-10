@@ -15,7 +15,7 @@ export interface RefreshLimits_shop_limits_currentUsage {
   warehouses: number | null;
 }
 
-export interface RefreshLimits_shop_limits_maximumUsage {
+export interface RefreshLimits_shop_limits_allowedUsage {
   __typename: "Limits";
   channels: number | null;
   orders: number | null;
@@ -27,7 +27,7 @@ export interface RefreshLimits_shop_limits_maximumUsage {
 export interface RefreshLimits_shop_limits {
   __typename: "LimitInfo";
   currentUsage: RefreshLimits_shop_limits_currentUsage;
-  maximumUsage: RefreshLimits_shop_limits_maximumUsage;
+  allowedUsage: RefreshLimits_shop_limits_allowedUsage;
 }
 
 export interface RefreshLimits_shop {

@@ -45,7 +45,7 @@ interface PageHeaderProps {
 
 function formatLimit(limit: LimitInfo): string {
   return `${limit.data.currentUsage[limit.key]}/${
-    limit.data.maximumUsage[limit.key]
+    limit.data.allowedUsage[limit.key]
   } ${limit.text}`;
 }
 
