@@ -5124,6 +5124,14 @@
     "context": "field is optional",
     "string": "Optional"
   },
+  "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadImages": {
+    "context": "modal button images upload",
+    "string": "Upload Images"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadUrl": {
+    "context": "modal button url upload",
+    "string": "Upload URL"
+  },
   "src_dot_products_dot_components_dot_ProductMedia_dot_media": {
     "context": "section header",
     "string": "Media"
@@ -5131,14 +5139,6 @@
   "src_dot_products_dot_components_dot_ProductMedia_dot_upload": {
     "context": "modal button upload",
     "string": "Upload"
-  },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_uploadImages": {
-    "context": "modal button images upload",
-    "string": "Upload Images"
-  },
-  "src_dot_products_dot_components_dot_ProductMedia_dot_uploadUrl": {
-    "context": "modal button url upload",
-    "string": "Upload URL"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
     "context": "product is not configurable",
