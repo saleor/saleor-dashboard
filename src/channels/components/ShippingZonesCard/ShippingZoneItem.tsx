@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
 import DeletableItem from "@saleor/components/DeletableItem";
@@ -32,10 +32,13 @@ const ShippingZoneItem: React.FC<ShippingZoneItemProps> = ({
   const handleDelete = () => onDelete(id);
 
   return (
-    <div className={classes.container}>
-      <Typography>{name}</Typography>
-      <DeletableItem onDelete={handleDelete} />
-    </div>
+    <>
+      <div className={classes.container}>
+        <Typography>{name}</Typography>
+        <DeletableItem onDelete={handleDelete} />
+      </div>
+      <Divider />
+    </>
   );
 };
 
