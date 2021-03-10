@@ -2,6 +2,8 @@ export type IThemeColors = Record<
   "primary" | "secondary" | "error" | "paperBorder" | "autofill",
   string
 > & {
+  highlightInactive: Record<"default", string>;
+} & {
   background: Record<"default" | "paper", string>;
 } & {
   checkbox: Record<"default", string>;
@@ -31,6 +33,9 @@ export type IThemeColors = Record<
 };
 
 export const dark: IThemeColors = {
+  highlightInactive: {
+    default: "#78797A"
+  },
   autofill: "#5D5881",
   background: {
     default: "#1D1E1F",
@@ -68,6 +73,9 @@ export const dark: IThemeColors = {
   theme: "dark"
 };
 export const light: IThemeColors = {
+  highlightInactive: {
+    default: "#C8C8C8"
+  },
   autofill: "#f4f6c5",
   background: {
     default: "#EFF5F8",
@@ -89,6 +97,7 @@ export const light: IThemeColors = {
     default: "#C8C8C8",
     disabled: "rgba(216, 216, 216, 0.3)"
   },
+
   input: {
     border: "#BDBDBD",
     default: "#FFFFFF",

@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { CSSProperties } from "@material-ui/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
@@ -24,7 +23,7 @@ import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => {
-    const inputPadding: CSSProperties = {
+    const inputPadding = {
       paddingBottom: theme.spacing(2),
       paddingTop: theme.spacing(2)
     };
@@ -77,7 +76,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
     onRefundedProductQuantityChange,
     onSetMaximalQuantities
   } = props;
-  const classes = useStyles(props);
+  const classes = useStyles({});
   const intl = useIntl();
 
   return (
