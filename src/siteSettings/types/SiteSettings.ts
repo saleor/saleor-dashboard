@@ -16,7 +16,7 @@ export interface SiteSettings_shop_limits_currentUsage {
   warehouses: number | null;
 }
 
-export interface SiteSettings_shop_limits_maximumUsage {
+export interface SiteSettings_shop_limits_allowedUsage {
   __typename: "Limits";
   channels: number | null;
   orders: number | null;
@@ -28,7 +28,7 @@ export interface SiteSettings_shop_limits_maximumUsage {
 export interface SiteSettings_shop_limits {
   __typename: "LimitInfo";
   currentUsage: SiteSettings_shop_limits_currentUsage;
-  maximumUsage: SiteSettings_shop_limits_maximumUsage;
+  allowedUsage: SiteSettings_shop_limits_allowedUsage;
 }
 
 export interface SiteSettings_shop_companyAddress_country {

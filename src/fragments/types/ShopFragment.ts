@@ -16,7 +16,7 @@ export interface ShopFragment_limits_currentUsage {
   warehouses: number | null;
 }
 
-export interface ShopFragment_limits_maximumUsage {
+export interface ShopFragment_limits_allowedUsage {
   __typename: "Limits";
   channels: number | null;
   orders: number | null;
@@ -28,7 +28,7 @@ export interface ShopFragment_limits_maximumUsage {
 export interface ShopFragment_limits {
   __typename: "LimitInfo";
   currentUsage: ShopFragment_limits_currentUsage;
-  maximumUsage: ShopFragment_limits_maximumUsage;
+  allowedUsage: ShopFragment_limits_allowedUsage;
 }
 
 export interface ShopFragment_companyAddress_country {

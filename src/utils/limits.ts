@@ -9,7 +9,7 @@ export function hasLimits(
     return false;
   }
 
-  return limits.maximumUsage[key] !== null;
+  return limits.allowedUsage[key] !== null;
 }
 
 export function isLimitReached(
@@ -20,5 +20,5 @@ export function isLimitReached(
     return false;
   }
 
-  return limits.currentUsage[key] >= limits.maximumUsage[key];
+  return limits.currentUsage[key] >= limits.allowedUsage[key];
 }

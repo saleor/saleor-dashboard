@@ -507,6 +507,14 @@ export const address = {
 
 export const limits: ShopLimitFragment_limits = {
   __typename: "LimitInfo",
+  allowedUsage: {
+    __typename: "Limits",
+    channels: 5,
+    orders: 500,
+    productVariants: 1000,
+    staffUsers: 10,
+    warehouses: 3
+  },
   currentUsage: {
     __typename: "Limits",
     channels: 2,
@@ -514,19 +522,11 @@ export const limits: ShopLimitFragment_limits = {
     productVariants: 100,
     staffUsers: 7,
     warehouses: 1
-  },
-  maximumUsage: {
-    __typename: "Limits",
-    channels: 5,
-    orders: 500,
-    productVariants: 1000,
-    staffUsers: 10,
-    warehouses: 3
   }
 };
 export const limitsReached: ShopLimitFragment_limits = {
   __typename: "LimitInfo",
-  currentUsage: {
+  allowedUsage: {
     __typename: "Limits",
     channels: 5,
     orders: 500,
@@ -534,7 +534,7 @@ export const limitsReached: ShopLimitFragment_limits = {
     staffUsers: 10,
     warehouses: 3
   },
-  maximumUsage: {
+  currentUsage: {
     __typename: "Limits",
     channels: 5,
     orders: 500,

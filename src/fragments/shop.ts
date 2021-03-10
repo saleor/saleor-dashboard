@@ -16,7 +16,7 @@ export const limitFragment = gql`
       currentUsage {
         ...LimitInfoFragment
       }
-      maximumUsage {
+      allowedUsage {
         ...LimitInfoFragment
       }
     }
