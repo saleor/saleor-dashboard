@@ -115,15 +115,15 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
-          attributes {
-            attribute {
-              id
-            }
-            values {
-              id
-              name
-            }
-          }
+#          attributes {  commented out for optimization, not neede in the main product list
+#            attribute {
+#              id
+#            }
+#            values {
+#              id
+#              name
+#            }
+#          }
           pricing {
             priceRangeUndiscounted {
               start {
