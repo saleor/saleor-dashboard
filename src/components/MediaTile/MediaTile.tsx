@@ -69,7 +69,9 @@ interface MediaTileProps {
 const MediaTile: React.FC<MediaTileProps> = props => {
   const { loading, onDelete, onEdit, media } = props;
   const classes = useStyles(props);
-  const parsedMediaOembedData = JSON.parse(media?.oembedData);
+  const parsedMediaOembedData = media?.oembedData
+    ? JSON.parse(media.oembedData)
+    : null;
   const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
