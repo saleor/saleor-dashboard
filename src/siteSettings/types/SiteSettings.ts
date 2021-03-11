@@ -7,30 +7,6 @@
 // GraphQL query operation: SiteSettings
 // ====================================================
 
-export interface SiteSettings_shop_limits_currentUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
-}
-
-export interface SiteSettings_shop_limits_allowedUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
-}
-
-export interface SiteSettings_shop_limits {
-  __typename: "LimitInfo";
-  currentUsage: SiteSettings_shop_limits_currentUsage;
-  allowedUsage: SiteSettings_shop_limits_allowedUsage;
-}
-
 export interface SiteSettings_shop_companyAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -66,7 +42,6 @@ export interface SiteSettings_shop_domain {
 
 export interface SiteSettings_shop {
   __typename: "Shop";
-  limits: SiteSettings_shop_limits;
   companyAddress: SiteSettings_shop_companyAddress | null;
   countries: SiteSettings_shop_countries[];
   customerSetPasswordUrl: string | null;

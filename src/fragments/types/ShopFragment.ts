@@ -7,30 +7,6 @@
 // GraphQL fragment: ShopFragment
 // ====================================================
 
-export interface ShopFragment_limits_currentUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
-}
-
-export interface ShopFragment_limits_allowedUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
-}
-
-export interface ShopFragment_limits {
-  __typename: "LimitInfo";
-  currentUsage: ShopFragment_limits_currentUsage;
-  allowedUsage: ShopFragment_limits_allowedUsage;
-}
-
 export interface ShopFragment_companyAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -66,7 +42,6 @@ export interface ShopFragment_domain {
 
 export interface ShopFragment {
   __typename: "Shop";
-  limits: ShopFragment_limits;
   companyAddress: ShopFragment_companyAddress | null;
   countries: ShopFragment_countries[];
   customerSetPasswordUrl: string | null;
