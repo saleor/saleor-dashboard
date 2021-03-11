@@ -5,7 +5,7 @@ import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { makeStyles } from "@saleor/theme";
@@ -26,7 +26,7 @@ export interface OrderListPageProps
   extends PageListProps,
     FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
-  limits: ShopFragment_limits;
+  limits: RefreshLimits_shop_limits;
   orders: OrderList_orders_edges_node[];
   onSettingsOpen: () => void;
 }

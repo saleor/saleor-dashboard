@@ -8,8 +8,8 @@ import ColumnPicker, {
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
-import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { sectionNames } from "@saleor/intl";
 import {
   GridAttributes_availableInGrid_edges_node,
@@ -49,7 +49,7 @@ export interface ProductListPageProps
   channelsCount: number;
   currencySymbol: string;
   gridAttributes: GridAttributes_grid_edges_node[];
-  limits: ShopFragment_limits;
+  limits: RefreshLimits_shop_limits;
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   onExport: () => void;

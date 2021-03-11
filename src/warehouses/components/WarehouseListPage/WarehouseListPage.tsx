@@ -5,7 +5,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
-import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -26,7 +26,7 @@ export interface WarehouseListPageProps
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     TabPageProps {
-  limits: ShopFragment_limits;
+  limits: RefreshLimits_shop_limits;
   warehouses: WarehouseWithShippingFragment[];
   onBack: () => void;
   onRemove: (id: string) => void;
