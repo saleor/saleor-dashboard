@@ -1,5 +1,3 @@
-import { limits } from "@saleor/fixtures";
-
 import { SiteSettings_shop } from "./types/SiteSettings";
 
 export const shop: SiteSettings_shop = {
@@ -38,6 +36,5 @@ export const shop: SiteSettings_shop = {
     __typename: "Domain",
     host: "localhost:8000"
   },
-  limits,
   name: "Saleor e-commerce"
 };
