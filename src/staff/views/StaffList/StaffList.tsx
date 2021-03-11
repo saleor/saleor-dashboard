@@ -74,7 +74,15 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables
   });
-  const limitOpts = useShopLimitsQuery({});
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: false,
+      orders: false,
+      productVariants: false,
+      staffUsers: true,
+      warehouses: false
+    }
+  });
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {

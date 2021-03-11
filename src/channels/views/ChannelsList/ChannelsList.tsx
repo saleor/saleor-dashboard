@@ -31,7 +31,15 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const intl = useIntl();
 
   const { data, refetch } = useChannelsList({ displayLoader: true });
-  const limitOpts = useShopLimitsQuery({});
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: true,
+      orders: false,
+      productVariants: false,
+      staffUsers: false,
+      warehouses: false
+    }
+  });
 
   const selectedChannel = data?.channels?.find(
     channel => channel.id === params?.id

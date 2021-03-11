@@ -137,7 +137,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     variables: { id }
   });
   const { channel } = useAppChannel();
-  const limitOpts = useShopLimitsQuery({});
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: false,
+      orders: false,
+      productVariants: true,
+      staffUsers: false,
+      warehouses: false
+    }
+  });
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 

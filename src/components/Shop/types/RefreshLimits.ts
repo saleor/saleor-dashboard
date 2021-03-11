@@ -38,3 +38,11 @@ export interface RefreshLimits_shop {
 export interface RefreshLimits {
   shop: RefreshLimits_shop;
 }
+
+export interface RefreshLimitsVariables {
+  channels: boolean;
+  orders: boolean;
+  productVariants: boolean;
+  staffUsers: boolean;
+  warehouses: boolean;
+}

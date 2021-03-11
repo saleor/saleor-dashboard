@@ -80,7 +80,15 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       }
     }
   });
-  const limitOpts = useShopLimitsQuery({});
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: false,
+      orders: false,
+      productVariants: false,
+      staffUsers: false,
+      warehouses: true
+    }
+  });
 
   const tabs = getFilterTabs();
 

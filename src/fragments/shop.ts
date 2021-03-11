@@ -4,11 +4,11 @@ import { fragmentAddress } from "./address";
 
 export const limitFragment = gql`
   fragment LimitInfoFragment on Limits {
-    channels
-    orders
-    productVariants
-    staffUsers
-    warehouses
+    channels @include(if: $channels)
+    orders @include(if: $orders)
+    productVariants @include(if: $productVariants)
+    staffUsers @include(if: $staffUsers)
+    warehouses @include(if: $warehouses)
   }
 
   fragment ShopLimitFragment on Shop {
@@ -25,9 +25,7 @@ export const limitFragment = gql`
 
 export const shopFragment = gql`
   ${fragmentAddress}
-  ${limitFragment}
   fragment ShopFragment on Shop {
-    ...ShopLimitFragment
     companyAddress {
       ...AddressFragment
     }

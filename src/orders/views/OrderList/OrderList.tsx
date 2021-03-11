@@ -72,7 +72,15 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const { channel, availableChannels } = useAppChannel();
-  const limitOpts = useShopLimitsQuery({});
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: false,
+      orders: true,
+      productVariants: false,
+      staffUsers: false,
+      warehouses: false
+    }
+  });
 
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels
