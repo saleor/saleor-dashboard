@@ -12,6 +12,8 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { useOrderConfirmMutation } from "@saleor/orders/mutations";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
+import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -458,72 +460,80 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             }
                           )}
                         />
-                        <OrderDraftPage
-                          disabled={loading}
-                          onNoteAdd={variables =>
-                            orderAddNote.mutate({
-                              input: variables,
-                              order: id
-                            })
-                          }
-                          users={maybe(
-                            () =>
-                              users.data.search.edges.map(edge => edge.node),
-                            []
-                          )}
-                          hasMore={maybe(
-                            () => users.data.search.pageInfo.hasNextPage,
-                            false
-                          )}
-                          onFetchMore={loadMoreCustomers}
-                          fetchUsers={searchUsers}
-                          loading={users.loading}
-                          usersLoading={users.loading}
-                          onCustomerEdit={data =>
-                            orderDraftUpdate.mutate({
-                              id,
-                              input: data
-                            })
-                          }
-                          onDraftFinalize={() =>
-                            orderDraftFinalize.mutate({ id })
-                          }
-                          onDraftRemove={() => openModal("cancel")}
-                          onOrderLineAdd={() => openModal("add-order-line")}
-                          onBack={() => navigate(orderDraftListUrl())}
-                          order={order}
-                          countries={maybe(() => data.shop.countries, []).map(
-                            country => ({
-                              code: country.code,
-                              label: country.country
-                            })
-                          )}
-                          onProductClick={id => () =>
-                            navigate(productUrl(encodeURIComponent(id)))}
-                          onBillingAddressEdit={() =>
-                            openModal("edit-billing-address")
-                          }
-                          onShippingAddressEdit={() =>
-                            openModal("edit-shipping-address")
-                          }
-                          onShippingMethodEdit={() =>
-                            openModal("edit-shipping")
-                          }
-                          onOrderLineRemove={id =>
-                            orderLineDelete.mutate({ id })
-                          }
-                          onOrderLineChange={(id, data) =>
-                            orderLineUpdate.mutate({
-                              id,
-                              input: data
-                            })
-                          }
-                          saveButtonBarState="default"
-                          onProfileView={() =>
-                            navigate(customerUrl(order.user.id))
-                          }
-                          userPermissions={user?.userPermissions || []}
-                        />
+
+                        <OrderDiscountProvider order={order}>
+                          <OrderLineDiscountProvider order={order}>
+                            <OrderDraftPage
+                              disabled={loading}
+                              onNoteAdd={variables =>
+                                orderAddNote.mutate({
+                                  input: variables,
+                                  order: id
+                                })
+                              }
+                              users={maybe(
+                                () =>
+                                  users.data.search.edges.map(
+                                    edge => edge.node
+                                  ),
+                                []
+                              )}
+                              hasMore={maybe(
+                                () => users.data.search.pageInfo.hasNextPage,
+                                false
+                              )}
+                              onFetchMore={loadMoreCustomers}
+                              fetchUsers={searchUsers}
+                              loading={users.loading}
+                              usersLoading={users.loading}
+                              onCustomerEdit={data =>
+                                orderDraftUpdate.mutate({
+                                  id,
+                                  input: data
+                                })
+                              }
+                              onDraftFinalize={() =>
+                                orderDraftFinalize.mutate({ id })
+                              }
+                              onDraftRemove={() => openModal("cancel")}
+                              onOrderLineAdd={() => openModal("add-order-line")}
+                              onBack={() => navigate(orderDraftListUrl())}
+                              order={order}
+                              countries={maybe(
+                                () => data.shop.countries,
+                                []
+                              ).map(country => ({
+                                code: country.code,
+                                label: country.country
+                              }))}
+                              onProductClick={id => () =>
+                                navigate(productUrl(encodeURIComponent(id)))}
+                              onBillingAddressEdit={() =>
+                                openModal("edit-billing-address")
+                              }
+                              onShippingAddressEdit={() =>
+                                openModal("edit-shipping-address")
+                              }
+                              onShippingMethodEdit={() =>
+                                openModal("edit-shipping")
+                              }
+                              onOrderLineRemove={id =>
+                                orderLineDelete.mutate({ id })
+                              }
+                              onOrderLineChange={(id, data) =>
+                                orderLineUpdate.mutate({
+                                  id,
+                                  input: data
+                                })
+                              }
+                              saveButtonBarState="default"
+                              onProfileView={() =>
+                                navigate(customerUrl(order.user.id))
+                              }
+                              userPermissions={user?.userPermissions || []}
+                            />
+                          </OrderLineDiscountProvider>
+                        </OrderDiscountProvider>
                         <OrderDraftCancelDialog
                           confirmButtonState={orderDraftCancel.opts.status}
                           errors={

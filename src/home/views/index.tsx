@@ -26,10 +26,10 @@ const HomeSection = () => {
 
   return (
     <HomePage
-      activities={data?.activities.edges.map(edge => edge.node).reverse()}
-      orders={data?.ordersToday.totalCount}
-      sales={data?.salesToday.gross}
-      topProducts={data?.productTopToday.edges.map(edge => edge.node)}
+      activities={data?.activities?.edges.map(edge => edge.node).reverse()}
+      orders={data?.ordersToday?.totalCount}
+      sales={data?.salesToday?.gross}
+      topProducts={data?.productTopToday?.edges.map(edge => edge.node)}
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }
@@ -57,8 +57,8 @@ const HomeSection = () => {
           })
         )
       }
-      ordersToCapture={data?.ordersToCapture.totalCount}
-      ordersToFulfill={data?.ordersToFulfill.totalCount}
+      ordersToCapture={data?.ordersToCapture?.totalCount}
+      ordersToFulfill={data?.ordersToFulfill?.totalCount}
       productsOutOfStock={data?.productsOutOfStock.totalCount}
       userName={getUserName(user, true)}
       userPermissions={user?.userPermissions}
