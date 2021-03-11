@@ -11,9 +11,9 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { ShopFragment_limits } from "@saleor/fragments/types/ShopFragment";
 import { sectionNames } from "@saleor/intl";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
@@ -25,7 +25,7 @@ import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
   channelsList: Channels_channels[] | undefined;
-  limits: ShopFragment_limits;
+  limits: RefreshLimits_shop_limits;
   navigateToChannelCreate: () => void;
   onBack: () => void;
   onRowClick: (id: string) => () => void;
