@@ -17,6 +17,8 @@ export function getSortQueryField(
       return ProductOrderField.TYPE;
     case ProductListUrlSortField.status:
       return ProductOrderField.PUBLISHED;
+    case ProductListUrlSortField.rank:
+      return ProductOrderField.RANK;
     default:
       return undefined;
   }
@@ -26,15 +28,17 @@ export function getSortQueryVariables(
   params: ProductListUrlQueryParams,
   channel: string
 ): ProductOrder {
+  const direction = getOrderDirection(params.asc);
   if (params.sort === ProductListUrlSortField.attribute) {
     return {
       attributeId: params.attributeId,
-      direction: getOrderDirection(params.asc)
+      direction
     };
   }
+  const field = getSortQueryField(params.sort);
   return {
     channel,
-    direction: getOrderDirection(params.asc),
-    field: getSortQueryField(params.sort)
+    direction,
+    field
   };
 }
