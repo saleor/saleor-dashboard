@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ShippingZoneFilterInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: ShippingZones
 // ====================================================
@@ -58,6 +60,7 @@ export interface ShippingZones {
 }
 
 export interface ShippingZonesVariables {
+  filter?: ShippingZoneFilterInput | null;
   first?: number | null;
   after?: string | null;
   last?: number | null;

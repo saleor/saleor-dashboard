@@ -12,6 +12,10 @@ import React from "react";
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import { Channel_channel } from "../../types/Channel";
+import ChannelDetailsProvider, {
+  ChannelDetailsContext,
+  ChannelDetailsContextConsumerProps
+} from "./ChannelDetailsProvider/ChannelDetailsProvider";
 
 export interface ChannelDetailsPageProps {
   channel?: Channel_channel;
@@ -47,52 +51,66 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   const [selectedCurrencyCode, setSelectedCurrencyCode] = React.useState("");
 
   return (
-    <Form onSubmit={onSubmit} initial={channel || initialData}>
-      {({ change, data, hasChanged, submit }) => {
-        const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedCurrencyCode,
-          currencyCodes
-        );
-        const formDisabled = !data.name || !data.slug || !data.currencyCode;
+    <ChannelDetailsProvider channel={channel}>
+      <Form onSubmit={onSubmit} initial={channel || initialData}>
+        {({ change, data, hasChanged, submit }) => {
+          const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
+            change,
+            setSelectedCurrencyCode,
+            currencyCodes
+          );
+          const formDisabled = !data.name || !data.slug || !data.currencyCode;
 
-        return (
-          <>
-            <Grid>
-              <div>
-                <ChannelForm
-                  data={data}
-                  disabled={disabled}
-                  currencyCodes={currencyCodes}
-                  selectedCurrencyCode={selectedCurrencyCode}
-                  onChange={change}
-                  onCurrencyCodeChange={handleCurrencyCodeSelect}
-                  errors={errors}
-                />
-              </div>
-              {!!updateChannelStatus && (
+          return (
+            <>
+              <Grid>
                 <div>
-                  <ChannelStatus
-                    isActive={channel?.isActive}
-                    disabled={disabledStatus}
-                    updateChannelStatus={updateChannelStatus}
+                  <ChannelForm
+                    data={data}
+                    disabled={disabled}
+                    currencyCodes={currencyCodes}
+                    selectedCurrencyCode={selectedCurrencyCode}
+                    onChange={change}
+                    onCurrencyCodeChange={handleCurrencyCodeSelect}
+                    errors={errors}
                   />
-                  <CardSpacer />
-                  <ShippingZonesCard />
                 </div>
-              )}
-            </Grid>
-            <SaveButtonBar
-              onCancel={onBack}
-              onSave={submit}
-              onDelete={onDelete}
-              state={saveButtonBarState}
-              disabled={disabled || formDisabled || !onSubmit || !hasChanged}
-            />
-          </>
-        );
-      }}
-    </Form>
+                {!!updateChannelStatus && (
+                  <div>
+                    <ChannelStatus
+                      isActive={channel?.isActive}
+                      disabled={disabledStatus}
+                      updateChannelStatus={updateChannelStatus}
+                    />
+                    <CardSpacer />
+                    <ChannelDetailsContext.Consumer>
+                      {({
+                        searchShippingZones,
+                        shippingZones,
+                        isLoadingShippingZones
+                      }: ChannelDetailsContextConsumerProps) => (
+                        <ShippingZonesCard
+                          onSearch={searchShippingZones}
+                          zones={shippingZones}
+                          isLoadingZones={isLoadingShippingZones}
+                        />
+                      )}
+                    </ChannelDetailsContext.Consumer>
+                  </div>
+                )}
+              </Grid>
+              <SaveButtonBar
+                onCancel={onBack}
+                onSave={submit}
+                onDelete={onDelete}
+                state={saveButtonBarState}
+                disabled={disabled || formDisabled || !onSubmit || !hasChanged}
+              />
+            </>
+          );
+        }}
+      </Form>
+    </ChannelDetailsProvider>
   );
 };
 

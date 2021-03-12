@@ -1778,6 +1778,10 @@ export interface ShippingZoneCreateInput {
   addChannels?: string[] | null;
 }
 
+export interface ShippingZoneFilterInput {
+  search?: string | null;
+}
+
 export interface ShippingZoneUpdateInput {
   name?: string | null;
   description?: string | null;

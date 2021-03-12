@@ -7,7 +7,6 @@ import {
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -63,6 +62,8 @@ export interface PriceRatesUpdateProps {
   rateId: string;
   params: ShippingRateUrlQueryParams;
 }
+
+const PAGINATE_BY = 100;
 
 export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   id,

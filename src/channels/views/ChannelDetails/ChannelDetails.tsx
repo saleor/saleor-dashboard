@@ -75,6 +75,10 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     variables: { id }
   });
 
+  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+    onCompleted: onSubmit
+  });
+
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
       const errors = data.channelActivate.errors;
