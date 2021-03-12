@@ -56,6 +56,7 @@ const props: ShippingZoneRatesPageProps = {
   onProductUnassign: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
+  postalCodeRules: [],
   rate: shippingZone.shippingMethods[0],
   saveButtonBarState: "default",
   selected: 0,

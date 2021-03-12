@@ -3,12 +3,7 @@ import { CHANNEL_FORM_SELECTORS } from "../elements/channels/channel-form-select
 import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 
-export function createChannelByView(
-  name,
-  currency,
-  otherCurrency,
-  slug = name
-) {
+export function createChannelByView(name, currency, slug = name) {
   cy.get(CHANNELS_SELECTORS.createChannelButton)
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.channelName)
@@ -17,15 +12,14 @@ export function createChannelByView(
     .type(slug)
     .get(ADD_CHANNEL_FORM_SELECTORS.currency)
     .click();
-  if (!otherCurrency) {
-    cy.get(ADD_CHANNEL_FORM_SELECTORS.currency).type(currency);
-    cy.get(`[data-test-value=${currency}]`).click();
-  } else {
-    cy.get(ADD_CHANNEL_FORM_SELECTORS.currency)
-      .type(otherCurrency)
-      .get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown)
-      .click();
-  }
+  cy.get(ADD_CHANNEL_FORM_SELECTORS.currency).type(currency);
+  cy.get("body").then($body => {
+    if ($body.find(currency).length) {
+      cy.contains(ADD_CHANNEL_FORM_SELECTORS.currencyOptions, currency).click();
+    } else {
+      cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown).click();
+    }
+  });
   cy.get(ADD_CHANNEL_FORM_SELECTORS.saveButton).click();
 }
 export function selectChannelInPicker(channelName) {
