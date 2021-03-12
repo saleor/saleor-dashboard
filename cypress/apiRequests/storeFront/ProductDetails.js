@@ -1,6 +1,5 @@
-class ProductDetails {
-  getProductDetails(productId, channelId) {
-    const query = `fragment BasicProductFields on Product {
+export function getProductDetails(productId, channelId) {
+  const query = `fragment BasicProductFields on Product {
       id
       name
     }
@@ -34,7 +33,5 @@ class ProductDetails {
         availableForPurchase
       }
     }`;
-    return cy.sendRequestWithQuery(query, "token");
-  }
+  return cy.sendRequestWithQuery(query, "token");
 }
-export default ProductDetails;

@@ -1,6 +1,5 @@
-class Channels {
-  createChannel(isActive, name, slug, currencyCode) {
-    const createChannelMutation = `mutation{
+export function createChannel(isActive, name, slug, currencyCode) {
+  const createChannelMutation = `mutation{
                 channelCreate(input: {
                   isActive: ${isActive}
                   name: "${name}"
@@ -18,10 +17,10 @@ class Channels {
                   }
                 }
               }`;
-    return cy.sendRequestWithQuery(createChannelMutation);
-  }
-  getChannels() {
-    const getChannelsInfoQuery = `query{
+  return cy.sendRequestWithQuery(createChannelMutation);
+}
+export function getChannels() {
+  const getChannelsInfoQuery = `query{
       channels{
         name
         id
@@ -31,11 +30,11 @@ class Channels {
       }
     }
     `;
-    return cy.sendRequestWithQuery(getChannelsInfoQuery);
-  }
+  return cy.sendRequestWithQuery(getChannelsInfoQuery);
+}
 
-  deleteChannel(channelId, targetChannelId) {
-    const deleteChannelMutation = `mutation{
+export function deleteChannel(channelId, targetChannelId) {
+  const deleteChannelMutation = `mutation{
             channelDelete(id: "${channelId}", input:{
               targetChannel: "${targetChannelId}"
             }){
@@ -47,7 +46,5 @@ class Channels {
               }
             }
           }`;
-    return cy.sendRequestWithQuery(deleteChannelMutation);
-  }
+  return cy.sendRequestWithQuery(deleteChannelMutation);
 }
-export default Channels;
