@@ -6,9 +6,32 @@ import { useEffect } from "react";
 import { QueryResult, useQuery as useBaseQuery } from "react-apollo";
 import { useIntl } from "react-intl";
 
+import { User_userPermissions } from "../fragments/types/User";
+import { PrefixedPermissions } from "../types/extendedTypes";
+import { PermissionEnum } from "../types/globalTypes";
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
 import useUser from "./useUser";
+
+const getPermissionKey = (permission: string) =>
+  `PERMISSION_${permission}` as PrefixedPermissions;
+
+const allPermissions = Object.keys(PermissionEnum).reduce(
+  (prev, code) => ({
+    ...prev,
+    [getPermissionKey(code)]: false
+  }),
+  {} as Record<PrefixedPermissions, boolean>
+);
+
+const getUserPermissions = (userPermissions: User_userPermissions[]) =>
+  userPermissions.reduce(
+    (prev, permission) => ({
+      ...prev,
+      [getPermissionKey(permission.code)]: true
+    }),
+    {} as Record<PrefixedPermissions, boolean>
+  );
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
@@ -25,7 +48,7 @@ type UseQueryOpts<TVariables> = Partial<{
   variables: TVariables;
 }>;
 type UseQueryHook<TData, TVariables> = (
-  opts: UseQueryOpts<TVariables>
+  opts: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
 ) => UseQueryResult<TData, TVariables>;
 
 function makeQuery<TData, TVariables>(
@@ -40,6 +63,15 @@ function makeQuery<TData, TVariables>(
     const intl = useIntl();
     const [, dispatchAppState] = useAppState();
     const user = useUser();
+    const userPermissions = getUserPermissions(
+      user.user?.userPermissions || []
+    );
+
+    const variablesWithPermissions = {
+      ...variables,
+      ...allPermissions,
+      ...userPermissions
+    };
 
     const queryData = useBaseQuery(query, {
       context: {
@@ -56,7 +88,7 @@ function makeQuery<TData, TVariables>(
           intl
         ),
       skip,
-      variables
+      variables: variablesWithPermissions
     });
 
     useEffect(() => {
@@ -82,7 +114,7 @@ function makeQuery<TData, TVariables>(
           }
           return mergeFunc(previousResults, fetchMoreResult);
         },
-        variables: { ...variables, ...extraVariables }
+        variables: { ...variablesWithPermissions, ...extraVariables }
       });
 
     return {
