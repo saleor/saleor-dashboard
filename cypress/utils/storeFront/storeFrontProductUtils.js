@@ -18,7 +18,7 @@ export const isProductVisibleInSearchResult = (resp, productName) => {
   );
 };
 
-export const getProductVariants = (productId, channelSlug) =>
+export const getProductVariants = (productId, channelSlug) => {
   getProductDetails(productId, channelSlug).then(resp => {
     const variantsList = resp.body.data.product.variants;
     return variantsList.map(element => ({
@@ -26,3 +26,9 @@ export const getProductVariants = (productId, channelSlug) =>
       price: element.pricing.price.gross.amount
     }));
   });
+};
+
+export const getProductPrice = (productId, channelSlug) =>
+  getProductDetails(productId, channelSlug).then(
+    resp => resp.body.data.product.variants[0].pricing.price.gross.amount
+  );

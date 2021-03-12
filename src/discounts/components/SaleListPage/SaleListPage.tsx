@@ -54,7 +54,12 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
-        <Button onClick={onAdd} variant="contained" color="primary">
+        <Button
+          onClick={onAdd}
+          variant="contained"
+          color="primary"
+          data-test-id="create-sale"
+        >
           <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>
       </PageHeader>

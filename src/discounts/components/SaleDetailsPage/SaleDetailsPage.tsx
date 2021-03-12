@@ -208,6 +208,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     )}
                   </CollectionsTab>
                   <ProductsTab
+                    testId="products-tab"
                     isActive={activeTab === SaleDetailsPageTab.products}
                     changeTab={onTabClick}
                   >
