@@ -5,7 +5,10 @@ import {
 } from "@saleor/channels/types/Channel";
 import { ChannelUpdate } from "@saleor/channels/types/ChannelUpdate";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
+import {
+  getParsedSearchData,
+  getSearchFetchMoreProps
+} from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -29,6 +32,7 @@ export interface ChannelDetailsContextConsumerProps {
   removeShippingZone: (id: string) => void;
   searchShippingZones: (searchPhrase: string) => void;
   fetchMoreShippingZones: FetchMoreProps;
+  shippingZonesChoices: Array<{ id: string; name: string }>;
 }
 
 const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
@@ -37,7 +41,7 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
 }) => {
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useState<
     Channel_channel_shippingZones[]
-  >(channel?.shippingZones);
+  >(channel?.shippingZones || []);
   const [shippingZonesIdsToRemove, setShippingZonesIdsToRemove] = useState<
     ShippingZonesIds
   >([]);
@@ -66,10 +70,9 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
       getUpdatedIdsWithNewId(shippingZonesIdsToAdd, zoneId)
     );
 
-    console.log(111, { searchShippingZonesResult });
     setShippingZonesToDisplay([
-      ...shippingZonesToDisplay
-      // searchShippingZonesResult.data.search.find(getById(zoneId))
+      ...shippingZonesToDisplay,
+      getParsedSearchData(searchShippingZonesResult).find(getById(zoneId))
     ]);
   };
 
@@ -78,18 +81,19 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
       getUpdatedIdsWithNewId(shippingZonesIdsToRemove, zoneId)
     );
 
+    console.log(111, remove(shippingZonesToDisplay, getById(zoneId)));
     setShippingZonesToDisplay(remove(shippingZonesToDisplay, getById(zoneId)));
   };
 
-  const getFilteredSearchedShippingZones = () => [];
-  // searchShippingZonesResult?.data?.shippingZones?.filter(
-  //   ({ searchedZoneId }) =>
-  //     // this correct?
-  //     !shippingZonesToDisplay.map(({ id }) => id).includes(searchedZoneId)
-  // ) || [];
+  const getFilteredShippingZonesChoices = () =>
+    getParsedSearchData(searchShippingZonesResult).filter(
+      ({ id: searchedZoneId }) =>
+        !shippingZonesToDisplay.map(({ id }) => id).includes(searchedZoneId)
+    );
 
   const contextValues: ChannelDetailsContextConsumerProps = {
-    shippingZones: getFilteredSearchedShippingZones(),
+    shippingZonesChoices: getFilteredShippingZonesChoices(),
+    shippingZones: shippingZonesToDisplay,
     addShippingZone,
     removeShippingZone,
     searchShippingZones,
@@ -98,6 +102,11 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
       fetchMoreShippingZones
     )
   };
+
+  console.log({
+    results: getParsedSearchData(searchShippingZonesResult),
+    choices: getFilteredShippingZonesChoices()
+  });
 
   return (
     <ChannelDetailsContext.Provider value={contextValues}>

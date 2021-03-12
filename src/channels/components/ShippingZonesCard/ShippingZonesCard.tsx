@@ -4,6 +4,7 @@ import {
   ClickAwayListener,
   Typography
 } from "@material-ui/core";
+import { ChannelDetailsContextConsumerProps } from "@saleor/channels/pages/ChannelDetailsPage/ChannelDetailsProvider/ChannelDetailsProvider";
 import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
@@ -31,19 +32,18 @@ const messages = defineMessages({
   }
 });
 
-interface ShippingZonesCardProps {
-  zones: Channel_channel_shippingZones[];
-  onSearch: (searchPhrase: string) => void;
-  isLoadingZones: boolean;
-}
+interface ShippingZonesCardProps extends ChannelDetailsContextConsumerProps {}
 
 const ShippingZonesCard: React.FC<ShippingZonesCardProps> = ({
-  onSearch,
-  isLoadingZones,
-  zones
+  searchShippingZones: onSearch,
+  shippingZones,
+  shippingZonesChoices,
+  addShippingZone,
+  removeShippingZone,
+  fetchMoreShippingZones
 }) => {
   const intl = useIntl();
-  const choicesMenuRef = useRef<HTMLDivElement>(null);
+  const choicesMenuRef = useRef(null);
 
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState<boolean>(
@@ -53,7 +53,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = ({
   const handleToggleListOpen = () => setIsListOpen(!isListOpen);
 
   return (
-    <Card ref={choicesMenuRef}>
+    <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
       {/* 
       {loading && (
@@ -68,23 +68,23 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = ({
           <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
         </CardContent>
         <ShippingZonesListHeader
-          zonesCount={zones?.length}
+          zonesCount={shippingZones?.length}
           isListOpen={isListOpen}
           onOpenChange={handleToggleListOpen}
         />
-        {zones.map(zone => (
-          <ShippingZoneItem zone={zone} />
+        {shippingZones.map(zone => (
+          <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
         ))}
         {isChoicesSelectShown ? (
           <ClickAwayListener onClickAway={() => setIsChoicesSelectShown(false)}>
             <div ref={choicesMenuRef}>
               <SingleAutocompleteSelectField
-                ref={choicesMenuRef}
                 useNakedInput
                 name="shippingZone"
-                choices={mapNodeToChoice(zones)}
+                choices={mapNodeToChoice(shippingZonesChoices)}
                 fetchChoices={onSearch}
-                // onChange={() => {}}
+                {...fetchMoreShippingZones}
+                onChange={({ target }) => addShippingZone(target.value)}
               />
             </div>
           </ClickAwayListener>

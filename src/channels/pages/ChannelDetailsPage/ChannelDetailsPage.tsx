@@ -84,16 +84,10 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
                     />
                     <CardSpacer />
                     <ChannelDetailsContext.Consumer>
-                      {({
-                        searchShippingZones,
-                        shippingZones,
-                        isLoadingShippingZones
-                      }: ChannelDetailsContextConsumerProps) => (
-                        <ShippingZonesCard
-                          onSearch={searchShippingZones}
-                          zones={shippingZones}
-                          isLoadingZones={isLoadingShippingZones}
-                        />
+                      {(
+                        channelDetailsConsumerProps: ChannelDetailsContextConsumerProps
+                      ) => (
+                        <ShippingZonesCard {...channelDetailsConsumerProps} />
                       )}
                     </ChannelDetailsContext.Consumer>
                   </div>

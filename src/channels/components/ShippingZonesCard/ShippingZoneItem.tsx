@@ -29,13 +29,11 @@ const ShippingZoneItem: React.FC<ShippingZoneItemProps> = ({
   const { id, name } = zone;
   const classes = useStyles({});
 
-  const handleDelete = () => onDelete(id);
-
   return (
     <>
       <div className={classes.container}>
         <Typography>{name}</Typography>
-        <DeletableItem onDelete={handleDelete} />
+        <DeletableItem id={id} onDelete={onDelete} />
       </div>
       <Divider />
     </>

@@ -1,5 +1,4 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import { shippingZoneFragment } from "@saleor/fragments/shipping";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
 import {
@@ -9,7 +8,6 @@ import {
 
 const searchShippingZones = gql`
   ${pageInfoFragment}
-  ${shippingZoneFragment}
   query SearchShippingZones(
     $query: String!
     $first: Int
@@ -26,7 +24,8 @@ const searchShippingZones = gql`
     ) {
       edges {
         node {
-          ...ShippingZoneFragment
+          id
+          name
         }
       }
       pageInfo {

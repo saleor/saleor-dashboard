@@ -15,14 +15,17 @@ const useStyles = makeStyles(
 );
 
 interface DeletableItemProps {
-  onDelete: () => void;
+  onDelete: (id: string) => void;
+  id: string;
 }
 
-const DeletableItem: React.FC<DeletableItemProps> = () => {
+const DeletableItem: React.FC<DeletableItemProps> = ({ onDelete, id }) => {
   const classes = useStyles({});
 
+  const handleDelete = () => onDelete(id);
+
   return (
-    <div className={classes.container}>
+    <div className={classes.container} onClick={handleDelete}>
       <TrashIcon />
     </div>
   );

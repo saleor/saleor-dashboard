@@ -9,3 +9,6 @@ export const getSearchFetchMoreProps = (
   loading: !!loading,
   onFetchMore
 });
+
+export const getParsedSearchData = ({ data }) =>
+  data?.search?.edges?.map(({ node }) => node) || [];

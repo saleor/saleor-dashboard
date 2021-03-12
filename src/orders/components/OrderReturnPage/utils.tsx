@@ -89,5 +89,7 @@ export const getParsedFulfiledLines = (
     quantity
   }));
 
-export const getById = (idToCompare: string) => (obj: { id: string }) =>
-  obj.id === idToCompare;
+export const getById = (idToCompare: string) => (obj: { id: string }) => {
+  console.log({ idToCompare, obj });
+  return obj.id === idToCompare;
+};
