@@ -1,19 +1,14 @@
 import faker from "faker";
 
-import ProductDetails from "../../../apiRequests/storeFront/ProductDetails";
-import ProductSteps from "../../../steps/products/productSteps";
+import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
+import { updateProductPublish } from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
-import ChannelsUtils from "../../../utils/channelsUtils";
-import ProductsUtils from "../../../utils/productsUtils";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import * as productsUtils from "../../../utils/productsUtils";
 import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Published products", () => {
-  const productDetails = new ProductDetails();
-  const channelsUtils = new ChannelsUtils();
-  const productsUtils = new ProductsUtils();
-  const productSteps = new ProductSteps();
-
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -22,12 +17,20 @@ describe("Published products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productType = productsUtils.getProductType();
-      attribute = productsUtils.getAttribute();
-      category = productsUtils.getCategory();
-    });
+    productsUtils.deleteProductsStartsWith(startsWith);
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct(name)
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -36,8 +39,7 @@ describe("Published products", () => {
   it("should update product to published", () => {
     const productName = `${startsWith}${faker.random.number()}`;
     let defaultChannel;
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         productsUtils.createProductInChannel({
@@ -50,11 +52,11 @@ describe("Published products", () => {
           isAvailableForPurchase: false
         });
       })
-      .then(() => {
-        const product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        const product = productResp;
         const productUrl = productDetailsUrl(product.id);
-        productSteps.updateProductPublish(productUrl, true);
-        productDetails.getProductDetails(product.id, defaultChannel.slug);
+        updateProductPublish(productUrl, true);
+        getProductDetails(product.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isProductVisible(resp, productName);
@@ -66,8 +68,7 @@ describe("Published products", () => {
     let defaultChannel;
     let product;
 
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         productsUtils.createProductInChannel({
@@ -78,11 +79,11 @@ describe("Published products", () => {
           categoryId: category.id
         });
       })
-      .then(() => {
-        product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        product = productResp;
         const productUrl = productDetailsUrl(product.id);
-        productSteps.updateProductPublish(productUrl, false);
-        productDetails.getProductDetails(product.id, defaultChannel.slug);
+        updateProductPublish(productUrl, false);
+        getProductDetails(product.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isProductVisible(resp, productName);
@@ -90,7 +91,7 @@ describe("Published products", () => {
         cy.loginInShop();
       })
       .then(() => {
-        productDetails.getProductDetails(product.id, defaultChannel.slug);
+        getProductDetails(product.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isProductVisible(resp, productName);

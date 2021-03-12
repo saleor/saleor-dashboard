@@ -2,24 +2,24 @@
 
 import faker from "faker";
 
-import ProductRequest from "../../apiRequests/Product";
-import SalesSteps from "../../steps/salesSteps";
+import { updateChannelInProduct } from "../../apiRequests/Product";
+import {
+  assignProducts,
+  createSale,
+  discountOptions
+} from "../../steps/salesSteps";
 import { urlList } from "../../url/urlList";
-import ChannelsUtils from "../../utils/channelsUtils";
-import ProductsUtils from "../../utils/productsUtils";
-import SalesUtils from "../../utils/salesUtils";
-import ShippingUtils from "../../utils/shippingUtils";
+import * as channelsUtils from "../../utils/channelsUtils";
+import * as productsUtils from "../../utils/productsUtils";
+import { deleteSalesStartsWith } from "../../utils/salesUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith
+} from "../../utils/shippingUtils";
 import { getProductPrice } from "../../utils/storeFront/storeFrontProductUtils";
 
 describe("Sales discounts", () => {
   const startsWith = "Cy-";
-
-  const productRequest = new ProductRequest();
-  const productsUtils = new ProductsUtils();
-  const channelsUtils = new ChannelsUtils();
-  const shippingUtils = new ShippingUtils();
-  const salesUtils = new SalesUtils();
-  const salesSteps = new SalesSteps();
 
   let productType;
   let attribute;
@@ -29,35 +29,41 @@ describe("Sales discounts", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannels(startsWith);
-    salesUtils.deleteProperSales(startsWith);
-    productsUtils.deleteProperProducts(startsWith);
-    shippingUtils.deleteShipping(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
+    deleteSalesStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
     const name = `${startsWith}${faker.random.number()}`;
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
-      .then(() => {
-        productType = productsUtils.getProductType();
-        attribute = productsUtils.getAttribute();
-        category = productsUtils.getCategory();
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
 
-        channelsUtils.getDefaultChannel();
-      })
+          channelsUtils.getDefaultChannel();
+        }
+      )
       .then(channel => {
         defaultChannel = channel;
         cy.fixture("addresses");
       })
       .then(addresses => {
-        shippingUtils.createShipping({
+        createShipping({
           channelId: defaultChannel.id,
           name,
           address: addresses.plAddress,
           price: 100
         });
       })
-      .then(() => {
-        warehouse = shippingUtils.getWarehouse();
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
       });
   });
 
@@ -80,16 +86,16 @@ describe("Sales discounts", () => {
         categoryId: category.id,
         price: productPrice
       })
-      .then(() => {
+      .then(({ product: productResp }) => {
         cy.visit(urlList.sales);
-        const product = productsUtils.getCreatedProduct();
-        salesSteps.createSale({
+        const product = productResp;
+        createSale({
           saleName,
           channelName: defaultChannel.name,
           discountValue,
-          discountOption: salesSteps.discountOptions.PERCENTAGE
+          discountOption: discountOptions.PERCENTAGE
         });
-        salesSteps.assignProducts(product.name);
+        assignProducts(product.name);
         getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => {
@@ -113,16 +119,16 @@ describe("Sales discounts", () => {
         categoryId: category.id,
         price: productPrice
       })
-      .then(() => {
+      .then(({ product: productResp }) => {
         cy.visit(urlList.sales);
-        const product = productsUtils.getCreatedProduct();
-        salesSteps.createSale({
+        const product = productResp;
+        createSale({
           saleName,
           channelName: defaultChannel.name,
           discountValue,
-          discountOption: salesSteps.discountOptions.FIXED
+          discountOption: discountOptions.FIXED
         });
-        salesSteps.assignProducts(product.name);
+        assignProducts(product.name);
         getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => {
@@ -138,7 +144,9 @@ describe("Sales discounts", () => {
     const discountValue = 50;
     const productPrice = 100;
 
-    channelsUtils.createChannel({ name: saleName });
+    channelsUtils
+      .createChannel({ name: saleName })
+      .then(channelResp => (channel = channelResp));
     productsUtils
       .createProductInChannel({
         name: saleName,
@@ -149,22 +157,21 @@ describe("Sales discounts", () => {
         categoryId: category.id,
         price: productPrice
       })
-      .then(() => {
-        product = productsUtils.getCreatedProduct();
-        channel = channelsUtils.getCreatedChannel();
-        productRequest.updateChannelInProduct({
+      .then(({ product: productResp }) => {
+        product = productResp;
+        updateChannelInProduct({
           productId: product.id,
           channelId: channel.id
         });
       })
       .then(() => {
         cy.visit(urlList.sales);
-        salesSteps.createSale({
+        createSale({
           saleName,
           channelName: channel.name,
           discountValue
         });
-        salesSteps.assignProducts(product.name);
+        assignProducts(product.name);
         getProductPrice(product.id, defaultChannel.slug);
       })
       .then(price => expect(price).to.equal(productPrice));

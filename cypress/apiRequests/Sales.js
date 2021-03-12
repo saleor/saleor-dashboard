@@ -1,38 +1,35 @@
 import { getValueWithDefault } from "./utils/Utils";
 
-class Sales {
-  getSales(first, searchQuery) {
-    const filter = getValueWithDefault(
-      searchQuery,
-      `, filter:{
+export function getSales(first, searchQuery) {
+  const filter = getValueWithDefault(
+    searchQuery,
+    `, filter:{
         search:"${searchQuery}"
       }`
-    );
-    const query = `query{
-      sales(first:
-        ${first} ${filter}){
-          edges{
-            node{
-              id
-              name
-            }
-          }
-        }
-      }`;
-    return cy
-      .sendRequestWithQuery(query)
-      .then(resp => resp.body.data.sales.edges);
-  }
-  deleteSale(saleId) {
-    const mutation = `mutation{
-      saleDelete(id:"${saleId}"){
-        discountErrors{
-          field
-          message
+  );
+  const query = `query{
+    sales(first:
+    ${first} ${filter}){
+      edges{
+        node{
+          id
+          name
         }
       }
-    }`;
-    return cy.sendRequestWithQuery(mutation);
-  }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.sales.edges);
 }
-export default Sales;
+export function deleteSale(saleId) {
+  const mutation = `mutation{
+    saleDelete(id:"${saleId}"){
+      discountErrors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}

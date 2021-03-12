@@ -1,26 +1,20 @@
-import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { DebounceForm } from "@saleor/components/DebounceForm";
-import Form from "@saleor/components/Form";
-import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
-import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar";
+import {
+  OrderLineDiscountConsumer,
+  OrderLineDiscountContextConsumerProps
+} from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
+import TableLine from "./TableLine";
 
 export interface FormData {
   quantity: number;
@@ -113,99 +107,27 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         </TableHead>
       )}
       <TableBody>
-        {maybe(() => lines.length) === 0 ? (
+        {!!lines?.length ? (
+          renderCollection(lines, line => (
+            <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
+              {(
+                orderLineDiscountProps: OrderLineDiscountContextConsumerProps
+              ) => (
+                <TableLine
+                  {...orderLineDiscountProps}
+                  line={line}
+                  onOrderLineChange={onOrderLineChange}
+                  onOrderLineRemove={onOrderLineRemove}
+                />
+              )}
+            </OrderLineDiscountConsumer>
+          ))
+        ) : (
           <TableRow>
             <TableCell colSpan={5}>
               <FormattedMessage defaultMessage="No Products added to Order" />
             </TableCell>
           </TableRow>
-        ) : (
-          renderCollection(lines, line => (
-            <TableRow key={line ? line.id : "skeleton"}>
-              <TableCellAvatar
-                className={classes.colName}
-                thumbnail={maybe(() => line.thumbnail.url)}
-              >
-                {maybe(() => line.productName && line.productSku) ? (
-                  <>
-                    <>
-                      <Typography variant="body2">
-                        {line.productName}
-                      </Typography>
-                      <Typography variant="caption">
-                        {line.productSku}
-                      </Typography>
-                    </>
-                  </>
-                ) : (
-                  <Skeleton />
-                )}
-              </TableCellAvatar>
-              <TableCell className={classes.colQuantity}>
-                {maybe(() => line.quantity) ? (
-                  <Form
-                    initial={{ quantity: line.quantity }}
-                    onSubmit={data => onOrderLineChange(line.id, data)}
-                  >
-                    {({ change, data, hasChanged, submit }) => {
-                      const handleQuantityChange = createNonNegativeValueChangeHandler(
-                        change
-                      );
-
-                      return (
-                        <DebounceForm
-                          change={handleQuantityChange}
-                          submit={hasChanged ? submit : undefined}
-                          time={200}
-                        >
-                          {debounce => (
-                            <TextField
-                              className={classes.quantityField}
-                              fullWidth
-                              name="quantity"
-                              type="number"
-                              value={data.quantity}
-                              onChange={debounce}
-                              onBlur={submit}
-                              inputProps={{
-                                min: 1
-                              }}
-                            />
-                          )}
-                        </DebounceForm>
-                      );
-                    }}
-                  </Form>
-                ) : (
-                  <Skeleton />
-                )}
-              </TableCell>
-              <TableCell className={classes.colPrice}>
-                {maybe(() => line.unitPrice.net) ? (
-                  <Money money={line.unitPrice.net} />
-                ) : (
-                  <Skeleton />
-                )}
-              </TableCell>
-              <TableCell className={classes.colTotal}>
-                {maybe(() => line.unitPrice.net && line.quantity) ? (
-                  <Money
-                    money={{
-                      amount: line.unitPrice.net.amount * line.quantity,
-                      currency: line.unitPrice.net.currency
-                    }}
-                  />
-                ) : (
-                  <Skeleton />
-                )}
-              </TableCell>
-              <TableCell className={classes.colAction}>
-                <IconButton onClick={() => onOrderLineRemove(line.id)}>
-                  <DeleteIcon color="primary" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))
         )}
       </TableBody>
     </ResponsiveTable>

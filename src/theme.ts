@@ -2,6 +2,11 @@ import Card from "@material-ui/core/Card";
 import Checkbox from "@material-ui/core/Checkbox";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
+import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
+import {
+  Palette,
+  PaletteOptions
+} from "@material-ui/core/styles/createPalette";
 import { Overrides } from "@material-ui/core/styles/overrides";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -22,6 +27,25 @@ const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
 export const ICONBUTTON_SIZE = 48;
 
 const fontFamily = '"Inter", "roboto", "sans-serif"';
+
+export interface ITheme extends Theme {
+  palette: IPalette;
+}
+
+interface IThemeOptions extends ThemeOptions {
+  palette: IPaletteOptions;
+}
+
+interface IPalette extends Palette, ExtraPaletteOptions {}
+
+interface IPaletteOptions extends PaletteOptions, ExtraPaletteOptions {}
+
+interface ExtraPaletteOptions {
+  textHighlighted?: {
+    active: string;
+    inactive: string;
+  };
+}
 
 const inputOverrides = (colors: IThemeColors): Overrides => ({
   MuiInput: {
@@ -177,7 +201,8 @@ const inputOverrides = (colors: IThemeColors): Overrides => ({
     }
   }
 });
-const createTheme = (colors: IThemeColors): Theme =>
+
+const createTheme = (colors: IThemeColors): ITheme =>
   createMuiTheme({
     overrides: {
       ...inputOverrides(colors),
@@ -517,6 +542,10 @@ const createTheme = (colors: IThemeColors): Theme =>
         primary: colors.font.default,
         secondary: colors.font.gray
       },
+      textHighlighted: {
+        active: colors.primary,
+        inactive: colors.highlightInactive.default
+      },
       type: colors.theme
     },
     props: {
@@ -566,7 +595,7 @@ const createTheme = (colors: IThemeColors): Theme =>
         fontSize: "1.3125rem"
       }
     }
-  });
+  } as IThemeOptions);
 
 TextField.defaultProps = {
   ...TextField.defaultProps,

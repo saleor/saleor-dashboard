@@ -6,9 +6,10 @@ import React from "react";
 
 import OrderDraftPage, {
   OrderDraftPageProps
-} from "../../../orders/components/OrderDraftPage";
-import { clients, countries, draftOrder } from "../../../orders/fixtures";
-import Decorator from "../../Decorator";
+} from "../../../../orders/components/OrderDraftPage";
+import { clients, countries, draftOrder } from "../../../../orders/fixtures";
+import Decorator from "../../../Decorator";
+import { getDiscountsProvidersWrapper } from "./utils";
 
 const order = draftOrder(placeholderImage);
 
@@ -37,8 +38,11 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   usersLoading: false
 };
 
+const DiscountsDecorator = getDiscountsProvidersWrapper(order);
+
 storiesOf("Views / Orders / Order draft", module)
   .addDecorator(Decorator)
+  .addDecorator(DiscountsDecorator)
   .add("default", () => <OrderDraftPage {...props} />)
   .add("loading", () => (
     <OrderDraftPage {...props} disabled={true} order={undefined} />

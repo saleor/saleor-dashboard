@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentStatus } from "./../../types/globalTypes";
+import { DiscountValueTypeEnum, FulfillmentStatus } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: FulfillmentFragment
@@ -12,6 +12,31 @@ export interface FulfillmentFragment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface FulfillmentFragment_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillmentFragment_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillmentFragment_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillmentFragment_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: FulfillmentFragment_lines_orderLine_undiscountedUnitPrice_gross;
+  net: FulfillmentFragment_lines_orderLine_undiscountedUnitPrice_net;
 }
 
 export interface FulfillmentFragment_lines_orderLine_unitPrice_gross {
@@ -46,6 +71,11 @@ export interface FulfillmentFragment_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  unitDiscount: FulfillmentFragment_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: FulfillmentFragment_lines_orderLine_undiscountedUnitPrice;
   unitPrice: FulfillmentFragment_lines_orderLine_unitPrice;
   thumbnail: FulfillmentFragment_lines_orderLine_thumbnail | null;
 }
