@@ -21,6 +21,7 @@ export function createShippingZone(name, country) {
     }){
       shippingZone{
         id
+        name
       }
     }
   }`;

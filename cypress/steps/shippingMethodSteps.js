@@ -3,11 +3,20 @@ import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-detail
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
 
-export function createShippingZone(shippingName, warehouseName) {
+export function createShippingZone(shippingName, warehouseName, country) {
   cy.get(SHIPPING_ZONES_LIST.addShippingZone)
     .click()
     .get(SHIPPING_ZONE_DETAILS.nameInput)
     .type(shippingName)
+    .get(SHIPPING_ZONE_DETAILS.assignCountryButton)
+    .click()
+    .get(SHIPPING_ZONE_DETAILS.searchInput)
+    .type(country);
+  cy.contains(SHIPPING_ZONE_DETAILS.tableRow, country)
+    .find(BUTTON_SELECTORS.checkbox)
+    .click()
+    .get(SHIPPING_ZONE_DETAILS.submitAssignCountry)
+    .click()
     .get(BUTTON_SELECTORS.submit)
     .click()
     .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
@@ -29,9 +38,9 @@ export function createShippingRate(rateName, price, rateOption) {
     .each($priceInput => {
       cy.wrap($priceInput).type(price);
     });
-  cy.addAliasToGraphRequest("CreateShippingRate");
+  cy.addAliasToGraphRequest("ShippingZone");
   cy.get(BUTTON_SELECTORS.submit).click();
-  cy.wait("@CreateShippingRate");
+  cy.wait("@ShippingZone");
 }
 
 export const rateOptions = {

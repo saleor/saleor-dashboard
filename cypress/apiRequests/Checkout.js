@@ -43,7 +43,6 @@ export function createCheckout({
       checkout{
         id
         availableShippingMethods{
-          id
           name
         }
       }

@@ -8,6 +8,7 @@
         "country": "PL",
         "countryArea": "Dolny Śląsk",
         "phone": "123456787",
-        "currency": "PLN"
+        "currency": "PLN",
+        "countryFullName": "Poland"
     }
 }

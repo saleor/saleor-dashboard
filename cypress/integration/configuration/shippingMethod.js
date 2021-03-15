@@ -15,6 +15,7 @@ import * as channelsUtils from "../../utils/channelsUtils";
 import { createCheckout } from "../../utils/ordersUtils";
 import * as productsUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
+import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
 
 describe("Shipping methods", () => {
   const startsWith = "Cy-";
@@ -90,7 +91,7 @@ describe("Shipping methods", () => {
         createdChannel = channel;
         shippingUtils.createShipping({
           channelId: defaultChannel.id,
-          shippingName,
+          name: shippingName,
           address: plAddress,
           price: defaultChannelPrice
         });
@@ -136,10 +137,10 @@ describe("Shipping methods", () => {
           });
       });
   });
-  it("should create price based shipping method", () => {
+  xit("should create price based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
-    createShippingZone(shippingName, warehouse.name);
+    createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
     createShippingRate(shippingName, price, rateOptions.PRICE_OPTION);
 
     createCheckout({
@@ -148,15 +149,22 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress
     }).then(checkout => {
-      expect(checkout).includes(shippingName);
+      const isShippingAvailable = isShippingAvailableInCheckout(
+        checkout,
+        shippingName
+      );
+      /* eslint-disable no-unused-expressions */
+      expect(isShippingAvailable).to.be.true;
     });
   });
 
   it("should create weight based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
-    createShippingZone(shippingName, warehouse.name);
+    createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
+    cy.pause();
     createShippingRate(shippingName, price, rateOptions.WEIGHT_OPTION);
+    cy.pause();
 
     createCheckout({
       channelSlug: defaultChannel.slug,
@@ -164,7 +172,11 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress
     }).then(checkout => {
-      expect(checkout).includes(shippingName);
+      const isShippingAvailable = isShippingAvailableInCheckout(
+        checkout,
+        shippingName
+      );
+      expect(isShippingAvailable).to.be.true;
     });
   });
 });
