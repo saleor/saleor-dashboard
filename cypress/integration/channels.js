@@ -1,7 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import Channels from "../apiRequests/Channels";
+import { createChannel } from "../apiRequests/Channels";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../elements/catalog/products/product-selectors";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../elements/channels/add-channel-form-selectors";
@@ -14,16 +14,15 @@ import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { createChannelByView } from "../steps/channelsSteps";
 import { urlList } from "../url/urlList";
-import * as channelsUtils from "../utils/channelsUtils";
+import { deleteChannelsStartsWith } from "../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
   const currency = "PLN";
-  const channels = new Channels();
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannels(channelStartsWith);
+    deleteChannelsStartsWith(channelStartsWith);
   });
 
   beforeEach(() => {
@@ -77,7 +76,7 @@ describe("Channels", () => {
 
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    channels.createChannel(false, randomChannel, randomChannel, currency);
+    createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.channels);
     createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
@@ -85,10 +84,10 @@ describe("Channels", () => {
     );
   });
 
-  it("should validate currency", () => {
+  it("should validate duplicated currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
     cy.visit(urlList.channels);
-    createChannelByView(randomChannel, currency, "notExistingCurrency");
+    createChannelByView(randomChannel, "notExistingCurrency");
     cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
       "be.visible"
     );
@@ -96,7 +95,7 @@ describe("Channels", () => {
 
   it("should delete channel", () => {
     const randomChannelToDelete = `${channelStartsWith} ${faker.random.number()}`;
-    channels.createChannel(
+    createChannel(
       false,
       randomChannelToDelete,
       randomChannelToDelete,
@@ -120,7 +119,7 @@ describe("Channels", () => {
 
   it("should not be possible to add products to order with inactive channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
-    channels.createChannel(false, randomChannel, randomChannel, currency);
+    createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click()

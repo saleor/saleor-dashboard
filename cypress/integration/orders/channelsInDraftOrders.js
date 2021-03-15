@@ -21,15 +21,15 @@ describe("Channels in draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannels(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         channelsUtils.createChannel({ name: randomName });
       })
-      .then(() => {
-        otherChannel = channelsUtils.getCreatedChannel();
+      .then(channelResp => {
+        otherChannel = channelResp;
       });
   });
 

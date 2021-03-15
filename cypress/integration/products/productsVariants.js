@@ -1,10 +1,19 @@
 import faker from "faker";
 
-import Channels from "../../apiRequests/Channels";
-import Product from "../../apiRequests/Product";
-import VariantsSteps from "../../steps/products/VariantsSteps";
+import { createChannel } from "../../apiRequests/Channels";
+import {
+  createProduct,
+  updateChannelInProduct
+} from "../../apiRequests/Product";
+import {
+  createFirstVariant,
+  createVariant
+} from "../../steps/products/VariantsSteps";
 import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
+import {
+  deleteChannelsStartsWith,
+  getDefaultChannel
+} from "../../utils/channelsUtils";
 import * as productUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
@@ -14,11 +23,6 @@ describe("Creating variants", () => {
   const startsWith = "Cy-";
   const attributeValues = ["value1", "value2"];
 
-  const product = new Product();
-  const channels = new Channels();
-
-  const variantsSteps = new VariantsSteps();
-
   let defaultChannel;
   let warehouse;
   let attribute;
@@ -27,13 +31,12 @@ describe("Creating variants", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShipping(startsWith);
-    productUtils.deleteProperProducts(startsWith);
-    channelsUtils.deleteChannels(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productUtils.deleteProductsStartsWith(startsWith);
+    deleteChannelsStartsWith(startsWith);
 
     const name = `${startsWith}${faker.random.number()}`;
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         cy.fixture("addresses");
@@ -45,15 +48,21 @@ describe("Creating variants", () => {
           address: fixtureAddresses.plAddress
         })
       )
-      .then(() => (warehouse = shippingUtils.getWarehouse()));
+      .then(({ warehouse: warehouseResp }) => (warehouse = warehouseResp));
 
     productUtils
       .createTypeAttributeAndCategoryForProduct(name, attributeValues)
-      .then(() => {
-        attribute = productUtils.getAttribute();
-        productType = productUtils.getProductType();
-        category = productUtils.getCategory();
-      });
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -65,16 +74,15 @@ describe("Creating variants", () => {
     const price = 10;
     let createdProduct;
 
-    product
-      .createProduct(attribute.id, name, productType.id, category.id)
+    createProduct(attribute.id, name, productType.id, category.id)
       .then(resp => {
         createdProduct = resp.body.data.productCreate.product;
-        product.updateChannelInProduct({
+        updateChannelInProduct({
           productId: createdProduct.id,
           channelId: defaultChannel.id
         });
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createFirstVariant({
+        createFirstVariant({
           sku: name,
           warehouseId: warehouse.id,
           price,
@@ -103,10 +111,10 @@ describe("Creating variants", () => {
         categoryId: category.id,
         price: variants[0].price
       })
-      .then(() => {
-        createdProduct = productUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        createdProduct = productResp;
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createVariant({
+        createVariant({
           sku: secondVariantSku,
           warehouseName: warehouse.name,
           attributeName: variants[1].name,
@@ -125,8 +133,7 @@ describe("Creating variants", () => {
     const variantsPrice = 10;
     let newChannel;
     let createdProduct;
-    channels
-      .createChannel(true, name, name, "PLN")
+    createChannel(true, name, name, "PLN")
       .then(resp => {
         newChannel = resp.body.data.channelCreate.channel;
         productUtils.createProduct(
@@ -136,22 +143,22 @@ describe("Creating variants", () => {
           category.id
         );
       })
-      .then(() => {
-        createdProduct = productUtils.getCreatedProduct();
-        product.updateChannelInProduct({
+      .then(productResp => {
+        createdProduct = productResp;
+        updateChannelInProduct({
           productId: createdProduct.id,
           channelId: defaultChannel.id
         });
       })
       .then(() => {
-        product.updateChannelInProduct({
+        updateChannelInProduct({
           productId: createdProduct.id,
           channelId: newChannel.id
         });
       })
       .then(() => {
         cy.visit(`${urlList.products}${createdProduct.id}`);
-        variantsSteps.createFirstVariant({
+        createFirstVariant({
           sku: name,
           warehouseId: warehouse.id,
           price: variantsPrice,

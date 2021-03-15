@@ -1,7 +1,10 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createCustomer, deleteCustomers } from "../../apiRequests/Customer";
+import {
+  createCustomer,
+  deleteCustomersStartsWith
+} from "../../apiRequests/Customer";
 import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { selectChannelInPicker } from "../../steps/channelsSteps";
@@ -9,19 +12,23 @@ import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
 import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import * as productsUtils from "../../utils/productsUtils";
-import * as shippingUtils from "../../utils/shippingUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith
+} from "../../utils/shippingUtils";
 
 describe("Draft orders", () => {
   const startsWith = "Cy-";
   const randomName = startsWith + faker.random.number();
 
   let defaultChannel;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomers(startsWith);
-    shippingUtils.deleteShipping(startsWith);
-    productsUtils.deleteProperProducts(startsWith);
+    deleteCustomersStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
     getDefaultChannel()
       .then(channel => {
@@ -32,30 +39,37 @@ describe("Draft orders", () => {
       })
       .then(addresses => {
         createCustomer(
-          `${randomName}@ex.pl`,
+          `${randomName}@example.com`,
           randomName,
           addresses.plAddress,
           true
         );
-        shippingUtils.createShipping({
+        createShipping({
           channelId: defaultChannel.id,
           name: randomName,
           address: addresses.plAddress
         });
       })
-      .then(() => {
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
         productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
       })
-      .then(() => {
-        productsUtils.createProductInChannel({
-          name: randomName,
-          channelId: defaultChannel.id,
-          warehouseId: shippingUtils.getWarehouse().id,
-          productTypeId: productsUtils.getProductType().id,
-          attributeId: productsUtils.getAttribute().id,
-          categoryId: productsUtils.getCategory().id
-        });
-      });
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productsUtils.createProductInChannel({
+            name: randomName,
+            channelId: defaultChannel.id,
+            warehouseId: warehouse.id,
+            productTypeId: productTypeResp.id,
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id
+          });
+        }
+      );
   });
 
   beforeEach(() => {

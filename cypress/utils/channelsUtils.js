@@ -1,9 +1,6 @@
-import Channels from "../apiRequests/Channels";
+import * as channels from "../apiRequests/Channels";
 
-const channels = new Channels();
-let channel;
-
-export function deleteChannels(nameStartsWith) {
+export function deleteChannelsStartsWith(nameStartsWith) {
   channels.getChannels().then(resp => {
     const channelsArray = new Set(resp.body.data.channels);
     if (!channelsArray) {
@@ -42,9 +39,6 @@ export function createChannel({
   currencyCode = "PLN"
 }) {
   return channels
-    .createChannel(true, name, name, currencyCode)
-    .then(resp => (channel = resp.body.data.channelCreate.channel));
-}
-export function getCreatedChannel() {
-  return channel;
+    .createChannel(isActive, name, slug, currencyCode)
+    .its("body.data.channelCreate.channel");
 }
