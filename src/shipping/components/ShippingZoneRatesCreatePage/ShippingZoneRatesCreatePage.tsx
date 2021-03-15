@@ -91,12 +91,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     type: null
   };
 
-  const postalCodeInclusionChange = (
-    inclusion: PostalCodeRuleInclusionTypeEnum
-  ) => {
-    onPostalCodeInclusionChange(inclusion);
-  };
-
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
@@ -166,7 +160,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 <ShippingZonePostalCodes
                   disabled={disabled}
                   onPostalCodeDelete={onPostalCodeUnassign}
-                  onPostalCodeInclusionChange={postalCodeInclusionChange}
+                  onPostalCodeInclusionChange={onPostalCodeInclusionChange}
                   onPostalCodeRangeAdd={onPostalCodeAssign}
                   postalCodes={postalCodes}
                 />

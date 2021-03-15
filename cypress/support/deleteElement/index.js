@@ -7,7 +7,7 @@ Cypress.Commands.add(
   }
 );
 Cypress.Commands.add(
-  "deleteProperElements",
+  "deleteElementsStartsWith",
   (deleteFunction, getFunction, startsWith, name) => {
     getFunction(100, startsWith).then(elements => {
       elements.forEach(element => {

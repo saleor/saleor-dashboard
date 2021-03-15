@@ -2,50 +2,74 @@
 import faker from "faker";
 
 import { addChannelToShippingMethod } from "../../apiRequests/ShippingMethod";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHIPPING_RATE_DETAILS } from "../../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
-import { SHIPPING_ZONES_LIST } from "../../elements/shipping/shipping-zones-list";
 import { selectChannelInHeader } from "../../steps/channelsSteps";
+import {
+  createShippingRate,
+  createShippingZone,
+  rateOptions
+} from "../../steps/shippingMethodSteps";
+import { getFormattedCurrencyAmount } from "../../support/format/formatCurrencyAmount";
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
+import { createCheckout } from "../../utils/ordersUtils";
 import * as productsUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 
 describe("Shipping methods", () => {
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
+  const price = 8;
   let defaultChannel;
   let plAddress;
+  let variantsList;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    shippingUtils.deleteShipping(startsWith);
-    channelsUtils.deleteChannels(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()
-      .then(channel => (defaultChannel = channel));
-    productsUtils
-      .createTypeAttributeAndCategoryForProduct(startsWith)
-      .then(() => {
-        productsUtils.createProductInChannel({
-          name,
-          channelId: defaultChannel.id,
-          productTypeId: productsUtils.getProductType().id,
-          attributeId: productsUtils.getAttribute().id,
-          categoryId: productsUtils.getCategory().id
-        });
-        cy.fixture("addresses").then(addresses => {
-          plAddress = addresses.plAddress;
-          shippingUtils.createWarehouse(name, plAddress);
-        });
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addresses => {
+        plAddress = addresses.plAddress;
+        shippingUtils.createWarehouse({ name, address: plAddress });
+      })
+      .then(warehouseResp => {
+        warehouse = warehouseResp;
+        productsUtils.createTypeAttributeAndCategoryForProduct(startsWith);
+      })
+      .then(
+        ({
+          productType: productTypeResp,
+          category: categoryResp,
+          attribute: attributeResp
+        }) => {
+          productsUtils.createProductInChannel({
+            name,
+            channelId: defaultChannel.id,
+            productTypeId: productTypeResp.id,
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 10
+          });
+        }
+      )
+      .then(({ variants: variantsListResp }) => {
+        variantsList = variantsListResp;
       });
   });
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
+    cy.visit(urlList.shippingMethods);
   });
 
   xit("should display different price for each channel", () => {
@@ -56,15 +80,14 @@ describe("Shipping methods", () => {
     let shippingMethod;
     let shippingZone;
     let createdChannel;
+
     channelsUtils
       .createChannel({
         name: shippingName,
         currencyCode: createdChannelCurrency
       })
-      .then(() => {
-        createdChannel = channelsUtils.getCreatedChannel();
-      })
-      .then(() => {
+      .then(channel => {
+        createdChannel = channel;
         shippingUtils.createShipping({
           channelId: defaultChannel.id,
           shippingName,
@@ -72,86 +95,76 @@ describe("Shipping methods", () => {
           price: defaultChannelPrice
         });
       })
+      .then(
+        ({
+          shippingMethod: shippingMethodResp,
+          shippingZone: shippingZoneResp
+        }) => {
+          shippingZone = shippingZoneResp;
+          shippingMethod = shippingMethodResp;
+          addChannelToShippingMethod(
+            shippingMethod.id,
+            createdChannel.id,
+            createdChannelPrice
+          );
+        }
+      )
       .then(() => {
-        shippingZone = shippingUtils.getShippingZone();
-        shippingMethod = shippingUtils.getShippingMethod();
-        addChannelToShippingMethod(
-          shippingMethod.id,
-          createdChannel.id,
-          createdChannelPrice
-        );
-      })
-      .then(() => {
-        cy.visit(urlList.shippingMethods);
         cy.addAliasToGraphRequest("ShippingZone");
         cy.contains(shippingZone.name).click();
         cy.wait("@ShippingZone");
         selectChannelInHeader(defaultChannel.name);
         cy.getTextFromElement(SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell)
           .then(text => {
-            const language =
-              window.navigator.userLanguage || window.navigator.language;
-            const expectedValue = defaultChannelPrice.toLocaleString(language, {
-              currency: defaultChannel.currencyCode,
-              style: "currency"
-            });
+            const expectedValue = getFormattedCurrencyAmount(
+              defaultChannelPrice,
+              defaultChannel.currencyCode
+            );
             expect(text).to.be.eq(expectedValue);
-          })
-          .then(() => {
+
             selectChannelInHeader(createdChannel.name);
             cy.getTextFromElement(
               SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
             );
           })
           .then(text => {
-            const language =
-              window.navigator.userLanguage || window.navigator.language;
-            const expectedValue = createdChannelPrice.toLocaleString(language, {
-              currency: createdChannelCurrency,
-              style: "currency"
-            });
+            const expectedValue = getFormattedCurrencyAmount(
+              createdChannelPrice,
+              createdChannelCurrency
+            );
             expect(text).to.be.eq(expectedValue);
           });
       });
   });
-  it("should be possible to create price based shipping method", () => {
+  it("should create price based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
-    const price = 5;
-    cy.visit(urlList.shippingMethods);
-    cy.get(SHIPPING_ZONES_LIST.addShippingZone)
-      .click()
-      .get(SHIPPING_ZONE_DETAILS.nameInput)
-      .type(shippingName)
-      .get(BUTTON_SELECTORS.submit)
-      .click()
-      .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
-      .click()
-      .get(SHIPPING_ZONE_DETAILS.warehouseOption)
-      .contains(name)
-      .click();
-    cy.addAliasToGraphRequest("UpdateShippingZone");
-    cy.get(BUTTON_SELECTORS.submit).click();
-    cy.wait("@UpdateShippingZone")
-      .get(SHIPPING_ZONE_DETAILS.addPriceRateButton)
-      .click()
-      .get(SHIPPING_RATE_DETAILS.inputName)
-      .type(shippingName)
-      .get(SHIPPING_RATE_DETAILS.priceInput)
-      .each($priceInput => {
-        cy.wrap($priceInput).type(price);
-      });
-    cy.get(BUTTON_SELECTORS.submit);
 
-    /*
-        create shipping method - with price based - in view
-        check available shipping methods on storefront
-        */
+    createShippingZone(shippingName, warehouse.name);
+    createShippingRate(shippingName, price, rateOptions.PRICE_OPTION);
+
+    createCheckout({
+      channelSlug: defaultChannel.slug,
+      email: "test@example.com",
+      variantsList,
+      address: plAddress
+    }).then(checkout => {
+      expect(checkout).includes(shippingName);
+    });
   });
 
-  it("should be possible to weight price based shipping method", () => {
-    /*
-        create shipping method - weight based - in view
-        check available shipping methods on storefront
-        */
+  it("should create weight based shipping method", () => {
+    const shippingName = `${startsWith}${faker.random.number()}`;
+
+    createShippingZone(shippingName, warehouse.name);
+    createShippingRate(shippingName, price, rateOptions.WEIGHT_OPTION);
+
+    createCheckout({
+      channelSlug: defaultChannel.slug,
+      email: "test@example.com",
+      variantsList,
+      address: plAddress
+    }).then(checkout => {
+      expect(checkout).includes(shippingName);
+    });
   });
 });

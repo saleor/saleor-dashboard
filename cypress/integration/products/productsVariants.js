@@ -10,13 +10,16 @@ import {
   createVariant
 } from "../../steps/products/VariantsSteps";
 import { urlList } from "../../url/urlList";
-import { deleteChannels, getDefaultChannel } from "../../utils/channelsUtils";
+import {
+  deleteChannelsStartsWith,
+  getDefaultChannel
+} from "../../utils/channelsUtils";
 import * as productUtils from "../../utils/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
-describe("creating variants", () => {
+describe("Creating variants", () => {
   const startsWith = "Cy-";
   const attributeValues = ["value1", "value2"];
 
@@ -28,9 +31,9 @@ describe("creating variants", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShipping(startsWith);
-    productUtils.deleteProperProducts(startsWith);
-    deleteChannels(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productUtils.deleteProductsStartsWith(startsWith);
+    deleteChannelsStartsWith(startsWith);
 
     const name = `${startsWith}${faker.random.number()}`;
     getDefaultChannel()
@@ -45,15 +48,21 @@ describe("creating variants", () => {
           address: fixtureAddresses.plAddress
         })
       )
-      .then(() => (warehouse = shippingUtils.getWarehouse()));
+      .then(({ warehouse: warehouseResp }) => (warehouse = warehouseResp));
 
     productUtils
       .createTypeAttributeAndCategoryForProduct(name, attributeValues)
-      .then(() => {
-        attribute = productUtils.getAttribute();
-        productType = productUtils.getProductType();
-        category = productUtils.getCategory();
-      });
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -102,8 +111,8 @@ describe("creating variants", () => {
         categoryId: category.id,
         price: variants[0].price
       })
-      .then(() => {
-        createdProduct = productUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        createdProduct = productResp;
         cy.visit(`${urlList.products}${createdProduct.id}`);
         createVariant({
           sku: secondVariantSku,
@@ -134,8 +143,8 @@ describe("creating variants", () => {
           category.id
         );
       })
-      .then(() => {
-        createdProduct = productUtils.getCreatedProduct();
+      .then(productResp => {
+        createdProduct = productResp;
         updateChannelInProduct({
           productId: createdProduct.id,
           channelId: defaultChannel.id

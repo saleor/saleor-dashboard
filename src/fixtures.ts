@@ -303,7 +303,7 @@ export const searchPageProps: SearchPageProps = {
   onSearchChange: () => undefined
 };
 
-export const filterPageProps: FilterPageProps<string, object> = {
+export const filterPageProps: FilterPageProps<string, {}> = {
   ...searchPageProps,
   ...tabPageProps,
   filterOpts: {},

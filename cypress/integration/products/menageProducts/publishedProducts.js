@@ -17,12 +17,20 @@ describe("Published products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productType = productsUtils.getProductType();
-      attribute = productsUtils.getAttribute();
-      category = productsUtils.getCategory();
-    });
+    productsUtils.deleteProductsStartsWith(startsWith);
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct(name)
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -44,8 +52,8 @@ describe("Published products", () => {
           isAvailableForPurchase: false
         });
       })
-      .then(() => {
-        const product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        const product = productResp;
         const productUrl = productDetailsUrl(product.id);
         updateProductPublish(productUrl, true);
         getProductDetails(product.id, defaultChannel.slug);
@@ -71,8 +79,8 @@ describe("Published products", () => {
           categoryId: category.id
         });
       })
-      .then(() => {
-        product = productsUtils.getCreatedProduct();
+      .then(({ product: productResp }) => {
+        product = productResp;
         const productUrl = productDetailsUrl(product.id);
         updateProductPublish(productUrl, false);
         getProductDetails(product.id, defaultChannel.slug);

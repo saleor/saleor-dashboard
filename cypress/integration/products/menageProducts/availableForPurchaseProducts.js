@@ -20,8 +20,8 @@ describe("Products available in listings", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShipping(startsWith);
-    productsUtils.deleteProperProducts(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
     getDefaultChannel()
       .then(channel => {
@@ -35,15 +35,23 @@ describe("Products available in listings", () => {
           address: addressesFixture.plAddress
         });
       })
-      .then(() => {
-        warehouse = shippingUtils.getWarehouse();
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
       });
 
-    productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productType = productsUtils.getProductType();
-      attribute = productsUtils.getAttribute();
-      category = productsUtils.getCategory();
-    });
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct(name)
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -52,6 +60,8 @@ describe("Products available in listings", () => {
 
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
+    let product;
+
     productsUtils
       .createProductInChannel({
         name: productName,
@@ -62,17 +72,13 @@ describe("Products available in listings", () => {
         categoryId: category.id,
         isAvailableForPurchase: false
       })
-      .then(() => {
-        const productUrl = productDetailsUrl(
-          productsUtils.getCreatedProduct().id
-        );
+      .then(({ product: productResp }) => {
+        product = productResp;
+        const productUrl = productDetailsUrl(product.id);
         updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
-        getProductDetails(
-          productsUtils.getCreatedProduct().id,
-          defaultChannel.slug
-        );
+        getProductDetails(product.id, defaultChannel.slug);
       })
       .then(resp => {
         expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
@@ -80,6 +86,8 @@ describe("Products available in listings", () => {
   });
   it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
+    let product;
+
     productsUtils
       .createProductInChannel({
         name: productName,
@@ -89,17 +97,13 @@ describe("Products available in listings", () => {
         attributeId: attribute.id,
         categoryId: category.id
       })
-      .then(() => {
-        const productUrl = productDetailsUrl(
-          productsUtils.getCreatedProduct().id
-        );
+      .then(({ product: productResp }) => {
+        product = productResp;
+        const productUrl = productDetailsUrl(product.id);
         updateProductIsAvailableForPurchase(productUrl, false);
       })
       .then(() => {
-        getProductDetails(
-          productsUtils.getCreatedProduct().id,
-          defaultChannel.slug
-        );
+        getProductDetails(product.id, defaultChannel.slug);
       })
       .then(resp => {
         expect(isProductAvailableForPurchase(resp)).to.be.eq(false);

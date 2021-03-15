@@ -1,21 +1,21 @@
 import * as checkoutRequest from "../apiRequests/Checkout";
 import * as orderRequest from "../apiRequests/Order";
 
-let checkout;
-let order;
-
 export function createWaitingForCaptureOrder(
   channelSlug,
   email,
   variantsList,
   shippingMethodId
 ) {
-  return createCheckout(channelSlug, email, variantsList)
-    .then(() =>
-      checkoutRequest.addShippingMethod(checkout.id, shippingMethodId)
-    )
+  let checkout;
+  return createCheckout({ channelSlug, email, variantsList })
+    .then(checkoutResp => {
+      checkout = checkoutResp;
+      checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
+    })
     .then(() => addPayment(checkout.id))
-    .then(() => checkoutRequest.completeCheckout(checkout.id));
+    .then(() => checkoutRequest.completeCheckout(checkout.id))
+    .then(() => checkout);
 }
 export function createReadyToFulfillOrder(
   customerId,
@@ -23,8 +23,10 @@ export function createReadyToFulfillOrder(
   channelId,
   variantsList
 ) {
+  let order;
   return createDraftOrder(customerId, shippingMethodId, channelId)
-    .then(() => {
+    .then(orderResp => {
+      order = orderResp;
       variantsList.forEach(variantElement => {
         orderRequest.addProductToOrder(order.id, variantElement.id);
       });
@@ -35,12 +37,18 @@ export function createReadyToFulfillOrder(
 export function createDraftOrder(customerId, shippingMethodId, channelId) {
   return orderRequest
     .createDraftOrder(customerId, shippingMethodId, channelId)
-    .then(resp => (order = resp.body.data.draftOrderCreate.order));
+    .its("body.data.draftOrderCreate.order");
 }
-export function createCheckout(channelSlug, email, variantsList) {
+export function createCheckout({ channelSlug, email, variantsList, address }) {
   return checkoutRequest
-    .createCheckout(channelSlug, email, 1, variantsList)
-    .then(resp => (checkout = resp.body.data.checkoutCreate.checkout));
+    .createCheckout({
+      channelSlug,
+      email,
+      productQuantity: 1,
+      variantsList,
+      address
+    })
+    .its("body.data.checkoutCreate.checkout");
 }
 export function addPayment(checkoutId) {
   return checkoutRequest.addPayment(

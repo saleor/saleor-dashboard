@@ -1,7 +1,7 @@
 import { deleteCollection, getCollections } from "../apiRequests/Collections";
 
-export function deleteProperCollections(startsWith) {
-  cy.deleteProperElements(
+export function deleteCollectionsStartsWith(startsWith) {
+  cy.deleteElementsStartsWith(
     deleteCollection,
     getCollections,
     startsWith,

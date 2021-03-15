@@ -10,9 +10,9 @@ import {
 } from "../steps/collectionsSteps";
 import { urlList } from "../url/urlList";
 import * as channelsUtils from "../utils/channelsUtils";
-import { deleteProperCollections } from "../utils/collectionsUtils";
+import { deleteCollectionsStartsWith } from "../utils/collectionsUtils";
 import * as productsUtils from "../utils/productsUtils";
-import { deleteShipping } from "../utils/shippingUtils";
+import { deleteShippingStartsWith } from "../utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
@@ -26,14 +26,15 @@ describe("Collections", () => {
   let attribute;
   let productType;
   let category;
+  let product;
 
   let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    deleteProperCollections(startsWith);
-    deleteShipping(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()
@@ -41,18 +42,25 @@ describe("Collections", () => {
         defaultChannel = channel;
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
-      .then(() => {
-        attribute = productsUtils.getAttribute();
-        productType = productsUtils.getProductType();
-        category = productsUtils.getCategory();
-        productsUtils.createProductInChannel({
-          name,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id
-        });
-      });
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+          productsUtils.createProductInChannel({
+            name,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id
+          });
+        }
+      )
+      .then(({ product: productResp }) => (product = productResp));
   });
 
   beforeEach(() => {
@@ -97,22 +105,17 @@ describe("Collections", () => {
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     let collection;
+    let channel;
 
     channelsUtils
       .createChannel({ name: collectionName })
-      .then(() => {
-        updateChannelInProduct(
-          productsUtils.getCreatedProduct().id,
-          channelsUtils.getCreatedChannel().id
-        );
+      .then(channelResp => {
+        channel = channelResp;
+        updateChannelInProduct(product.id, channel.id);
       })
       .then(() => {
         cy.visit(urlList.collections);
-        createCollection(
-          collectionName,
-          true,
-          channelsUtils.getCreatedChannel()
-        );
+        createCollection(collectionName, true, channel);
       })
       .then(collectionResp => {
         collection = collectionResp;
@@ -129,15 +132,18 @@ describe("Collections", () => {
     // but are listed on Collections
     const randomName = `${startsWith}${faker.random.number()}`;
     let collection;
+    let createdProduct;
 
-    productsUtils.createProductInChannel({
-      name: randomName,
-      channelId: defaultChannel.id,
-      productTypeId: productType.id,
-      attributeId: attribute.id,
-      categoryId: category.id,
-      visibleInListings: false
-    });
+    productsUtils
+      .createProductInChannel({
+        name: randomName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        visibleInListings: false
+      })
+      .then(({ product: productResp }) => (createdProduct = productResp));
     cy.visit(urlList.collections);
     createCollection(randomName, true, defaultChannel)
       .then(collectionResp => {
@@ -148,19 +154,16 @@ describe("Collections", () => {
         getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
-        const isVisible = isProductInCollectionVisible(
-          resp,
-          productsUtils.getCreatedProduct().id
-        );
+        const isVisible = isProductInCollectionVisible(resp, createdProduct.id);
         expect(isVisible).to.equal(true);
       })
       .then(() => {
-        searchInShop(productsUtils.getCreatedProduct().name);
+        searchInShop(createdProduct.name);
       })
       .then(resp => {
         const isVisible = isProductVisibleInSearchResult(
           resp,
-          productsUtils.getCreatedProduct().name
+          createdProduct.name
         );
         expect(isVisible).to.equal(false);
       });

@@ -3,9 +3,9 @@ import { findValueInEnum } from "@saleor/misc";
 import isArray from "lodash-es/isArray";
 
 function createFilterUtils<
-  TQueryParams extends object,
-  TFilters extends object
->(filters: object) {
+  TQueryParams extends {},
+  TFilters extends {}
+>(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
       .filter(key => Object.keys(filters).includes(key))
@@ -35,11 +35,11 @@ export function dedupeFilter<T>(array: T[]): T[] {
 
 export type GetFilterQueryParam<
   TFilterKeys extends string,
-  TFilters extends object
-> = (filter: IFilterElement<TFilterKeys>, params?: object) => TFilters;
+  TFilters extends {}
+> = (filter: IFilterElement<TFilterKeys>, params?: {}) => TFilters;
 export function getFilterQueryParams<
   TFilterKeys extends string,
-  TUrlFilters extends object
+  TUrlFilters extends {}
 >(
   filter: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
@@ -86,7 +86,7 @@ export function getSingleValueQueryParam<
 export function getSingleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends object
+  TEnum extends {}
 >(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
@@ -104,7 +104,7 @@ export function getSingleEnumValueQueryParam<
 export function getMultipleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends object
+  TEnum extends {}
 >(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
