@@ -91,3 +91,7 @@ export const getParsedFulfiledLines = (
 
 export const getById = (idToCompare: string) => (obj: { id: string }) =>
   obj.id === idToCompare;
+
+export const getByUnmatchingId = (idToCompare: string) => (obj: {
+  id: string;
+}) => obj.id !== idToCompare;

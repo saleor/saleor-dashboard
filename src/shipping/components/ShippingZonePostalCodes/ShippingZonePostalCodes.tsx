@@ -24,7 +24,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface ShippingZonePostalCodesProps {
   disabled: boolean;
   initialExpanded?: boolean;
-  initialInclusionType?: PostalCodeRuleInclusionTypeEnum;
   postalCodes: ShippingMethodFragment_postalCodeRules[] | undefined;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
@@ -64,7 +63,6 @@ const useStyles = makeStyles(
 const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   disabled,
   initialExpanded = true,
-  initialInclusionType = PostalCodeRuleInclusionTypeEnum.EXCLUDE,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
@@ -74,6 +72,15 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   const [inclusionType, setInclusionType] = React.useState(null);
   const intl = useIntl();
   const classes = useStyles({});
+
+  const getInclusionType = () => {
+    if (inclusionType) {
+      return inclusionType;
+    }
+    return (
+      postalCodes[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE
+    );
+  };
 
   const onInclusionRadioChange = (event: React.ChangeEvent<any>) => {
     const value = event.target.value;
@@ -92,9 +99,6 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     }
     return postalCodeRange.start;
   };
-
-  const getInlcusionType = () =>
-    inclusionType === null ? initialInclusionType : inclusionType;
 
   return (
     <Card>
@@ -154,7 +158,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
             }
           ]}
           name="includePostalCodes"
-          value={getInlcusionType()}
+          value={getInclusionType()}
           onChange={onInclusionRadioChange}
         />
       </CardContent>

@@ -191,6 +191,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
           orderList,
           order => (
             <TableRow
+              data-test-id="order-table-row"
               hover={!!order}
               className={!!order ? classes.link : undefined}
               onClick={order ? onRowClick(order.id) : undefined}

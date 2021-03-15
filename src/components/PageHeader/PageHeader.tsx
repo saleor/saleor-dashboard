@@ -38,6 +38,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
 
   return (
     <ExtendedPageHeader
+      testId="page-header"
       className={className}
       inline={inline}
       title={

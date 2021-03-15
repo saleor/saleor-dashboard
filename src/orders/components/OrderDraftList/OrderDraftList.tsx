@@ -170,6 +170,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
 
             return (
               <TableRow
+                data-test-id="draft-order-table-row"
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
                 onClick={order ? onRowClick(order.id) : undefined}
