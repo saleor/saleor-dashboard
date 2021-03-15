@@ -1,6 +1,7 @@
 import "./user";
 import "./softAssertions";
 import "./deleteElement/index.js";
+import "./elements/index";
 
 import { urlList } from "../url/urlList";
 

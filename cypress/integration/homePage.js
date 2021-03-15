@@ -1,6 +1,9 @@
 import faker from "faker";
 
-import { createCustomer, deleteCustomers } from "../apiRequests/Customer";
+import {
+  createCustomer,
+  deleteCustomersStartsWith
+} from "../apiRequests/Customer";
 import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import { changeChannel } from "../steps/homePageSteps";
 import { urlList } from "../url/urlList";
@@ -34,7 +37,7 @@ describe("Homepage analytics", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productsUtils.deleteProductsStartsWith(startsWith);
-    deleteCustomers(startsWith);
+    deleteCustomersStartsWith(startsWith);
     shippingUtils.deleteShippingStartsWith(startsWith);
     let addresses;
 
