@@ -14,7 +14,7 @@ export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = (
   const intl = useIntl();
 
   return (
-    <Card data-test-id="sales-channel">
+    <Card data-test-id="order-sales-channel">
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Sales channel",
