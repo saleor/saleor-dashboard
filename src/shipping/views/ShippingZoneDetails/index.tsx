@@ -9,6 +9,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { createPaginationState } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
@@ -78,9 +79,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     ShippingZoneUrlDialog,
     ShippingZoneUrlQueryParams
   >(navigate, params => shippingZoneUrl(id, params), params);
-  const rate = data?.shippingZone?.shippingMethods?.find(
-    rate => rate.id === params.id
-  );
+  const rate = data?.shippingZone?.shippingMethods?.find(getById(params.id));
 
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {

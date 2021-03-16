@@ -1644,7 +1644,6 @@ type DeletePrivateMetadata {
 type DigitalContent implements Node & ObjectWithMetadata {
   useDefaultSettings: Boolean!
   automaticFulfillment: Boolean!
-  productVariant: ProductVariant!
   contentFile: String!
   maxDownloads: Int
   urlValidDays: Int
@@ -1652,6 +1651,7 @@ type DigitalContent implements Node & ObjectWithMetadata {
   id: ID!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  productVariant: ProductVariant!
 }
 
 type DigitalContentCountableConnection {
@@ -5925,6 +5925,9 @@ enum WebhookEventTypeEnum {
   PRODUCT_CREATED
   PRODUCT_UPDATED
   PRODUCT_DELETED
+  PRODUCT_VARIANT_CREATED
+  PRODUCT_VARIANT_UPDATED
+  PRODUCT_VARIANT_DELETED
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
@@ -5948,6 +5951,9 @@ enum WebhookSampleEventTypeEnum {
   PRODUCT_CREATED
   PRODUCT_UPDATED
   PRODUCT_DELETED
+  PRODUCT_VARIANT_CREATED
+  PRODUCT_VARIANT_UPDATED
+  PRODUCT_VARIANT_DELETED
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
