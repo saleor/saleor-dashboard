@@ -51,15 +51,17 @@ interface ExtendedPageHeaderProps {
   className?: string;
   inline?: boolean;
   title?: React.ReactNode;
+  testId?: string;
 }
 
 const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
-  const { children, className, inline, title } = props;
+  const { children, className, inline, title, testId } = props;
 
   const classes = useStyles(props);
 
   return (
     <div
+      data-test-id={testId}
       className={classNames(classes.root, className, {
         [classes.block]: !inline
       })}

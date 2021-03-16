@@ -171,7 +171,14 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
     if (!!shippingAddress) {
-      return <Link onClick={onShippingMethodEdit}>{shippingCarrierBase}</Link>;
+      return (
+        <Link
+          onClick={onShippingMethodEdit}
+          data-test-id="add-shipping-carrier"
+        >
+          {shippingCarrierBase}
+        </Link>
+      );
     }
 
     const addCustomerInfo = intl.formatMessage(messages.addCustomerInfo);
