@@ -6834,9 +6834,17 @@
     "context": "section header",
     "string": "Events"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_144149815": {
+    "context": "event",
+    "string": "Product variant deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
     "string": "Order updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
+    "context": "event",
+    "string": "Product variant updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
     "context": "event",
@@ -6861,6 +6869,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
     "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3285325968": {
+    "context": "event",
+    "string": "Product variant created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
     "context": "event",
