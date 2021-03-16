@@ -483,7 +483,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   id: string;
   name: string;
   sku: string;
-  media: (SimpleProductUpdate_productVariantUpdate_productVariant_product_variants_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product {
@@ -550,7 +550,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   privateMetadata: (SimpleProductUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes[];
-  media: (SimpleProductUpdate_productVariantUpdate_productVariant_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantUpdate_productVariant_media[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
   channelListings: SimpleProductUpdate_productVariantUpdate_productVariant_channelListings[] | null;
@@ -766,7 +766,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   id: string;
   name: string;
   sku: string;
-  media: (SimpleProductUpdate_productVariantStocksCreate_productVariant_product_variants_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_variants_media[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product {
@@ -833,7 +833,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   privateMetadata: (SimpleProductUpdate_productVariantStocksCreate_productVariant_privateMetadata | null)[];
   selectionAttributes: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes[];
   nonSelectionAttributes: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes[];
-  media: (SimpleProductUpdate_productVariantStocksCreate_productVariant_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksCreate_productVariant_media[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksCreate_productVariant_product;
   channelListings: SimpleProductUpdate_productVariantStocksCreate_productVariant_channelListings[] | null;
@@ -1048,7 +1048,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   id: string;
   name: string;
   sku: string;
-  media: (SimpleProductUpdate_productVariantStocksDelete_productVariant_product_variants_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_variants_media[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product {
@@ -1115,7 +1115,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   privateMetadata: (SimpleProductUpdate_productVariantStocksDelete_productVariant_privateMetadata | null)[];
   selectionAttributes: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes[];
   nonSelectionAttributes: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes[];
-  media: (SimpleProductUpdate_productVariantStocksDelete_productVariant_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksDelete_productVariant_media[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksDelete_productVariant_product;
   channelListings: SimpleProductUpdate_productVariantStocksDelete_productVariant_channelListings[] | null;
@@ -1331,7 +1331,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   id: string;
   name: string;
   sku: string;
-  media: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_variants_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product {
@@ -1398,7 +1398,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   privateMetadata: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes[];
-  media: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksUpdate_productVariant_media[] | null;
   name: string;
   product: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product;
   channelListings: SimpleProductUpdate_productVariantStocksUpdate_productVariant_channelListings[] | null;

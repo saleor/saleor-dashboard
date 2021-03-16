@@ -208,7 +208,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_varia
   id: string;
   name: string;
   sku: string;
-  media: (VariantUpdate_productVariantUpdate_productVariant_product_variants_media | null)[] | null;
+  media: VariantUpdate_productVariantUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_product {
@@ -275,7 +275,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   privateMetadata: (VariantUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes[];
-  media: (VariantUpdate_productVariantUpdate_productVariant_media | null)[] | null;
+  media: VariantUpdate_productVariantUpdate_productVariant_media[] | null;
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_channelListings[] | null;
@@ -491,7 +491,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   id: string;
   name: string;
   sku: string;
-  media: (VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media | null)[] | null;
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product {
@@ -558,7 +558,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   privateMetadata: (VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes[];
-  media: (VariantUpdate_productVariantStocksUpdate_productVariant_media | null)[] | null;
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_media[] | null;
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings[] | null;

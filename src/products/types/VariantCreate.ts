@@ -208,7 +208,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product_varia
   id: string;
   name: string;
   sku: string;
-  media: (VariantCreate_productVariantCreate_productVariant_product_variants_media | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product {
@@ -275,7 +275,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantCreate_productVariantCreate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes[];
-  media: (VariantCreate_productVariantCreate_productVariant_media | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_media[] | null;
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;
   channelListings: VariantCreate_productVariantCreate_productVariant_channelListings[] | null;

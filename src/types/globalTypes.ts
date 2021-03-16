@@ -1578,10 +1578,10 @@ export interface ProductChannelListingUpdateInput {
 }
 
 export interface ProductCreateInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
+  collections?: string[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;
@@ -1610,10 +1610,10 @@ export interface ProductFilterInput {
 }
 
 export interface ProductInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
+  collections?: string[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;

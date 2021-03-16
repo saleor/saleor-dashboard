@@ -201,7 +201,7 @@ export interface ProductVariant_product_variants {
   id: string;
   name: string;
   sku: string;
-  media: (ProductVariant_product_variants_media | null)[] | null;
+  media: ProductVariant_product_variants_media[] | null;
 }
 
 export interface ProductVariant_product {
@@ -268,7 +268,7 @@ export interface ProductVariant {
   privateMetadata: (ProductVariant_privateMetadata | null)[];
   selectionAttributes: ProductVariant_selectionAttributes[];
   nonSelectionAttributes: ProductVariant_nonSelectionAttributes[];
-  media: (ProductVariant_media | null)[] | null;
+  media: ProductVariant_media[] | null;
   name: string;
   product: ProductVariant_product;
   channelListings: ProductVariant_channelListings[] | null;

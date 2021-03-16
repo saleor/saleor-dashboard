@@ -207,7 +207,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_product_va
   id: string;
   name: string;
   sku: string;
-  media: (VariantMediaAssign_variantMediaAssign_productVariant_product_variants_media | null)[] | null;
+  media: VariantMediaAssign_variantMediaAssign_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_product {
@@ -274,7 +274,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant {
   privateMetadata: (VariantMediaAssign_variantMediaAssign_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantMediaAssign_variantMediaAssign_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantMediaAssign_variantMediaAssign_productVariant_nonSelectionAttributes[];
-  media: (VariantMediaAssign_variantMediaAssign_productVariant_media | null)[] | null;
+  media: VariantMediaAssign_variantMediaAssign_productVariant_media[] | null;
   name: string;
   product: VariantMediaAssign_variantMediaAssign_productVariant_product;
   channelListings: VariantMediaAssign_variantMediaAssign_productVariant_channelListings[] | null;

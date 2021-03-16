@@ -103,7 +103,7 @@ export interface ProductVariantCreateData_product_variants {
   id: string;
   name: string;
   sku: string;
-  media: (ProductVariantCreateData_product_variants_media | null)[] | null;
+  media: ProductVariantCreateData_product_variants_media[] | null;
 }
 
 export interface ProductVariantCreateData_product {
