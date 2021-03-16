@@ -3,16 +3,16 @@ import { removeAtIndex } from "@saleor/utils/lists";
 import useStateFromProps from "./useStateFromProps";
 
 export type FormsetChange<TValue = any> = (id: string, value: TValue) => void;
-export interface FormsetAtomicData<TData = object, TValue = any> {
+export interface FormsetAtomicData<TData = {}, TValue = any> {
   data: TData;
   id: string;
   label: string;
   value: TValue;
 }
-export type FormsetData<TData = object, TValue = any> = Array<
+export type FormsetData<TData = {}, TValue = any> = Array<
   FormsetAtomicData<TData, TValue>
 >;
-export interface UseFormsetOutput<TData = object, TValue = any> {
+export interface UseFormsetOutput<TData = {}, TValue = any> {
   add: (data: FormsetAtomicData<TData, TValue>) => void;
   change: FormsetChange<TValue>;
   data: FormsetData<TData, TValue>;
@@ -21,7 +21,7 @@ export interface UseFormsetOutput<TData = object, TValue = any> {
   set: (data: FormsetData<TData, TValue>) => void;
   remove: (id: string) => void;
 }
-function useFormset<TData = object, TValue = any>(
+function useFormset<TData = {}, TValue = any>(
   initial: FormsetData<TData, TValue>
 ): UseFormsetOutput<TData, TValue> {
   const [data, setData] = useStateFromProps<FormsetData<TData, TValue>>(

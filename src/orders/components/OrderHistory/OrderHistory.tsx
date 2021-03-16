@@ -10,18 +10,16 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
-import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
-import { orderUrl } from "@saleor/orders/urls";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum
 } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages } from "react-intl";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
+import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
 
 export const getEventMessage = (
@@ -251,17 +249,6 @@ export const getEventMessage = (
   }
 };
 
-export const replacementCreatedMessages = defineMessages({
-  description: {
-    defaultMessage: "was created for replaced products",
-    description: "replacement created order history message description"
-  },
-  draftNumber: {
-    defaultMessage: "Draft #{orderNumber} ",
-    description: "replacement created order history message draft number"
-  }
-});
-
 export interface FormData {
   message: string;
 }
@@ -317,26 +304,6 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
     return { title };
   };
 
-  const getTitleElements = (
-    event: OrderDetails_order_events
-  ): TitleElement[] => {
-    const { type, relatedOrder } = event;
-
-    switch (type) {
-      case OrderEventsEnum.ORDER_REPLACEMENT_CREATED: {
-        return [
-          {
-            link: orderUrl(relatedOrder?.id),
-            text: intl.formatMessage(replacementCreatedMessages.draftNumber, {
-              orderNumber: relatedOrder?.number
-            })
-          },
-          { text: intl.formatMessage(replacementCreatedMessages.description) }
-        ];
-      }
-    }
-  };
-
   return (
     <div className={classes.root}>
       <Typography className={classes.header} color="textSecondary">
@@ -381,13 +348,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               }
 
               if (isTimelineEventOfType("linked", type)) {
-                return (
-                  <TimelineEvent
-                    titleElements={getTitleElements(event)}
-                    key={id}
-                    date={date}
-                  />
-                );
+                return <LinkedTimelineEvent event={event} key={id} />;
               }
 
               return (

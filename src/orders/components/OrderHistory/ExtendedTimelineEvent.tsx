@@ -1,15 +1,20 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
-import { orderUrl } from "@saleor/orders/urls";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { OrderEventsEnum } from "@saleor/types/globalTypes";
-import classNames from "classnames";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderDetails_order_events } from "../../types/OrderDetails";
+import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
+import Label from "./Label";
+import {
+  getEmployeeNameLink,
+  getOrderNumberLink,
+  hasOrderLineDiscountWithNoPreviousValue,
+  isTimelineEventOfDiscountType
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -79,6 +84,31 @@ export const titles = defineMessages({
     description: "returned event title",
     id: "event title returned"
   },
+  orderDiscountAdded: {
+    defaultMessage: "Order was discounted by",
+    description: "order was discounted event title",
+    id: "event title order discounted"
+  },
+  orderDiscountAutomaticallyUpdated: {
+    defaultMessage: "Order discount was updated automatically updated",
+    description: "order discount was updated automatically event title",
+    id: "event title order discount auto updated"
+  },
+  orderDiscountUpdated: {
+    defaultMessage: "Order discount was updated by",
+    description: "order discount was updated event title",
+    id: "event title order discount updated"
+  },
+  orderLineDiscountAdded: {
+    defaultMessage: "{productName} discount was added by ",
+    description: "order line discount added title",
+    id: "event title order line discount added"
+  },
+  orderLineDiscountUpdated: {
+    defaultMessage: "{productName} discount was updated by ",
+    description: "order line discount updated title",
+    id: "event title order line discount updated"
+  },
   orderMarkedAsPaid: {
     defaultMessage: "Order was marked as paid by",
     description: "order marked as paid event title",
@@ -122,28 +152,42 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     id,
     date,
     type,
-    user,
     lines,
     amount,
     transactionReference,
-    shippingCostsIncluded,
-    relatedOrder
+    shippingCostsIncluded
   } = event;
   const classes = useStyles({});
   const intl = useIntl();
 
   const eventTypeInCamelCase = camelCase(type);
 
-  const employeeName = `${user.firstName} ${user.lastName}`;
+  const getEventTitleMessageInCamelCase = () => {
+    if (hasOrderLineDiscountWithNoPreviousValue(event)) {
+      return titles.orderLineDiscountAdded;
+    }
+
+    return titles[eventTypeInCamelCase];
+  };
+
+  const getTitleProps = () => {
+    if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
+      return { productName: lines[0]?.itemName };
+    }
+
+    return {};
+  };
 
   const titleElements = {
     by: { text: intl.formatMessage(messages.by) },
-    employeeName: { link: staffMemberDetailsUrl(user.id), text: employeeName },
-    orderNumber: {
-      link: orderUrl(relatedOrder?.id),
-      text: `#${relatedOrder?.number}`
-    },
-    title: { text: intl.formatMessage(titles[eventTypeInCamelCase]) }
+    employeeName: getEmployeeNameLink(event),
+    orderNumber: getOrderNumberLink(event),
+    title: {
+      text: intl.formatMessage(
+        getEventTitleMessageInCamelCase(),
+        getTitleProps()
+      )
+    }
   };
 
   const selectTitleElements = () => {
@@ -153,39 +197,43 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
         return [title, orderNumber, by, employeeName];
       }
+      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
+        return [title];
+      }
       default: {
         return [title, employeeName];
       }
     }
   };
 
+  if (isTimelineEventOfDiscountType(type)) {
+    return (
+      <ExtendedDiscountTimelineEvent
+        event={event}
+        titleElements={selectTitleElements()}
+      />
+    );
+  }
+
   return (
     <TimelineEvent date={date} titleElements={selectTitleElements()} key={id}>
       {lines && (
         <>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classes.eventSubtitle}
-          >
-            {intl.formatMessage(productTitles[eventTypeInCamelCase])}
-          </Typography>
+          <Label
+            text={intl.formatMessage(productTitles[eventTypeInCamelCase])}
+          />
           <table>
             <tbody>
-              {lines.map(({ orderLine, quantity }) => (
-                <tr key={orderLine.id}>
+              {lines.map(({ orderLine, quantity, itemName }, i) => (
+                <tr key={`${itemName}-${i}`}>
                   <td className={classes.linesTableCell}>
-                    {orderLine.productName}
+                    {orderLine?.productName || itemName}
                   </td>
                   <td className={classes.linesTableCell}>
-                    <Typography variant="caption" color="textSecondary">
-                      {orderLine.variantName}
-                    </Typography>
+                    <Label text={orderLine?.variantName} />
                   </td>
                   <td className={classes.linesTableCell}>
-                    <Typography variant="caption" color="textSecondary">
-                      {`qty: ${quantity}`}
-                    </Typography>
+                    <Label text={`qty: ${quantity}`} />
                   </td>
                 </tr>
               ))}
@@ -193,13 +241,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
           </table>
           {(amount || amount === 0) && (
             <>
-              <Typography
-                variant="caption"
-                color="textSecondary"
-                className={classNames(classes.eventSubtitle, classes.topSpacer)}
-              >
-                {intl.formatMessage(messages.refundedAmount)}
-              </Typography>
+              <Label text={intl.formatMessage(messages.refundedAmount)} />
               <Money
                 money={{
                   amount,
@@ -218,13 +260,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
 
       {!!transactionReference && (
         <>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classNames(classes.eventSubtitle)}
-          >
-            {intl.formatMessage(messages.transactionReference)}
-          </Typography>
+          <Label text={intl.formatMessage(messages.transactionReference)} />
           <Typography>{transactionReference}</Typography>
         </>
       )}

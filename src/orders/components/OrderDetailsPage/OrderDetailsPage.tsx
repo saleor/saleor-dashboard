@@ -237,7 +237,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ) : (
                   <>
                     <OrderDraftDetails
-                      disabled={!order?.channel}
                       order={order}
                       onOrderLineAdd={onOrderLineAdd}
                       onOrderLineChange={onOrderLineChange}

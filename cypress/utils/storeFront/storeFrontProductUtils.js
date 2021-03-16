@@ -1,32 +1,34 @@
-import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
-import Search from "../../apiRequests/storeFront/Search";
+import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
 
-export const isProductVisible = (productId, channelSlug, name) => {
-  const productDetails = new ProductDetails();
-  return productDetails
-    .getProductDetails(productId, channelSlug)
-    .then(productDetailsResp => {
-      const product = productDetailsResp.body.data.product;
-      return product !== null && product.name === name;
-    });
+export const isProductVisible = (resp, name) => {
+  const product = resp.body.data.product;
+  return product !== null && product.name === name;
 };
 
-export const isProductAvailableForPurchase = (productId, channelSlug) => {
-  const productDetails = new ProductDetails();
-  return productDetails
-    .getProductDetails(productId, channelSlug)
-    .then(
-      productDetailsResp =>
-        productDetailsResp.body.data.product.isAvailableForPurchase
-    );
+export const isProductAvailableForPurchase = resp => {
+  const product = resp.body.data.product;
+  return product.isAvailableForPurchase;
 };
-export const isProductVisibleInSearchResult = (productName, channelSlug) => {
-  const search = new Search();
-  return search
-    .searchInShop(productName, channelSlug)
-    .then(
-      resp =>
-        resp.body.data.products.totalCount !== 0 &&
-        resp.body.data.products.edges[0].node.name === productName
-    );
+
+export const isProductVisibleInSearchResult = (resp, productName) => {
+  const productsList = resp.body.data.products;
+  return (
+    productsList.totalCount !== 0 &&
+    productsList.edges[0].node.name === productName
+  );
 };
+
+export const getProductVariants = (productId, channelSlug) => {
+  getProductDetails(productId, channelSlug).then(resp => {
+    const variantsList = resp.body.data.product.variants;
+    return variantsList.map(element => ({
+      name: element.name,
+      price: element.pricing.price.gross.amount
+    }));
+  });
+};
+
+export const getProductPrice = (productId, channelSlug) =>
+  getProductDetails(productId, channelSlug).then(
+    resp => resp.body.data.product.variants[0].pricing.price.gross.amount
+  );

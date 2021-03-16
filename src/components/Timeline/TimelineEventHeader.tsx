@@ -60,7 +60,7 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
       {title && <Typography>{title}</Typography>}
       {titleElements && (
         <div className={classes.elementsContainer}>
-          {titleElements.map(({ text, link }) => {
+          {titleElements.filter(Boolean).map(({ text, link }) => {
             if (link) {
               return (
                 <Link

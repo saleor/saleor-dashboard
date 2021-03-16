@@ -1,18 +1,15 @@
 import faker from "faker";
 
-import ProductSteps from "../../../steps/productSteps";
+import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
+import { updateProductIsAvailableForPurchase } from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
-import ChannelsUtils from "../../../utils/channelsUtils";
-import ProductsUtils from "../../../utils/productsUtils";
-import ShippingUtils from "../../../utils/shippingUtils";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import * as productsUtils from "../../../utils/productsUtils";
+import * as shippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
-  const shippingUtils = new ShippingUtils();
-  const channelsUtils = new ChannelsUtils();
-  const productsUtils = new ProductsUtils();
-  const productSteps = new ProductSteps();
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
@@ -23,11 +20,10 @@ describe("Products available in listings", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShipping(startsWith);
-    productsUtils.deleteProperProducts(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
-    channelsUtils
-      .getDefaultChannel()
+    getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
         cy.fixture("addresses");
@@ -39,15 +35,23 @@ describe("Products available in listings", () => {
           address: addressesFixture.plAddress
         });
       })
-      .then(() => {
-        warehouse = shippingUtils.getWarehouse();
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
       });
 
-    productsUtils.createTypeAttributeAndCategoryForProduct(name).then(() => {
-      productType = productsUtils.getProductType();
-      attribute = productsUtils.getAttribute();
-      category = productsUtils.getCategory();
-    });
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct(name)
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        }
+      );
   });
 
   beforeEach(() => {
@@ -56,6 +60,8 @@ describe("Products available in listings", () => {
 
   it("should update product to available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
+    let product;
+
     productsUtils
       .createProductInChannel({
         name: productName,
@@ -66,25 +72,22 @@ describe("Products available in listings", () => {
         categoryId: category.id,
         isAvailableForPurchase: false
       })
-      .then(() => {
-        const productUrl = productDetailsUrl(
-          productsUtils.getCreatedProduct().id
-        );
-        productSteps.updateProductIsAvailableForPurchase(productUrl, true);
+      .then(({ product: productResp }) => {
+        product = productResp;
+        const productUrl = productDetailsUrl(product.id);
+        updateProductIsAvailableForPurchase(productUrl, true);
       })
       .then(() => {
-        isProductAvailableForPurchase(
-          productsUtils.getCreatedProduct().id,
-          defaultChannel.slug,
-          productName
-        );
+        getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isVisibleResp => {
-        expect(isVisibleResp).to.be.eq(true);
+      .then(resp => {
+        expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
       });
   });
   it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.random.number()}`;
+    let product;
+
     productsUtils
       .createProductInChannel({
         name: productName,
@@ -94,21 +97,16 @@ describe("Products available in listings", () => {
         attributeId: attribute.id,
         categoryId: category.id
       })
-      .then(() => {
-        const productUrl = productDetailsUrl(
-          productsUtils.getCreatedProduct().id
-        );
-        productSteps.updateProductIsAvailableForPurchase(productUrl, false);
+      .then(({ product: productResp }) => {
+        product = productResp;
+        const productUrl = productDetailsUrl(product.id);
+        updateProductIsAvailableForPurchase(productUrl, false);
       })
       .then(() => {
-        isProductAvailableForPurchase(
-          productsUtils.getCreatedProduct().id,
-          defaultChannel.slug,
-          productName
-        );
+        getProductDetails(product.id, defaultChannel.slug);
       })
-      .then(isProductVisible => {
-        expect(isProductVisible).to.be.eq(false);
+      .then(resp => {
+        expect(isProductAvailableForPurchase(resp)).to.be.eq(false);
       });
   });
 });

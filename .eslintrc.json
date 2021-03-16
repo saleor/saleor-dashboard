@@ -21,8 +21,15 @@
         "default": "array-simple"
       }
     ],
-    "@typescript-eslint/ban-types": "error",
-    "@typescript-eslint/class-name-casing": "error",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "extendDefaults": true,
+        "types": {
+          "{}": false
+        }
+      }
+    ],
     "@typescript-eslint/consistent-type-assertions": "error",
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/explicit-member-accessibility": "off",
@@ -128,7 +135,7 @@
     "no-multiple-empty-lines": "off",
     "no-new-func": "error",
     "no-new-wrappers": "error",
-    "no-redeclare": "error",
+    "no-redeclare": "off",
     "no-return-await": "error",
     "no-sequences": "error",
     "no-shadow": [
@@ -155,7 +162,7 @@
     "radix": "error",
     "simple-import-sort/sort": ["error"],
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
-    "sort-keys": "warn",
+    "sort-keys": "off",
     "space-before-function-paren": "off",
     "spaced-comment": "error",
     "use-isnan": "error",
