@@ -9,7 +9,7 @@ import {
 const searchShippingZones = gql`
   ${pageInfoFragment}
   query SearchShippingZones(
-    $query: String!
+    $query: String = ""
     $first: Int
     $after: String
     $last: Int

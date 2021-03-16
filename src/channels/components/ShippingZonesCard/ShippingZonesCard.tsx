@@ -1,19 +1,18 @@
 import {
   Card,
   CardContent,
-  ClickAwayListener,
+  Divider,
+  makeStyles,
   Typography
 } from "@material-ui/core";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import { ChannelDetailsContextConsumerProps } from "@saleor/channels/pages/ChannelDetailsPage/ChannelDetailsProvider/ChannelDetailsProvider";
-import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
 import CardTitle from "@saleor/components/CardTitle";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";
-import { mapNodeToChoice } from "@saleor/utils/maps";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ShippingZoneItem from "./ShippingZoneItem";
+import ShippingZonesCardListFooter from "./ShippingZonesCardListFooter";
 import ShippingZonesListHeader from "./ShippingZonesListHeader";
 
 const messages = defineMessages({
@@ -25,81 +24,52 @@ const messages = defineMessages({
     defaultMessage:
       "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels.",
     description: "card subtitle"
-  },
-  addZoneTitle: {
-    defaultMessage: "Add Shipping Zones",
-    description: "add shipping zone title"
   }
 });
 
+const useExpanderStyles = makeStyles(
+  () => ({
+    // empty expanded needed for mui to use root styles
+    expanded: {},
+    root: {
+      boxShadow: "none",
+
+      "&:before": {
+        content: "none"
+      },
+
+      "&$expanded": {
+        margin: 0,
+        border: "none"
+      }
+    }
+  }),
+  { name: "ShippingZonesCardExpander" }
+);
+
 interface ShippingZonesCardProps extends ChannelDetailsContextConsumerProps {}
 
-const ShippingZonesCard: React.FC<ShippingZonesCardProps> = ({
-  searchShippingZones: onSearch,
-  shippingZones,
-  shippingZonesChoices,
-  addShippingZone,
-  removeShippingZone,
-  fetchMoreShippingZones
-}) => {
+const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
+  const { shippingZones, removeShippingZone } = props;
+
+  const expanderClasses = useExpanderStyles({});
   const intl = useIntl();
   const choicesMenuRef = useRef(null);
-
-  const [isListOpen, setIsListOpen] = useState<boolean>(false);
-  const [isChoicesSelectShown, setIsChoicesSelectShown] = useState<boolean>(
-    false
-  );
-
-  const handleToggleListOpen = () => setIsListOpen(!isListOpen);
 
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
-      {/* 
-      {loading && (
-        <CardContent>
-          <Skeleton />
-        </CardContent>
-      )} */}
-
-      {/* {!loading && ( */}
-      <>
-        <CardContent>
-          <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
-        </CardContent>
-        <ShippingZonesListHeader
-          zonesCount={shippingZones?.length}
-          isListOpen={isListOpen}
-          onOpenChange={handleToggleListOpen}
-        />
+      <CardContent>
+        <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
+      </CardContent>
+      <ExpansionPanel classes={expanderClasses}>
+        <ShippingZonesListHeader shippingZones={shippingZones} />
+        <Divider />
         {shippingZones.map(zone => (
           <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
         ))}
-        {isChoicesSelectShown ? (
-          <ClickAwayListener onClickAway={() => setIsChoicesSelectShown(false)}>
-            <div ref={choicesMenuRef}>
-              <SingleAutocompleteSelectField
-                useNakedInput
-                name="shippingZone"
-                choices={mapNodeToChoice(shippingZonesChoices)}
-                fetchChoices={onSearch}
-                {...fetchMoreShippingZones}
-                onChange={({ target }) => addShippingZone(target.value)}
-              />
-            </div>
-          </ClickAwayListener>
-        ) : (
-          <CardAddItemsFooter
-            onAdd={() => setIsChoicesSelectShown(true)}
-            title={messages.addZoneTitle}
-            testIds={{
-              link: "add-shipping-zone-link",
-              button: "add-shipping-zone-button"
-            }}
-          />
-        )}
-      </>
-      {/* )} */}
+        <ShippingZonesCardListFooter containerRef={choicesMenuRef} {...props} />
+      </ExpansionPanel>
     </Card>
   );
 };

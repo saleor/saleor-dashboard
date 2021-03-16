@@ -1,24 +1,39 @@
-import { Divider, Typography } from "@material-ui/core";
+import { ExpansionPanelSummary, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
 import IconChevronDown from "@saleor/icons/ChevronDown";
-import IconChevronUp from "@saleor/icons/ChevronUp";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     container: {
+      width: "100%",
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: theme.spacing(0, 3)
-    },
-    iconContainer: {
-      padding: theme.spacing(1, 0),
-      display: "flex",
-      justifyContent: "center",
       alignItems: "center"
+    },
+    // empty expanded needed for mui to use root styles
+    expanded: {},
+    root: {
+      width: "100%",
+      border: "none",
+      paddingBottom: theme.spacing(2),
+      minHeight: 0,
+
+      "&$expanded": {
+        minHeight: 0,
+        paddingBottom: theme.spacing(2)
+      }
+    },
+    content: {
+      width: "calc(100% - 20px)",
+      margin: 0,
+
+      "&$expanded": {
+        margin: 0
+      }
     }
   }),
   { name: "ShippingZonesListHeader" }
@@ -32,33 +47,26 @@ const messages = defineMessages({
 });
 
 interface ShippingZonesListHeaderProps {
-  isListOpen: boolean;
-  zonesCount?: number;
-  onOpenChange: () => void;
+  shippingZones: Channel_channel_shippingZones[];
 }
 
 const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
-  isListOpen,
-  zonesCount = 0,
-  onOpenChange
+  shippingZones
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   return (
-    <>
-      <div className={classes.container}>
+    <div className={classes.container}>
+      <ExpansionPanelSummary expandIcon={<IconChevronDown />} classes={classes}>
         <Typography variant="subtitle2" color="textSecondary">
-          {intl.formatMessage(messages.title, { zonesCount })}
+          {intl.formatMessage(messages.title, {
+            zonesCount: shippingZones.length
+          })}
         </Typography>
-        {!!zonesCount && (
-          <div className={classes.iconContainer} onClick={onOpenChange}>
-            {isListOpen ? <IconChevronUp /> : <IconChevronDown />}
-          </div>
-        )}
-      </div>
-      <Divider />
-    </>
+      </ExpansionPanelSummary>
+      <HorizontalSpacer spacing={1.5} />
+    </div>
   );
 };
 

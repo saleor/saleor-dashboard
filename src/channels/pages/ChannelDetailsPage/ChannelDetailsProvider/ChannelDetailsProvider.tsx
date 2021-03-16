@@ -11,10 +11,12 @@ import {
 } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import {
+  getById,
+  getByUnmatchingId
+} from "@saleor/orders/components/OrderReturnPage/utils";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import { FetchMoreProps } from "@saleor/types";
-import remove from "lodash/remove";
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { getUpdatedIdsWithNewId } from "./utils";
@@ -49,13 +51,13 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
     ShippingZonesIds
   >([]);
 
-  const intl = useIntl();
-  const notify = useNotifier();
+  // const intl = useIntl();
+  // const notify = useNotifier();
 
-  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdate) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl))
-  });
+  // const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+  //   onCompleted: ({ channelUpdate: { errors } }: ChannelUpdate) =>
+  //     notify(getDefaultNotifierSuccessErrorData(errors, intl))
+  // });
 
   const {
     loadMore: fetchMoreShippingZones,
@@ -81,8 +83,9 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
       getUpdatedIdsWithNewId(shippingZonesIdsToRemove, zoneId)
     );
 
-    console.log(111, remove(shippingZonesToDisplay, getById(zoneId)));
-    setShippingZonesToDisplay(remove(shippingZonesToDisplay, getById(zoneId)));
+    setShippingZonesToDisplay(
+      shippingZonesToDisplay.filter(getByUnmatchingId(zoneId))
+    );
   };
 
   const getFilteredShippingZonesChoices = () =>
@@ -102,11 +105,6 @@ const ChannelDetailsProvider: React.FC<ChannelDetailsProviderProps> = ({
       fetchMoreShippingZones
     )
   };
-
-  console.log({
-    results: getParsedSearchData(searchShippingZonesResult),
-    choices: getFilteredShippingZonesChoices()
-  });
 
   return (
     <ChannelDetailsContext.Provider value={contextValues}>
