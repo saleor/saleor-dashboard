@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import CardTitle from "@saleor/components/CardTitle";
-import React, { useRef } from "react";
+import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ShippingZoneItem from "./ShippingZoneItem";
@@ -47,7 +47,7 @@ const useExpanderStyles = makeStyles(
   { name: "ShippingZonesCardExpander" }
 );
 
-interface ShippingZonesCardProps extends ShippingZonesProps {}
+type ShippingZonesCardProps = ShippingZonesProps;
 
 const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
   const { shippingZones, removeShippingZone } = props;
