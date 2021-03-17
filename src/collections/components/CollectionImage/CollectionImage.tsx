@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
+import MediaTile from "@saleor/components/MediaTile";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
@@ -109,7 +109,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
         <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
         <CardContent>
-          <ImageTile image={image} onImageDelete={onImageDelete} />
+          <MediaTile media={image} onDelete={onImageDelete} />
         </CardContent>
       )}
       {image && (

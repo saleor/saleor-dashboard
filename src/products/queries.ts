@@ -10,6 +10,10 @@ import {
 import { taxTypeFragment } from "@saleor/fragments/taxes";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
+import {
+  ProductMediaById,
+  ProductMediaByIdVariables
+} from "@saleor/products/types/ProductMediaById";
 import gql from "graphql-tag";
 
 import { CountAllProducts } from "./types/CountAllProducts";
@@ -29,10 +33,6 @@ import {
   ProductDetails,
   ProductDetailsVariables
 } from "./types/ProductDetails";
-import {
-  ProductImageById,
-  ProductImageByIdVariables
-} from "./types/ProductImageById";
 import { ProductList, ProductListVariables } from "./types/ProductList";
 import {
   ProductVariantCreateData,
@@ -191,7 +191,7 @@ const productVariantCreateQuery = gql`
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {
       id
-      images {
+      media {
         id
         sortOrder
         url
@@ -224,9 +224,10 @@ const productVariantCreateQuery = gql`
         id
         name
         sku
-        images {
+        media {
           id
           url
+          type
         }
       }
     }
@@ -237,27 +238,32 @@ export const useProductVariantCreateQuery = makeQuery<
   ProductVariantCreateDataVariables
 >(productVariantCreateQuery);
 
-const productImageQuery = gql`
-  query ProductImageById($productId: ID!, $imageId: ID!) {
+const productMediaQuery = gql`
+  query ProductMediaById($productId: ID!, $mediaId: ID!) {
     product(id: $productId) {
       id
       name
-      mainImage: imageById(id: $imageId) {
+      mainImage: mediaById(id: $mediaId) {
         id
         alt
         url
+        type
+        oembedData
       }
-      images {
+      media {
         id
         url(size: 48)
+        alt
+        type
+        oembedData
       }
     }
   }
 `;
-export const useProductImageQuery = makeQuery<
-  ProductImageById,
-  ProductImageByIdVariables
->(productImageQuery);
+export const useProductMediaQuery = makeQuery<
+  ProductMediaById,
+  ProductMediaByIdVariables
+>(productMediaQuery);
 
 const availableInGridAttributes = gql`
   ${pageInfoFragment}

@@ -5,8 +5,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
+import MediaTile from "@saleor/components/MediaTile";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
@@ -97,7 +97,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
         <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
         <CardContent>
-          <ImageTile image={image} onImageDelete={onImageDelete} />
+          <MediaTile media={image} onDelete={onImageDelete} />
         </CardContent>
       )}
 

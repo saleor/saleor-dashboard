@@ -795,6 +795,7 @@ export enum ProductErrorCode {
   PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
+  UNSUPPORTED_MEDIA_PROVIDER = "UNSUPPORTED_MEDIA_PROVIDER",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
 }
 
@@ -811,6 +812,11 @@ export enum ProductFieldEnum {
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
+}
+
+export enum ProductMediaType {
+  IMAGE = "IMAGE",
+  VIDEO = "VIDEO",
 }
 
 export enum ProductOrderField {
@@ -1572,10 +1578,10 @@ export interface ProductChannelListingUpdateInput {
 }
 
 export interface ProductCreateInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
+  collections?: string[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;
@@ -1604,10 +1610,10 @@ export interface ProductFilterInput {
 }
 
 export interface ProductInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: (string | null)[] | null;
+  collections?: string[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;

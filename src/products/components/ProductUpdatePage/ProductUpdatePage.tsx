@@ -26,6 +26,7 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
@@ -42,12 +43,12 @@ import { useIntl } from "react-intl";
 
 import {
   ProductDetails_product,
-  ProductDetails_product_images,
+  ProductDetails_product_media,
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
 import ProductDetailsForm from "../ProductDetailsForm";
-import ProductImages from "../ProductImages";
+import ProductMedia from "../ProductMedia";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
@@ -71,8 +72,9 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
+  isMediaUrlModalVisible?: boolean;
   variants: ProductDetails_product_variants[];
-  images: ProductDetails_product_images[];
+  media: ProductDetails_product_media[];
   hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
@@ -102,6 +104,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
+  onMediaUrlUpload(mediaUrl: string);
   onSeoClick?();
   onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetails_product_variants);
@@ -133,7 +136,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchCollections,
   fetchMoreCategories,
   fetchMoreCollections,
-  images,
+  media,
   hasChannelChanged,
   header,
   placeholderImage,
@@ -150,6 +153,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  onMediaUrlUpload,
   onChannelsChange,
   openChannelsModal,
   onSeoClick,
@@ -161,6 +165,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantReorder,
   onWarehouseConfigure,
   isChecked,
+  isMediaUrlModalVisible,
   selected,
   selectedChannelId,
   toggle,
@@ -178,6 +183,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
+  );
+
+  const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
+    isMediaUrlModalVisible || false
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
@@ -262,13 +271,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <ProductImages
-                  images={images}
+                <ProductMedia
+                  media={media}
                   placeholderImage={placeholderImage}
                   onImageDelete={onImageDelete}
                   onImageReorder={onImageReorder}
                   onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
+                  openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -441,6 +451,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 }
               />
             )}
+
+            <ProductExternalMediaDialog
+              product={product}
+              onClose={() => setMediaUrlModalStatus(false)}
+              open={mediaUrlModalStatus}
+              onSubmit={onMediaUrlUpload}
+            />
           </Container>
         </>
       )}
