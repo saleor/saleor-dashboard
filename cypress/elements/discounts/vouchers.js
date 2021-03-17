@@ -1,7 +1,9 @@
 export const VOUCHERS_SELECTORS = {
   createVoucherButton: "[data-test-id='create-voucher']",
-  generateCode: "[data-test-id='generate-code']",
+  voucherCodeInput: "[name='code']",
   discountRadioButtons: "[name='discountType']",
-  percentageDiscountRadioButton: `${discountRadioButtons}[value='PERCENTAGE']`,
+  percentageDiscountRadioButton: "[name='discountType'][value='PERCENTAGE']",
+  fixedDiscountRadioButton: "[name='discountType'][value='FIXED']",
+  shippingDiscountRadioButton: "[name='discountType'][value='SHIPPING']",
   discountValueInputs: "[name='value']"
 };

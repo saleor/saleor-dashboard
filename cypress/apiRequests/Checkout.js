@@ -1,18 +1,36 @@
-export function createCheckout(
+export function createCheckout({
   channelSlug,
   email,
-  productQuantity,
-  variantsList
-) {
+  productQuantity = 1,
+  variantsList,
+  address,
+  auth = "auth"
+}) {
   const lines = variantsList.map(
     variant => `{quantity:${productQuantity}
                     variantId:"${variant.id}"}`
   );
+  const shippingAddress = address
+    ? `shippingAddress:{
+      city: "${address.city}" 
+      companyName: "${address.companyName}"
+      country: ${address.country}
+      countryArea: "${address.countryArea}"
+      firstName: "Test"
+      lastName: "Test"
+      phone: "${address.phone}"
+      postalCode: "${address.postalCode}"
+      streetAddress1: "${address.streetAddress1}"
+      streetAddress2: "${address.streetAddress2}"
+    }`
+    : "";
+
   const mutation = `mutation{
     checkoutCreate(input:{
       channel:"${channelSlug}"
       email:"${email}"
       lines: [${lines.join()}]
+      ${shippingAddress}
     }){
       checkoutErrors{
         field
@@ -24,7 +42,7 @@ export function createCheckout(
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation, auth);
 }
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
@@ -64,6 +82,27 @@ export function completeCheckout(checkoutId) {
       checkoutErrors{
         field
         message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function addVoucher(checkoutId, voucherCode) {
+  const mutation = `mutation addVoucher{
+    checkoutAddPromoCode(checkoutId:"${checkoutId}",
+      promoCode:"${voucherCode}"
+    ){
+      checkoutErrors{
+        field
+        message
+      }
+      checkout{
+        totalPrice{
+          gross{
+            amount
+          }
+        }
       }
     }
   }`;

@@ -46,6 +46,7 @@ export function selectChannelInDetailsPages(channelName) {
     .get(MENAGE_CHANNEL_AVAILABILITY.channelsAvailabilityForm)
     .contains(channelName)
     .click()
-    .get(BUTTON_SELECTORS.submit)
+    .get(MENAGE_CHANNEL_AVAILABILITY.dialog)
+    .find(BUTTON_SELECTORS.submit)
     .click();
 }
