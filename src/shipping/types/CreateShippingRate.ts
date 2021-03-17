@@ -129,7 +129,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   description: string | null;
   default: boolean;
   shippingMethods: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods | null)[] | null;
-  warehouses: (CreateShippingRate_shippingPriceCreate_shippingZone_warehouses | null)[] | null;
+  warehouses: CreateShippingRate_shippingPriceCreate_shippingZone_warehouses[];
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingMethod_postalCodeRules {
