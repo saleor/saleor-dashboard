@@ -98,7 +98,11 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           description: "section header"
         })}
         toolbar={
-          <Button color="primary" onClick={onProductAssign}>
+          <Button
+            color="primary"
+            onClick={onProductAssign}
+            data-test-id="assign-products"
+          >
             <FormattedMessage
               defaultMessage="Assign products"
               description="button"

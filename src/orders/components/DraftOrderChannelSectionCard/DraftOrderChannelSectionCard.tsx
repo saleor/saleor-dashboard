@@ -21,7 +21,7 @@ export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCard
           description: "section header"
         })}
       />
-      <CardContent>
+      <CardContent data-test-id="sales-channel">
         {!channelName ? <Skeleton /> : <Typography>{channelName}</Typography>}
       </CardContent>
     </Card>
