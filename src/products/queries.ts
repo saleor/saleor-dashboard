@@ -1,4 +1,3 @@
-import { attributeValueFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   fragmentVariant,
@@ -96,7 +95,6 @@ export const useInitialProductFilterDataQuery = makeQuery<
 
 const productListQuery = gql`
   ${productFragment}
-  ${attributeValueFragment}
   query ProductList(
     $first: Int
     $after: String
@@ -116,14 +114,6 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
-          attributes {
-            attribute {
-              id
-            }
-            values {
-              ...AttributeValueFragment
-            }
-          }
         }
       }
       pageInfo {
