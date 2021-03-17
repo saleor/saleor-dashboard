@@ -59,8 +59,6 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
     Channel_channel_shippingZones[]
   >(channel?.shippingZones || []);
 
-  console.log({ sh: channel?.shippingZones, shippingZonesToDisplay });
-
   const initialData: FormData = {
     currencyCode: "",
     name: "",

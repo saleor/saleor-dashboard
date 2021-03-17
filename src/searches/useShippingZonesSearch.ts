@@ -1,6 +1,7 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
+
 import {
   SearchShippingZones,
   SearchShippingZonesVariables

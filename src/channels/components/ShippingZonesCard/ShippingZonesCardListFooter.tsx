@@ -5,6 +5,7 @@ import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAd
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useRef, useState } from "react";
 import { defineMessages } from "react-intl";
+
 import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
@@ -14,7 +15,7 @@ const messages = defineMessages({
   }
 });
 
-interface ShippingZonesCardListFooterProps extends ShippingZonesProps {}
+type ShippingZonesCardListFooterProps = ShippingZonesProps;
 
 const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = ({
   shippingZonesChoices,

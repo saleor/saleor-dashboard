@@ -1,4 +1,5 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
+import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { ChannelDelete } from "@saleor/channels/types/ChannelDelete";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
@@ -21,7 +22,6 @@ import {
   useChannelDeleteMutation,
   useChannelUpdateMutation
 } from "../../mutations";
-import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { useChannelDetails, useChannelsList } from "../../queries";
 import { ChannelUpdate } from "../../types/ChannelUpdate";

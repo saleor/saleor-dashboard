@@ -1,9 +1,9 @@
 import { IconButton } from "@material-ui/core";
-import Link from "@saleor/components/Link";
+import { makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import Link from "@saleor/components/Link";
 import React, { MutableRefObject } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
-import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(
   theme => ({

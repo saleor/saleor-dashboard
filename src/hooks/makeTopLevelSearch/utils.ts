@@ -1,4 +1,5 @@
 import { FetchMoreProps } from "@saleor/types";
+
 import { CommonSearchOpts } from "./types";
 
 export const getSearchFetchMoreProps = (

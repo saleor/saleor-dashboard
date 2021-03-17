@@ -1,3 +1,4 @@
+import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { ChannelCreate } from "@saleor/channels/types/ChannelCreate";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
@@ -6,16 +7,15 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { sectionNames } from "@saleor/intl";
 import currencyCodes from "currency-codes";
+import { omit } from "lodash-es";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { useChannelCreateMutation } from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath, channelsListUrl } from "../../urls";
-import { omit } from "lodash-es";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();

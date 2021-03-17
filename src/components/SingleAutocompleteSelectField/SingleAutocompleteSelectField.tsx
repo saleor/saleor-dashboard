@@ -1,7 +1,7 @@
 import { InputProps } from "@material-ui/core/Input";
+import InputBase from "@material-ui/core/InputBase";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import InputBase from "@material-ui/core/InputBase";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
