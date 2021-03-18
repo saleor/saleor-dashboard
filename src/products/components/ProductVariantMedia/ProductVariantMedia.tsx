@@ -5,9 +5,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductImageFragment } from "@saleor/fragments/types/ProductImageFragment";
+import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  chooseMedia: {
+    defaultMessage: "Choose media",
+    description: "button"
+  },
+  media: {
+    defaultMessage: "Media",
+    description: "section header"
+  },
+  selectSpecificVariant: {
+    defaultMessage: "Select a specific variant media from product media",
+    description: "select variant media"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -38,29 +53,25 @@ const useStyles = makeStyles(
       gridTemplateColumns: "repeat(4, 1fr)"
     }
   }),
-  { name: "ProductVariantImages" }
+  { name: "ProductVariantMedia" }
 );
 
-interface ProductVariantImagesProps {
-  images?: ProductImageFragment[];
+interface ProductVariantMediaProps {
+  media?: ProductMediaFragment[];
   placeholderImage?: string;
   disabled: boolean;
   onImageAdd();
 }
 
-export const ProductVariantImages: React.FC<ProductVariantImagesProps> = props => {
-  const { disabled, images, onImageAdd } = props;
-
-  const classes = useStyles(props);
+export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
   const intl = useIntl();
+  const classes = useStyles(props);
+  const { disabled, media, onImageAdd } = props;
 
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Images",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.media)}
         toolbar={
           <Button
             color="primary"
@@ -68,28 +79,33 @@ export const ProductVariantImages: React.FC<ProductVariantImagesProps> = props =
             disabled={disabled}
             onClick={onImageAdd}
           >
-            <FormattedMessage
-              defaultMessage="Choose photos"
-              description="button"
-            />
+            {intl.formatMessage(messages.chooseMedia)}
           </Button>
         }
       />
       <CardContent>
         <div className={classes.root}>
-          {images === undefined || images === null ? (
+          {media === undefined || media === null ? (
             <Skeleton />
-          ) : images.length > 0 ? (
-            images
+          ) : media.length > 0 ? (
+            media
               .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
-              .map(tile => (
-                <div className={classes.imageContainer} key={tile.id}>
-                  <img className={classes.image} src={tile.url} />
-                </div>
-              ))
+              .map(mediaObj => {
+                const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
+                const mediaUrl =
+                  parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+                return (
+                  <img
+                    key={mediaObj.id}
+                    className={classes.image}
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                  />
+                );
+              })
           ) : (
             <Typography className={classes.helpText}>
-              <FormattedMessage defaultMessage="Select a specific variant image from product images" />
+              {intl.formatMessage(messages.selectSpecificVariant)}
             </Typography>
           )}
         </div>
@@ -97,5 +113,5 @@ export const ProductVariantImages: React.FC<ProductVariantImagesProps> = props =
     </Card>
   );
 };
-ProductVariantImages.displayName = "ProductVariantImages";
-export default ProductVariantImages;
+ProductVariantMedia.displayName = "ProductVariantMedia";
+export default ProductVariantMedia;

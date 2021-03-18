@@ -17,7 +17,7 @@ export function createShippingZone(shippingName, warehouseName, country) {
     .click()
     .get(SHIPPING_ZONE_DETAILS.submitAssignCountry)
     .click()
-    .get(BUTTON_SELECTORS.submit)
+    .get(BUTTON_SELECTORS.confirm)
     .click()
     .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .click()
@@ -25,7 +25,7 @@ export function createShippingZone(shippingName, warehouseName, country) {
     .contains(warehouseName)
     .click();
   cy.addAliasToGraphRequest("UpdateShippingZone");
-  cy.get(BUTTON_SELECTORS.submit).click();
+  cy.get(BUTTON_SELECTORS.confirm).click();
   cy.wait("@UpdateShippingZone");
 }
 
@@ -39,7 +39,7 @@ export function createShippingRate(rateName, price, rateOption) {
       cy.wrap($priceInput).type(price);
     });
   cy.addAliasToGraphRequest("ShippingZone");
-  cy.get(BUTTON_SELECTORS.submit).click();
+  cy.get(BUTTON_SELECTORS.confirm).click();
   cy.wait("@ShippingZone");
 }
 

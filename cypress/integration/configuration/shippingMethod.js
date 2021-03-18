@@ -73,7 +73,7 @@ describe("Shipping methods", () => {
     cy.visit(urlList.shippingMethods);
   });
 
-  xit("should display different price for each channel", () => {
+  it("should display different price for each channel", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
     const defaultChannelPrice = 11;
     const createdChannelPrice = 7;
@@ -124,6 +124,8 @@ describe("Shipping methods", () => {
             expect(text).to.be.eq(expectedValue);
 
             selectChannelInHeader(createdChannel.name);
+          })
+          .then(() => {
             cy.getTextFromElement(
               SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
             );
@@ -137,7 +139,7 @@ describe("Shipping methods", () => {
           });
       });
   });
-  xit("should create price based shipping method", () => {
+  it("should create price based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
     createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
@@ -147,7 +149,8 @@ describe("Shipping methods", () => {
       channelSlug: defaultChannel.slug,
       email: "test@example.com",
       variantsList,
-      address: plAddress
+      address: plAddress,
+      auth: "token"
     }).then(checkout => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,
@@ -162,15 +165,13 @@ describe("Shipping methods", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
     createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
-    cy.pause();
     createShippingRate(shippingName, price, rateOptions.WEIGHT_OPTION);
-    cy.pause();
-
     createCheckout({
       channelSlug: defaultChannel.slug,
       email: "test@example.com",
       variantsList,
-      address: plAddress
+      address: plAddress,
+      auth: "token"
     }).then(checkout => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,

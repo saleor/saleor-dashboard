@@ -38,7 +38,7 @@ export function createCustomer(email, customerName, address, isActive = false) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function deleteCustomers(startsWith) {
+export function deleteCustomersStartsWith(startsWith) {
   getCustomers(startsWith).then(resp => {
     if (resp.body.data.customers) {
       const customers = resp.body.data.customers.edges;

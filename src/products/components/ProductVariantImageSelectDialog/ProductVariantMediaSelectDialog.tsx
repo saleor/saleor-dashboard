@@ -4,7 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import { ProductImageFragment } from "@saleor/fragments/types/ProductImageFragment";
+import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
@@ -48,45 +48,53 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantImageSelectDialogProps {
-  images?: ProductImageFragment[];
-  selectedImages?: string[];
+  media?: ProductMediaFragment[];
+  selectedMedia?: string[];
   open: boolean;
   onClose();
-  onImageSelect(id: string);
+  onMediaSelect(id: string);
 }
 
-const ProductVariantImageSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
-  const { images, open, selectedImages, onClose, onImageSelect } = props;
-
+const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
+  const { media, open, selectedMedia, onClose, onMediaSelect } = props;
   const classes = useStyles(props);
 
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
-          defaultMessage="Image Selection"
+          defaultMessage="Media Selection"
           description="dialog header"
         />
       </DialogTitle>
       <DialogContent>
         <div className={classes.root}>
-          {images
+          {media
             .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
-            .map(tile => (
-              <div
-                className={classNames([
-                  classes.imageContainer,
-                  {
-                    [classes.selectedImageContainer]:
-                      selectedImages.indexOf(tile.id) !== -1
-                  }
-                ])}
-                onClick={onImageSelect(tile.id)}
-                key={tile.id}
-              >
-                <img className={classes.image} src={tile.url} />
-              </div>
-            ))}
+            .map(mediaObj => {
+              const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
+              const mediaUrl =
+                parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+              return (
+                <div
+                  className={classNames([
+                    classes.imageContainer,
+                    {
+                      [classes.selectedImageContainer]:
+                        selectedMedia.indexOf(mediaObj.id) !== -1
+                    }
+                  ])}
+                  onClick={onMediaSelect(mediaObj.id)}
+                  key={mediaObj.id}
+                >
+                  <img
+                    className={classes.image}
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                  />
+                </div>
+              );
+            })}
         </div>
       </DialogContent>
       <DialogActions>
@@ -97,5 +105,6 @@ const ProductVariantImageSelectDialog: React.FC<ProductVariantImageSelectDialogP
     </Dialog>
   );
 };
-ProductVariantImageSelectDialog.displayName = "ProductVariantImageSelectDialog";
-export default ProductVariantImageSelectDialog;
+
+ProductVariantMediaSelectDialog.displayName = "ProductVariantMediaSelectDialog";
+export default ProductVariantMediaSelectDialog;

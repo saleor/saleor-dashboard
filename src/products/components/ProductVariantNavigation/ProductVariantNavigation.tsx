@@ -99,6 +99,10 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
           {renderCollection(variants, (variant, variantIndex) => {
             const isDefault = variant && variant.id === defaultVariantId;
             const isActive = variant && variant.id === current;
+            const thumbnail = variant?.media?.filter(
+              mediaObj => mediaObj.type === "IMAGE"
+            )[0];
+
             return (
               <SortableTableRow
                 hover={!!variant}
@@ -111,7 +115,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
               >
                 <TableCellAvatar
                   className={classes.colAvatar}
-                  thumbnail={variant?.images[0]?.url || fallbackThumbnail}
+                  thumbnail={thumbnail?.url || fallbackThumbnail}
                 />
                 <TableCell className={classes.colName}>
                   {variant ? variant.name || variant.sku : <Skeleton />}

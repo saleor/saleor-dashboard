@@ -27,9 +27,9 @@ import { commonMessages } from "@saleor/intl";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
-  useProductImageCreateMutation,
-  useProductImageDeleteMutation,
-  useProductImagesReorder,
+  useProductMediaCreateMutation,
+  useProductMediaDeleteMutation,
+  useProductMediaReorder,
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
@@ -41,6 +41,7 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -55,7 +56,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
-import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
+import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
 import {
   productImageUrl,
@@ -159,7 +160,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     reorderProductImages,
     reorderProductImagesOpts
-  ] = useProductImagesReorder({});
+  ] = useProductMediaReorder({});
 
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
@@ -176,10 +177,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     createProductImage,
     createProductImageOpts
-  ] = useProductImageCreateMutation({
+  ] = useProductMediaCreateMutation({
     onCompleted: data => {
-      const imageError = data.productImageCreate.errors.find(
-        error => error.field === ("image" as keyof ProductImageCreateVariables)
+      const imageError = data.productMediaCreate.errors.find(
+        error => error.field === ("image" as keyof ProductMediaCreateVariables)
       );
       if (imageError) {
         notify({
@@ -190,7 +191,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
 
-  const [deleteProductImage] = useProductImageDeleteMutation({
+  const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
       notify({
         status: "success",
@@ -265,6 +266,41 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   }));
 
   const [
+    createProductMedia,
+    createProductMediaOpts
+  ] = useProductMediaCreateMutation({
+    onCompleted: data => {
+      const errors = data.productMediaCreate.errors;
+
+      if (errors.length) {
+        errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+      }
+    }
+  });
+
+  const handleMediaUrlUpload = (mediaUrl: string) => {
+    const variables = {
+      alt: "",
+      mediaUrl,
+      product: product.id
+    };
+
+    createProductMedia({
+      variables
+    });
+  };
+
+  const [
     deleteAttributeValue,
     deleteAttributeValueOpts
   ] = useAttributeValueDeleteMutation({});
@@ -332,6 +368,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
     deleteAttributeValueOpts.loading ||
+    createProductMediaOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
@@ -339,7 +376,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateProductOpts.loading || updateSimpleProductOpts.loading,
     updateProductOpts.data?.productUpdate.errors,
     updateSimpleProductOpts.data?.productUpdate.errors,
-    updateSimpleProductOpts.data?.productVariantUpdate.errors
+    updateSimpleProductOpts.data?.productVariantUpdate.errors,
+    createProductMediaOpts.data?.productMediaCreate.errors
   );
 
   const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
@@ -353,6 +391,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
     ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
+
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
     null
@@ -421,7 +460,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         saveButtonBarState={formTransitionState}
-        images={data?.product?.images}
+        media={data?.product?.media}
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
@@ -433,6 +472,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
+        onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}

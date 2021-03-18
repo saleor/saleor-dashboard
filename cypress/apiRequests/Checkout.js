@@ -5,7 +5,8 @@ export function createCheckout({
   email,
   productQuantity,
   variantsList,
-  address
+  address,
+  auth = "auth"
 }) {
   const lines = variantsList.map(
     variant => `{quantity:${productQuantity}
@@ -48,7 +49,7 @@ export function createCheckout({
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation, auth);
 }
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
