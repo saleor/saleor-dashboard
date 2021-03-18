@@ -8,10 +8,10 @@ import {
 import { Overrides } from "@material-ui/core/styles/overrides";
 import { createElement } from "react";
 
-import { IThemeColors } from "./components/Theme/themes";
-import CheckboxIcon from "./icons/Checkbox";
-import CheckboxCheckedIcon from "./icons/CheckboxChecked";
-import CheckboxIndeterminateIcon from "./icons/CheckboxIndeterminate";
+import { IThemeColors } from "../components/Theme/themes";
+import CheckboxIcon from "../icons/Checkbox";
+import CheckboxCheckedIcon from "../icons/CheckboxChecked";
+import CheckboxIndeterminateIcon from "../icons/CheckboxIndeterminate";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
   [
