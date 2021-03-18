@@ -26,7 +26,7 @@ export interface ProductMediaReorder_productMediaReorder_product_media {
 export interface ProductMediaReorder_productMediaReorder_product {
   __typename: "Product";
   id: string;
-  media: (ProductMediaReorder_productMediaReorder_product_media | null)[] | null;
+  media: ProductMediaReorder_productMediaReorder_product_media[] | null;
 }
 
 export interface ProductMediaReorder_productMediaReorder {
