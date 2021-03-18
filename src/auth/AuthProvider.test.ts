@@ -40,8 +40,11 @@ describe("User", () => {
   it("will be logged in if has valid credentials", async done => {
     const hook = renderAuthProvider(apolloClient);
 
-    await act(() => {
-      hook.current.login(adminCredentials.email, adminCredentials.password);
+    await act(async () => {
+      await hook.current.login(
+        adminCredentials.email,
+        adminCredentials.password
+      );
     });
     expect(hook.current.user.email).toBe(adminCredentials.email);
     adminCredentials.token = getTokens().auth;
@@ -52,8 +55,8 @@ describe("User", () => {
   it("will not be logged in if doesn't have valid credentials", async done => {
     const hook = renderAuthProvider(apolloClient);
 
-    await act(() => {
-      hook.current.login(adminCredentials.email, "NotAValidPassword123!");
+    await act(async () => {
+      await hook.current.login(adminCredentials.email, "NotAValidPassword123!");
     });
     expect(hook.current.user).toBe(null);
 
@@ -63,8 +66,8 @@ describe("User", () => {
   it("will not be logged in if is non-staff", async done => {
     const hook = renderAuthProvider(apolloClient);
 
-    await act(() => {
-      hook.current.login(
+    await act(async () => {
+      await hook.current.login(
         nonStaffUserCredentials.email,
         nonStaffUserCredentials.password
       );
