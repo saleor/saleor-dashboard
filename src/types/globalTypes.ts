@@ -1123,6 +1123,7 @@ export interface AttributeUpdateInput {
 
 export interface AttributeValueCreateInput {
   name: string;
+  value?: string | null;
 }
 
 export interface AttributeValueInput {

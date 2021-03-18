@@ -571,6 +571,7 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
+  value: String
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
   reference: ID
@@ -592,6 +593,7 @@ type AttributeValueCreate {
 
 input AttributeValueCreateInput {
   name: String!
+  value: String
 }
 
 type AttributeValueDelete {
@@ -3957,7 +3959,7 @@ type Product implements Node & ObjectWithMetadata {
   mediaById(id: ID): ProductMedia!
   imageById(id: ID): ProductImage @deprecated(reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead.")
   variants: [ProductVariant]
-  media: [ProductMedia]
+  media: [ProductMedia!]
   images: [ProductImage] @deprecated(reason: "Will be removed in Saleor 4.0. Use the `media` field instead.")
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation

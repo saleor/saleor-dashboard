@@ -89,6 +89,7 @@ export interface ProductList_products_edges_node_attributes_values {
   slug: string | null;
   file: ProductList_products_edges_node_attributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductList_products_edges_node_attributes {

@@ -33,6 +33,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute {
@@ -59,6 +60,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes {
@@ -80,6 +82,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute {
@@ -106,6 +109,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   slug: string | null;
   file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes {
@@ -208,7 +212,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant | null;
-  media: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media | null)[] | null;
+  media: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media[] | null;
   name: string;
   thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
   channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings[] | null;

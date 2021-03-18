@@ -27,6 +27,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes_attribute {
@@ -53,6 +54,7 @@ export interface ProductVariantReorder_productVariantReorder_product_attributes_
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_attributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_attributes {
@@ -74,6 +76,7 @@ export interface ProductVariantReorder_productVariantReorder_product_productType
   slug: string | null;
   file: ProductVariantReorder_productVariantReorder_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_productType_variantAttributes {
@@ -269,7 +272,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   category: ProductVariantReorder_productVariantReorder_product_category | null;
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductVariantReorder_productVariantReorder_product_media | null)[] | null;
+  media: ProductVariantReorder_productVariantReorder_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductVariantReorder_productVariantReorder_product_variants | null)[] | null;
   weight: ProductVariantReorder_productVariantReorder_product_weight | null;

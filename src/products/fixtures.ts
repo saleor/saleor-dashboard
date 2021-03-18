@@ -36,7 +36,8 @@ export const product: (
             id: "ptav47282",
             name: "portals",
             reference: null,
-            slug: "portals"
+            slug: "portals",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -44,7 +45,8 @@ export const product: (
             id: "ptav17253",
             name: "Baht",
             reference: null,
-            slug: "Baht"
+            slug: "Baht",
+            value: ""
           }
         ]
       },
@@ -55,7 +57,8 @@ export const product: (
           id: "ptav47282",
           name: "portals",
           reference: null,
-          slug: "portals"
+          slug: "portals",
+          value: ""
         }
       ]
     },
@@ -76,7 +79,9 @@ export const product: (
             id: "ptav31282",
             name: "payment",
             reference: null,
-            slug: "payment"
+            slug: "payment",
+            value: "",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -84,7 +89,9 @@ export const product: (
             id: "ptav14907",
             name: "Auto Loan Account",
             reference: null,
-            slug: "Auto-Loan-Account"
+            slug: "Auto-Loan-Account",
+            value: "",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -92,7 +99,9 @@ export const product: (
             id: "ptav27366",
             name: "Garden",
             reference: null,
-            slug: "Garden"
+            slug: "Garden",
+            value: "",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -100,7 +109,9 @@ export const product: (
             id: "ptav11873",
             name: "override",
             reference: null,
-            slug: "override"
+            slug: "override",
+            value: "",
+            value: ""
           }
         ]
       },
@@ -111,7 +122,9 @@ export const product: (
           id: "ptav14907",
           name: "Auto Loan Account",
           reference: null,
-          slug: "Auto-Loan-Account"
+          slug: "Auto-Loan-Account",
+            value: "",
+            value: ""
         }
       ]
     }
@@ -292,7 +305,8 @@ export const product: (
             id: "gdghdgdhkkdae",
             name: "File First Value",
             reference: null,
-            slug: "file-first-value"
+            slug: "file-first-value",
+            value: ""
           }
         ]
       }
@@ -313,7 +327,8 @@ export const product: (
             id: "ptvav47282",
             name: "Black",
             reference: null,
-            slug: "black"
+            slug: "black",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -321,7 +336,8 @@ export const product: (
             id: "ptvav17253",
             name: "White",
             reference: null,
-            slug: "white"
+            slug: "white",
+            value: ""
           }
         ]
       }
@@ -350,7 +366,9 @@ export const product: (
             id: "gdghdgdhkkdae",
             name: "File First Value",
             reference: null,
-            slug: "file-first-value"
+            slug: "file-first-value",
+            value: "",
+            value: ""
           }
         ]
       },
@@ -368,7 +386,8 @@ export const product: (
             id: "ptvav47282",
             name: "Black",
             reference: null,
-            slug: "black"
+            slug: "black",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -376,7 +395,8 @@ export const product: (
             id: "ptvav17253",
             name: "White",
             reference: null,
-            slug: "white"
+            slug: "white",
+            value: ""
           }
         ]
       }
@@ -832,7 +852,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6MQ==",
             name: "Pineapple",
             reference: null,
-            slug: "pineapple"
+            slug: "pineapple",
+            value: ""
           }
         ]
       }
@@ -940,7 +961,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6Mg==",
             name: "Coconut",
             reference: null,
-            slug: "coconut"
+            slug: "coconut",
+            value: ""
           }
         ]
       }
@@ -1048,7 +1070,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6Mw==",
             name: "Apple",
             reference: null,
-            slug: "apple"
+            slug: "apple",
+            value: ""
           }
         ]
       }
@@ -1157,7 +1180,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NDk=",
             name: "Orange",
             reference: null,
-            slug: "orange"
+            slug: "orange",
+            value: ""
           }
         ]
       }
@@ -1265,7 +1289,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NTA=",
             name: "Banana",
             reference: null,
-            slug: "banana"
+            slug: "banana",
+            value: ""
           }
         ]
       }
@@ -1373,7 +1398,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NTE=",
             name: "Bean",
             reference: null,
-            slug: "bean"
+            slug: "bean",
+            value: ""
           }
         ]
       }
@@ -1481,7 +1507,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NTI=",
             name: "Carrot",
             reference: null,
-            slug: "carrot"
+            slug: "carrot",
+            value: ""
           }
         ]
       }
@@ -1589,7 +1616,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NTM=",
             name: "Sprouty",
             reference: null,
-            slug: "sprouty"
+            slug: "sprouty",
+            value: ""
           }
         ]
       }
@@ -1697,7 +1725,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -1805,7 +1834,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -1913,7 +1943,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2021,7 +2052,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2129,7 +2161,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2237,7 +2270,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2345,7 +2379,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2453,7 +2488,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6ODI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2561,7 +2597,8 @@ export const products = (
             id: "QXR0cmlidXRlVmFsdWU6NzI=",
             name: "Cotton",
             reference: null,
-            slug: "cotton"
+            slug: "cotton",
+            value: ""
           }
         ]
       }
@@ -2758,7 +2795,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "gdghdgdhkkdae",
             name: "File First Value",
             reference: null,
-            slug: "file-first-value"
+            slug: "file-first-value",
+            value: ""
           }
         ]
       },
@@ -2773,7 +2811,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           id: "gdghdgdhkkdae",
           name: "File First Value",
           reference: null,
-          slug: "file-first-value"
+          slug: "file-first-value",
+          value: ""
         }
       ]
     }
@@ -3016,7 +3055,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav47282",
             name: "portals",
             reference: null,
-            slug: "portals"
+            slug: "portals",
+            value: "",
           },
           {
             __typename: "AttributeValue",
@@ -3025,6 +3065,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             name: "Baht",
             reference: null,
             slug: "Baht"
+            value: "",
           }
         ]
       },
@@ -3036,6 +3077,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           name: "portals",
           reference: null,
           slug: "portals"
+          value: "",
         }
       ]
     },
@@ -3056,7 +3098,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav31282",
             name: "payment",
             reference: null,
-            slug: "payment"
+            slug: "payment",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -3064,7 +3107,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav14907",
             name: "Auto Loan Account",
             reference: null,
-            slug: "Auto-Loan-Account"
+            slug: "Auto-Loan-Account",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -3072,7 +3116,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav27366",
             name: "Garden",
             reference: null,
-            slug: "Garden"
+            slug: "Garden",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -3080,7 +3125,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav11873",
             name: "override",
             reference: null,
-            slug: "override"
+            slug: "override",
+            value: ""
           }
         ]
       },
@@ -3091,7 +3137,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           id: "ptav14907",
           name: "Auto Loan Account",
           reference: null,
-          slug: "Auto-Loan-Account"
+          slug: "Auto-Loan-Account",
+          value: ""
         }
       ]
     }

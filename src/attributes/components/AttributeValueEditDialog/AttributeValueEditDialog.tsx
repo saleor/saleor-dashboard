@@ -9,6 +9,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
@@ -21,6 +22,7 @@ import { AttributeDetails_attribute_values } from "../../types/AttributeDetails"
 
 export interface AttributeValueEditDialogFormData {
   name: string;
+  value?: string;
 }
 export interface AttributeValueEditDialogProps {
   attributeValue: AttributeDetails_attribute_values | null;
@@ -43,10 +45,11 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: AttributeValueEditDialogFormData = {
-    name: maybe(() => attributeValue.name, "")
+    name: maybe(() => attributeValue.name, ""),
+    value: attributeValue?.value || ""
   };
   const errors = useModalDialogErrors(apiErrors, open);
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(["name", "value"], errors);
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
@@ -82,6 +85,24 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                   description: "attribute name"
                 })}
                 value={data.name}
+                onChange={change}
+              />
+              <FormSpacer />
+              <TextField
+                autoFocus
+                disabled={disabled}
+                error={!!formErrors.value}
+                fullWidth
+                helperText={getAttributeValueErrorMessage(
+                  formErrors.value,
+                  intl
+                )}
+                name={"value" as keyof AttributeValueEditDialogFormData}
+                label={intl.formatMessage({
+                  defaultMessage: "Value",
+                  description: "attribute value"
+                })}
+                value={data.value}
                 onChange={change}
               />
             </DialogContent>

@@ -94,6 +94,12 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             </TableCell>
             <TableCell className={classes.columnStore}>
               <FormattedMessage
+                defaultMessage="Attribute value"
+                description="attribute values list: value column header"
+              />
+            </TableCell>
+            <TableCell className={classes.columnStore}>
+              <FormattedMessage
                 defaultMessage="Default Store View"
                 description="attribute values list: name column header"
               />
@@ -113,10 +119,13 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 index={valueIndex || 0}
               >
                 <TableCell className={classes.columnAdmin}>
-                  {maybe(() => value.slug) ? value.slug : <Skeleton />}
+                  {value?.slug ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.columnStore}>
-                  {maybe(() => value.name) ? value.name : <Skeleton />}
+                  {value?.value ?? <Skeleton />}
+                </TableCell>
+                <TableCell className={classes.columnStore}>
+                  {value?.name ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton

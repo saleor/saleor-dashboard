@@ -39,6 +39,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_select
   slug: string | null;
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_attribute {
@@ -65,6 +66,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_select
   slug: string | null;
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes {
@@ -86,6 +88,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSel
   slug: string | null;
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_attribute {
@@ -112,6 +115,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSel
   slug: string | null;
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes {
@@ -214,7 +218,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_produc
   __typename: "Product";
   id: string;
   defaultVariant: VariantMediaUnassign_variantMediaUnassign_productVariant_product_defaultVariant | null;
-  media: (VariantMediaUnassign_variantMediaUnassign_productVariant_product_media | null)[] | null;
+  media: VariantMediaUnassign_variantMediaUnassign_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantMediaUnassign_variantMediaUnassign_productVariant_product_thumbnail | null;
   channelListings: VariantMediaUnassign_variantMediaUnassign_productVariant_product_channelListings[] | null;

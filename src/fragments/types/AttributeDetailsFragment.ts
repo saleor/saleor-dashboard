@@ -33,6 +33,7 @@ export interface AttributeDetailsFragment_values {
   slug: string | null;
   file: AttributeDetailsFragment_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface AttributeDetailsFragment {

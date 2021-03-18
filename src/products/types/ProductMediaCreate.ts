@@ -27,6 +27,7 @@ export interface ProductMediaCreate_productMediaCreate_product_attributes_attrib
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_attributes_attribute_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_attributes_attribute {
@@ -53,6 +54,7 @@ export interface ProductMediaCreate_productMediaCreate_product_attributes_values
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_attributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_attributes {
@@ -74,6 +76,7 @@ export interface ProductMediaCreate_productMediaCreate_product_productType_varia
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_productType_variantAttributes {
@@ -269,7 +272,7 @@ export interface ProductMediaCreate_productMediaCreate_product {
   category: ProductMediaCreate_productMediaCreate_product_category | null;
   collections: (ProductMediaCreate_productMediaCreate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductMediaCreate_productMediaCreate_product_media | null)[] | null;
+  media: ProductMediaCreate_productMediaCreate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductMediaCreate_productMediaCreate_product_variants | null)[] | null;
   weight: ProductMediaCreate_productMediaCreate_product_weight | null;

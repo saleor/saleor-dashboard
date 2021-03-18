@@ -40,6 +40,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   slug: string | null;
   file: ProductVariantCreateData_product_productType_selectionVariantAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_selectionVariantAttributes {
@@ -66,6 +67,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   slug: string | null;
   file: ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values_file | null;
   reference: string | null;
+  value: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes {
@@ -109,7 +111,7 @@ export interface ProductVariantCreateData_product_variants {
 export interface ProductVariantCreateData_product {
   __typename: "Product";
   id: string;
-  media: (ProductVariantCreateData_product_media | null)[] | null;
+  media: ProductVariantCreateData_product_media[] | null;
   channelListings: ProductVariantCreateData_product_channelListings[] | null;
   name: string;
   productType: ProductVariantCreateData_product_productType;
