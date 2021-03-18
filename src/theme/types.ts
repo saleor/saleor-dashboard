@@ -12,14 +12,14 @@ interface ExtraPaletteOptions {
   };
 }
 
-interface IPalette extends Palette, ExtraPaletteOptions {}
+interface SaleorPalette extends Palette, ExtraPaletteOptions {}
 
-interface IPaletteOptions extends PaletteOptions, ExtraPaletteOptions {}
+interface SaleorPaletteOptions extends PaletteOptions, ExtraPaletteOptions {}
 
-export interface ITheme extends Theme {
-  palette: IPalette;
+export interface SaleorTheme extends Theme {
+  palette: SaleorPalette;
 }
 
-export interface IThemeOptions extends ThemeOptions {
-  palette: IPaletteOptions;
+export interface SaleorThemeOptions extends ThemeOptions {
+  palette: SaleorPaletteOptions;
 }
