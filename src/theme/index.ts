@@ -8,7 +8,7 @@ import CheckboxIcon from "../icons/Checkbox";
 import CheckboxCheckedIcon from "../icons/CheckboxChecked";
 import CheckboxIndeterminateIcon from "../icons/CheckboxIndeterminate";
 import shadows from "./shadows";
-import { ITheme, IThemeOptions } from "./types";
+import { SaleorTheme, SaleorThemeOptions } from "./types";
 
 export const ICONBUTTON_SIZE = 48;
 
@@ -169,7 +169,7 @@ const inputOverrides = (colors: IThemeColors): Overrides => ({
   }
 });
 
-const createTheme = (colors: IThemeColors): ITheme =>
+const createTheme = (colors: IThemeColors): SaleorTheme =>
   createMuiTheme({
     overrides: {
       ...inputOverrides(colors),
@@ -551,6 +551,6 @@ const createTheme = (colors: IThemeColors): ITheme =>
         fontSize: "1.3125rem"
       }
     }
-  } as IThemeOptions);
+  } as SaleorThemeOptions);
 
 export default createTheme;

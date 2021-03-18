@@ -1,3 +1,5 @@
+import { Shadows } from "@material-ui/core/styles/shadows";
+
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
   [
     `0 ${pv}px ${pb}px ${ps}px rgba(0, 0, 0, 0.2)`,
@@ -5,7 +7,7 @@ const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
     `0 ${av}px ${ab}px ${as}px rgba(0, 0, 0, 0.12)`
   ].join(",");
 
-const shadows = [
+const shadows: Shadows = [
   "none",
   createShadow(1, 1, 0, 2, 1, -2, 1, 3, 0),
   createShadow(2, 2, 0, 3, 1, -2, 1, 5, 0),
