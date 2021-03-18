@@ -6,11 +6,12 @@ import Hr from "@saleor/components/Hr";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import ChannelsList from "./ChannelsList";
 
 import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityContentProps {
-  isSelected: (option: Channel) => boolean;
+  isChannelSelected: (id: string) => boolean;
   channels: Channel[];
   contentType?: string;
   disabled: boolean;
@@ -21,7 +22,7 @@ export interface ChannelsAvailabilityContentProps {
 }
 
 export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
-  isSelected,
+  isChannelSelected,
   channels,
   contentType = "",
   onChange,
@@ -81,7 +82,8 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
           className={classes.scrollArea}
           data-test-id="manage-products-channels-availiability-list"
         >
-          {filteredChannels?.length ? (
+          <ChannelsList channels={filteredChannels} />
+          {/* {filteredChannels?.length ? (
             filteredChannels.map(option => (
               <div
                 key={option.id}
@@ -105,7 +107,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
             <div className={classes.notFound}>
               <FormattedMessage defaultMessage="No Channels found" />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

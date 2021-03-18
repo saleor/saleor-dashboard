@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductChannelListingUpdateInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductChannelListingUpdateInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductChannelListingUpdate
@@ -172,16 +173,6 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   name: string;
 }
 
-export interface ProductChannelListingUpdate_productChannelListingUpdate_product_media {
-  __typename: "ProductMedia";
-  id: string;
-  alt: string;
-  sortOrder: number | null;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -263,7 +254,6 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   category: ProductChannelListingUpdate_productChannelListingUpdate_product_category | null;
   collections: (ProductChannelListingUpdate_productChannelListingUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductChannelListingUpdate_productChannelListingUpdate_product_media | null)[] | null;
   isAvailable: boolean | null;
   variants: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants | null)[] | null;
   weight: ProductChannelListingUpdate_productChannelListingUpdate_product_weight | null;

@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductCreate
@@ -179,16 +180,6 @@ export interface ProductCreate_productCreate_product_collections {
   name: string;
 }
 
-export interface ProductCreate_productCreate_product_media {
-  __typename: "ProductMedia";
-  id: string;
-  alt: string;
-  sortOrder: number | null;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
 export interface ProductCreate_productCreate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -270,7 +261,6 @@ export interface ProductCreate_productCreate_product {
   category: ProductCreate_productCreate_product_category | null;
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductCreate_productCreate_product_media | null)[] | null;
   isAvailable: boolean | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
   weight: ProductCreate_productCreate_product_weight | null;

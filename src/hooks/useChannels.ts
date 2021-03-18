@@ -3,7 +3,7 @@ import { Channel } from "@saleor/channels/utils";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 
-interface Modal {
+export interface Modal {
   openModal: (action: ChannelsAction) => void;
   closeModal: () => void;
 }
@@ -27,7 +27,9 @@ function useChannels<T extends Channel, A>(
     setChannels(currentChannels);
   };
 
-  const handleChannelsModalOpen = () => openModal("open-channels-picker");
+  const handleChannelsModalOpen = () => {
+    openModal("open-channels-picker");
+  };
 
   const handleChannelsConfirm = () => {
     const sortedChannelListElements = channelListElements.sort(

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -795,7 +796,6 @@ export enum ProductErrorCode {
   PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
-  UNSUPPORTED_MEDIA_PROVIDER = "UNSUPPORTED_MEDIA_PROVIDER",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
 }
 
@@ -812,11 +812,6 @@ export enum ProductFieldEnum {
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
-}
-
-export enum ProductMediaType {
-  IMAGE = "IMAGE",
-  VIDEO = "VIDEO",
 }
 
 export enum ProductOrderField {
@@ -1570,18 +1565,20 @@ export interface ProductChannelListingAddInput {
   visibleInListings?: boolean | null;
   isAvailableForPurchase?: boolean | null;
   availableForPurchaseDate?: any | null;
+  addVariants?: string[] | null;
+  removeVariants?: string[] | null;
 }
 
 export interface ProductChannelListingUpdateInput {
-  addChannels?: ProductChannelListingAddInput[] | null;
+  updateChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
 }
 
 export interface ProductCreateInput {
-  attributes?: AttributeValueInput[] | null;
+  attributes?: (AttributeValueInput | null)[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: string[] | null;
+  collections?: (string | null)[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;
@@ -1610,10 +1607,10 @@ export interface ProductFilterInput {
 }
 
 export interface ProductInput {
-  attributes?: AttributeValueInput[] | null;
+  attributes?: (AttributeValueInput | null)[] | null;
   category?: string | null;
   chargeTaxes?: boolean | null;
-  collections?: string[] | null;
+  collections?: (string | null)[] | null;
   description?: any | null;
   name?: string | null;
   slug?: string | null;

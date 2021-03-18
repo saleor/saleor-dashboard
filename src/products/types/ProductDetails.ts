@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductDetails
@@ -172,16 +173,6 @@ export interface ProductDetails_product_collections {
   name: string;
 }
 
-export interface ProductDetails_product_media {
-  __typename: "ProductMedia";
-  id: string;
-  alt: string;
-  sortOrder: number | null;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
 export interface ProductDetails_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -263,7 +254,6 @@ export interface ProductDetails_product {
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductDetails_product_media | null)[] | null;
   isAvailable: boolean | null;
   variants: (ProductDetails_product_variants | null)[] | null;
   weight: ProductDetails_product_weight | null;

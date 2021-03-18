@@ -74,6 +74,7 @@ import {
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
+import useChannelsWithProductVariants from "./useChannelsWithProducts";
 
 interface ProductUpdateProps {
   id: string;
@@ -244,6 +245,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     closeModal,
     openModal
   });
+
+  // useChannelsWithProductVariants(channelsData, product?.variants);
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
@@ -423,14 +426,31 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts
   };
 
+  const allChannelsLol = [
+    {
+      channel: {
+        id: "1",
+        name: "First Channel"
+      }
+    },
+    {
+      channel: {
+        id: "2",
+        name: "Second Channel"
+      }
+    }
+  ];
+
   return (
     <>
       <WindowTitle title={data?.product?.name} />
-      {!!allChannels?.length && (
+      {/* {!!allChannels?.length && ( */}
+      {!!allChannelsLol?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
           disabled={!channelListElements.length}
-          channels={allChannels}
+          channels={allChannelsLol}
+          // channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
