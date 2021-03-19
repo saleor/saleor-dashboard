@@ -16,7 +16,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         id: "fdinugiffgffd",
         name: "Dropdown First Value",
         reference: null,
-        slug: "dropdown-first-value"
+        slug: "dropdown-first-value",
+        value: ""
       },
       {
         __typename: "AttributeValue",
@@ -24,7 +25,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         id: "fdhfdhdihidff",
         name: "Dropdown Second Value",
         reference: null,
-        slug: "dropdown-second-value"
+        slug: "dropdown-second-value",
+        value: ""
       }
     ]
   },
@@ -44,7 +46,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         id: "terteretregtt",
         name: "Multiselect First Value",
         reference: null,
-        slug: "multiselect-first-value"
+        slug: "multiselect-first-value",
+        value: ""
       },
       {
         __typename: "AttributeValue",
@@ -52,7 +55,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         id: "tyueyryetopwr",
         name: "Multiselect Second Value",
         reference: null,
-        slug: "multiselect-second-value"
+        slug: "multiselect-second-value",
+        value: ""
       },
       {
         __typename: "AttributeValue",
@@ -60,7 +64,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         id: "truiwrtweirqd",
         name: "Multiselect Third Value",
         reference: null,
-        slug: "multiselect-third-value"
+        slug: "multiselect-third-value",
+        value: ""
       }
     ]
   },
@@ -84,7 +89,8 @@ const FILE_ATTRIBUTE: AttributeInput = {
         id: "gdghdgdhkkdae",
         name: "File First Value",
         reference: null,
-        slug: "file-first-value"
+        slug: "file-first-value",
+        value: ""
       }
     ]
   },
@@ -119,7 +125,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         id: "vbnhgcvjhbvhj",
         name: "References First Value",
         reference: null,
-        slug: "references-first-value"
+        slug: "references-first-value",
+        value: ""
       },
       {
         __typename: "AttributeValue",
@@ -127,7 +134,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         id: "gucngdfdfvdvd",
         name: "References Second Value",
         reference: null,
-        slug: "references-second-value"
+        slug: "references-second-value",
+        value: ""
       },
       {
         __typename: "AttributeValue",
@@ -135,7 +143,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         id: "dfdfdsfdsfdse",
         name: "References Third Value",
         reference: null,
-        slug: "references-third-value"
+        slug: "references-third-value",
+        value: ""
       }
     ]
   },

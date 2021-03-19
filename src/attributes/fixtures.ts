@@ -35,7 +35,8 @@ export const attribute: AttributeDetailsFragment = {
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
       reference: null,
-      slug: "john-doe"
+      slug: "john-doe",
+      value: "john"
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
@@ -43,7 +44,8 @@ export const attribute: AttributeDetailsFragment = {
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
       reference: null,
-      slug: "milionare-pirate"
+      slug: "milionare-pirate",
+      value: "milionare"
     }
   ],
   visibleInStorefront: true

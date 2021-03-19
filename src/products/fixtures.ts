@@ -80,7 +80,6 @@ export const product: (
             name: "payment",
             reference: null,
             slug: "payment",
-            value: "",
             value: ""
           },
           {
@@ -90,7 +89,6 @@ export const product: (
             name: "Auto Loan Account",
             reference: null,
             slug: "Auto-Loan-Account",
-            value: "",
             value: ""
           },
           {
@@ -100,7 +98,6 @@ export const product: (
             name: "Garden",
             reference: null,
             slug: "Garden",
-            value: "",
             value: ""
           },
           {
@@ -110,7 +107,6 @@ export const product: (
             name: "override",
             reference: null,
             slug: "override",
-            value: "",
             value: ""
           }
         ]
@@ -123,8 +119,7 @@ export const product: (
           name: "Auto Loan Account",
           reference: null,
           slug: "Auto-Loan-Account",
-            value: "",
-            value: ""
+          value: ""
         }
       ]
     }
@@ -367,7 +362,6 @@ export const product: (
             name: "File First Value",
             reference: null,
             slug: "file-first-value",
-            value: "",
             value: ""
           }
         ]
@@ -3056,7 +3050,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             name: "portals",
             reference: null,
             slug: "portals",
-            value: "",
+            value: ""
           },
           {
             __typename: "AttributeValue",
@@ -3064,8 +3058,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
             id: "ptav17253",
             name: "Baht",
             reference: null,
-            slug: "Baht"
-            value: "",
+            slug: "Baht",
+            value: ""
           }
         ]
       },
@@ -3076,8 +3070,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           id: "ptav47282",
           name: "portals",
           reference: null,
-          slug: "portals"
-          value: "",
+          slug: "portals",
+          value: ""
         }
       ]
     },
