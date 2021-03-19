@@ -12,9 +12,8 @@ export function createCheckout({
     variant => `{quantity:${productQuantity}
                     variantId:"${variant.id}"}`
   );
-  const shippingAddress = getValueWithDefault(
-    address,
-    `
+  const shippingAddress = address
+    ? `
   shippingAddress:{
     city: "${address.city}" 
     companyName: "${address.companyName}"
@@ -27,7 +26,7 @@ export function createCheckout({
     streetAddress1: "${address.streetAddress1}"
     streetAddress2: "${address.streetAddress2}"
   }`
-  );
+    : "";
 
   const mutation = `mutation{
     checkoutCreate(input:{
