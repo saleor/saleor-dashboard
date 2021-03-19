@@ -1,7 +1,6 @@
 import muiMakeStyles from "@material-ui/core/styles/makeStyles";
 import useMuiTheme from "@material-ui/core/styles/useTheme";
 import muiWithStyles from "@material-ui/core/styles/withStyles";
-import { StylesHook } from "@material-ui/styles/makeStyles";
 import { StyleRules } from "@material-ui/styles/withStyles";
 import {
   ClassKeyOfStyles,
@@ -10,17 +9,19 @@ import {
   Styles,
   WithStylesOptions
 } from "@material-ui/styles/withStyles";
-import { CoerceEmptyInterface, PropInjector } from "@material-ui/types";
+import { PropInjector } from "@material-ui/types";
 
 import { SaleorTheme } from "./types";
 
 export function makeStyles<
-  Props extends {} = {},
+  Props extends Record<string, any> = {},
   ClassKey extends string = string
 >(
   styles: Styles<SaleorTheme, Props, ClassKey>,
   options?: Omit<WithStylesOptions<SaleorTheme>, "withTheme">
-): StylesHook<Styles<SaleorTheme, Props, ClassKey>> {
+): keyof Props extends never
+  ? (props?: any) => ClassNameMap<ClassKey>
+  : (props: Props) => ClassNameMap<ClassKey> {
   return muiMakeStyles(styles, options);
 }
 
@@ -34,13 +35,13 @@ export type WithStyles<
 export function withStyles<
   ClassKey extends string,
   Options extends WithStylesOptions<SaleorTheme> = {},
-  Props extends Record<string, unknown> = {}
+  Props extends Record<string, any> = {}
 >(
   style: Styles<SaleorTheme, Props, ClassKey>,
   options?: Options
 ): PropInjector<
   WithStyles<ClassKey, Options["withTheme"]>,
-  StyledComponentProps<ClassKey> & CoerceEmptyInterface<Props>
+  StyledComponentProps<ClassKey> & Props
 > {
   return muiWithStyles(style, options);
 }
