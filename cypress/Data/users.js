@@ -8,3 +8,9 @@ export const USER_WITHOUT_NAME = {
   email: Cypress.env("SECOND_USER_NAME"),
   password: Cypress.env("USER_PASSWORD")
 };
+export const PERMISSION_USERS = {
+  password: Cypress.env("PERMISSIONS_USERS_PASSWORD"),
+  emails: {
+    shipping: "shipping.manager@example.com"
+  }
+};

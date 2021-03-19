@@ -1,4 +1,4 @@
-import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../Data/users";
+import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../data/users";
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 import { urlList } from "../../url/urlList";
 
