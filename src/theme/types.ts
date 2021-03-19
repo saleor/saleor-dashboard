@@ -12,9 +12,11 @@ interface ExtraPaletteOptions {
   };
 }
 
-interface SaleorPalette extends Palette, ExtraPaletteOptions {}
+export interface SaleorPalette extends Palette, ExtraPaletteOptions {}
 
-interface SaleorPaletteOptions extends PaletteOptions, ExtraPaletteOptions {}
+export interface SaleorPaletteOptions
+  extends PaletteOptions,
+    ExtraPaletteOptions {}
 
 export interface SaleorTheme extends Theme {
   palette: SaleorPalette;
