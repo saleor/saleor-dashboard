@@ -4,10 +4,13 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
+import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -49,6 +52,14 @@ export const ChannelCreateView = ({}) => {
       }
     });
 
+  const {
+    loadMore: fetchMoreShippingZones,
+    search: searchShippingZones,
+    result: searchShippingZonesResult
+  } = useShippingZonesSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
       {
@@ -82,6 +93,12 @@ export const ChannelCreateView = ({}) => {
           })}
         />
         <ChannelDetailsPage
+          searchShippingZones={searchShippingZones}
+          searchShippingZonesData={searchShippingZonesResult.data}
+          fetchMoreShippingZones={getSearchFetchMoreProps(
+            searchShippingZonesResult,
+            fetchMoreShippingZones
+          )}
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           currencyCodes={currencyCodeChoices}

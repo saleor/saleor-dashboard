@@ -20,9 +20,7 @@ const props: ChannelDetailsPageProps = {
   saveButtonBarState: "default",
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
-  searchShippingZonesResult: {
-    data: undefined
-  },
+  searchShippingZonesData: undefined,
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
