@@ -24,9 +24,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
   addShippingZone,
   shippingZones
 }) => {
-  const [isChoicesSelectShown, setIsChoicesSelectShown] = useState<boolean>(
-    false
-  );
+  const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const shippingZonesRef = useRef<Channel_channel_shippingZones[]>(
     shippingZones
   );
@@ -52,7 +50,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
         <SingleAutocompleteSelectField
           value=""
           displayValue=""
-          useNakedInput
+          nakedInput
           name="shippingZone"
           choices={mapNodeToChoice(shippingZonesChoices)}
           fetchChoices={searchShippingZones}

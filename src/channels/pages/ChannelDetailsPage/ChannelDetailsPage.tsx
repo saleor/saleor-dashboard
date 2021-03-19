@@ -79,12 +79,12 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   const getFilteredShippingZonesChoices = () =>
     getParsedSearchData(searchShippingZonesResult).filter(
       ({ id: searchedZoneId }) =>
-        !shippingZonesToDisplay.map(({ id }) => id).includes(searchedZoneId)
+        !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
     );
 
   return (
     <Form onSubmit={onSubmit} initial={initialData}>
-      {({ change, data, hasChanged, submit, triggerChange, set }) => {
+      {({ change, data, hasChanged, submit, set }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -104,8 +104,6 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
             )
           });
 
-          triggerChange();
-
           setShippingZonesToDisplay([
             ...shippingZonesToDisplay,
             getParsedSearchData(searchShippingZonesResult).find(getById(zoneId))
@@ -124,8 +122,6 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
               zoneId
             )
           });
-
-          triggerChange();
 
           setShippingZonesToDisplay(
             shippingZonesToDisplay.filter(getByUnmatchingId(zoneId))

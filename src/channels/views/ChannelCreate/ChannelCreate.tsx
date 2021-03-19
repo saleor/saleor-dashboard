@@ -9,7 +9,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
 import currencyCodes from "currency-codes";
-import { omit } from "lodash-es";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,13 +35,14 @@ export const ChannelCreateView = ({}) => {
 
   const handleSubmit = ({
     shippingZonesIdsToAdd,
+    shippingZonesIdsToRemove,
     currencyCode,
     ...rest
   }: FormData) =>
     createChannel({
       variables: {
         input: {
-          ...omit(rest, "shippingZonesIdsToRemove"),
+          ...rest,
           currencyCode: currencyCode.toUpperCase(),
           addShippingZones: shippingZonesIdsToAdd
         }

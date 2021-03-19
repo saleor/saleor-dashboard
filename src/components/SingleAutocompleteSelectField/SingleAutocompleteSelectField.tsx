@@ -48,7 +48,7 @@ export interface SingleAutocompleteSelectFieldProps
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   FormHelperTextProps?: ExtendedFormHelperTextProps;
-  useNakedInput?: boolean;
+  nakedInput?: boolean;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -77,7 +77,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     onChange,
     onFetchMore,
     FormHelperTextProps,
-    useNakedInput = false,
+    nakedInput = false,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -163,7 +163,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               ensureProperValues();
             }
 
-            const TextFieldComponent = useNakedInput ? InputBase : TextField;
+            const TextFieldComponent = nakedInput ? InputBase : TextField;
 
             const commonInputProps = {
               ...InputProps,
@@ -181,11 +181,12 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               onClick: toggleMenu
             };
 
-            const nakedInputProps = useNakedInput
+            const nakedInputProps = nakedInput
               ? {
                   "aria-label": "naked",
                   ...commonInputProps,
-                  autoFocus: true
+                  autoFocus: true,
+                  className: classes.nakedInput
                 }
               : {};
 
@@ -196,9 +197,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               >
                 <TextFieldComponent
                   {...nakedInputProps}
-                  className={classNames({
-                    [classes.nakedInput]: useNakedInput
-                  })}
                   InputProps={commonInputProps}
                   error={error}
                   disabled={disabled}

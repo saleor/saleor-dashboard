@@ -19,16 +19,16 @@ const useStyles = makeStyles(
     root: {
       width: "100%",
       border: "none",
+      marginRight: theme.spacing(1),
       paddingBottom: theme.spacing(2),
       minHeight: 0,
 
       "&$expanded": {
-        minHeight: 0,
-        paddingBottom: theme.spacing(2)
+        minHeight: 0
       }
     },
     content: {
-      width: "calc(100% - 20px)",
+      paddingLeft: theme.spacing(1),
       margin: 0,
 
       "&$expanded": {
