@@ -999,6 +999,10 @@
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_4031078167": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
   },
+  "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1148029984": {
+    "context": "attribute value",
+    "string": "Value"
+  },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1395607402": {
     "context": "edit attribute value",
     "string": "Edit Value"
@@ -1014,6 +1018,10 @@
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_1397696159": {
     "context": "attribute values list: name column header",
     "string": "Default Store View"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeValues_dot_1431643778": {
+    "context": "attribute values list: value column header",
+    "string": "Attribute value"
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_1565474525": {
     "context": "attribute values list: slug column header",
