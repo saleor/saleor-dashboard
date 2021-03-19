@@ -246,7 +246,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     openModal
   });
 
-  // useChannelsWithProductVariants(channelsData, product?.variants);
+  useChannelsWithProductVariants({
+    channels: channelsData?.channels,
+    variants: product?.variants,
+    action: params?.action,
+    openModal,
+    closeModal
+  });
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
@@ -441,11 +447,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   ];
 
+  //remove later
+  if (!channelsData) {
+    return null;
+  }
+
   return (
     <>
       <WindowTitle title={data?.product?.name} />
       {/* {!!allChannels?.length && ( */}
-      {!!allChannelsLol?.length && (
+      {/* {!!allChannelsLol?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
           disabled={!channelListElements.length}
@@ -462,7 +473,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />
-      )}
+      )} */}
       <ProductUpdatePage
         allChannelsCount={allChannels?.length}
         hasChannelChanged={

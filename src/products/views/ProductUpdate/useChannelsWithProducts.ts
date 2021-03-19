@@ -1,56 +1,70 @@
-import { ChannelData } from "@saleor/channels/utils";
-import {
-  Product_channelListings,
-  Product_variants_channelListings
-} from "@saleor/fragments/types/Product";
-import { ProductVariant_channelListings } from "@saleor/fragments/types/ProductVariant";
-import { Modal } from "@saleor/hooks/useChannels";
+import { Channels_channels } from "@saleor/channels/types/Channels";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import {
-  ProductDetails_product_variants,
-  ProductDetails_product_variants_channelListings
-} from "@saleor/products/types/ProductDetails";
+import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ProductUrlDialog } from "@saleor/products/urls";
 
-interface ChannelsWithVariantsData {
-  [id: string]: {
-    hasChanged: boolean;
-    selectedVariantsIds: string[];
-    variantsIdsToRemove: string[];
-    variantsIdsToAdd: string[];
-  };
-}
+import {
+  ChannelsWithVariantsData,
+  ChannelWithVariantData,
+  initialChannelWithVariantData
+} from "./types";
+import { extractVariantsForChannel } from "./utils";
 
-const useChannelsWithProductVariants = (
-  channelsData: ChannelData[],
-  variants: ProductDetails_product_variants[],
-  action: ProductUrlDialog,
-  { closeModal, openModal }: Modal
-) => {
-  const initialParsedChannelsWithVariantsData = channelsData.reduce(
-    (result, currentChannel) => {
-      const currentChannelVariants = variants.filter(({ channelListings }) =>
-        channelListings.includes(
-          ({ channel }: ProductDetails_product_variants_channelListings) => {
-            console.log({ channel });
-            return channel.id === currentChannel.id;
-          }
-        )
-      );
-
-      return {
-        ...result,
-        id: {
-          hasChanged: false
-        }
-      };
-    },
+const useChannelsWithProductVariants = ({
+  channels,
+  variants,
+  openModal,
+  closeModal
+}: {
+  channels: Channels_channels[];
+  variants: ProductDetails_product_variants[];
+  action: ProductUrlDialog;
+  closeModal;
+  openModal;
+}) => {
+  const initialParsedChannelsWithVariantsData: ChannelsWithVariantsData = channels?.reduce(
+    (result: ChannelsWithVariantsData, currentChannel) => ({
+      ...result,
+      [currentChannel.id]: {
+        selecedVariants: extractVariantsForChannel(variants, currentChannel.id),
+        ...initialChannelWithVariantData
+      }
+    }),
     {}
   );
 
   const [channelsWithVariants, setChannelsWithVariants] = useStateFromProps<
     ChannelsWithVariantsData
   >(initialParsedChannelsWithVariantsData);
+
+  const getChannelWithAddedVariantData = (
+    {
+      selectedVariants,
+      variantsIdsToAdd,
+      variantsIdsToRemove
+    }: ChannelWithVariantData,
+    channelId: string,
+    variantId: string
+  ) => ({
+    [channelId]: {
+      hasChanged: true,
+      variantsIdsToAdd: getUpdatedIds // needs merge with ma branch
+    }
+  });
+
+  const handleAddVariant = (channelId: string) => (variantId: string) =>
+    setChannelsWithVariants({
+      ...channelsWithVariants,
+      ...getChannelWithAddedVariantData(
+        channelsWithVariants[channelId],
+        channelId,
+        variantId
+      )
+    });
+
+  return {
+    addVariant: handleAddVariant
+  };
 };
 
 export default useChannelsWithProductVariants;
