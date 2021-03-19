@@ -1,5 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { TypographyProps } from "@material-ui/core/Typography";
 import { createElement } from "react";
 
 import { IThemeColors } from "../components/Theme/themes";
@@ -195,7 +196,7 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
       },
       MuiTypography: {
         component: "div"
-      },
+      } as TypographyProps,
       MuiCheckbox: {
         checkedIcon: createElement(CheckboxCheckedIcon),
         color: "primary",
