@@ -1,4 +1,5 @@
 import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
+import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
 import { FetchMoreProps } from "@saleor/types";
 
 export interface ShippingZonesProps {
@@ -7,5 +8,5 @@ export interface ShippingZonesProps {
   searchShippingZones: (searchPhrase: string) => void;
   fetchMoreShippingZones: FetchMoreProps;
   shippingZones: Channel_channel_shippingZones[];
-  shippingZonesChoices;
+  shippingZonesChoices: SearchShippingZones_search_edges_node[];
 }

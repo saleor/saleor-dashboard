@@ -13,6 +13,7 @@ import {
   getById,
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
+import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
 import { FetchMoreProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useState } from "react";
@@ -71,7 +72,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
     ...channel
   };
 
-  const getFilteredShippingZonesChoices = () =>
+  const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
