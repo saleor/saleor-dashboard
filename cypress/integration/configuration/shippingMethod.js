@@ -78,6 +78,7 @@ describe("Shipping methods", () => {
     const defaultChannelPrice = 11;
     const createdChannelPrice = 7;
     const createdChannelCurrency = "PLN";
+
     let shippingMethod;
     let shippingZone;
     let createdChannel;
