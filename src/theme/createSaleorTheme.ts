@@ -1,9 +1,5 @@
-import Card from "@material-ui/core/Card";
-import Checkbox from "@material-ui/core/Checkbox";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import { createElement } from "react";
 
 import { IThemeColors } from "../components/Theme/themes";
@@ -190,6 +186,21 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
     props: {
       MuiFormControl: {
         variant: "filled"
+      },
+      MuiTextField: {
+        variant: "outlined"
+      },
+      MuiCard: {
+        elevation: 0
+      },
+      MuiTypography: {
+        component: "div"
+      },
+      MuiCheckbox: {
+        checkedIcon: createElement(CheckboxCheckedIcon),
+        color: "primary",
+        icon: createElement(CheckboxIcon),
+        indeterminateIcon: createElement(CheckboxIndeterminateIcon)
       }
     },
     shadows,
@@ -209,26 +220,5 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
       }
     }
   });
-
-TextField.defaultProps = {
-  ...TextField.defaultProps,
-  variant: "outlined"
-};
-
-Card.defaultProps = {
-  ...Card.defaultProps,
-  elevation: 0
-};
-
-Typography.defaultProps = {
-  component: "div"
-};
-
-Checkbox.defaultProps = {
-  checkedIcon: createElement(CheckboxCheckedIcon),
-  color: "primary",
-  icon: createElement(CheckboxIcon),
-  indeterminateIcon: createElement(CheckboxIndeterminateIcon)
-};
 
 export default createTheme;
