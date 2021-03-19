@@ -5015,29 +5015,13 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
-  "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
-    "context": "section header",
-    "string": "All Photos"
+  "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_4146081479": {
+    "context": "modal header",
+    "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
   },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_1905082483": {
-    "context": "field is optional",
-    "string": "Optional"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_2546267317": {
-    "context": "header",
-    "string": "Edit Photo"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_367472710": {
-    "context": "section header",
-    "string": "Photo View"
-  },
-  "src_dot_products_dot_components_dot_ProductImagePage_dot_3822382625": {
-    "context": "section header",
-    "string": "Photo Information"
-  },
-  "src_dot_products_dot_components_dot_ProductImages_dot_3240888698": {
-    "context": "section header",
-    "string": "Images"
+  "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_buttonMessage": {
+    "context": "modal button",
+    "string": "Upload URL"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
     "context": "product price",
@@ -5115,6 +5099,42 @@
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_allMedia": {
+    "context": "section header",
+    "string": "All Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_editMedia": {
+    "context": "header",
+    "string": "Edit Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_mediaInformation": {
+    "context": "section header",
+    "string": "Media Information"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_mediaView": {
+    "context": "section header",
+    "string": "Media View"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPage_dot_optional": {
+    "context": "field is optional",
+    "string": "Optional"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadImages": {
+    "context": "modal button images upload",
+    "string": "Upload Images"
+  },
+  "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadUrl": {
+    "context": "modal button url upload",
+    "string": "Upload URL"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_media": {
+    "context": "section header",
+    "string": "Media"
+  },
+  "src_dot_products_dot_components_dot_ProductMedia_dot_upload": {
+    "context": "modal button upload",
+    "string": "Upload"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
     "context": "product is not configurable",
@@ -5319,20 +5339,21 @@
     "context": "dialog header",
     "string": "Delete Variant"
   },
-  "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_3196043669": {
+  "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_2015102342": {
     "context": "dialog header",
-    "string": "Image Selection"
+    "string": "Media Selection"
   },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_3240888698": {
-    "context": "section header",
-    "string": "Images"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_3449133076": {
-    "string": "Select a specific variant image from product images"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantImages_dot_989683980": {
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_chooseMedia": {
     "context": "button",
-    "string": "Choose photos"
+    "string": "Choose media"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_media": {
+    "context": "section header",
+    "string": "Media"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantMedia_dot_selectSpecificVariant": {
+    "context": "select variant media",
+    "string": "Select a specific variant media from product media"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_1222345317": {
     "context": "default product variant indicator",
@@ -6721,6 +6742,9 @@
   "src_dot_utils_dot_errors_dot_unknownError": {
     "string": "Unknown error"
   },
+  "src_dot_utils_dot_errors_dot_unsupportedMediaProvider": {
+    "string": "Unsupported media provider or incorrect URL"
+  },
   "src_dot_utils_dot_errors_dot_urlNotSet": {
     "context": "error message",
     "string": "URL not set for an invoice"
@@ -6834,9 +6858,17 @@
     "context": "section header",
     "string": "Events"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_144149815": {
+    "context": "event",
+    "string": "Product variant deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
     "string": "Order updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
+    "context": "event",
+    "string": "Product variant updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
     "context": "event",
@@ -6861,6 +6893,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
     "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3285325968": {
+    "context": "event",
+    "string": "Product variant created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
     "context": "event",

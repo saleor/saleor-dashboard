@@ -91,7 +91,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
   return (
     <ProductImageComponent
-      imageId={decodeURIComponent(match.params.imageId)}
+      mediaId={decodeURIComponent(match.params.imageId)}
       productId={decodeURIComponent(match.params.productId)}
       params={params}
     />

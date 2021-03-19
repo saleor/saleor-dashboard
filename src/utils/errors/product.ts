@@ -41,6 +41,9 @@ const messages = defineMessages({
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
   },
+  unsupportedMediaProvider: {
+    defaultMessage: "Unsupported media provider or incorrect URL"
+  },
   variantNoDigitalContent: {
     defaultMessage: "This variant does not have any digital content"
   },
@@ -74,6 +77,8 @@ function getProductErrorMessage(
         return intl.formatMessage(commonMessages.requiredField);
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
+      case ProductErrorCode.UNSUPPORTED_MEDIA_PROVIDER:
+        return intl.formatMessage(messages.unsupportedMediaProvider);
       case ProductErrorCode.INVALID:
         if (err.field === "price") {
           return intl.formatMessage(messages.priceInvalid);

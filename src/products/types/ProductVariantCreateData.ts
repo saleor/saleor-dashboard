@@ -2,14 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductVariantCreateData
 // ====================================================
 
-export interface ProductVariantCreateData_product_images {
-  __typename: "ProductImage";
+export interface ProductVariantCreateData_product_media {
+  __typename: "ProductMedia";
   id: string;
   sortOrder: number | null;
   url: string;
@@ -91,10 +91,11 @@ export interface ProductVariantCreateData_product_thumbnail {
   url: string;
 }
 
-export interface ProductVariantCreateData_product_variants_images {
-  __typename: "ProductImage";
+export interface ProductVariantCreateData_product_variants_media {
+  __typename: "ProductMedia";
   id: string;
   url: string;
+  type: ProductMediaType;
 }
 
 export interface ProductVariantCreateData_product_variants {
@@ -102,13 +103,13 @@ export interface ProductVariantCreateData_product_variants {
   id: string;
   name: string;
   sku: string;
-  images: (ProductVariantCreateData_product_variants_images | null)[] | null;
+  media: ProductVariantCreateData_product_variants_media[] | null;
 }
 
 export interface ProductVariantCreateData_product {
   __typename: "Product";
   id: string;
-  images: (ProductVariantCreateData_product_images | null)[] | null;
+  media: (ProductVariantCreateData_product_media | null)[] | null;
   channelListings: ProductVariantCreateData_product_channelListings[] | null;
   name: string;
   productType: ProductVariantCreateData_product_productType;

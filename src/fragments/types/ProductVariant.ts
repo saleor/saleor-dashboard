@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ProductVariant
@@ -114,10 +114,12 @@ export interface ProductVariant_nonSelectionAttributes {
   values: (ProductVariant_nonSelectionAttributes_values | null)[];
 }
 
-export interface ProductVariant_images {
-  __typename: "ProductImage";
+export interface ProductVariant_media {
+  __typename: "ProductMedia";
   id: string;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductVariant_product_defaultVariant {
@@ -125,12 +127,14 @@ export interface ProductVariant_product_defaultVariant {
   id: string;
 }
 
-export interface ProductVariant_product_images {
-  __typename: "ProductImage";
+export interface ProductVariant_product_media {
+  __typename: "ProductMedia";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductVariant_product_thumbnail {
@@ -184,10 +188,12 @@ export interface ProductVariant_product_channelListings {
   pricing: ProductVariant_product_channelListings_pricing | null;
 }
 
-export interface ProductVariant_product_variants_images {
-  __typename: "ProductImage";
+export interface ProductVariant_product_variants_media {
+  __typename: "ProductMedia";
   id: string;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductVariant_product_variants {
@@ -195,14 +201,14 @@ export interface ProductVariant_product_variants {
   id: string;
   name: string;
   sku: string;
-  images: (ProductVariant_product_variants_images | null)[] | null;
+  media: ProductVariant_product_variants_media[] | null;
 }
 
 export interface ProductVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariant_product_defaultVariant | null;
-  images: (ProductVariant_product_images | null)[] | null;
+  media: (ProductVariant_product_media | null)[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
   channelListings: ProductVariant_product_channelListings[] | null;
@@ -262,7 +268,7 @@ export interface ProductVariant {
   privateMetadata: (ProductVariant_privateMetadata | null)[];
   selectionAttributes: ProductVariant_selectionAttributes[];
   nonSelectionAttributes: ProductVariant_nonSelectionAttributes[];
-  images: (ProductVariant_images | null)[] | null;
+  media: ProductVariant_media[] | null;
   name: string;
   product: ProductVariant_product;
   channelListings: ProductVariant_channelListings[] | null;
