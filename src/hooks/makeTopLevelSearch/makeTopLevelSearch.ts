@@ -12,6 +12,10 @@ export interface SearchData {
   };
 }
 
+export interface ResultSearchData {
+  data: SearchData;
+}
+
 function makeTopLevelSearch<
   TData extends SearchData,
   TVariables extends SearchVariables

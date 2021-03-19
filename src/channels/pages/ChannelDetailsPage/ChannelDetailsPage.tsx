@@ -5,18 +5,15 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
-import {
-  getParsedSearchData,
-  getSearchFetchMoreProps
-} from "@saleor/hooks/makeTopLevelSearch/utils";
+import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
+import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getById,
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import { FetchMoreProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useState } from "react";
 
@@ -39,6 +36,9 @@ export interface ChannelDetailsPageProps {
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
   updateChannelStatus?: () => void;
+  searchShippingZones: (query: string) => void;
+  searchShippingZonesData?: SearchData;
+  fetchMoreShippingZones: FetchMoreProps;
 }
 
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
@@ -51,7 +51,10 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   onBack,
   onDelete,
   saveButtonBarState,
-  updateChannelStatus
+  updateChannelStatus,
+  searchShippingZones,
+  searchShippingZonesData,
+  fetchMoreShippingZones
 }) => {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
 
@@ -68,16 +71,8 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
     ...channel
   };
 
-  const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
-
   const getFilteredShippingZonesChoices = () =>
-    getParsedSearchData(searchShippingZonesResult).filter(
+    getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
     );
@@ -106,7 +101,9 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
 
           setShippingZonesToDisplay([
             ...shippingZonesToDisplay,
-            getParsedSearchData(searchShippingZonesResult).find(getById(zoneId))
+            getParsedSearchData({ data: searchShippingZonesData }).find(
+              getById(zoneId)
+            )
           ]);
         };
 
@@ -161,10 +158,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
                   addShippingZone={addShippingZone}
                   removeShippingZone={removeShippingZone}
                   searchShippingZones={searchShippingZones}
-                  fetchMoreShippingZones={getSearchFetchMoreProps(
-                    searchShippingZonesResult,
-                    fetchMoreShippingZones
-                  )}
+                  fetchMoreShippingZones={fetchMoreShippingZones}
                 />
               </div>
             </Grid>

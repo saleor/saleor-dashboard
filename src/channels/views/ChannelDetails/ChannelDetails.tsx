@@ -6,11 +6,14 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
+import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -148,6 +151,14 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     deleteChannel({ variables: data });
   };
 
+  const {
+    loadMore: fetchMoreShippingZones,
+    search: searchShippingZones,
+    result: searchShippingZonesResult
+  } = useShippingZonesSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle
@@ -162,6 +173,12 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </AppHeader>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
+          searchShippingZones={searchShippingZones}
+          searchShippingZonesData={searchShippingZonesResult.data}
+          fetchMoreShippingZones={getSearchFetchMoreProps(
+            searchShippingZonesResult,
+            fetchMoreShippingZones
+          )}
           channel={data?.channel}
           disabled={updateChannelOpts.loading || loading}
           disabledStatus={

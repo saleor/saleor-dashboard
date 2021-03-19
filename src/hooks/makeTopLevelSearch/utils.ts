@@ -1,6 +1,6 @@
 import { FetchMoreProps } from "@saleor/types";
 
-import { SearchData } from "./makeTopLevelSearch";
+import { ResultSearchData } from "./makeTopLevelSearch";
 import { CommonSearchOpts } from "./types";
 
 export const getSearchFetchMoreProps = (
@@ -12,5 +12,5 @@ export const getSearchFetchMoreProps = (
   onFetchMore
 });
 
-export const getParsedSearchData = ({ data }: { data: SearchData }) =>
+export const getParsedSearchData = ({ data }: ResultSearchData) =>
   data?.search?.edges?.map(({ node }) => node) || [];
