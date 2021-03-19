@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
 import StatusChip from "@saleor/components/StatusChip";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

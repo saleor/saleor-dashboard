@@ -1,8 +1,8 @@
 import IconButton from "@material-ui/core/IconButton";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 

@@ -1,10 +1,10 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";

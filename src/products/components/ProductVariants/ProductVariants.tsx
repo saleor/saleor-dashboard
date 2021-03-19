@@ -2,7 +2,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +17,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 

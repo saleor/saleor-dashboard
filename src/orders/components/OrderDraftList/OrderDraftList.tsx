@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -18,6 +17,7 @@ import {
   transformPaymentStatus
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { makeStyles } from "@saleor/theme";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";

@@ -1,12 +1,12 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
+import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
 import React from "react";

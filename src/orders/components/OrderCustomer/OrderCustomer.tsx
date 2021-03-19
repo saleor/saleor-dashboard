@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
@@ -14,6 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";

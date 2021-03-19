@@ -1,29 +1,17 @@
 import muiMakeStyles from "@material-ui/core/styles/makeStyles";
+import useMuiTheme from "@material-ui/core/styles/useTheme";
 import muiWithStyles from "@material-ui/core/styles/withStyles";
 import { StylesHook } from "@material-ui/styles/makeStyles";
+import { StyleRules } from "@material-ui/styles/withStyles";
 import {
-  BaseCSSProperties,
   ClassKeyOfStyles,
   ClassNameMap,
-  CreateCSSProperties,
-  CSSProperties,
   StyledComponentProps,
-  StyleRulesCallback,
   Styles,
   WithStylesOptions
 } from "@material-ui/styles/withStyles";
 import { CoerceEmptyInterface, PropInjector } from "@material-ui/types";
 
-export {
-  CreateCSSProperties,
-  CSSProperties,
-  ClassNameMap,
-  StyledComponentProps,
-  Styles,
-  WithStylesOptions,
-  StyleRulesCallback,
-  BaseCSSProperties
-};
 import { SaleorTheme } from "./types";
 
 export function makeStyles<
@@ -55,4 +43,14 @@ export function withStyles<
   StyledComponentProps<ClassKey> & CoerceEmptyInterface<Props>
 > {
   return muiWithStyles(style, options);
+}
+
+export function useTheme(): SaleorTheme {
+  return useMuiTheme();
+}
+
+export function createStyles<ClassKey extends string, Props extends {}>(
+  styles: StyleRules<Props, ClassKey>
+): StyleRules<Props, ClassKey> {
+  return styles;
 }

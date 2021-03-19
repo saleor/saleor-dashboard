@@ -1,9 +1,9 @@
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles, useTheme as useMuiTheme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 import useTheme from "@saleor/hooks/useTheme";
+import { makeStyles, useTheme as useSaleorTheme } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
@@ -76,7 +76,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
   const classes = useStyles(props);
 
   const { isDark } = useTheme();
-  const { direction } = useMuiTheme();
+  const { direction } = useSaleorTheme();
 
   return (
     <div className={classNames(classes.root, className)} {...other}>
