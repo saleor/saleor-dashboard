@@ -31,8 +31,8 @@ import { defineMessages, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
-import ProductVariantImages from "../ProductVariantImages";
-import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog";
+import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
+import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
@@ -97,7 +97,7 @@ interface ProductVariantPageProps {
   onBack();
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
-  onImageSelect(id: string);
+  onMediaSelect(id: string);
   onVariantClick(variantId: string);
   onSetDefaultVariant();
   onWarehouseConfigure();
@@ -120,7 +120,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onAdd,
   onBack,
   onDelete,
-  onImageSelect,
+  onMediaSelect,
   onSubmit,
   onVariantClick,
   onVariantReorder,
@@ -139,12 +139,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
-  const variantImages = variant?.images?.map(image => image.id);
-  const productImages = variant?.product?.images?.sort((prev, next) =>
+  const variantMedia = variant?.media?.map(image => image.id);
+  const productMedia = variant?.product?.media?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1
   );
-  const images = productImages
-    ?.filter(image => variantImages.indexOf(image.id) !== -1)
+  const media = productMedia
+    ?.filter(image => variantMedia.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
@@ -255,9 +255,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                   />
                   <CardSpacer />
-                  <ProductVariantImages
+                  <ProductVariantMedia
                     disabled={loading}
-                    images={images}
+                    media={media}
                     placeholderImage={placeholderImage}
                     onImageAdd={toggleModal}
                   />
@@ -334,12 +334,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         </ProductVariantUpdateForm>
       </Container>
       {variant && (
-        <ProductVariantImageSelectDialog
+        <ProductVariantMediaSelectDialog
           onClose={toggleModal}
-          onImageSelect={onImageSelect}
+          onMediaSelect={onMediaSelect}
           open={isModalOpened}
-          images={productImages}
-          selectedImages={maybe(() => variant.images.map(image => image.id))}
+          media={productMedia}
+          selectedMedia={maybe(() => variant.media.map(image => image.id))}
         />
       )}
     </>

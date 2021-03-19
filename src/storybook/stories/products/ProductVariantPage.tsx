@@ -26,7 +26,7 @@ storiesOf("Views / Products / Product variant details", module)
       onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onImageSelect={() => undefined}
+      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
@@ -52,7 +52,7 @@ storiesOf("Views / Products / Product variant details", module)
       onAdd={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onImageSelect={() => undefined}
+      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
@@ -77,7 +77,7 @@ storiesOf("Views / Products / Product variant details", module)
       onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onImageSelect={() => undefined}
+      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
@@ -100,7 +100,7 @@ storiesOf("Views / Products / Product variant details", module)
       onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onImageSelect={() => undefined}
+      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}

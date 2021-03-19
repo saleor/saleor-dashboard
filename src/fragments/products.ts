@@ -40,12 +40,14 @@ export const priceRangeFragment = gql`
   }
 `;
 
-export const fragmentProductImage = gql`
-  fragment ProductImageFragment on ProductImage {
+export const fragmentProductMedia = gql`
+  fragment ProductMediaFragment on ProductMedia {
     id
     alt
     sortOrder
     url
+    type
+    oembedData
   }
 `;
 
@@ -159,7 +161,7 @@ export const productVariantAttributesFragment = gql`
 `;
 
 export const productFragmentDetails = gql`
-  ${fragmentProductImage}
+  ${fragmentProductMedia}
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${weightFragment}
@@ -191,8 +193,8 @@ export const productFragmentDetails = gql`
     channelListings {
       ...ChannelListingProductFragment
     }
-    images {
-      ...ProductImageFragment
+    media {
+      ...ProductMediaFragment
     }
     isAvailable
     variants {
@@ -256,7 +258,7 @@ export const selectedVariantAttributeFragment = gql`
 export const fragmentVariant = gql`
   ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
-  ${fragmentProductImage}
+  ${fragmentProductMedia}
   ${stockFragment}
   ${weightFragment}
   ${metadataFragment}
@@ -272,9 +274,11 @@ export const fragmentVariant = gql`
     ) {
       ...SelectedVariantAttributeFragment
     }
-    images {
+    media {
       id
       url
+      type
+      oembedData
     }
     name
     product {
@@ -282,8 +286,8 @@ export const fragmentVariant = gql`
       defaultVariant {
         id
       }
-      images {
-        ...ProductImageFragment
+      media {
+        ...ProductMediaFragment
       }
       name
       thumbnail {
@@ -305,9 +309,11 @@ export const fragmentVariant = gql`
         id
         name
         sku
-        images {
+        media {
           id
           url
+          type
+          oembedData
         }
       }
       defaultVariant {

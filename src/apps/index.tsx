@@ -47,7 +47,7 @@ const AppInstall: React.FC<RouteComponentProps> = props => {
   return <AppInstallView params={params} {...props} />;
 };
 
-interface CustomAppDetailsProps extends RouteComponentProps<{ id: string }> {
+interface CustomAppDetailsProps extends RouteComponentProps<{ id?: string }> {
   token: string;
   onTokenClose: () => void;
 }
@@ -59,6 +59,11 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppUrlQueryParams = qs;
+  const id = match.params.id;
+
+  if (!id) {
+    throw new Error("No ID provided");
+  }
 
   return (
     <CustomAppDetailsView

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantReorder
@@ -178,12 +178,14 @@ export interface ProductVariantReorder_productVariantReorder_product_collections
   name: string;
 }
 
-export interface ProductVariantReorder_productVariantReorder_product_images {
-  __typename: "ProductImage";
+export interface ProductVariantReorder_productVariantReorder_product_media {
+  __typename: "ProductMedia";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_variants_stocks_warehouse {
@@ -267,7 +269,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   category: ProductVariantReorder_productVariantReorder_product_category | null;
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  images: (ProductVariantReorder_productVariantReorder_product_images | null)[] | null;
+  media: (ProductVariantReorder_productVariantReorder_product_media | null)[] | null;
   isAvailable: boolean | null;
   variants: (ProductVariantReorder_productVariantReorder_product_variants | null)[] | null;
   weight: ProductVariantReorder_productVariantReorder_product_weight | null;

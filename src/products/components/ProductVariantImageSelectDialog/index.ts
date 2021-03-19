@@ -1,2 +1,2 @@
-export { default } from "./ProductVariantImageSelectDialog";
-export * from "./ProductVariantImageSelectDialog";
+export { default } from "./ProductVariantMediaSelectDialog";
+export * from "./ProductVariantMediaSelectDialog";

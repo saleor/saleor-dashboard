@@ -8,15 +8,15 @@ import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
-    image: {
+    media: {
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
       width: "100%"
     },
-    imageContainer: {
+    mediaContainer: {
       "&:hover, &.dragged": {
-        "& $imageOverlay": {
+        "& $mediaOverlay": {
           display: "block"
         }
       },
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
       position: "relative",
       width: 148
     },
-    imageOverlay: {
+    mediaOverlay: {
       background: "rgba(0, 0, 0, 0.6)",
       cursor: "move",
       display: "none",
@@ -39,63 +39,68 @@ const useStyles = makeStyles(
       top: 0,
       width: 148
     },
-    imageOverlayShow: {
-      "&$imageOverlay": {
+    mediaOverlayShadow: {
+      "&mediaOverlay": {
         alignItems: "center",
         display: "flex",
         justifyContent: "center"
       }
     },
-    imageOverlayToolbar: {
+    mediaOverlayToolbar: {
       display: "flex",
       justifyContent: "flex-end"
     }
   }),
-  { name: "ImageTile" }
+  { name: "MediaTile" }
 );
 
-interface ImageTileProps {
-  image: {
-    alt?: string;
+interface MediaTileProps {
+  media: {
+    alt: string;
     url: string;
+    type?: string;
+    oembedData?: string;
   };
   loading?: boolean;
-  onImageDelete?: () => void;
-  onImageEdit?: (event: React.ChangeEvent<any>) => void;
+  onDelete?: () => void;
+  onEdit?: (event: React.ChangeEvent<any>) => void;
 }
 
-const ImageTile: React.FC<ImageTileProps> = props => {
-  const { loading, onImageDelete, onImageEdit, image } = props;
-
+const MediaTile: React.FC<MediaTileProps> = props => {
+  const { loading, onDelete, onEdit, media } = props;
   const classes = useStyles(props);
+  const parsedMediaOembedData = media?.oembedData
+    ? JSON.parse(media.oembedData)
+    : null;
+  const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
-    <div className={classes.imageContainer} data-test="product-image">
+    <div className={classes.mediaContainer} data-test="product-image">
       <div
-        className={classNames(classes.imageOverlay, {
-          [classes.imageOverlayShow]: loading
+        className={classNames(classes.mediaOverlay, {
+          [classes.mediaOverlayShadow]: loading
         })}
       >
         {loading ? (
           <CircularProgress size={32} />
         ) : (
-          <div className={classes.imageOverlayToolbar}>
-            {onImageEdit && (
-              <IconButton color="primary" onClick={onImageEdit}>
+          <div className={classes.mediaOverlayToolbar}>
+            {onEdit && (
+              <IconButton color="primary" onClick={onEdit}>
                 <EditIcon />
               </IconButton>
             )}
-            {onImageDelete && (
-              <IconButton color="primary" onClick={onImageDelete}>
+            {onDelete && (
+              <IconButton color="primary" onClick={onDelete}>
                 <DeleteIcon />
               </IconButton>
             )}
           </div>
         )}
       </div>
-      <img className={classes.image} src={image.url} alt={image.alt} />
+      <img className={classes.media} src={mediaUrl} alt={media.alt} />
     </div>
   );
 };
-ImageTile.displayName = "ImageTile";
-export default ImageTile;
+MediaTile.displayName = "MediaTile";
+export default MediaTile;

@@ -1,6 +1,7 @@
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import {
   AttributeInputTypeEnum,
+  ProductMediaType,
   WeightUnitsEnum
 } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -206,47 +207,57 @@ export const product: (
   defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
   description: JSON.stringify(content),
   id: "p10171",
-  images: [
-    {
-      __typename: "ProductImage",
-      alt: "Id sit dolores adipisci",
-      id: "UHJvZHVjdEltYWdlOjE=",
-      sortOrder: 0,
-      url: placeholderImage
-    },
-    {
-      __typename: "ProductImage",
-      alt: "Id sit dolores adipisci",
-      id: "UHJvZHVjdEltYWdlOaE=",
-      sortOrder: 2,
-      url: placeholderImage
-    },
-    {
-      __typename: "ProductImage",
-      alt: "Id sit dolores adipisci",
-      id: "UPJvZHVjdEltYWdlOjV=",
-      sortOrder: 1,
-      url: placeholderImage
-    },
-    {
-      __typename: "ProductImage",
-      alt: "Id sit dolores adipisci",
-      id: "UHJvZHVjdEltYHdlOjX=",
-      sortOrder: 3,
-      url: placeholderImage
-    },
-    {
-      __typename: "ProductImage",
-      alt: "Id sit dolores adipisci",
-      id: "UHJvZHVjdIlnYWdlOjX=",
-      sortOrder: 4,
-      url: placeholderImage
-    }
-  ],
   isAvailable: false,
   isAvailableForPurchase: false,
   isFeatured: false,
   margin: { __typename: "Margin", start: 2, stop: 7 },
+  media: [
+    {
+      __typename: "ProductMedia",
+      alt: "Id sit dolores adipisci",
+      id: "UHJvZHVjdEltYWdlOjE=",
+      sortOrder: 0,
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
+      url: placeholderImage
+    },
+    {
+      __typename: "ProductMedia",
+      alt: "Id sit dolores adipisci",
+      id: "UHJvZHVjdEltYWdlOaE=",
+      sortOrder: 2,
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
+      url: placeholderImage
+    },
+    {
+      __typename: "ProductMedia",
+      alt: "Id sit dolores adipisci",
+      id: "UPJvZHVjdEltYWdlOjV=",
+      sortOrder: 1,
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
+      url: placeholderImage
+    },
+    {
+      __typename: "ProductMedia",
+      alt: "Id sit dolores adipisci",
+      id: "UHJvZHVjdEltYHdlOjX=",
+      sortOrder: 3,
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
+      url: placeholderImage
+    },
+    {
+      __typename: "ProductMedia",
+      alt: "Id sit dolores adipisci",
+      id: "UHJvZHVjdIlnYWdlOjX=",
+      sortOrder: 4,
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
+      url: placeholderImage
+    }
+  ],
   metadata: [
     {
       __typename: "MetadataItem",
@@ -404,19 +415,23 @@ export const product: (
       __typename: "ProductVariant",
       channelListings: [],
       id: "pv75934",
-      images: [
+      margin: 2,
+      media: [
         {
-          __typename: "ProductImage",
+          __typename: "ProductMedia",
           id: "pi92837",
+          type: ProductMediaType.IMAGE,
+          oembedData: "{}",
           url: placeholderImage
         },
         {
-          __typename: "ProductImage",
+          __typename: "ProductMedia",
           id: "pi92838",
+          type: ProductMediaType.IMAGE,
+          oembedData: "{}",
           url: placeholderImage
         }
       ],
-      margin: 2,
       name: "Cordoba Oro",
       sku: "87192-94370",
       stocks: [
@@ -485,19 +500,23 @@ export const product: (
         }
       ],
       id: "pv68615",
-      images: [
+      margin: 7,
+      media: [
         {
-          __typename: "ProductImage",
+          __typename: "ProductMedia",
           id: "pi81234",
+          type: ProductMediaType.IMAGE,
+          oembedData: "{}",
           url: placeholderImage
         },
         {
-          __typename: "ProductImage",
+          __typename: "ProductMedia",
           id: "pi1236912",
+          type: ProductMediaType.IMAGE,
+          oembedData: "{}",
           url: placeholderImage
         }
       ],
-      margin: 7,
       name: "silver",
       sku: "69055-15190",
       stocks: [
@@ -2679,25 +2698,33 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   id: "var1",
-  images: [
+  media: [
     {
-      __typename: "ProductImage",
+      __typename: "ProductMedia",
       id: "img1",
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
       url: placeholderImage
     },
     {
-      __typename: "ProductImage",
+      __typename: "ProductMedia",
       id: "img2",
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
       url: placeholderImage
     },
     {
-      __typename: "ProductImage",
+      __typename: "ProductMedia",
       id: "img7",
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
       url: placeholderImage
     },
     {
-      __typename: "ProductImage",
+      __typename: "ProductMedia",
       id: "img8",
+      type: ProductMediaType.IMAGE,
+      oembedData: "{}",
       url: placeholderImage
     }
   ],
@@ -2823,68 +2850,86 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       id: "var1"
     },
     id: "prod1",
-    images: [
+    media: [
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Front",
         id: "img1",
         sortOrder: 1,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Back",
         id: "img2",
         sortOrder: 4,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Right side",
         id: "img3",
         sortOrder: 2,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Left side",
         id: "img4",
         sortOrder: 3,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Paper",
         id: "img5",
         sortOrder: 0,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Hard cover",
         id: "img6",
         sortOrder: 1,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Extended version",
         id: "img7",
         sortOrder: 0,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Cut version",
         id: "img8",
         sortOrder: 2,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       },
       {
-        __typename: "ProductImage",
+        __typename: "ProductMedia",
         alt: "Soft cover",
         id: "img9",
         sortOrder: 2,
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
         url: placeholderImage
       }
     ],
@@ -2894,10 +2939,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       {
         __typename: "ProductVariant",
         id: "var1",
-        images: [
+        media: [
           {
-            __typename: "ProductImage",
+            __typename: "ProductMedia",
             id: "23123",
+            type: ProductMediaType.IMAGE,
+            oembedData: "{}",
             url: placeholderImage
           }
         ],
@@ -2907,10 +2954,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       {
         __typename: "ProductVariant",
         id: "var2",
-        images: [
+        media: [
           {
-            __typename: "ProductImage",
+            __typename: "ProductMedia",
             id: "23123",
+            type: ProductMediaType.IMAGE,
+            oembedData: "{}",
             url: placeholderImage
           }
         ],
@@ -2920,10 +2969,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       {
         __typename: "ProductVariant",
         id: "var3",
-        images: [
+        media: [
           {
-            __typename: "ProductImage",
+            __typename: "ProductMedia",
             id: "23123",
+            type: ProductMediaType.IMAGE,
+            oembedData: "{}",
             url: placeholderImage
           }
         ],
@@ -2933,10 +2984,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       {
         __typename: "ProductVariant",
         id: "var4",
-        images: [
+        media: [
           {
-            __typename: "ProductImage",
+            __typename: "ProductMedia",
             id: "23123",
+            type: ProductMediaType.IMAGE,
+            oembedData: "{}",
             url: placeholderImage
           }
         ],
@@ -3075,9 +3128,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     value: 6
   }
 });
-export const variantImages = (placeholderImage: string) =>
-  variant(placeholderImage).images;
+export const variantMedia = (placeholderImage: string) =>
+  variant(placeholderImage).media;
 export const variantProductImages = (placeholderImage: string) =>
-  variant(placeholderImage).product.images;
+  variant(placeholderImage).product.media;
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
