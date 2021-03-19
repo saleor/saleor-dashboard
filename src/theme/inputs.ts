@@ -1,3 +1,4 @@
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import { Overrides } from "@material-ui/core/styles/overrides";
 import { IThemeColors } from "@saleor/components/Theme/themes";
 
