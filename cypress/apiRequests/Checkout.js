@@ -1,5 +1,3 @@
-import { getValueWithDefault } from "./utils/Utils";
-
 export function createCheckout({
   channelSlug,
   email,
