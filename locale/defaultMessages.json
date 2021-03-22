@@ -3563,6 +3563,10 @@
     "context": "order history message",
     "string": "Note was added to the order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_2308853031": {
+    "context": "order history message",
+    "string": "Order placed information was sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2369495522": {
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
