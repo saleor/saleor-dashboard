@@ -1,7 +1,7 @@
 import { PageInfoFragment } from "@saleor/fragments/types/PageInfoFragment";
 import { DocumentNode } from "graphql";
 
-import makeSearch, { SearchVariables, UseSearchHook } from "./makeSearch";
+import makeSearch, { SearchVariables, UseSearchHook } from "../makeSearch";
 
 export interface SearchData {
   search: {
@@ -10,6 +10,10 @@ export interface SearchData {
     }>;
     pageInfo: PageInfoFragment;
   };
+}
+
+export interface ResultSearchData {
+  data: SearchData;
 }
 
 function makeTopLevelSearch<

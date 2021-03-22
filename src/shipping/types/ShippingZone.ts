@@ -156,7 +156,7 @@ export interface ShippingZone_shippingZone {
   description: string | null;
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
-  warehouses: (ShippingZone_shippingZone_warehouses | null)[] | null;
+  warehouses: ShippingZone_shippingZone_warehouses[];
 }
 
 export interface ShippingZone {

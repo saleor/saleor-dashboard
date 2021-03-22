@@ -120,6 +120,7 @@ export enum ChannelErrorCode {
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1165,6 +1166,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  addShippingZones?: string[] | null;
 }
 
 export interface ChannelDeleteInput {
@@ -1175,6 +1177,8 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  addShippingZones?: string[] | null;
+  removeShippingZones?: string[] | null;
 }
 
 export interface CollectionChannelListingUpdateInput {
@@ -1778,6 +1782,7 @@ export interface ShippingZoneCreateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
 }
 
 export interface ShippingZoneUpdateInput {
@@ -1786,7 +1791,9 @@ export interface ShippingZoneUpdateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
   removeWarehouses?: (string | null)[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ShopSettingsInput {

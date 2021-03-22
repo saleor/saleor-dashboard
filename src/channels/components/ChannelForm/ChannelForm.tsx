@@ -26,6 +26,8 @@ export interface FormData {
   name: string;
   currencyCode: string;
   slug: string;
+  shippingZonesIdsToAdd: string[];
+  shippingZonesIdsToRemove: string[];
 }
 
 export interface ChannelFormProps {

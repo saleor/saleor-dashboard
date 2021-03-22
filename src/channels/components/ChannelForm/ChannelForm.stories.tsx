@@ -8,6 +8,8 @@ import ChannelForm, { ChannelFormProps } from "./ChannelForm";
 const props: ChannelFormProps = {
   data: {
     currencyCode: "euro",
+    shippingZonesIdsToAdd: [],
+    shippingZonesIdsToRemove: [],
     name: "Test",
     slug: "test"
   },

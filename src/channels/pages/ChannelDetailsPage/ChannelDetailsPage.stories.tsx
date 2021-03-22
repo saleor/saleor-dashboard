@@ -18,7 +18,14 @@ const props: ChannelDetailsPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  updateChannelStatus: () => undefined
+  updateChannelStatus: () => undefined,
+  searchShippingZones: () => undefined,
+  searchShippingZonesData: undefined,
+  fetchMoreShippingZones: {
+    loading: false,
+    hasMore: false,
+    onFetchMore: () => undefined
+  }
 };
 
 storiesOf("Views / Channels / Channel details", module)
