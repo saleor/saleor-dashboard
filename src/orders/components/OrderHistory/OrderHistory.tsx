@@ -84,6 +84,11 @@ export const getEventMessage = (
             defaultMessage: "Order cancel information was sent to customer",
             description: "order history message"
           });
+        case OrderEventsEmailsEnum.ORDER_CONFIRMATION:
+          return intl.formatMessage({
+            defaultMessage: "Order placed information was sent to customer",
+            description: "order history message"
+          });
         case OrderEventsEmailsEnum.ORDER_REFUND:
           return intl.formatMessage({
             defaultMessage: "Order refund information was sent to customer",
