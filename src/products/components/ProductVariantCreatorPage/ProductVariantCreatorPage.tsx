@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
+import { ShopLimitFragment_limits } from "@saleor/fragments/types/ShopLimitFragment";
 import useWizard from "@saleor/hooks/useWizard";
 import { validatePrice } from "@saleor/products/utils/validation";
 import { makeStyles } from "@saleor/theme";
@@ -15,6 +16,7 @@ import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
 import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
+import { getVariantsNumber } from "./ProductVariantCreatorValues";
 import reduceProductVariantCreateFormData, {
   ProductVariantCreateReducerActionType
 } from "./reducer";
@@ -42,11 +44,15 @@ const useStyles = makeStyles(
 
 function canHitNext(
   step: ProductVariantCreatorStep,
-  data: ProductVariantCreateFormData
+  data: ProductVariantCreateFormData,
+  variantsLeft: number | null
 ): boolean {
   switch (step) {
     case ProductVariantCreatorStep.values:
-      return data.attributes.every(attribute => attribute.values.length > 0);
+      return data.attributes.every(attribute => attribute.values.length > 0) &&
+        variantsLeft === null
+        ? true
+        : getVariantsNumber(data) <= variantsLeft;
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
         if (data.price.channels.some(channel => validatePrice(channel.price))) {
@@ -85,8 +91,9 @@ function canHitNext(
 export interface ProductVariantCreatePageProps
   extends Omit<
     ProductVariantCreatorContentProps,
-    "data" | "dispatchFormDataAction" | "step" | "onStepClick"
+    "data" | "dispatchFormDataAction" | "step" | "variantsLeft" | "onStepClick"
   > {
+  limits: ShopLimitFragment_limits;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
@@ -138,6 +145,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
     attributes,
     channelListings,
     errors,
+    limits,
     onSubmit,
     warehouses,
     ...contentProps
@@ -177,6 +185,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
 
   React.useEffect(reloadForm, [attributes.length, warehouses.length]);
 
+  const variantsLeft = limits.allowedUsage.productVariants
+    ? limits.allowedUsage.productVariants - limits.currentUsage.productVariants
+    : null;
+
   return (
     <Container>
       <ProductVariantCreateTabs step={step} onStepClick={setStep} />
@@ -203,7 +215,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
             data-test-id="next-step"
             className={classes.button}
             color="primary"
-            disabled={!canHitNext(step, wizardData)}
+            disabled={!canHitNext(step, wizardData, variantsLeft)}
             variant="contained"
             onClick={nextStep}
           >
@@ -213,7 +225,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
           <Button
             className={classes.button}
             color="primary"
-            disabled={!canHitNext(step, wizardData)}
+            disabled={!canHitNext(step, wizardData, variantsLeft)}
             variant="contained"
             onClick={() => onSubmit(wizardData.variants)}
           >
@@ -232,6 +244,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
         data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
+        variantsLeft={variantsLeft}
         step={step}
         warehouses={warehouses}
       />
