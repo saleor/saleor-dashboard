@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
-import { ShopLimitFragment_limits } from "@saleor/fragments/types/ShopLimitFragment";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import useWizard from "@saleor/hooks/useWizard";
 import { validatePrice } from "@saleor/products/utils/validation";
 import { makeStyles } from "@saleor/theme";
@@ -93,7 +93,7 @@ export interface ProductVariantCreatePageProps
     ProductVariantCreatorContentProps,
     "data" | "dispatchFormDataAction" | "step" | "variantsLeft" | "onStepClick"
   > {
-  limits: ShopLimitFragment_limits;
+  limits: RefreshLimits_shop_limits;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
