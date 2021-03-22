@@ -2,7 +2,6 @@ import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/assign-product
 import { SALES_SELECTORS } from "../../elements/discounts/sales";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { formatDate } from "../../support/formatDate";
-// import { MENAGE_CHANNEL_AVAILABILITY } from "../elements/channels/menage-channel-availability";
 import { selectChannelInDetailsPages } from "../channelsSteps";
 
 export const discountOptions = {
@@ -25,15 +24,6 @@ export function createSale({
     .get(discountOption)
     .click();
   selectChannelInDetailsPages(channelName);
-  // .get(MENAGE_CHANNEL_AVAILABILITY.availableManageButton)
-  // .click()
-  // .get(MENAGE_CHANNEL_AVAILABILITY.allChannelsInput)
-  // .click()
-  // .get(MENAGE_CHANNEL_AVAILABILITY.channelsAvailabilityForm)
-  // .contains(channelName)
-  // .click()
-  // .get(BUTTON_SELECTORS.submit)
-  // .click()
   cy.get(SALES_SELECTORS.discountValue)
     .type(discountValue)
     .get(SALES_SELECTORS.startDateInput)

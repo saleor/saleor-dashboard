@@ -1,3 +1,4 @@
+import { getDefaultAddress } from "./utils/Utils";
 export function createCheckout({
   channelSlug,
   email,
@@ -10,20 +11,7 @@ export function createCheckout({
     variant => `{quantity:${productQuantity}
                     variantId:"${variant.id}"}`
   );
-  const shippingAddress = address
-    ? `shippingAddress:{
-      city: "${address.city}" 
-      companyName: "${address.companyName}"
-      country: ${address.country}
-      countryArea: "${address.countryArea}"
-      firstName: "Test"
-      lastName: "Test"
-      phone: "${address.phone}"
-      postalCode: "${address.postalCode}"
-      streetAddress1: "${address.streetAddress1}"
-      streetAddress2: "${address.streetAddress2}"
-    }`
-    : "";
+  const shippingAddress = getDefaultAddress(address, "shippingAddress");
 
   const mutation = `mutation{
     checkoutCreate(input:{
