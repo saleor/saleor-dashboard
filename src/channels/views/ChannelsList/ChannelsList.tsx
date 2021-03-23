@@ -60,6 +60,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         })
       });
       refetch();
+      limitOpts.refetch();
       closeModal();
     } else {
       errors.map(error =>

@@ -68,6 +68,15 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables
   });
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      channels: false,
+      orders: false,
+      productVariants: false,
+      staffUsers: false,
+      warehouses: true
+    }
+  });
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
@@ -76,17 +85,9 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         refetch();
+        limitOpts.refetch();
         closeModal();
       }
-    }
-  });
-  const limitOpts = useShopLimitsQuery({
-    variables: {
-      channels: false,
-      orders: false,
-      productVariants: false,
-      staffUsers: false,
-      warehouses: true
     }
   });
 
