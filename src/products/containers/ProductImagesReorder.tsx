@@ -1,55 +1,56 @@
 import React from "react";
 
 import { TypedMutationInnerProps } from "../../mutations";
-import { useProductImagesReorder } from "../mutations";
+import { useProductMediaReorder } from "../mutations";
 import {
-  ProductImageReorder,
-  ProductImageReorderVariables
-} from "../types/ProductImageReorder";
+  ProductMediaReorder,
+  ProductMediaReorderVariables
+} from "../types/ProductMediaReorder";
 
-interface ProductImagesReorderProviderProps
+interface ProductMediaReorderProviderProps
   extends TypedMutationInnerProps<
-    ProductImageReorder,
-    ProductImageReorderVariables
+    ProductMediaReorder,
+    ProductMediaReorderVariables
   > {
   productId: string;
-  productImages: Array<{
+  productMedia: Array<{
     id: string;
     url: string;
   }>;
 }
 
-const ProductImagesReorderProvider: React.FC<ProductImagesReorderProviderProps> = ({
+const ProductMediaReorderProvider: React.FC<ProductMediaReorderProviderProps> = ({
   children,
   productId,
-  productImages,
+  productMedia,
   ...mutationProps
 }) => {
-  const [mutate, mutationResult] = useProductImagesReorder(mutationProps);
+  const [mutate, mutationResult] = useProductMediaReorder(mutationProps);
 
   return (
     <>
       {children(opts => {
-        const productImagesMap = productImages.reduce((prev, curr) => {
+        const productMediaMap = productMedia.reduce((prev, curr) => {
           prev[curr.id] = curr;
           return prev;
         }, {});
-        const newProductImages = opts.variables.imagesIds.map((id, index) => ({
-          __typename: "ProductImage",
-          ...productImagesMap[id],
+        const newProductMedia = opts.variables.mediaIds.map((id, index) => ({
+          __typename: "ProductMedia",
+          ...productMediaMap[id],
           sortOrder: index
         }));
         const optimisticResponse: typeof mutationResult["data"] = {
-          productImageReorder: {
-            __typename: "ProductImageReorder",
+          productMediaReorder: {
+            __typename: "ProductMediaReorder",
             errors: null,
             product: {
               __typename: "Product",
               id: productId,
-              images: newProductImages
+              media: newProductMedia
             }
           }
         };
+
         return mutate({
           ...opts,
           optimisticResponse
@@ -59,4 +60,4 @@ const ProductImagesReorderProvider: React.FC<ProductImagesReorderProviderProps> 
   );
 };
 
-export default ProductImagesReorderProvider;
+export default ProductMediaReorderProvider;

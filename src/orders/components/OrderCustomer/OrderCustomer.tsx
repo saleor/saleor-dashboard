@@ -109,6 +109,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               requiredPermissions={[PermissionEnum.MANAGE_USERS]}
             >
               <Button
+                data-test-id="edit-customer"
                 color="primary"
                 variant="text"
                 disabled={!onCustomerEdit}
@@ -146,6 +147,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               );
               return (
                 <SingleAutocompleteSelectField
+                  data-test-id="select-customer"
                   allowCustomValues={true}
                   choices={userChoices}
                   displayValue={userDisplayName}

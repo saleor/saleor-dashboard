@@ -1,5 +1,5 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import renderer, { ReactTestRendererJSON } from "react-test-renderer";
 
 import { TimezoneProvider } from "../Timezone";
 import Date from "./Date";
@@ -31,7 +31,9 @@ test("Render humanized date with timezone GMT-11", () => {
       <Date date={testDate} />
     </TimezoneProvider>
   );
-  expect(date.toJSON().props.dateTime).toEqual(testDate);
+  expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
+    testDate
+  );
 });
 
 test("Render humanized date with timezone GMT+13", () => {
@@ -40,5 +42,7 @@ test("Render humanized date with timezone GMT+13", () => {
       <Date date={testDate} />
     </TimezoneProvider>
   );
-  expect(date.toJSON().props.dateTime).toEqual(testDate);
+  expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
+    testDate
+  );
 });

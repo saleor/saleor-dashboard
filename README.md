@@ -18,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js 10.0+
+- Node.js v14+
 - A running instance of [Saleor](https://github.com/mirumee/saleor/).
 
 ### Installing

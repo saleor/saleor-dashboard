@@ -41,7 +41,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   selectedChannelId: "123"
 };
 
-storiesOf("Views / Collections / Collection details", module)
+storiesOf("Views / Collections / Collection detailsCollection details", module)
   .addDecorator(Decorator)
   .add("default", () => <CollectionDetailsPage {...props} />)
   .add("loading", () => (

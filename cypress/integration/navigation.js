@@ -1,17 +1,41 @@
-import { PERMISSIONS } from "../Data/permissions";
+import { PERMISSIONS_OPTIONS } from "../Data/permissionsUsers";
 import * as permissionsSteps from "../steps/permissions";
 
 describe("Navigation for users with one permission", () => {
-  it("should shipping page be enabled", () => {
-    const permission = PERMISSIONS.shipping;
-    permissionsSteps.navigateToAvailablePageAsOnePermissionUser(permission);
-    permissionsSteps.isElementDisplayed().then(isDisplayed => {
-      // expect(isDisplayed).to.be.true;
+  Object.keys(PERMISSIONS_OPTIONS).forEach(key => {
+    it(`should ${key} be enabled`, () => {
+      const permissionOption = PERMISSIONS_OPTIONS[key];
+      const permissions = permissionOption.permissions;
+      permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
+        permissionOption
+      );
+      permissionsSteps
+        .getDisplayedSelectors()
+        .then(selectors => {
+          permissionsSteps.expectAllSelectorsPermitted(permissions, selectors);
+        })
+        .then(() => {
+          if (!permissions) {
+            return;
+          }
+          permissions.forEach(permission => {
+            if (permission.parent) {
+              cy.get(permission.parent.parentMenuSelector)
+                .click()
+                .then(() => {
+                  permissionsSteps.getDisplayedSelectors(
+                    permission.parent.parentSelectors
+                  );
+                })
+                .then(parentSelectors => {
+                  permissionsSteps.expectAllSelectorsPermitted(
+                    permissions,
+                    parentSelectors
+                  );
+                });
+            }
+          });
+        });
     });
-    const links = permissionsSteps.getNotPermittedLinks(permission);
-    // .then(({ notPermittedLinkInMenu, notPermittedLinkInParent }) => {
-    //   expect(notPermittedLinkInMenu).to.not.be.ok;
-    //   expect(notPermittedLinkInParent).to.not.be.ok;
-    // })
   });
 });

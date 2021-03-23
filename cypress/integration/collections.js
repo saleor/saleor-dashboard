@@ -1,15 +1,18 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import Product from "../apiRequests/Product";
-import Collections from "../apiRequests/storeFront/Collections";
-import Search from "../apiRequests/storeFront/Search";
-import CollectionsSteps from "../steps/collectionsSteps";
+import { updateChannelInProduct } from "../apiRequests/Product";
+import { getCollection } from "../apiRequests/storeFront/Collections";
+import { searchInShop } from "../apiRequests/storeFront/Search";
+import {
+  assignProductsToCollection,
+  createCollection
+} from "../steps/collectionsSteps";
 import { urlList } from "../url/urlList";
-import ChannelsUtils from "../utils/channelsUtils";
-import CollectionsUtils from "../utils/collectionsUtils";
-import ProductsUtils from "../utils/productsUtils";
-import ShippingUtils from "../utils/shippingUtils";
+import * as channelsUtils from "../utils/channelsUtils";
+import { deleteCollectionsStartsWith } from "../utils/collectionsUtils";
+import * as productsUtils from "../utils/productsUtils";
+import { deleteShippingStartsWith } from "../utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
@@ -17,29 +20,21 @@ import {
 import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontProductUtils";
 
 describe("Collections", () => {
-  const productRequest = new Product();
-  const collectionsRequest = new Collections();
-  const search = new Search();
-  const channelsUtils = new ChannelsUtils();
-  const productsUtils = new ProductsUtils();
-  const collectionsUtils = new CollectionsUtils();
-  const shippingUtils = new ShippingUtils();
-  const collectionsSteps = new CollectionsSteps();
-
   const startsWith = "Cy-";
   const name = `${startsWith}${faker.random.number()}`;
 
   let attribute;
   let productType;
   let category;
+  let product;
 
   let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProperProducts(startsWith);
-    collectionsUtils.deleteProperCollections(startsWith);
-    shippingUtils.deleteShipping(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()
@@ -47,18 +42,25 @@ describe("Collections", () => {
         defaultChannel = channel;
         productsUtils.createTypeAttributeAndCategoryForProduct(name);
       })
-      .then(() => {
-        attribute = productsUtils.getAttribute();
-        productType = productsUtils.getProductType();
-        category = productsUtils.getCategory();
-        productsUtils.createProductInChannel({
-          name,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id
-        });
-      });
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+          productsUtils.createProductInChannel({
+            name,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id
+          });
+        }
+      )
+      .then(({ product: productResp }) => (product = productResp));
   });
 
   beforeEach(() => {
@@ -70,14 +72,13 @@ describe("Collections", () => {
     cy.visit(urlList.collections);
     let collection;
 
-    collectionsSteps
-      .createCollection(collectionName, false, defaultChannel)
+    createCollection(collectionName, false, defaultChannel)
       .then(collectionResp => {
         collection = collectionResp;
-        collectionsSteps.assignProductsToCollection(name);
+        assignProductsToCollection(name);
       })
       .then(() => {
-        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
+        getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isCollectionVisible(resp, collection.id);
@@ -89,12 +90,12 @@ describe("Collections", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     let collection;
     cy.visit(urlList.collections);
-    collectionsSteps
-      .createCollection(collectionName, true, defaultChannel)
+
+    createCollection(collectionName, true, defaultChannel)
       .then(collectionResp => {
         collection = collectionResp;
-        collectionsSteps.assignProductsToCollection(name);
-        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
+        assignProductsToCollection(name);
+        getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isCollectionVisible(resp, collection.id);
@@ -104,27 +105,22 @@ describe("Collections", () => {
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.random.number()}`;
     let collection;
+    let channel;
 
     channelsUtils
       .createChannel({ name: collectionName })
-      .then(() => {
-        productRequest.updateChannelInProduct(
-          productsUtils.getCreatedProduct().id,
-          channelsUtils.getCreatedChannel().id
-        );
+      .then(channelResp => {
+        channel = channelResp;
+        updateChannelInProduct(product.id, channel.id);
       })
       .then(() => {
         cy.visit(urlList.collections);
-        collectionsSteps.createCollection(
-          collectionName,
-          true,
-          channelsUtils.getCreatedChannel()
-        );
+        createCollection(collectionName, true, channel);
       })
       .then(collectionResp => {
         collection = collectionResp;
-        collectionsSteps.assignProductsToCollection(name);
-        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
+        assignProductsToCollection(name);
+        getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
         const isVisible = isCollectionVisible(resp, collection.id);
@@ -135,41 +131,39 @@ describe("Collections", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
     // but are listed on Collections
     const randomName = `${startsWith}${faker.random.number()}`;
-    const hiddenProductUtils = new ProductsUtils();
     let collection;
+    let createdProduct;
 
-    hiddenProductUtils.createProductInChannel({
-      name: randomName,
-      channelId: defaultChannel.id,
-      productTypeId: productType.id,
-      attributeId: attribute.id,
-      categoryId: category.id,
-      visibleInListings: false
-    });
+    productsUtils
+      .createProductInChannel({
+        name: randomName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        visibleInListings: false
+      })
+      .then(({ product: productResp }) => (createdProduct = productResp));
     cy.visit(urlList.collections);
-    collectionsSteps
-      .createCollection(randomName, true, defaultChannel)
+    createCollection(randomName, true, defaultChannel)
       .then(collectionResp => {
         collection = collectionResp;
-        collectionsSteps.assignProductsToCollection(randomName);
+        assignProductsToCollection(randomName);
       })
       .then(() => {
-        collectionsRequest.getCollection(collection.id, defaultChannel.slug);
+        getCollection(collection.id, defaultChannel.slug);
       })
       .then(resp => {
-        const isVisible = isProductInCollectionVisible(
-          resp,
-          hiddenProductUtils.getCreatedProduct().id
-        );
+        const isVisible = isProductInCollectionVisible(resp, createdProduct.id);
         expect(isVisible).to.equal(true);
       })
       .then(() => {
-        search.searchInShop(hiddenProductUtils.getCreatedProduct().name);
+        searchInShop(createdProduct.name);
       })
       .then(resp => {
         const isVisible = isProductVisibleInSearchResult(
           resp,
-          hiddenProductUtils.getCreatedProduct().name
+          createdProduct.name
         );
         expect(isVisible).to.equal(false);
       });

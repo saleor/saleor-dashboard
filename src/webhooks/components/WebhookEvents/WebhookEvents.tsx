@@ -104,6 +104,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product deleted",
       description: "event"
     }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_CREATED]: intl.formatMessage({
+      defaultMessage: "Product variant created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_UPDATED]: intl.formatMessage({
+      defaultMessage: "Product variant updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_DELETED]: intl.formatMessage({
+      defaultMessage: "Product variant deleted",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({
       defaultMessage: "Fulfillment created",
       description: "event"

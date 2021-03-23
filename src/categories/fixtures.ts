@@ -92,6 +92,7 @@ export const category: (
   backgroundImage: {
     __typename: "Image",
     alt: "Alt text",
+    oembedData: "{}",
     url: placeholderImage
   },
   children: {
@@ -211,7 +212,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -265,7 +270,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -319,7 +328,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -373,7 +386,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -427,7 +444,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -481,7 +502,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -535,7 +560,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -589,7 +618,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -643,7 +676,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       },
       {
@@ -697,7 +734,11 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: {
+            __typename: "Image",
+            oembedData: "{}",
+            url: placeholderImage
+          }
         }
       }
     ],

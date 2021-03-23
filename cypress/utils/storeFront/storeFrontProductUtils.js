@@ -1,4 +1,4 @@
-import ProductDetails from "../../apiRequests/storeFront/ProductDetails";
+import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
 
 export const isProductVisible = (resp, name) => {
   const product = resp.body.data.product;
@@ -19,8 +19,7 @@ export const isProductVisibleInSearchResult = (resp, productName) => {
 };
 
 export const getProductVariants = (productId, channelSlug) => {
-  const productDetails = new ProductDetails();
-  return productDetails.getProductDetails(productId, channelSlug).then(resp => {
+  getProductDetails(productId, channelSlug).then(resp => {
     const variantsList = resp.body.data.product.variants;
     return variantsList.map(element => ({
       name: element.name,
@@ -28,3 +27,8 @@ export const getProductVariants = (productId, channelSlug) => {
     }));
   });
 };
+
+export const getProductPrice = (productId, channelSlug) =>
+  getProductDetails(productId, channelSlug).then(
+    resp => resp.body.data.product.variants[0].pricing.price.gross.amount
+  );
