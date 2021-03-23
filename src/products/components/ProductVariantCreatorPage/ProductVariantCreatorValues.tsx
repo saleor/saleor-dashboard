@@ -51,7 +51,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
         <Alert
           show={variantsNumber > variantsLeft}
           title={intl.formatMessage({
-            defaultMessage: "Order limit reached",
+            defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
