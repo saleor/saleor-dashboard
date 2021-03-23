@@ -1,3 +1,4 @@
+import { TEST_ADMIN_USER } from "../../Data/users";
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
 
 Cypress.Commands.add("loginUser", () =>
@@ -14,11 +15,11 @@ Cypress.Commands.add("loginInShop", () => {
   cy.loginUserViaRequest("token");
 });
 
-Cypress.Commands.add("loginUserViaRequest", (authorization = "auth") => {
-  const mutation = `mutation TokenAuth{
-    tokenCreate(email: "${Cypress.env("USER_NAME")}", password: "${Cypress.env(
-    "USER_PASSWORD"
-  )}") {
+Cypress.Commands.add(
+  "loginUserViaRequest",
+  (authorization = "auth", user = TEST_ADMIN_USER) => {
+    const mutation = `mutation TokenAuth{
+    tokenCreate(email: "${user.email}", password: "${user.password}") {
       token
       errors: accountErrors {
         code
@@ -30,10 +31,11 @@ Cypress.Commands.add("loginUserViaRequest", (authorization = "auth") => {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
-    window.sessionStorage.setItem(
-      authorization,
-      resp.body.data.tokenCreate.token
-    );
-  });
-});
+    return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
+      window.sessionStorage.setItem(
+        authorization,
+        resp.body.data.tokenCreate.token
+      );
+    });
+  }
+);
