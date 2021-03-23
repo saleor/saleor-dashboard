@@ -27,13 +27,34 @@ export function createReadyToFulfillOrder(
   return createDraftOrder(customerId, shippingMethodId, channelId)
     .then(orderResp => {
       order = orderResp;
-      variantsList.forEach(variantElement => {
-        orderRequest.addProductToOrder(order.id, variantElement.id);
-      });
+      assignVariantsToOrder(order, variantsList);
     })
     .then(() => orderRequest.markOrderAsPaid(order.id))
     .then(() => orderRequest.completeOrder(order.id));
 }
+
+export function createOrder({
+  customerId,
+  shippingMethodId,
+  channelId,
+  variantsList
+}) {
+  let order;
+  return createDraftOrder(customerId, shippingMethodId, channelId)
+    .then(orderResp => {
+      order = orderResp;
+      assignVariantsToOrder(order, variantsList);
+    })
+    .then(() => orderRequest.completeOrder(order.id))
+    .then(() => order);
+}
+
+function assignVariantsToOrder(order, variantsList) {
+  variantsList.forEach(variantElement => {
+    orderRequest.addProductToOrder(order.id, variantElement.id);
+  });
+}
+
 export function createDraftOrder(customerId, shippingMethodId, channelId) {
   return orderRequest
     .createDraftOrder(customerId, shippingMethodId, channelId)

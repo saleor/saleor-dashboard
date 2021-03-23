@@ -5,7 +5,14 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  allMedia: {
+    defaultMessage: "All Media",
+    description: "section header"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -39,55 +46,63 @@ const useStyles = makeStyles(
     },
     toolbar: { marginTop: -theme.spacing(0.5) }
   }),
-  { name: "ProductImageNavigation" }
+  { name: "ProductMediaNavigation" }
 );
 
-interface ProductImageNavigationProps {
+interface ProductMediaNavigationProps {
   disabled: boolean;
-  images?: Array<{
+  media?: Array<{
     id: string;
     url: string;
+    alt?: string;
+    type?: string;
+    oembedData?: string;
   }>;
   highlighted?: string;
   onRowClick: (id: string) => () => void;
 }
 
-const ProductImageNavigation: React.FC<ProductImageNavigationProps> = props => {
-  const { highlighted, images, onRowClick } = props;
+const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
+  const { highlighted, media, onRowClick } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
     <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "All Photos",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.allMedia)} />
       <CardContent>
-        {images === undefined ? (
+        {!media ? (
           <Skeleton />
         ) : (
           <div className={classes.root}>
-            {images.map(image => (
-              <div
-                className={classNames({
-                  [classes.imageContainer]: true,
-                  [classes.highlightedImageContainer]: image.id === highlighted
-                })}
-                onClick={onRowClick(image.id)}
-                key={image.id}
-              >
-                <img className={classes.image} src={image.url} />
-              </div>
-            ))}
+            {media.map(mediaObj => {
+              const mediaObjOembedData = JSON.parse(mediaObj?.oembedData);
+              const mediaUrl =
+                mediaObjOembedData?.thumbnail_url || mediaObj.url;
+
+              return (
+                <div
+                  className={classNames({
+                    [classes.imageContainer]: true,
+                    [classes.highlightedImageContainer]:
+                      mediaObj.id === highlighted
+                  })}
+                  onClick={onRowClick(mediaObj.id)}
+                  key={mediaObj.id}
+                >
+                  <img
+                    className={classes.image}
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
       </CardContent>
     </Card>
   );
 };
-ProductImageNavigation.displayName = "ProductImageNavigation";
-export default ProductImageNavigation;
+ProductMediaNavigation.displayName = "ProductMediaNavigation";
+export default ProductMediaNavigation;

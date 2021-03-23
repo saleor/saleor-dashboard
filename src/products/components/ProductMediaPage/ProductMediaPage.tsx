@@ -12,10 +12,30 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
-import ProductImageNavigation from "../ProductImageNavigation";
+import ProductMediaNavigation from "../ProductMediaNavigation";
+
+const messages = defineMessages({
+  editMedia: {
+    defaultMessage: "Edit Media",
+    description: "header"
+  },
+  mediaInformation: {
+    defaultMessage: "Media Information",
+    description: "section header"
+  },
+  mediaView: {
+    defaultMessage: "Media View",
+    description: "section header"
+  },
+  optional: {
+    defaultMessage: "Optional",
+    description: "field is optional"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -25,24 +45,30 @@ const useStyles = makeStyles(
       width: "100%"
     },
     imageContainer: {
+      "& iframe": {
+        width: "100%",
+        maxHeight: 420
+      },
       background: "#ffffff",
       border: "1px solid #eaeaea",
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
-      maxWidth: 552,
+      width: "100%",
       padding: theme.spacing(2)
     }
   }),
-  { name: "ProductImagePage" }
+  { name: "ProductMediaPage" }
 );
 
-interface ProductImagePageProps {
-  image?: {
+interface ProductMediaPageProps {
+  mediaObj?: {
     id: string;
     alt: string;
     url: string;
+    type: string;
+    oembedData?: string;
   };
-  images?: Array<{
+  media?: Array<{
     id: string;
     url: string;
   }>;
@@ -55,11 +81,11 @@ interface ProductImagePageProps {
   onSubmit: (data: { description: string }) => void;
 }
 
-const ProductImagePage: React.FC<ProductImagePageProps> = props => {
+const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
   const {
     disabled,
-    image,
-    images,
+    mediaObj,
+    media,
     product,
     saveButtonBarState,
     onBack,
@@ -73,42 +99,31 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
 
   return (
     <Form
-      initial={{ description: image ? image.alt : "" }}
+      initial={{ description: mediaObj ? mediaObj.alt : "" }}
       onSubmit={onSubmit}
       confirmLeave
     >
       {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>{product}</AppHeader>
-          <PageHeader
-            title={intl.formatMessage({
-              defaultMessage: "Edit Photo",
-              description: "header"
-            })}
-          />
+          <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
-              <ProductImageNavigation
+              <ProductMediaNavigation
                 disabled={disabled}
-                images={images}
-                highlighted={image ? image.id : undefined}
+                media={media}
+                highlighted={media ? mediaObj.id : undefined}
                 onRowClick={onRowClick}
               />
               <Card>
                 <CardTitle
-                  title={intl.formatMessage({
-                    defaultMessage: "Photo Information",
-                    description: "section header"
-                  })}
+                  title={intl.formatMessage(messages.mediaInformation)}
                 />
                 <CardContent>
                   <TextField
                     name="description"
                     label={intl.formatMessage(commonMessages.description)}
-                    helperText={intl.formatMessage({
-                      defaultMessage: "Optional",
-                      description: "field is optional"
-                    })}
+                    helperText={intl.formatMessage(messages.optional)}
                     disabled={disabled}
                     onChange={change}
                     value={data.description}
@@ -120,17 +135,25 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
             </div>
             <div>
               <Card>
-                <CardTitle
-                  title={intl.formatMessage({
-                    defaultMessage: "Photo View",
-                    description: "section header"
-                  })}
-                />
+                <CardTitle title={intl.formatMessage(messages.mediaView)} />
                 <CardContent>
-                  {!!image ? (
-                    <div className={classes.imageContainer}>
-                      <img src={image.url} className={classes.image} />
-                    </div>
+                  {!!mediaObj ? (
+                    mediaObj?.type === ProductMediaType.IMAGE ? (
+                      <div className={classes.imageContainer}>
+                        <img
+                          className={classes.image}
+                          src={mediaObj.url}
+                          alt={mediaObj.alt}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className={classes.imageContainer}
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.parse(mediaObj?.oembedData)?.html
+                        }}
+                      />
+                    )
                   ) : (
                     <Skeleton />
                   )}
@@ -150,5 +173,5 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
     </Form>
   );
 };
-ProductImagePage.displayName = "ProductImagePage";
-export default ProductImagePage;
+ProductMediaPage.displayName = "ProductMediaPage";
+export default ProductMediaPage;

@@ -3,17 +3,28 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
-import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
-import { commonMessages } from "@saleor/intl";
+import MediaTile from "@saleor/components/MediaTile";
+import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
+import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@saleor/types";
+import { ProductMediaType } from "@saleor/types/globalTypes";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import { ProductDetails_product_images } from "../../types/ProductDetails";
+const messages = defineMessages({
+  media: {
+    defaultMessage: "Media",
+    description: "section header"
+  },
+  upload: {
+    defaultMessage: "Upload",
+    description: "modal button upload"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -102,85 +113,88 @@ const useStyles = makeStyles(
       opacity: 0.2
     }
   }),
-  { name: "ProductImages" }
+  { name: "ProductMedia" }
 );
 
-interface ProductImagesProps {
-  placeholderImage?: string;
-  images: ProductDetails_product_images[];
-  loading?: boolean;
-  onImageDelete: (id: string) => () => void;
-  onImageEdit: (id: string) => () => void;
-  onImageReorder?: ReorderAction;
-  onImageUpload(file: File);
-}
-
-interface SortableImageProps {
-  image: {
+interface SortableMediaProps {
+  media: {
     id: string;
     alt?: string;
     url: string;
   };
-  onImageEdit: (id: string) => void;
-  onImageDelete: () => void;
+  onEdit: (id: string) => void;
+  onDelete: () => void;
 }
 
-const SortableImage = SortableElement<SortableImageProps>(
-  ({ image, onImageEdit, onImageDelete }) => (
-    <ImageTile
-      image={image}
-      onImageEdit={onImageEdit ? () => onImageEdit(image.id) : undefined}
-      onImageDelete={onImageDelete}
+const SortableMedia = SortableElement<SortableMediaProps>(
+  ({ media, onEdit, onDelete }) => (
+    <MediaTile
+      media={media}
+      onEdit={onEdit ? () => onEdit(media.id) : undefined}
+      onDelete={onDelete}
     />
   )
 );
 
-interface ImageListContainerProps {
+interface MediaListContainerProps {
   className: string;
-  items: ProductDetails_product_images[];
-  preview: ProductDetails_product_images[];
-  onImageDelete: (id: string) => () => void;
-  onImageEdit: (id: string) => () => void;
+  media: ProductMediaFragment[];
+  preview: ProductMediaFragment[];
+  onDelete: (id: string) => () => void;
+  onEdit: (id: string) => () => void;
 }
 
-const ImageListContainer = SortableContainer<ImageListContainerProps>(
-  ({ items, preview, onImageDelete, onImageEdit, ...props }) => (
+const MediaListContainer = SortableContainer<MediaListContainerProps>(
+  ({ media, preview, onDelete, onEdit, ...props }) => (
     <div {...props}>
-      {items.map((image, index) => (
-        <SortableImage
+      {media.map((mediaObj, index) => (
+        <SortableMedia
           key={`item-${index}`}
           index={index}
-          image={image}
-          onImageEdit={onImageEdit ? onImageEdit(image.id) : null}
-          onImageDelete={onImageDelete(image.id)}
+          media={mediaObj}
+          onEdit={onEdit ? onEdit(mediaObj.id) : null}
+          onDelete={onDelete(mediaObj.id)}
         />
       ))}
       {preview
         .sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
-        .map(image => (
-          <ImageTile loading={true} image={image} />
+        .map((mediaObj, index) => (
+          <MediaTile loading={true} media={mediaObj} key={index} />
         ))}
     </div>
   )
 );
 
-const ProductImages: React.FC<ProductImagesProps> = props => {
+interface ProductMediaProps {
+  placeholderImage?: string;
+  media: ProductMediaFragment[];
+  loading?: boolean;
+  onImageDelete: (id: string) => () => void;
+  onImageEdit: (id: string) => () => void;
+  onImageReorder?: ReorderAction;
+  onImageUpload(file: File);
+  openMediaUrlModal();
+}
+
+const ProductMedia: React.FC<ProductMediaProps> = props => {
   const {
-    images,
+    media,
     placeholderImage,
-    loading,
     onImageEdit,
     onImageDelete,
     onImageReorder,
-    onImageUpload
+    onImageUpload,
+    openMediaUrlModal
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const upload = React.useRef(null);
+  const imagesUpload = React.useRef<HTMLInputElement>(null);
+  const anchor = React.useRef<HTMLButtonElement>();
   const [imagesToUpload, setImagesToUpload] = React.useState<
-    ProductDetails_product_images[]
+    ProductMediaFragment[]
   >([]);
+  const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
 
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () =>
@@ -192,11 +206,13 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
           setImagesToUpload(prevImagesToUpload => [
             ...prevImagesToUpload,
             {
-              __typename: "ProductImage",
+              __typename: "ProductMedia",
               alt: "",
               id: "",
               sortOrder: fileIndex,
-              url: event.target.result as string
+              type: ProductMediaType.IMAGE,
+              url: event.target.result as string,
+              oembedData: null
             }
           ]);
         };
@@ -208,35 +224,41 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
   return (
     <Card className={classes.card}>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Images",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.media)}
         toolbar={
           <>
             <Button
-              onClick={() => upload.current.click()}
-              disabled={loading}
+              onClick={() => setPopperOpenStatus(true)}
               variant="text"
               color="primary"
               data-test="button-upload-image"
+              ref={anchor}
             >
-              {intl.formatMessage(commonMessages.uploadImage)}
+              {intl.formatMessage(messages.upload)}
             </Button>
+
+            <ProductMediaPopper
+              anchorRef={anchor.current}
+              imagesUploadRef={imagesUpload.current}
+              setPopperStatus={setPopperOpenStatus}
+              popperStatus={popperOpenStatus}
+              openMediaUrlModal={openMediaUrlModal}
+            />
+
             <input
               className={classes.fileField}
               id="fileUpload"
               onChange={event => handleImageUpload(event.target.files)}
               multiple
               type="file"
-              ref={upload}
+              ref={imagesUpload}
               accept="image/*"
             />
           </>
         }
       />
       <div className={classes.imageGridContainer}>
-        {images === undefined ? (
+        {media === undefined ? (
           <CardContent>
             <div className={classes.root}>
               <div className={classes.imageContainer}>
@@ -244,7 +266,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
               </div>
             </div>
           </CardContent>
-        ) : images.length > 0 ? (
+        ) : media.length > 0 ? (
           <>
             <ImageUpload
               className={classes.imageUpload}
@@ -256,19 +278,19 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
             >
               {({ isDragActive }) => (
                 <CardContent>
-                  <ImageListContainer
+                  <MediaListContainer
                     distance={20}
                     helperClass="dragged"
                     axis="xy"
-                    items={images}
+                    media={media}
                     preview={imagesToUpload}
                     onSortEnd={onImageReorder}
                     className={classNames({
                       [classes.root]: true,
                       [classes.rootDragActive]: isDragActive
                     })}
-                    onImageDelete={onImageDelete}
-                    onImageEdit={onImageEdit}
+                    onDelete={onImageDelete}
+                    onEdit={onImageEdit}
                   />
                 </CardContent>
               )}
@@ -281,5 +303,5 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
     </Card>
   );
 };
-ProductImages.displayName = "ProductImages";
-export default ProductImages;
+ProductMedia.displayName = "ProductMedia";
+export default ProductMedia;
