@@ -201,6 +201,9 @@ export const productFragmentDetails = gql`
       sku
       name
       margin
+      media {
+        url(size: 200)
+      }
       stocks {
         ...StockFragment
       }

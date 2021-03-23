@@ -22,12 +22,8 @@ export const channelFragment = gql`
 
 export const channelDetailsFragment = gql`
   ${channelFragment}
-  ${shippingZoneFragment}
   fragment ChannelDetailsFragment on Channel {
     ...ChannelFragment
     hasOrders
-    shippingZones {
-      ...ShippingZoneFragment
-    }
   }
 `;

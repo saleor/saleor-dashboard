@@ -180,6 +180,11 @@ export interface ProductCreate_productCreate_product_collections {
   name: string;
 }
 
+export interface ProductCreate_productCreate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductCreate_productCreate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -226,6 +231,7 @@ export interface ProductCreate_productCreate_product_variants {
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductCreate_productCreate_product_variants_media[] | null;
   stocks: (ProductCreate_productCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductCreate_productCreate_product_variants_channelListings[] | null;

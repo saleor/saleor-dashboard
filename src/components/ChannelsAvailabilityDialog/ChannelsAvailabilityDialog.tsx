@@ -1,8 +1,11 @@
 import { Channel } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { ChannelsAvailabilityContent } from "@saleor/components/ChannelsAvailabilityContent";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { filter } from "fuzzaldrin";
 import React from "react";
+
+import ChannelsAvailabilityContent from "../ChannelsAvailabilityContent";
+import ChannelsAvailabilityContentWrapper from "../ChannelsAvailabilityContent/ChannelsAvailabilityContentWrapper";
 
 export interface ChannelsAvailabilityDialogProps {
   isSelected: (option: Channel) => boolean;
@@ -23,34 +26,49 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   isSelected,
   channels,
   confirmButtonState,
-  contentType = "",
+  contentType,
   disabled,
   open,
   onClose,
   onChange,
   onConfirm,
-  selected = 0,
+  selected,
   title,
   toggleAll
-}) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    open={open}
-    onClose={onClose}
-    onConfirm={onConfirm}
-    title={title}
-    disabled={disabled}
-  >
-    <ChannelsAvailabilityContent
-      channels={channels}
+}) => {
+  const [query, onQueryChange] = React.useState("");
+  const filteredChannels = filter(channels, query, { key: "name" });
+
+  const handleToggleAll = () => toggleAll(channels, selected);
+
+  const hasAllSelected = selected === channels.length;
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      open={open}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      title={title}
       disabled={disabled}
-      contentType={contentType}
-      isSelected={isSelected}
-      selected={selected}
-      toggleAll={toggleAll}
-      onChange={onChange}
-    />
-  </ActionDialog>
-);
-ChannelsAvailabilityDialog.displayName = "ChannelsAvailabilityDialog";
+    >
+      <ChannelsAvailabilityContentWrapper
+        hasAnyChannelsToDisplay={!!filteredChannels.length}
+        hasAllSelected={hasAllSelected}
+        query={query}
+        onQueryChange={onQueryChange}
+        toggleAll={handleToggleAll}
+        contentType={contentType}
+        disabled={disabled}
+      >
+        <ChannelsAvailabilityContent
+          filteredChannels={filteredChannels}
+          isChannelSelected={isSelected}
+          onChange={onChange}
+        />
+      </ChannelsAvailabilityContentWrapper>
+    </ActionDialog>
+  );
+};
+
 export default ChannelsAvailabilityDialog;

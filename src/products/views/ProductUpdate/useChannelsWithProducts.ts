@@ -1,34 +1,39 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
-import { ProductUrlDialog } from "@saleor/products/urls";
+import reduce from "lodash-es/reduce";
 
 import {
+  CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
   ChannelsWithVariantsData,
   ChannelWithVariantData,
-  initialChannelWithVariantData
+  initialChannelWithVariantData,
+  UseChannelsWithProductVariants,
+  UseChannelsWithProductVariantsProps
 } from "./types";
-import { extractVariantsForChannel } from "./utils";
+import {
+  areAllChannelVariantsSelected,
+  extractVariantsIdsForChannel,
+  getChannelVariantToggleData,
+  getChannelWithAddedVariantData,
+  getChannelWithRemovedVariantData
+} from "./utils";
 
 const useChannelsWithProductVariants = ({
   channels,
   variants,
   openModal,
-  closeModal
-}: {
-  channels: Channels_channels[];
-  variants: ProductDetails_product_variants[];
-  action: ProductUrlDialog;
-  closeModal;
-  openModal;
-}) => {
+  closeModal,
+  action
+}: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
   const initialParsedChannelsWithVariantsData: ChannelsWithVariantsData = channels?.reduce(
     (result: ChannelsWithVariantsData, currentChannel) => ({
       ...result,
       [currentChannel.id]: {
-        selecedVariants: extractVariantsForChannel(variants, currentChannel.id),
-        ...initialChannelWithVariantData
-      }
+        ...initialChannelWithVariantData,
+        selecedVariants: extractVariantsIdsForChannel(
+          variants,
+          currentChannel.id
+        )
+      } as ChannelWithVariantData
     }),
     {}
   );
@@ -37,33 +42,72 @@ const useChannelsWithProductVariants = ({
     ChannelsWithVariantsData
   >(initialParsedChannelsWithVariantsData);
 
-  const getChannelWithAddedVariantData = (
-    {
-      selectedVariants,
-      variantsIdsToAdd,
-      variantsIdsToRemove
-    }: ChannelWithVariantData,
-    channelId: string,
-    variantId: string
-  ) => ({
-    [channelId]: {
-      hasChanged: true,
-      variantsIdsToAdd: getUpdatedIds // needs merge with ma branch
-    }
-  });
-
-  const handleAddVariant = (channelId: string) => (variantId: string) =>
+  const handleAddVariant = (channelId: string, variantId: string) =>
     setChannelsWithVariants({
       ...channelsWithVariants,
-      ...getChannelWithAddedVariantData(
-        channelsWithVariants[channelId],
+      ...getChannelWithAddedVariantData({
+        channelWithVariantsData: channelsWithVariants[channelId],
         channelId,
         variantId
-      )
+      })
     });
 
+  const handleRemoveVariant = (channelId: string, variantId: string) =>
+    setChannelsWithVariants({
+      ...channelsWithVariants,
+      ...getChannelWithRemovedVariantData({
+        channelWithVariantsData: channelsWithVariants[channelId],
+        channelId,
+        variantId
+      })
+    });
+
+  const toggleAllChannelVariants = (channelId: string) => () => {
+    const isChannelSelected = areAllChannelVariantsSelected(
+      variants,
+      channelsWithVariants[channelId]
+    );
+
+    setChannelsWithVariants({
+      ...channelsWithVariants,
+      [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
+    });
+  };
+
+  const toggleAllChannels = () => {
+    const updatedData: ChannelsWithVariantsData = reduce(
+      channelsWithVariants,
+      (result, channelData, channelId) => {
+        const isChannelSelected = areAllChannelVariantsSelected(
+          variants,
+          channelData
+        );
+
+        return {
+          ...result,
+          [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
+        };
+      },
+      {}
+    );
+
+    setChannelsWithVariants(updatedData);
+  };
+
+  const handleModalOpen = () =>
+    openModal(CHANNELS_AVAILIABILITY_MODAL_SELECTOR);
+
+  const isModalOpen = action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR;
+
   return {
-    addVariant: handleAddVariant
+    channelsWithVariants,
+    addVariantToChannel: handleAddVariant,
+    removeVariantFromChannel: handleRemoveVariant,
+    onChannelsAvailiabilityModalOpen: handleModalOpen,
+    onChannelsAvailiabilityModalClose: closeModal,
+    isChannelsAvailabilityModalOpen: isModalOpen,
+    toggleAllChannelVariants,
+    toggleAllChannels
   };
 };
 

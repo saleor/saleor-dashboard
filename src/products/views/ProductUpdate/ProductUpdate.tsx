@@ -12,7 +12,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
+import ChannelsWithVariantsAvailabilityDialog from "@saleor/components/ChannelsWithVariantsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -246,7 +246,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     openModal
   });
 
-  useChannelsWithProductVariants({
+  const channelsWithVariantsProps = useChannelsWithProductVariants({
     channels: channelsData?.channels,
     variants: product?.variants,
     action: params?.action,
@@ -432,48 +432,22 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts
   };
 
-  const allChannelsLol = [
-    {
-      channel: {
-        id: "1",
-        name: "First Channel"
-      }
-    },
-    {
-      channel: {
-        id: "2",
-        name: "Second Channel"
-      }
-    }
-  ];
-
-  //remove later
-  if (!channelsData) {
-    return null;
-  }
-
   return (
     <>
       <WindowTitle title={data?.product?.name} />
-      {/* {!!allChannels?.length && ( */}
-      {/* {!!allChannelsLol?.length && (
-        <ChannelsAvailabilityDialog
-          isSelected={isChannelSelected}
+      {!!allChannels?.length && (
+        <ChannelsWithVariantsAvailabilityDialog
+          {...channelsWithVariantsProps}
+          channels={allChannels}
+          variants={product?.variants}
           disabled={!channelListElements.length}
-          channels={allChannelsLol}
-          // channels={allChannels}
-          onChange={channelsToggle}
-          onClose={handleChannelsModalClose}
-          open={isChannelsModalOpen}
+          confirmButtonState="default"
+          onConfirm={handleChannelsConfirm}
           title={intl.formatMessage({
             defaultMessage: "Manage Products Channel Availability"
           })}
-          confirmButtonState="default"
-          selected={channelListElements.length}
-          onConfirm={handleChannelsConfirm}
-          toggleAll={toggleAllChannels}
         />
-      )} */}
+      )}
       <ProductUpdatePage
         allChannelsCount={allChannels?.length}
         hasChannelChanged={
