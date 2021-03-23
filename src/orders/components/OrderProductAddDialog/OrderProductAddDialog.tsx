@@ -189,9 +189,8 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose: () => setVariants([])
   });
 
-  const productChoices = products.filter(
-    product => product.variants?.length > 0
-  );
+  const productChoices =
+    products?.filter(product => product.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
         product.variants.map(variant => isVariantSelected(variant, variants))
