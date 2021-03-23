@@ -8,7 +8,7 @@ export function createWaitingForCaptureOrder(
   shippingMethodId
 ) {
   let checkout;
-  return createCheckout(channelSlug, email, variantsList)
+  return createCheckout({ channelSlug, email, variantsList })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
@@ -17,6 +17,27 @@ export function createWaitingForCaptureOrder(
     .then(() => checkoutRequest.completeCheckout(checkout.id))
     .then(() => checkout);
 }
+export function createCheckoutWithVoucher({
+  channelSlug,
+  email = "email@example.com",
+  variantsList,
+  address,
+  shippingMethodId,
+  voucherCode,
+  auth
+}) {
+  let checkout;
+  return createCheckout({ channelSlug, email, variantsList, address, auth })
+    .then(checkoutResp => {
+      checkout = checkoutResp;
+      checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
+    })
+    .then(() => {
+      checkoutRequest.addVoucher(checkout.id, voucherCode);
+    })
+    .its("body.data.checkoutAddPromoCode");
+}
+
 export function createReadyToFulfillOrder(
   customerId,
   shippingMethodId,
@@ -27,21 +48,55 @@ export function createReadyToFulfillOrder(
   return createDraftOrder(customerId, shippingMethodId, channelId)
     .then(orderResp => {
       order = orderResp;
-      variantsList.forEach(variantElement => {
-        orderRequest.addProductToOrder(order.id, variantElement.id);
-      });
+      assignVariantsToOrder(order, variantsList);
     })
     .then(() => orderRequest.markOrderAsPaid(order.id))
     .then(() => orderRequest.completeOrder(order.id));
 }
+
+export function createOrder({
+  customerId,
+  shippingMethodId,
+  channelId,
+  variantsList
+}) {
+  let order;
+  return createDraftOrder(customerId, shippingMethodId, channelId)
+    .then(orderResp => {
+      order = orderResp;
+      assignVariantsToOrder(order, variantsList);
+    })
+    .then(() => orderRequest.completeOrder(order.id))
+    .then(() => order);
+}
+
+function assignVariantsToOrder(order, variantsList) {
+  variantsList.forEach(variantElement => {
+    orderRequest.addProductToOrder(order.id, variantElement.id);
+  });
+}
+
 export function createDraftOrder(customerId, shippingMethodId, channelId) {
   return orderRequest
     .createDraftOrder(customerId, shippingMethodId, channelId)
     .its("body.data.draftOrderCreate.order");
 }
-export function createCheckout(channelSlug, email, variantsList) {
+export function createCheckout({
+  channelSlug,
+  email,
+  variantsList,
+  address,
+  auth
+}) {
   return checkoutRequest
-    .createCheckout(channelSlug, email, 1, variantsList)
+    .createCheckout({
+      channelSlug,
+      email,
+      productQuantity: 1,
+      variantsList,
+      address,
+      auth
+    })
     .its("body.data.checkoutCreate.checkout");
 }
 export function addPayment(checkoutId) {

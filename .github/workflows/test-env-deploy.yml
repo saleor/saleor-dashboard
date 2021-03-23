@@ -59,7 +59,7 @@ jobs:
       - name: Run build
         env:
           # Use custom API_URI or the default one
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://master.staging.saleor.cloud/graphql/' }}
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
           APP_MOUNT_URI: /
           STATIC_URL: /
         run: |

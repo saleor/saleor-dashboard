@@ -41,7 +41,7 @@ const props: ProductUpdatePageProps = {
   fetchMoreCollections: fetchMoreProps,
   hasChannelChanged: false,
   header: product.name,
-  images: product.images,
+  media: product.media,
   onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
   onChannelsChange: () => undefined,
@@ -49,6 +49,7 @@ const props: ProductUpdatePageProps = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
+  onMediaUrlUpload: () => undefined,
   onSetDefaultVariant: () => undefined,
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
@@ -72,7 +73,7 @@ storiesOf("Views / Products / Product edit", module)
   .addDecorator(Decorator)
   .add("when data is fully loaded", () => <ProductUpdatePage {...props} />)
   .add("when product has no images", () => (
-    <ProductUpdatePage {...props} images={[]} />
+    <ProductUpdatePage {...props} media={[]} />
   ))
   .add("when product has no variants", () => (
     <ProductUpdatePage
@@ -92,7 +93,7 @@ storiesOf("Views / Products / Product edit", module)
       variants={undefined}
       product={undefined}
       collections={undefined}
-      images={undefined}
+      media={undefined}
     />
   ))
   .add("no variants", () => (

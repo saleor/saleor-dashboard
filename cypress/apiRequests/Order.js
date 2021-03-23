@@ -35,6 +35,7 @@ export function createDraftOrder(customerId, shippingMethodId, channelId) {
       }
       order{
         id
+        number
       }
     }
   }`;

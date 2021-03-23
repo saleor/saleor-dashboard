@@ -7,11 +7,11 @@ import {
   assignProducts,
   createSale,
   discountOptions
-} from "../../steps/salesSteps";
+} from "../../steps/discounts/salesSteps";
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../utils/discounts/salesUtils";
 import * as productsUtils from "../../utils/productsUtils";
-import { deleteSalesStartsWith } from "../../utils/salesUtils";
 import {
   createShipping,
   deleteShippingStartsWith

@@ -143,6 +143,7 @@ export const collection: (
   backgroundImage: {
     __typename: "Image",
     alt: "Alt text",
+    oembedData: "{}",
     url: placeholderCollectionImage
   },
   channelListings: [

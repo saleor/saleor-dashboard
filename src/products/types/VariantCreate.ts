@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductVariantCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
@@ -121,10 +121,12 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   values: (VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_values | null)[];
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_images {
-  __typename: "ProductImage";
+export interface VariantCreate_productVariantCreate_productVariant_media {
+  __typename: "ProductMedia";
   id: string;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_defaultVariant {
@@ -132,12 +134,14 @@ export interface VariantCreate_productVariantCreate_productVariant_product_defau
   id: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_product_images {
-  __typename: "ProductImage";
+export interface VariantCreate_productVariantCreate_productVariant_product_media {
+  __typename: "ProductMedia";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_thumbnail {
@@ -191,10 +195,12 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
   pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_product_variants_images {
-  __typename: "ProductImage";
+export interface VariantCreate_productVariantCreate_productVariant_product_variants_media {
+  __typename: "ProductMedia";
   id: string;
   url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_variants {
@@ -202,14 +208,14 @@ export interface VariantCreate_productVariantCreate_productVariant_product_varia
   id: string;
   name: string;
   sku: string;
-  images: (VariantCreate_productVariantCreate_productVariant_product_variants_images | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantCreate_productVariantCreate_productVariant_product_defaultVariant | null;
-  images: (VariantCreate_productVariantCreate_productVariant_product_images | null)[] | null;
+  media: (VariantCreate_productVariantCreate_productVariant_product_media | null)[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
   channelListings: VariantCreate_productVariantCreate_productVariant_product_channelListings[] | null;
@@ -269,7 +275,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   privateMetadata: (VariantCreate_productVariantCreate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantCreate_productVariantCreate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes[];
-  images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_media[] | null;
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;
   channelListings: VariantCreate_productVariantCreate_productVariant_channelListings[] | null;

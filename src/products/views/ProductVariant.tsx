@@ -43,8 +43,8 @@ import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage
 import {
   useProductVariantReorderMutation,
   useVariantDeleteMutation,
-  useVariantImageAssignMutation,
-  useVariantImageUnassignMutation,
+  useVariantMediaAssignMutation,
+  useVariantMediaUnassignMutation,
   useVariantUpdateMutation
 } from "../mutations";
 import { useProductVariantQuery } from "../queries";
@@ -115,8 +115,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
-  const [assignImage, assignImageOpts] = useVariantImageAssignMutation({});
-  const [unassignImage, unassignImageOpts] = useVariantImageUnassignMutation(
+  const [assignMedia, assignMediaOpts] = useVariantMediaAssignMutation({});
+  const [unassignMedia, unassignMediaOpts] = useVariantMediaUnassignMutation(
     {}
   );
   const [deleteVariant, deleteVariantOpts] = useVariantDeleteMutation({
@@ -130,6 +130,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       navigate(productUrl(productId));
     }
   });
+
   const [updateVariant, updateVariantOpts] = useVariantUpdateMutation({
     onCompleted: data => {
       if (data.productVariantUpdate.errors.length === 0) {
@@ -198,24 +199,24 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     uploadFileOpts.loading ||
     deleteVariantOpts.loading ||
     updateVariantOpts.loading ||
-    assignImageOpts.loading ||
-    unassignImageOpts.loading ||
+    assignMediaOpts.loading ||
+    unassignMediaOpts.loading ||
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
-  const handleImageSelect = (id: string) => () => {
+  const handleMediaSelect = (id: string) => () => {
     if (variant) {
-      if (variant?.images?.map(image => image.id).indexOf(id) !== -1) {
-        unassignImage({
+      if (variant?.media?.map(media_obj => media_obj.id).indexOf(id) !== -1) {
+        unassignMedia({
           variables: {
-            imageId: id,
+            mediaId: id,
             variantId: variant.id
           }
         });
       } else {
-        assignImage({
+        assignMedia({
           variables: {
-            imageId: id,
+            mediaId: id,
             variantId: variant.id
           }
         });
@@ -331,7 +332,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onAdd={() => navigate(productVariantAddUrl(productId))}
         onBack={handleBack}
         onDelete={() => openModal("remove")}
-        onImageSelect={handleImageSelect}
+        onMediaSelect={handleMediaSelect}
         onSubmit={async data => {
           await handleSubmit(data);
           await handleSubmitChannels(data, variant);
