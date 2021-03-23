@@ -162,8 +162,6 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                       </div>
                     }
                     onChange={event => {
-                      console.log("LOOOL");
-                      event.stopPropagation();
                       toggleAllChannelVariants(channelId)();
                     }}
                   />

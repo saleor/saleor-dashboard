@@ -26,9 +26,12 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
         checked={!!checked}
         disabled={disabled}
         name={name}
-        onChange={event =>
-          onChange({ ...event, target: { name, value: !checked } })
-        }
+        onClick={event => {
+          event.stopPropagation();
+          onChange({ ...event, target: { name, value: !checked } });
+        }}
+        // onChange={event =>
+        // }
       />
     }
     label={label}
