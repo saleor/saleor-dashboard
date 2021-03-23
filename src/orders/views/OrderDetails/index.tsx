@@ -601,7 +601,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         />
                       </>
                     )}
-                    {isOrderUnconfirmed && (
+                    {order && isOrderUnconfirmed && (
                       <>
                         <WindowTitle
                           title={intl.formatMessage(
@@ -616,103 +616,115 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             }
                           )}
                         />
-                        <OrderDetailsPage
-                          onOrderReturn={() => navigate(orderReturnPath(id))}
-                          disabled={
-                            updateMetadataOpts.loading ||
-                            updatePrivateMetadataOpts.loading
-                          }
-                          onNoteAdd={variables =>
-                            orderAddNote.mutate({
-                              input: variables,
-                              order: id
-                            })
-                          }
-                          onBack={handleBack}
-                          order={order}
-                          onOrderLineAdd={() => openModal("add-order-line")}
-                          onOrderLineChange={(id, data) =>
-                            orderLineUpdate.mutate({
-                              id,
-                              input: data
-                            })
-                          }
-                          onOrderLineRemove={id =>
-                            orderLineDelete.mutate({ id })
-                          }
-                          onShippingMethodEdit={() =>
-                            openModal("edit-shipping")
-                          }
-                          saveButtonBarState={getMutationState(
-                            updateMetadataOpts.called ||
-                              updatePrivateMetadataOpts.called,
-                            updateMetadataOpts.loading ||
-                              updatePrivateMetadataOpts.loading,
-                            [
-                              ...(updateMetadataOpts.data?.deleteMetadata
-                                .errors || []),
-                              ...(updateMetadataOpts.data?.updateMetadata
-                                .errors || []),
-                              ...(updatePrivateMetadataOpts.data
-                                ?.deletePrivateMetadata.errors || []),
-                              ...(updatePrivateMetadataOpts.data
-                                ?.updatePrivateMetadata.errors || [])
-                            ]
-                          )}
-                          shippingMethods={maybe(
-                            () => data.order.availableShippingMethods,
-                            []
-                          )}
-                          userPermissions={user?.userPermissions || []}
-                          onOrderCancel={() => openModal("cancel")}
-                          onOrderFulfill={() => navigate(orderFulfillUrl(id))}
-                          onFulfillmentCancel={fulfillmentId =>
-                            navigate(
-                              orderUrl(id, {
-                                action: "cancel-fulfillment",
-                                id: fulfillmentId
-                              })
-                            )
-                          }
-                          onFulfillmentTrackingNumberUpdate={fulfillmentId =>
-                            navigate(
-                              orderUrl(id, {
-                                action: "edit-fulfillment",
-                                id: fulfillmentId
-                              })
-                            )
-                          }
-                          onPaymentCapture={() => openModal("capture")}
-                          onPaymentVoid={() => openModal("void")}
-                          onPaymentRefund={() => navigate(orderRefundUrl(id))}
-                          onProductClick={id => () => navigate(productUrl(id))}
-                          onBillingAddressEdit={() =>
-                            openModal("edit-billing-address")
-                          }
-                          onShippingAddressEdit={() =>
-                            openModal("edit-shipping-address")
-                          }
-                          onPaymentPaid={() => openModal("mark-paid")}
-                          onProfileView={() =>
-                            navigate(customerUrl(order.user.id))
-                          }
-                          onInvoiceClick={id =>
-                            window.open(
-                              order.invoices.find(invoice => invoice.id === id)
-                                ?.url,
-                              "_blank"
-                            )
-                          }
-                          onInvoiceGenerate={() =>
-                            orderInvoiceRequest.mutate({
-                              orderId: id
-                            })
-                          }
-                          onInvoiceSend={id =>
-                            openModal("invoice-send", { id })
-                          }
-                          onSubmit={handleSubmit}
-                        />
+                        <OrderDiscountProvider order={order}>
+                          <OrderLineDiscountProvider order={order}>
+                            <OrderDetailsPage
+                              onOrderReturn={() =>
+                                navigate(orderReturnPath(id))
+                              }
+                              disabled={
+                                updateMetadataOpts.loading ||
+                                updatePrivateMetadataOpts.loading
+                              }
+                              onNoteAdd={variables =>
+                                orderAddNote.mutate({
+                                  input: variables,
+                                  order: id
+                                })
+                              }
+                              onBack={handleBack}
+                              order={order}
+                              onOrderLineAdd={() => openModal("add-order-line")}
+                              onOrderLineChange={(id, data) =>
+                                orderLineUpdate.mutate({
+                                  id,
+                                  input: data
+                                })
+                              }
+                              onOrderLineRemove={id =>
+                                orderLineDelete.mutate({ id })
+                              }
+                              onShippingMethodEdit={() =>
+                                openModal("edit-shipping")
+                              }
+                              saveButtonBarState={getMutationState(
+                                updateMetadataOpts.called ||
+                                  updatePrivateMetadataOpts.called,
+                                updateMetadataOpts.loading ||
+                                  updatePrivateMetadataOpts.loading,
+                                [
+                                  ...(updateMetadataOpts.data?.deleteMetadata
+                                    .errors || []),
+                                  ...(updateMetadataOpts.data?.updateMetadata
+                                    .errors || []),
+                                  ...(updatePrivateMetadataOpts.data
+                                    ?.deletePrivateMetadata.errors || []),
+                                  ...(updatePrivateMetadataOpts.data
+                                    ?.updatePrivateMetadata.errors || [])
+                                ]
+                              )}
+                              shippingMethods={maybe(
+                                () => data.order.availableShippingMethods,
+                                []
+                              )}
+                              userPermissions={user?.userPermissions || []}
+                              onOrderCancel={() => openModal("cancel")}
+                              onOrderFulfill={() =>
+                                navigate(orderFulfillUrl(id))
+                              }
+                              onFulfillmentCancel={fulfillmentId =>
+                                navigate(
+                                  orderUrl(id, {
+                                    action: "cancel-fulfillment",
+                                    id: fulfillmentId
+                                  })
+                                )
+                              }
+                              onFulfillmentTrackingNumberUpdate={fulfillmentId =>
+                                navigate(
+                                  orderUrl(id, {
+                                    action: "edit-fulfillment",
+                                    id: fulfillmentId
+                                  })
+                                )
+                              }
+                              onPaymentCapture={() => openModal("capture")}
+                              onPaymentVoid={() => openModal("void")}
+                              onPaymentRefund={() =>
+                                navigate(orderRefundUrl(id))
+                              }
+                              onProductClick={id => () =>
+                                navigate(productUrl(id))}
+                              onBillingAddressEdit={() =>
+                                openModal("edit-billing-address")
+                              }
+                              onShippingAddressEdit={() =>
+                                openModal("edit-shipping-address")
+                              }
+                              onPaymentPaid={() => openModal("mark-paid")}
+                              onProfileView={() =>
+                                navigate(customerUrl(order.user.id))
+                              }
+                              onInvoiceClick={id =>
+                                window.open(
+                                  order.invoices.find(
+                                    invoice => invoice.id === id
+                                  )?.url,
+                                  "_blank"
+                                )
+                              }
+                              onInvoiceGenerate={() =>
+                                orderInvoiceRequest.mutate({
+                                  orderId: id
+                                })
+                              }
+                              onInvoiceSend={id =>
+                                openModal("invoice-send", { id })
+                              }
+                              onSubmit={handleSubmit}
+                            />
+                          </OrderLineDiscountProvider>
+                        </OrderDiscountProvider>
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
                           open={
