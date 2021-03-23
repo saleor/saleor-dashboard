@@ -218,6 +218,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         closeModal();
         reset();
         refetch();
+        limitOpts.refetch();
       }
     }
   });
