@@ -6,15 +6,15 @@ import {
 } from "../../apiRequests/Customer";
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 import { changeChannel } from "../../steps/homePageSteps";
+import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import * as homePageUtils from "../../utils/homePageUtils";
-import * as productsUtils from "../../utils/productsUtils";
-import * as shippingUtils from "../../utils/shippingUtils";
-import { urlList } from "../url/urlList";
 import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder
-} from "../utils/ordersUtils";
+} from "../../utils/ordersUtils";
+import * as productsUtils from "../../utils/productsUtils";
+import * as shippingUtils from "../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {

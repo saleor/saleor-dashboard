@@ -1,7 +1,11 @@
 import { PERMISSIONS } from "./permissions";
-import { ONE_PERMISSION_USERS } from "./users";
+import { ONE_PERMISSION_USERS, TEST_ADMIN_USER } from "./users";
 
 export const PERMISSIONS_OPTIONS = {
+  all: {
+    user: TEST_ADMIN_USER,
+    permissions: Object.values(PERMISSIONS)
+  },
   app: {
     user: ONE_PERMISSION_USERS.app,
     permissions: [PERMISSIONS.app]
@@ -16,10 +20,6 @@ export const PERMISSIONS_OPTIONS = {
   },
   giftCard: {
     user: ONE_PERMISSION_USERS.giftCard
-  },
-  navigation: {
-    user: ONE_PERMISSION_USERS.navigation,
-    permissions: [PERMISSIONS.navigation]
   },
   order: {
     user: ONE_PERMISSION_USERS.order,

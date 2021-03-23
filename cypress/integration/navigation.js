@@ -1,14 +1,17 @@
-import { PERMISSIONS_OPTIONS } from "../Data/permissionsUsers";
+import { PERMISSIONS_OPTIONS } from "../data/permissionsUsers";
 import * as permissionsSteps from "../steps/permissions";
 
-describe("Navigation for users with one permission", () => {
+describe("Navigation for users with different permissions", () => {
   Object.keys(PERMISSIONS_OPTIONS).forEach(key => {
-    it(`should ${key} be enabled`, () => {
+    it(`should navigate as an user with ${key} permission`, () => {
       const permissionOption = PERMISSIONS_OPTIONS[key];
       const permissions = permissionOption.permissions;
       permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
         permissionOption
       );
+      if (key === "all") {
+        return;
+      }
       permissionsSteps
         .getDisplayedSelectors()
         .then(selectors => {

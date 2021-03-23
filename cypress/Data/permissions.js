@@ -23,10 +23,6 @@ export const PERMISSIONS = {
       menuSelectors.DISCOUNTS_MENU_SELECTORS.sales
     ]
   },
-  navigation: {
-    parent: configurationAsParent,
-    permissionSelectors: CONFIGURATION_SELECTORS.navigation
-  },
   order: {
     parent: {
       parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.orders,

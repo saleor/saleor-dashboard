@@ -21,9 +21,7 @@ describe("Displaying welcome message on home page", () => {
     cy.get(HOMEPAGE_SELECTORS.welcomeMessage)
       .invoke("text")
       .then(text => {
-        expect(text).to.contains(
-          `${USER_WITHOUT_NAME.email} ${USER_WITHOUT_NAME.lastName}`
-        );
+        expect(text).to.contains(`${USER_WITHOUT_NAME.email}`);
       });
   });
 });
