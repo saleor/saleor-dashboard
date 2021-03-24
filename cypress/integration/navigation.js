@@ -1,4 +1,4 @@
-import { PERMISSIONS_OPTIONS } from "../data/permissionsUsers";
+import { PERMISSIONS_OPTIONS } from "../Data/permissionsUsers";
 import * as permissionsSteps from "../steps/permissions";
 
 describe("Navigation for users with different permissions", () => {

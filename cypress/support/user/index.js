@@ -1,4 +1,4 @@
-import { TEST_ADMIN_USER } from "../../data/users";
+import { TEST_ADMIN_USER } from "../../Data/users";
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
 
 Cypress.Commands.add("loginUser", () =>
