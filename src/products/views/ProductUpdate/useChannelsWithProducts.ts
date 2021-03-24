@@ -11,6 +11,7 @@ import {
 } from "./types";
 import {
   areAllChannelVariantsSelected,
+  areAnyChannelVariantsSelected,
   extractVariantsIdsForChannel,
   getChannelVariantToggleData,
   getChannelWithAddedVariantData,
@@ -63,8 +64,7 @@ const useChannelsWithProductVariants = ({
     });
 
   const toggleAllChannelVariants = (channelId: string) => () => {
-    const isChannelSelected = areAllChannelVariantsSelected(
-      variants,
+    const isChannelSelected = areAnyChannelVariantsSelected(
       channelsWithVariants[channelId]
     );
 

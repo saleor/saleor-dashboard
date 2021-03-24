@@ -21,14 +21,14 @@ import ControlledCheckbox from "../ControlledCheckbox";
 const useStyles = makeStyles(
   theme => ({
     variantContainer: {
-      padding: theme.spacing(2, 1, 1, 4)
+      padding: theme.spacing(2, 0, 2, 4)
     },
     channelContainer: {
       width: "100%"
     },
     channelCheckboxContainer: {
       width: "100%",
-      paddingBottom: theme.spacing(1)
+      padding: theme.spacing(3, 0)
     },
     channelTitleContainer: {
       display: "flex",
@@ -68,8 +68,9 @@ const useSummaryStyles = makeStyles(
     root: {
       width: "100%",
       border: "none",
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
+      height: theme.spacing(10),
+      paddingRight: theme.spacing(1.5),
+      padding: 0,
       margin: 0,
       minHeight: 0,
 
@@ -143,7 +144,11 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
               expandIcon={<IconChevronDown />}
               classes={summaryClasses}
             >
-              <div className={classes.channelContainer}>
+              <div
+                className={classes.channelContainer}
+                // stop expander when selecting & deselecting channel
+                onClick={event => event.stopPropagation()}
+              >
                 <div className={classes.channelCheckboxContainer}>
                   <ControlledCheckbox
                     checked={isChannelSelected(channelId)}
@@ -161,9 +166,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                         />
                       </div>
                     }
-                    onChange={event => {
-                      toggleAllChannelVariants(channelId)();
-                    }}
+                    onChange={toggleAllChannelVariants(channelId)}
                   />
                 </div>
                 <Divider />

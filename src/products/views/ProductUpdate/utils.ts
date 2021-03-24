@@ -75,15 +75,15 @@ export const getChannelVariantToggleData = (
   return isSelected
     ? {
         hasChanged: true,
-        selectedVariantsIds: allProductVariantsIds,
-        variantsIdsToAdd: allProductVariantsIds,
-        variantsIdsToRemove: []
-      }
-    : {
-        hasChanged: true,
         selectedVariantsIds: [],
         variantsIdsToAdd: [],
         variantsIdsToRemove: allProductVariantsIds
+      }
+    : {
+        hasChanged: true,
+        selectedVariantsIds: allProductVariantsIds,
+        variantsIdsToAdd: allProductVariantsIds,
+        variantsIdsToRemove: []
       };
 };
 

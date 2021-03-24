@@ -3,7 +3,6 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { UseChannelsWithProductVariants } from "@saleor/products/views/ProductUpdate/types";
 import {
-  areAllChannelVariantsSelected,
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
