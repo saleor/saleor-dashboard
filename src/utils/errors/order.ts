@@ -34,6 +34,10 @@ const messages = defineMessages({
     defaultMessage: "Only pre-authorized payments can be captured",
     description: "error message"
   },
+  insufficientStock: {
+    defaultMessage: "Cannot change the quantity because of insufficient stock",
+    description: "error message"
+  },
   noShippingAddress: {
     defaultMessage:
       "Cannot choose a shipping method for an order without the shipping address",
@@ -79,6 +83,8 @@ function getOrderErrorMessage(
         return intl.formatMessage(commonErrorMessages.graphqlError);
       case OrderErrorCode.INVALID:
         return intl.formatMessage(commonErrorMessages.invalid);
+      case OrderErrorCode.INSUFFICIENT_STOCK:
+        return intl.formatMessage(messages.insufficientStock);
       case OrderErrorCode.NOT_EDITABLE:
         return intl.formatMessage(messages.notEditable);
       case OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS:

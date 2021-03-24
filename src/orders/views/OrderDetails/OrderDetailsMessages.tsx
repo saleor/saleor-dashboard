@@ -1,6 +1,7 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -205,6 +206,13 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
           defaultMessage: "Order line updated"
         })
       });
+    } else {
+      errs.forEach(error =>
+        pushMessage({
+          status: "error",
+          text: getOrderErrorMessage(error, intl)
+        })
+      );
     }
   };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {

@@ -6645,6 +6645,10 @@
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
   },
+  "src_dot_utils_dot_errors_dot_insufficientStock": {
+    "context": "error message",
+    "string": "Cannot change the quantity because of insufficient stock"
+  },
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"
   },
