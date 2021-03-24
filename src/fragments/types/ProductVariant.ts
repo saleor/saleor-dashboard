@@ -208,7 +208,7 @@ export interface ProductVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariant_product_defaultVariant | null;
-  media: (ProductVariant_product_media | null)[] | null;
+  media: ProductVariant_product_media[] | null;
   name: string;
   thumbnail: ProductVariant_product_thumbnail | null;
   channelListings: ProductVariant_product_channelListings[] | null;

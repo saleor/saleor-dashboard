@@ -270,7 +270,7 @@ export interface SimpleProductUpdate_productUpdate_product {
   category: SimpleProductUpdate_productUpdate_product_category | null;
   collections: (SimpleProductUpdate_productUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (SimpleProductUpdate_productUpdate_product_media | null)[] | null;
+  media: SimpleProductUpdate_productUpdate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   weight: SimpleProductUpdate_productUpdate_product_weight | null;
@@ -490,7 +490,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   __typename: "Product";
   id: string;
   defaultVariant: SimpleProductUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
-  media: (SimpleProductUpdate_productVariantUpdate_productVariant_product_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
   channelListings: SimpleProductUpdate_productVariantUpdate_productVariant_product_channelListings[] | null;
@@ -773,7 +773,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   __typename: "Product";
   id: string;
   defaultVariant: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_defaultVariant | null;
-  media: (SimpleProductUpdate_productVariantStocksCreate_productVariant_product_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_media[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_thumbnail | null;
   channelListings: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_channelListings[] | null;
@@ -1055,7 +1055,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   __typename: "Product";
   id: string;
   defaultVariant: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_defaultVariant | null;
-  media: (SimpleProductUpdate_productVariantStocksDelete_productVariant_product_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_media[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_thumbnail | null;
   channelListings: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_channelListings[] | null;
@@ -1338,7 +1338,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   __typename: "Product";
   id: string;
   defaultVariant: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
-  media: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_media | null)[] | null;
+  media: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
   channelListings: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_channelListings[] | null;

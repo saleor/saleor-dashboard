@@ -208,7 +208,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant | null;
-  media: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media | null)[] | null;
+  media: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media[] | null;
   name: string;
   thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
   channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings[] | null;

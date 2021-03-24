@@ -109,7 +109,7 @@ export interface ProductVariantCreateData_product_variants {
 export interface ProductVariantCreateData_product {
   __typename: "Product";
   id: string;
-  media: (ProductVariantCreateData_product_media | null)[] | null;
+  media: ProductVariantCreateData_product_media[] | null;
   channelListings: ProductVariantCreateData_product_channelListings[] | null;
   name: string;
   productType: ProductVariantCreateData_product_productType;

@@ -144,11 +144,32 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
   value: []
 };
 
+const TEXT_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.TEXT,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "asdfafd",
+        name: "Some text",
+        reference: null,
+        slug: "text"
+      }
+    ]
+  },
+  id: "asdfafd",
+  label: "Text Attribute",
+  value: []
+};
+
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
   FILE_ATTRIBUTE,
-  REFERENCE_ATTRIBUTE
+  REFERENCE_ATTRIBUTE,
+  TEXT_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -174,5 +195,9 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
       REFERENCE_ATTRIBUTE.data.values[1].id,
       REFERENCE_ATTRIBUTE.data.values[2].id
     ]
+  },
+  {
+    ...TEXT_ATTRIBUTE,
+    value: [TEXT_ATTRIBUTE.data.values[0].name]
   }
 ];

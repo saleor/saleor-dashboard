@@ -214,7 +214,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_produc
   __typename: "Product";
   id: string;
   defaultVariant: VariantMediaUnassign_variantMediaUnassign_productVariant_product_defaultVariant | null;
-  media: (VariantMediaUnassign_variantMediaUnassign_productVariant_product_media | null)[] | null;
+  media: VariantMediaUnassign_variantMediaUnassign_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantMediaUnassign_variantMediaUnassign_productVariant_product_thumbnail | null;
   channelListings: VariantMediaUnassign_variantMediaUnassign_productVariant_product_channelListings[] | null;

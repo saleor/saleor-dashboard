@@ -269,7 +269,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product {
   category: ProductMediaUpdate_productMediaUpdate_product_category | null;
   collections: (ProductMediaUpdate_productMediaUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductMediaUpdate_productMediaUpdate_product_media | null)[] | null;
+  media: ProductMediaUpdate_productMediaUpdate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductMediaUpdate_productMediaUpdate_product_variants | null)[] | null;
   weight: ProductMediaUpdate_productMediaUpdate_product_weight | null;

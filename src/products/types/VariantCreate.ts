@@ -215,7 +215,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantCreate_productVariantCreate_productVariant_product_defaultVariant | null;
-  media: (VariantCreate_productVariantCreate_productVariant_product_media | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
   channelListings: VariantCreate_productVariantCreate_productVariant_product_channelListings[] | null;
