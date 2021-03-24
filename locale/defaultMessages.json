@@ -4212,19 +4212,23 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
-    "context": "window title",
-    "string": "Order #{orderNumber}"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_694622335": {
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
+    "string": "Fulfillment successfully cancelled"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderDraftDetails_dot_694622335": {
     "context": "window title",
     "string": "Draft Order #{orderNumber}"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
-    "string": "Fulfillment successfully cancelled"
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderNormalDetails_dot_580490159": {
+    "context": "window title",
+    "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderUnconfirmedDetails_dot_580490159": {
+    "context": "window title",
+    "string": "Order #{orderNumber}"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1161115149": {
     "context": "dialog header",
