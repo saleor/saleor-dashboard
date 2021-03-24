@@ -39,7 +39,7 @@ function navigateToAvailablePageAndCheckIfDisplayed(
       expect(isDisplayed).to.be.true;
     });
 }
-export function isElementDisplayed(element = SHARED_ELEMENTS.title) {
+export function isElementDisplayed(element = SHARED_ELEMENTS.header) {
   return cy.get("body").then(body => body.find(element).length > 0);
 }
 export function getDisplayedSelectors(selectors = LEFT_MENU_SELECTORS) {

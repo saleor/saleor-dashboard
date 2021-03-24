@@ -1,3 +1,3 @@
 export const SHARED_ELEMENTS = {
-  title: "[class*='title']"
+  header: "[data-test-id='page-header']"
 };

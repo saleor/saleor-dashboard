@@ -6,6 +6,7 @@ describe("Navigation for users with different permissions", () => {
     it(`should navigate as an user with ${key} permission`, () => {
       const permissionOption = PERMISSIONS_OPTIONS[key];
       const permissions = permissionOption.permissions;
+      cy.clearSessionData();
       permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
         permissionOption
       );
