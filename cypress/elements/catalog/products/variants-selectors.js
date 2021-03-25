@@ -2,8 +2,6 @@ export const VARIANTS_SELECTORS = {
   attributeCheckbox: "[name*='value:']",
   valueContainer: "[data-test-id='value-container']",
   nextButton: "[class*='MuiButton-containedPrimary']",
-  priceInput: "[name*='channel-price']",
-  costPriceInput: "[name*='channel-costPrice']",
   warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "input[class*='MuiInputBase'][type='text']",
   attributeSelector: "[data-test='attribute-value']",

@@ -8,7 +8,7 @@ import {
 import {
   createFirstVariant,
   createVariant
-} from "../../steps/products/VariantsSteps";
+} from "../../steps/catalog/products/VariantsSteps";
 import { urlList } from "../../url/urlList";
 import {
   deleteChannelsStartsWith,

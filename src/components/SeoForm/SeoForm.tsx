@@ -163,7 +163,12 @@ const SeoForm: React.FC<SeoFormProps> = props => {
           defaultMessage: "Search Engine Preview"
         })}
         toolbar={
-          <Button color="primary" variant="text" onClick={toggleExpansion}>
+          <Button
+            color="primary"
+            variant="text"
+            onClick={toggleExpansion}
+            data-test-id="edit-seo"
+          >
             <FormattedMessage
               defaultMessage="Edit website SEO"
               description="button"

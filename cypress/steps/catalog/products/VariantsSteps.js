@@ -1,18 +1,17 @@
-import { PRODUCTS_SELECTORS } from "../../elements/catalog/products/product-selectors";
-import { VARIANTS_SELECTORS } from "../../elements/catalog/variants-selectors";
+import { PRICE_LIST } from "../../../elements/catalog/products/price-list";
+import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
+import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
+import { fillUpPriceList } from "./priceList";
 
 export function createFirstVariant({ sku, warehouseId, price, attribute }) {
-  cy.get(PRODUCTS_SELECTORS.addVariantsButton).click();
+  cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   cy.get(VARIANTS_SELECTORS.valueContainer)
     .contains(attribute)
     .find(VARIANTS_SELECTORS.attributeCheckbox)
     .click()
     .get(VARIANTS_SELECTORS.nextButton)
-    .click()
-    .get(VARIANTS_SELECTORS.priceInput)
-    .each($priceInput => {
-      cy.wrap($priceInput).type(price);
-    });
+    .click();
+  fillUpPriceList(price);
   cy.get(`[name*='${warehouseId}']`)
     .click()
     .get(VARIANTS_SELECTORS.nextButton)
@@ -30,16 +29,16 @@ export function createVariant({
   price,
   costPrice = price
 }) {
-  cy.get(PRODUCTS_SELECTORS.addVariantsButton)
+  cy.get(PRODUCT_DETAILS.addVariantsButton)
     .click()
     .get(VARIANTS_SELECTORS.attributeSelector)
     .click()
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
     .click()
-    .get(VARIANTS_SELECTORS.priceInput)
+    .get(PRICE_LIST.priceInput)
     .type(price)
-    .get(VARIANTS_SELECTORS.costPriceInput)
+    .get(PRICE_LIST.costPriceInput)
     .type(costPrice)
     .get(VARIANTS_SELECTORS.skuInputInAddVariant)
     .type(sku)

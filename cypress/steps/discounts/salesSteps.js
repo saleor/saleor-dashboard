@@ -1,4 +1,4 @@
-import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/assign-products";
+import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/products/assign-products";
 import { SALES_SELECTORS } from "../../elements/discounts/sales";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { formatDate } from "../../support/formatDate";

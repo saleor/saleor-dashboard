@@ -2,5 +2,7 @@ export const BUTTON_SELECTORS = {
   back: '[data-test="back"]',
   submit: '[data-test="submit"]',
   confirm: '[data-test="button-bar-confirm"]',
-  checkbox: "[type='checkbox']"
+  goBackButton: "[data-test-id='app-header-back-button']",
+  checkbox: "[type='checkbox']",
+  selectOption: "[data-test*='select-option']"
 };
