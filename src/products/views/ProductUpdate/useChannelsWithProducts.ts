@@ -1,21 +1,21 @@
+import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import reduce from "lodash-es/reduce";
+import { useEffect, useState } from "react";
 
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
   ChannelsWithVariantsData,
-  ChannelWithVariantData,
-  initialChannelWithVariantData,
   UseChannelsWithProductVariants,
   UseChannelsWithProductVariantsProps
 } from "./types";
 import {
   areAllChannelVariantsSelected,
   areAnyChannelVariantsSelected,
-  extractVariantsIdsForChannel,
   getChannelVariantToggleData,
   getChannelWithAddedVariantData,
-  getChannelWithRemovedVariantData
+  getChannelWithRemovedVariantData,
+  getParsedChannelsWithVariantsDataFromChannels
 } from "./utils";
 
 const useChannelsWithProductVariants = ({
@@ -25,39 +25,43 @@ const useChannelsWithProductVariants = ({
   closeModal,
   action
 }: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
-  const initialParsedChannelsWithVariantsData: ChannelsWithVariantsData = channels?.reduce(
-    (result: ChannelsWithVariantsData, currentChannel) => ({
-      ...result,
-      [currentChannel.id]: {
-        ...initialChannelWithVariantData,
-        selecedVariants: extractVariantsIdsForChannel(
-          variants,
-          currentChannel.id
-        )
-      } as ChannelWithVariantData
-    }),
-    {}
+  const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
+    channels
   );
 
-  const [channelsWithVariants, setChannelsWithVariants] = useStateFromProps<
-    ChannelsWithVariantsData
-  >(initialParsedChannelsWithVariantsData);
+  const [
+    channelsWithVariantsData,
+    setChannelsWithVariantsData
+  ] = useStateFromProps<ChannelsWithVariantsData>(
+    initialChannelsWithVariantsData
+  );
+
+  const [hasChanged, setHasChanged] = useState(false);
+
+  const handleSetHasChanged = () => setHasChanged(true);
+
+  useEffect(handleSetHasChanged, [channelsWithVariantsData]);
+
+  const handleSetChannelsWithVariantsData = (channels: ChannelData[]) =>
+    setChannelsWithVariantsData(
+      getParsedChannelsWithVariantsDataFromChannels(channels)
+    );
 
   const handleAddVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariants({
-      ...channelsWithVariants,
+    setChannelsWithVariantsData({
+      ...channelsWithVariantsData,
       ...getChannelWithAddedVariantData({
-        channelWithVariantsData: channelsWithVariants[channelId],
+        channelWithVariantsData: channelsWithVariantsData[channelId],
         channelId,
         variantId
       })
     });
 
   const handleRemoveVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariants({
-      ...channelsWithVariants,
+    setChannelsWithVariantsData({
+      ...channelsWithVariantsData,
       ...getChannelWithRemovedVariantData({
-        channelWithVariantsData: channelsWithVariants[channelId],
+        channelWithVariantsData: channelsWithVariantsData[channelId],
         channelId,
         variantId
       })
@@ -65,18 +69,18 @@ const useChannelsWithProductVariants = ({
 
   const toggleAllChannelVariants = (channelId: string) => () => {
     const isChannelSelected = areAnyChannelVariantsSelected(
-      channelsWithVariants[channelId]
+      channelsWithVariantsData[channelId]
     );
 
-    setChannelsWithVariants({
-      ...channelsWithVariants,
+    setChannelsWithVariantsData({
+      ...channelsWithVariantsData,
       [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
     });
   };
 
   const toggleAllChannels = () => {
     const updatedData: ChannelsWithVariantsData = reduce(
-      channelsWithVariants,
+      channelsWithVariantsData,
       (result, channelData, channelId) => {
         const isChannelSelected = areAllChannelVariantsSelected(
           variants,
@@ -91,8 +95,10 @@ const useChannelsWithProductVariants = ({
       {}
     );
 
-    setChannelsWithVariants(updatedData);
+    setChannelsWithVariantsData(updatedData);
   };
+
+  const onChannelsWithVariantsDataConfirm = () => closeModal();
 
   const handleModalOpen = () =>
     openModal(CHANNELS_AVAILIABILITY_MODAL_SELECTOR);
@@ -100,14 +106,17 @@ const useChannelsWithProductVariants = ({
   const isModalOpen = action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR;
 
   return {
-    channelsWithVariants,
+    channelsWithVariantsData,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
     onChannelsAvailiabilityModalOpen: handleModalOpen,
     onChannelsAvailiabilityModalClose: closeModal,
     isChannelsAvailabilityModalOpen: isModalOpen,
+    haveChannelsWithVariantsDataChanged: hasChanged,
+    setChannelsWithVariantsData: handleSetChannelsWithVariantsData,
     toggleAllChannelVariants,
-    toggleAllChannels
+    toggleAllChannels,
+    onChannelsWithVariantsDataConfirm
   };
 };
 

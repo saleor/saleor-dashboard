@@ -17,6 +17,7 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
+import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -51,7 +52,7 @@ import {
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
@@ -75,6 +76,26 @@ import {
   createVariantReorderHandler
 } from "./handlers";
 import useChannelsWithProductVariants from "./useChannelsWithProducts";
+
+const messages = defineMessages({
+  deleteProductDialogTitle: {
+    defaultMessage: "Delete Product",
+    description: "delete product dialog title"
+  },
+  deleteProductDialogSubtitle: {
+    defaultMessage: "Are you sure you want to delete {name}?",
+    description: "delete product dialog subtitle"
+  },
+  deleteVariantDialogTitle: {
+    defaultMessage: "Delete Product Variants",
+    description: "delete variant dialog title"
+  },
+  deleteVariantDialogSubtitle: {
+    defaultMessage:
+      "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}",
+    description: "delete variant dialog subtitle"
+  }
+});
 
 interface ProductUpdateProps {
   id: string;
@@ -227,27 +248,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
-  const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-    product
-  );
   const {
-    channelListElements,
-    channelsToggle,
-    currentChannels,
-    handleChannelsConfirm,
-    handleChannelsModalClose,
-    handleChannelsModalOpen,
-    isChannelSelected,
-    isChannelsModalOpen,
-    setCurrentChannels,
-    toggleAllChannels
-  } = useChannels(productChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
-
-  const channelsWithVariantsProps = useChannelsWithProductVariants({
-    channels: channelsData?.channels,
+    setChannelsWithVariantsData,
+    channelsWithVariantsData,
+    haveChannelsWithVariantsChanged,
+    onChannelsAvailiabilityModalOpen,
+    ...channelsWithVariantsProps
+  } = useChannelsWithProductVariants({
+    channels: allChannels,
     variants: product?.variants,
     action: params?.action,
     openModal,
@@ -256,23 +264,22 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length === 0) {
-        const updatedProductChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-          data.productChannelListingUpdate.product
-        );
-        setCurrentChannels(updatedProductChannelsChoices);
+      if (!!data.productChannelListingUpdate.errors.length) {
+        return;
       }
+
+      setChannelsWithVariantsData(
+        createSortedChannelsDataFromProduct(
+          data.productChannelListingUpdate.product
+        )
+      );
     }
   });
+
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdate({});
-
-  const channelChoices = product?.channelListings.map(listing => ({
-    label: listing.channel.name,
-    value: listing.channel.id
-  }));
 
   const [
     createProductMedia,
@@ -411,53 +418,46 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       ?.errors || [])
   ];
 
-  const fetchMoreCollections = {
-    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchCollectionsOpts.loading,
-    onFetchMore: loadMoreCollections
-  };
-  const fetchMoreCategories = {
-    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchCategoriesOpts.loading,
-    onFetchMore: loadMoreCategories
-  };
-  const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchPagesOpts.loading,
-    onFetchMore: loadMorePages
-  };
-  const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchProductsOpts.loading,
-    onFetchMore: loadMoreProducts
-  };
+  const fetchMoreCollections = getSearchFetchMoreProps(
+    searchCollectionsOpts,
+    loadMoreCollections
+  );
+
+  const fetchMoreCategories = getSearchFetchMoreProps(
+    searchCategoriesOpts,
+    loadMoreCategories
+  );
+
+  const fetchMoreReferencePages = getSearchFetchMoreProps(
+    searchPagesOpts,
+    loadMorePages
+  );
+
+  const fetchMoreReferenceProducts = getSearchFetchMoreProps(
+    searchProductsOpts,
+    loadMoreProducts
+  );
 
   return (
     <>
       <WindowTitle title={data?.product?.name} />
       {!!allChannels?.length && (
         <ChannelsWithVariantsAvailabilityDialog
+          channelsWithVariantsData={channelsWithVariantsData}
+          haveChannelsWithVariantsChanged={haveChannelsWithVariantsChanged}
           {...channelsWithVariantsProps}
           channels={allChannels}
           variants={product?.variants}
-          disabled={!channelListElements.length}
-          confirmButtonState="default"
-          onConfirm={handleChannelsConfirm}
-          title={intl.formatMessage({
-            defaultMessage: "Manage Products Channel Availability"
-          })}
         />
       )}
       <ProductUpdatePage
         allChannelsCount={allChannels?.length}
-        hasChannelChanged={
-          productChannelsChoices?.length !== currentChannels?.length
-        }
+        channels={allChannels}
+        hasChannelChanged={haveChannelsWithVariantsChanged}
         categories={categories}
         collections={collections}
-        currentChannels={currentChannels}
+        channelsWithVariantsData={channelsWithVariantsData}
         defaultWeightUnit={shop?.defaultWeightUnit}
-        channelChoices={channelChoices}
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
         errors={errors}
@@ -507,8 +507,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         selectedChannelId={channel?.id}
-        openChannelsModal={handleChannelsModalOpen}
-        onChannelsChange={setCurrentChannels}
+        openChannelsModal={onChannelsAvailiabilityModalOpen}
+        onChannelsChange={setChannelsWithVariantsData}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
@@ -531,18 +531,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         confirmButtonState={deleteProductOpts.status}
         onConfirm={() => deleteProduct({ variables: { id } })}
         variant="delete"
-        title={intl.formatMessage({
-          defaultMessage: "Delete Product",
-          description: "dialog header"
-        })}
+        title={intl.formatMessage(messages.deleteProductDialogTitle)}
       >
         <DialogContentText>
           <FormattedMessage
-            defaultMessage="Are you sure you want to delete {name}?"
-            description="delete product"
-            values={{
-              name: product ? product.name : undefined
-            }}
+            {...messages.deleteProductDialogSubtitle}
+            values={{ name: product?.name }}
           />
         </DialogContentText>
       </ActionDialog>
@@ -558,15 +552,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           })
         }
         variant="delete"
-        title={intl.formatMessage({
-          defaultMessage: "Delete Product Variants",
-          description: "dialog header"
-        })}
+        title={intl.formatMessage(messages.deleteVariantDialogTitle)}
       >
         <DialogContentText>
           <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
-            description="dialog content"
+            {...messages.deleteVariantDialogSubtitle}
             values={{
               counter: params?.ids?.length,
               displayQuantity: <strong>{params?.ids?.length}</strong>

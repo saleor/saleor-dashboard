@@ -1,43 +1,54 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
-import { UseChannelsWithProductVariants } from "@saleor/products/views/ProductUpdate/types";
+import {
+  UseChannelsWithProductVariants,
+  UseChannelsWithProductVariantsProps
+} from "@saleor/products/views/ProductUpdate/types";
 import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
 import { filter } from "fuzzaldrin";
 import React from "react";
+import { useIntl } from "react-intl";
+import { defineMessages } from "react-intl";
 
 import ChannelsAvailabilityContentWrapper from "../ChannelsAvailabilityContent/ChannelsAvailabilityContentWrapper";
-import { ConfirmButtonTransitionState } from "../ConfirmButton";
 import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariantsAvailabilityDialogContent";
 
+const messages = defineMessages({
+  title: {
+    defaultMessage: "Manage Channels",
+    description: "channels variants availability dialog title"
+  }
+});
+
+type UseChannelsWithVariantsCommonProps = Omit<
+  UseChannelsWithProductVariants,
+  "setChannelsWithVariantsData" | "onChannelsAvailiabilityModalOpen"
+>;
+
 export interface ChannelsAvailabilityDialogProps
-  extends UseChannelsWithProductVariants {
+  extends UseChannelsWithVariantsCommonProps {
   channels: ChannelData[];
-  confirmButtonState: ConfirmButtonTransitionState;
   contentType?: string;
-  disabled: boolean;
   variants: ProductDetails_product_variants[];
-  onConfirm: () => void;
-  title: string;
 }
 
 export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
   channels,
-  confirmButtonState,
   contentType,
-  disabled,
-  onConfirm,
-  title,
   variants,
   isChannelsAvailabilityModalOpen,
   toggleAllChannels,
   channelsWithVariants,
   onChannelsAvailiabilityModalClose,
+  haveChannelsWithVariantsChanged,
+  onChannelsWithVariantsConfirm,
   ...rest
 }) => {
+  const intl = useIntl();
   const [query, onQueryChange] = React.useState("");
   const filteredChannels = filter(channels, query, { key: "name" }) || [];
 
@@ -51,12 +62,12 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
 
   return (
     <ActionDialog
-      confirmButtonState={confirmButtonState}
+      confirmButtonState="default"
       open={isChannelsAvailabilityModalOpen}
       onClose={onChannelsAvailiabilityModalClose}
-      onConfirm={onConfirm}
-      title={title}
-      disabled={disabled}
+      onConfirm={onChannelsWithVariantsConfirm}
+      title={intl.formatMessage(messages.title)}
+      disabled={!haveChannelsWithVariantsChanged}
     >
       <ChannelsAvailabilityContentWrapper
         hasAllSelected={hasAllChannelsSelected}
@@ -65,11 +76,10 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
         onQueryChange={onQueryChange}
         toggleAll={toggleAllChannels}
         contentType={contentType}
-        disabled={disabled}
       >
         <ChannelsWithVariantsAvailabilityDialogContent
           allVariants={variants}
-          channels={channels}
+          channels={filteredChannels}
           isChannelSelected={isChannelSelected}
           channelsWithVariants={channelsWithVariants}
           {...rest}

@@ -65,7 +65,6 @@ const messages = defineMessages({
 
 export interface ChannelsAvailabilityContentProps {
   contentType?: string;
-  disabled: boolean;
   toggleAll?: () => void;
   children: React.ReactNode;
   toggleAllLabel?: React.ReactNode;

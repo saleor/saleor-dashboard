@@ -1,10 +1,10 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import { ChannelsAction } from "@saleor/channels/urls";
+import { ChannelData } from "@saleor/channels/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ProductUrlDialog } from "@saleor/products/urls";
 
 export interface UseChannelsWithProductVariantsProps {
-  channels: Channels_channels[];
+  channels: ChannelData[];
   variants: ProductDetails_product_variants[];
   action: ProductUrlDialog;
   openModal: (action: ChannelsAction) => void;
@@ -12,7 +12,6 @@ export interface UseChannelsWithProductVariantsProps {
 }
 
 export interface ChannelWithVariantData {
-  hasChanged: boolean;
   selectedVariantsIds: string[];
   variantsIdsToRemove: string[];
   variantsIdsToAdd: string[];
@@ -23,7 +22,6 @@ export interface ChannelsWithVariantsData {
 }
 
 export const initialChannelWithVariantData: ChannelWithVariantData = {
-  hasChanged: false,
   variantsIdsToRemove: [],
   variantsIdsToAdd: [],
   selectedVariantsIds: []
@@ -32,12 +30,15 @@ export const initialChannelWithVariantData: ChannelWithVariantData = {
 export const CHANNELS_AVAILIABILITY_MODAL_SELECTOR = "open-channels-picker";
 
 export interface UseChannelsWithProductVariants {
+  onChannelsWithVariantsConfirm: () => void;
+  setChannelsWithVariantsData: (channels: ChannelData[]) => void;
   addVariantToChannel: (channelId: string, variantId: string) => void;
   removeVariantFromChannel: (channelId: string, variantId: string) => void;
-  channelsWithVariants: ChannelsWithVariantsData;
+  channelsWithVariantsData: ChannelsWithVariantsData;
   onChannelsAvailiabilityModalOpen: () => void;
   onChannelsAvailiabilityModalClose: () => void;
   isChannelsAvailabilityModalOpen: boolean;
   toggleAllChannels: () => void;
   toggleAllChannelVariants: (channelId: string) => () => void;
+  haveChannelsWithVariantsChanged: boolean;
 }
