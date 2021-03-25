@@ -267,6 +267,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value[0]}
             helperText={getErrorMessage(error, intl)}
             onChange={event => onChange(attribute.id, event.target.value)}
+            inputProps={{ maxLength: 249 }}
           />
         </BasicAttributeRow>
       );
@@ -289,6 +290,5 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
   }
 };
-
 AttributeRow.displayName = "AttributeRow";
 export default AttributeRow;

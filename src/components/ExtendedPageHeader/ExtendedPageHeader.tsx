@@ -29,7 +29,8 @@ const useStyles = makeStyles(
     root: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
+      wordBreak: "break-all"
     },
     subtitle: {
       alignItems: "center",
