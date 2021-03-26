@@ -7,5 +7,4 @@ export const AVAILABLE_CHANNELS_FORM = {
   radioButtonsValueFalse: "[value='false']",
   visibleInListingsButton: "[name*='visibleInListings']",
   availableChannel: "[data-test='channel-availability-item']"
-  // publishedCheckbox: "[name='isPublished']"
 };

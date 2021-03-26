@@ -1,10 +1,7 @@
 import { COLLECTION_SELECTORS } from "../elements/catalog/collection-selectors";
 import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/products/assign-products-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../elements/channels/available-channels-form";
-import {
-  MENAGE_CHANNEL_AVAILABILITY,
-  SELECT_CHANNELS_TO_ASSIGN
-} from "../elements/channels/select-channels-to-assign";
+import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 
 export function createCollection(collectionName, isPublished, channel) {
