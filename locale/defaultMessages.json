@@ -865,6 +865,10 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
+    "context": "text attribute type",
+    "string": "Text"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
