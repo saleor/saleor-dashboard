@@ -3,6 +3,7 @@ import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { metadataForms } from "../../steps/catalog/metadataSteps";
 import {
   fillUpPriceList,
@@ -22,7 +23,6 @@ describe("Create product", () => {
     rating: 2
   };
   const seo = {
-    slug: "testSlug",
     title: "testTitle",
     description: generalInfo.description
   };
@@ -55,19 +55,21 @@ describe("Create product", () => {
       .click();
   });
 
-  it("should create product, with product type using variant attributes", () => {
-    const productTypeName = `${startsWith}${faker.random.number()}`;
-    productUtils.createTypeProduct(productTypeName, attribute.id, true);
-    fillUpCommonFieldsForProductType({
+  it("should create product with variants", () => {
+    const randomName = `${startsWith}${faker.random.number()}`;
+    productUtils.createTypeProduct(randomName, attribute.id);
+    seo.slug = randomName;
+    const productData = {
       generalInfo,
       seo,
       metadata,
-      productOrganization: { productType: productTypeName }
-    }).then(
+      productOrganization: { productType: randomName }
+    };
+    fillUpCommonFieldsForProductType(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     cy.addAliasToGraphRequest("ProductDetails");
-    cy.get(PRODUCT_DETAILS.saveBtn).click();
+    cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
     cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
@@ -75,18 +77,14 @@ describe("Create product", () => {
       .then(resp => {
         const productResp = resp.find(element => element.data.product).data
           .product;
-        expectCorrectProductInformation(productResp);
-        expectCorrectProductOrganization(productResp, {
-          category: productOrganization.category,
-          collection: productOrganization.collection,
-          productType: productTypeName
-        });
+        expectCorrectProductInformation(productResp, productData);
       });
   });
-  it("should create product", () => {
+  it("should create product without variants", () => {
     const prices = { sellingPrice: 6, costPrice: 3 };
     const randomName = `${startsWith}${faker.random.number()}`;
-    productUtils.createTypeProduct(randomName, attribute.id);
+    seo.slug = randomName;
+    productUtils.createTypeProduct(randomName, attribute.id, false);
     const productData = {
       generalInfo,
       seo,
@@ -101,7 +99,7 @@ describe("Create product", () => {
     fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
     cy.get(PRODUCT_DETAILS.skuInput).type(randomName);
     cy.addAliasToGraphRequest("ProductDetails");
-    cy.get(PRODUCT_DETAILS.saveBtn).click();
+    cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
     cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")

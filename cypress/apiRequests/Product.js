@@ -135,7 +135,7 @@ export function createVariant({
 export function createTypeProduct(
   name,
   attributeId,
-  hasVariants = false,
+  hasVariants = true,
   slug = name
 ) {
   const mutation = `mutation{
