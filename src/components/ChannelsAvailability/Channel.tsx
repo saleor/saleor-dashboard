@@ -29,7 +29,6 @@ const Channel: React.FC<ChannelProps> = ({
       <ChannelContent
         data={data}
         onChange={onChange}
-        isOpen={isOpen}
         messages={messages}
         errors={errors}
         disabled={disabled}

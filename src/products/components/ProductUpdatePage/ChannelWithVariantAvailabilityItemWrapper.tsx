@@ -12,14 +12,17 @@ import { ProductDetails_product_variants } from "@saleor/products/types/ProductD
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
 import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
 const useExpanderStyles = makeStyles(
-  () => ({
+  theme => ({
     expanded: {},
     root: {
       boxShadow: "none",
+      margin: 0,
+      padding: 0,
+      paddingBottom: theme.spacing(2),
 
       "&:before": {
         content: "none"
@@ -31,7 +34,43 @@ const useExpanderStyles = makeStyles(
       }
     }
   }),
-  { name: "ChannelsWithVariantsAvailabilityItemWrapperExpander" }
+  { name: "ChannelWithVariantAvailabilityItemWrapperExpander" }
+);
+
+const useSummaryStyles = makeStyles(
+  theme => ({
+    expanded: {},
+    root: {
+      width: "100%",
+      border: "none",
+      margin: 0,
+      padding: 0,
+      minHeight: 0,
+      paddingTop: theme.spacing(2),
+
+      "&$expanded": {
+        minHeight: 0
+      }
+    },
+    content: {
+      margin: 0,
+
+      "&$expanded": {
+        margin: 0
+      }
+    }
+  }),
+  { name: "ChannelWithVariantAvailabilityItemWrapperSummary" }
+);
+
+const useStyles = makeStyles(
+  () => ({
+    container: {
+      display: "flex",
+      flexDirection: "column"
+    }
+  }),
+  { name: "ChannelWithVariantAvailabilityItemWrapper" }
 );
 
 const messages = defineMessages({
@@ -45,22 +84,12 @@ const messages = defineMessages({
   }
 });
 
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      display: "flex",
-      flexDirection: "column"
-    }
-  }),
-  { name: "ChannelsWithVariantsAvailabilityItemWrapper" }
-);
-
 interface ChannelAvailabilityItemWrapperProps {
   variants: ProductDetails_product_variants[];
   channelId: string;
   channels: ChannelData[];
   channelsWithVariantsData: ChannelsWithVariantsData;
-  availableDateLabel: MessageDescriptor;
+  messages: Record<string, string>;
 }
 
 const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityItemWrapperProps> = ({
@@ -68,10 +97,11 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
   channelsWithVariantsData,
   channelId,
   variants,
-  availableDateLabel,
+  messages: commonChannelMessages,
   children
 }) => {
   const expanderClasses = useExpanderStyles({});
+  const summaryClasses = useSummaryStyles({});
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -90,12 +120,12 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
     <ExpansionPanel classes={expanderClasses}>
       <ExpansionPanelSummary
         expandIcon={<IconChevronDown />}
-        // classes={summaryClasses}
+        classes={summaryClasses}
       >
         <div className={classes.container}>
-          <Typography>{name}</Typography>;
+          <Typography>{name}</Typography>
           <Label text={intl.formatMessage(variantsLabel, { variantsCount })} />
-          <Label text={intl.formatMessage(availableDateLabel)} />
+          <Label text={commonChannelMessages.availableDateText} />
         </div>
       </ExpansionPanelSummary>
       {children}

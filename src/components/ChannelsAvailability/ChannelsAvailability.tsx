@@ -34,8 +34,8 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
   const {
     channelsList,
     errors = [],
-    selectedChannelsCount,
-    allChannelsCount,
+    selectedChannelsCount = 0,
+    allChannelsCount = 0,
     channels,
     messages,
     onChange,

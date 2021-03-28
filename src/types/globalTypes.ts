@@ -816,6 +816,11 @@ export enum ProductFieldEnum {
   VISIBLE = "VISIBLE",
 }
 
+export enum ProductMediaType {
+  IMAGE = "IMAGE",
+  VIDEO = "VIDEO",
+}
+
 export enum ProductOrderField {
   COLLECTION = "COLLECTION",
   DATE = "DATE",

@@ -1,5 +1,5 @@
+import placeholderImage from "@assets/images/placeholder255x255.png";
 import {
-  Avatar,
   Divider,
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -17,6 +17,7 @@ import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ControlledCheckbox from "../ControlledCheckbox";
+import Avatar from "../TableCellAvatar/Avatar";
 
 const useStyles = makeStyles(
   theme => ({
@@ -136,7 +137,8 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           selectedVariantsIds.includes(variantId);
 
         const getVariantThumbnailSrc = (variantId: string) =>
-          allVariants.find(getById(variantId)).media[0].url;
+          allVariants.find(getById(variantId)).media[0]?.url ||
+          placeholderImage;
 
         return (
           <ExpansionPanel classes={expanderClasses}>
@@ -184,7 +186,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                     name={name}
                     label={
                       <div className={classes.variantTitleContainer}>
-                        <Avatar src={getVariantThumbnailSrc(variantId)} />
+                        <Avatar thumbnail={getVariantThumbnailSrc(variantId)} />
                         <Typography>{name}</Typography>
                       </div>
                     }

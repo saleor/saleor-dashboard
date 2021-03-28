@@ -96,7 +96,7 @@ export const extractAllProductVariantsIds = (
 
 export const areAllVariantsAtAllChannelsSelected = (
   variants: ProductDetails_product_variants[] = [],
-  channelsWithVariants: ChannelsWithVariantsData
+  channelsWithVariants: ChannelsWithVariantsData = {}
 ) =>
   every(channelsWithVariants, channelWithVariantsData =>
     areAllChannelVariantsSelected(variants, channelWithVariantsData)

@@ -5,6 +5,7 @@ import ChannelsAvailabilityWrapper, {
 } from "@saleor/components/ChannelsAvailability/ChannelsAvailabilityWrapper";
 import {
   ChannelsAvailabilityError,
+  ChannelValue,
   Message
 } from "@saleor/components/ChannelsAvailability/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailability/utils";
@@ -12,19 +13,26 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
-import { getTotalSelectedChannelsCount } from "@saleor/products/views/ProductUpdate/utils";
+import {
+  areAnyChannelVariantsSelected,
+  getTotalSelectedChannelsCount
+} from "@saleor/products/views/ProductUpdate/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelWithVariantsAvailabilityItemWrapper from "./ChannelWithVariantAvailabilityItemWrapper";
 
 interface ChannelsWithVariantsAvailabilityCardProps
-  extends Omit<ChannelsAvailabilityWrapperProps, "children"> {
+  extends Omit<
+    ChannelsAvailabilityWrapperProps,
+    "children" | "selectedChannelsCount" | "allChannelsCount"
+  > {
   channelsWithVariantsData: ChannelsWithVariantsData;
   channels: ChannelData[];
   variants: ProductDetails_product_variants[];
   errors?: ChannelsAvailabilityError[];
   messages: Message;
+  onChange: (id: string, data: ChannelValue) => void;
 }
 
 const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailabilityCardProps> = ({
@@ -33,7 +41,8 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   openModal,
   variants,
   errors,
-  messages
+  messages,
+  onChange
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -46,6 +55,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   });
 
   const allChannelsCount = channels.length;
+
   const selectedChannelsCount = getTotalSelectedChannelsCount(
     channelsWithVariantsData
   );
@@ -56,22 +66,27 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
       allChannelsCount={allChannelsCount}
       openModal={openModal}
     >
-      {channels.map(({ id, ...rest }) => (
-        <ChannelWithVariantsAvailabilityItemWrapper
-          messages={channelsMessages}
-          key={id}
-          channelsWithVariantsData={channelsWithVariantsData}
-          variants={variants}
-          channels={channels}
-          channelId={id}
-        >
-          <ChannelContent
-            data={channels.find(getById(id))}
-            errors={errors}
+      {channels
+        .filter(({ id }) =>
+          areAnyChannelVariantsSelected(channelsWithVariantsData[id])
+        )
+        .map(({ id }) => (
+          <ChannelWithVariantsAvailabilityItemWrapper
             messages={channelsMessages[id]}
-          />
-        </ChannelWithVariantsAvailabilityItemWrapper>
-      ))}
+            key={id}
+            channelsWithVariantsData={channelsWithVariantsData}
+            variants={variants}
+            channels={channels}
+            channelId={id}
+          >
+            <ChannelContent
+              onChange={onChange}
+              data={channels.find(getById(id))}
+              errors={errors}
+              messages={channelsMessages[id]}
+            />
+          </ChannelWithVariantsAvailabilityItemWrapper>
+        ))}
     </ChannelsAvailabilityWrapper>
   );
 };

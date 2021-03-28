@@ -1,11 +1,62 @@
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  makeStyles
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Hr from "@saleor/components/Hr";
-import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import classNames from "classnames";
-import React, { useState } from "react";
+import IconChevronDown from "@saleor/icons/ChevronDown";
+import React from "react";
 
-import { useStyles } from "./styles";
 import { ChannelData, Message } from "./types";
+
+const useExpanderStyles = makeStyles(
+  theme => ({
+    expanded: {},
+    root: {
+      boxShadow: "none",
+      margin: 0,
+      padding: 0,
+      paddingBottom: theme.spacing(2),
+
+      "&:before": {
+        content: "none"
+      },
+
+      "&$expanded": {
+        margin: 0,
+        border: "none"
+      }
+    }
+  }),
+  { name: "ChannelContentWrapperExpander" }
+);
+
+const useSummaryStyles = makeStyles(
+  theme => ({
+    expanded: {},
+    root: {
+      width: "100%",
+      border: "none",
+      margin: 0,
+      padding: 0,
+      minHeight: 0,
+      paddingTop: theme.spacing(2),
+
+      "&$expanded": {
+        minHeight: 0,
+        padding: theme.spacing(2, 0)
+      }
+    },
+    content: {
+      margin: 0,
+
+      "&$expanded": {
+        margin: 0
+      }
+    }
+  }),
+  { name: "ChannelContentWrapperExpanderSummary" }
+);
 
 export interface ChannelContentWrapperProps {
   data: ChannelData;
@@ -18,38 +69,22 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   messages,
   children
 }) => {
+  const expanderClasses = useExpanderStyles({});
+  const summaryClasses = useSummaryStyles({});
+
   const { name } = data;
-  const classes = useStyles({});
-  const [isOpen, setOpen] = useState(false);
 
   return (
-    <>
-      <div className={classes.channelItem}>
-        <div
-          data-test="channel-availability-item"
-          role="button"
-          className={classes.channelBtn}
-          onClick={() => setOpen(!isOpen)}
-        >
-          <div className={classes.channelName}>
-            <Typography>{name}</Typography>
-            <ArrowDropdown
-              className={classNames(classes.arrow, {
-                [classes.rotate]: isOpen
-              })}
-              color="primary"
-            />
-          </div>
-          <Typography variant="caption">
-            {messages.availableDateText}
-          </Typography>
-        </div>
-        {React.Children.map(children, (channel: React.ReactElement<any>) =>
-          React.cloneElement(channel, { ...channel.props, isOpen })
-        )}
-      </div>
-      <Hr className={classes.hr} />
-    </>
+    <ExpansionPanel classes={expanderClasses}>
+      <ExpansionPanelSummary
+        expandIcon={<IconChevronDown />}
+        classes={summaryClasses}
+      >
+        <Typography>{name}</Typography>
+        <Typography variant="caption">{messages.availableDateText}</Typography>
+      </ExpansionPanelSummary>
+      {children}
+    </ExpansionPanel>
   );
 };
 

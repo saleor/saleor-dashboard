@@ -36,7 +36,7 @@ export function createChannelsPriceChangeHandler(
 }
 
 export function createChannelsChangeHandler(
-  channelListings: ChannelData[],
+  channelsData: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
@@ -44,19 +44,18 @@ export function createChannelsChangeHandler(
     id: string,
     data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
-    );
-    const channel = channelListings[channelIndex];
+    const channelIndex = channelsData.findIndex(channel => channel.id === id);
+    const channel = channelsData[channelIndex];
 
     const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
+      ...channelsData.slice(0, channelIndex),
       {
         ...channel,
         ...data
       },
-      ...channelListings.slice(channelIndex + 1)
+      ...channelsData.slice(channelIndex + 1)
     ];
+
     updateChannels(updatedChannels);
     triggerChange();
   };

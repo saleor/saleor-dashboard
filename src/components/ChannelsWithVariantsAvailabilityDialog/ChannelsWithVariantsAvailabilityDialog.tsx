@@ -1,10 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
-import {
-  UseChannelsWithProductVariants,
-  UseChannelsWithProductVariantsProps
-} from "@saleor/products/views/ProductUpdate/types";
+import { UseChannelsWithProductVariants } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
@@ -42,9 +39,9 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   variants,
   isChannelsAvailabilityModalOpen,
   toggleAllChannels,
-  channelsWithVariants,
+  channelsWithVariantsData,
   onChannelsAvailiabilityModalClose,
-  haveChannelsWithVariantsChanged,
+  haveChannelsWithVariantsDataChanged,
   onChannelsWithVariantsConfirm,
   ...rest
 }) => {
@@ -54,11 +51,11 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,
-    channelsWithVariants
+    channelsWithVariantsData
   );
 
   const isChannelSelected = (channelId: string) =>
-    areAnyChannelVariantsSelected(channelsWithVariants[channelId]);
+    areAnyChannelVariantsSelected(channelsWithVariantsData[channelId]);
 
   return (
     <ActionDialog
@@ -67,7 +64,7 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
       onClose={onChannelsAvailiabilityModalClose}
       onConfirm={onChannelsWithVariantsConfirm}
       title={intl.formatMessage(messages.title)}
-      disabled={!haveChannelsWithVariantsChanged}
+      disabled={!haveChannelsWithVariantsDataChanged}
     >
       <ChannelsAvailabilityContentWrapper
         hasAllSelected={hasAllChannelsSelected}
@@ -81,7 +78,7 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
           allVariants={variants}
           channels={filteredChannels}
           isChannelSelected={isChannelSelected}
-          channelsWithVariants={channelsWithVariants}
+          channelsWithVariants={channelsWithVariantsData}
           {...rest}
         />
       </ChannelsAvailabilityContentWrapper>

@@ -30,6 +30,8 @@ export const initialChannelWithVariantData: ChannelWithVariantData = {
 export const CHANNELS_AVAILIABILITY_MODAL_SELECTOR = "open-channels-picker";
 
 export interface UseChannelsWithProductVariants {
+  channelsData: ChannelData[];
+  setChannelsData: (data: ChannelData[]) => void;
   onChannelsWithVariantsConfirm: () => void;
   setChannelsWithVariantsData: (channels: ChannelData[]) => void;
   addVariantToChannel: (channelId: string, variantId: string) => void;
@@ -40,5 +42,5 @@ export interface UseChannelsWithProductVariants {
   isChannelsAvailabilityModalOpen: boolean;
   toggleAllChannels: () => void;
   toggleAllChannelVariants: (channelId: string) => () => void;
-  haveChannelsWithVariantsChanged: boolean;
+  haveChannelsWithVariantsDataChanged: boolean;
 }

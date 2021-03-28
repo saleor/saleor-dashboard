@@ -2,6 +2,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(
   theme => ({
+    container: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1)
+    },
+    radioField: {
+      paddingLeft: theme.spacing(1)
+    },
     arrow: {
       transition: theme.transitions.duration.short + "ms"
     },

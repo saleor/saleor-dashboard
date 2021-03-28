@@ -1,7 +1,8 @@
 import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import isEmpty from "lodash-es/isEmpty";
 import reduce from "lodash-es/reduce";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -29,6 +30,8 @@ const useChannelsWithProductVariants = ({
     channels
   );
 
+  const [channelsData, setChannelsData] = useStateFromProps(channels);
+
   const [
     channelsWithVariantsData,
     setChannelsWithVariantsData
@@ -36,9 +39,26 @@ const useChannelsWithProductVariants = ({
     initialChannelsWithVariantsData
   );
 
+  const channelsWithVariantsDataRef = useRef(channelsWithVariantsData);
+
   const [hasChanged, setHasChanged] = useState(false);
 
-  const handleSetHasChanged = () => setHasChanged(true);
+  const handleSetHasChanged = () => {
+    const isDataRefEmpty = isEmpty(channelsWithVariantsDataRef.current);
+    const isDataEmpty = isEmpty(channelsWithVariantsData);
+
+    const hasFilledInitialData = isDataRefEmpty && !isDataEmpty;
+
+    const hasNoDataFilled = isDataRefEmpty && isDataEmpty;
+
+    if (hasNoDataFilled || hasFilledInitialData) {
+      channelsWithVariantsDataRef.current = channelsWithVariantsData;
+      return;
+    }
+
+    channelsWithVariantsDataRef.current = channelsWithVariantsData;
+    setHasChanged(true);
+  };
 
   useEffect(handleSetHasChanged, [channelsWithVariantsData]);
 
@@ -98,7 +118,7 @@ const useChannelsWithProductVariants = ({
     setChannelsWithVariantsData(updatedData);
   };
 
-  const onChannelsWithVariantsDataConfirm = () => closeModal();
+  const onChannelsWithVariantsConfirm = () => closeModal();
 
   const handleModalOpen = () =>
     openModal(CHANNELS_AVAILIABILITY_MODAL_SELECTOR);
@@ -107,6 +127,8 @@ const useChannelsWithProductVariants = ({
 
   return {
     channelsWithVariantsData,
+    setChannelsData,
+    channelsData,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
     onChannelsAvailiabilityModalOpen: handleModalOpen,
@@ -116,7 +138,7 @@ const useChannelsWithProductVariants = ({
     setChannelsWithVariantsData: handleSetChannelsWithVariantsData,
     toggleAllChannelVariants,
     toggleAllChannels,
-    onChannelsWithVariantsDataConfirm
+    onChannelsWithVariantsConfirm
   };
 };
 

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantMediaUnassign
@@ -121,9 +121,27 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSel
   values: (VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_values | null)[];
 }
 
+export interface VariantMediaUnassign_variantMediaUnassign_productVariant_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
+}
+
+export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product_media {
+  __typename: "ProductMedia";
+  id: string;
+  alt: string;
+  sortOrder: number | null;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product_thumbnail {
@@ -177,17 +195,27 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_produc
   pricing: VariantMediaUnassign_variantMediaUnassign_productVariant_product_channelListings_pricing | null;
 }
 
+export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product_variants_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
   sku: string;
+  media: VariantMediaUnassign_variantMediaUnassign_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantMediaUnassign_variantMediaUnassign_productVariant_product_defaultVariant | null;
+  media: VariantMediaUnassign_variantMediaUnassign_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantMediaUnassign_variantMediaUnassign_productVariant_product_thumbnail | null;
   channelListings: VariantMediaUnassign_variantMediaUnassign_productVariant_product_channelListings[] | null;
@@ -247,6 +275,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant {
   privateMetadata: (VariantMediaUnassign_variantMediaUnassign_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes[];
+  media: VariantMediaUnassign_variantMediaUnassign_productVariant_media[] | null;
   name: string;
   product: VariantMediaUnassign_variantMediaUnassign_productVariant_product;
   channelListings: VariantMediaUnassign_variantMediaUnassign_productVariant_channelListings[] | null;

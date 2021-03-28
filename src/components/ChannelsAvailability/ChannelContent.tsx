@@ -21,7 +21,6 @@ import {
 export interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
-  isOpen: boolean;
   errors: ChannelsAvailabilityError[];
   messages: Message;
   onChange: (id: string, data: ChannelValue) => void;
@@ -32,8 +31,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   disabled,
   errors,
   messages,
-  onChange,
-  isOpen
+  onChange
 }) => {
   const {
     availableForPurchase,
@@ -82,13 +80,10 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     errors
   );
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <>
+    <div className={classes.container}>
       <RadioSwitchField
+        className={classes.radioField}
         disabled={disabled}
         firstOptionLabel={
           <>
@@ -171,6 +166,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         <>
           <Hr />
           <RadioSwitchField
+            className={classes.radioField}
             disabled={disabled}
             firstOptionLabel={
               <>
@@ -282,7 +278,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 

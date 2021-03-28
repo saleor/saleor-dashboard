@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -122,9 +122,27 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   values: (VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values | null)[];
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_product_media {
+  __typename: "ProductMedia";
+  id: string;
+  alt: string;
+  sortOrder: number | null;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_product_thumbnail {
@@ -178,17 +196,27 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_chann
   pricing: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing | null;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_product_variants_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
   sku: string;
+  media: VariantUpdate_productVariantUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
+  media: VariantUpdate_productVariantUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_product_channelListings[] | null;
@@ -248,6 +276,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   privateMetadata: (VariantUpdate_productVariantUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes[];
+  media: VariantUpdate_productVariantUpdate_productVariant_media[] | null;
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_channelListings[] | null;
@@ -376,9 +405,27 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values | null)[];
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_media {
+  __typename: "ProductMedia";
+  id: string;
+  alt: string;
+  sortOrder: number | null;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail {
@@ -432,17 +479,27 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   pricing: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing | null;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media {
+  __typename: "ProductMedia";
+  id: string;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
   sku: string;
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media[] | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings[] | null;
@@ -502,6 +559,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   privateMetadata: (VariantUpdate_productVariantStocksUpdate_productVariant_privateMetadata | null)[];
   selectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes[];
   nonSelectionAttributes: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes[];
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_media[] | null;
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings[] | null;

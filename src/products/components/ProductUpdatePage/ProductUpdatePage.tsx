@@ -38,7 +38,7 @@ import {
   ReorderAction
 } from "@saleor/types";
 import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
   ProductDetails_product,
@@ -60,12 +60,12 @@ import ProductUpdateForm, {
 } from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
-  defaultWeightUnit: string;
   channelsWithVariantsData: ChannelsWithVariantsData;
-  errors: ProductErrorWithAttributesFragment[];
+  setChannelsData: (data: ChannelData[]) => void;
+  channelsData: ChannelData[];
   channelsErrors: ProductChannelListingErrorFragment[];
-  allChannelsCount: number;
-  channels: ChannelData[];
+  defaultWeightUnit: string;
+  errors: ProductErrorWithAttributesFragment[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -98,7 +98,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
-  onChannelsChange: (data: ChannelData[]) => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -111,9 +110,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onWarehouseConfigure();
 }
 
-export interface ProductUpdatePageSubmitData
-  extends ProductUpdatePageFormData,
-    ChannelProps {
+export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   addStocks: ProductStockInput[];
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
@@ -128,8 +125,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
   channelsErrors,
-  allChannelsCount,
-  channels = [],
   collections: collectionChoiceList,
   errors,
   fetchCategories,
@@ -144,6 +139,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   warehouses,
+  setChannelsData,
   taxTypes,
   referencePages = [],
   referenceProducts = [],
@@ -154,11 +150,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageReorder,
   onImageUpload,
   onMediaUrlUpload,
-  onChannelsChange,
   openChannelsModal,
   onSeoClick,
   onSubmit,
   onVariantAdd,
+  channelsData,
   onVariantsAdd,
   onSetDefaultVariant,
   onVariantShow,
@@ -227,18 +223,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <ProductUpdateForm
+      channelsData={channelsData}
+      setChannelsData={setChannelsData}
       onSubmit={onSubmit}
       product={product}
       categories={categories}
       collections={collections}
+      channelsWithVariants={channelsWithVariantsData}
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
-      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
-      currentChannels={channels}
       hasVariants={hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
@@ -300,7 +297,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {!!product?.productType && !hasVariants && (
                   <>
                     <ProductVariantPrice
-                      ProductVariantChannelListings={data.channelListings}
+                      ProductVariantChannelListings={data.channelsData}
                       errors={channelsErrors}
                       loading={disabled}
                       onChange={handlers.changeChannelPrice}
@@ -404,11 +401,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     })
                   }}
                   errors={channelsErrors}
-                  selectedChannelsCount={data.channelListings.length}
-                  allChannelsCount={allChannelsCount}
-                  channels={data.channelListings}
+                  channels={data.channelsData}
                   channelsWithVariantsData={channelsWithVariantsData}
-                  disabled={disabled}
+                  variants={variants}
                   onChange={handlers.changeChannels}
                   openModal={openChannelsModal}
                 />

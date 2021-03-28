@@ -191,11 +191,11 @@ const productVariantCreateQuery = gql`
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {
       id
-      # media {
-      #   id
-      #   sortOrder
-      #   url
-      # }
+      media {
+        id
+        sortOrder
+        url
+      }
       channelListings {
         channel {
           id
@@ -224,11 +224,11 @@ const productVariantCreateQuery = gql`
         id
         name
         sku
-        # media {
-        #   id
-        #   url
-        #   type
-        # }
+        media {
+          id
+          url
+          type
+        }
       }
     }
   }
@@ -238,32 +238,32 @@ export const useProductVariantCreateQuery = makeQuery<
   ProductVariantCreateDataVariables
 >(productVariantCreateQuery);
 
-// const productMediaQuery = gql`
-//   query ProductMediaById($productId: ID!, $mediaId: ID!) {
-//     product(id: $productId) {
-//       id
-//       name
-//       mainImage: mediaById(id: $mediaId) {
-//         id
-//         alt
-//         url
-//         type
-//         oembedData
-//       }
-//       media {
-//         id
-//         url(size: 48)
-//         alt
-//         type
-//         oembedData
-//       }
-//     }
-//   }
-// `;
-// export const useProductMediaQuery = makeQuery<
-//   ProductMediaById,
-//   ProductMediaByIdVariables
-// >(productMediaQuery);
+const productMediaQuery = gql`
+  query ProductMediaById($productId: ID!, $mediaId: ID!) {
+    product(id: $productId) {
+      id
+      name
+      mainImage: mediaById(id: $mediaId) {
+        id
+        alt
+        url
+        type
+        oembedData
+      }
+      media {
+        id
+        url(size: 48)
+        alt
+        type
+        oembedData
+      }
+    }
+  }
+`;
+export const useProductMediaQuery = makeQuery<
+  ProductMediaById,
+  ProductMediaByIdVariables
+>(productMediaQuery);
 
 const availableInGridAttributes = gql`
   ${pageInfoFragment}

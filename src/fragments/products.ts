@@ -40,16 +40,16 @@ export const priceRangeFragment = gql`
   }
 `;
 
-// export const fragmentProductMedia = gql`
-//   fragment ProductMediaFragment on ProductMedia {
-//     id
-//     alt
-//     sortOrder
-//     url
-//     type
-//     oembedData
-//   }
-// `;
+export const fragmentProductMedia = gql`
+  fragment ProductMediaFragment on ProductMedia {
+    id
+    alt
+    sortOrder
+    url
+    type
+    oembedData
+  }
+`;
 
 export const channelListingProductWithoutPricingFragment = gql`
   fragment ChannelListingProductWithoutPricingFragment on ProductChannelListing {
@@ -275,21 +275,21 @@ export const fragmentVariant = gql`
     ) {
       ...SelectedVariantAttributeFragment
     }
-    # media {
-    #   id
-    #   url
-    #   type
-    #   oembedData
-    # }
+    media {
+      id
+      url
+      type
+      oembedData
+    }
     name
     product {
       id
       defaultVariant {
         id
       }
-      # media {
-      #   ...ProductMediaFragment
-      # }
+      media {
+        ...ProductMediaFragment
+      }
       name
       thumbnail {
         url
@@ -310,12 +310,12 @@ export const fragmentVariant = gql`
         id
         name
         sku
-        # media {
-        #   id
-        #   url
-        #   type
-        #   oembedData
-        # }
+        media {
+          id
+          url
+          type
+          oembedData
+        }
       }
       defaultVariant {
         id

@@ -19,7 +19,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannels from "@saleor/hooks/useChannels";
+// import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
@@ -75,7 +75,7 @@ import {
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
-import useChannelsWithProductVariants from "./useChannelsWithProducts";
+import useChannelsWithProductVariants from "./useChannelsWithProductVariants";
 
 const messages = defineMessages({
   deleteProductDialogTitle: {
@@ -151,7 +151,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { data: channelsData } = useChannelsList({});
+  const { data: channelsListData } = useChannelsList({});
 
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
@@ -243,7 +243,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
     product,
-    channelsData?.channels
+    channelsListData?.channels
   ).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -251,8 +251,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const {
     setChannelsWithVariantsData,
     channelsWithVariantsData,
-    haveChannelsWithVariantsChanged,
+    haveChannelsWithVariantsDataChanged,
     onChannelsAvailiabilityModalOpen,
+    channelsData,
+    setChannelsData,
     ...channelsWithVariantsProps
   } = useChannelsWithProductVariants({
     channels: allChannels,
@@ -444,16 +446,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       {!!allChannels?.length && (
         <ChannelsWithVariantsAvailabilityDialog
           channelsWithVariantsData={channelsWithVariantsData}
-          haveChannelsWithVariantsChanged={haveChannelsWithVariantsChanged}
+          haveChannelsWithVariantsDataChanged={
+            haveChannelsWithVariantsDataChanged
+          }
           {...channelsWithVariantsProps}
           channels={allChannels}
           variants={product?.variants}
         />
       )}
       <ProductUpdatePage
-        allChannelsCount={allChannels?.length}
-        channels={allChannels}
-        hasChannelChanged={haveChannelsWithVariantsChanged}
+        channelsData={channelsData}
+        setChannelsData={setChannelsData}
+        hasChannelChanged={haveChannelsWithVariantsDataChanged}
         categories={categories}
         collections={collections}
         channelsWithVariantsData={channelsWithVariantsData}
@@ -508,7 +512,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreCollections={fetchMoreCollections}
         selectedChannelId={channel?.id}
         openChannelsModal={onChannelsAvailiabilityModalOpen}
-        onChannelsChange={setChannelsWithVariantsData}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }

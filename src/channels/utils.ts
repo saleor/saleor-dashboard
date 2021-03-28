@@ -151,6 +151,7 @@ export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
     currency: channel.currencyCode,
     id: channel.id,
     isAvailableForPurchase: false,
+    variantsIds: [],
     isPublished: false,
     name: channel.name,
     price: "",

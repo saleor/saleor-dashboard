@@ -32,7 +32,7 @@ export interface ProductMediaById_product {
   id: string;
   name: string;
   mainImage: ProductMediaById_product_mainImage;
-  media: (ProductMediaById_product_media | null)[] | null;
+  media: ProductMediaById_product_media[] | null;
 }
 
 export interface ProductMediaById {
