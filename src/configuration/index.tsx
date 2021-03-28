@@ -50,7 +50,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
           title: intl.formatMessage(sectionNames.attributes),
-          url: attributeListUrl()
+          url: attributeListUrl(),
+          testId: "configurationMenuAttributes"
         },
         {
           description: intl.formatMessage({
@@ -60,7 +61,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
           title: intl.formatMessage(sectionNames.productTypes),
-          url: productTypeListUrl()
+          url: productTypeListUrl(),
+          testId: "configurationMenuProductTypes"
         }
       ]
     },
@@ -77,7 +79,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_SETTINGS,
           title: intl.formatMessage(sectionNames.taxes),
-          url: taxSection
+          url: taxSection,
+          testId: "configurationMenuTaxes"
         }
       ]
     },
@@ -94,7 +97,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_STAFF,
           title: intl.formatMessage(sectionNames.staff),
-          url: staffListUrl()
+          url: staffListUrl(),
+          testId: "configurationMenuStaff"
         },
         {
           description: intl.formatMessage({
@@ -105,7 +109,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <PermissionGroups fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_STAFF,
           title: intl.formatMessage(sectionNames.permissionGroups),
-          url: permissionGroupListUrl()
+          url: permissionGroupListUrl(),
+          testId: "configurationMenuPermissionGroups"
         }
       ]
     },
@@ -122,7 +127,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <ShippingMethods fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_SHIPPING,
           title: intl.formatMessage(sectionNames.shipping),
-          url: shippingZonesListUrl()
+          url: shippingZonesListUrl(),
+          testId: "configurationMenuShipping"
         },
         {
           description: intl.formatMessage({
@@ -132,7 +138,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Warehouses fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PRODUCTS,
           title: intl.formatMessage(sectionNames.warehouses),
-          url: warehouseSection
+          url: warehouseSection,
+          testId: "configurationMenuWarehouses"
         }
       ]
     },
@@ -149,7 +156,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Channels fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_CHANNELS,
           title: intl.formatMessage(sectionNames.channels),
-          url: channelsListUrl()
+          url: channelsListUrl(),
+          testId: "configurationMenuChannels"
         }
       ]
     },
@@ -166,7 +174,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <PageTypes fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PAGES,
           title: intl.formatMessage(sectionNames.pageTypes),
-          url: pageTypeListUrl()
+          url: pageTypeListUrl(),
+          testId: "configurationMenuPageTypes"
         },
         {
           description: intl.formatMessage({
@@ -176,7 +185,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PAGES,
           title: intl.formatMessage(sectionNames.pages),
-          url: pageListUrl()
+          url: pageListUrl(),
+          testId: "configurationMenuPages"
         }
       ]
     },
@@ -193,7 +203,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_MENUS,
           title: intl.formatMessage(sectionNames.navigation),
-          url: menuListUrl()
+          url: menuListUrl(),
+          testId: "configurationMenuNavigation"
         },
         {
           description: intl.formatMessage({
@@ -203,7 +214,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <SiteSettings fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_SETTINGS,
           title: intl.formatMessage(sectionNames.siteSettings),
-          url: siteSettingsUrl()
+          url: siteSettingsUrl(),
+          testId: "configurationMenuSiteSettings"
         },
         {
           description: intl.formatMessage({
@@ -219,7 +231,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           ),
           permission: PermissionEnum.MANAGE_PLUGINS,
           title: intl.formatMessage(sectionNames.plugins),
-          url: pluginListUrl()
+          url: pluginListUrl(),
+          testId: "configurationPluginsPages"
         }
       ]
     }

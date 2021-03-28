@@ -19,6 +19,7 @@ export interface MenuItem {
   permission: PermissionEnum;
   title: string;
   url?: string;
+  testId?: string;
 }
 
 export interface MenuSection {
@@ -128,6 +129,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     key={itemIndex}
                     data-test="settingsSubsection"
                     data-testid={item.title.toLowerCase()}
+                    data-test-id={item.testId}
                   >
                     <CardContent className={classes.cardContent}>
                       <div className={classes.icon}>{item.icon}</div>
