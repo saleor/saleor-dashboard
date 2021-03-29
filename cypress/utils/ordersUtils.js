@@ -17,6 +17,27 @@ export function createWaitingForCaptureOrder(
     .then(() => checkoutRequest.completeCheckout(checkout.id))
     .then(() => checkout);
 }
+export function createCheckoutWithVoucher({
+  channelSlug,
+  email = "email@example.com",
+  variantsList,
+  address,
+  shippingMethodId,
+  voucherCode,
+  auth
+}) {
+  let checkout;
+  return createCheckout({ channelSlug, email, variantsList, address, auth })
+    .then(checkoutResp => {
+      checkout = checkoutResp;
+      checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
+    })
+    .then(() => {
+      checkoutRequest.addVoucher(checkout.id, voucherCode);
+    })
+    .its("body.data.checkoutAddPromoCode");
+}
+
 export function createReadyToFulfillOrder(
   customerId,
   shippingMethodId,

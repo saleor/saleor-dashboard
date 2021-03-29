@@ -53,7 +53,12 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        <Button onClick={onAdd} variant="contained" color="primary">
+        <Button
+          onClick={onAdd}
+          variant="contained"
+          color="primary"
+          data-test-id="create-voucher"
+        >
           <FormattedMessage
             defaultMessage="Create voucher"
             description="button"

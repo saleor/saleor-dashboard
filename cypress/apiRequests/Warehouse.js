@@ -1,4 +1,4 @@
-import { getValueWithDefault } from "./utils/Utils";
+import { getDefaultAddress, getValueWithDefault } from "./utils/Utils";
 
 export function createWarehouse({ name, shippingZone, address, slug = name }) {
   const shippingZoneLine = getValueWithDefault(
@@ -10,14 +10,7 @@ export function createWarehouse({ name, shippingZone, address, slug = name }) {
       name:"${name}"
       slug:"${slug}"
       ${shippingZoneLine}
-      address:{
-        streetAddress1: "${address.streetAddress1}"
-        streetAddress2: "${address.streetAddress2}"
-        city: "${address.city}"
-        postalCode: "${address.postalCode}"
-        country: ${address.country}
-        phone: "${address.phone}"
-      }
+      ${getDefaultAddress(address, "address", false)}
     }){
       warehouseErrors{
         field
