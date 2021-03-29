@@ -10,8 +10,9 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createChannelsPriceChangeHandler(
-  channelListings: ChannelPriceData[],
-  updateChannels: (data: ChannelPriceData[]) => void,
+  channelListings: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
+  updateChannelsData: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
@@ -31,6 +32,7 @@ export function createChannelsPriceChangeHandler(
       ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
+    updateChannelsData(updatedChannels);
     triggerChange();
   };
 }
@@ -38,6 +40,7 @@ export function createChannelsPriceChangeHandler(
 export function createChannelsChangeHandler(
   channelsData: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
+  updateChannelsData: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
   return (
@@ -57,6 +60,7 @@ export function createChannelsChangeHandler(
     ];
 
     updateChannels(updatedChannels);
+    updateChannelsData(updatedChannels);
     triggerChange();
   };
 }

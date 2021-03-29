@@ -9,7 +9,7 @@ import React from "react";
 
 import ChannelsAvailability, {
   ChannelsAvailabilityProps
-} from "./ChannelsAvailability";
+} from "./ChannelsAvailabilityCard";
 
 const user: User = {
   __typename: "User",

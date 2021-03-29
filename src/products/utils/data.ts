@@ -206,6 +206,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
   channelsWithVariants: ChannelsWithVariantsData;
+  channelListings: ChannelData[];
   channelsData: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
@@ -224,6 +225,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
 export function getProductUpdatePageFormData(
   product: ProductDetails_product,
   variants: ProductDetails_product_variants[],
+  currentChannels: ChannelData[],
   channelsData: ChannelData[],
   channelsWithVariants: ChannelsWithVariantsData
 ): ProductUpdatePageFormData {
@@ -237,6 +239,7 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
+    channelListings: currentChannels,
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),

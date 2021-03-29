@@ -2,7 +2,7 @@ import { ChannelData } from "@saleor/channels/utils";
 import { LocalizeDate } from "@saleor/hooks/useDateLocalize";
 import { IntlShape } from "react-intl";
 
-import { Message } from "../ChannelsAvailability/types";
+import { Message } from "./types";
 
 type ChannelsAvailabilityMessageKey =
   | "availableDateText"

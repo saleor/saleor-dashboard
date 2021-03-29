@@ -12,6 +12,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/components/ChannelsWithVariantsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -19,11 +20,13 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -247,6 +250,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
+  const isSimpleProduct =
+    data?.product?.variants.length === 1 &&
+    !!data?.product.variants.find(getById(data?.product?.defaultVariant.id));
+
   const {
     setChannelsWithVariantsData,
     channelsWithVariantsData,
@@ -261,6 +268,26 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     action: params?.action,
     openModal,
     closeModal
+  });
+
+  const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
+    product
+  );
+
+  const {
+    channelListElements,
+    channelsToggle,
+    currentChannels,
+    handleChannelsConfirm,
+    handleChannelsModalClose,
+    handleChannelsModalOpen,
+    isChannelSelected,
+    isChannelsModalOpen,
+    setCurrentChannels,
+    toggleAllChannels
+  } = useChannels(productChannelsChoices, params?.action, {
+    closeModal,
+    openModal
   });
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
@@ -442,21 +469,46 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   return (
     <>
       <WindowTitle title={data?.product?.name} />
-      {!!allChannels?.length && (
-        <ChannelsWithVariantsAvailabilityDialog
-          channelsWithVariantsData={channelsWithVariantsData}
-          haveChannelsWithVariantsDataChanged={
-            haveChannelsWithVariantsDataChanged
-          }
-          {...channelsWithVariantsProps}
-          channels={allChannels}
-          variants={product?.variants}
-        />
-      )}
+      {!!allChannels?.length &&
+        (isSimpleProduct ? (
+          <ChannelsAvailabilityDialog
+            isSelected={isChannelSelected}
+            channels={allChannels}
+            onChange={channelsToggle}
+            onClose={handleChannelsModalClose}
+            open={isChannelsModalOpen}
+            title={intl.formatMessage({
+              defaultMessage: "Manage Products Channel Availability"
+            })}
+            confirmButtonState="default"
+            selected={channelListElements.length}
+            onConfirm={handleChannelsConfirm}
+            toggleAll={toggleAllChannels}
+          />
+        ) : (
+          <ChannelsWithVariantsAvailabilityDialog
+            channelsWithVariantsData={channelsWithVariantsData}
+            haveChannelsWithVariantsDataChanged={
+              haveChannelsWithVariantsDataChanged
+            }
+            {...channelsWithVariantsProps}
+            channels={allChannels}
+            variants={product?.variants}
+          />
+        ))}
       <ProductUpdatePage
+        hasChannelChanged={
+          haveChannelsWithVariantsDataChanged ||
+          productChannelsChoices?.length !== currentChannels?.length
+        }
+        isSimpleProduct={isSimpleProduct}
+        openChannelsModal={handleChannelsModalOpen}
+        onChannelsChange={setCurrentChannels}
+        channelsErrors={channelsErrors}
+        currentChannels={currentChannels}
+        allChannelsCount={allChannels?.length}
         channelsData={channelsData}
         setChannelsData={setChannelsData}
-        hasChannelChanged={haveChannelsWithVariantsDataChanged}
         categories={categories}
         collections={collections}
         channelsWithVariantsData={channelsWithVariantsData}
@@ -464,7 +516,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
         errors={errors}
-        channelsErrors={channelsErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         saveButtonBarState={formTransitionState}
@@ -510,7 +561,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         selectedChannelId={channel?.id}
-        openChannelsModal={onChannelsAvailiabilityModalOpen}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }

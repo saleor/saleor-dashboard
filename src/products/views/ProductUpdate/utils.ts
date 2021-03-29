@@ -107,9 +107,9 @@ export const areAllChannelVariantsSelected = (
   { selectedVariantsIds }: Pick<ChannelWithVariantData, "selectedVariantsIds">
 ) => selectedVariantsIds.length === variants.length;
 
-export const areAnyChannelVariantsSelected = ({
-  selectedVariantsIds
-}: ChannelWithVariantData) => selectedVariantsIds.length > 0;
+export const areAnyChannelVariantsSelected = (
+  channelsWithVariantsData: ChannelWithVariantData
+) => channelsWithVariantsData?.selectedVariantsIds.length > 0;
 
 export const getTotalSelectedChannelsCount = (
   channelsWithVariantsData: ChannelsWithVariantsData

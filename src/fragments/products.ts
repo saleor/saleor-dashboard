@@ -259,6 +259,7 @@ export const selectedVariantAttributeFragment = gql`
 `;
 
 export const fragmentVariant = gql`
+  ${fragmentProductMedia}
   ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
   ${stockFragment}

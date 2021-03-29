@@ -1,14 +1,15 @@
 import { ChannelData } from "@saleor/channels/utils";
-import ChannelContent from "@saleor/components/ChannelsAvailability/ChannelContent";
+import CannotDefineChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
+import ChannelContent from "@saleor/components/ChannelsAvailabilityCard/ChannelContent";
 import ChannelsAvailabilityWrapper, {
   ChannelsAvailabilityWrapperProps
-} from "@saleor/components/ChannelsAvailability/ChannelsAvailabilityWrapper";
+} from "@saleor/components/ChannelsAvailabilityCard/ChannelsAvailabilityWrapper";
 import {
   ChannelsAvailabilityError,
   ChannelValue,
   Message
-} from "@saleor/components/ChannelsAvailability/types";
-import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailability/utils";
+} from "@saleor/components/ChannelsAvailabilityCard/types";
+import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
@@ -59,6 +60,10 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   const selectedChannelsCount = getTotalSelectedChannelsCount(
     channelsWithVariantsData
   );
+
+  if (!variants?.length) {
+    return <CannotDefineChannelsAvailabilityCard />;
+  }
 
   return (
     <ChannelsAvailabilityWrapper

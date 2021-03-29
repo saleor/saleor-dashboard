@@ -21,7 +21,6 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -57,6 +56,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   changeTaxCode: boolean;
   channelsData: ChannelData[];
   channelsWithVariants: ChannelsWithVariantsData;
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -149,6 +149,8 @@ export interface UseProductUpdateFormOpts
   warehouses: SearchWarehouses_search_edges_node[];
   channelsData: ChannelData[];
   hasVariants: boolean;
+  currentChannels: ChannelData[];
+  setChannels: (data: ChannelData[]) => void;
   setChannelsData: (data: ChannelData[]) => void;
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
@@ -202,6 +204,7 @@ function useProductUpdateForm(
     getProductUpdatePageFormData(
       product,
       product?.variants,
+      opts.currentChannels,
       opts.channelsData,
       opts.channelsWithVariants
     )
@@ -299,11 +302,13 @@ function useProductUpdateForm(
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleChannelsChange = createChannelsChangeHandler(
     opts.channelsData,
+    opts.setChannels,
     opts.setChannelsData,
     triggerChange
   );
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.channelsData,
+    opts.setChannels,
     opts.setChannelsData,
     triggerChange
   );

@@ -5,7 +5,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
-import { ChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailability/utils";
+import { ChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";

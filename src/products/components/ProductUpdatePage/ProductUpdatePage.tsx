@@ -8,6 +8,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -62,7 +63,10 @@ import ProductUpdateForm, {
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   channelsWithVariantsData: ChannelsWithVariantsData;
   setChannelsData: (data: ChannelData[]) => void;
+  onChannelsChange: (data: ChannelData[]) => void;
   channelsData: ChannelData[];
+  currentChannels: ChannelData[];
+  allChannelsCount: number;
   channelsErrors: ProductChannelListingErrorFragment[];
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
@@ -86,6 +90,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  isSimpleProduct: boolean;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchReferencePages?: (data: string) => void;
@@ -126,6 +131,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   categories: categoryChoiceList,
   channelsErrors,
   collections: collectionChoiceList,
+  isSimpleProduct,
   errors,
   fetchCategories,
   fetchCollections,
@@ -145,6 +151,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   referenceProducts = [],
   onBack,
   onDelete,
+  allChannelsCount,
+  currentChannels,
   onImageDelete,
   onImageEdit,
   onImageReorder,
@@ -174,7 +182,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
   onCloseDialog,
-  channelsWithVariantsData
+  channelsWithVariantsData,
+  onChannelsChange
 }) => {
   const intl = useIntl();
 
@@ -223,6 +232,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <ProductUpdateForm
+      currentChannels={currentChannels}
       channelsData={channelsData}
       setChannelsData={setChannelsData}
       onSubmit={onSubmit}
@@ -234,6 +244,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
+      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       hasVariants={hasVariants}
@@ -386,27 +397,50 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onCollectionChange={handlers.selectCollection}
                 />
                 <CardSpacer />
-                <ChannelsWithVariantsAvailabilityCard
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Not published",
-                      description: "product label",
-                      id: "not published channel"
-                    }),
+                {isSimpleProduct ? (
+                  <ChannelsAvailability
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label"
+                      }),
 
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Published",
-                      description: "product label",
-                      id: "published channel"
-                    })
-                  }}
-                  errors={channelsErrors}
-                  channels={data.channelsData}
-                  channelsWithVariantsData={channelsWithVariantsData}
-                  variants={variants}
-                  onChange={handlers.changeChannels}
-                  openModal={openChannelsModal}
-                />
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label"
+                      })
+                    }}
+                    errors={channelsErrors}
+                    selectedChannelsCount={data.channelListings.length}
+                    allChannelsCount={allChannelsCount}
+                    channels={data.channelListings}
+                    disabled={disabled}
+                    onChange={handlers.changeChannels}
+                    openModal={openChannelsModal}
+                  />
+                ) : (
+                  <ChannelsWithVariantsAvailabilityCard
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label",
+                        id: "not published channel"
+                      }),
+
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label",
+                        id: "published channel"
+                      })
+                    }}
+                    errors={channelsErrors}
+                    channels={data.channelsData}
+                    channelsWithVariantsData={channelsWithVariantsData}
+                    variants={variants}
+                    onChange={handlers.changeChannels}
+                    openModal={openChannelsModal}
+                  />
+                )}
                 <CardSpacer />
                 <ProductTaxes
                   data={data}
