@@ -1,20 +1,33 @@
 import { ChannelData } from "@saleor/channels/utils";
 import { LocalizeDate } from "@saleor/hooks/useDateLocalize";
-import { IntlShape, MessageDescriptor } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import { Message } from "../ChannelsAvailability/types";
 
+type ChannelsAvailabilityMessageKey =
+  | "availableDateText"
+  | "availableLabel"
+  | "availableSecondLabel"
+  | "hiddenSecondLabel"
+  | "setAvailabilityDateLabel"
+  | "unavailableLabel";
+
+export type ChannelsAvailabilityMessages = Record<
+  ChannelsAvailabilityMessageKey,
+  string
+>;
+
 export const getChannelsAvailabilityMessages = ({
   messages,
-  channels,
+  channels = [],
   intl,
   localizeDate
 }: {
-  messages: Message;
-  channels: ChannelData[];
+  messages?: Message;
+  channels?: ChannelData[];
   intl: IntlShape;
   localizeDate: LocalizeDate;
-}): Record<string, MessageDescriptor> =>
+}): ChannelsAvailabilityMessages =>
   channels.reduce(
     (prevVal, currVal) => ({
       ...prevVal,
@@ -91,5 +104,5 @@ export const getChannelsAvailabilityMessages = ({
         })
       }
     }),
-    {}
+    {} as ChannelsAvailabilityMessages
   );

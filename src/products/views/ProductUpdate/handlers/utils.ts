@@ -66,7 +66,7 @@ const getParsedChannelsData = (
     getChannelListingAddInputFromData(channelsWithVariants[id], { id, ...rest })
   );
 
-const getParsedChannelsToBeAdded = (
+export const getParsedChannelsToBeAdded = (
   channelsWithVariants: ChannelsWithVariantsData,
   channelsData: ChannelData[]
 ) =>

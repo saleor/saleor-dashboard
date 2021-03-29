@@ -192,9 +192,9 @@ export const productFragmentDetails = gql`
     channelListings {
       ...ChannelListingProductFragment
     }
-    # media {
-    #   ...ProductMediaFragment
-    # }
+    media {
+      ...ProductMediaFragment
+    }
     isAvailable
     variants {
       id

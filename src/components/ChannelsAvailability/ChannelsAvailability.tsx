@@ -21,7 +21,7 @@ export interface ChannelsAvailability
   channelsList: ChannelList[];
   errors?: ChannelsAvailabilityError[];
   disabled?: boolean;
-  messages: Message;
+  messages?: Message;
   onChange?: (id: string, data: ChannelValue) => void;
 }
 

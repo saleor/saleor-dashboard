@@ -35,16 +35,25 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { MutationFetchResult } from "react-apollo";
 
-const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
+import { getParsedChannelsToBeAdded } from "../ProductUpdate/handlers/utils";
+import { ChannelsWithVariantsData } from "../ProductUpdate/types";
+
+const getChannelsVariables = (
+  productId: string,
+  channelsWithVariants: ChannelsWithVariantsData,
+  channelsData: ChannelData[]
+) => ({
   variables: {
     id: productId,
     input: {
-      addChannels: getAvailabilityVariables(channels)
+      updateChannels: getParsedChannelsToBeAdded(
+        channelsWithVariants,
+        channelsData
+      )
     }
   }
 });

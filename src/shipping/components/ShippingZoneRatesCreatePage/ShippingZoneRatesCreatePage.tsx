@@ -169,10 +169,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 <ChannelsAvailability
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name
-                  }))}
+                  channelsList={data.channelListings}
                   openModal={openChannelsModal}
                 />
               </div>

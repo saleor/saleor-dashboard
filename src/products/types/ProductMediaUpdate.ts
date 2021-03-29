@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductMediaUpdate
@@ -179,6 +179,16 @@ export interface ProductMediaUpdate_productMediaUpdate_product_collections {
   name: string;
 }
 
+export interface ProductMediaUpdate_productMediaUpdate_product_media {
+  __typename: "ProductMedia";
+  id: string;
+  alt: string;
+  sortOrder: number | null;
+  url: string;
+  type: ProductMediaType;
+  oembedData: any;
+}
+
 export interface ProductMediaUpdate_productMediaUpdate_product_variants_media {
   __typename: "ProductMedia";
   url: string;
@@ -266,6 +276,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product {
   category: ProductMediaUpdate_productMediaUpdate_product_category | null;
   collections: (ProductMediaUpdate_productMediaUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
+  media: ProductMediaUpdate_productMediaUpdate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductMediaUpdate_productMediaUpdate_product_variants | null)[] | null;
   weight: ProductMediaUpdate_productMediaUpdate_product_weight | null;

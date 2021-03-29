@@ -12,7 +12,7 @@ export interface ChannelsAvailabilityDialogProps {
   channels: Channel[];
   confirmButtonState: ConfirmButtonTransitionState;
   contentType?: string;
-  disabled: boolean;
+  disabled?: boolean;
   open: boolean;
   onClose: () => void;
   onChange: (option: Channel) => void;
@@ -59,7 +59,6 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
         onQueryChange={onQueryChange}
         toggleAll={handleToggleAll}
         contentType={contentType}
-        disabled={disabled}
       >
         <ChannelsAvailabilityContent
           filteredChannels={filteredChannels}
