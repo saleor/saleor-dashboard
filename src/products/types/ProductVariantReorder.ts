@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ReorderInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -269,7 +270,7 @@ export interface ProductVariantReorder_productVariantReorder_product {
   category: ProductVariantReorder_productVariantReorder_product_category | null;
   collections: (ProductVariantReorder_productVariantReorder_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductVariantReorder_productVariantReorder_product_media | null)[] | null;
+  media: ProductVariantReorder_productVariantReorder_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductVariantReorder_productVariantReorder_product_variants | null)[] | null;
   weight: ProductVariantReorder_productVariantReorder_product_weight | null;
