@@ -157,7 +157,6 @@ describe("Shipping methods", () => {
         checkout,
         shippingName
       );
-      /* eslint-disable no-unused-expressions */
       expect(isShippingAvailable).to.be.true;
     });
   });

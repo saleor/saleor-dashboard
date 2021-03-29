@@ -85,7 +85,6 @@ describe("Draft orders", () => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
         $order => {
-          /* eslint-disable no-unused-expressions */
           expect($order).to.be.visible;
         }
       );

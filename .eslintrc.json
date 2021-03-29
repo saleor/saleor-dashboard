@@ -11,7 +11,9 @@
     "@typescript-eslint",
     "import",
     "local-rules",
-    "simple-import-sort"
+    "simple-import-sort",
+    "cypress",
+    "chai-friendly"
   ],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -72,6 +74,7 @@
     "arrow-parens": ["off", "as-needed"],
     "camelcase": "off",
     "capitalized-comments": "off",
+    "chai-friendly/no-unused-expressions": "error",
     "comma-dangle": "off",
     "complexity": "off",
     "constructor-super": "error",
@@ -151,7 +154,7 @@
     "no-undef-init": "error",
     "no-underscore-dangle": "off",
     "no-unsafe-finally": "error",
-    "no-unused-expressions": "error",
+    "no-unused-expressions": "off",
     "no-unused-labels": "error",
     "no-var": "error",
     "object-shorthand": "error",
