@@ -9,7 +9,7 @@ import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith

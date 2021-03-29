@@ -1,6 +1,6 @@
-import * as attributeRequest from "../apiRequests/Attribute";
-import * as categoryRequest from "../apiRequests/Category";
-import * as productRequest from "../apiRequests/Product";
+import * as attributeRequest from "../../apiRequests/Attribute";
+import * as categoryRequest from "../../apiRequests/Category";
+import * as productRequest from "../../apiRequests/Product";
 
 export function createProductInChannel({
   name,

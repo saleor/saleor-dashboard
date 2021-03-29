@@ -11,7 +11,7 @@ import { selectChannelInPicker } from "../../steps/channelsSteps";
 import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
 import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith

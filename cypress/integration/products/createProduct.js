@@ -12,7 +12,11 @@ import {
 import { fillUpCommonFieldsForProductType } from "../../steps/catalog/products/productSteps";
 import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
-import * as productUtils from "../../utils/productsUtils";
+import {
+  expectCorrectProductInformation,
+  expectCorrectProductVariantInformation
+} from "../../utils/products/checkProductInfo";
+import * as productUtils from "../../utils/products/productsUtils";
 
 describe("Create product", () => {
   const startsWith = "Cy-";
@@ -38,7 +42,6 @@ describe("Create product", () => {
       value: "privateMetadataValue"
     }
   };
-  const { softExpect } = chai;
   let attribute;
 
   before(() => {
@@ -63,7 +66,8 @@ describe("Create product", () => {
       generalInfo,
       seo,
       metadata,
-      productOrganization: { productType: randomName }
+      productOrganization: { productType: randomName },
+      attribute
     };
     fillUpCommonFieldsForProductType(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
@@ -89,7 +93,8 @@ describe("Create product", () => {
       generalInfo,
       seo,
       metadata,
-      productOrganization: { productType: randomName }
+      productOrganization: { productType: randomName },
+      attribute
     };
     fillUpCommonFieldsForProductType(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
@@ -108,65 +113,11 @@ describe("Create product", () => {
         const productResp = resp.find(element => element.data.product).data
           .product;
         expectCorrectProductInformation(productResp, productData);
-        softExpect(
-          expect(productResp.variants).to.have.length(1),
-          softExpect(productResp.variants[0].sku).to.be.eq(randomName),
-          softExpect(
-            productResp.variants[0].channelListings[0].costPrice.amount
-          ).to.be.eq(prices.costPrice),
-          softExpect(
-            productResp.variants[0].channelListings[0].price.amount
-          ).to.be.eq(prices.sellingPrice)
+        expectCorrectProductVariantInformation(
+          productResp.variants,
+          randomName,
+          prices
         );
       });
   });
-
-  function expectCorrectProductInformation(productResp, productData) {
-    softExpect(productResp.name).to.be.eq(productData.generalInfo.name);
-    softExpect(productResp.description).includes(
-      productData.generalInfo.description
-    );
-    softExpect(productResp.rating).to.be.eq(productData.generalInfo.rating);
-    softExpect(productResp.slug).to.be.eq(productData.seo.slug);
-    softExpect(productResp.seoTitle).to.be.eq(productData.seo.title);
-    softExpect(productResp.seoDescription).to.be.eq(
-      productData.seo.description
-    );
-    softExpect(
-      expect(productResp.metadata).to.have.length(1),
-      softExpect(productResp.metadata[0].key).to.be.eq(
-        productData.metadata.public.name
-      ),
-      softExpect(productResp.metadata[0].value).to.be.eq(
-        productData.metadata.public.value
-      )
-    );
-    softExpect(
-      expect(productResp.privateMetadata).to.have.length(1),
-      softExpect(productResp.privateMetadata[0].key).to.be.eq(
-        productData.metadata.private.name
-      ),
-      softExpect(productResp.privateMetadata[0].value).to.be.eq(
-        productData.metadata.private.value
-      )
-    );
-    softExpect(productResp.productType.name).to.be.eq(
-      productData.productOrganization.productType
-    );
-    softExpect(productResp.category.name).to.be.eq(
-      productData.productOrganization.category
-    );
-    softExpect(
-      expect(productResp.attributes).to.have.length(1),
-      softExpect(productResp.attributes[0].attribute.name).to.be.eq(
-        attribute.name
-      )
-    );
-    softExpect(
-      expect(productResp.collections).to.have.length(1),
-      softExpect(productResp.collections[0].name).to.be.eq(
-        productData.productOrganization.collection
-      )
-    );
-  }
 });

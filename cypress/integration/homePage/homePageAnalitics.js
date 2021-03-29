@@ -13,7 +13,7 @@ import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder
 } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 
 // <reference types="cypress" />
