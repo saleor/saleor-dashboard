@@ -5,7 +5,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
-import ChannelsAvailabilityContent from "@saleor/components/ChannelsAvailabilityContent";
+import ChannelsAvailabilityContent from "@saleor/components/ChannelsAvailabilityDialogContentWrapper";
 import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";

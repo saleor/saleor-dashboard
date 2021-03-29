@@ -161,6 +161,7 @@ export const productVariantAttributesFragment = gql`
 `;
 
 export const productFragmentDetails = gql`
+  ${fragmentProductMedia}
   ${productVariantAttributesFragment}
   ${stockFragment}
   ${weightFragment}

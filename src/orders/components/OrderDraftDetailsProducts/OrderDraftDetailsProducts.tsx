@@ -4,7 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps

@@ -24,28 +24,38 @@ export const useStyles = makeStyles(
 
 export interface ChannelsAvailabilityContentProps {
   isChannelSelected: (channel: Channel) => boolean;
-  filteredChannels: Channel[];
+  channels: Channel[];
   onChange: (option: Channel) => void;
 }
 
 const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
   isChannelSelected,
-  filteredChannels,
+  channels,
   onChange
 }) => {
   const classes = useStyles({});
 
-  return filteredChannels.map(option => (
-    <div key={option.id} className={classes.option} data-test-id="channel-row">
-      <ControlledCheckbox
-        checked={isChannelSelected(option)}
-        name={option.name}
-        label={<Typography className={classes.label}>{option.name}</Typography>}
-        onChange={() => onChange(option)}
-      />
-      <Hr />
-    </div>
-  ));
+  return (
+    <>
+      {channels.map(option => (
+        <div
+          key={option.id}
+          className={classes.option}
+          data-test-id="channel-row"
+        >
+          <ControlledCheckbox
+            checked={isChannelSelected(option)}
+            name={option.name}
+            label={
+              <Typography className={classes.label}>{option.name}</Typography>
+            }
+            onChange={() => onChange(option)}
+          />
+          <Hr />
+        </div>
+      ))}
+    </>
+  );
 };
 
 export default ChannelsAvailabilityContent;

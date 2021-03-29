@@ -313,9 +313,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     })
                   }}
                   errors={channelsErrors}
-                  selectedChannelsCount={data.channelListings.length}
+                  selectedChannelsCount={data.channelListings?.length || 0}
                   allChannelsCount={allChannelsCount}
-                  channels={data.channelListings}
+                  channels={data.channelListings || []}
                   disabled={loading}
                   onChange={handlers.changeChannels}
                   openModal={openChannelsModal}

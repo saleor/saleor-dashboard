@@ -11,7 +11,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
-import ChannelsAvailabilityContentWrapper from "../ChannelsAvailabilityContent/ChannelsAvailabilityContentWrapper";
+import ChannelsAvailabilityContentWrapper from "../ChannelsAvailabilityDialogContentWrapper/ChannelsAvailabilityDialogContentWrapper";
 import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariantsAvailabilityDialogContent";
 
 const messages = defineMessages({
@@ -27,7 +27,10 @@ type UseChannelsWithVariantsCommonProps = Omit<
 >;
 
 export interface ChannelsAvailabilityDialogProps
-  extends UseChannelsWithVariantsCommonProps {
+  extends Omit<
+    UseChannelsWithVariantsCommonProps,
+    "channelsData" | "setChannelsData"
+  > {
   channels: ChannelData[];
   contentType?: string;
   variants: ProductDetails_product_variants[];

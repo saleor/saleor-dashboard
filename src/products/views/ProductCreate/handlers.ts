@@ -39,21 +39,32 @@ import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/Sea
 import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { MutationFetchResult } from "react-apollo";
 
-import { getParsedChannelsToBeAdded } from "../ProductUpdate/handlers/utils";
-import { ChannelsWithVariantsData } from "../ProductUpdate/types";
+export const getAvailabilityVariables = (channels: ChannelData[]) =>
+  channels.map(channel => {
+    const { isAvailableForPurchase, availableForPurchase } = channel;
+    const isAvailable =
+      availableForPurchase && !isAvailableForPurchase
+        ? true
+        : isAvailableForPurchase;
 
-const getChannelsVariables = (
-  productId: string,
-  channelsWithVariants: ChannelsWithVariantsData,
-  channelsData: ChannelData[]
-) => ({
+    return {
+      availableForPurchaseDate:
+        isAvailableForPurchase || availableForPurchase === ""
+          ? null
+          : availableForPurchase,
+      channelId: channel.id,
+      isAvailableForPurchase: isAvailable,
+      isPublished: channel.isPublished,
+      publicationDate: channel.publicationDate,
+      visibleInListings: channel.visibleInListings
+    };
+  });
+
+const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
     id: productId,
     input: {
-      updateChannels: getParsedChannelsToBeAdded(
-        channelsWithVariants,
-        channelsData
-      )
+      updateChannels: getAvailabilityVariables(channels)
     }
   }
 });

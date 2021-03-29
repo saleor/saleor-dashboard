@@ -37,7 +37,6 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -54,8 +53,7 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
   changeTaxCode: boolean;
-  channelsWithVariants: ChannelsWithVariantsData;
-  channelsData: ChannelData[];
+  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   description: OutputData;
@@ -156,8 +154,7 @@ function useProductCreateForm(
     Record<"productType", string> = {
     category: "",
     changeTaxCode: false,
-    channelsData: [],
-    channelsWithVariants: {},
+    channelListings: opts.currentChannels,
     chargeTaxes: false,
     collections: [],
     description: null,
@@ -325,7 +322,7 @@ function useProductCreateForm(
   const disabled =
     !productTypeChoice?.hasVariants &&
     (!data.sku ||
-      data.channelsData.some(
+      data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ));
