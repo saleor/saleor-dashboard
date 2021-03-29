@@ -271,7 +271,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceSend = (data: InvoiceEmailSend) => {
-    const errs = data.invoiceSendEmail?.errors;
+    const errs = data.invoiceSendNotification?.errors;
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({

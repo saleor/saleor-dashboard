@@ -687,7 +687,7 @@ const invoiceEmailSendMutation = gql`
   ${invoiceErrorFragment}
   ${invoiceFragment}
   mutation InvoiceEmailSend($id: ID!) {
-    invoiceSendEmail(id: $id) {
+    invoiceSendNotification(id: $id) {
       errors: invoiceErrors {
         ...InvoiceErrorFragment
       }
