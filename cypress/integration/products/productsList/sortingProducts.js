@@ -1,5 +1,6 @@
+import get from "lodash.get";
+
 import { urlList } from "../../../url/urlList";
-import { getDisplayedProductsArray } from "../../../utils/products/productsListUtils";
 
 description("Sorting products", () => {
   before(() => {
@@ -8,8 +9,8 @@ description("Sorting products", () => {
       .visit(urlList.products);
   });
   it("Sorting by name", () => {
-    getDisplayedProductsArray().then(productsArray => {
-      expectSortedBy(productsArray, "name");
-    });
+    expectProductsSortedBy("name");
+    get(PRODUCTS_LIST.nameColumnSortingArrow).click();
+    expectProductsSortedBy("name", false);
   });
 });

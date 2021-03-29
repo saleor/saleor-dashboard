@@ -15,12 +15,14 @@ export function getDisplayedProductsArray() {
     })
     .then(() => productsList);
 }
-export function expectSortedBy(productsArray, columnName, inAscOrder = true) {
-  const productsNames = productsArray.map(product => product[columnName]);
-  const sortedArray = inAscOrder
-    ? productsNames.sort()
-    : productsNames.sort(function(a, b) {
-        return b - a;
-      });
-  expect(productsNames).to.be.eq(sortedArray);
+export function expectProductsSortedBy(columnName, inAscOrder = true) {
+  getDisplayedProductsArray().then(productsArray => {
+    const productsNames = productsArray.map(product => product[columnName]);
+    const sortedArray = inAscOrder
+      ? productsNames.sort()
+      : productsNames.sort(function(a, b) {
+          return b - a;
+        });
+    expect(productsNames).to.be.eq(sortedArray);
+  });
 }
