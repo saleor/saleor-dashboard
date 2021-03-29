@@ -28,6 +28,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update CollectionBulkDelete error type - #1030 by @d-wysocki
 - Remove mailing settings - #1027 by @dominik-zeglen
 - Update schema to contain email plugin changes - #1029 by @dominik-zeglen
+- Fix creating shipping voucher - #1031 by @orzechdev
 
 # 2.11.1
 
