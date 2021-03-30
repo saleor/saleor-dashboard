@@ -1,9 +1,9 @@
 import configureIcon from "@assets/images/menu-configure-icon.svg";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { User } from "@saleor/fragments/types/User";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";

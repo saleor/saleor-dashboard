@@ -1,6 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@saleor/theme";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 

@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
@@ -9,6 +8,7 @@ import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/theme";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
 import classNames from "classnames";

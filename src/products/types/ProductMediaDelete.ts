@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ProductErrorCode } from "./../../types/globalTypes";
@@ -22,7 +23,7 @@ export interface ProductMediaDelete_productMediaDelete_product_media {
 export interface ProductMediaDelete_productMediaDelete_product {
   __typename: "Product";
   id: string;
-  media: (ProductMediaDelete_productMediaDelete_product_media | null)[] | null;
+  media: ProductMediaDelete_productMediaDelete_product_media[] | null;
 }
 
 export interface ProductMediaDelete_productMediaDelete {

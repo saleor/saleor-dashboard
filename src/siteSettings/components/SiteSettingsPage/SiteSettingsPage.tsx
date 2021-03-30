@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
@@ -14,6 +13,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";

@@ -1,4 +1,4 @@
-import { getValueWithDefault } from "./utils/Utils";
+import { getValueWithDefault } from "../utils/Utils";
 
 export function getSales(first, searchQuery) {
   const filter = getValueWithDefault(

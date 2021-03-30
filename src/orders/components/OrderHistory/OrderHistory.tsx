@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
@@ -11,6 +10,7 @@ import {
   TimelineNote
 } from "@saleor/components/Timeline";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
+import { makeStyles } from "@saleor/theme";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum

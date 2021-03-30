@@ -1,11 +1,11 @@
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import useWizard from "@saleor/hooks/useWizard";
 import { validatePrice } from "@saleor/products/utils/validation";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 

@@ -1,10 +1,10 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { IconProps } from "@material-ui/core/Icon";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,6 +19,7 @@ export interface MenuItem {
   permission: PermissionEnum;
   title: string;
   url?: string;
+  testId?: string;
 }
 
 export interface MenuSection {
@@ -128,6 +129,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     key={itemIndex}
                     data-test="settingsSubsection"
                     data-testid={item.title.toLowerCase()}
+                    data-test-id={item.testId}
                   >
                     <CardContent className={classes.cardContent}>
                       <div className={classes.icon}>{item.icon}</div>

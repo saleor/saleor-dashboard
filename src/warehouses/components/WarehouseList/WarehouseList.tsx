@@ -1,5 +1,4 @@
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -13,6 +12,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";

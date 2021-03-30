@@ -1,9 +1,9 @@
 import { IconButtonProps } from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import Toolbar from "@material-ui/core/Toolbar";
 import RowNumberSelect from "@saleor/components/RowNumberSelect";
 import { maybe } from "@saleor/misc";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import { ListSettings } from "../../types";

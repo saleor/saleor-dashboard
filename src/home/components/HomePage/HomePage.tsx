@@ -1,10 +1,10 @@
-import { makeStyles } from "@material-ui/core/styles";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
+import { makeStyles } from "@saleor/theme";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";

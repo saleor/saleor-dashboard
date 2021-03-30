@@ -1,6 +1,6 @@
 import { ButtonProps } from "@material-ui/core/Button";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import ArrowIcon from "@material-ui/icons/ArrowBack";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 

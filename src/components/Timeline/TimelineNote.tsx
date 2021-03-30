@@ -2,9 +2,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import * as colors from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
+import { makeStyles } from "@saleor/theme";
 import CRC from "crc-32";
 import React from "react";
 

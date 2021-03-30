@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 const useStyles = makeStyles(

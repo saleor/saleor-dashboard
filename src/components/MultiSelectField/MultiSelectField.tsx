@@ -4,7 +4,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select, { SelectProps } from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

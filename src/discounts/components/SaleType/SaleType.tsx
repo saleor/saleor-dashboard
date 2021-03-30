@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
 import { FormChange } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/theme";
 import { SaleType as SaleTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
