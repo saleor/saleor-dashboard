@@ -1,5 +1,5 @@
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
-
+/* eslint-disable no-unused-expressions*/
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
   return cy
@@ -16,10 +16,31 @@ export function getDisplayedColumnArray(columnName) {
 }
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
   getDisplayedColumnArray(columnName).then(productsArray => {
-    const newProductArray = productsArray.slice();
-    const sortedProductsArray = inAscOrder
-      ? newProductArray.sort()
-      : newProductArray.sort().reverse();
+    let sortedProductsArray = productsArray.slice();
+    if (columnName !== "price") {
+      inAscOrder
+        ? sortedProductsArray.sort()
+        : sortedProductsArray.sort().reverse();
+    } else {
+      sortedProductsArray = getSortedPriceColumn(
+        sortedProductsArray,
+        inAscOrder
+      );
+    }
     expect(productsArray).to.be.deep.eq(sortedProductsArray);
   });
+}
+function getSortedPriceColumn(productsArray, inAscOrder) {
+  return inAscOrder
+    ? productsArray.sort(sortColumnByPrice)
+    : productsArray.sort(sortColumnByPrice).reverse();
+}
+function sortColumnByPrice(a, b) {
+  return (
+    getMinimalPriceFromPriceRangeCell(a) > getMinimalPriceFromPriceRangeCell(b)
+  );
+}
+function getMinimalPriceFromPriceRangeCell(priceRange) {
+  const regex = /\d+,\d+/;
+  return parseFloat(priceRange.match(regex));
 }

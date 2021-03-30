@@ -8,19 +8,18 @@ describe("Sorting products", () => {
   sortByList.forEach(sortBy => {
     it(`Sorting by ${sortBy}`, () => {
       let ascSortOrder;
+
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
-      cy.addAliasToGraphRequest("ProductList");
       if (sortBy !== "name") {
         cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
-        cy.wait("@ProductList");
         cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
-        ascSortOrder = true;
+        ascSortOrder = sortBy !== "availability" ? true : false;
       }
       expectProductsSortedBy(sortBy, ascSortOrder);
       cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
-      cy.wait("@ProductList");
+      ascSortOrder = sortBy !== "availability" ? false : true;
       cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
       expectProductsSortedBy(sortBy, ascSortOrder);
     });

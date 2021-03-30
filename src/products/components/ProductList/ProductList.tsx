@@ -228,7 +228,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
 
             return (
               <TableCellHeader
-                data-test-id="colPriceHeader"
                 className={classes.colAttribute}
                 direction={
                   sort.sort === ProductListUrlSortField.attribute &&
@@ -253,6 +252,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           })}
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
+              data-test-id="colPriceHeader"
               className={classes.colPrice}
               direction={
                 sort.sort === ProductListUrlSortField.price
