@@ -1,5 +1,4 @@
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -11,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { TaxRateType } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
