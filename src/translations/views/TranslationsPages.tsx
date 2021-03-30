@@ -10,7 +10,7 @@ import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import { TypedUpdatePageTranslations } from "../mutations";
 import { usePageTranslationDetails } from "../queries";
-import { TranslationInputFieldName } from "../types";
+import { PageTranslationInputFieldName } from "../types";
 import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
 import {
   languageEntitiesUrl,
@@ -68,7 +68,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     <TypedUpdatePageTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (
-          fieldName: TranslationInputFieldName,
+          fieldName: PageTranslationInputFieldName,
           data: string
         ) => {
           updateTranslations({
