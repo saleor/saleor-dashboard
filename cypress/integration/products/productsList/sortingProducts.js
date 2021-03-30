@@ -7,6 +7,7 @@ describe("Sorting products", () => {
   const sortByList = ["name", "type", "availability", "price"];
   sortByList.forEach(sortBy => {
     it(`Sorting by ${sortBy}`, () => {
+      let ascSortOrder;
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
@@ -15,12 +16,13 @@ describe("Sorting products", () => {
         cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
         cy.wait("@ProductList");
         cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+        ascSortOrder = true;
       }
-      expectProductsSortedBy(sortBy);
+      expectProductsSortedBy(sortBy, ascSortOrder);
       cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
       cy.wait("@ProductList");
       cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
-      expectProductsSortedBy(sortBy, false);
+      expectProductsSortedBy(sortBy, ascSortOrder);
     });
   });
 });
