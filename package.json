@@ -17,7 +17,7 @@
     "npm": ">=6.11.0 <7"
   },
   "dependencies": {
-    "@editorjs/editorjs": "^2.19.1",
+    "@editorjs/editorjs": "^2.19.3",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
     "@editorjs/list": "^1.6.1",
