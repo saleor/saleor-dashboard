@@ -1,11 +1,11 @@
 import logoLight from "@assets/images/logo-sidebar-light.svg";
 import configurationIcon from "@assets/images/menu-configure-icon.svg";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { User } from "@saleor/fragments/types/User";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";

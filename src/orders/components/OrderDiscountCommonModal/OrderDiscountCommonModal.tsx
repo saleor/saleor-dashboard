@@ -7,7 +7,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { PopperPlacementType } from "@material-ui/core/Popper";
-import { makeStyles } from "@material-ui/core/styles";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton, {
@@ -17,6 +16,7 @@ import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { Money } from "@saleor/fragments/types/Money";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, {
   ChangeEvent,
