@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
@@ -13,6 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";

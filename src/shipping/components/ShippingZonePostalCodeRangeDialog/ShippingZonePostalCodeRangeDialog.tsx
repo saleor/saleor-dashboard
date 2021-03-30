@@ -3,7 +3,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ConfirmButton, {
@@ -12,6 +11,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import { buttonMessages, commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { DialogProps, MinMax } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

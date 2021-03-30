@@ -1,11 +1,11 @@
 import Button from "@material-ui/core/Button";
+import TextField, { StandardTextFieldProps } from "@material-ui/core/TextField";
 import {
   createStyles,
-  Theme,
+  SaleorTheme,
   WithStyles,
   withStyles
-} from "@material-ui/core/styles";
-import TextField, { StandardTextFieldProps } from "@material-ui/core/TextField";
+} from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -16,7 +16,7 @@ interface ListFieldState {
   value: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = (theme: SaleorTheme) =>
   createStyles({
     chip: {
       marginBottom: theme.spacing(1)

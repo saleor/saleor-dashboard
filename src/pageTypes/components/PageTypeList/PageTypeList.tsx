@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -11,6 +10,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
+import { makeStyles } from "@saleor/theme";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";

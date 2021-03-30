@@ -1,10 +1,10 @@
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
+import { makeStyles } from "@saleor/theme";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";

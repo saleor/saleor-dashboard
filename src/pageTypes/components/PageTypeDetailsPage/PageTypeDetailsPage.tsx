@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -14,6 +13,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
+import { makeStyles } from "@saleor/theme";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";

@@ -2,9 +2,9 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Portal from "@material-ui/core/Portal";
-import { makeStyles } from "@material-ui/core/styles";
 import useWindowScroll from "@saleor/hooks/useWindowScroll";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

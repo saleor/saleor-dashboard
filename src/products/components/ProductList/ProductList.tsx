@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -24,6 +23,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
+import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
