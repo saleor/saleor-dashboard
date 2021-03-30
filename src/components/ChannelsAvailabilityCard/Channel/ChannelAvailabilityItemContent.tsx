@@ -9,14 +9,14 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DateContext } from "../Date/DateContext";
-import { useStyles } from "./styles";
+import { DateContext } from "../../Date/DateContext";
+import { useStyles } from "../styles";
 import {
   ChannelData,
   ChannelsAvailabilityError,
   ChannelValue,
   Message
-} from "./types";
+} from "../types";
 
 export interface ChannelContentProps {
   disabled?: boolean;

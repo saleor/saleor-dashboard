@@ -6,11 +6,11 @@ import { RequireOnlyOne } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelContent from "./ChannelContent";
-import ChannelContentWrapper from "./ChannelContentWrapper";
-import ChannelsAvailabilityWrapper, {
+import ChannelAvailabilityItemContent from "./Channel/ChannelAvailabilityItemContent";
+import ChannelAvailabilityItemWrapper from "./Channel/ChannelAvailabilityItemWrapper";
+import ChannelsAvailabilityCardWrapper, {
   ChannelsAvailabilityWrapperProps
-} from "./ChannelsAvailabilityWrapper";
+} from "./ChannelsAvailabilityCardWrapper";
 import { useStyles } from "./styles";
 import { ChannelsAvailabilityError, ChannelValue, Message } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
@@ -53,7 +53,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
   });
 
   return (
-    <ChannelsAvailabilityWrapper
+    <ChannelsAvailabilityCardWrapper
       selectedChannelsCount={selectedChannelsCount}
       allChannelsCount={allChannelsCount}
       openModal={openModal}
@@ -64,14 +64,14 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
               errors?.filter(error => error.channels.includes(data.id)) || [];
 
             return (
-              <ChannelContentWrapper messages={messages} data={data}>
-                <ChannelContent
+              <ChannelAvailabilityItemWrapper messages={messages} data={data}>
+                <ChannelAvailabilityItemContent
                   data={data}
                   onChange={onChange}
                   messages={channelsMessages[data.id]}
                   errors={channelErrors}
                 />
-              </ChannelContentWrapper>
+              </ChannelAvailabilityItemWrapper>
             );
           })
         : channelsList
@@ -86,7 +86,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
             </React.Fragment>
           ))
         : null}
-    </ChannelsAvailabilityWrapper>
+    </ChannelsAvailabilityCardWrapper>
   );
 };
 

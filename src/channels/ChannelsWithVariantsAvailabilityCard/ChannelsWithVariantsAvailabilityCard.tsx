@@ -1,9 +1,9 @@
 import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
-import ChannelContent from "@saleor/components/ChannelsAvailabilityCard/ChannelContent";
-import ChannelsAvailabilityWrapper, {
+import ChannelAvailabilityItemContent from "@saleor/components/ChannelsAvailabilityCard/Channel/ChannelAvailabilityItemContent";
+import ChannelsAvailabilityCardWrapper, {
   ChannelsAvailabilityWrapperProps
-} from "@saleor/components/ChannelsAvailabilityCard/ChannelsAvailabilityWrapper";
+} from "@saleor/components/ChannelsAvailabilityCard/ChannelsAvailabilityCardWrapper";
 import {
   ChannelsAvailabilityError,
   ChannelValue,
@@ -68,7 +68,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   }
 
   return (
-    <ChannelsAvailabilityWrapper
+    <ChannelsAvailabilityCardWrapper
       selectedChannelsCount={selectedChannelsCount}
       allChannelsCount={allChannelsCount}
       openModal={openModal}
@@ -86,7 +86,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
             channels={channels}
             channelId={id}
           >
-            <ChannelContent
+            <ChannelAvailabilityItemContent
               onChange={onChange}
               data={channels.find(getById(id))}
               errors={errors}
@@ -94,7 +94,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
             />
           </ChannelWithVariantsAvailabilityItemWrapper>
         ))}
-    </ChannelsAvailabilityWrapper>
+    </ChannelsAvailabilityCardWrapper>
   );
 };
 

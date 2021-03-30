@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import React from "react";
 
-import { ChannelData, Message } from "./types";
+import { ChannelData, Message } from "../types";
 
 const useExpanderStyles = makeStyles(
   theme => ({

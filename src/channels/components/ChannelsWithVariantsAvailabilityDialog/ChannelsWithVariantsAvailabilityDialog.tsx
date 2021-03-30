@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
 import { useChannelsSearch } from "../../../components/ChannelsAvailabilityDialog/utils";
-import ChannelsAvailabilityContentWrapper from "../../../components/ChannelsAvailabilityDialogContentWrapper/ChannelsAvailabilityDialogContentWrapper";
+import ChannelsAvailabilityContentWrapper from "../../../components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";
 import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariantsAvailabilityDialogContent";
 
 const messages = defineMessages({

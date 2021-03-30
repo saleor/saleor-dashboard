@@ -4,7 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import React from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
-import ChannelsAvailabilityDialogContentWrapper from "../ChannelsAvailabilityDialogContentWrapper";
+import ChannelsAvailabilityDialogWrapper from "../ChannelsAvailabilityDialogWrapper";
 import { useChannelsSearch } from "./utils";
 
 export interface ChannelsAvailabilityDialogProps {
@@ -53,7 +53,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
       title={title}
       disabled={disabled}
     >
-      <ChannelsAvailabilityDialogContentWrapper
+      <ChannelsAvailabilityDialogWrapper
         hasAnyChannelsToDisplay={!!filteredChannels.length}
         hasAllSelected={hasAllSelected}
         query={query}
@@ -66,7 +66,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
           isChannelSelected={isSelected}
           onChange={onChange}
         />
-      </ChannelsAvailabilityDialogContentWrapper>
+      </ChannelsAvailabilityDialogWrapper>
     </ActionDialog>
   );
 };
