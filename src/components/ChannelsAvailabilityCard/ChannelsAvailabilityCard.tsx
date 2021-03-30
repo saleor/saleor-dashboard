@@ -25,12 +25,12 @@ export interface ChannelsAvailability
   onChange?: (id: string, data: ChannelValue) => void;
 }
 
-export type ChannelsAvailabilityProps = RequireOnlyOne<
+export type ChannelsAvailabilityCardProps = RequireOnlyOne<
   ChannelsAvailability,
   "channels" | "channelsList"
 >;
 
-export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
+export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
   const {
     channelsList,
     errors = [],

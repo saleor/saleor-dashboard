@@ -4,19 +4,6 @@ import { IntlShape } from "react-intl";
 
 import { Message } from "./types";
 
-type ChannelsAvailabilityMessageKey =
-  | "availableDateText"
-  | "availableLabel"
-  | "availableSecondLabel"
-  | "hiddenSecondLabel"
-  | "setAvailabilityDateLabel"
-  | "unavailableLabel";
-
-export type ChannelsAvailabilityMessages = Record<
-  ChannelsAvailabilityMessageKey,
-  string
->;
-
 export const getChannelsAvailabilityMessages = ({
   messages,
   channels = [],
@@ -27,7 +14,7 @@ export const getChannelsAvailabilityMessages = ({
   channels?: ChannelData[];
   intl: IntlShape;
   localizeDate: LocalizeDate;
-}): ChannelsAvailabilityMessages =>
+}): Message =>
   channels.reduce(
     (prevVal, currVal) => ({
       ...prevVal,
@@ -104,5 +91,5 @@ export const getChannelsAvailabilityMessages = ({
         })
       }
     }),
-    {} as ChannelsAvailabilityMessages
+    {} as Message
   );

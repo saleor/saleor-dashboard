@@ -20,14 +20,14 @@ export const channelFragment = gql`
   }
 `;
 
-// # ${shippingZoneFragment}
-//   # shippingZones {
-//   #   ...ShippingZoneFragment
-//   # }
 export const channelDetailsFragment = gql`
+  ${shippingZoneFragment}
   ${channelFragment}
   fragment ChannelDetailsFragment on Channel {
     ...ChannelFragment
     hasOrders
+    shippingZones {
+      ...ShippingZoneFragment
+    }
   }
 `;

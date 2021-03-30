@@ -3,6 +3,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
+import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
@@ -13,7 +14,6 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import ChannelsWithVariantsAvailabilityDialog from "@saleor/components/ChannelsWithVariantsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";

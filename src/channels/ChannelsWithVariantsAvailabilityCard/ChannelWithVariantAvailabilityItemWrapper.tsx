@@ -5,7 +5,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
-import { ChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
+import { Message } from "@saleor/components/ChannelsAvailabilityCard/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -90,7 +90,7 @@ interface ChannelAvailabilityItemWrapperProps {
   channelId: string;
   channels: ChannelData[];
   channelsWithVariantsData: ChannelsWithVariantsData;
-  messages: ChannelsAvailabilityMessages;
+  messages: Message;
 }
 
 const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityItemWrapperProps> = ({
