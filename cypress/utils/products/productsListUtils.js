@@ -1,28 +1,25 @@
-export function getDisplayedProductsArray() {
-  const productsList = [];
-  return get(PRODUCTS_LIST.products)
+import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
+
+export function getDisplayedColumnArray(columnName) {
+  let productsList = new Array();
+  return cy
+    .get(PRODUCTS_LIST.productsList)
     .each($product => {
-      const product = {};
-      PRODUCT_ROW.forEach(key => {
-        $product
-          .find(key)
-          .invoke("text")
-          .then(productName => {
-            product[key] = productName;
-          });
-      });
-      productsList.push(cy.wrap(product));
+      cy.wrap($product)
+        .find(PRODUCTS_LIST.productRowElements[columnName])
+        .invoke("text")
+        .then(productName => {
+          productsList = productsList.concat([productName]);
+        });
     })
     .then(() => productsList);
 }
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
-  getDisplayedProductsArray().then(productsArray => {
-    const productsNames = productsArray.map(product => product[columnName]);
-    const sortedArray = inAscOrder
-      ? productsNames.sort()
-      : productsNames.sort(function(a, b) {
-          return b - a;
-        });
-    expect(productsNames).to.be.eq(sortedArray);
+  getDisplayedColumnArray(columnName).then(productsArray => {
+    const newProductArray = productsArray.slice();
+    const sortedProductsArray = inAscOrder
+      ? newProductArray.sort()
+      : newProductArray.sort().reverse();
+    expect(productsArray).to.be.deep.eq(sortedProductsArray);
   });
 }
