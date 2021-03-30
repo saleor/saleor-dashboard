@@ -12,8 +12,8 @@ import { getAttributeInputFromProductType, ProductType } from "./data";
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
-  updateChannelsData: (data: ChannelData[]) => void,
-  triggerChange: () => void
+  triggerChange: () => void,
+  updateChannelsData?: (data: ChannelData[]) => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
     const { costPrice, price } = priceData;
@@ -32,7 +32,11 @@ export function createChannelsPriceChangeHandler(
       ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
-    updateChannelsData(updatedChannels);
+
+    if (updateChannelsData) {
+      updateChannelsData(updatedChannels);
+    }
+
     triggerChange();
   };
 }
@@ -40,8 +44,8 @@ export function createChannelsPriceChangeHandler(
 export function createChannelsChangeHandler(
   channelsData: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
-  updateChannelsData: (data: ChannelData[]) => void,
-  triggerChange: () => void
+  triggerChange: () => void,
+  updateChannelsData?: (data: ChannelData[]) => void
 ) {
   return (
     id: string,
@@ -60,7 +64,11 @@ export function createChannelsChangeHandler(
     ];
 
     updateChannels(updatedChannels);
-    updateChannelsData(updatedChannels);
+
+    if (updateChannelsData) {
+      updateChannelsData(updatedChannels);
+    }
+
     triggerChange();
   };
 }

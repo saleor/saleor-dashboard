@@ -2,7 +2,7 @@ import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { defineMessages, FormattedMessage } from "react-intl";
 
-import CardTitle from "../CardTitle";
+import CardTitle from "../../../components/CardTitle";
 
 const messages = defineMessages({
   title: {

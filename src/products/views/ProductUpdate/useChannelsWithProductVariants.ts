@@ -138,7 +138,8 @@ const useChannelsWithProductVariants = ({
     setChannelsWithVariantsData: handleSetChannelsWithVariantsData,
     toggleAllChannelVariants,
     toggleAllChannels,
-    onChannelsWithVariantsConfirm
+    onChannelsWithVariantsConfirm,
+    setHaveChannelsWithVariantsChanged: setHasChanged
   };
 };
 

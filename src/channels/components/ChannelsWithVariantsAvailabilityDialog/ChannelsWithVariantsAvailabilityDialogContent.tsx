@@ -1,4 +1,4 @@
-import placeholderImage from "@assets/images/placeholder255x255.png";
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   Divider,
   ExpansionPanel,
@@ -16,8 +16,8 @@ import map from "lodash-es/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ControlledCheckbox from "../ControlledCheckbox";
-import Avatar from "../TableCellAvatar/Avatar";
+import ControlledCheckbox from "../../../components/ControlledCheckbox";
+import Avatar from "../../../components/TableCellAvatar/Avatar";
 
 const useStyles = makeStyles(
   theme => ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
     },
     channelCheckboxContainer: {
       width: "100%",
-      padding: theme.spacing(3, 0)
+      padding: theme.spacing(2, 0)
     },
     channelTitleContainer: {
       display: "flex",
@@ -70,21 +70,12 @@ const useSummaryStyles = makeStyles(
       width: "100%",
       border: "none",
       height: theme.spacing(10),
-      paddingRight: theme.spacing(1.5),
       padding: 0,
       margin: 0,
-      minHeight: 0,
-
-      "&$expanded": {
-        minHeight: 0
-      }
+      minHeight: 0
     },
     content: {
-      margin: 0,
-
-      "&$expanded": {
-        margin: 0
-      }
+      margin: 0
     }
   }),
   { name: "ChannelsWithVariantsAvailabilityChannelSummary" }

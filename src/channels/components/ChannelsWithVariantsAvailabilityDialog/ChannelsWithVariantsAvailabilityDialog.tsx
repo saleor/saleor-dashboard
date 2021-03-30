@@ -6,12 +6,12 @@ import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
-import { filter } from "fuzzaldrin";
 import React from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
-import ChannelsAvailabilityContentWrapper from "../ChannelsAvailabilityDialogContentWrapper/ChannelsAvailabilityDialogContentWrapper";
+import { useChannelsSearch } from "../../../components/ChannelsAvailabilityDialog/utils";
+import ChannelsAvailabilityContentWrapper from "../../../components/ChannelsAvailabilityDialogContentWrapper/ChannelsAvailabilityDialogContentWrapper";
 import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariantsAvailabilityDialogContent";
 
 const messages = defineMessages({
@@ -23,14 +23,15 @@ const messages = defineMessages({
 
 type UseChannelsWithVariantsCommonProps = Omit<
   UseChannelsWithProductVariants,
-  "setChannelsWithVariantsData" | "onChannelsAvailiabilityModalOpen"
+  | "setChannelsWithVariantsData"
+  | "onChannelsAvailiabilityModalOpen"
+  | "setHaveChannelsWithVariantsChanged"
+  | "channelsData"
+  | "setChannelsData"
 >;
 
 export interface ChannelsAvailabilityDialogProps
-  extends Omit<
-    UseChannelsWithVariantsCommonProps,
-    "channelsData" | "setChannelsData"
-  > {
+  extends UseChannelsWithVariantsCommonProps {
   channels: ChannelData[];
   contentType?: string;
   variants: ProductDetails_product_variants[];
@@ -49,8 +50,9 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   ...rest
 }) => {
   const intl = useIntl();
-  const [query, onQueryChange] = React.useState("");
-  const filteredChannels = filter(channels, query, { key: "name" }) || [];
+  const { query, onQueryChange, filteredChannels } = useChannelsSearch(
+    channels
+  );
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,

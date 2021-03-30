@@ -57,7 +57,9 @@ import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
-import ProductUpdatePage from "../../components/ProductUpdatePage";
+import ProductUpdatePage, {
+  ProductUpdatePageSubmitData
+} from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
 import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -258,6 +260,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     setChannelsWithVariantsData,
     channelsWithVariantsData,
     haveChannelsWithVariantsDataChanged,
+    setHaveChannelsWithVariantsChanged,
     onChannelsAvailiabilityModalOpen,
     channelsData,
     setChannelsData,
@@ -498,8 +501,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         ))}
       <ProductUpdatePage
         hasChannelChanged={
-          haveChannelsWithVariantsDataChanged ||
-          productChannelsChoices?.length !== currentChannels?.length
+          haveChannelsWithVariantsDataChanged
+          // ||
+          // productChannelsChoices?.length !== currentChannels?.length
         }
         isSimpleProduct={isSimpleProduct}
         openChannelsModal={handleChannelsModalOpen}
@@ -532,7 +536,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
-        onSubmit={handleSubmit}
+        onSubmit={(formData: ProductUpdatePageSubmitData) => {
+          setHaveChannelsWithVariantsChanged(false);
+          return handleSubmit(formData);
+        }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}

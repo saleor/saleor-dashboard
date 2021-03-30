@@ -1,5 +1,5 @@
+import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
-import CannotDefineChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import ChannelContent from "@saleor/components/ChannelsAvailabilityCard/ChannelContent";
 import ChannelsAvailabilityWrapper, {
   ChannelsAvailabilityWrapperProps
@@ -23,11 +23,13 @@ import { useIntl } from "react-intl";
 
 import ChannelWithVariantsAvailabilityItemWrapper from "./ChannelWithVariantAvailabilityItemWrapper";
 
-interface ChannelsWithVariantsAvailabilityCardProps
-  extends Omit<
-    ChannelsAvailabilityWrapperProps,
-    "children" | "selectedChannelsCount" | "allChannelsCount"
-  > {
+type CommonChannelsAvailabilityProps = Omit<
+  ChannelsAvailabilityWrapperProps,
+  "children" | "selectedChannelsCount" | "allChannelsCount"
+>;
+
+export interface ChannelsWithVariantsAvailabilityCardProps
+  extends CommonChannelsAvailabilityProps {
   channelsWithVariantsData: ChannelsWithVariantsData;
   channels: ChannelData[];
   variants: ProductDetails_product_variants[];
@@ -41,7 +43,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   channelsWithVariantsData,
   openModal,
   variants,
-  errors,
+  errors = [],
   messages,
   onChange
 }) => {

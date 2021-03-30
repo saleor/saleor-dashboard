@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import ChannelContent, { ChannelContentProps } from "./ChannelContent";
 import ChannelContentWrapper, {
@@ -16,25 +16,16 @@ const Channel: React.FC<ChannelProps> = ({
   disabled,
   errors,
   onChange
-}) => {
-  const [isOpen, setOpen] = useState(false);
-
-  return (
-    <ChannelContentWrapper
-      isOpen={isOpen}
-      setOpen={setOpen}
-      messages={messages}
+}) => (
+  <ChannelContentWrapper messages={messages} data={data}>
+    <ChannelContent
       data={data}
-    >
-      <ChannelContent
-        data={data}
-        onChange={onChange}
-        messages={messages}
-        errors={errors}
-        disabled={disabled}
-      />
-    </ChannelContentWrapper>
-  );
-};
+      onChange={onChange}
+      messages={messages}
+      errors={errors}
+      disabled={disabled}
+    />
+  </ChannelContentWrapper>
+);
 
 export default Channel;

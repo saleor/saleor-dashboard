@@ -303,14 +303,14 @@ function useProductUpdateForm(
   const handleChannelsChange = createChannelsChangeHandler(
     opts.channelsData,
     opts.setChannels,
-    opts.setChannelsData,
-    triggerChange
+    triggerChange,
+    opts.setChannelsData
   );
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.channelsData,
     opts.setChannels,
-    opts.setChannelsData,
-    triggerChange
+    triggerChange,
+    opts.setChannelsData
   );
 
   const data: ProductUpdateData = {

@@ -41,6 +41,7 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
+import ChannelsWithVariantsAvailabilityCard from "../../../channels/ChannelsWithVariantsAvailabilityCard/ChannelsWithVariantsAvailabilityCard";
 import {
   ProductDetails_product,
   ProductDetails_product_media,
@@ -54,7 +55,6 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ChannelsWithVariantsAvailabilityCard from "./ChannelsWithVariantsAvailabilityCard";
 import ProductUpdateForm, {
   ProductUpdateData,
   ProductUpdateHandlers

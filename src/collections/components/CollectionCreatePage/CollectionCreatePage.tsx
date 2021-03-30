@@ -1,7 +1,7 @@
-import { ChannelCollectionData } from "@saleor/channels/utils";
+import { ChannelCollectionData, ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
-import { ChannelsAvailability } from "@saleor/components/ChannelsAvailabilityCard";
+import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -129,7 +129,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>
             <div>
-              <ChannelsAvailability
+              <ChannelsAvailabilityCard
                 messages={{
                   hiddenLabel: intl.formatMessage({
                     defaultMessage: "Hidden",
@@ -144,7 +144,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 errors={channelsErrors}
                 selectedChannelsCount={data.channelListings.length}
                 allChannelsCount={channelsCount}
-                channels={data.channelListings}
+                channels={data.channelListings as ChannelData[]}
                 disabled={disabled}
                 onChange={handlers.changeChannels}
                 openModal={openChannelsModal}

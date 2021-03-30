@@ -2,13 +2,13 @@ import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
+import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailability from "@saleor/components/ChannelsAvailabilityCard";
-import CannotDefineChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";

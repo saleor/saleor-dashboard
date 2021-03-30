@@ -21,6 +21,10 @@ const channels = createChannelsData(channelsList);
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
+  allChannelsCount: 5,
+  onChannelsChange: () => undefined,
+  currentChannels: [],
+  isSimpleProduct: false,
   categories: [product.category],
   channelsWithVariantsData: {
     channel1: {
