@@ -72,32 +72,6 @@ export interface ProductList_products_edges_node_channelListings {
   pricing: ProductList_products_edges_node_channelListings_pricing | null;
 }
 
-export interface ProductList_products_edges_node_attributes_attribute {
-  __typename: "Attribute";
-  id: string;
-}
-
-export interface ProductList_products_edges_node_attributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface ProductList_products_edges_node_attributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: ProductList_products_edges_node_attributes_values_file | null;
-  reference: string | null;
-}
-
-export interface ProductList_products_edges_node_attributes {
-  __typename: "SelectedAttribute";
-  attribute: ProductList_products_edges_node_attributes_attribute;
-  values: (ProductList_products_edges_node_attributes_values | null)[];
-}
-
 export interface ProductList_products_edges_node {
   __typename: "Product";
   id: string;
@@ -105,7 +79,6 @@ export interface ProductList_products_edges_node {
   thumbnail: ProductList_products_edges_node_thumbnail | null;
   productType: ProductList_products_edges_node_productType;
   channelListings: ProductList_products_edges_node_channelListings[] | null;
-  attributes: ProductList_products_edges_node_attributes[];
 }
 
 export interface ProductList_products_edges {

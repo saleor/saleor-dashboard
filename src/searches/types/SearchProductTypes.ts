@@ -9,21 +9,6 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/g
 // GraphQL query operation: SearchProductTypes
 // ====================================================
 
-export interface SearchProductTypes_search_edges_node_productAttributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface SearchProductTypes_search_edges_node_productAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: SearchProductTypes_search_edges_node_productAttributes_values_file | null;
-  reference: string | null;
-}
-
 export interface SearchProductTypes_search_edges_node_productAttributes {
   __typename: "Attribute";
   id: string;
@@ -32,7 +17,6 @@ export interface SearchProductTypes_search_edges_node_productAttributes {
   slug: string | null;
   name: string | null;
   valueRequired: boolean;
-  values: (SearchProductTypes_search_edges_node_productAttributes_values | null)[] | null;
 }
 
 export interface SearchProductTypes_search_edges_node_taxType {
