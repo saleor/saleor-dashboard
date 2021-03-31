@@ -1685,7 +1685,7 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
-  "src_dot_components_dot_Attributes_dot_multipleValueLable": {
+  "src_dot_components_dot_Attributes_dot_multipleValueLabel": {
     "context": "attribute values",
     "string": "Values"
   },
