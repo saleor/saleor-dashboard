@@ -44,6 +44,10 @@ import {
 } from "./types/ProductDetails";
 import { ProductList, ProductListVariables } from "./types/ProductList";
 import {
+  ProductTypeSearchDetails,
+  ProductTypeSearchDetailsVariables
+} from "./types/ProductTypeSearchDetails";
+import {
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
 } from "./types/ProductVariantCreateData";
@@ -203,10 +207,35 @@ export const useProductDetails = makeQuery<
   ProductDetailsVariables
 >(productDetailsQuery);
 
-export const useProductDetailsQuery = makeQuery<
-  ProductDetails,
-  ProductDetailsVariables
->(productDetailsQuery);
+const productTypeSearchDetailsQuery = gql`
+  ${taxTypeFragment}
+  ${attributeValueFragment}
+  query ProductTypeSearchDetails($id: ID!) {
+    productType(id: $id) {
+      id
+      name
+      hasVariants
+      productAttributes {
+        id
+        inputType
+        entityType
+        slug
+        name
+        valueRequired
+        values {
+          ...AttributeValueFragment
+        }
+      }
+      taxType {
+        ...TaxTypeFragment
+      }
+    }
+  }
+`;
+export const useProductTypeSearchDetails = makeQuery<
+  ProductTypeSearchDetails,
+  ProductTypeSearchDetailsVariables
+>(productTypeSearchDetailsQuery);
 
 const productVariantQuery = gql`
   ${fragmentVariant}

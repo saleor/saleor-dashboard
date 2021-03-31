@@ -89,19 +89,13 @@ export function createVariantChannelsChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  setAttributes: (data: FormsetData<AttributeInputData>) => void,
-  setProductType: (productType: ProductType) => void,
-  productTypeChoiceList: ProductType[],
+  setProductType: (productTypeId: string) => void,
   triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
-    const selectedProductType = productTypeChoiceList.find(
-      productType => productType.id === id
-    );
+    setProductType(id);
     triggerChange();
-    setProductType(selectedProductType);
-    setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }
 
