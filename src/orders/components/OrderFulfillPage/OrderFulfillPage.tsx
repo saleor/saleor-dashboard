@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import { makeStyles, Theme } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -27,6 +26,7 @@ import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
+import { makeStyles } from "@saleor/theme";
 import {
   OrderErrorCode,
   OrderFulfillStockInput
@@ -49,7 +49,7 @@ type ClassKey =
   | "quantityInnerInput"
   | "quantityInnerInputNoRemaining"
   | "remainingQuantity";
-const useStyles = makeStyles<Theme, OrderFulfillPageProps, ClassKey>(
+const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
   theme => {
     const inputPadding: CSSProperties = {
       paddingBottom: theme.spacing(2),

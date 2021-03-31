@@ -1,5 +1,5 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
+import { makeStyles } from "@saleor/theme";
 import { ChannelProps } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";

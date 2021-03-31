@@ -1,9 +1,9 @@
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

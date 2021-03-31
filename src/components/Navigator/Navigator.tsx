@@ -1,11 +1,11 @@
 import Fade from "@material-ui/core/Fade";
 import Modal from "@material-ui/core/Modal";
 import Paper from "@material-ui/core/Paper";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import useTheme from "@material-ui/core/styles/useTheme";
 import { APP_VERSION } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { useTheme } from "@saleor/theme";
+import { makeStyles } from "@saleor/theme";
 import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";

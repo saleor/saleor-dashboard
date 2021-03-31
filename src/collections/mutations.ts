@@ -8,8 +8,7 @@ import {
 } from "@saleor/fragments/collections";
 import {
   collectionChannelListingErrorFragment,
-  collectionsErrorFragment,
-  productErrorFragment
+  collectionsErrorFragment
 } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
@@ -181,11 +180,11 @@ export const useUnassignCollectionProductMutation = makeMutation<
 >(unassignCollectionProduct);
 
 const collectionBulkDelete = gql`
-  ${productErrorFragment}
+  ${collectionsErrorFragment}
   mutation CollectionBulkDelete($ids: [ID]!) {
     collectionBulkDelete(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors: collectionErrors {
+        ...CollectionErrorFragment
       }
     }
   }

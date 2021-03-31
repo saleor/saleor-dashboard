@@ -1,14 +1,14 @@
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
 import { buttonMessages } from "@saleor/intl";
+import {
+  createStyles,
+  SaleorTheme,
+  WithStyles,
+  withStyles
+} from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -19,7 +19,7 @@ export type ConfirmButtonTransitionState =
   | "error"
   | "default";
 
-const styles = (theme: Theme) =>
+const styles = (theme: SaleorTheme) =>
   createStyles({
     error: {
       "&:hover": {

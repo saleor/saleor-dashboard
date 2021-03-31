@@ -1,10 +1,10 @@
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
+import { makeStyles } from "@saleor/theme";
 import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
