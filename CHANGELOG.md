@@ -26,6 +26,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add product variant webhooks - #1006 by @piotrgrundas
 - Use default sort for search products list - #997 by @orzechdev
 - Update CollectionBulkDelete error type - #1030 by @d-wysocki
+- Remove mailing settings - #1027 by @dominik-zeglen
 - Unconfirmed order manipulation - #967 by @tomaszszymanski129
 
 # 2.11.1
