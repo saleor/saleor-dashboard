@@ -6829,6 +6829,10 @@
     "context": "event",
     "string": "Order updated"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1616635110": {
+    "context": "event",
+    "string": "User notified"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
     "context": "event",
     "string": "Product variant updated"

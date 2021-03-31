@@ -9,13 +9,13 @@ import { InvoiceErrorCode, JobStatusEnum } from "./../../types/globalTypes";
 // GraphQL mutation operation: InvoiceEmailSend
 // ====================================================
 
-export interface InvoiceEmailSend_invoiceSendEmail_errors {
+export interface InvoiceEmailSend_invoiceSendNotification_errors {
   __typename: "InvoiceError";
   code: InvoiceErrorCode;
   field: string | null;
 }
 
-export interface InvoiceEmailSend_invoiceSendEmail_invoice {
+export interface InvoiceEmailSend_invoiceSendNotification_invoice {
   __typename: "Invoice";
   id: string;
   number: string | null;
@@ -24,14 +24,14 @@ export interface InvoiceEmailSend_invoiceSendEmail_invoice {
   status: JobStatusEnum;
 }
 
-export interface InvoiceEmailSend_invoiceSendEmail {
-  __typename: "InvoiceSendEmail";
-  errors: InvoiceEmailSend_invoiceSendEmail_errors[];
-  invoice: InvoiceEmailSend_invoiceSendEmail_invoice | null;
+export interface InvoiceEmailSend_invoiceSendNotification {
+  __typename: "InvoiceSendNotification";
+  errors: InvoiceEmailSend_invoiceSendNotification_errors[];
+  invoice: InvoiceEmailSend_invoiceSendNotification_invoice | null;
 }
 
 export interface InvoiceEmailSend {
-  invoiceSendEmail: InvoiceEmailSend_invoiceSendEmail | null;
+  invoiceSendNotification: InvoiceEmailSend_invoiceSendNotification | null;
 }
 
 export interface InvoiceEmailSendVariables {

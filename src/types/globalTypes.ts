@@ -151,6 +151,7 @@ export enum CollectionSortField {
 
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
+  MULTILINE = "MULTILINE",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
   SECRETMULTILINE = "SECRETMULTILINE",
@@ -999,6 +1000,7 @@ export enum WebhookEventTypeEnum {
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
+  NOTIFY_USER = "NOTIFY_USER",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
@@ -1247,6 +1249,7 @@ export interface CustomerInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
 }
 
 export interface DateRangeInput {
@@ -1866,6 +1869,7 @@ export interface UserCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
 }
 
