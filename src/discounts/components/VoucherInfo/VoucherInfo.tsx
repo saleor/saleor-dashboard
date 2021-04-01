@@ -46,11 +46,7 @@ const VoucherInfo = ({
         title={intl.formatMessage(commonMessages.generalInformations)}
         toolbar={
           variant === "create" && (
-            <Button
-              color="primary"
-              onClick={onGenerateCode}
-              data-test-id="generate-code"
-            >
+            <Button color="primary" onClick={onGenerateCode}>
               <FormattedMessage
                 defaultMessage="Generate Code"
                 description="voucher code, button"

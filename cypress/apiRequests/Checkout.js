@@ -1,24 +1,18 @@
-import { getDefaultAddress } from "./utils/Utils";
-export function createCheckout({
+export function createCheckout(
   channelSlug,
   email,
-  productQuantity = 1,
-  variantsList,
-  address,
-  auth = "auth"
-}) {
+  productQuantity,
+  variantsList
+) {
   const lines = variantsList.map(
     variant => `{quantity:${productQuantity}
                     variantId:"${variant.id}"}`
   );
-  const shippingAddress = getDefaultAddress(address, "shippingAddress");
-
   const mutation = `mutation{
     checkoutCreate(input:{
       channel:"${channelSlug}"
       email:"${email}"
       lines: [${lines.join()}]
-      ${shippingAddress}
     }){
       checkoutErrors{
         field
@@ -30,7 +24,7 @@ export function createCheckout({
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation, auth);
+  return cy.sendRequestWithQuery(mutation);
 }
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
@@ -70,27 +64,6 @@ export function completeCheckout(checkoutId) {
       checkoutErrors{
         field
         message
-      }
-    }
-  }`;
-  return cy.sendRequestWithQuery(mutation);
-}
-
-export function addVoucher(checkoutId, voucherCode) {
-  const mutation = `mutation addVoucher{
-    checkoutAddPromoCode(checkoutId:"${checkoutId}",
-      promoCode:"${voucherCode}"
-    ){
-      checkoutErrors{
-        field
-        message
-      }
-      checkout{
-        totalPrice{
-          gross{
-            amount
-          }
-        }
       }
     }
   }`;

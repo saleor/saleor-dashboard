@@ -1,12 +1,17 @@
-import { getDefaultAddress } from "./utils/Utils";
-
 export function createWarehouse(name, shippingZone, address, slug = name) {
   const mutation = `mutation{
     createWarehouse(input:{
       name:"${name}"
       slug:"${slug}"
       shippingZones:"${shippingZone}"
-      ${getDefaultAddress(address, "address", false)}
+      address:{
+        streetAddress1: "${address.streetAddress1}"
+        streetAddress2: "${address.streetAddress2}"
+        city: "${address.city}"
+        postalCode: "${address.postalCode}"
+        country: ${address.country}
+        phone: "${address.phone}"
+      }
     }){
       warehouseErrors{
         field

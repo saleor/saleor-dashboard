@@ -1,17 +1,17 @@
 Cypress.Commands.add(
   "handleDeleteElement",
-  (element, deleteFunction, startsWith, name) => {
-    if (element.node[name].includes(startsWith)) {
+  (element, deleteFunction, startsWith) => {
+    if (element.node.name.includes(startsWith)) {
       deleteFunction(element.node.id);
     }
   }
 );
 Cypress.Commands.add(
   "deleteElementsStartsWith",
-  (deleteFunction, getFunction, startsWith, name = "name") => {
+  (deleteFunction, getFunction, startsWith, name) => {
     getFunction(100, startsWith).then(elements => {
       elements.forEach(element => {
-        cy.handleDeleteElement(element, deleteFunction, startsWith, name);
+        cy.handleDeleteElement(element, deleteFunction, startsWith);
       });
     });
   }

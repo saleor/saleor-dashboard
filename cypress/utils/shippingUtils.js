@@ -46,11 +46,13 @@ export function deleteShippingStartsWith(startsWith) {
   cy.deleteElementsStartsWith(
     shippingMethodRequest.deleteShippingZone,
     shippingMethodRequest.getShippingZones,
-    startsWith
+    startsWith,
+    "shippingZONE"
   );
   cy.deleteElementsStartsWith(
     warehouseRequest.deleteWarehouse,
     warehouseRequest.getWarehouses,
-    startsWith
+    startsWith,
+    "Warehouse"
   );
 }
