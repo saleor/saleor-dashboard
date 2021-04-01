@@ -8,20 +8,11 @@ jobs:
   assign_ui:
     runs-on: ubuntu-latest
     name: Add UI Reviewer
-    if: ${{ !contains(github.event.pull_request.requested_reviewers , 'pwgryglak') }}
+    # if: ${{ !contains(github.event.pull_request.requested_reviewers , 'pwgryglak') && contains(github.event.pull_request.body , '[x] This code contains UI changes') }}
     steps:
-      - name: Check UI changes checkbox
-        id: ui_changes_check
-        # Search for API_URI in PR description
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          pattern: \[x\] This code contains UI changes
-        run: |
-          echo "::set-output name=is_checked::$(echo $pull_request_body | grep -Eo  "$pattern")"
-
       - name: Assign UI reviewer
-        if: steps.ui_changes_check.outputs.is_checked
-        uses: AveryCameronUofR/add-reviewer-gh-action@1.0.3
+        uses: jwm0/add-reviewer-gh-action@7a5823b78f69fff30cf31ce836785e95330fa603
         with:
           reviewers: "pwgryglak"
           token: ${{ secrets.GITHUB_TOKEN }}
+          remove: true
