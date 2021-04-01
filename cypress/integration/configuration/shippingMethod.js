@@ -13,7 +13,7 @@ import { getFormattedCurrencyAmount } from "../../support/format/formatCurrencyA
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 import { createCheckout } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
 
