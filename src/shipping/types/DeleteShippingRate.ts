@@ -130,7 +130,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   description: string | null;
   default: boolean;
   shippingMethods: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods | null)[] | null;
-  warehouses: DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses[];
+  warehouses: (DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses | null)[] | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete {

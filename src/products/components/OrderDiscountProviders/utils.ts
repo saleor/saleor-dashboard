@@ -1,3 +1,5 @@
+import { IMessage } from "@saleor/components/messages";
+import { commonMessages } from "@saleor/intl";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import {
   OrderDetails_order,
@@ -5,7 +7,9 @@ import {
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
 import { OrderDiscountType } from "@saleor/types/globalTypes";
+import commonErrorMessages from "@saleor/utils/errors/common";
 import { useState } from "react";
+import { IntlShape } from "react-intl";
 
 import { OrderLineDiscountData } from "./types";
 
@@ -17,6 +21,21 @@ export const useDiscountDialog = () => {
 
   return { closeDialog, isDialogOpen, openDialog };
 };
+
+export const getDiscountNotifierData = (
+  errors: any[],
+  intl: IntlShape
+): IMessage =>
+  !errors.length
+    ? {
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      }
+    : {
+        status: "error",
+        text: intl.formatMessage(commonErrorMessages.unknownError)
+      };
+
 export const getManualOrderDiscount = (order: OrderDetails_order) =>
   order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;
 

@@ -1,22 +1,19 @@
-import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
-import { ChannelCreate } from "@saleor/channels/types/ChannelCreate";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import { commonMessages } from "@saleor/intl";
 import { sectionNames } from "@saleor/intl";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ChannelCreateInput } from "../../../types/globalTypes";
 import { useChannelCreateMutation } from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
+import { ChannelCreate } from "../../types/ChannelCreate";
 import { channelPath, channelsListUrl } from "../../urls";
 
 export const ChannelCreateView = ({}) => {
@@ -26,39 +23,26 @@ export const ChannelCreateView = ({}) => {
 
   const handleBack = () => navigate(channelsListUrl());
 
-  const [createChannel, createChannelOpts] = useChannelCreateMutation({
-    onCompleted: ({ channelCreate: { errors, channel } }: ChannelCreate) => {
-      notify(getDefaultNotifierSuccessErrorData(errors, intl));
-
-      if (!errors.length) {
-        navigate(channelPath(channel.id));
-      }
+  const onSubmit = (data: ChannelCreate) => {
+    if (!data.channelCreate.errors.length) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(channelPath(data.channelCreate.channel.id));
     }
+  };
+
+  const [createChannel, createChannelOpts] = useChannelCreateMutation({
+    onCompleted: onSubmit
   });
 
-  const handleSubmit = ({
-    shippingZonesIdsToAdd,
-    shippingZonesIdsToRemove,
-    currencyCode,
-    ...rest
-  }: FormData) =>
+  const handleSubmit = (data: ChannelCreateInput) =>
     createChannel({
       variables: {
-        input: {
-          ...rest,
-          currencyCode: currencyCode.toUpperCase(),
-          addShippingZones: shippingZonesIdsToAdd
-        }
+        input: { ...data, currencyCode: data.currencyCode.toUpperCase() }
       }
     });
-
-  const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
@@ -93,12 +77,6 @@ export const ChannelCreateView = ({}) => {
           })}
         />
         <ChannelDetailsPage
-          searchShippingZones={searchShippingZones}
-          searchShippingZonesData={searchShippingZonesResult.data}
-          fetchMoreShippingZones={getSearchFetchMoreProps(
-            searchShippingZonesResult,
-            fetchMoreShippingZones
-          )}
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           currencyCodes={currencyCodeChoices}

@@ -76,7 +76,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ data, hasChanged, submit, set }) => {
+      {({ data, hasChanged, submit, set, triggerChange }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {
@@ -98,6 +98,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
             });
           }
 
+          triggerChange();
           set(newData);
         };
         return (

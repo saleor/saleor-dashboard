@@ -100,12 +100,11 @@ function useForm<T extends FormData>(
     setData(initial);
   }
 
-  function set(newData: Partial<T>, setHasChanged = true) {
+  function set(newData: Partial<T>) {
     setData(data => ({
       ...data,
       ...newData
     }));
-    setChanged(setHasChanged);
   }
 
   async function submit() {

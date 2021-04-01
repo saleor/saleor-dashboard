@@ -1,7 +1,6 @@
 /* eslint-disable sort-keys */
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
@@ -20,7 +19,7 @@ import {
   OrderLineDiscountConsumerProps,
   OrderLineDiscountData
 } from "./types";
-import { useDiscountDialog } from "./utils";
+import { getDiscountNotifierData, useDiscountDialog } from "./utils";
 import { getOrderLineDiscount, getParsedDiscountData } from "./utils";
 
 export interface OrderLineDiscountContextConsumerProps
@@ -80,7 +79,7 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
 
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
-    notify(getDefaultNotifierSuccessErrorData(errors, intl));
+    notify(getDiscountNotifierData(errors, intl));
   };
 
   const addOrUpdateOrderLineDiscount = (orderLineId: string) => (

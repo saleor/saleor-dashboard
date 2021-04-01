@@ -27,10 +27,6 @@ export function mapPagesToChoices(
 export function mapNodeToChoice(
   nodes: Array<Node & Record<"name", string>>
 ): Array<SingleAutocompleteChoiceType | MultiAutocompleteChoiceType> {
-  if (!nodes) {
-    return [];
-  }
-
   return nodes.map(node => ({
     label: node.name,
     value: node.id

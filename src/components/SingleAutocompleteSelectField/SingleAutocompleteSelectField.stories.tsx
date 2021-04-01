@@ -31,7 +31,7 @@ const Story: React.FC<Partial<
   SingleAutocompleteSelectFieldProps & {
     enableLoadMore: boolean;
   }
->> = ({ allowCustomValues, emptyOption, enableLoadMore, nakedInput }) => {
+>> = ({ allowCustomValues, emptyOption, enableLoadMore }) => {
   const [displayValue, setDisplayValue] = React.useState(suggestions[0].label);
 
   return (
@@ -59,7 +59,6 @@ const Story: React.FC<Partial<
                 onFetchMore={enableLoadMore ? onFetchMore : undefined}
                 allowCustomValues={allowCustomValues}
                 emptyOption={emptyOption}
-                nakedInput={nakedInput}
               />
             );
           }}
@@ -105,7 +104,6 @@ storiesOf("Generics / Select with autocomplete", module)
   .add("no data", () => (
     <SingleAutocompleteSelectFieldContent {...contentProps} choices={[]} />
   ))
-  .add("naked", () => <Story nakedInput />)
   .add("interactive", () => <Story />)
   .add("interactive with custom option", () => (
     <Story allowCustomValues={true} />
