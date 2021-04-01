@@ -22,6 +22,7 @@ export interface SearchProductTypes_search_edges_node_productAttributes_values {
   slug: string | null;
   file: SearchProductTypes_search_edges_node_productAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface SearchProductTypes_search_edges_node_productAttributes {

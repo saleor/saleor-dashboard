@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import { FileChoiceType } from "@saleor/components/FileUploadField";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
@@ -18,6 +19,11 @@ export function getSingleChoices(
     value: value.slug
   }));
 }
+
+export const getRichTextData = (attribute: AttributeInput): OutputData => {
+  const data = attribute.data.selectedValues?.[0]?.richText;
+  return data ? JSON.parse(data) : {};
+};
 
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];

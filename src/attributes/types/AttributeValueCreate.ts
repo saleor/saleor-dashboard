@@ -34,6 +34,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   slug: string | null;
   file: AttributeValueCreate_attributeValueCreate_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {

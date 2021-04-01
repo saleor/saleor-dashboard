@@ -34,6 +34,7 @@ export interface AttributeDetails_attribute_values {
   slug: string | null;
   file: AttributeDetails_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface AttributeDetails_attribute {

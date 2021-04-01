@@ -35,7 +35,8 @@ export const attribute: AttributeDetailsFragment = {
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
       reference: null,
-      slug: "john-doe"
+      slug: "john-doe",
+      richText: null
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
@@ -43,7 +44,8 @@ export const attribute: AttributeDetailsFragment = {
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
       reference: null,
-      slug: "milionare-pirate"
+      slug: "milionare-pirate",
+      richText: null
     }
   ],
   visibleInStorefront: true
@@ -69,7 +71,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "john-doe",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -79,7 +82,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "milionare-pirate",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -103,7 +107,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "100g",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -113,7 +118,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "250g",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -123,7 +129,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "500g",
           sortOrder: 2,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -133,7 +140,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "1kg",
           sortOrder: 3,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: false
@@ -157,7 +165,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "saleor",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: false
@@ -181,7 +190,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "100g",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -191,7 +201,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "250g",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -201,7 +212,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "500g",
           sortOrder: 2,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: false
@@ -225,7 +237,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "arabica",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -235,7 +248,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "robusta",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -259,7 +273,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "round",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -269,7 +284,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "v-neck",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -279,7 +295,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "polo",
           sortOrder: 2,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -303,7 +320,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "blue",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -313,7 +331,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "white",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -337,7 +356,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "soft",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -347,7 +367,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "hard",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -357,7 +378,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "middle-soft",
           sortOrder: 2,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -367,7 +389,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "middle-hard",
           sortOrder: 3,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -377,7 +400,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "middle",
           sortOrder: 4,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -387,7 +411,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "very-hard",
           sortOrder: 5,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: false
@@ -411,7 +436,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "sour",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -421,7 +447,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "sweet",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -445,7 +472,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "english",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -455,7 +483,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "pirate",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -479,7 +508,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "mirumee-press",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -489,7 +519,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "saleor-publishing",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true
@@ -513,7 +544,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "xs",
           sortOrder: 0,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -523,7 +555,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "s",
           sortOrder: 1,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -533,7 +566,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "m",
           sortOrder: 2,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -543,7 +577,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "l",
           sortOrder: 3,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -553,7 +588,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "xl",
           sortOrder: 4,
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -563,7 +599,8 @@ export const attributes: Array<AttributeList_attributes_edges_node &
           reference: null,
           slug: "xxl",
           sortOrder: 5,
-          value: ""
+          value: "",
+          richText: null
         }
       ],
       visibleInStorefront: true

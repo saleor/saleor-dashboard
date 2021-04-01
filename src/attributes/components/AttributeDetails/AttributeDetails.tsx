@@ -127,7 +127,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     },
     {
       label: intl.formatMessage(inputTypeMessages.text),
-      value: AttributeInputTypeEnum.TEXT
+      value: AttributeInputTypeEnum.RICH_TEXT
     }
   ];
   const entityTypeChoices = [

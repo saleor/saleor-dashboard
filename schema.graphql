@@ -499,7 +499,7 @@ enum AttributeInputTypeEnum {
   MULTISELECT
   FILE
   REFERENCE
-  TEXT
+  RICH_TEXT
 }
 
 type AttributeReorderValues {
@@ -578,6 +578,7 @@ type AttributeValue implements Node {
   inputType: AttributeInputTypeEnum
   reference: ID
   file: File
+  richText: JSONString
 }
 
 type AttributeValueBulkDelete {
@@ -596,6 +597,7 @@ type AttributeValueCreate {
 input AttributeValueCreateInput {
   name: String!
   value: String
+  richText: JSONString
 }
 
 type AttributeValueDelete {
@@ -611,6 +613,7 @@ input AttributeValueInput {
   file: String
   contentType: String
   references: [ID!]
+  richText: JSONString
 }
 
 type AttributeValueTranslatableContent implements Node {
@@ -629,6 +632,7 @@ type AttributeValueTranslate {
 type AttributeValueTranslation implements Node {
   id: ID!
   name: String!
+  richText: JSONString
   language: LanguageDisplay!
 }
 
@@ -3677,6 +3681,7 @@ type Payment implements Node {
   token: String!
   checkout: Checkout
   order: Order
+  paymentMethodType: String!
   customerIpAddress: String
   chargeStatus: PaymentChargeStatusEnum!
   actions: [OrderAction]!

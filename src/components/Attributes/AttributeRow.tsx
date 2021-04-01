@@ -1,4 +1,3 @@
-import { TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
@@ -9,10 +8,12 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
+  getRichTextData,
   getSingleChoices
 } from "@saleor/components/Attributes/utils";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
+import RichTextEditor from "@saleor/components/RichTextEditor";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@saleor/components/SortableChipsField";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
@@ -143,18 +144,17 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.TEXT:
+    case AttributeInputTypeEnum.RICH_TEXT:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <TextField
-            fullWidth
+          <RichTextEditor
+            name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={!!error}
             label={intl.formatMessage(messages.valueLabel)}
-            value={attribute.value[0]}
             helperText={getErrorMessage(error, intl)}
-            onChange={event => onChange(attribute.id, event.target.value)}
-            inputProps={{ maxLength: 249 }}
+            onChange={data => onChange(attribute.id, JSON.stringify(data))}
+            data={getRichTextData(attribute)}
           />
         </BasicAttributeRow>
       );

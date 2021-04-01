@@ -22,6 +22,7 @@ export interface SelectedVariantAttributeFragment_attribute_values {
   slug: string | null;
   file: SelectedVariantAttributeFragment_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface SelectedVariantAttributeFragment_attribute {
@@ -48,6 +49,7 @@ export interface SelectedVariantAttributeFragment_values {
   slug: string | null;
   file: SelectedVariantAttributeFragment_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface SelectedVariantAttributeFragment {
