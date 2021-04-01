@@ -1,10 +1,10 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";

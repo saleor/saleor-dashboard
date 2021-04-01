@@ -1,6 +1,5 @@
 import { TableHead } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -14,6 +13,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { PermissionGroupList_permissionGroups_edges_node } from "@saleor/permissionGroups/types/PermissionGroupList";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
+import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";

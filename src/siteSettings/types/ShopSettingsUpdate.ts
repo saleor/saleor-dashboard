@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { SiteDomainInput, ShopSettingsInput, AddressInput, ShopErrorCode } from "./../../types/globalTypes";

@@ -19,7 +19,7 @@ export const getParsedTranslationInputData = ({
 
   if (fieldsToParse.includes(fieldName)) {
     return {
-      description: getParsedDataForJsonStringField(data as OutputData)
+      [fieldName]: getParsedDataForJsonStringField(data as OutputData)
     };
   }
 

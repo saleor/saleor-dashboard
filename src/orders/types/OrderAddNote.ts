@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { OrderAddNoteInput, OrderErrorCode, OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "./../../types/globalTypes";

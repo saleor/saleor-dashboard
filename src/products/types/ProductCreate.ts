@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ProductCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -270,7 +271,7 @@ export interface ProductCreate_productCreate_product {
   category: ProductCreate_productCreate_product_category | null;
   collections: (ProductCreate_productCreate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductCreate_productCreate_product_media | null)[] | null;
+  media: ProductCreate_productCreate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
   weight: ProductCreate_productCreate_product_weight | null;

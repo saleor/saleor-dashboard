@@ -1,12 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
+import { makeStyles } from "@saleor/theme";
 import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

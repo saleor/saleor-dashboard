@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -13,6 +12,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";

@@ -1,13 +1,13 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import { buttonMessages } from "@saleor/intl";
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { isSecretField } from "@saleor/plugins/utils";
+import { makeStyles } from "@saleor/theme";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

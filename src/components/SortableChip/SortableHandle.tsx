@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Draggable from "@saleor/icons/Draggable";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
