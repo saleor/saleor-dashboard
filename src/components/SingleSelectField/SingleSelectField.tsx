@@ -5,7 +5,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select, { SelectProps } from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";

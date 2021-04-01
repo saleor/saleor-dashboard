@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -263,7 +264,7 @@ export interface Product {
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (Product_media | null)[] | null;
+  media: Product_media[] | null;
   isAvailable: boolean | null;
   variants: (Product_variants | null)[] | null;
   weight: Product_weight | null;

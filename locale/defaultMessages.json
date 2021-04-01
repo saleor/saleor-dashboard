@@ -436,10 +436,6 @@
     "context": "autocomplete select label",
     "string": "Warehouse"
   },
-  "siteSettingsMailingHelperText": {
-    "context": "helper text",
-    "string": "Mailing Configuration"
-  },
   "src_dot_accept": {
     "context": "button",
     "string": "Accept"
@@ -6021,32 +6017,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_529433178": {
     "string": "Store description is shown on taskbar after your store name"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1124962330": {
-    "string": "Mailing email address"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1672275992": {
-    "context": "email sender",
-    "string": "This will be visible as \"from\" name"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_280712237": {
-    "context": "section header",
-    "string": "Mailing Configuration"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_297689661": {
-    "string": "Configurate your email address from which all automatic emails will be sent to your customers."
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_3211348653": {
-    "string": "Customer password reset URL"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_3447841451": {
-    "string": "This URL will be used as a main URL for password resets. It will be sent via email."
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_50742153": {
-    "string": "URL address"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_70179174": {
-    "string": "Mailing email sender"
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1004240342": {
     "string": "This adress will be used to generate invoices and calculate shipping rates."
   },
@@ -6058,18 +6028,11 @@
     "context": "section header",
     "string": "Company Information"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_280712237": {
-    "context": "section header",
-    "string": "Mailing Configuration"
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3657173399": {
     "string": "Email adress you provide here will be used as a contact adress for your customers."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3799756739": {
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
-    "string": "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
   },
   "src_dot_somethingWentWrong": {
     "string": "Saleor ran into an unexpected problem"
@@ -6865,6 +6828,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
     "string": "Order updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1616635110": {
+    "context": "event",
+    "string": "User notified"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
     "context": "event",

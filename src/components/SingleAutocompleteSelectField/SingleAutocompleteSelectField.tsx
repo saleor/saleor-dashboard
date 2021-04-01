@@ -1,7 +1,7 @@
 import { InputProps } from "@material-ui/core/Input";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
+import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";

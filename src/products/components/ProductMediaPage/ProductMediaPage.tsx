@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
@@ -12,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

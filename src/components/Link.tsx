@@ -1,11 +1,10 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
-import { ITheme } from "@saleor/theme";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
-  (theme: ITheme) => ({
+  theme => ({
     primary: {
       color: theme.palette.textHighlighted.active
     },

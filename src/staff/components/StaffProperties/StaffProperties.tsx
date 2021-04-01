@@ -1,12 +1,12 @@
 import photoIcon from "@assets/images/photo-icon.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import React from "react";

@@ -1,9 +1,9 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { createStyles, SaleorTheme, withStyles } from "@saleor/theme";
 import React from "react";
 
-const styles = createStyles((theme: Theme) => ({
+const styles = createStyles((theme: SaleorTheme) => ({
   "@global": {
     "@import": "url('https://rsms.me/inter/inter.css')",
 

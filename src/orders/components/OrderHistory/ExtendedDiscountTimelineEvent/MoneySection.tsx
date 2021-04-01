@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { Money } from "@saleor/fragments/types/Money";
+import { makeStyles } from "@saleor/theme";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

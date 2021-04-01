@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -15,6 +14,7 @@ import {
   GridAttributes_grid_edges_node
 } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import { makeStyles } from "@saleor/theme";
 import {
   ChannelProps,
   FetchMoreProps,
