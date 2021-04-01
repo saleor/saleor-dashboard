@@ -35,6 +35,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
@@ -53,6 +54,8 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
+  channelsData: ChannelData[];
+  channelsWithVariants: ChannelsWithVariantsData;
   channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
@@ -142,11 +145,13 @@ export interface UseProductUpdateFormOpts
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
-  setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: SearchWarehouses_search_edges_node[];
-  currentChannels: ChannelData[];
+  channelsData: ChannelData[];
   hasVariants: boolean;
+  currentChannels: ChannelData[];
+  setChannels: (data: ChannelData[]) => void;
+  setChannelsData: (data: ChannelData[]) => void;
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
   fetchReferencePages?: (data: string) => void;
@@ -154,6 +159,7 @@ export interface UseProductUpdateFormOpts
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
+  channelsWithVariants: ChannelsWithVariantsData;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -198,7 +204,9 @@ function useProductUpdateForm(
     getProductUpdatePageFormData(
       product,
       product?.variants,
-      opts.currentChannels
+      opts.currentChannels,
+      opts.channelsData,
+      opts.channelsWithVariants
     )
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
@@ -293,18 +301,21 @@ function useProductUpdateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleChannelsChange = createChannelsChangeHandler(
-    opts.currentChannels,
+    opts.channelsData,
     opts.setChannels,
-    triggerChange
+    triggerChange,
+    opts.setChannelsData
   );
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
-    opts.currentChannels,
+    opts.channelsData,
     opts.setChannels,
-    triggerChange
+    triggerChange,
+    opts.setChannelsData
   );
 
   const data: ProductUpdateData = {
     ...form.data,
+    channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
@@ -340,7 +351,7 @@ function useProductUpdateForm(
   const disabled =
     !opts.hasVariants &&
     (!data.sku ||
-      data.channelListings.some(
+      opts.channelsData.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ));

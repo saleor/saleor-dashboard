@@ -2,12 +2,13 @@ import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
+import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -300,26 +301,30 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
-                <AvailabilityCard
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Not published",
-                      description: "product label"
-                    }),
+                {isSimpleProduct ? (
+                  <ChannelsAvailabilityCard
+                    messages={{
+                      hiddenLabel: intl.formatMessage({
+                        defaultMessage: "Not published",
+                        description: "product label"
+                      }),
 
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Published",
-                      description: "product label"
-                    })
-                  }}
-                  errors={channelsErrors}
-                  selectedChannelsCount={data.channelListings.length}
-                  allChannelsCount={allChannelsCount}
-                  channels={data.channelListings}
-                  disabled={loading}
-                  onChange={handlers.changeChannels}
-                  openModal={openChannelsModal}
-                />
+                      visibleLabel: intl.formatMessage({
+                        defaultMessage: "Published",
+                        description: "product label"
+                      })
+                    }}
+                    errors={channelsErrors}
+                    selectedChannelsCount={data.channelListings?.length || 0}
+                    allChannelsCount={allChannelsCount}
+                    channels={data.channelListings || []}
+                    disabled={loading}
+                    onChange={handlers.changeChannels}
+                    openModal={openChannelsModal}
+                  />
+                ) : (
+                  <CannotDefineChannelsAvailabilityCard />
+                )}
                 <CardSpacer />
                 <ProductTaxes
                   data={data}

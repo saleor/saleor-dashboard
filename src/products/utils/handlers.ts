@@ -10,9 +10,10 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createChannelsPriceChangeHandler(
-  channelListings: ChannelPriceData[],
-  updateChannels: (data: ChannelPriceData[]) => void,
-  triggerChange: () => void
+  channelListings: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
+  triggerChange: () => void,
+  updateChannelsData?: (data: ChannelData[]) => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
     const { costPrice, price } = priceData;
@@ -31,33 +32,43 @@ export function createChannelsPriceChangeHandler(
       ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
+
+    if (updateChannelsData) {
+      updateChannelsData(updatedChannels);
+    }
+
     triggerChange();
   };
 }
 
 export function createChannelsChangeHandler(
-  channelListings: ChannelData[],
+  channelsData: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
-  triggerChange: () => void
+  triggerChange: () => void,
+  updateChannelsData?: (data: ChannelData[]) => void
 ) {
   return (
     id: string,
     data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
-    );
-    const channel = channelListings[channelIndex];
+    const channelIndex = channelsData.findIndex(channel => channel.id === id);
+    const channel = channelsData[channelIndex];
 
     const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
+      ...channelsData.slice(0, channelIndex),
       {
         ...channel,
         ...data
       },
-      ...channelListings.slice(channelIndex + 1)
+      ...channelsData.slice(channelIndex + 1)
     ];
+
     updateChannels(updatedChannels);
+
+    if (updateChannelsData) {
+      updateChannelsData(updatedChannels);
+    }
+
     triggerChange();
   };
 }
