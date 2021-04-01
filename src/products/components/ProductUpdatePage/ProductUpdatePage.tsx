@@ -232,6 +232,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <ProductUpdateForm
+      isSimpleProduct={isSimpleProduct}
       currentChannels={currentChannels}
       channelsData={channelsData}
       setChannelsData={setChannelsData}
@@ -305,10 +306,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                 )}
                 <CardSpacer />
-                {!!product?.productType && !hasVariants && (
+                {isSimpleProduct && (
                   <>
                     <ProductVariantPrice
-                      ProductVariantChannelListings={data.channelsData}
+                      ProductVariantChannelListings={data.channelListings}
                       errors={channelsErrors}
                       loading={disabled}
                       onChange={handlers.changeChannelPrice}

@@ -1,6 +1,4 @@
-import Avatar from "@material-ui/core/Avatar";
 import TableCell, { TableCellProps } from "@material-ui/core/TableCell";
-import Cached from "@material-ui/icons/Cached";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

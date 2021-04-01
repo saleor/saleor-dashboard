@@ -107,9 +107,9 @@ export const getChannelsVariables = (
 };
 
 export const getVariantChannelsInput = ({
-  channelsData
+  channelListings
 }: ProductUpdatePageSubmitData) =>
-  channelsData.map(listing => ({
+  channelListings.map(listing => ({
     channelId: listing.id,
     costPrice: listing.costPrice || null,
     price: listing.price

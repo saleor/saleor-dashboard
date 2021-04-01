@@ -21,6 +21,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -160,6 +161,7 @@ export interface UseProductUpdateFormOpts
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   channelsWithVariants: ChannelsWithVariantsData;
+  isSimpleProduct: boolean;
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -198,6 +200,9 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
+  const [channelListings, setChannelListings] = useStateFromProps(
+    opts.currentChannels
+  );
   const triggerChange = () => setChanged(true);
 
   const form = useForm(
@@ -300,21 +305,22 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+
   const handleChannelsChange = createChannelsChangeHandler(
-    opts.channelsData,
-    opts.setChannels,
-    triggerChange,
-    opts.setChannelsData
+    opts.isSimpleProduct ? channelListings : opts.channelsData,
+    opts.isSimpleProduct ? setChannelListings : opts.setChannelsData,
+    triggerChange
   );
+
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
-    opts.channelsData,
-    opts.setChannels,
-    triggerChange,
-    opts.setChannelsData
+    opts.isSimpleProduct ? channelListings : opts.channelsData,
+    opts.isSimpleProduct ? setChannelListings : opts.setChannelsData,
+    triggerChange
   );
 
   const data: ProductUpdateData = {
     ...form.data,
+    channelListings,
     channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
       attributes.data,
@@ -325,6 +331,7 @@ function useProductUpdateForm(
     description: description.current,
     stocks: stocks.data
   };
+
   // Need to make it function to always have description.current up to date
   const getSubmitData = (): ProductUpdateSubmitData => ({
     ...data,
@@ -351,7 +358,7 @@ function useProductUpdateForm(
   const disabled =
     !opts.hasVariants &&
     (!data.sku ||
-      opts.channelsData.some(
+      data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ));

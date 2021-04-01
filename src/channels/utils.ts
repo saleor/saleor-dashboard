@@ -111,7 +111,7 @@ export const createVariantChannels = (
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
-      price: listing.price.amount.toString()
+      price: listing.price?.amount?.toString()
     }));
     return uniqBy([...variantChannels, ...productChannels], obj => obj.id);
   }
