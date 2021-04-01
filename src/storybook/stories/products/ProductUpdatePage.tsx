@@ -19,19 +19,24 @@ import { taxTypes } from "../taxes/fixtures";
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
 
-const channelChoices = product.channelListings.map(listing => ({
-  label: listing.channel.name,
-  value: listing.channel.id
-}));
-
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
+  onChannelsChange: () => undefined,
+  currentChannels: [],
+  isSimpleProduct: false,
   categories: [product.category],
-  channelChoices,
+  channelsWithVariantsData: {
+    channel1: {
+      selectedVariantsIds: ["variantA"],
+      variantsIdsToRemove: ["variantB"],
+      variantsIdsToAdd: []
+    }
+  },
+  setChannelsData: () => undefined,
+  channelsData: channels,
   channelsErrors: [],
   collections,
-  currentChannels: [],
   defaultWeightUnit: "kg",
   disabled: false,
   errors: [],
@@ -44,7 +49,6 @@ const props: ProductUpdatePageProps = {
   media: product.media,
   onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
-  onChannelsChange: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
@@ -182,6 +186,4 @@ storiesOf("Views / Products / Product edit", module)
       )}
     />
   ))
-  .add("with channels", () => (
-    <ProductUpdatePage {...props} currentChannels={channels} />
-  ));
+  .add("with channels", () => <ProductUpdatePage {...props} />);
