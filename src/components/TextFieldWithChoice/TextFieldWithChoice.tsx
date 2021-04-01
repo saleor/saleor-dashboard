@@ -4,10 +4,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import MenuToggle from "../MenuToggle";

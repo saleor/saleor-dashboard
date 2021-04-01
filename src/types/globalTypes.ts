@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -151,6 +152,7 @@ export enum CollectionSortField {
 
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
+  MULTILINE = "MULTILINE",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
   SECRETMULTILINE = "SECRETMULTILINE",
@@ -999,6 +1001,7 @@ export enum WebhookEventTypeEnum {
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
+  NOTIFY_USER = "NOTIFY_USER",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
@@ -1089,6 +1092,7 @@ export interface AttributeFilterInput {
   filterableInStorefront?: boolean | null;
   filterableInDashboard?: boolean | null;
   availableInGrid?: boolean | null;
+  metadata?: (MetadataInput | null)[] | null;
   search?: string | null;
   ids?: (string | null)[] | null;
   type?: AttributeTypeEnum | null;
@@ -1124,6 +1128,7 @@ export interface AttributeUpdateInput {
 
 export interface AttributeValueCreateInput {
   name: string;
+  value?: string | null;
 }
 
 export interface AttributeValueInput {
@@ -1147,6 +1152,7 @@ export interface CatalogueInput {
 
 export interface CategoryFilterInput {
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1205,6 +1211,7 @@ export interface CollectionCreateInput {
 export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
   channel?: string | null;
 }
@@ -1246,6 +1253,7 @@ export interface CustomerInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
 }
 
 export interface DateRangeInput {
@@ -1372,6 +1380,7 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1381,6 +1390,7 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1606,6 +1616,7 @@ export interface ProductFilterInput {
   productType?: string | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1643,6 +1654,7 @@ export interface ProductTypeFilterInput {
   search?: string | null;
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
+  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1864,6 +1876,7 @@ export interface UserCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
 }
 

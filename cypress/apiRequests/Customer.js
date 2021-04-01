@@ -1,3 +1,4 @@
+import { getDefaultAddress } from "./utils/Utils";
 export function createCustomer(email, customerName, address, isActive = false) {
   const mutation = `
   mutation{
@@ -6,24 +7,8 @@ export function createCustomer(email, customerName, address, isActive = false) {
       lastName: "${customerName}"
       email: "${email}"
       isActive: ${isActive}
-      defaultBillingAddress: {
-        companyName: "${address.companyName}"
-        streetAddress1: "${address.streetAddress1}"
-        streetAddress2: "${address.streetAddress2}"
-        city: "${address.city}"
-        postalCode: "${address.postalCode}"
-        country: ${address.country}
-        phone: "${address.phone}"
-      }
-      defaultShippingAddress: {
-        companyName: "${address.companyName}"
-        streetAddress1: "${address.streetAddress1}"
-        streetAddress2: "${address.streetAddress2}"
-        city: "${address.city}"
-        postalCode: "${address.postalCode}"
-        country: ${address.country}
-        phone: "${address.phone}"
-      }
+      ${getDefaultAddress(address, "defaultBillingAddress")}
+      ${getDefaultAddress(address, "defaultShippingAddress")}
     }){
       user{
         id

@@ -1,21 +1,10 @@
 // <reference types="cypress" />
-import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_SELECTORS } from "../../elements/catalog/products/product-selectors";
 import { urlList } from "../../url/urlList";
 
 describe("Products", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
-  });
-
-  it("should navigate to channels page", () => {
-    cy.visit(urlList.homePage)
-      .get(LEFT_MENU_SELECTORS.catalog)
-      .click()
-      .get(LEFT_MENU_SELECTORS.products)
-      .click()
-      .location("pathname")
-      .should("contain", "/products");
   });
 
   it("should add new visible product", () => {

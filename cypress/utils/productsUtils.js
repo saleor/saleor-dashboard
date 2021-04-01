@@ -109,19 +109,16 @@ export function deleteProductsStartsWith(startsWith) {
   cy.deleteElementsStartsWith(
     productRequest.deleteProductType,
     productRequest.getProductTypes,
-    startsWith,
-    "productType"
+    startsWith
   );
   cy.deleteElementsStartsWith(
     attributeRequest.deleteAttribute,
     attributeRequest.getAttributes,
-    startsWith,
-    "attributes"
+    startsWith
   );
   cy.deleteElementsStartsWith(
     categoryRequest.deleteCategory,
     categoryRequest.getCategories,
-    startsWith,
-    "categories"
+    startsWith
   );
 }

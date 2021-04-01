@@ -25,6 +25,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix trigger form change when collections are being added to list of product collections - #987 by @gax97
 - Add product variant webhooks - #1006 by @piotrgrundas
 - Use default sort for search products list - #997 by @orzechdev
+- Update CollectionBulkDelete error type - #1030 by @d-wysocki
+- Remove mailing settings - #1027 by @dominik-zeglen
+- Update schema to contain email plugin changes - #1029 by @dominik-zeglen
 
 # 2.11.1
 

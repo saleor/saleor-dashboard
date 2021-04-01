@@ -5,7 +5,6 @@ import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ChannelPriceData } from "@saleor/channels/utils";
@@ -14,6 +13,7 @@ import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { makeStyles } from "@saleor/theme";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
@@ -55,11 +55,7 @@ type ClassKey =
 
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
-const useStyles = makeStyles<
-  Theme,
-  ProductVariantCreatorSummaryProps,
-  ClassKey
->(
+const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
   theme => ({
     attributeValue: {
       display: "inline-block",

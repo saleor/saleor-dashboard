@@ -1,6 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -45,8 +45,8 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
   settings,
   onChange
 }) => {
-  const theme = useTheme();
-  const classes = useStyles({ theme });
+  const classes = useStyles({});
+
   return (
     <div className={className}>
       <span className={classes.label}>

@@ -1,12 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
 import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
+import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";

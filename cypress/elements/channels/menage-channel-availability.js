@@ -12,5 +12,6 @@ export const MENAGE_CHANNEL_AVAILABILITY = {
   radioButtonsValueTrue: "[value='true']",
   radioButtonsValueFalse: "[value='false']",
   visibleInListingsButton: "[name*='visibleInListings']",
-  allChannelsInput: "[name='allChannels']"
+  allChannelsInput: "[name='allChannels']",
+  dialog: "[role='dialog']"
 };

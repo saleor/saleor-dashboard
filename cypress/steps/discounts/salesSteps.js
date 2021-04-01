@@ -1,8 +1,8 @@
-import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/assign-products";
-import { MENAGE_CHANNEL_AVAILABILITY } from "../elements/channels/menage-channel-availability";
-import { SALES_SELECTORS } from "../elements/discounts/sales";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { formatDate } from "../support/formatDate";
+import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/assign-products";
+import { SALES_SELECTORS } from "../../elements/discounts/sales";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { formatDate } from "../../support/formatDate";
+import { selectChannelInDetailsPages } from "../channelsSteps";
 
 export const discountOptions = {
   PERCENTAGE: SALES_SELECTORS.percentageOption,
@@ -22,17 +22,9 @@ export function createSale({
     .get(SALES_SELECTORS.nameInput)
     .type(saleName)
     .get(discountOption)
-    .click()
-    .get(MENAGE_CHANNEL_AVAILABILITY.availableManageButton)
-    .click()
-    .get(MENAGE_CHANNEL_AVAILABILITY.allChannelsInput)
-    .click()
-    .get(MENAGE_CHANNEL_AVAILABILITY.channelsAvailabilityForm)
-    .contains(channelName)
-    .click()
-    .get(BUTTON_SELECTORS.submit)
-    .click()
-    .get(SALES_SELECTORS.discountValue)
+    .click();
+  selectChannelInDetailsPages(channelName);
+  cy.get(SALES_SELECTORS.discountValue)
     .type(discountValue)
     .get(SALES_SELECTORS.startDateInput)
     .type(todaysDate);
