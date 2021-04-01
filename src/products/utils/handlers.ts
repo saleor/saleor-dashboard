@@ -3,11 +3,7 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
-import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetData } from "@saleor/hooks/useFormset";
-
-import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelPriceData[],

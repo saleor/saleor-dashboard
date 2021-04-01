@@ -548,6 +548,7 @@ export const products = (
 ): ProductList_products_edges_node[] => [
   {
     __typename: "Product",
+    attributes: [],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -637,6 +638,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -726,6 +728,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -815,6 +818,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6MQ==",
+            name: "Pineapple",
+            reference: null,
+            slug: "pineapple"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -904,6 +926,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6Mg==",
+            name: "Coconut",
+            reference: null,
+            slug: "coconut"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -993,6 +1034,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6Mw==",
+            name: "Apple",
+            reference: null,
+            slug: "apple"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1083,6 +1143,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NDk=",
+            name: "Orange",
+            reference: null,
+            slug: "orange"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1172,6 +1251,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NTA=",
+            name: "Banana",
+            reference: null,
+            slug: "banana"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1261,6 +1359,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NTE=",
+            name: "Bean",
+            reference: null,
+            slug: "bean"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1350,6 +1467,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NTI=",
+            name: "Carrot",
+            reference: null,
+            slug: "carrot"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1439,6 +1575,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE2"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NTM=",
+            name: "Sprouty",
+            reference: null,
+            slug: "sprouty"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1528,6 +1683,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1617,6 +1791,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1706,6 +1899,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1795,6 +2007,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1884,6 +2115,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1973,6 +2223,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -2062,6 +2331,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -2151,6 +2439,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6ODI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -2240,6 +2547,25 @@ export const products = (
   },
   {
     __typename: "Product",
+    attributes: [
+      {
+        __typename: "SelectedAttribute",
+        attribute: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjIz"
+        },
+        values: [
+          {
+            __typename: "AttributeValue",
+            file: null,
+            id: "QXR0cmlidXRlVmFsdWU6NzI=",
+            name: "Cotton",
+            reference: null,
+            slug: "cotton"
+          }
+        ]
+      }
+    ],
     channelListings: [
       {
         __typename: "ProductChannelListing",

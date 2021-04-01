@@ -186,7 +186,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const handleSubmit = async data => {
     const result = await createMetadataCreateHandler(
       createHandler(
-        productTypes,
+        selectedProductType.productType,
         variables => uploadFile({ variables }),
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),
