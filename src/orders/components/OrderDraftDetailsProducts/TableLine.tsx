@@ -5,9 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { makeStyles } from "@saleor/theme";
 import React, { useRef } from "react";
