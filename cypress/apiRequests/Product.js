@@ -132,7 +132,12 @@ export function createVariant({
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function createTypeProduct(name, attributeId, slug = name) {
+export function createTypeProduct(
+  name,
+  attributeId,
+  hasVariants = true,
+  slug = name
+) {
   const mutation = `mutation{
     productTypeCreate(input: {
       name: "${name}"
@@ -140,6 +145,7 @@ export function createTypeProduct(name, attributeId, slug = name) {
       isShippingRequired: true
       productAttributes: "${attributeId}"
       variantAttributes: "${attributeId}"
+      hasVariants: ${hasVariants}
     }){
       productErrors{
         field
