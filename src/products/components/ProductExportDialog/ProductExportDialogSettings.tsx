@@ -1,10 +1,10 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/theme";
 import {
   ExportProductsInput,
   ExportScope,

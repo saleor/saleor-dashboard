@@ -1,6 +1,6 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { makeStyles } from "@saleor/theme";
 import { toggle } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";

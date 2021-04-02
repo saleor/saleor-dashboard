@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -15,6 +14,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment_shippingMethods } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { makeStyles } from "@saleor/theme";
 import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,6 +26,7 @@ export interface ShippingZoneRatesProps extends ChannelProps {
   disabled: boolean;
   rates: ShippingZoneDetailsFragment_shippingMethods[];
   variant: "price" | "weight";
+  testId?: string;
   onRateAdd: () => void;
   onRateEdit: (id: string) => void;
   onRateRemove: (id: string) => void;
@@ -58,7 +59,8 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     onRateRemove,
     rates,
     selectedChannelId,
-    variant
+    variant,
+    testId
   } = props;
 
   const classes = useStyles(props);
@@ -80,7 +82,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               })
         }
         toolbar={
-          <Button color="primary" disabled={disabled} onClick={onRateAdd}>
+          <Button
+            color="primary"
+            disabled={disabled}
+            onClick={onRateAdd}
+            data-test-id={testId}
+          >
             <FormattedMessage
               defaultMessage="Create rate"
               description="button"
@@ -153,7 +160,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-test-id="shipping-rate-price">
                     {maybe<React.ReactNode>(
                       () =>
                         rate && !channel ? (

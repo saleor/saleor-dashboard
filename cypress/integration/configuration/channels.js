@@ -1,20 +1,22 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../apiRequests/Channels";
-import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { PRODUCTS_SELECTORS } from "../elements/catalog/products/product-selectors";
-import { ADD_CHANNEL_FORM_SELECTORS } from "../elements/channels/add-channel-form-selectors";
-import { CHANNEL_FORM_SELECTORS } from "../elements/channels/channel-form-selectors";
-import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
-import { CONFIGURATION_SELECTORS } from "../elements/configuration/configuration-selectors";
-import { HEADER_SELECTORS } from "../elements/header/header-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
-import { ORDERS_SELECTORS } from "../elements/orders/orders-selectors";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { createChannelByView } from "../steps/channelsSteps";
-import { urlList } from "../url/urlList";
-import { deleteChannelsStartsWith } from "../utils/channelsUtils";
+import { createChannel } from "../../apiRequests/Channels";
+import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
+import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
+import { ADD_CHANNEL_FORM_SELECTORS } from "../../elements/channels/add-channel-form-selectors";
+import { AVAILABLE_CHANNELS_FORM } from "../../elements/channels/available-channels-form";
+import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
+import { CHANNELS_SELECTORS } from "../../elements/channels/channels-selectors";
+import { SELECT_CHANNELS_TO_ASSIGN } from "../../elements/channels/select-channels-to-assign";
+import { CONFIGURATION_SELECTORS } from "../../elements/configuration/configuration-selectors";
+import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
+import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
+import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { createChannelByView } from "../../steps/channelsSteps";
+import { urlList } from "../../url/urlList";
+import { deleteChannelsStartsWith } from "../../utils/channelsUtils";
 
 describe("Channels", () => {
   const channelStartsWith = "Cypress:";
@@ -65,12 +67,12 @@ describe("Channels", () => {
     cy.addAliasToGraphRequest("InitialProductFilterData");
     cy.visit(urlList.products);
     cy.wait("@InitialProductFilterData");
-    cy.get(PRODUCTS_SELECTORS.productsList)
+    cy.get(PRODUCTS_LIST.productsList)
       .first()
       .click()
-      .get(PRODUCTS_SELECTORS.availableManageButton)
+      .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
       .click()
-      .get(PRODUCTS_SELECTORS.channelsAvailabilityForm)
+      .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
       .contains(randomChannel);
   });
 

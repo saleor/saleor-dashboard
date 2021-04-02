@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -269,7 +270,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product {
   category: ProductVariantSetDefault_productVariantSetDefault_product_category | null;
   collections: (ProductVariantSetDefault_productVariantSetDefault_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductVariantSetDefault_productVariantSetDefault_product_media | null)[] | null;
+  media: ProductVariantSetDefault_productVariantSetDefault_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductVariantSetDefault_productVariantSetDefault_product_variants | null)[] | null;
   weight: ProductVariantSetDefault_productVariantSetDefault_product_weight | null;

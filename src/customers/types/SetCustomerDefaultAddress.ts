@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AddressTypeEnum, AccountErrorCode } from "./../../types/globalTypes";

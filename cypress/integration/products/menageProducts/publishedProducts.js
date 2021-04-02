@@ -1,10 +1,10 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { updateProductPublish } from "../../../steps/products/productSteps";
+import { updateProductPublish } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />

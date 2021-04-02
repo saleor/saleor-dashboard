@@ -1,7 +1,7 @@
 import Portal from "@material-ui/core/Portal";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import AppHeaderContext from "../AppLayout/AppHeaderContext";

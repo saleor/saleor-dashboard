@@ -1,6 +1,6 @@
-import * as attributeRequest from "../apiRequests/Attribute";
-import * as categoryRequest from "../apiRequests/Category";
-import * as productRequest from "../apiRequests/Product";
+import * as attributeRequest from "../../apiRequests/Attribute";
+import * as categoryRequest from "../../apiRequests/Category";
+import * as productRequest from "../../apiRequests/Product";
 
 export function createProductInChannel({
   name,
@@ -70,9 +70,9 @@ export function createAttribute(name, attributeValues) {
     .createAttribute(name, attributeValues)
     .its("body.data.attributeCreate.attribute");
 }
-export function createTypeProduct(name, attributeId) {
+export function createTypeProduct(name, attributeId, hasVariants) {
   return productRequest
-    .createTypeProduct(name, attributeId)
+    .createTypeProduct(name, attributeId, hasVariants)
     .its("body.data.productTypeCreate.productType");
 }
 export function createCategory(name) {
