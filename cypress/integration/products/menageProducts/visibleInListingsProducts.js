@@ -4,7 +4,7 @@ import { searchInShop } from "../../../apiRequests/storeFront/Search";
 import { updateProductVisibleInListings } from "../../../steps/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />

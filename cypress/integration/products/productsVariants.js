@@ -14,7 +14,7 @@ import {
   deleteChannelsStartsWith,
   getDefaultChannel
 } from "../../utils/channelsUtils";
-import * as productUtils from "../../utils/productsUtils";
+import * as productUtils from "../../utils/products/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
 
