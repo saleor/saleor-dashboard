@@ -190,14 +190,11 @@ export interface SimpleProductUpdate_productUpdate_product_media {
   oembedData: any;
 }
 
-<<<<<<< HEAD
-=======
 export interface SimpleProductUpdate_productUpdate_product_variants_media {
   __typename: "ProductMedia";
   url: string;
 }
 
->>>>>>> 7ca06d06... Update types
 export interface SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
