@@ -27,6 +27,9 @@ export function createCheckout({
       created
       checkout{
         id
+        availableShippingMethods{
+          name
+        }
       }
     }
   }`;
