@@ -14,13 +14,10 @@ greatly reduce the amount of work needed to review your work. -->
 <!-- Please keep this section. It will make maintainer's life easier. -->
 
 1. [ ] This code contains UI changes
-2. [ ] All visible strings are translated with proper context.
-3. [ ] All data-formatting is locale-aware (dates, numbers, and so on).
-4. [ ] Attributes `[data-test-id]` are added for new elements.
-5. [ ] Code is properly typed.
-6. [ ] Changes are mentioned in the changelog.
-7. [ ] The changes are tested in different browsers (Chrome, Firefox, Safari).
-8. [ ] The changes are tested in light and dark mode.
+2. [ ] All visible strings are translated with proper context including data-formatting
+3. [ ] Attributes `[data-test-id]` are added for new elements
+4. [ ] Changes are mentioned in the changelog
+5. [ ] The changes are tested in different browsers and in light/dark mode
 
 ### Test environment config
 

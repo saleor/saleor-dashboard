@@ -2,17 +2,17 @@ name: Review assignment
 
 on:
   pull_request:
-    types: [opened, edited, ready_for_review]
+    types: [opened, edited]
 
 jobs:
   assign_ui:
     runs-on: ubuntu-latest
-    name: Add UI Reviewer
-    # if: ${{ !contains(github.event.pull_request.requested_reviewers , 'pwgryglak') && contains(github.event.pull_request.body , '[x] This code contains UI changes') }}
+    name: Assign UI Reviewer
+    if: contains(github.event.pull_request.body , 'This code contains UI changes')
     steps:
-      - name: Assign UI reviewer
-        uses: jwm0/add-reviewer-gh-action@7a5823b78f69fff30cf31ce836785e95330fa603
+      - name: Add/Remove UI reviewer
+        uses: jwm0/add-reviewer-gh-action@1.0.4
         with:
           reviewers: "pwgryglak"
           token: ${{ secrets.GITHUB_TOKEN }}
-          remove: true
+          remove: ${{ !contains(github.event.pull_request.body , '[x] This code contains UI changes') }}
