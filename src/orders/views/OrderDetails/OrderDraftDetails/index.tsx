@@ -9,7 +9,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { getStringOrPlaceholder, maybe } from "../../../../misc";
+import { getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
@@ -98,11 +98,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 order: id
               })
             }
-            users={maybe(
-              () => users.data.search.edges.map(edge => edge.node),
-              []
-            )}
-            hasMore={maybe(() => users.data.search.pageInfo.hasNextPage, false)}
+            users={users?.data?.search?.edges?.map(edge => edge.node) || []}
+            hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
             onFetchMore={loadMoreCustomers}
             fetchUsers={searchUsers}
             loading={users.loading}
@@ -118,7 +115,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onOrderLineAdd={() => openModal("add-order-line")}
             onBack={() => navigate(orderDraftListUrl())}
             order={order}
-            countries={maybe(() => data.shop.countries, []).map(country => ({
+            countries={(data?.shop?.countries || []).map(country => ({
               code: country.code,
               label: country.country
             }))}

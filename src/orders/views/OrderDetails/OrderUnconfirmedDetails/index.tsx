@@ -11,11 +11,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import {
-  getMutationState,
-  getStringOrPlaceholder,
-  maybe
-} from "../../../../misc";
+import { getMutationState, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import { FulfillmentStatus } from "../../../../types/globalTypes";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
@@ -155,10 +151,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                   .errors || [])
               ]
             )}
-            shippingMethods={maybe(
-              () => data.order.availableShippingMethods,
-              []
-            )}
+            shippingMethods={data?.order?.availableShippingMethods || []}
             userPermissions={user?.userPermissions || []}
             onOrderCancel={() => openModal("cancel")}
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}
