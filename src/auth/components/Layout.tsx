@@ -1,7 +1,6 @@
 import backgroundArt from "@assets/images/login-background.svg";
 import logoBig from "@assets/images/logo-1.png";
 import { makeStyles } from "@material-ui/core/styles";
-import useTheme from "@saleor/hooks/useTheme";
 import React from "react";
 import SVG from "react-inlinesvg";
 
@@ -73,7 +72,6 @@ const Layout: React.FC = props => {
   const { children } = props;
 
   const classes = useStyles(props);
-  const { isDark } = useTheme();
 
   return (
     <div className={classes.root}>
