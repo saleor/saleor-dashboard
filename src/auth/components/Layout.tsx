@@ -1,6 +1,5 @@
 import backgroundArt from "@assets/images/login-background.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import saleorLightLogo from "@assets/images/logo-light.svg";
+import logoBig from "@assets/images/logo-1.png";
 import { makeStyles } from "@material-ui/core/styles";
 import useTheme from "@saleor/hooks/useTheme";
 import React from "react";
@@ -83,10 +82,7 @@ const Layout: React.FC = props => {
       </div>
       <div className={classes.mainPanel}>
         <div className={classes.mainPanelContent}>
-          <SVG
-            className={classes.logo}
-            src={isDark ? saleorDarkLogo : saleorLightLogo}
-          />
+          <img src={logoBig} alt="logo" style={{width: '200px', marginBottom: '20px'}} />
           {children}
         </div>
       </div>
