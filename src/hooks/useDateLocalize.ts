@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 export type LocalizeDate = (date: string, format?: string) => string;
 
-function useDateLocalize(): (date: string, format?: string) => string {
+function useDateLocalize(): LocalizeDate {
   const { locale } = useContext(LocaleContext);
 
   return (date: string, format?: string) =>

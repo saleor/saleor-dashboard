@@ -17,9 +17,7 @@ export interface ChannelWithVariantData {
   variantsIdsToAdd: string[];
 }
 
-export interface ChannelsWithVariantsData {
-  [id: string]: ChannelWithVariantData;
-}
+export type ChannelsWithVariantsData = Record<string, ChannelWithVariantData>;
 
 export const initialChannelWithVariantData: ChannelWithVariantData = {
   variantsIdsToRemove: [],
