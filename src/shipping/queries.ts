@@ -7,6 +7,10 @@ import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
+import {
+  ShippingZoneChannels,
+  ShippingZoneChannelsVariables
+} from "./types/ShippingZoneChannels";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
 const shippingZones = gql`
@@ -54,6 +58,7 @@ const shippingZone = gql`
       channels {
         id
         name
+        currencyCode
       }
       warehouses {
         id
@@ -65,3 +70,21 @@ const shippingZone = gql`
 export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
   shippingZone
 );
+
+const shippingZoneChannels = gql`
+  query ShippingZoneChannels($id: ID!) {
+    shippingZone(id: $id) {
+      id
+      channels {
+        id
+        name
+        currencyCode
+      }
+    }
+  }
+`;
+
+export const useShippingZoneChannels = makeQuery<
+  ShippingZoneChannels,
+  ShippingZoneChannelsVariables
+>(shippingZoneChannels);

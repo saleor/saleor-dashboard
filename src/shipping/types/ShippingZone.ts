@@ -144,6 +144,7 @@ export interface ShippingZone_shippingZone_channels {
   __typename: "Channel";
   id: string;
   name: string;
+  currencyCode: string;
 }
 
 export interface ShippingZone_shippingZone_warehouses {

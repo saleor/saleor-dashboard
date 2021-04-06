@@ -1,5 +1,4 @@
 import Button from "@material-ui/core/Button";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -90,6 +89,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     variables: { id, ...paginationState }
   });
 
+  const channelsData = data?.shippingZone?.channels;
+
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -162,7 +163,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     params
   );
 
-  const { data: channelsData } = useChannelsList({});
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
@@ -194,7 +194,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   const shippingChannels = createShippingChannelsFromRate(
     rate?.channelListings
   );
-  const allChannels = createSortedShippingChannels(channelsData?.channels);
+  const allChannels = createSortedShippingChannels(channelsData);
 
   const {
     channelListElements,
