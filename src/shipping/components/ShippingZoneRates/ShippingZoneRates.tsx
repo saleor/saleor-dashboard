@@ -26,6 +26,7 @@ export interface ShippingZoneRatesProps extends ChannelProps {
   disabled: boolean;
   rates: ShippingZoneDetailsFragment_shippingMethods[];
   variant: "price" | "weight";
+  testId?: string;
   onRateAdd: () => void;
   onRateEdit: (id: string) => void;
   onRateRemove: (id: string) => void;
@@ -58,7 +59,8 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     onRateRemove,
     rates,
     selectedChannelId,
-    variant
+    variant,
+    testId
   } = props;
 
   const classes = useStyles(props);
@@ -80,7 +82,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               })
         }
         toolbar={
-          <Button color="primary" disabled={disabled} onClick={onRateAdd}>
+          <Button
+            color="primary"
+            disabled={disabled}
+            onClick={onRateAdd}
+            data-test-id={testId}
+          >
             <FormattedMessage
               defaultMessage="Create rate"
               description="button"
@@ -153,7 +160,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-test-id="shipping-rate-price">
                     {maybe<React.ReactNode>(
                       () =>
                         rate && !channel ? (
