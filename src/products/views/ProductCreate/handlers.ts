@@ -27,7 +27,7 @@ import {
   ProductDelete,
   ProductDeleteVariables
 } from "@saleor/products/types/ProductDelete";
-import { ProductTypeSearchDetails_productType } from "@saleor/products/types/ProductTypeSearchDetails";
+import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateVariables
@@ -66,7 +66,7 @@ const getSimpleProductVariables = (
 });
 
 export function createHandler(
-  productType: ProductTypeSearchDetails_productType,
+  productType: ProductType_productType,
   uploadFile: (
     variables: FileUploadVariables
   ) => Promise<MutationFetchResult<FileUpload>>,

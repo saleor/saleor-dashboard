@@ -23,7 +23,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { ProductTypeSearchDetails_productType } from "@saleor/products/types/ProductTypeSearchDetails";
+import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
   ProductType
@@ -137,7 +137,7 @@ export interface UseProductCreateFormOpts
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  selectedProductType?: ProductTypeSearchDetails_productType;
+  selectedProductType?: ProductType_productType;
   onSelectProductType: (productTypeId: string) => void;
 }
 

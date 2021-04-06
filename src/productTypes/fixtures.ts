@@ -1,7 +1,7 @@
 import {
-  ProductTypeSearchDetails_productType,
-  ProductTypeSearchDetails_productType_productAttributes
-} from "@saleor/products/types/ProductTypeSearchDetails";
+  ProductType_productType,
+  ProductType_productType_productAttributes
+} from "@saleor/products/types/ProductType";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 
 import {
@@ -12,7 +12,7 @@ import {
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
-export const attributes: ProductTypeSearchDetails_productType_productAttributes[] = [
+export const attributes: ProductType_productType_productAttributes[] = [
   {
     node: {
       __typename: "Attribute" as "Attribute",
@@ -556,7 +556,7 @@ export const attributes: ProductTypeSearchDetails_productType_productAttributes[
   }
 ].map(edge => edge.node);
 
-export const productTypeSearch: ProductTypeSearchDetails_productType = {
+export const productTypeSearch: ProductType_productType = {
   __typename: "ProductType" as "ProductType",
   hasVariants: true,
   id: "UHJvZHVjdFR5cGU6NA==",

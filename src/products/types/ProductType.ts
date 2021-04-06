@@ -6,25 +6,25 @@
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL query operation: ProductTypeSearchDetails
+// GraphQL query operation: ProductType
 // ====================================================
 
-export interface ProductTypeSearchDetails_productType_productAttributes_values_file {
+export interface ProductType_productType_productAttributes_values_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductTypeSearchDetails_productType_productAttributes_values {
+export interface ProductType_productType_productAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductTypeSearchDetails_productType_productAttributes_values_file | null;
+  file: ProductType_productType_productAttributes_values_file | null;
   reference: string | null;
 }
 
-export interface ProductTypeSearchDetails_productType_productAttributes {
+export interface ProductType_productType_productAttributes {
   __typename: "Attribute";
   id: string;
   inputType: AttributeInputTypeEnum | null;
@@ -32,28 +32,28 @@ export interface ProductTypeSearchDetails_productType_productAttributes {
   slug: string | null;
   name: string | null;
   valueRequired: boolean;
-  values: (ProductTypeSearchDetails_productType_productAttributes_values | null)[] | null;
+  values: (ProductType_productType_productAttributes_values | null)[] | null;
 }
 
-export interface ProductTypeSearchDetails_productType_taxType {
+export interface ProductType_productType_taxType {
   __typename: "TaxType";
   description: string | null;
   taxCode: string | null;
 }
 
-export interface ProductTypeSearchDetails_productType {
+export interface ProductType_productType {
   __typename: "ProductType";
   id: string;
   name: string;
   hasVariants: boolean;
-  productAttributes: (ProductTypeSearchDetails_productType_productAttributes | null)[] | null;
-  taxType: ProductTypeSearchDetails_productType_taxType | null;
+  productAttributes: (ProductType_productType_productAttributes | null)[] | null;
+  taxType: ProductType_productType_taxType | null;
 }
 
-export interface ProductTypeSearchDetails {
-  productType: ProductTypeSearchDetails_productType | null;
+export interface ProductType {
+  productType: ProductType_productType | null;
 }
 
-export interface ProductTypeSearchDetailsVariables {
+export interface ProductTypeVariables {
   id: string;
 }

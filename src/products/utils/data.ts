@@ -20,7 +20,7 @@ import { StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ProductTypeSearchDetails_productType_productAttributes } from "../types/ProductTypeSearchDetails";
+import { ProductType_productType_productAttributes } from "../types/ProductType";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
@@ -37,7 +37,7 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
-  productAttributes: ProductTypeSearchDetails_productType_productAttributes[];
+  productAttributes: ProductType_productType_productAttributes[];
 }
 
 export function getAttributeInputFromProduct(

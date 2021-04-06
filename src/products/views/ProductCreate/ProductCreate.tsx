@@ -17,7 +17,7 @@ import {
   useVariantCreateMutation
 } from "@saleor/products/mutations";
 import { useProductCreateMutation } from "@saleor/products/mutations";
-import { useProductTypeSearchDetails } from "@saleor/products/queries";
+import { useProductTypeQuery } from "@saleor/products/queries";
 import {
   productAddUrl,
   ProductCreateUrlDialog,
@@ -110,7 +110,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const taxTypes = useTaxTypeList({});
-  const { data: selectedProductType } = useProductTypeSearchDetails({
+  const { data: selectedProductType } = useProductTypeQuery({
     variables: {
       id: selectedProductTypeId
     },
