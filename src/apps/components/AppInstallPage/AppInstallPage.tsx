@@ -1,4 +1,4 @@
-import saleorDarkLogoSmall from "@assets/images/salingo-small.svg";
+import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
