@@ -12,6 +12,7 @@ import {
 } from "./types";
 import {
   areAllChannelVariantsSelected,
+  areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected,
   getChannelVariantToggleData,
   getChannelWithAddedVariantData,
@@ -99,19 +100,20 @@ const useChannelsWithProductVariants = ({
   };
 
   const toggleAllChannels = () => {
+    const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
+      variants,
+      channelsWithVariantsData
+    );
+
     const updatedData: ChannelsWithVariantsData = reduce(
       channelsWithVariantsData,
-      (result, channelData, channelId) => {
-        const isChannelSelected = areAllChannelVariantsSelected(
+      (result, _, channelId) => ({
+        ...result,
+        [channelId]: getChannelVariantToggleData(
           variants,
-          channelData
-        );
-
-        return {
-          ...result,
-          [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
-        };
-      },
+          areAllChannelsSelected
+        )
+      }),
       {}
     );
 
