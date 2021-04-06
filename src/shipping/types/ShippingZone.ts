@@ -139,6 +139,13 @@ export interface ShippingZone_shippingZone_shippingMethods {
   excludedProducts: ShippingZone_shippingZone_shippingMethods_excludedProducts | null;
 }
 
+export interface ShippingZone_shippingZone_channels {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface ShippingZone_shippingZone_warehouses {
   __typename: "Warehouse";
   id: string;
