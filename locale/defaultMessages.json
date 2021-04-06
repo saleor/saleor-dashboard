@@ -424,6 +424,10 @@
     "context": "shipment refund title",
     "string": "Shipment was refunded"
   },
+  "shippingZoneChannels_dot_autocomplete_dot_label": {
+    "context": "ChannelsSection select field label",
+    "string": "Channel"
+  },
   "shippingZoneDetailsDialogsDeleteShippingMethod": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
@@ -433,7 +437,7 @@
     "string": "Are you sure you want to delete {name}?"
   },
   "shippingZoneWarehouses_dot_autocomplete_dot_label": {
-    "context": "autocomplete select label",
+    "context": "WarehousesSection select field label",
     "string": "Warehouse"
   },
   "siteSettingsMailingHelperText": {
@@ -5906,20 +5910,21 @@
     "context": "shipping method name",
     "string": "Name"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_1221560277": {
-    "context": "section header",
-    "string": "Warehouse"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_2304484478": {
-    "context": "button",
+  "src_dot_shipping_dot_components_dot_ShippingZoneSettingsCard_dot_selectFieldAddText": {
+    "context": "WarehousesSection select field add text",
     "string": "Add New Warehouse"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_3852102652": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneSettingsCard_dot_selectFieldPlaceholder": {
+    "context": "WarehousesSection select field placeholder",
+    "string": "Select Warehouse"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneSettingsCard_dot_subtitle": {
+    "context": "WarehousesSection subtitle",
     "string": "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_46197273": {
-    "context": "input placeholder",
-    "string": "Select Warehouse"
+  "src_dot_shipping_dot_components_dot_ShippingZoneSettingsCard_dot_title": {
+    "context": "ShippingZoneSettingsCard title",
+    "string": "Settings"
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesListPage_dot_1325966144": {
     "context": "header",

@@ -51,6 +51,10 @@ const shippingZone = gql`
       shippingMethods {
         ...ShippingMethodWithExcludedProductsFragment
       }
+      channels {
+        id
+        name
+      }
       warehouses {
         id
         name
