@@ -1,5 +1,5 @@
-import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
+import saleorDarkLogoSmall from "@assets/images/salingo-small.svg";
+import saleorDarkLogo from "@assets/images/salingo.svg";
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
