@@ -10,7 +10,7 @@ import React from "react";
 import ChannelsAvailabilityCard, {
   ChannelsAvailabilityCardProps
 } from "./ChannelsAvailabilityCard";
-import { Message } from "./types";
+import { Messages } from "./types";
 
 const user: User = {
   __typename: "User",
@@ -61,7 +61,7 @@ storiesOf("Generics / Channels availability card", module)
             hiddenSecondLabel: "Will become published"
           }
         }),
-        {} as Message
+        {} as Messages
       )}
     />
   ));

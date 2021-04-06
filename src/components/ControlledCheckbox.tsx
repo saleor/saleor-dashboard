@@ -8,6 +8,7 @@ interface ControlledCheckboxProps {
   label?: React.ReactNode;
   checked: boolean;
   disabled?: boolean;
+  checkedIcon?: React.ReactNode;
   onChange(event: any);
 }
 
@@ -17,16 +18,18 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
   name,
   label,
   onChange,
+  checkedIcon,
   ...props
 }) => (
   <FormControlLabel
     disabled={disabled}
     control={
       <Checkbox
+        checkedIcon={checkedIcon}
         checked={!!checked}
         disabled={disabled}
         name={name}
-        onClick={() => onChange({ target: { name, value: !checked } })}
+        onChange={() => onChange({ target: { name, value: !checked } })}
       />
     }
     label={label}

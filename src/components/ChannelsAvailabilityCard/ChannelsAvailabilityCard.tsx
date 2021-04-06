@@ -12,7 +12,7 @@ import ChannelsAvailabilityCardWrapper, {
   ChannelsAvailabilityWrapperProps
 } from "./ChannelsAvailabilityCardWrapper";
 import { useStyles } from "./styles";
-import { ChannelsAvailabilityError, ChannelValue, Message } from "./types";
+import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
 export interface ChannelsAvailability
@@ -21,8 +21,8 @@ export interface ChannelsAvailability
   channelsList: ChannelList[];
   errors?: ChannelsAvailabilityError[];
   disabled?: boolean;
-  messages?: Message;
-  onChange?: (id: string, data: ChannelValue) => void;
+  messages?: Messages;
+  onChange?: (id: string, data: ChannelOpts) => void;
 }
 
 export type ChannelsAvailabilityCardProps = RequireOnlyOne<

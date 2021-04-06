@@ -16,7 +16,7 @@ const messages = defineMessages({
   }
 });
 
-const CannotDefineChannelsAvailabilityCard: React.FC<{}> = () => (
+const CannotDefineChannelsAvailabilityCard: React.FC = () => (
   <Card>
     <CardTitle title={<FormattedMessage {...messages.title} />} />
     <CardContent>

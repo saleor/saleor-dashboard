@@ -19,16 +19,16 @@ export interface Channel {
 
 export interface ChannelData {
   id: string;
-  isPublished: boolean;
   name: string;
-  publicationDate: string | null;
-  currency: string;
-  variantsIds: string[];
-  price: string;
-  costPrice: string;
-  availableForPurchase: string;
-  isAvailableForPurchase: boolean;
-  visibleInListings: boolean;
+  isPublished?: boolean;
+  publicationDate?: string | null;
+  currency?: string;
+  variantsIds?: string[];
+  price?: string;
+  costPrice?: string;
+  availableForPurchase?: string;
+  isAvailableForPurchase?: boolean;
+  visibleInListings?: boolean;
 }
 
 export interface ChannelPriceData {

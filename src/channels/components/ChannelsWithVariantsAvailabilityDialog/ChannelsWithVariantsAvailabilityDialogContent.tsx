@@ -7,6 +7,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
+import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -145,6 +146,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <div className={classes.channelCheckboxContainer}>
                   <ControlledCheckbox
                     checked={isChannelSelected(channelId)}
+                    checkedIcon={<IconCheckboxSemiChecked />}
                     name={name}
                     label={
                       <div className={classes.channelTitleContainer}>

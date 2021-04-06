@@ -1,7 +1,7 @@
 import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 
-export interface ChannelValue {
+export interface ChannelOpts {
   availableForPurchase?: string;
   isAvailableForPurchase?: boolean;
   isPublished: boolean;
@@ -9,7 +9,7 @@ export interface ChannelValue {
   visibleInListings?: boolean;
 }
 
-export interface Message {
+export interface Messages {
   visibleLabel: string;
   hiddenLabel: string;
   visibleSecondLabel?: string;
@@ -19,16 +19,6 @@ export interface Message {
   unavailableLabel?: string;
   availableSecondLabel?: string;
   setAvailabilityDateLabel?: string;
-}
-
-export interface ChannelData {
-  id: string;
-  isPublished: boolean;
-  name: string;
-  publicationDate: string | null;
-  availableForPurchase?: string;
-  isAvailableForPurchase?: boolean;
-  visibleInListings?: boolean;
 }
 
 export type ChannelsAvailabilityError =

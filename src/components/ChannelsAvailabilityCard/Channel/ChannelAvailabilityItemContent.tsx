@@ -1,5 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { ChannelData } from "@saleor/channels/utils";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
@@ -11,19 +12,14 @@ import { useIntl } from "react-intl";
 
 import { DateContext } from "../../Date/DateContext";
 import { useStyles } from "../styles";
-import {
-  ChannelData,
-  ChannelsAvailabilityError,
-  ChannelValue,
-  Message
-} from "../types";
+import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 
 export interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
   errors: ChannelsAvailabilityError[];
-  messages: Message;
-  onChange: (id: string, data: ChannelValue) => void;
+  messages: Messages;
+  onChange: (id: string, data: ChannelOpts) => void;
 }
 
 const ChannelContent: React.FC<ChannelContentProps> = ({

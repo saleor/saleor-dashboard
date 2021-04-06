@@ -5,9 +5,9 @@ import ChannelsAvailabilityCardWrapper, {
   ChannelsAvailabilityWrapperProps
 } from "@saleor/components/ChannelsAvailabilityCard/ChannelsAvailabilityCardWrapper";
 import {
+  ChannelOpts,
   ChannelsAvailabilityError,
-  ChannelValue,
-  Message
+  Messages
 } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
@@ -34,8 +34,8 @@ export interface ChannelsWithVariantsAvailabilityCardProps
   channels: ChannelData[];
   variants: ProductDetails_product_variants[];
   errors?: ChannelsAvailabilityError[];
-  messages: Message;
-  onChange: (id: string, data: ChannelValue) => void;
+  messages: Messages;
+  onChange: (id: string, data: ChannelOpts) => void;
 }
 
 const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailabilityCardProps> = ({

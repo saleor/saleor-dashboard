@@ -1,4 +1,4 @@
-import { ChannelCollectionData, ChannelData } from "@saleor/channels/utils";
+import { ChannelCollectionData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -144,7 +144,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 errors={channelsErrors}
                 selectedChannelsCount={data.channelListings.length}
                 allChannelsCount={channelsCount}
-                channels={data.channelListings as ChannelData[]}
+                channels={data.channelListings}
                 disabled={disabled}
                 onChange={handlers.changeChannels}
                 openModal={openChannelsModal}

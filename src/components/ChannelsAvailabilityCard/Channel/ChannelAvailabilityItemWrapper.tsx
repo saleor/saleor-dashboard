@@ -4,10 +4,11 @@ import {
   makeStyles
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import { ChannelData } from "@saleor/channels/utils";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import React from "react";
 
-import { ChannelData, Message } from "../types";
+import { Messages } from "../types";
 
 const useExpanderStyles = makeStyles(
   theme => ({
@@ -61,7 +62,7 @@ const useSummaryStyles = makeStyles(
 export interface ChannelContentWrapperProps {
   data: ChannelData;
   children: React.ReactNode;
-  messages: Message;
+  messages: Messages;
 }
 
 const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({

@@ -11,7 +11,6 @@ import {
   UseChannelsWithProductVariantsProps
 } from "./types";
 import {
-  areAllChannelVariantsSelected,
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected,
   getChannelVariantToggleData,
