@@ -31,7 +31,6 @@ export interface UseChannelsWithProductVariants {
   channelsData: ChannelData[];
   setChannelsData: (data: ChannelData[]) => void;
   onChannelsWithVariantsConfirm: () => void;
-  setChannelsWithVariantsData: (channels: ChannelData[]) => void;
   addVariantToChannel: (channelId: string, variantId: string) => void;
   removeVariantFromChannel: (channelId: string, variantId: string) => void;
   channelsWithVariantsData: ChannelsWithVariantsData;

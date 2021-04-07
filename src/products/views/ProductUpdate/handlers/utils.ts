@@ -2,13 +2,18 @@ import { ChannelData } from "@saleor/channels/utils";
 import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
+import {
+  ProductDetails_product,
+  ProductDetails_product_variants
+} from "@saleor/products/types/ProductDetails";
 import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
+import { diff } from "fast-array-diff";
 
 import { ChannelsWithVariantsData, ChannelWithVariantData } from "../types";
+import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
   productVariables: ProductUpdateVariables,
@@ -39,6 +44,7 @@ export const getSimpleProductErrors = (data: SimpleProductUpdate) => [
 
 export const getChannelListingAddInputFromData = (
   { variantsIdsToAdd, variantsIdsToRemove }: ChannelWithVariantData,
+  { selectedVariantsIds: initialSelectedVariantsIds }: ChannelWithVariantData,
   {
     id: channelId,
     isPublished,
@@ -54,33 +60,68 @@ export const getChannelListingAddInputFromData = (
   visibleInListings,
   isAvailableForPurchase,
   availableForPurchaseDate: availableForPurchase,
-  addVariants: variantsIdsToAdd,
+  addVariants: diff(initialSelectedVariantsIds, variantsIdsToAdd).added,
   removeVariants: variantsIdsToRemove
 });
 
 const getParsedChannelsData = (
   channelsWithVariants: ChannelsWithVariantsData,
+  initialChannelWithVariants: ChannelsWithVariantsData,
   channelsData: ChannelData[]
 ): ProductChannelListingAddInput[] =>
   channelsData.map(({ id, ...rest }) =>
-    getChannelListingAddInputFromData(channelsWithVariants[id], { id, ...rest })
+    getChannelListingAddInputFromData(
+      channelsWithVariants[id],
+      initialChannelWithVariants[id],
+      { id, ...rest }
+    )
   );
+
+const shouldAddChannel = (allVariants: ProductDetails_product_variants[]) => ({
+  removeVariants,
+  addVariants
+}: ProductChannelListingAddInput) =>
+  !!addVariants.length ||
+  (!!removeVariants.length && removeVariants.length !== allVariants.length);
+
+const shouldRemoveChannel = (
+  allVariants: ProductDetails_product_variants[]
+) => ({ removeVariants }: ProductChannelListingAddInput) =>
+  !!removeVariants.length && removeVariants.length === allVariants.length;
 
 export const getParsedChannelsToBeAdded = (
   channelsWithVariants: ChannelsWithVariantsData,
-  channelsData: ChannelData[]
-) =>
-  getParsedChannelsData(channelsWithVariants, channelsData).filter(
-    ({ addVariants }) => !!addVariants.length
+  channelsData: ChannelData[],
+  allVariants: ProductDetails_product_variants[]
+) => {
+  const initialChannelWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
+    channelsData
   );
+
+  return getParsedChannelsData(
+    channelsWithVariants,
+    initialChannelWithVariantsData,
+    channelsData
+  ).filter(shouldAddChannel(allVariants));
+};
 
 const getChannelsIdsToBeRemoved = (
   channelsWithVariants: ChannelsWithVariantsData,
-  channelsData: ChannelData[]
-) =>
-  getParsedChannelsData(channelsWithVariants, channelsData)
-    .filter(({ removeVariants }) => !!removeVariants.length)
+  channelsData: ChannelData[],
+  allVariants: ProductDetails_product_variants[]
+) => {
+  const initialChannelWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
+    channelsData
+  );
+
+  return getParsedChannelsData(
+    channelsWithVariants,
+    initialChannelWithVariantsData,
+    channelsData
+  )
+    .filter(shouldRemoveChannel(allVariants))
     .map(({ channelId }) => channelId);
+};
 
 export const getChannelsVariables = (
   product: ProductDetails_product,
@@ -88,11 +129,13 @@ export const getChannelsVariables = (
 ) => {
   const channelsToBeAdded = getParsedChannelsToBeAdded(
     channelsWithVariants,
-    channelsData
+    channelsData,
+    product.variants
   );
   const channelsToBeRemoved = getChannelsIdsToBeRemoved(
     channelsWithVariants,
-    channelsData
+    channelsData,
+    product.variants
   );
 
   return {

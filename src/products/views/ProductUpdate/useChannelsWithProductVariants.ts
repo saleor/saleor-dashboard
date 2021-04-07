@@ -1,4 +1,3 @@
-import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import isEmpty from "lodash-es/isEmpty";
 import reduce from "lodash-es/reduce";
@@ -26,11 +25,11 @@ const useChannelsWithProductVariants = ({
   closeModal,
   action
 }: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
+  const [channelsData, setChannelsData] = useStateFromProps(channels);
+
   const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
     channels
   );
-
-  const [channelsData, setChannelsData] = useStateFromProps(channels);
 
   const [
     channelsWithVariantsData,
@@ -51,21 +50,16 @@ const useChannelsWithProductVariants = ({
 
     const hasNoDataFilled = isDataRefEmpty && isDataEmpty;
 
+    channelsWithVariantsDataRef.current = channelsWithVariantsData;
+
     if (hasNoDataFilled || hasFilledInitialData) {
-      channelsWithVariantsDataRef.current = channelsWithVariantsData;
       return;
     }
 
-    channelsWithVariantsDataRef.current = channelsWithVariantsData;
     setHasChanged(true);
   };
 
   useEffect(handleSetHasChanged, [channelsWithVariantsData]);
-
-  const handleSetChannelsWithVariantsData = (channels: ChannelData[]) =>
-    setChannelsWithVariantsData(
-      getParsedChannelsWithVariantsDataFromChannels(channels)
-    );
 
   const handleAddVariant = (channelId: string, variantId: string) =>
     setChannelsWithVariantsData({
@@ -136,7 +130,6 @@ const useChannelsWithProductVariants = ({
     onChannelsAvailiabilityModalClose: closeModal,
     isChannelsAvailabilityModalOpen: isModalOpen,
     haveChannelsWithVariantsDataChanged: hasChanged,
-    setChannelsWithVariantsData: handleSetChannelsWithVariantsData,
     toggleAllChannelVariants,
     toggleAllChannels,
     onChannelsWithVariantsConfirm,

@@ -23,7 +23,6 @@ const messages = defineMessages({
 
 type UseChannelsWithVariantsCommonProps = Omit<
   UseChannelsWithProductVariants,
-  | "setChannelsWithVariantsData"
   | "onChannelsAvailiabilityModalOpen"
   | "setHaveChannelsWithVariantsChanged"
   | "channelsData"

@@ -257,7 +257,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     !!data?.product.variants.find(getById(data?.product?.defaultVariant.id));
 
   const {
-    setChannelsWithVariantsData,
     channelsWithVariantsData,
     haveChannelsWithVariantsDataChanged,
     setHaveChannelsWithVariantsChanged,
@@ -298,12 +297,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (!!data.productChannelListingUpdate.errors.length) {
         return;
       }
-
-      setChannelsWithVariantsData(
-        createSortedChannelsDataFromProduct(
-          data.productChannelListingUpdate.product
-        )
-      );
     }
   });
 
