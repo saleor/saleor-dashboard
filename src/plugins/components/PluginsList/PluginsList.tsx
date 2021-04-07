@@ -134,10 +134,7 @@ const PluginList: React.FC<PluginListProps> = props => {
               <TableCell className={classes.colActive}>
                 {maybe<React.ReactNode>(
                   () => (
-                    <StatusLabel
-                      label={translateBoolean(plugin.active, intl)}
-                      status={plugin.active ? "success" : "error"}
-                    />
+                    <ChannelStatusLabel plugin={plugin} />
                   ),
                   <Skeleton />
                 )}
