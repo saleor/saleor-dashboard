@@ -64,9 +64,9 @@ describe("Channels", () => {
       .click();
 
     // new channel should be visible at product availability form
-    cy.addAliasToGraphRequest("InitialProductFilterData");
+    cy.addAliasToGraphRequest("InitialProductFilterAttributes");
     cy.visit(urlList.products);
-    cy.wait("@InitialProductFilterData");
+    cy.wait("@InitialProductFilterAttributes");
     cy.get(PRODUCTS_LIST.productsList)
       .first()
       .click()
