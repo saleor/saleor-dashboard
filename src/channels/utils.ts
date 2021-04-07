@@ -269,7 +269,7 @@ export const createChannelsDataFromProduct = (
         isPublished,
         publicationDate,
         variantsIds,
-        costPrice: costPrice ? costPrice.amount.toString() : "",
+        costPrice: costPrice?.amount.toString() ?? "",
         currency: price ? price.currency : "",
         id: channel.id,
         isAvailableForPurchase: !!isAvailableForPurchase,
