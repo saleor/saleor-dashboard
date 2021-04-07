@@ -5804,6 +5804,10 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
   },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_description": {
+    "context": "label",
+    "string": "Shipping Rate Description"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_maxDays": {
     "context": "label",
     "string": "Max Delivery Time"

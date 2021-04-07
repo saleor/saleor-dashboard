@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -39,6 +40,7 @@ import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 export interface FormData extends MetadataFormData {
   channelListings: ChannelShippingData[];
   name: string;
+  description: OutputData;
   noLimits: boolean;
   minValue: string;
   maxValue: string;
@@ -108,6 +110,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     minDays: rate?.minimumDeliveryDays?.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
+    description: rate?.description || "",
     noLimits: false,
     privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
     type: rate?.type || null
