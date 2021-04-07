@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
@@ -162,6 +163,7 @@ export interface ShippingZone_shippingZone {
   description: string | null;
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
+  channels: ShippingZone_shippingZone_channels[];
   warehouses: ShippingZone_shippingZone_warehouses[];
 }
 

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { StaffUpdateInput, AccountErrorCode, PermissionEnum } from "./../../types/globalTypes";
