@@ -44,8 +44,13 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
     addShippingZone(target.value);
   };
 
+  const handleFooterClickAway = () => {
+    setIsChoicesSelectShown(false);
+    searchShippingZones("");
+  };
+
   return isChoicesSelectShown ? (
-    <ClickAwayListener onClickAway={() => setIsChoicesSelectShown(false)}>
+    <ClickAwayListener onClickAway={handleFooterClickAway}>
       <div>
         <SingleAutocompleteSelectField
           value=""
