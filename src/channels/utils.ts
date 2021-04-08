@@ -99,21 +99,13 @@ export const createVariantChannels = (
   data?: ProductVariantDetails_productVariant
 ): ChannelPriceData[] => {
   if (data) {
-    const productChannels = data?.product.channelListings.map(listing => ({
-      costPrice: "",
-      currency: listing.channel.currencyCode,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: ""
-    }));
-    const variantChannels = data?.channelListings.map(listing => ({
+    return data?.channelListings.map(listing => ({
       costPrice: listing.costPrice?.amount.toString() || "",
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
       price: listing.price?.amount?.toString()
     }));
-    return uniqBy([...variantChannels, ...productChannels], obj => obj.id);
   }
   return [];
 };
