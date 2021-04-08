@@ -12,6 +12,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
+import { ChannelData } from "@saleor/channels/utils";
 import {
   FileUpload,
   FileUploadVariables
@@ -77,6 +78,7 @@ type SubmitErrors = Array<
 
 export function createUpdateHandler(
   product: ProductDetails_product,
+  allChannels: ChannelData[],
   uploadFile: (
     variables: FileUploadVariables
   ) => Promise<MutationFetchResult<FileUpload>>,
@@ -149,7 +151,7 @@ export function createUpdateHandler(
       const result = await updateProduct(productVariables);
       errors = [...errors, ...result.data.productUpdate.errors];
 
-      await updateChannels(getChannelsVariables(product, data));
+      await updateChannels(getChannelsVariables(product, allChannels, data));
     } else {
       if (!product.variants.length) {
         const productVariantResult = await productVariantCreate({
@@ -182,7 +184,9 @@ export function createUpdateHandler(
             }
           });
 
-          await updateChannels(getChannelsVariables(product, data));
+          await updateChannels(
+            getChannelsVariables(product, allChannels, data)
+          );
 
           const result = await updateSimpleProduct(
             getSimpleProductVariables(productVariables, data, variantId)
@@ -199,7 +203,7 @@ export function createUpdateHandler(
         );
         errors = [...errors, ...getSimpleProductErrors(result.data)];
 
-        await updateChannels(getChannelsVariables(product, data));
+        await updateChannels(getChannelsVariables(product, allChannels, data));
 
         updateVariantChannels({
           variables: {

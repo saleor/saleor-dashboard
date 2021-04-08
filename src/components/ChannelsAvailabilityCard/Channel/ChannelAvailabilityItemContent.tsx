@@ -113,7 +113,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             ...formData,
             isPublished: !isPublished,
             publicationDate:
-              !isPublished && !publicationDate ? todayDate : publicationDate
+              !isPublished && !publicationDate
+                ? localizeDate(todayDate, "YYYY-MM-DD")
+                : publicationDate
           });
         }}
       />

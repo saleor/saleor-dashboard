@@ -361,6 +361,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product,
     createUpdateHandler(
       product,
+      allChannels,
       variables => uploadFile({ variables }),
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
