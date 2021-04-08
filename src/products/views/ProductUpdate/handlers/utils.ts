@@ -14,11 +14,7 @@ import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import isEqual from "lodash/isEqual";
 
-import {
-  ChannelsWithVariantsData,
-  ChannelWithVariantData,
-  initialChannelWithVariantData
-} from "../types";
+import { ChannelsWithVariantsData, ChannelWithVariantData } from "../types";
 import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
