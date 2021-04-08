@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import { searchInShop } from "../../../apiRequests/storeFront/Search";
-import { updateProductVisibleInListings } from "../../../steps/products/productSteps";
+import { updateProductVisibleInListings } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import * as productsUtils from "../../../utils/products/productsUtils";

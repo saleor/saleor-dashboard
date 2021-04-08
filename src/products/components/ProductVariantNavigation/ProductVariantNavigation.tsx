@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -12,6 +11,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";

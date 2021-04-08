@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 

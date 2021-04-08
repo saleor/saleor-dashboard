@@ -1,5 +1,5 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableBody, { TableBodyProps } from "@material-ui/core/TableBody";
+import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainer } from "react-sortable-hoc";

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { MenuCreateInput, MenuErrorCode } from "./../../types/globalTypes";

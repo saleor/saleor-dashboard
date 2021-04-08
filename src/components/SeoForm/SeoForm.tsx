@@ -1,12 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { makeStyles } from "@saleor/theme";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";
@@ -163,7 +163,12 @@ const SeoForm: React.FC<SeoFormProps> = props => {
           defaultMessage: "Search Engine Preview"
         })}
         toolbar={
-          <Button color="primary" variant="text" onClick={toggleExpansion}>
+          <Button
+            color="primary"
+            variant="text"
+            onClick={toggleExpansion}
+            data-test-id="edit-seo"
+          >
             <FormattedMessage
               defaultMessage="Edit website SEO"
               description="button"

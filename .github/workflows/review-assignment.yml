@@ -1,0 +1,18 @@
+name: Review assignment
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  assign_ui:
+    runs-on: ubuntu-latest
+    name: Assign UI Reviewer
+    if: contains(github.event.pull_request.body , 'This code contains UI changes')
+    steps:
+      - name: Add/Remove UI reviewer
+        uses: jwm0/add-reviewer-gh-action@1.0.4
+        with:
+          reviewers: "pwgryglak"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          remove: ${{ !contains(github.event.pull_request.body , '[x] This code contains UI changes') }}
