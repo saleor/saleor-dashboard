@@ -265,7 +265,7 @@ export const TypedUpdateAttributeTranslations = TypedMutation<
 const updateAttributeValueTranslations = gql`
   mutation UpdateAttributeValueTranslations(
     $id: ID!
-    $input: NameTranslationInput!
+    $input: AttributeValueTranslationInput!
     $language: LanguageCodeEnum!
   ) {
     attributeValueTranslate(id: $id, input: $input, languageCode: $language) {
@@ -279,6 +279,7 @@ const updateAttributeValueTranslations = gql`
         translation(languageCode: $language) {
           id
           name
+          richText
         }
       }
     }

@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -7,10 +8,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../misc";
-import {
-  LanguageCodeEnum,
-  NameTranslationInput
-} from "../../types/globalTypes";
+import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsProductTypesPage, {
   fieldNames
 } from "../components/TranslationsProductTypesPage";
@@ -92,24 +90,27 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
             updateAttributeValueTranslations,
             updateAttributeValueTranslationsOpts
           ) => {
-            const handleSubmit = (field: string, data: string) => {
-              const input: NameTranslationInput = {};
+            const handleSubmit = (field: string, data: string | OutputData) => {
               const [fieldName, fieldId] = field.split(":");
+
               if (fieldName === fieldNames.attribute) {
-                input.name = data;
                 updateAttributeTranslations({
                   variables: {
                     id: fieldId,
-                    input,
+                    input: { name: data as string },
                     language: languageCode
                   }
                 });
-              } else if (fieldName === fieldNames.value) {
-                input.name = data;
+              } else if (
+                [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
+              ) {
+                const isRichText = fieldName === fieldNames.richTextValue;
                 updateAttributeValueTranslations({
                   variables: {
                     id: fieldId,
-                    input,
+                    input: isRichText
+                      ? { richText: JSON.stringify(data) }
+                      : { name: data as string },
                     language: languageCode
                   }
                 });

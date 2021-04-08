@@ -20,7 +20,7 @@ import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";
 
-interface TranslationField {
+export interface TranslationField {
   displayName: string;
   name: string;
   translation: string;
@@ -108,7 +108,6 @@ const useStyles = makeStyles(
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,
-
     disabled,
     fields,
     initialState,

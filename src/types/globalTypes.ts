@@ -1139,6 +1139,11 @@ export interface AttributeValueInput {
   richText?: any | null;
 }
 
+export interface AttributeValueTranslationInput {
+  name?: string | null;
+  richText?: any | null;
+}
+
 export interface BulkAttributeValueInput {
   id?: string | null;
   values: (string | null)[];
