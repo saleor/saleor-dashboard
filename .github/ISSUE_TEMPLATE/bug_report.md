@@ -33,6 +33,12 @@ about: Create a report to help us improve
 
 **System information**
 
+Saleor version:
+- [ ] dev (current master)
+- [ ] 3.0
+- [ ] 2.11
+- [ ] 2.10
+
 Operating system: 
 - [ ] Windows
 - [ ] Linux
