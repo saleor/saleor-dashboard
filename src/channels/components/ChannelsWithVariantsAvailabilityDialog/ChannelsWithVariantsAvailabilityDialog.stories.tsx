@@ -4,9 +4,11 @@ import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ChannelsWithVariantsAvailabilityDialog from "./ChannelsWithVariantsAvailabilityDialog";
+import ChannelsWithVariantsAvailabilityDialog, {
+  ChannelsAvailabilityDialogProps
+} from "./ChannelsWithVariantsAvailabilityDialog";
 
-const props = {
+const props: ChannelsAvailabilityDialogProps = {
   channels: [
     {
       id: "1",
