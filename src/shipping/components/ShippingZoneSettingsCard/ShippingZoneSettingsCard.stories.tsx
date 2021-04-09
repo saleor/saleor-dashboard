@@ -5,9 +5,11 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { FormData } from "../../components/ShippingZoneDetailsPage/types";
-import ShippingZoneSettingsCard from "./ShippingZoneSettingsCard";
+import ShippingZoneSettingsCard, {
+  ShippingZoneSettingsCardProps
+} from "./ShippingZoneSettingsCard";
 
-const props = {
+const props: ShippingZoneSettingsCardProps = {
   formData: {
     channels: ["channel1"],
     warehouses: ["warehouse1", "warehouse2"]
@@ -30,12 +32,10 @@ const props = {
   onWarehouseAdd: () => undefined,
   warehousesChoices: [
     {
-      __typename: "Warehouse",
       value: "warehouse1",
       label: "C our wares"
     },
     {
-      __typename: "Warehouse",
       value: "warehouse2",
       label: "Be stocked"
     }

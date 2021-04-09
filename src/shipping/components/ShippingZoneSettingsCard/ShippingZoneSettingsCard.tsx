@@ -20,7 +20,7 @@ const messages = defineMessages({
   }
 });
 
-interface ShippingZoneSettingsCardProps {
+export interface ShippingZoneSettingsCardProps {
   formData: FormData;
   warehousesDisplayValues: MultiAutocompleteChoiceType[];
   warehousesChoices: MultiAutocompleteChoiceType[];
