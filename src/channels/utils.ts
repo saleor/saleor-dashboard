@@ -5,7 +5,10 @@ import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { RequireOnlyOne } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
-import { ShippingZone_shippingZone_shippingMethods_channelListings } from "@saleor/shipping/types/ShippingZone";
+import {
+  ShippingZone_shippingZone_channels,
+  ShippingZone_shippingZone_shippingMethods_channelListings
+} from "@saleor/shipping/types/ShippingZone";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash-es/uniqBy";
 
@@ -168,7 +171,7 @@ export const createChannelsDataWithPrice = (
 };
 
 export const createShippingChannels = (
-  data?: Channels_channels[]
+  data?: ShippingZone_shippingZone_channels[]
 ): ChannelShippingData[] =>
   data?.map(channel => ({
     currency: channel.currencyCode,
@@ -272,7 +275,9 @@ export const createSortedChannelsData = (data?: Channels_channels[]) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedShippingChannels = (data?: Channels_channels[]) =>
+export const createSortedShippingChannels = (
+  data?: ShippingZone_shippingZone_channels[]
+) =>
   createShippingChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
