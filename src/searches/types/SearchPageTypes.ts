@@ -22,6 +22,7 @@ export interface SearchPageTypes_search_edges_node_attributes_values {
   slug: string | null;
   file: SearchPageTypes_search_edges_node_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface SearchPageTypes_search_edges_node_attributes {

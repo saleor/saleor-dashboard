@@ -41,6 +41,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   slug: string | null;
   file: ProductVariantCreateData_product_productType_selectionVariantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantCreateData_product_productType_selectionVariantAttributes {
@@ -67,6 +68,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   slug: string | null;
   file: ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes {

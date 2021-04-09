@@ -167,12 +167,16 @@ export const attributeTranslationFragment = gql`
     attribute {
       id
       name
+      inputType
       values {
         id
         name
+        richText
+        inputType
         translation(languageCode: $language) {
           id
           name
+          richText
         }
       }
     }

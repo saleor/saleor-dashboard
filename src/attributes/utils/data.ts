@@ -281,7 +281,6 @@ export const getAttributesDisplayData = (
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
       return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
     }
-
     return attribute;
   });
 

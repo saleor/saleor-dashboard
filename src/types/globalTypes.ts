@@ -90,6 +90,7 @@ export enum AttributeInputTypeEnum {
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
   REFERENCE = "REFERENCE",
+  RICH_TEXT = "RICH_TEXT",
 }
 
 export enum AttributeSortField {
@@ -1128,6 +1129,7 @@ export interface AttributeUpdateInput {
 export interface AttributeValueCreateInput {
   name: string;
   value?: string | null;
+  richText?: any | null;
 }
 
 export interface AttributeValueInput {
@@ -1136,6 +1138,12 @@ export interface AttributeValueInput {
   file?: string | null;
   contentType?: string | null;
   references?: string[] | null;
+  richText?: any | null;
+}
+
+export interface AttributeValueTranslationInput {
+  name?: string | null;
+  richText?: any | null;
 }
 
 export interface BulkAttributeValueInput {

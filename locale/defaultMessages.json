@@ -861,6 +861,10 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
+    "context": "text attribute type",
+    "string": "Text"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
@@ -1681,7 +1685,7 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
-  "src_dot_components_dot_Attributes_dot_multipleValueLable": {
+  "src_dot_components_dot_Attributes_dot_multipleValueLabel": {
     "context": "attribute values",
     "string": "Values"
   },
@@ -6467,6 +6471,10 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
     "string": "Attribute Name"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3495336243": {
+    "context": "attribute richtext value",
+    "string": "Text"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
     "context": "header",

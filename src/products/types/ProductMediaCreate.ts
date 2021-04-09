@@ -28,6 +28,7 @@ export interface ProductMediaCreate_productMediaCreate_product_attributes_attrib
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_attributes_attribute {
@@ -54,6 +55,7 @@ export interface ProductMediaCreate_productMediaCreate_product_attributes_values
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_attributes {
@@ -75,6 +77,7 @@ export interface ProductMediaCreate_productMediaCreate_product_productType_varia
   slug: string | null;
   file: ProductMediaCreate_productMediaCreate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaCreate_productMediaCreate_product_productType_variantAttributes {
