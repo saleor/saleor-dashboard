@@ -1,6 +1,6 @@
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/theme";
 import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
