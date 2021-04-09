@@ -49,10 +49,11 @@ function canHitNext(
 ): boolean {
   switch (step) {
     case ProductVariantCreatorStep.values:
-      return data.attributes.every(attribute => attribute.values.length > 0) &&
-        variantsLeft === null
-        ? true
-        : getVariantsNumber(data) <= variantsLeft;
+      return (
+        (data.attributes.every(attribute => attribute.values.length > 0) &&
+          variantsLeft === null) ||
+        getVariantsNumber(data) <= variantsLeft
+      );
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
         if (data.price.channels.some(channel => validatePrice(channel.price))) {

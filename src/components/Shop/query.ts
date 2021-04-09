@@ -42,11 +42,11 @@ export const TypedShopInfoQuery = TypedQuery<ShopInfo, {}>(shopInfo);
 const limitInfo = gql`
   ${limitFragment}
   query RefreshLimits(
-    $channels: Boolean!
-    $orders: Boolean!
-    $productVariants: Boolean!
-    $staffUsers: Boolean!
-    $warehouses: Boolean!
+    $channels: Boolean = false
+    $orders: Boolean = false
+    $productVariants: Boolean = false
+    $staffUsers: Boolean = false
+    $warehouses: Boolean = false
   ) {
     shop {
       ...ShopLimitFragment

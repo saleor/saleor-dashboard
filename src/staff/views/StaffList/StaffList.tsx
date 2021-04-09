@@ -76,11 +76,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      channels: false,
-      orders: false,
-      productVariants: false,
-      staffUsers: true,
-      warehouses: false
+      staffUsers: true
     }
   });
 
