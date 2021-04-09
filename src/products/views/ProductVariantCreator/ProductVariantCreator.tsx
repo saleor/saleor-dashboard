@@ -43,11 +43,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      channels: false,
-      orders: false,
-      productVariants: true,
-      staffUsers: false,
-      warehouses: false
+      productVariants: true
     }
   });
 

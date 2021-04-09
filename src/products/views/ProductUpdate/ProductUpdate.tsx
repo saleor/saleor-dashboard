@@ -139,11 +139,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const { channel } = useAppChannel();
   const limitOpts = useShopLimitsQuery({
     variables: {
-      channels: false,
-      orders: false,
-      productVariants: true,
-      staffUsers: false,
-      warehouses: false
+      productVariants: true
     }
   });
 

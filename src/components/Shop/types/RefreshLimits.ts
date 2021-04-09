@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -40,9 +41,9 @@ export interface RefreshLimits {
 }
 
 export interface RefreshLimitsVariables {
-  channels: boolean;
-  orders: boolean;
-  productVariants: boolean;
-  staffUsers: boolean;
-  warehouses: boolean;
+  channels?: boolean | null;
+  orders?: boolean | null;
+  productVariants?: boolean | null;
+  staffUsers?: boolean | null;
+  warehouses?: boolean | null;
 }

@@ -33,11 +33,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const { data, refetch } = useChannelsList({ displayLoader: true });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      channels: true,
-      orders: false,
-      productVariants: false,
-      staffUsers: false,
-      warehouses: false
+      channels: true
     }
   });
 
