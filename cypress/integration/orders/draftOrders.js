@@ -11,7 +11,7 @@ import { selectChannelInPicker } from "../../steps/channelsSteps";
 import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
 import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
@@ -85,7 +85,6 @@ describe("Draft orders", () => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
         $order => {
-          /* eslint-disable no-unused-expressions */
           expect($order).to.be.visible;
         }
       );

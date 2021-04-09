@@ -189,9 +189,8 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose: () => setVariants([])
   });
 
-  const productChoices = products.filter(
-    product => product.variants?.length > 0
-  );
+  const productChoices =
+    products?.filter(product => product.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
         product.variants.map(variant => isVariantSelected(variant, variants))
@@ -332,10 +331,12 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                                 </div>
                               </TableCell>
                               <TableCell className={classes.textRight}>
-                                {variant?.channelListings[0]?.price && (
-                                  <Money
-                                    money={variant.channelListings[0].price}
-                                  />
+                                {variant.channelListings.map(
+                                  listing =>
+                                    listing.channel.id ===
+                                      selectedChannelId && (
+                                      <Money money={listing.price} />
+                                    )
                                 )}
                               </TableCell>
                             </TableRow>

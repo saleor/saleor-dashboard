@@ -17,7 +17,7 @@
     "npm": ">=6.11.0 <7"
   },
   "dependencies": {
-    "@editorjs/editorjs": "^2.19.1",
+    "@editorjs/editorjs": "^2.19.3",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
     "@editorjs/list": "^1.6.1",
@@ -45,6 +45,7 @@
     "editorjs-undo": "^0.1.4",
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
+    "fsevents": "^1.2.9",
     "fuzzaldrin": "^2.1.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.11.0",
@@ -95,6 +96,7 @@
     "@pollyjs/adapter-node-http": "^5.0.0",
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
+    "@release-it/bumper": "^2.0.0",
     "@sentry/webpack-plugin": "^1.14.0",
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
@@ -138,6 +140,8 @@
     "enzyme-to-json": "^3.6.1",
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.2",
+    "eslint-plugin-chai-friendly": "^0.6.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
@@ -156,6 +160,7 @@
     "react-intl-translations-manager": "^5.0.3",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.11.1",
+    "release-it": "^14.5.0",
     "require-context.macro": "^1.1.1",
     "rimraf": "^3.0.0",
     "setup-polly-jest": "^0.9.1",
@@ -231,6 +236,7 @@
     "test": "jest src/",
     "transpile-messages": "node scripts/transpile-tx.js",
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
-    "postbuild": "rimraf ./build/**/*.js.map"
+    "postbuild": "rimraf ./build/**/*.js.map",
+    "release": "release-it"
   }
 }

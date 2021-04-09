@@ -11,7 +11,7 @@ import {
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 import { deleteSalesStartsWith } from "../../utils/discounts/salesUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
