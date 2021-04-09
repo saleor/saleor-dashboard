@@ -11,7 +11,7 @@ export function markOrderAsPaid(orderId) {
 
 export function addProductToOrder(orderId, variantId, quantity = 1) {
   const mutation = `mutation{
-    draftOrderLinesCreate(id:"${orderId}", input:{
+    orderLinesCreate(id:"${orderId}", input:{
       quantity:${quantity}
       variantId: "${variantId}"
     }){

@@ -98,7 +98,12 @@ const CountryList: React.FC<CountryListProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <Button color="primary" disabled={disabled} onClick={onCountryAssign}>
+          <Button
+            color="primary"
+            disabled={disabled}
+            onClick={onCountryAssign}
+            data-test-id="assign-country"
+          >
             <FormattedMessage
               defaultMessage="Assign countries"
               description="button"

@@ -80,15 +80,15 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     item: string,
     stateAndHelpers: ControllerStateAndHelpers
   ) => {
+    stateAndHelpers.reset({
+      inputValue: ""
+    });
     onChange({
       target: {
         name,
         value: item
       }
     } as any);
-    stateAndHelpers.reset({
-      inputValue: item
-    });
   };
 
   return (
