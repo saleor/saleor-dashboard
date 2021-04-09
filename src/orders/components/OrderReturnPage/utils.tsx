@@ -95,3 +95,30 @@ export const getById = (idToCompare: string) => (obj: { id: string }) =>
 export const getByUnmatchingId = (idToCompare: string) => (obj: {
   id: string;
 }) => obj.id !== idToCompare;
+
+const isIncludedInIds = function<T extends { id: string }>(
+  arrayToCompare: string[] | T[],
+  obj: { id: string }
+) {
+  const isSimpleIdsArray = (arrayToCompare as string[]).every(
+    value => typeof value === "string"
+  );
+
+  const idsToCompare = isSimpleIdsArray
+    ? (arrayToCompare as string[])
+    : ((arrayToCompare as T[]).map(({ id }) => id) as string[]);
+
+  return idsToCompare.includes(obj.id);
+};
+
+export function getByIds<T extends { id: string }>(
+  arrayToCompare: string[] | T[]
+) {
+  return (obj: { id: string }) => isIncludedInIds(arrayToCompare, obj);
+}
+
+export function getByUnmatchingIds<T extends { id: string }>(
+  arrayToCompare: string[] | T[]
+) {
+  return (obj: { id: string }) => !isIncludedInIds(arrayToCompare, obj);
+}
