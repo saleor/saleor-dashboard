@@ -6,7 +6,8 @@ import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
-import React from "react";
+import isEqual from "lodash/isEqual";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
@@ -49,9 +50,25 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   ...rest
 }) => {
   const intl = useIntl();
+  const [canConfirm, setCanConfirm] = useState(false);
+  const channelsWithVariantsDataRef = useRef(channelsWithVariantsData);
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(
     channels
   );
+
+  const handleSetCanConfirm = () => {
+    const hasDataInsideDialogChanged = !isEqual(
+      channelsWithVariantsData,
+      channelsWithVariantsDataRef.current
+    );
+
+    if (hasDataInsideDialogChanged) {
+      channelsWithVariantsDataRef.current = channelsWithVariantsData;
+      setCanConfirm(true);
+    }
+  };
+
+  useEffect(handleSetCanConfirm, [channelsWithVariantsData]);
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,
@@ -61,14 +78,24 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   const isChannelSelected = (channelId: string) =>
     areAnyChannelVariantsSelected(channelsWithVariantsData[channelId]);
 
+  const handleClose = () => {
+    setCanConfirm(false);
+    onChannelsAvailiabilityModalClose();
+  };
+
+  const handleConfirm = () => {
+    setCanConfirm(false);
+    onChannelsWithVariantsConfirm();
+  };
+
   return (
     <ActionDialog
       confirmButtonState="default"
       open={isChannelsAvailabilityModalOpen}
-      onClose={onChannelsAvailiabilityModalClose}
-      onConfirm={onChannelsWithVariantsConfirm}
+      onClose={handleClose}
+      onConfirm={handleConfirm}
       title={intl.formatMessage(messages.title)}
-      disabled={!haveChannelsWithVariantsDataChanged}
+      disabled={!canConfirm}
     >
       <ChannelsAvailabilityContentWrapper
         hasAllSelected={hasAllChannelsSelected}
