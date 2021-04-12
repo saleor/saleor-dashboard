@@ -1,17 +1,20 @@
+import alertIconDark from "@assets/images/alert-dark.svg";
 import alertIcon from "@assets/images/alert.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import useTheme from "@saleor/hooks/useTheme";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import SVG from "react-inlinesvg";
 
 const useStyles = makeStyles(
   theme => ({
     close: {
+      color: theme.palette.common.black,
       position: "absolute",
       right: theme.spacing(-1),
       top: theme.spacing(-2)
@@ -21,8 +24,11 @@ const useStyles = makeStyles(
       display: "grid",
       gridTemplateColumns: "40px 1fr"
     },
+    icon: {
+      color: theme.palette.alert.icon.warning
+    },
     root: {
-      background: "#FFF4E4",
+      background: theme.palette.alert.paper.warning,
       marginBottom: theme.spacing(3)
     },
     titleBar: {
@@ -41,13 +47,17 @@ export interface AlertProps {
 const Alert: React.FC<AlertProps> = ({ children, show, title }) => {
   const classes = useStyles({});
   const [visible, setVisible] = useStateFromProps(show);
+  const { isDark } = useTheme();
 
   return visible ? (
     <Card elevation={0} className={classes.root}>
       <CardContent>
         <div className={classes.content}>
           <div>
-            <SVG src={alertIcon} />
+            <SVG
+              className={classes.icon}
+              src={isDark ? alertIconDark : alertIcon}
+            />
           </div>
           <div>
             <div className={classes.titleBar}>
