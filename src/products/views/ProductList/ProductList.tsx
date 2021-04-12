@@ -543,12 +543,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           >
             <FormControlLabel
               value={ProductPublishType.AUCTION}
-              control={<Radio />}
+              control={<Radio color="primary" />}
               label="Aukcja"
             />
             <FormControlLabel
               value={ProductPublishType.BUY_NOW}
-              control={<Radio />}
+              control={<Radio color="primary" />}
               label="Kup teraz"
             />
           </RadioGroup>
