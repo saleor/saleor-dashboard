@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -21,6 +22,7 @@ export interface PageDetailsFragment_attributes_attribute_values {
   slug: string | null;
   file: PageDetailsFragment_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetailsFragment_attributes_attribute {
@@ -47,6 +49,7 @@ export interface PageDetailsFragment_attributes_values {
   slug: string | null;
   file: PageDetailsFragment_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetailsFragment_attributes {
@@ -68,6 +71,7 @@ export interface PageDetailsFragment_pageType_attributes_values {
   slug: string | null;
   file: PageDetailsFragment_pageType_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetailsFragment_pageType_attributes {

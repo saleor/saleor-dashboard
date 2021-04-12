@@ -143,6 +143,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     [WebhookEventTypeEnum.PAGE_DELETED]: intl.formatMessage({
       defaultMessage: "Page deleted",
       description: "event"
+    }),
+    [WebhookEventTypeEnum.NOTIFY_USER]: intl.formatMessage({
+      defaultMessage: "User notified",
+      description: "event"
     })
   };
 

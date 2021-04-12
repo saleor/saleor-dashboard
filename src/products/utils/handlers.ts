@@ -3,11 +3,7 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
-import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetData } from "@saleor/hooks/useFormset";
-
-import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelPriceData[],
@@ -89,19 +85,13 @@ export function createVariantChannelsChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  setAttributes: (data: FormsetData<AttributeInputData>) => void,
-  setProductType: (productType: ProductType) => void,
-  productTypeChoiceList: ProductType[],
+  setProductType: (productTypeId: string) => void,
   triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
-    const selectedProductType = productTypeChoiceList.find(
-      productType => productType.id === id
-    );
+    setProductType(id);
     triggerChange();
-    setProductType(selectedProductType);
-    setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }
 

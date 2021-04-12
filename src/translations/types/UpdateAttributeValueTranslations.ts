@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { NameTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
+import { AttributeValueTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateAttributeValueTranslations
@@ -18,6 +19,7 @@ export interface UpdateAttributeValueTranslations_attributeValueTranslate_attrib
   __typename: "AttributeValueTranslation";
   id: string;
   name: string;
+  richText: any | null;
 }
 
 export interface UpdateAttributeValueTranslations_attributeValueTranslate_attributeValue {
@@ -39,6 +41,6 @@ export interface UpdateAttributeValueTranslations {
 
 export interface UpdateAttributeValueTranslationsVariables {
   id: string;
-  input: NameTranslationInput;
+  input: AttributeValueTranslationInput;
   language: LanguageCodeEnum;
 }

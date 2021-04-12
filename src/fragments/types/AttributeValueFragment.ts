@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -19,4 +20,5 @@ export interface AttributeValueFragment {
   slug: string | null;
   file: AttributeValueFragment_file | null;
   reference: string | null;
+  richText: any | null;
 }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ProductVariantCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -40,6 +41,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute {
@@ -66,6 +68,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes {
@@ -87,6 +90,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute {
@@ -113,6 +117,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes {
@@ -215,7 +220,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantCreate_productVariantCreate_productVariant_product_defaultVariant | null;
-  media: (VariantCreate_productVariantCreate_productVariant_product_media | null)[] | null;
+  media: VariantCreate_productVariantCreate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantCreate_productVariantCreate_productVariant_product_thumbnail | null;
   channelListings: VariantCreate_productVariantCreate_productVariant_product_channelListings[] | null;

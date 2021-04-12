@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { PageCreateInput, PageErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -29,6 +30,7 @@ export interface PageCreate_pageCreate_page_attributes_attribute_values {
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes_attribute {
@@ -55,6 +57,7 @@ export interface PageCreate_pageCreate_page_attributes_values {
   slug: string | null;
   file: PageCreate_pageCreate_page_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageCreate_pageCreate_page_attributes {
@@ -76,6 +79,7 @@ export interface PageCreate_pageCreate_page_pageType_attributes_values {
   slug: string | null;
   file: PageCreate_pageCreate_page_pageType_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageCreate_pageCreate_page_pageType_attributes {

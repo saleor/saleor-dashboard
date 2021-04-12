@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { LanguageCodeEnum } from "./../../types/globalTypes";
+import { LanguageCodeEnum, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AttributeTranslationDetails
@@ -22,12 +23,15 @@ export interface AttributeTranslationDetails_translation_AttributeTranslatableCo
   __typename: "AttributeValueTranslation";
   id: string;
   name: string;
+  richText: any | null;
 }
 
 export interface AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
+  richText: any | null;
+  inputType: AttributeInputTypeEnum | null;
   translation: AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values_translation | null;
 }
 
@@ -35,6 +39,7 @@ export interface AttributeTranslationDetails_translation_AttributeTranslatableCo
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
   values: (AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values | null)[] | null;
 }
 

@@ -1,52 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
-
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: SearchProductTypes
 // ====================================================
 
-export interface SearchProductTypes_search_edges_node_productAttributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface SearchProductTypes_search_edges_node_productAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: SearchProductTypes_search_edges_node_productAttributes_values_file | null;
-  reference: string | null;
-}
-
-export interface SearchProductTypes_search_edges_node_productAttributes {
-  __typename: "Attribute";
-  id: string;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  slug: string | null;
-  name: string | null;
-  valueRequired: boolean;
-  values: (SearchProductTypes_search_edges_node_productAttributes_values | null)[] | null;
-}
-
-export interface SearchProductTypes_search_edges_node_taxType {
-  __typename: "TaxType";
-  description: string | null;
-  taxCode: string | null;
-}
-
 export interface SearchProductTypes_search_edges_node {
   __typename: "ProductType";
   id: string;
   name: string;
-  hasVariants: boolean;
-  productAttributes: (SearchProductTypes_search_edges_node_productAttributes | null)[] | null;
-  taxType: SearchProductTypes_search_edges_node_taxType | null;
 }
 
 export interface SearchProductTypes_search_edges {

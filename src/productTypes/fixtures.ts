@@ -1,7 +1,8 @@
 import {
-  SearchProductTypes_search_edges_node,
-  SearchProductTypes_search_edges_node_productAttributes
-} from "@saleor/searches/types/SearchProductTypes";
+  ProductType_productType,
+  ProductType_productType_productAttributes
+} from "@saleor/products/types/ProductType";
+import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 
 import {
   AttributeInputTypeEnum,
@@ -11,7 +12,7 @@ import {
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
-export const attributes: SearchProductTypes_search_edges_node_productAttributes[] = [
+export const attributes: ProductType_productType_productAttributes[] = [
   {
     node: {
       __typename: "Attribute" as "Attribute",
@@ -31,7 +32,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "john-doe",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -42,7 +44,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "milionare-pirate",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -66,7 +69,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "100g",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -77,7 +81,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "250g",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -88,7 +93,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "500g",
           sortOrder: 2,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -99,7 +105,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "1kg",
           sortOrder: 3,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -123,7 +130,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "saleor",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -147,7 +155,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "100g",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -158,7 +167,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "250g",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -169,7 +179,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "500g",
           sortOrder: 2,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -193,7 +204,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "arabica",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -204,7 +216,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "robusta",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -228,7 +241,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "round",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -239,7 +253,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "v-neck",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -250,7 +265,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "polo",
           sortOrder: 2,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -274,7 +290,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "blue",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -285,7 +302,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "white",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -309,7 +327,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "soft",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -320,7 +339,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "hard",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -331,7 +351,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "middle-soft",
           sortOrder: 2,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -342,7 +363,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "middle-hard",
           sortOrder: 3,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -353,7 +375,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "middle",
           sortOrder: 4,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -364,7 +387,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "very-hard",
           sortOrder: 5,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -388,7 +412,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "sour",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -399,7 +424,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "sweet",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -423,7 +449,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "english",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -434,7 +461,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "pirate",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -458,7 +486,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "mirumee-press",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -469,7 +498,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "saleor-publishing",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
@@ -493,7 +523,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "xs",
           sortOrder: 0,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -504,7 +535,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "s",
           sortOrder: 1,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -515,7 +547,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "m",
           sortOrder: 2,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -526,7 +559,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "l",
           sortOrder: 3,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -537,7 +571,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "xl",
           sortOrder: 4,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -548,12 +583,26 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
           slug: "xxl",
           sortOrder: 5,
           type: "STRING",
-          value: ""
+          value: "",
+          richText: null
         }
       ]
     }
   }
 ].map(edge => edge.node);
+
+export const productTypeSearch: ProductType_productType = {
+  __typename: "ProductType" as "ProductType",
+  hasVariants: true,
+  id: "UHJvZHVjdFR5cGU6NA==",
+  name: "Candy",
+  productAttributes: [attributes[0]],
+  taxType: {
+    __typename: "TaxType" as "TaxType",
+    description: "PB100000",
+    taxCode: "Books / Manuals"
+  }
+};
 
 export const productTypes: Array<SearchProductTypes_search_edges_node &
   ProductTypeList_productTypes_edges_node> = [

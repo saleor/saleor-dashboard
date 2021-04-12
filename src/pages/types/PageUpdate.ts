@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { PageInput, PageErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -28,6 +29,7 @@ export interface PageUpdate_pageUpdate_page_attributes_attribute_values {
   slug: string | null;
   file: PageUpdate_pageUpdate_page_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes_attribute {
@@ -54,6 +56,7 @@ export interface PageUpdate_pageUpdate_page_attributes_values {
   slug: string | null;
   file: PageUpdate_pageUpdate_page_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes {
@@ -75,6 +78,7 @@ export interface PageUpdate_pageUpdate_page_pageType_attributes_values {
   slug: string | null;
   file: PageUpdate_pageUpdate_page_pageType_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageUpdate_pageUpdate_page_pageType_attributes {

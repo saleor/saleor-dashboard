@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -27,6 +28,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_attributes_attrib
   slug: string | null;
   file: ProductMediaUpdate_productMediaUpdate_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_attributes_attribute {
@@ -53,6 +55,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_attributes_values
   slug: string | null;
   file: ProductMediaUpdate_productMediaUpdate_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_attributes {
@@ -74,6 +77,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_productType_varia
   slug: string | null;
   file: ProductMediaUpdate_productMediaUpdate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_productType_variantAttributes {
@@ -269,7 +273,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product {
   category: ProductMediaUpdate_productMediaUpdate_product_category | null;
   collections: (ProductMediaUpdate_productMediaUpdate_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductMediaUpdate_productMediaUpdate_product_media | null)[] | null;
+  media: ProductMediaUpdate_productMediaUpdate_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductMediaUpdate_productMediaUpdate_product_variants | null)[] | null;
   weight: ProductMediaUpdate_productMediaUpdate_product_weight | null;

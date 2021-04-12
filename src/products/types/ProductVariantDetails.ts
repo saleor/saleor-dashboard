@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -33,6 +34,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute {
@@ -59,6 +61,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_values
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes {
@@ -80,6 +83,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute {
@@ -106,6 +110,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_val
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes {
@@ -208,7 +213,7 @@ export interface ProductVariantDetails_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariantDetails_productVariant_product_defaultVariant | null;
-  media: (ProductVariantDetails_productVariant_product_media | null)[] | null;
+  media: ProductVariantDetails_productVariant_product_media[] | null;
   name: string;
   thumbnail: ProductVariantDetails_productVariant_product_thumbnail | null;
   channelListings: ProductVariantDetails_productVariant_product_channelListings[] | null;

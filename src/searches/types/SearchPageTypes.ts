@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -21,6 +22,7 @@ export interface SearchPageTypes_search_edges_node_attributes_values {
   slug: string | null;
   file: SearchPageTypes_search_edges_node_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface SearchPageTypes_search_edges_node_attributes {

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -21,6 +22,7 @@ export interface ProductDetails_product_attributes_attribute_values {
   slug: string | null;
   file: ProductDetails_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes_attribute {
@@ -47,6 +49,7 @@ export interface ProductDetails_product_attributes_values {
   slug: string | null;
   file: ProductDetails_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes {
@@ -68,6 +71,7 @@ export interface ProductDetails_product_productType_variantAttributes_values {
   slug: string | null;
   file: ProductDetails_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes {
@@ -263,7 +267,7 @@ export interface ProductDetails_product {
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
   chargeTaxes: boolean;
-  media: (ProductDetails_product_media | null)[] | null;
+  media: ProductDetails_product_media[] | null;
   isAvailable: boolean | null;
   variants: (ProductDetails_product_variants | null)[] | null;
   weight: ProductDetails_product_weight | null;

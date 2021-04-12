@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -33,6 +34,7 @@ export interface AttributeDetails_attribute_values {
   slug: string | null;
   file: AttributeDetails_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface AttributeDetails_attribute {

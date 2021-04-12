@@ -1,10 +1,10 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { updateProductIsAvailableForPurchase } from "../../../steps/products/productSteps";
+import { updateProductIsAvailableForPurchase } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import * as shippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 

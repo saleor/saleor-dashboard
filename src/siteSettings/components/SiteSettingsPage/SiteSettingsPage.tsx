@@ -22,9 +22,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import { SiteSettings_shop } from "../../types/SiteSettings";
 import SiteSettingsDetails from "../SiteSettingsDetails/SiteSettingsDetails";
-import SiteSettingsMailing, {
-  SiteSettingsMailingFormData
-} from "../SiteSettingsMailing";
 
 export interface SiteSettingsPageAddressFormData {
   city: string;
@@ -38,8 +35,7 @@ export interface SiteSettingsPageAddressFormData {
 }
 
 export interface SiteSettingsPageFormData
-  extends SiteSettingsPageAddressFormData,
-    SiteSettingsMailingFormData {
+  extends SiteSettingsPageAddressFormData {
   description: string;
   domain: string;
   name: string;
@@ -114,9 +110,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   };
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
-    customerSetPasswordUrl: maybe(() => shop.customerSetPasswordUrl, ""),
-    defaultMailSenderAddress: maybe(() => shop.defaultMailSenderAddress, ""),
-    defaultMailSenderName: maybe(() => shop.defaultMailSenderName, ""),
     description: maybe(() => shop.description, ""),
     domain: maybe(() => shop.domain.host, ""),
     name: maybe(() => shop.name, "")
@@ -159,24 +152,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 </Typography>
               </div>
               <SiteSettingsDetails
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={change}
-              />
-              <Hr className={classes.hr} />
-              <div>
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="Mailing Configuration"
-                    description="section header"
-                  />
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage defaultMessage="This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails." />
-                </Typography>
-              </div>
-              <SiteSettingsMailing
                 data={data}
                 errors={errors}
                 disabled={disabled}

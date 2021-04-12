@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
@@ -40,6 +41,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute {
@@ -66,6 +68,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -87,6 +90,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute {
@@ -113,6 +117,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -215,7 +220,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product {
   __typename: "Product";
   id: string;
   defaultVariant: VariantUpdate_productVariantUpdate_productVariant_product_defaultVariant | null;
-  media: (VariantUpdate_productVariantUpdate_productVariant_product_media | null)[] | null;
+  media: VariantUpdate_productVariantUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantUpdate_productVariant_product_thumbnail | null;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_product_channelListings[] | null;
@@ -323,6 +328,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute {
@@ -349,6 +355,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -370,6 +377,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute {
@@ -396,6 +404,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {
@@ -498,7 +507,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   __typename: "Product";
   id: string;
   defaultVariant: VariantUpdate_productVariantStocksUpdate_productVariant_product_defaultVariant | null;
-  media: (VariantUpdate_productVariantStocksUpdate_productVariant_product_media | null)[] | null;
+  media: VariantUpdate_productVariantStocksUpdate_productVariant_product_media[] | null;
   name: string;
   thumbnail: VariantUpdate_productVariantStocksUpdate_productVariant_product_thumbnail | null;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings[] | null;
