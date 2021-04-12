@@ -30,7 +30,7 @@ function useProductExportFieldMessages() {
       description: "product field",
       id: "productExportFieldName"
     }),
-    [ProductFieldEnum.PRODUCT_IMAGES]: intl.formatMessage({
+    [ProductFieldEnum.PRODUCT_MEDIA]: intl.formatMessage({
       defaultMessage: "Product Images",
       description: "product field",
       id: "productExportFieldProductImages"
@@ -45,7 +45,7 @@ function useProductExportFieldMessages() {
       description: "product field",
       id: "productExportFieldProductWeight"
     }),
-    [ProductFieldEnum.VARIANT_IMAGES]: intl.formatMessage({
+    [ProductFieldEnum.VARIANT_MEDIA]: intl.formatMessage({
       defaultMessage: "Variant Images",
       description: "product field",
       id: "productExportFieldVariantImages"
