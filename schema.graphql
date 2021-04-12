@@ -1266,6 +1266,7 @@ input ConfigurationItemInput {
 
 enum ConfigurationTypeFieldEnum {
   STRING
+  MULTILINE
   BOOLEAN
   SECRET
   PASSWORD
