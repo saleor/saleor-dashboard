@@ -85,6 +85,11 @@ export function createProduct(attributeId, name, productTypeId, categoryId) {
     .createProduct(attributeId, name, productTypeId, categoryId)
     .its("body.data.productCreate.product");
 }
+export function updateProduct(productId, input) {
+  return productRequest
+    .updateProduct(productId, input)
+    .its("body.data.productUpdate.product");
+}
 export function createVariant({
   productId,
   sku,
