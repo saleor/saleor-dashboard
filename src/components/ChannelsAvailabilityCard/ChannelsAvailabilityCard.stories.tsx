@@ -7,9 +7,10 @@ import { PermissionEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ChannelsAvailability, {
-  ChannelsAvailabilityProps
-} from "./ChannelsAvailability";
+import ChannelsAvailabilityCard, {
+  ChannelsAvailabilityCardProps
+} from "./ChannelsAvailabilityCard";
+import { Messages } from "./types";
 
 const user: User = {
   __typename: "User",
@@ -30,7 +31,7 @@ const user: User = {
 
 const productChannels = createChannelsDataFromProduct(product(""));
 
-const props: ChannelsAvailabilityProps = {
+const props: ChannelsAvailabilityCardProps = {
   allChannelsCount: 4,
   channelsList: productChannels.map(channel => ({
     id: channel.id,
@@ -42,16 +43,16 @@ const props: ChannelsAvailabilityProps = {
   selectedChannelsCount: 3
 };
 
-storiesOf("Generics / ChannelsAvailability", module)
+storiesOf("Generics / Channels availability card", module)
   .addDecorator(Decorator)
   .addDecorator(UserDecorator(user))
-  .add("default", () => <ChannelsAvailability {...props} />)
+  .add("default", () => <ChannelsAvailabilityCard {...props} />)
   .add("with onChange", () => (
-    <ChannelsAvailability
+    <ChannelsAvailabilityCard
       {...props}
       channelsList={undefined}
       channels={productChannels}
-      channelsMessages={productChannels.reduce(
+      messages={productChannels.reduce(
         (prevVal, currVal) => ({
           ...prevVal,
           [currVal.id]: {
@@ -60,7 +61,7 @@ storiesOf("Generics / ChannelsAvailability", module)
             hiddenSecondLabel: "Will become published"
           }
         }),
-        {}
+        {} as Messages
       )}
     />
   ));

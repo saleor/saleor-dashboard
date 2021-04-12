@@ -4,7 +4,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
-import ChannelsAvailabilityContent from "@saleor/components/ChannelsAvailabilityContent";
+import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
+import ChannelsAvailabilityDialogChannelsList from "@saleor/components/ChannelsAvailabilityDialogChannelsList";
+import ChannelsAvailabilityDialogContentWrapper from "@saleor/components/ChannelsAvailabilityDialogWrapper";
 import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
@@ -243,6 +245,11 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const getFieldLabel = useProductExportFieldMessages();
+  const {
+    query: channelsQuery,
+    onQueryChange: onChannelsQueryChange,
+    filteredChannels
+  } = useChannelsSearch(channels);
 
   const handleFieldChange = (event: ChangeEvent) =>
     onChange({
@@ -283,6 +290,9 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   const selectedAllInventoryFields =
     selectedInventoryFields.length === inventoryFields.length;
 
+  const handleSelectAllChannels = () =>
+    onSelectAllChannels(channels, channels.length);
+
   return (
     <>
       <Typography className={classes.dialogLabel}>
@@ -321,19 +331,21 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         }
         data-test="channels"
       >
-        <ChannelsAvailabilityContent
-          channels={channels}
-          disabled={loading}
-          selected={selectedChannels?.length}
-          toggleAllText={intl.formatMessage({
-            defaultMessage: "Add all channels"
-          })}
-          isSelected={option =>
-            !!selectedChannels.find(channel => channel.id === option.id)
-          }
-          onChange={onChannelSelect}
-          toggleAll={onSelectAllChannels}
-        />
+        <ChannelsAvailabilityDialogContentWrapper
+          hasAnyChannelsToDisplay={!!channels.length}
+          hasAllSelected={selectedChannels.length === channels.length}
+          query={channelsQuery}
+          onQueryChange={onChannelsQueryChange}
+          toggleAll={handleSelectAllChannels}
+        >
+          <ChannelsAvailabilityDialogChannelsList
+            channels={filteredChannels}
+            isChannelSelected={option =>
+              !!selectedChannels.find(channel => channel.id === option.id)
+            }
+            onChange={onChannelSelect}
+          />
+        </ChannelsAvailabilityDialogContentWrapper>
       </Accordion>
       <FieldAccordion
         className={classes.accordion}

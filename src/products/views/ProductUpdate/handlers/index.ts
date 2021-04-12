@@ -12,7 +12,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
-import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
+import { ChannelData } from "@saleor/channels/utils";
 import {
   FileUpload,
   FileUploadVariables
@@ -23,7 +23,6 @@ import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/Prod
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
-import { weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
   ProductChannelListingUpdate,
@@ -55,13 +54,18 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
-import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
-import { diff } from "fast-array-diff";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
+
+import {
+  getChannelsVariables,
+  getSimpleProductErrors,
+  getSimpleProductVariables,
+  getVariantChannelsInput
+} from "./utils";
 
 type SubmitErrors = Array<
   | ProductErrorFragment
@@ -72,64 +76,9 @@ type SubmitErrors = Array<
   | ProductChannelListingErrorFragment
 >;
 
-const getSimpleProductVariables = (
-  productVariables: ProductUpdateVariables,
-  data: ProductUpdatePageSubmitData,
-  productId: string
-) => ({
-  ...productVariables,
-  addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-  deleteStocks: data.removeStocks,
-  input: {
-    ...productVariables.input,
-    weight: weight(data.weight)
-  },
-  productVariantId: productId,
-  productVariantInput: {
-    sku: data.sku,
-    trackInventory: data.trackInventory
-  },
-  updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
-});
-
-const getSimpleProductErrors = (data: SimpleProductUpdate) => [
-  ...data.productUpdate.errors,
-  ...data.productVariantStocksCreate.errors,
-  ...data.productVariantStocksDelete.errors,
-  ...data.productVariantStocksUpdate.errors
-];
-
-const getChannelsVariables = (
-  data: ProductUpdatePageSubmitData,
-  product: ProductDetails_product
-) => {
-  const productChannels = createSortedChannelsDataFromProduct(product);
-  const diffChannels = diff(
-    productChannels,
-    data.channelListings,
-    (a, b) => a.id === b.id
-  );
-
-  return {
-    id: product.id,
-    input: {
-      addChannels: getAvailabilityVariables(data.channelListings),
-      removeChannels: diffChannels.removed?.map(
-        removedChannel => removedChannel.id
-      )
-    }
-  };
-};
-
-const getVariantChannelsInput = (data: ProductUpdatePageSubmitData) =>
-  data.channelListings.map(listing => ({
-    channelId: listing.id,
-    costPrice: listing.costPrice || null,
-    price: listing.price
-  }));
-
 export function createUpdateHandler(
   product: ProductDetails_product,
+  allChannels: ChannelData[],
   uploadFile: (
     variables: FileUploadVariables
   ) => Promise<MutationFetchResult<FileUpload>>,
@@ -202,9 +151,7 @@ export function createUpdateHandler(
       const result = await updateProduct(productVariables);
       errors = [...errors, ...result.data.productUpdate.errors];
 
-      await updateChannels({
-        variables: getChannelsVariables(data, product)
-      });
+      await updateChannels(getChannelsVariables(product, allChannels, data));
     } else {
       if (!product.variants.length) {
         const productVariantResult = await productVariantCreate({
@@ -228,6 +175,7 @@ export function createUpdateHandler(
 
         const variantId =
           productVariantResult.data.productVariantCreate?.productVariant?.id;
+
         if (variantId) {
           updateVariantChannels({
             variables: {
@@ -235,9 +183,11 @@ export function createUpdateHandler(
               input: getVariantChannelsInput(data)
             }
           });
-          await updateChannels({
-            variables: getChannelsVariables(data, product)
-          });
+
+          await updateChannels(
+            getChannelsVariables(product, allChannels, data)
+          );
+
           const result = await updateSimpleProduct(
             getSimpleProductVariables(productVariables, data, variantId)
           );
@@ -253,9 +203,8 @@ export function createUpdateHandler(
         );
         errors = [...errors, ...getSimpleProductErrors(result.data)];
 
-        await updateChannels({
-          variables: getChannelsVariables(data, product)
-        });
+        await updateChannels(getChannelsVariables(product, allChannels, data));
+
         updateVariantChannels({
           variables: {
             id: product.variants[0].id,
