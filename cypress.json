@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://saleor-2692-tests-for-filtering-products.dashboard.saleor.rocks/",
+  "baseUrl": "http://localhost:9000/dashboard/",
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,

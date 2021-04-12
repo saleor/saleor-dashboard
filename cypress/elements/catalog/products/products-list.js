@@ -6,7 +6,7 @@ export const PRODUCTS_LIST = {
   emptyProductRow: "[class*='Skeleton']",
   showFiltersButton: '[data-test-id="show-filters-button"]',
   filters: {
-    filterOption: '[data-test="filter-field"]',
+    filterOption: '[data-test-id="filterOption"]',
     productsOutOfStockOption: '[data-test-id="OUT_OF_STOCK"]',
     filterBy: {
       category: '[data-test-id="categories"]',
