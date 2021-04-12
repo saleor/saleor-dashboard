@@ -3,7 +3,7 @@ export const PRODUCTS_LIST = {
   productsNames: "[data-test='name']",
   createProductBtn: "[data-test='add-product']",
   searchProducts: "[placeholder='Search Products...']",
-  emptyProductRow: "[class*='Skeleton']",
+  emptyProductRow: "[data-test-id='skeleton']",
   showFiltersButton: '[data-test-id="show-filters-button"]',
   filters: {
     filterOption: '[data-test-id="filterOption"]',
