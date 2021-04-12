@@ -808,10 +808,10 @@ export enum ProductFieldEnum {
   COLLECTIONS = "COLLECTIONS",
   DESCRIPTION = "DESCRIPTION",
   NAME = "NAME",
-  PRODUCT_IMAGES = "PRODUCT_IMAGES",
+  PRODUCT_MEDIA = "PRODUCT_MEDIA",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
-  VARIANT_IMAGES = "VARIANT_IMAGES",
+  VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
@@ -1859,7 +1859,7 @@ export interface StaffUserInput {
 
 export interface StockInput {
   warehouse: string;
-  quantity?: number | null;
+  quantity: number;
 }
 
 export interface TranslationInput {
