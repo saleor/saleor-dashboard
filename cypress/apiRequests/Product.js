@@ -26,6 +26,8 @@ export function getFirstProducts(first, search) {
 export function updateChannelInProduct({
   productId,
   channelId,
+  variantsIdsToAdd = null,
+  variantsIdsToRemove = null,
   isPublished = true,
   isAvailableForPurchase = true,
   visibleInListings = true
@@ -33,11 +35,13 @@ export function updateChannelInProduct({
   const mutation = `mutation{
     productChannelListingUpdate(id:"${productId}",
     input:{
-      addChannels:{ 
+      updateChannels:{ 
         channelId:"${channelId}"
         isPublished:${isPublished}
         isAvailableForPurchase:${isAvailableForPurchase}
         visibleInListings:${visibleInListings}
+        addVariants:${variantsIdsToAdd}
+        removeVariants:${variantsIdsToRemove}
       }
     }){
       product{
