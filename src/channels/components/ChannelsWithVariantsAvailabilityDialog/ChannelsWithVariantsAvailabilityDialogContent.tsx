@@ -7,12 +7,14 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
+import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
 import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
+import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
 import map from "lodash-es/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -120,6 +122,16 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
       ? addVariantToChannel(channelId, variantId)
       : removeVariantFromChannel(channelId, variantId);
 
+  const selectChannelIcon = (channelId: string) =>
+    areAllChannelVariantsSelected(
+      allVariants,
+      channelsWithVariants[channelId]
+    ) ? (
+      <IconCheckboxChecked />
+    ) : (
+      <IconCheckboxSemiChecked />
+    );
+
   return (
     <>
       {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
@@ -146,7 +158,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <div className={classes.channelCheckboxContainer}>
                   <ControlledCheckbox
                     checked={isChannelSelected(channelId)}
-                    checkedIcon={<IconCheckboxSemiChecked />}
+                    checkedIcon={selectChannelIcon(channelId)}
                     name={name}
                     label={
                       <div className={classes.channelTitleContainer}>
