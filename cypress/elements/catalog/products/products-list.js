@@ -14,6 +14,6 @@ export const PRODUCTS_LIST = {
       productType: '[data-test-id="productType"]',
       stock: '[data-test-id="stock"]'
     },
-    filterBySearchInput: 'input[class*="Filter"]'
+    filterBySearchInput: '[data-test*="filterField"][data-test*="Input"]'
   }
 };
