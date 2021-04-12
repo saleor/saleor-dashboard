@@ -25,15 +25,25 @@ import {
   GridAttributes,
   GridAttributesVariables
 } from "./types/GridAttributes";
+import { InitialProductFilterAttributes } from "./types/InitialProductFilterAttributes";
 import {
-  InitialProductFilterData,
-  InitialProductFilterDataVariables
-} from "./types/InitialProductFilterData";
+  InitialProductFilterCategories,
+  InitialProductFilterCategoriesVariables
+} from "./types/InitialProductFilterCategories";
+import {
+  InitialProductFilterCollections,
+  InitialProductFilterCollectionsVariables
+} from "./types/InitialProductFilterCollections";
+import {
+  InitialProductFilterProductTypes,
+  InitialProductFilterProductTypesVariables
+} from "./types/InitialProductFilterProductTypes";
 import {
   ProductDetails,
   ProductDetailsVariables
 } from "./types/ProductDetails";
 import { ProductList, ProductListVariables } from "./types/ProductList";
+import { ProductType, ProductTypeVariables } from "./types/ProductType";
 import {
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
@@ -43,13 +53,12 @@ import {
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
 
-const initialProductFilterDataQuery = gql`
-  query InitialProductFilterData(
-    $categories: [ID!]
-    $collections: [ID!]
-    $productTypes: [ID!]
-  ) {
-    attributes(first: 100, filter: { filterableInDashboard: true }) {
+const initialProductFilterAttributesQuery = gql`
+  query InitialProductFilterAttributes {
+    attributes(
+      first: 100
+      filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
+    ) {
       edges {
         node {
           id
@@ -63,6 +72,15 @@ const initialProductFilterDataQuery = gql`
         }
       }
     }
+  }
+`;
+export const useInitialProductFilterAttributesQuery = makeQuery<
+  InitialProductFilterAttributes,
+  null
+>(initialProductFilterAttributesQuery);
+
+const initialProductFilterCategoriesQuery = gql`
+  query InitialProductFilterCategories($categories: [ID!]) {
     categories(first: 100, filter: { ids: $categories }) {
       edges {
         node {
@@ -71,6 +89,15 @@ const initialProductFilterDataQuery = gql`
         }
       }
     }
+  }
+`;
+export const useInitialProductFilterCategoriesQuery = makeQuery<
+  InitialProductFilterCategories,
+  InitialProductFilterCategoriesVariables
+>(initialProductFilterCategoriesQuery);
+
+const initialProductFilterCollectionsQuery = gql`
+  query InitialProductFilterCollections($collections: [ID!]) {
     collections(first: 100, filter: { ids: $collections }) {
       edges {
         node {
@@ -79,6 +106,15 @@ const initialProductFilterDataQuery = gql`
         }
       }
     }
+  }
+`;
+export const useInitialProductFilterCollectionsQuery = makeQuery<
+  InitialProductFilterCollections,
+  InitialProductFilterCollectionsVariables
+>(initialProductFilterCollectionsQuery);
+
+const initialProductFilterProductTypesQuery = gql`
+  query InitialProductFilterProductTypes($productTypes: [ID!]) {
     productTypes(first: 100, filter: { ids: $productTypes }) {
       edges {
         node {
@@ -89,10 +125,10 @@ const initialProductFilterDataQuery = gql`
     }
   }
 `;
-export const useInitialProductFilterDataQuery = makeQuery<
-  InitialProductFilterData,
-  InitialProductFilterDataVariables
->(initialProductFilterDataQuery);
+export const useInitialProductFilterProductTypesQuery = makeQuery<
+  InitialProductFilterProductTypes,
+  InitialProductFilterProductTypesVariables
+>(initialProductFilterProductTypesQuery);
 
 const productListQuery = gql`
   ${productFragment}
@@ -168,10 +204,34 @@ export const useProductDetails = makeQuery<
   ProductDetailsVariables
 >(productDetailsQuery);
 
-export const useProductDetailsQuery = makeQuery<
-  ProductDetails,
-  ProductDetailsVariables
->(productDetailsQuery);
+const productTypeQuery = gql`
+  ${taxTypeFragment}
+  ${attributeValueFragment}
+  query ProductType($id: ID!) {
+    productType(id: $id) {
+      id
+      name
+      hasVariants
+      productAttributes {
+        id
+        inputType
+        entityType
+        slug
+        name
+        valueRequired
+        values {
+          ...AttributeValueFragment
+        }
+      }
+      taxType {
+        ...TaxTypeFragment
+      }
+    }
+  }
+`;
+export const useProductTypeQuery = makeQuery<ProductType, ProductTypeVariables>(
+  productTypeQuery
+);
 
 const productVariantQuery = gql`
   ${fragmentVariant}

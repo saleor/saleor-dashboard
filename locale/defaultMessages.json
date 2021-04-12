@@ -897,6 +897,10 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
+    "context": "text attribute type",
+    "string": "Text"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
@@ -1753,7 +1757,7 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
-  "src_dot_components_dot_Attributes_dot_multipleValueLable": {
+  "src_dot_components_dot_Attributes_dot_multipleValueLabel": {
     "context": "attribute values",
     "string": "Values"
   },
@@ -3614,6 +3618,10 @@
     "context": "order history message",
     "string": "Note was added to the order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_2308853031": {
+    "context": "order history message",
+    "string": "Order placed information was sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2369495522": {
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
@@ -3625,6 +3633,10 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2566971846": {
     "context": "order history message",
     "string": "Payment was voided"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_2607524598": {
+    "context": "order history message",
+    "string": "Products were deleted from an order"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2655541129": {
     "context": "order history message",
@@ -3658,13 +3670,13 @@
     "context": "order history message",
     "string": "Payment was refunded"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_3506022286": {
-    "context": "order history message",
-    "string": "Products were added to draft order"
-  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3731274949": {
     "context": "order history message",
     "string": "Order was refunded by {refundedBy}"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3796744261": {
+    "context": "order history message",
+    "string": "Products were added to an order"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
     "context": "order history message",
@@ -3676,10 +3688,6 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4015160303": {
     "context": "order history message",
     "string": "Oversold {quantity} items"
-  },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_4067959693": {
-    "context": "order history message",
-    "string": "Products were deleted from draft order"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_4121987561": {
     "context": "order history message",
@@ -4259,19 +4267,23 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
-    "context": "window title",
-    "string": "Order #{orderNumber}"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_694622335": {
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
+    "string": "Fulfillment successfully cancelled"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderDraftDetails_dot_694622335": {
     "context": "window title",
     "string": "Draft Order #{orderNumber}"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
-    "string": "Fulfillment successfully cancelled"
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderNormalDetails_dot_580490159": {
+    "context": "window title",
+    "string": "Order #{orderNumber}"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_OrderUnconfirmedDetails_dot_580490159": {
+    "context": "window title",
+    "string": "Order #{orderNumber}"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1161115149": {
     "context": "dialog header",
@@ -6513,6 +6525,10 @@
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
     "string": "Attribute Name"
   },
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3495336243": {
+    "context": "attribute richtext value",
+    "string": "Text"
+  },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
@@ -6652,6 +6668,10 @@
   },
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
+  },
+  "src_dot_utils_dot_errors_dot_insufficientStock": {
+    "context": "error message",
+    "string": "Cannot change the quantity because of insufficient stock"
   },
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"

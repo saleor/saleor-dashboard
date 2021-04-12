@@ -7,6 +7,7 @@ export const urlList = {
   orders: "orders/",
   products: "products/",
   warehouses: "warehouses/",
+  shippingMethods: "shipping/",
   sales: "discounts/sales/",
   collections: "collections/",
   vouchers: "discounts/vouchers/"

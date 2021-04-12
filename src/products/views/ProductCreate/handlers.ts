@@ -27,6 +27,7 @@ import {
   ProductDelete,
   ProductDeleteVariables
 } from "@saleor/products/types/ProductDelete";
+import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateVariables
@@ -35,7 +36,6 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { MutationFetchResult } from "react-apollo";
 
@@ -86,7 +86,7 @@ const getSimpleProductVariables = (
 });
 
 export function createHandler(
-  productTypes: SearchProductTypes_search_edges_node[],
+  productType: ProductType_productType,
   uploadFile: (
     variables: FileUploadVariables
   ) => Promise<MutationFetchResult<FileUpload>>,
@@ -146,9 +146,7 @@ export function createHandler(
     const result = await productCreate(productVariables);
     let hasErrors = errors.length > 0;
 
-    const hasVariants = productTypes.find(
-      product => product.id === formData.productType.id
-    ).hasVariants;
+    const hasVariants = productType.hasVariants;
     const productId = result.data.productCreate.product?.id;
 
     if (!productId) {

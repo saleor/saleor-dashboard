@@ -185,6 +185,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   )}
                   variant="price"
                   selectedChannelId={selectedChannelId}
+                  testId="add-price-rate"
                 />
                 <CardSpacer />
                 <ShippingZoneRates
@@ -197,6 +198,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   )}
                   variant="weight"
                   selectedChannelId={selectedChannelId}
+                  testId="add-weight-rate"
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />

@@ -90,6 +90,7 @@ export enum AttributeInputTypeEnum {
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
   REFERENCE = "REFERENCE",
+  RICH_TEXT = "RICH_TEXT",
 }
 
 export enum AttributeSortField {
@@ -614,12 +615,11 @@ export enum OrderEventsEmailsEnum {
 }
 
 export enum OrderEventsEnum {
+  ADDED_PRODUCTS = "ADDED_PRODUCTS",
   CANCELED = "CANCELED",
   CONFIRMED = "CONFIRMED",
-  DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_CREATED_FROM_REPLACE = "DRAFT_CREATED_FROM_REPLACE",
-  DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
   EMAIL_SENT = "EMAIL_SENT",
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
@@ -651,6 +651,7 @@ export enum OrderEventsEnum {
   PAYMENT_VOIDED = "PAYMENT_VOIDED",
   PLACED = "PLACED",
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
+  REMOVED_PRODUCTS = "REMOVED_PRODUCTS",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
@@ -1126,6 +1127,8 @@ export interface AttributeUpdateInput {
 
 export interface AttributeValueCreateInput {
   name: string;
+  value?: string | null;
+  richText?: any | null;
 }
 
 export interface AttributeValueInput {
@@ -1134,6 +1137,12 @@ export interface AttributeValueInput {
   file?: string | null;
   contentType?: string | null;
   references?: string[] | null;
+  richText?: any | null;
+}
+
+export interface AttributeValueTranslationInput {
+  name?: string | null;
+  richText?: any | null;
 }
 
 export interface BulkAttributeValueInput {

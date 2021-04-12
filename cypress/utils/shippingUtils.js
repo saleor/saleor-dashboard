@@ -9,7 +9,7 @@ export function createShipping({ channelId, name, address, price = 1 }) {
   return createShippingZone(name, address.country)
     .then(shippingZoneResp => {
       shippingZone = shippingZoneResp;
-      createWarehouse(name, shippingZone.id, address);
+      createWarehouse({ name, shippingZoneId: shippingZone.id, address });
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
@@ -31,9 +31,9 @@ export function createShippingZone(name, country) {
     .createShippingZone(name, country)
     .its("body.data.shippingZoneCreate.shippingZone");
 }
-export function createWarehouse(name, shippingZoneId, address) {
+export function createWarehouse({ name, shippingZoneId, address }) {
   return warehouseRequest
-    .createWarehouse(name, shippingZoneId, address)
+    .createWarehouse({ name, shippingZone: shippingZoneId, address })
     .its("body.data.createWarehouse.warehouse");
 }
 export function createShippingRate(name, shippingZoneId) {

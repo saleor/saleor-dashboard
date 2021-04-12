@@ -23,6 +23,7 @@ import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { ProductType_productType } from "@saleor/products/types/ProductType";
 import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
@@ -65,6 +66,7 @@ interface ProductCreatePageProps {
   weightUnit: string;
   warehouses: SearchWarehouses_search_edges_node[];
   taxTypes: TaxTypeFragment[];
+  selectedProductType?: ProductType_productType;
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
@@ -78,6 +80,7 @@ interface ProductCreatePageProps {
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   onCloseDialog: () => void;
+  onSelectProductType: (productTypeId: string) => void;
   onBack?();
   onSubmit?(data: ProductCreateData);
 }
@@ -103,6 +106,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   saveButtonBarState,
   warehouses,
   taxTypes,
+  selectedProductType,
   onBack,
   fetchProductTypes,
   weightUnit,
@@ -116,7 +120,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
-  onCloseDialog
+  onCloseDialog,
+  onSelectProductType
 }: ProductCreatePageProps) => {
   const intl = useIntl();
 
@@ -164,6 +169,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     <ProductCreateForm
       onSubmit={onSubmit}
       initial={initial}
+      selectedProductType={selectedProductType}
+      onSelectProductType={onSelectProductType}
       categories={categories}
       collections={collections}
       productTypes={productTypeChoiceList}

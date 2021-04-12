@@ -13,16 +13,11 @@ greatly reduce the amount of work needed to review your work. -->
 
 <!-- Please keep this section. It will make maintainer's life easier. -->
 
-1. [ ] All visible strings are translated with proper context.
-1. [ ] All data-formatting is locale-aware (dates, numbers, and so on).
-1. [ ] Translated strings are extracted.
-1. [ ] Number of API calls is optimized.
-1. [ ] The changes are tested.
-1. [ ] Data-test are added for new elements.
-1. [ ] Type definitions are up to date.
-1. [ ] Changes are mentioned in the changelog.
-1. [ ] The changes are tested in different browsers (Chrome, Firefox, Safari).
-1. [ ] The changes are tested in light and dark mode.
+1. [ ] This code contains UI changes
+2. [ ] All visible strings are translated with proper context including data-formatting
+3. [ ] Attributes `[data-test-id]` are added for new elements
+4. [ ] Changes are mentioned in the changelog
+5. [ ] The changes are tested in different browsers and in light/dark mode
 
 ### Test environment config
 

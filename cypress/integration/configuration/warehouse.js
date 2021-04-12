@@ -1,5 +1,5 @@
 // <reference types="cypress" />
-import { urlList } from "../url/urlList";
+import { urlList } from "../../url/urlList";
 
 describe("Warehouse settings", () => {
   beforeEach(() => {

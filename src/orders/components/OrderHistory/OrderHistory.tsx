@@ -32,9 +32,9 @@ export const getEventMessage = (
         defaultMessage: "Order was cancelled",
         description: "order history message"
       });
-    case OrderEventsEnum.DRAFT_ADDED_PRODUCTS:
+    case OrderEventsEnum.ADDED_PRODUCTS:
       return intl.formatMessage({
-        defaultMessage: "Products were added to draft order",
+        defaultMessage: "Products were added to an order",
         description: "order history message"
       });
     case OrderEventsEnum.DRAFT_CREATED:
@@ -42,9 +42,9 @@ export const getEventMessage = (
         defaultMessage: "Draft order was created",
         description: "order history message"
       });
-    case OrderEventsEnum.DRAFT_REMOVED_PRODUCTS:
+    case OrderEventsEnum.REMOVED_PRODUCTS:
       return intl.formatMessage({
-        defaultMessage: "Products were deleted from draft order",
+        defaultMessage: "Products were deleted from an order",
         description: "order history message"
       });
     case OrderEventsEnum.EMAIL_SENT:
@@ -59,7 +59,7 @@ export const getEventMessage = (
             defaultMessage: "Fulfillment confirmation was sent to customer",
             description: "order history message"
           });
-        case OrderEventsEmailsEnum.ORDER_CONFIRMATION:
+        case OrderEventsEmailsEnum.CONFIRMED:
           return intl.formatMessage({
             defaultMessage: "Order confirmation was sent to customer",
             description: "order history message"
@@ -82,6 +82,11 @@ export const getEventMessage = (
         case OrderEventsEmailsEnum.ORDER_CANCEL:
           return intl.formatMessage({
             defaultMessage: "Order cancel information was sent to customer",
+            description: "order history message"
+          });
+        case OrderEventsEmailsEnum.ORDER_CONFIRMATION:
+          return intl.formatMessage({
+            defaultMessage: "Order placed information was sent to customer",
             description: "order history message"
           });
         case OrderEventsEmailsEnum.ORDER_REFUND:
