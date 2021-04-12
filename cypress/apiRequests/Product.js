@@ -63,7 +63,22 @@ export function updateChannelPriceInVariant(variantId, channelId) {
   } `;
   return cy.sendRequestWithQuery(mutation);
 }
-export function createProduct(attributeId, name, productType, category) {
+export function createProduct(
+  attributeId,
+  name,
+  productType,
+  category,
+  collectionId,
+  description
+) {
+  const collection = getValueWithDefault(
+    collectionId,
+    `collections:["${collectionId}"]`
+  );
+  const descriptionLine = getValueWithDefault(
+    description,
+    `description:"${description}"`
+  );
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
@@ -72,6 +87,8 @@ export function createProduct(attributeId, name, productType, category) {
       name:"${name}"
       productType:"${productType}"
       category:"${category}"
+      ${collection}
+      ${descriptionLine}
     }){
       product{
         id
