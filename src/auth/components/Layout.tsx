@@ -11,8 +11,8 @@ const useStyles = makeStyles(
     logo: {
       "& svg": {
         display: "block",
-        height: 40,
-        marginBottom: theme.spacing(4)
+        height: 100,
+        marginBottom: theme.spacing(2)
       }
     },
     mainPanel: {

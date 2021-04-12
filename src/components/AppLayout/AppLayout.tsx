@@ -149,7 +149,7 @@ const useStyles = makeStyles(
       },
       background: theme.palette.secondary.main,
       display: "block",
-      height: 80,
+      height: "10vh",
       position: "relative"
     },
     logoDark: {
@@ -167,8 +167,8 @@ const useStyles = makeStyles(
     },
     menu: {
       background: theme.palette.background.paper,
-      height: "100vh",
-      padding: "25px 20px"
+      height: "90vh",
+      padding: "10px 20px"
     },
     menuIcon: {
       "& span": {
