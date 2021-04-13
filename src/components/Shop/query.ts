@@ -1,5 +1,5 @@
 import { limitFragment } from "@saleor/fragments/shop";
-import makeQuery from "@saleor/hooks/makeQuery";
+import makeQuery, { UseQueryOpts } from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../../queries";
@@ -39,21 +39,35 @@ const shopInfo = gql`
 `;
 export const TypedShopInfoQuery = TypedQuery<ShopInfo, {}>(shopInfo);
 
+const limits: Record<keyof RefreshLimitsVariables, boolean> = {
+  channels: false,
+  orders: false,
+  productVariants: false,
+  staffUsers: false,
+  warehouses: false
+};
 const limitInfo = gql`
   ${limitFragment}
   query RefreshLimits(
-    $channels: Boolean = false
-    $orders: Boolean = false
-    $productVariants: Boolean = false
-    $staffUsers: Boolean = false
-    $warehouses: Boolean = false
+    $channels: Boolean!
+    $orders: Boolean!
+    $productVariants: Boolean!
+    $staffUsers: Boolean!
+    $warehouses: Boolean!
   ) {
     shop {
       ...ShopLimitFragment
     }
   }
 `;
-export const useShopLimitsQuery = makeQuery<
-  RefreshLimits,
-  RefreshLimitsVariables
->(limitInfo);
+const hook = makeQuery<RefreshLimits, RefreshLimitsVariables>(limitInfo);
+export const useShopLimitsQuery = (
+  opts: UseQueryOpts<Partial<RefreshLimitsVariables>>
+) =>
+  hook({
+    ...opts,
+    variables: {
+      ...limits,
+      ...opts.variables
+    }
+  });
