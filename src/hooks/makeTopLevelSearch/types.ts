@@ -3,6 +3,7 @@ export interface CommonSearchOpts {
   loading?: boolean;
   data?: {
     search?: {
+      totalCount?: number;
       pageInfo?: {
         hasNextPage: boolean;
       };

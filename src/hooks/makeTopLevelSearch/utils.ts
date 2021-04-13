@@ -8,6 +8,7 @@ export const getSearchFetchMoreProps = (
   onFetchMore: any
 ): FetchMoreProps => ({
   hasMore: !!data?.search?.pageInfo?.hasNextPage,
+  totalCount: data?.search?.totalCount,
   loading: !!loading,
   onFetchMore
 });

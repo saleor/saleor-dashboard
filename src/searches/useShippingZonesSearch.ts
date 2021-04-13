@@ -23,6 +23,7 @@ const searchShippingZones = gql`
       last: $last
       before: $before
     ) {
+      totalCount
       edges {
         node {
           id

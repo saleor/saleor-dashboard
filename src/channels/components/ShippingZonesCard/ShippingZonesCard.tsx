@@ -50,10 +50,16 @@ const useExpanderStyles = makeStyles(
 type ShippingZonesCardProps = ShippingZonesProps;
 
 const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
-  const { shippingZones, removeShippingZone } = props;
+  const {
+    shippingZones,
+    removeShippingZone,
+    fetchMoreShippingZones: { totalCount }
+  } = props;
 
   const expanderClasses = useExpanderStyles({});
   const intl = useIntl();
+
+  const hasMoreZonesToBeSelected = totalCount !== shippingZones.length;
 
   return (
     <Card>
@@ -67,7 +73,9 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         {shippingZones.map(zone => (
           <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
         ))}
-        <ShippingZonesCardListFooter {...props} />
+        {hasMoreZonesToBeSelected ? (
+          <ShippingZonesCardListFooter {...props} />
+        ) : null}
       </ExpansionPanel>
     </Card>
   );

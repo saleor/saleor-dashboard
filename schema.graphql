@@ -2651,15 +2651,6 @@ type InvoiceUpdate {
   invoice: Invoice
 }
 
-type InvoiceSendNotification {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-  invoiceErrors: [InvoiceError!]!
-  invoice: Invoice
-}
-
 scalar JSONString
 
 interface Job {
@@ -3592,7 +3583,6 @@ type Order implements Node & ObjectWithMetadata {
   created: DateTime!
   status: OrderStatus!
   user: User
-  languageCode: String!
   trackingClientId: String!
   billingAddress: Address
   shippingAddress: Address
@@ -4858,6 +4848,10 @@ type Product implements Node & ObjectWithMetadata {
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   availableForPurchase: Date
   isAvailableForPurchase: Boolean
+}
+
+input PaymentFilterInput {
+  checkouts: [ID]
 }
 
 type ProductAttributeAssign {

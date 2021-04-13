@@ -28,6 +28,7 @@ export interface SearchShippingZones_search_pageInfo {
 
 export interface SearchShippingZones_search {
   __typename: "ShippingZoneCountableConnection";
+  totalCount: number | null;
   edges: SearchShippingZones_search_edges[];
   pageInfo: SearchShippingZones_search_pageInfo;
 }
