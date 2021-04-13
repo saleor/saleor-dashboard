@@ -579,8 +579,8 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         fields={[
           ProductFieldEnum.DESCRIPTION,
           ProductFieldEnum.NAME,
-          ProductFieldEnum.PRODUCT_MEDIA,
-          ProductFieldEnum.VARIANT_MEDIA
+          ProductFieldEnum.PRODUCT_IMAGES,
+          ProductFieldEnum.VARIANT_IMAGES
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
