@@ -31,6 +31,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update schema to contain email plugin changes - #1029 by @dominik-zeglen
 - Unconfirmed order manipulation - #967 by @tomaszszymanski129
 - Add multiline field plugins - #974 by @dominik-zeglen
+- Handle limit reached error - #990 by @dominik-zeglen
+- Display Cloud limits - #1004 by @dominik-zeglen
 
 # 2.11.1
 

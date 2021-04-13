@@ -2,6 +2,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -67,6 +68,11 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables
   });
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      warehouses: true
+    }
+  });
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
@@ -75,6 +81,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         refetch();
+        limitOpts.refetch();
         closeModal();
       }
     }
@@ -141,6 +148,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
+        limits={limitOpts.data?.shop.limits}
         tabs={tabs.map(tab => tab.name)}
         warehouses={maybe(() => data.warehouses.edges.map(edge => edge.node))}
         settings={settings}

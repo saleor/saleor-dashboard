@@ -1,6 +1,7 @@
 import { attributes } from "@saleor/attributes/fixtures";
 import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
+import { limitsReached } from "@saleor/fixtures";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -98,6 +99,7 @@ const props: ProductVariantCreatorContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
+  variantsLeft: 6,
   step: ProductVariantCreatorStep.values,
   warehouses: warehouseList
 };
@@ -190,5 +192,15 @@ storiesOf("Views / Products / Create multiple variants / summary", module)
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(Decorator)
   .add("interactive", () => (
-    <ProductVariantCreatorPage {...props} onSubmit={() => undefined} />
+    <ProductVariantCreatorPage
+      {...props}
+      limits={{
+        ...limitsReached,
+        currentUsage: {
+          ...limitsReached.currentUsage,
+          productVariants: limitsReached.currentUsage.productVariants - 6
+        }
+      }}
+      onSubmit={() => undefined}
+    />
   ));
