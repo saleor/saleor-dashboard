@@ -1,3 +1,4 @@
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -40,6 +41,11 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
       }
     }
   });
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      productVariants: true
+    }
+  });
 
   return (
     <>
@@ -61,6 +67,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           price: ""
         }))}
         attributes={data?.product?.productType?.variantAttributes || []}
+        limits={limitOpts.data?.shop?.limits}
         onSubmit={inputs =>
           bulkProductVariantCreate({
             variables: { id, inputs }

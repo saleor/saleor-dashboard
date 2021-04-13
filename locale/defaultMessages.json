@@ -1363,6 +1363,10 @@
     "context": "activate",
     "string": "Activate"
   },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_2754800034": {
+    "context": "alert",
+    "string": "Channel limit reached"
+  },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3511613983": {
     "context": "channel name",
     "string": "Channel Name"
@@ -1377,6 +1381,9 @@
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4224047662": {
     "context": "button",
     "string": "Create Channel"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_85767761": {
+    "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_channels_dot_views_dot_ChannelCreate_dot_2071399707": {
     "context": "currency code select",
@@ -3168,6 +3175,9 @@
   "src_dot_lastName": {
     "string": "Last Name"
   },
+  "src_dot_limitReached": {
+    "string": "Reached limit for this plan"
+  },
   "src_dot_manage": {
     "context": "button",
     "string": "Manage"
@@ -3712,6 +3722,10 @@
     "context": "generate invoice button",
     "string": "Generate"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_2214147779": {
+    "context": "alert",
+    "string": "Order limit reached"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2225897825": {
     "context": "button",
     "string": "Order Settings"
@@ -3722,6 +3736,9 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_355376157": {
     "string": "Search Orders..."
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_3769643084": {
+    "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_875489544": {
     "context": "tab name",
@@ -5047,12 +5064,19 @@
     "context": "export products to csv file, button",
     "string": "Export Products"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_3024822321": {
+    "context": "alert",
+    "string": "SKU limit reached"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_821159718": {
     "context": "tab name",
     "string": "All Products"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_911702010": {
+    "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
@@ -5245,6 +5269,9 @@
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1346828628": {
     "string": "Selected values will be used to create variants for the configurable product."
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1419085897": {
+    "string": "You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_168343345": {
     "context": "variant attribute",
     "string": "Attribute"
@@ -5286,6 +5313,10 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2877822536": {
     "string": "Skip pricing for now"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3024822321": {
+    "context": "alert",
+    "string": "SKU limit reached"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3387090508": {
     "string": "Apply unique stock by attribute to each SKU"
@@ -5456,6 +5487,10 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_277989856": {
     "string": "Use variants for products that come in a variety of versions for example different sizes or colors"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_3024822321": {
+    "context": "alert",
+    "string": "SKU limit reached"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3203451491": {
     "context": "filtering option",
     "string": "All Warehouses"
@@ -5474,6 +5509,9 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"
+  },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_911702010": {
+    "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
@@ -6076,6 +6114,13 @@
   "src_dot_staff_dot_components_dot_StaffListPage_dot_2852350932": {
     "context": "tab name",
     "string": "All Staff Members"
+  },
+  "src_dot_staff_dot_components_dot_StaffListPage_dot_378240223": {
+    "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "src_dot_staff_dot_components_dot_StaffListPage_dot_4002475974": {
+    "context": "alert",
+    "string": "Staff Member limit reached"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_61043583": {
     "string": "Search Staff Member"
@@ -6776,6 +6821,13 @@
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_3203451491": {
     "context": "tab name",
     "string": "All Warehouses"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_3562691996": {
+    "context": "alert",
+    "string": "Warehouse limit reached"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_478107533": {
+    "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_934572530": {
     "context": "button",

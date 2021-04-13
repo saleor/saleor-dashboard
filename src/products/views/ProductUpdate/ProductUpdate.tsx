@@ -14,6 +14,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
@@ -136,6 +137,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     variables: { id }
   });
   const { channel } = useAppChannel();
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      productVariants: true
+    }
+  });
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -208,6 +214,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         closeModal();
         reset();
         refetch();
+        limitOpts.refetch();
       }
     }
   });
@@ -459,6 +466,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         channelsErrors={channelsErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
+        limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
         header={product?.name}
