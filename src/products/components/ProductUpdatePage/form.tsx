@@ -21,7 +21,6 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -200,9 +199,6 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const [changed, setChanged] = React.useState(false);
-  const [channelListings, setChannelListings] = useStateFromProps(
-    opts.currentChannels
-  );
   const triggerChange = () => setChanged(true);
 
   const form = useForm(
@@ -307,20 +303,20 @@ function useProductUpdateForm(
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const handleChannelsChange = createChannelsChangeHandler(
-    opts.isSimpleProduct ? channelListings : opts.channelsData,
-    opts.isSimpleProduct ? setChannelListings : opts.setChannelsData,
+    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
+    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
     triggerChange
   );
 
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
-    opts.isSimpleProduct ? channelListings : opts.channelsData,
-    opts.isSimpleProduct ? setChannelListings : opts.setChannelsData,
+    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
+    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
     triggerChange
   );
 
   const data: ProductUpdateData = {
     ...form.data,
-    channelListings,
+    channelListings: opts.currentChannels,
     channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
       attributes.data,

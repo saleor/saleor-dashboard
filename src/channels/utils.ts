@@ -287,7 +287,7 @@ export const extractVariantsIdsForChannel = (
 
 export const createSortedChannelsDataFromProduct = (
   productData?: ProductDetails_product
-) =>
+): ChannelData[] =>
   createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );

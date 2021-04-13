@@ -1,4 +1,7 @@
-import { ChannelData } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  createSortedChannelsDataFromProduct
+} from "@saleor/channels/utils";
 import { weight } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
@@ -10,6 +13,7 @@ import {
 import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import isEqual from "lodash/isEqual";
@@ -150,6 +154,30 @@ export const getChannelsVariables = (
       input: {
         updateChannels: channelsToBeUpdated,
         removeChannels: channelsIdsToBeRemoved
+      }
+    }
+  };
+};
+
+export const getSimpleChannelsVariables = (
+  data: ProductUpdatePageSubmitData,
+  product: ProductDetails_product
+) => {
+  const productChannels = createSortedChannelsDataFromProduct(product);
+  const diffChannels = diff(
+    productChannels,
+    data.channelListings,
+    (a, b) => a.id === b.id
+  );
+
+  return {
+    variables: {
+      id: product.id,
+      input: {
+        updateChannels: getAvailabilityVariables(data.channelListings),
+        removeChannels: diffChannels.removed?.map(
+          removedChannel => removedChannel.id
+        )
       }
     }
   };

@@ -36,29 +36,9 @@ import {
   VariantCreate,
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
+import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { MutationFetchResult } from "react-apollo";
-
-export const getAvailabilityVariables = (channels: ChannelData[]) =>
-  channels.map(channel => {
-    const { isAvailableForPurchase, availableForPurchase } = channel;
-    const isAvailable =
-      availableForPurchase && !isAvailableForPurchase
-        ? true
-        : isAvailableForPurchase;
-
-    return {
-      availableForPurchaseDate:
-        isAvailableForPurchase || availableForPurchase === ""
-          ? null
-          : availableForPurchase,
-      channelId: channel.id,
-      isAvailableForPurchase: isAvailable,
-      isPublished: channel.isPublished,
-      publicationDate: channel.publicationDate,
-      visibleInListings: channel.visibleInListings
-    };
-  });
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {

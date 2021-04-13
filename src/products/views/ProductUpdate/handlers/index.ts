@@ -62,6 +62,7 @@ import { arrayMove } from "react-sortable-hoc";
 
 import {
   getChannelsVariables,
+  getSimpleChannelsVariables,
   getSimpleProductErrors,
   getSimpleProductVariables,
   getVariantChannelsInput
@@ -203,7 +204,7 @@ export function createUpdateHandler(
         );
         errors = [...errors, ...getSimpleProductErrors(result.data)];
 
-        await updateChannels(getChannelsVariables(product, allChannels, data));
+        await updateChannels(getSimpleChannelsVariables(data, product));
 
         updateVariantChannels({
           variables: {
