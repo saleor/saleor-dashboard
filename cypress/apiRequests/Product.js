@@ -1,3 +1,4 @@
+import { stringify } from "../support/format/formatJson";
 import { getValueWithDefault } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
@@ -21,6 +22,21 @@ export function getFirstProducts(first, search) {
   return cy
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.products.edges);
+}
+export function updateProduct(productId, input) {
+  const mutation = `mutation {
+    productUpdate(id:"${productId}", input:${stringify(input)} ){
+      productErrors{
+        field
+        message
+      }
+      product{
+        id
+      }
+    }
+  }
+  `;
+  return cy.sendRequestWithQuery(mutation);
 }
 
 export function updateChannelInProduct({

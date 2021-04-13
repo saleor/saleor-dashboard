@@ -131,7 +131,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         </Typography>
       )}
       {availableOptions.map(option => (
-        <div className={classes.option} key={option.value}>
+        <div
+          className={classes.option}
+          key={option.value}
+          data-test-id="filterOption"
+        >
           <FormControlLabel
             control={
               <Checkbox

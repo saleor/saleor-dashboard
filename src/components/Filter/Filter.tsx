@@ -111,6 +111,7 @@ const Filter: React.FC<FilterProps> = props => {
               isFilterMenuOpened || isFilterActive
           })}
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
+          data-test-id="show-filters-button"
         >
           <Typography className={classes.addFilterText}>
             <FormattedMessage defaultMessage="Filters" description="button" />
