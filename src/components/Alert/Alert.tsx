@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useTheme from "@saleor/hooks/useTheme";
 import { makeStyles } from "@saleor/theme";
+import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
 
@@ -41,17 +42,18 @@ const useStyles = makeStyles(
 );
 
 export interface AlertProps {
+  className?: string;
   show: boolean;
   title: string;
 }
 
-const Alert: React.FC<AlertProps> = ({ children, show, title }) => {
+const Alert: React.FC<AlertProps> = ({ children, className, show, title }) => {
   const classes = useStyles({});
   const [visible, setVisible] = useStateFromProps(show);
   const { isDark } = useTheme();
 
   return visible ? (
-    <Card elevation={0} className={classes.root}>
+    <Card elevation={0} className={classNames(classes.root, className)}>
       <CardContent>
         <div className={classes.content}>
           <div>

@@ -4,7 +4,6 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
-import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
@@ -40,9 +39,8 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
-import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
   ProductDetails_product,
@@ -229,8 +227,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
 
-  const limitReached = isLimitReached(limits, "productVariants");
-
   return (
     <ProductUpdateForm
       onSubmit={onSubmit}
@@ -315,34 +311,23 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   </>
                 )}
                 {hasVariants ? (
-                  <>
-                    <Alert
-                      show={limitReached}
-                      title={intl.formatMessage({
-                        defaultMessage: "SKU limit reached",
-                        description: "alert"
-                      })}
-                    >
-                      <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-                    </Alert>
-                    <ProductVariants
-                      addButtonDisabled={limitReached}
-                      disabled={disabled}
-                      variants={variants}
-                      product={product}
-                      onRowClick={onVariantShow}
-                      onVariantAdd={onVariantAdd}
-                      onVariantsAdd={onVariantsAdd}
-                      onVariantReorder={onVariantReorder}
-                      onSetDefaultVariant={onSetDefaultVariant}
-                      toolbar={toolbar}
-                      isChecked={isChecked}
-                      selected={selected}
-                      selectedChannelId={selectedChannelId}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                    />
-                  </>
+                  <ProductVariants
+                    disabled={disabled}
+                    limits={limits}
+                    variants={variants}
+                    product={product}
+                    onRowClick={onVariantShow}
+                    onVariantAdd={onVariantAdd}
+                    onVariantsAdd={onVariantsAdd}
+                    onVariantReorder={onVariantReorder}
+                    onSetDefaultVariant={onSetDefaultVariant}
+                    toolbar={toolbar}
+                    isChecked={isChecked}
+                    selected={selected}
+                    selectedChannelId={selectedChannelId}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                  />
                 ) : (
                   <>
                     <ProductShipping
