@@ -39,7 +39,7 @@ const shopInfo = gql`
 `;
 export const TypedShopInfoQuery = TypedQuery<ShopInfo, {}>(shopInfo);
 
-const limits: Record<keyof RefreshLimitsVariables, boolean> = {
+const limitVariables: Record<keyof RefreshLimitsVariables, boolean> = {
   channels: false,
   orders: false,
   productVariants: false,
@@ -60,14 +60,16 @@ const limitInfo = gql`
     }
   }
 `;
-const hook = makeQuery<RefreshLimits, RefreshLimitsVariables>(limitInfo);
+const useBaseShopLimitsQuery = makeQuery<RefreshLimits, RefreshLimitsVariables>(
+  limitInfo
+);
 export const useShopLimitsQuery = (
   opts: UseQueryOpts<Partial<RefreshLimitsVariables>>
 ) =>
-  hook({
+  useBaseShopLimitsQuery({
     ...opts,
     variables: {
-      ...limits,
+      ...limitVariables,
       ...opts.variables
     }
   });
