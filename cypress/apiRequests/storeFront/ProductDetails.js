@@ -2,6 +2,37 @@ export function getProductDetails(productId, channelId) {
   const query = `fragment BasicProductFields on Product {
     id
     name
+    attributes{
+      attribute{
+        id
+        name
+      }
+    }
+    category{
+      id
+      name
+    }
+    collections{
+      id
+      name
+    }
+    description
+    seoTitle
+    slug
+    seoDescription
+    rating
+    metadata{
+      key
+      value
+    }
+    privateMetadata{
+      key
+      value
+    }
+    productType{
+      id
+      name
+    }
   }
   
   fragment Price on TaxedMoney {

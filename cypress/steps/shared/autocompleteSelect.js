@@ -6,7 +6,7 @@ export function fillAutocompleteSelect(selectSelector, option) {
     .get(BUTTON_SELECTORS.selectOption)
     .should("be.visible");
   if (option) {
-    cy.get(selectSelector).type(option);
+    cy.get(selectSelector).clearAndType(option);
     cy.contains(BUTTON_SELECTORS.selectOption, option).click();
     cy.wrap(option).as("option");
   } else {

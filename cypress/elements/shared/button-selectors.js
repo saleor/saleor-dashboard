@@ -4,5 +4,6 @@ export const BUTTON_SELECTORS = {
   confirm: '[data-test="button-bar-confirm"]',
   goBackButton: "[data-test-id='app-header-back-button']",
   checkbox: "[type='checkbox']",
-  selectOption: "[data-test*='select-option']"
+  selectOption: "[data-test*='select-option']",
+  deleteButton: '[data-test="button-bar-delete"]'
 };

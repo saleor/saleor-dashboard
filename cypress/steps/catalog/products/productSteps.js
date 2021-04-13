@@ -40,28 +40,36 @@ function updateProductMenageInChannel(productUrl, menageSelector) {
     .click()
     .wait("@ProductChannelListingUpdate");
 }
-export function fillUpCommonFieldsForProductType({
+export function fillUpCommonFieldsForAllProductTypes({
   generalInfo,
   seo,
   metadata,
   productOrganization
 }) {
-  fillUpProductGeneralInfo(generalInfo);
-  editSeoSettings(seo);
-  addMetadataField(metadata.public);
-  addMetadataField(metadata.private);
-  return fillUpProductOrganization(productOrganization).then(
-    productOrgResp => productOrgResp
-  );
+  return fillUpProductGeneralInfo(generalInfo)
+    .then(() => {
+      editSeoSettings(seo);
+    })
+    .then(() => {
+      addMetadataField(metadata.public);
+    })
+    .then(() => {
+      addMetadataField(metadata.private);
+    })
+    .then(() => {
+      fillUpProductOrganization(productOrganization);
+    })
+    .then(productOrgResp => productOrgResp);
 }
 export function fillUpProductGeneralInfo({ name, description, rating }) {
-  cy.get(PRODUCT_DETAILS.productNameInput)
+  return cy
+    .get(PRODUCT_DETAILS.productNameInput)
     .click()
-    .type(name)
+    .clearAndType(name)
     .get(PRODUCT_DETAILS.descriptionInput)
-    .type(description)
+    .clearAndType(description)
     .get(PRODUCT_DETAILS.ratingInput)
-    .type(rating);
+    .clearAndType(rating);
 }
 export function fillUpProductOrganization({
   productType,
@@ -69,17 +77,39 @@ export function fillUpProductOrganization({
   collection
 }) {
   const organization = {};
-  return fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
-    .then(selected => {
-      organization.productType = selected;
-      fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category);
-    })
-    .then(selected => {
-      organization.category = selected;
-      fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
-    })
-    .then(selected => {
-      organization.collection = selected;
-      return organization;
-    });
+  if (productType) {
+    fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType).then(
+      selected => {
+        organization.productType = cy.wrap(selected);
+      }
+    );
+  }
+  if (category) {
+    fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category).then(
+      selected => {
+        organization.category = cy.wrap(selected);
+      }
+    );
+  }
+  if (collection) {
+    fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection).then(
+      selected => {
+        organization.collection = cy.wrap(selected);
+      }
+    );
+  }
+  return organization;
+  // return fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
+  //   .then(selected => {
+  //     organization.productType = selected;
+  //     fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category);
+  //   })
+  //   .then(selected => {
+  //     organization.category = selected;
+  //     fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
+  //   })
+  //   .then(selected => {
+  //     organization.collection = selected;
+  //     return organization;
+  //   });
 }

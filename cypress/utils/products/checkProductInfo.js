@@ -27,37 +27,58 @@ export function expectCorrectProductVariantInformation(
   );
 }
 function expectCorrectGeneralInformation(productResp, generalInfo) {
-  softExpect(productResp.name).to.be.eq(generalInfo.name);
-  softExpect(productResp.description).includes(generalInfo.description);
-  softExpect(productResp.rating).to.be.eq(generalInfo.rating);
+  softExpect(productResp.name, "Check product name").to.be.eq(generalInfo.name);
+  softExpect(productResp.description, "Check product description").includes(
+    generalInfo.description
+  );
+  softExpect(productResp.rating, "Check product rate").to.be.eq(
+    generalInfo.rating
+  );
 }
 function expectCorrectSeoInfo(productResp, seo) {
-  softExpect(productResp.slug).to.be.eq(seo.slug);
-  softExpect(productResp.seoTitle).to.be.eq(seo.title);
-  softExpect(productResp.seoDescription).to.be.eq(seo.description);
+  softExpect(productResp.slug, "Check product slug").to.be.eq(seo.slug);
+  softExpect(productResp.seoTitle, "Check product seo title").to.be.eq(
+    seo.title
+  );
+  softExpect(
+    productResp.seoDescription,
+    "Check product seo description"
+  ).to.be.eq(seo.description);
 }
 function expectCorrectMetadataInfo(metadataResp, expectedMetadata) {
   softExpect(
-    expect(metadataResp).to.have.length(1),
-    softExpect(metadataResp[0].key).to.be.eq(expectedMetadata.name),
-    softExpect(metadataResp[0].value).to.be.eq(expectedMetadata.value)
+    expect(metadataResp, "Check metadata fields length").to.have.length(1),
+    softExpect(metadataResp[0].key, "Check product metadata key").to.be.eq(
+      expectedMetadata.name
+    ),
+    softExpect(metadataResp[0].value, "Check product metadata value").to.be.eq(
+      expectedMetadata.value
+    )
   );
 }
 function expectCorrectProductOrgInfo(productResp, productOrganization) {
-  softExpect(productResp.productType.name).to.be.eq(
+  softExpect(productResp.productType.name, "Check product type name").to.be.eq(
     productOrganization.productType
   );
-  softExpect(productResp.category.name).to.be.eq(productOrganization.category);
+  softExpect(productResp.category.name, "Check category name").to.be.eq(
+    productOrganization.category
+  );
   softExpect(
-    expect(productResp.collections).to.have.length(1),
-    softExpect(productResp.collections[0].name).to.be.eq(
-      productOrganization.collection
-    )
+    expect(
+      productResp.collections,
+      "Check length of assigned collections"
+    ).to.have.length(1),
+    softExpect(
+      productResp.collections[0].name,
+      "Check collection name"
+    ).to.be.eq(productOrganization.collection)
   );
 }
 function expectCorrectAttribute(attributes, attribute) {
   softExpect(
     expect(attributes).to.have.length(1),
-    softExpect(attributes[0].attribute.name).to.be.eq(attribute.name)
+    softExpect(attributes[0].attribute.name, "Check attribute name").to.be.eq(
+      attribute.name
+    )
   );
 }
