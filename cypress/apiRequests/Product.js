@@ -42,8 +42,8 @@ export function updateProduct(productId, input) {
 export function updateChannelInProduct({
   productId,
   channelId,
-  variantsIdsToAdd = null,
-  variantsIdsToRemove = null,
+  variantsIdsToAdd = "[]",
+  variantsIdsToRemove = "[]",
   isPublished = true,
   isAvailableForPurchase = true,
   visibleInListings = true
