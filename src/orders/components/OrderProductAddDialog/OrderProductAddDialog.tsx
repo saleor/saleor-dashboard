@@ -23,6 +23,7 @@ import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
+import { variant } from "@saleor/products/fixtures";
 import { makeStyles } from "@saleor/theme";
 import { ChannelProps, FetchMoreProps } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -189,21 +190,6 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose: () => setVariants([])
   });
 
-  const productChoices =
-    products?.filter(product => product.variants?.length > 0) || [];
-  const selectedVariantsToProductsMap = productChoices
-    ? productChoices.map(product =>
-        product.variants.map(variant => isVariantSelected(variant, variants))
-      )
-    : [];
-  const productsWithAllVariantsSelected = productChoices
-    ? productChoices.map(product =>
-        hasAllVariantsSelected(product.variants, variants)
-      )
-    : [];
-
-  const handleSubmit = () => onSubmit(variants);
-
   const isValidVariant = ({
     channelListings
   }: SearchOrderVariant_search_edges_node_variants) => {
@@ -218,6 +204,30 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
 
     return !!currentListing && isVariantPriceSet;
   };
+
+  const getValidProductVariants = ({
+    variants
+  }: SearchOrderVariant_search_edges_node) => variants.filter(isValidVariant);
+
+  const productChoices =
+    products?.filter(product => getValidProductVariants(product).length > 0) ||
+    [];
+
+  const selectedVariantsToProductsMap = productChoices
+    ? productChoices.map(product =>
+        getValidProductVariants(product).map(variant =>
+          isVariantSelected(variant, variants)
+        )
+      )
+    : [];
+
+  const productsWithAllVariantsSelected = productChoices
+    ? productChoices.map(product =>
+        hasAllVariantsSelected(getValidProductVariants(product), variants)
+      )
+    : [];
+
+  const handleSubmit = () => onSubmit(variants);
 
   const productChoicesWithValidVariants = productChoices.filter(
     ({ variants }) => variants.some(isValidVariant)
