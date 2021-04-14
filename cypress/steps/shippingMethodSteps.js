@@ -3,7 +3,12 @@ import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-detail
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
 
-export function createShippingZone(shippingName, warehouseName, country) {
+export function createShippingZone(
+  shippingName,
+  warehouseName,
+  country,
+  channelName
+) {
   cy.get(SHIPPING_ZONES_LIST.addShippingZone)
     .click()
     .get(SHIPPING_ZONE_DETAILS.nameInput)
@@ -21,8 +26,13 @@ export function createShippingZone(shippingName, warehouseName, country) {
     .click()
     .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .click()
-    .get(SHIPPING_ZONE_DETAILS.warehouseOption)
+    .get(SHIPPING_ZONE_DETAILS.option)
     .contains(warehouseName)
+    .click()
+    .get(SHIPPING_ZONE_DETAILS.channelSelector)
+    .click()
+    .get(SHIPPING_ZONE_DETAILS.option)
+    .contains(channelName)
     .click();
   cy.addAliasToGraphRequest("UpdateShippingZone");
   cy.get(BUTTON_SELECTORS.confirm).click();
