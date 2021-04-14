@@ -27,7 +27,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
