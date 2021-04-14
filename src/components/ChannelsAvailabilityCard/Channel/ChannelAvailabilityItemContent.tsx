@@ -13,7 +13,6 @@ import { useIntl } from "react-intl";
 import { DateContext } from "../../Date/DateContext";
 import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
-
 export interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
@@ -21,7 +20,6 @@ export interface ChannelContentProps {
   messages: Messages;
   onChange: (id: string, data: ChannelOpts) => void;
 }
-
 const ChannelContent: React.FC<ChannelContentProps> = ({
   data,
   disabled,
@@ -50,7 +48,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const localizeDate = useDateLocalize();
   const hasAvailableProps =
     isAvailable !== undefined && availableForPurchase !== undefined;
-
   const [isPublicationDate, setPublicationDate] = useState(
     publicationDate === null
   );
@@ -70,12 +67,10 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         date: localizeDate(date, "L")
       }
     );
-
   const formErrors = getFormErrors(
     ["availableForPurchaseDate", "publicationDate"],
     errors
   );
-
   return (
     <div className={classes.container}>
       <RadioSwitchField
@@ -256,7 +251,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                     defaultMessage: "Show in product listings"
                   })}
                 </p>
-
                 <span className={classes.secondLabel}>
                   {intl.formatMessage({
                     defaultMessage:
@@ -277,5 +271,4 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     </div>
   );
 };
-
 export default ChannelContent;
