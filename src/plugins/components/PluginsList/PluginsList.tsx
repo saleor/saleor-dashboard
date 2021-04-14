@@ -6,10 +6,8 @@ import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { makeStyles } from "@saleor/theme";
@@ -19,7 +17,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
-import ChannelStatusLabel from "./ChannelStatusLabel";
+import PluginAvailabilityStatus from "./PluginAvailabilityStatus";
 
 export interface PluginListProps
   extends ListProps,
@@ -135,7 +133,7 @@ const PluginList: React.FC<PluginListProps> = props => {
               <TableCell className={classes.colActive}>
                 {maybe<React.ReactNode>(
                   () => (
-                    <ChannelStatusLabel plugin={plugin} />
+                    <PluginAvailabilityStatus plugin={plugin} />
                   ),
                   <Skeleton />
                 )}

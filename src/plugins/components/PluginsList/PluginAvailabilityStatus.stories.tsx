@@ -1,4 +1,3 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import {
   Plugins_plugins_edges_node,
   Plugins_plugins_edges_node_globalConfiguration_channel
@@ -9,9 +8,9 @@ import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ChannelStatusLabel from "./ChannelStatusLabel";
+import ChannelStatusLabel from "./PluginAvailabilityStatus";
 
-const channels = [
+const channels: Plugins_plugins_edges_node_globalConfiguration_channel[] = [
   {
     __typename: "Channel",
     id: "channel-1",
@@ -40,7 +39,6 @@ storiesOf("Plugins list / Channel status label", module)
   .addDecorator(CentralPlacementDecorator)
   .add("Global plugin (active)", () => (
     <ChannelStatusLabel
-      channels={channels as Channels_channels[]}
       plugin={{
         ...pluginProps,
         channelConfigurations: null,
@@ -48,14 +46,13 @@ storiesOf("Plugins list / Channel status label", module)
           __typename: "PluginConfiguration",
           configuration: [],
           active: true,
-          channel: channels[0] as Plugins_plugins_edges_node_globalConfiguration_channel
+          channel: channels[0]
         }
       }}
     />
   ))
   .add("Channel dependent plugin (active)", () => (
     <ChannelStatusLabel
-      channels={channels as Channels_channels[]}
       plugin={{
         ...pluginProps,
         globalConfiguration: null,
@@ -64,13 +61,13 @@ storiesOf("Plugins list / Channel status label", module)
             __typename: "PluginConfiguration",
             configuration: [],
             active: true,
-            channel: channels[0] as Plugins_plugins_edges_node_globalConfiguration_channel
+            channel: channels[0]
           },
           {
             __typename: "PluginConfiguration",
             configuration: [],
             active: false,
-            channel: channels[1] as Plugins_plugins_edges_node_globalConfiguration_channel
+            channel: channels[1]
           }
         ]
       }}
@@ -78,7 +75,6 @@ storiesOf("Plugins list / Channel status label", module)
   ))
   .add("Global plugin (inactive)", () => (
     <ChannelStatusLabel
-      channels={channels as Channels_channels[]}
       plugin={{
         ...pluginProps,
         channelConfigurations: null,
@@ -86,14 +82,13 @@ storiesOf("Plugins list / Channel status label", module)
           __typename: "PluginConfiguration",
           configuration: [],
           active: false,
-          channel: channels[0] as Plugins_plugins_edges_node_globalConfiguration_channel
+          channel: channels[0]
         }
       }}
     />
   ))
   .add("Channel dependent plugin (inactive)", () => (
     <ChannelStatusLabel
-      channels={channels as Channels_channels[]}
       plugin={{
         ...pluginProps,
         globalConfiguration: null,
@@ -102,13 +97,13 @@ storiesOf("Plugins list / Channel status label", module)
             __typename: "PluginConfiguration",
             configuration: [],
             active: false,
-            channel: channels[0] as Plugins_plugins_edges_node_globalConfiguration_channel
+            channel: channels[0]
           },
           {
             __typename: "PluginConfiguration",
             configuration: [],
             active: false,
-            channel: channels[1] as Plugins_plugins_edges_node_globalConfiguration_channel
+            channel: channels[1]
           }
         ]
       }}

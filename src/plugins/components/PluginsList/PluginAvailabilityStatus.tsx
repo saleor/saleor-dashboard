@@ -1,10 +1,16 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Channels_channels } from "@saleor/channels/types/Channels";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { Plugins_plugins_edges_node } from "@saleor/plugins/types/Plugins";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { pluginAvailabilityStatusMessages as messages } from "./messages";
+import {
+  getActiveChannelConfigsCount,
+  getAllChannelConfigsCount,
+  isPluginGlobal
+} from "./utils";
 
 const useStyles = makeStyles(
   () => ({
@@ -16,11 +22,8 @@ const useStyles = makeStyles(
   { name: "ChannelStatusLabel" }
 );
 
-import { channelStatusLabelMessages as messages } from "./messages";
-
 interface ChannelStatusLabelProps {
   plugin: Plugins_plugins_edges_node;
-  channels: Channels_channels[];
 }
 
 const ChannelStatusLabel: React.FC<ChannelStatusLabelProps> = ({
@@ -29,12 +32,11 @@ const ChannelStatusLabel: React.FC<ChannelStatusLabelProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
-  const isGlobalPlugin = !!globalConfiguration;
+  const isGlobalPlugin = isPluginGlobal(globalConfiguration);
 
-  const allChannelsCount = channelConfigurations?.length;
-  const activeChannelsCount = channelConfigurations?.filter(
-    ({ active }) => !!active
-  ).length;
+  const activeChannelsCount = getActiveChannelConfigsCount(
+    channelConfigurations
+  );
 
   const isStatusActive = isGlobalPlugin
     ? globalConfiguration.active
@@ -52,7 +54,9 @@ const ChannelStatusLabel: React.FC<ChannelStatusLabelProps> = ({
                 activeChannelsCount
               })}
             </Typography>
-            <Typography color="textSecondary">{`/${allChannelsCount}`}</Typography>
+            <Typography color="textSecondary">{`/${getAllChannelConfigsCount(
+              channelConfigurations
+            )}`}</Typography>
           </div>
         )
       }
