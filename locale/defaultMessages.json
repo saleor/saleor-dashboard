@@ -7038,6 +7038,10 @@
     "context": "event",
     "string": "Customer updated"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1089569085": {
+    "context": "webhook",
+    "string": "Secret Key"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",
     "string": "Target URL"
@@ -7057,10 +7061,6 @@
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3809115222": {
     "context": "webhook secret key help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3995417850": {
-    "context": "webhook",
-    "string": "Secret Key"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
     "context": "webhook specific information",
