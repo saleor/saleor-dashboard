@@ -17,7 +17,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
-import PluginAvailabilityStatus from "./PluginAvailabilityStatus";
+import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
 
 export interface PluginListProps
   extends ListProps,
@@ -130,14 +130,7 @@ const PluginList: React.FC<PluginListProps> = props => {
               <TableCell className={classes.colName}>
                 {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
               </TableCell>
-              <TableCell className={classes.colActive}>
-                {maybe<React.ReactNode>(
-                  () => (
-                    <PluginAvailabilityStatus plugin={plugin} />
-                  ),
-                  <Skeleton />
-                )}
-              </TableCell>
+              <PluginChannelAvailabilityCell plugin={plugin} />
               <TableCell className={classes.colAction}>
                 <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
                   <EditIcon />

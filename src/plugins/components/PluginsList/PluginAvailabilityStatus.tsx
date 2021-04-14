@@ -22,11 +22,11 @@ const useStyles = makeStyles(
   { name: "ChannelStatusLabel" }
 );
 
-interface ChannelStatusLabelProps {
+interface PluginAvailabilityStatusProps {
   plugin: Plugins_plugins_edges_node;
 }
 
-const ChannelStatusLabel: React.FC<ChannelStatusLabelProps> = ({
+const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
   plugin: { globalConfiguration, channelConfigurations }
 }) => {
   const classes = useStyles({});
@@ -65,4 +65,4 @@ const ChannelStatusLabel: React.FC<ChannelStatusLabelProps> = ({
   );
 };
 
-export default ChannelStatusLabel;
+export default PluginAvailabilityStatus;
