@@ -19,6 +19,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
+import ChannelStatusLabel from "./ChannelStatusLabel";
 
 export interface PluginListProps
   extends ListProps,
