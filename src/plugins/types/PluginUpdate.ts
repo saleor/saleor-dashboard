@@ -15,22 +15,57 @@ export interface PluginUpdate_pluginUpdate_errors {
   field: string | null;
 }
 
-export interface PluginUpdate_pluginUpdate_plugin_configuration {
+export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration_configuration {
   __typename: "ConfigurationItem";
   name: string;
-  type: ConfigurationTypeFieldEnum | null;
   value: string | null;
+  type: ConfigurationTypeFieldEnum | null;
   helpText: string | null;
   label: string | null;
+}
+
+export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration {
+  __typename: "PluginConfiguration";
+  active: boolean;
+  channel: PluginUpdate_pluginUpdate_plugin_globalConfiguration_channel | null;
+  configuration: (PluginUpdate_pluginUpdate_plugin_globalConfiguration_configuration | null)[] | null;
+}
+
+export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations_configuration {
+  __typename: "ConfigurationItem";
+  name: string;
+  value: string | null;
+  type: ConfigurationTypeFieldEnum | null;
+  helpText: string | null;
+  label: string | null;
+}
+
+export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations {
+  __typename: "PluginConfiguration";
+  active: boolean;
+  channel: PluginUpdate_pluginUpdate_plugin_channelConfigurations_channel | null;
+  configuration: (PluginUpdate_pluginUpdate_plugin_channelConfigurations_configuration | null)[] | null;
 }
 
 export interface PluginUpdate_pluginUpdate_plugin {
   __typename: "Plugin";
   id: string;
-  name: string;
-  description: string;
-  active: boolean;
-  configuration: (PluginUpdate_pluginUpdate_plugin_configuration | null)[] | null;
+  name: string | null;
+  description: string | null;
+  globalConfiguration: PluginUpdate_pluginUpdate_plugin_globalConfiguration | null;
+  channelConfigurations: PluginUpdate_pluginUpdate_plugin_channelConfigurations[] | null;
 }
 
 export interface PluginUpdate_pluginUpdate {
