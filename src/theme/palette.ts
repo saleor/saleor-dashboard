@@ -6,6 +6,7 @@ const createPalette = (colors: IThemeColors): SaleorPaletteOptions => ({
   action: {
     active: colors.checkbox.default
   },
+  alert: colors.alert,
   background: colors.background,
   divider: colors.divider,
   error: {

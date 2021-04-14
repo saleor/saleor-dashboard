@@ -1,4 +1,5 @@
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
+import { ShopLimitFragment_limits } from "./fragments/types/ShopLimitFragment";
 import { User_userPermissions } from "./fragments/types/User";
 import {
   FetchMoreProps,
@@ -502,4 +503,43 @@ export const address = {
   postalCode: "52203",
   streetAddress1: "419 Ruiz Orchard Apt. 199",
   streetAddress2: "0238 Cremin Freeway"
+};
+
+export const limits: ShopLimitFragment_limits = {
+  __typename: "LimitInfo",
+  allowedUsage: {
+    __typename: "Limits",
+    channels: 5,
+    orders: 500,
+    productVariants: 1000,
+    staffUsers: 10,
+    warehouses: 3
+  },
+  currentUsage: {
+    __typename: "Limits",
+    channels: 2,
+    orders: 230,
+    productVariants: 100,
+    staffUsers: 7,
+    warehouses: 1
+  }
+};
+export const limitsReached: ShopLimitFragment_limits = {
+  __typename: "LimitInfo",
+  allowedUsage: {
+    __typename: "Limits",
+    channels: 5,
+    orders: 500,
+    productVariants: 1000,
+    staffUsers: 10,
+    warehouses: 3
+  },
+  currentUsage: {
+    __typename: "Limits",
+    channels: 5,
+    orders: 500,
+    productVariants: 1000,
+    staffUsers: 10,
+    warehouses: 3
+  }
 };

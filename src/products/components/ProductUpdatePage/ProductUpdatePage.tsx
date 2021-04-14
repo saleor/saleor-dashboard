@@ -16,6 +16,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
@@ -73,6 +74,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   isMediaUrlModalVisible?: boolean;
+  limits: RefreshLimits_shop_limits;
   variants: ProductDetails_product_variants[];
   media: ProductDetails_product_media[];
   hasChannelChanged: boolean;
@@ -139,6 +141,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   media,
   hasChannelChanged,
   header,
+  limits,
   placeholderImage,
   product,
   saveButtonBarState,
@@ -310,6 +313,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {hasVariants ? (
                   <ProductVariants
                     disabled={disabled}
+                    limits={limits}
                     variants={variants}
                     product={product}
                     onRowClick={onVariantShow}

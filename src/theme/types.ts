@@ -5,7 +5,13 @@ import {
   PaletteOptions
 } from "@material-ui/core/styles/createPalette";
 
+export type AlertPalette = Record<
+  "success" | "error" | "warning" | "info",
+  string
+>;
+export type AlertColors = Record<"paper" | "icon", AlertPalette>;
 interface ExtraPaletteOptions {
+  alert?: AlertColors;
   textHighlighted?: {
     active: string;
     inactive: string;

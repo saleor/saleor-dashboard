@@ -7,6 +7,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
@@ -150,6 +151,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     skip: params.action !== "export"
   });
   const { availableChannels, channel } = useAppChannel();
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      productVariants: true
+    }
+  });
 
   const noChannel = !channel && typeof channel !== "undefined";
 
@@ -303,6 +309,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         });
         reset();
         refetch();
+        limitOpts.refetch();
       }
     }
   });
@@ -370,6 +377,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         )}
         onAdd={() => navigate(productAddUrl())}
         disabled={loading}
+        limits={limitOpts.data?.shop.limits}
         products={maybe(() => data.products.edges.map(edge => edge.node))}
         onFetchMore={() =>
           attributes.loadMore(

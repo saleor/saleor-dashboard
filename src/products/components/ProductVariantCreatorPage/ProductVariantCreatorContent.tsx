@@ -22,6 +22,7 @@ export interface ProductVariantCreatorContentProps {
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   step: ProductVariantCreatorStep;
+  variantsLeft: number | null;
   warehouses: WarehouseFragment[];
 }
 
@@ -32,6 +33,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
   dispatchFormDataAction,
   errors,
   step,
+  variantsLeft,
   warehouses
 }) => {
   const selectedAttributes = attributes.filter(attribute =>
@@ -48,6 +50,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
         <ProductVariantCreateValues
           attributes={selectedAttributes}
           data={data}
+          variantsLeft={variantsLeft}
           onValueClick={(attributeId, valueId) =>
             dispatchFormDataAction({
               selectValue: {
