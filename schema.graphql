@@ -2639,7 +2639,7 @@ type Mutation {
   shippingPriceDelete(id: ID!): ShippingPriceDelete
   shippingPriceBulkDelete(ids: [ID]!): ShippingPriceBulkDelete
   shippingPriceUpdate(id: ID!, input: ShippingPriceInput!): ShippingPriceUpdate
-  shippingPriceTranslate(id: ID!, input: ShippingPriceTranslationInput!, languageCode: LanguageCodeEnum!): ShippingPriceTranslate
+  shippingPriceTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ShippingPriceTranslate
   shippingPriceExcludeProducts(id: ID!, input: ShippingPriceExcludeProductsInput!): ShippingPriceExcludeProducts
   shippingPriceRemoveProductFromExclude(id: ID!, products: [ID]!): ShippingPriceRemoveProductFromExclude
   shippingZoneCreate(input: ShippingZoneCreateInput!): ShippingZoneCreate
@@ -2701,7 +2701,7 @@ type Mutation {
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
   paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
-  paymentInitialize(gateway: String!, paymentData: JSONString): PaymentInitialize
+  paymentInitialize(channel: String, gateway: String!, paymentData: JSONString): PaymentInitialize
   pageCreate(input: PageCreateInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
@@ -2770,7 +2770,7 @@ type Mutation {
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
-  pluginUpdate(id: ID!, input: PluginUpdateInput!): PluginUpdate
+  pluginUpdate(channel: String, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
   saleBulkDelete(ids: [ID]!): SaleBulkDelete
@@ -3766,6 +3766,7 @@ enum PaymentErrorCode {
   SHIPPING_METHOD_NOT_SET
   PAYMENT_ERROR
   NOT_SUPPORTED_GATEWAY
+  CHANNEL_INACTIVE
 }
 
 input PaymentFilterInput {
@@ -3904,11 +3905,17 @@ input PermissionGroupUpdateInput {
   removeUsers: [ID!]
 }
 
-type Plugin implements Node {
-  id: ID!
-  name: String!
-  description: String!
+type Plugin {
+  id: String!
+  name: String
+  description: String
+  globalConfiguration: PluginConfiguration
+  channelConfigurations: [PluginConfiguration!]
+}
+
+type PluginConfiguration {
   active: Boolean!
+  channel: Channel
   configuration: [ConfigurationItem]
 }
 
@@ -4160,10 +4167,10 @@ enum ProductFieldEnum {
   PRODUCT_WEIGHT
   COLLECTIONS
   CHARGE_TAXES
-  PRODUCT_MEDIA
+  PRODUCT_IMAGES
   VARIANT_SKU
   VARIANT_WEIGHT
-  VARIANT_MEDIA
+  VARIANT_IMAGES
 }
 
 input ProductFilterInput {
@@ -4627,7 +4634,7 @@ type Query {
   shop: Shop!
   orderSettings: OrderSettings
   shippingZone(id: ID!, channel: String): ShippingZone
-  shippingZones(filter: ShippingZoneFilterInput, channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
+  shippingZones(channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
   digitalContent(id: ID!): DigitalContent
   digitalContents(before: String, after: String, first: Int, last: Int): DigitalContentCountableConnection
   categories(filter: CategoryFilterInput, sortBy: CategorySortingInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
@@ -5123,7 +5130,7 @@ input ShippingZoneUpdateInput {
 }
 
 type Shop {
-  availablePaymentGateways(currency: String): [PaymentGateway!]!
+  availablePaymentGateways(currency: String, channel: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
   availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
@@ -5548,7 +5555,7 @@ type User implements Node & ObjectWithMetadata {
   editableGroups: [Group]
   avatar(size: Int): Image
   events: [CustomerEvent]
-  storedPaymentSources: [PaymentSource]
+  storedPaymentSources(channel: String): [PaymentSource]
   languageCode: LanguageCodeEnum!
 }
 
