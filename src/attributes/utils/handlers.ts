@@ -203,6 +203,12 @@ export const prepareAttributesInput = ({
         references: attribute.value
       };
     }
+    if (attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT) {
+      return {
+        id: attribute.id,
+        richText: attribute.value[0]
+      };
+    }
     return {
       id: attribute.id,
       values: attribute.value[0] === "" ? [] : attribute.value

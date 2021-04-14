@@ -1304,6 +1304,11 @@ export const shippingZones: ShippingZoneFragment[] = [
 
 export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
+  channels: [
+    { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
+
+    { __typename: "Channel", id: "channel2", name: "PLN", currencyCode: "PLN" }
+  ],
   countries: [
     {
       __typename: "CountryDisplay",

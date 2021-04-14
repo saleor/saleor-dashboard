@@ -13,6 +13,7 @@ export const attributeValueFragment = gql`
       ...FileFragment
     }
     reference
+    richText
   }
 `;
 

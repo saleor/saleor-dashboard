@@ -16,12 +16,13 @@ import {
   ProductDetails_product_collections,
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
-import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 
 import { ProductStockInput } from "../components/ProductStocks";
+import { ProductType_productType_productAttributes } from "../types/ProductType";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
+import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
 
 export interface Collection {
   id: string;
@@ -37,7 +38,7 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
-  productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
+  productAttributes: ProductType_productType_productAttributes[];
 }
 
 export function getAttributeInputFromProduct(
@@ -204,7 +205,9 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
+  channelsWithVariants: ChannelsWithVariantsData;
   channelListings: ChannelData[];
+  channelsData: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -222,17 +225,21 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
 export function getProductUpdatePageFormData(
   product: ProductDetails_product,
   variants: ProductDetails_product_variants[],
-  currentChannels: ChannelData[]
+  currentChannels: ChannelData[],
+  channelsData: ChannelData[],
+  channelsWithVariants: ChannelsWithVariantsData
 ): ProductUpdatePageFormData {
   return {
+    channelsWithVariants,
+    channelsData,
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
-    channelListings: currentChannels,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
+    channelListings: currentChannels,
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),

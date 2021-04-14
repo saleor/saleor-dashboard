@@ -8,9 +8,8 @@ import Checkbox from "@saleor/components/Checkbox";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -297,7 +296,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
                   data-test="id"
-                  data-test-id={product?.id}
+                  data-test-id={product ? product?.id : "skeleton"}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox

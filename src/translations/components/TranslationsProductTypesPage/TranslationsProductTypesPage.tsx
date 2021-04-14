@@ -8,8 +8,11 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../../types/globalTypes";
-import TranslationFields from "../TranslationFields";
+import {
+  AttributeInputTypeEnum,
+  LanguageCodeEnum
+} from "../../../types/globalTypes";
+import TranslationFields, { TranslationField } from "../TranslationFields";
 
 export interface TranslationsProductTypesPageProps
   extends TranslationsEntitiesPageProps {
@@ -18,7 +21,8 @@ export interface TranslationsProductTypesPageProps
 
 export const fieldNames = {
   attribute: "attribute",
-  value: "attributeValue"
+  value: "attributeValue",
+  richTextValue: "attributeRichTextValue"
 };
 
 const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> = ({
@@ -76,21 +80,41 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
             value: data?.attribute?.name
           },
           ...(data?.attribute?.values?.map(
-            (attributeValue, attributeValueIndex) => ({
-              displayName: intl.formatMessage(
-                {
-                  defaultMessage: "Value {number}",
-                  description: "attribute values"
-                },
-                {
-                  number: attributeValueIndex + 1
-                }
-              ),
-              name: fieldNames.value + ":" + attributeValue.id,
-              translation: attributeValue?.translation?.name || null,
-              type: "short" as "short",
-              value: attributeValue?.name
-            })
+            (attributeValue, attributeValueIndex) => {
+              const isRichText =
+                attributeValue?.inputType === AttributeInputTypeEnum.RICH_TEXT;
+              const displayName = isRichText
+                ? intl.formatMessage({
+                    defaultMessage: "Text",
+                    description: "attribute richtext value"
+                  })
+                : intl.formatMessage(
+                    {
+                      defaultMessage: "Value {number}",
+                      description: "attribute values"
+                    },
+                    {
+                      number: attributeValueIndex + 1
+                    }
+                  );
+
+              return {
+                displayName,
+                name: `${
+                  isRichText ? fieldNames.richTextValue : fieldNames.value
+                }:${attributeValue.id}`,
+                translation:
+                  (isRichText
+                    ? attributeValue?.translation?.richText
+                    : attributeValue?.translation?.name) || null,
+                type: (isRichText
+                  ? "rich"
+                  : "short") as TranslationField["type"],
+                value: isRichText
+                  ? attributeValue?.richText
+                  : attributeValue?.name
+              };
+            }
           ) || [])
         ]}
         saveButtonState={saveButtonState}

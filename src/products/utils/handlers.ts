@@ -3,15 +3,11 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
-import { AttributeInputData } from "@saleor/components/Attributes";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormsetData } from "@saleor/hooks/useFormset";
-
-import { getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createChannelsPriceChangeHandler(
-  channelListings: ChannelPriceData[],
-  updateChannels: (data: ChannelPriceData[]) => void,
+  channelListings: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
@@ -31,12 +27,13 @@ export function createChannelsPriceChangeHandler(
       ...channelListings.slice(channelIndex + 1)
     ];
     updateChannels(updatedChannels);
+
     triggerChange();
   };
 }
 
 export function createChannelsChangeHandler(
-  channelListings: ChannelData[],
+  channelsData: ChannelData[],
   updateChannels: (data: ChannelData[]) => void,
   triggerChange: () => void
 ) {
@@ -44,20 +41,20 @@ export function createChannelsChangeHandler(
     id: string,
     data: Omit<ChannelData, "name" | "price" | "currency" | "id">
   ) => {
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
-    );
-    const channel = channelListings[channelIndex];
+    const channelIndex = channelsData.findIndex(channel => channel.id === id);
+    const channel = channelsData[channelIndex];
 
     const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
+      ...channelsData.slice(0, channelIndex),
       {
         ...channel,
         ...data
       },
-      ...channelListings.slice(channelIndex + 1)
+      ...channelsData.slice(channelIndex + 1)
     ];
+
     updateChannels(updatedChannels);
+
     triggerChange();
   };
 }
@@ -89,19 +86,13 @@ export function createVariantChannelsChangeHandler(
 }
 
 export function createProductTypeSelectHandler(
-  setAttributes: (data: FormsetData<AttributeInputData>) => void,
-  setProductType: (productType: ProductType) => void,
-  productTypeChoiceList: ProductType[],
+  setProductType: (productTypeId: string) => void,
   triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
-    const selectedProductType = productTypeChoiceList.find(
-      productType => productType.id === id
-    );
+    setProductType(id);
     triggerChange();
-    setProductType(selectedProductType);
-    setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }
 

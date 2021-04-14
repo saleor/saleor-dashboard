@@ -202,6 +202,9 @@ export const productFragmentDetails = gql`
       sku
       name
       margin
+      media {
+        url(size: 200)
+      }
       stocks {
         ...StockFragment
       }
@@ -256,6 +259,7 @@ export const selectedVariantAttributeFragment = gql`
 `;
 
 export const fragmentVariant = gql`
+  ${fragmentProductMedia}
   ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
   ${fragmentProductMedia}

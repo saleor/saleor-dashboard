@@ -1,4 +1,3 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   createShippingChannels,
   createSortedShippingChannels
@@ -11,6 +10,7 @@ import { sectionNames } from "@saleor/intl";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
+import { useShippingZoneChannels } from "@saleor/shipping/queries";
 import {
   ShippingRateCreateUrlDialog,
   ShippingRateCreateUrlQueryParams,
@@ -44,15 +44,25 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const { data: channelsData, loading: channelsLoading } = useChannelsList({});
+  const {
+    data: shippingZoneData,
+    loading: channelsLoading
+  } = useShippingZoneChannels({
+    displayLoader: true,
+    variables: { id }
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateCreateUrlDialog,
     ShippingRateCreateUrlQueryParams
   >(navigate, params => shippingWeightRatesUrl(id, params), params);
 
-  const shippingChannels = createShippingChannels(channelsData?.channels);
-  const allChannels = createSortedShippingChannels(channelsData?.channels);
+  const shippingChannels = createShippingChannels(
+    shippingZoneData?.shippingZone?.channels
+  );
+  const allChannels = createSortedShippingChannels(
+    shippingZoneData?.shippingZone?.channels
+  );
 
   const {
     channelListElements,

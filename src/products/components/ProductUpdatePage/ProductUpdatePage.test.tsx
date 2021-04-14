@@ -2,7 +2,7 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
+import { fetchMoreProps, limits, listActionsProps } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -14,10 +14,6 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
-const channelChoices = product.channelListings.map(listing => ({
-  label: listing.channel.name,
-  value: listing.channel.id
-}));
 
 import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
@@ -28,7 +24,10 @@ const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
   categories: [product.category],
-  channelChoices,
+  channelsData: [],
+  channelsWithVariantsData: {},
+  isSimpleProduct: false,
+  setChannelsData: () => undefined,
   channelsErrors: [],
   collections,
   currentChannels: channels,
@@ -42,6 +41,7 @@ const props: ProductUpdatePageProps = {
   hasChannelChanged: false,
   header: product.name,
   media: product.media,
+  limits,
   onAssignReferencesClick: () => undefined,
   onBack: () => undefined,
   onChannelsChange: () => undefined,

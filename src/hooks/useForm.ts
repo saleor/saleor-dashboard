@@ -100,11 +100,12 @@ function useForm<T extends FormData>(
     setData(initial);
   }
 
-  function set(newData: Partial<T>) {
+  function set(newData: Partial<T>, setHasChanged = true) {
     setData(data => ({
       ...data,
       ...newData
     }));
+    setChanged(setHasChanged);
   }
 
   async function submit() {
@@ -112,7 +113,7 @@ function useForm<T extends FormData>(
       const result = onSubmit(data);
       if (result) {
         const errors = await result;
-        if (errors.length === 0) {
+        if (errors?.length === 0) {
           setChanged(false);
         }
       }

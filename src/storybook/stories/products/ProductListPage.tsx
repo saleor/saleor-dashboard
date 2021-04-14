@@ -11,6 +11,8 @@ import React from "react";
 import {
   fetchMoreProps,
   filterPageProps,
+  limits,
+  limitsReached,
   listActionsProps,
   pageListProps,
   sortPageProps
@@ -41,6 +43,7 @@ const props: ProductListPageProps = {
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
+  limits,
   onExport: () => undefined,
   products,
   selectedChannelId: "123",
@@ -71,4 +74,8 @@ storiesOf("Views / Products / Product list", module)
       selectedChannelId={""}
       products={products.map(product => ({ ...product, channelListings: [] }))}
     />
+  ))
+  .add("no limits", () => <ProductListPage {...props} limits={undefined} />)
+  .add("limits reached", () => (
+    <ProductListPage {...props} limits={limitsReached} />
   ));

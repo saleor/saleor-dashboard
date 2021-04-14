@@ -23,7 +23,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
   ProductType
@@ -137,6 +137,8 @@ export interface UseProductCreateFormOpts
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
+  selectedProductType?: ProductType_productType;
+  onSelectProductType: (productTypeId: string) => void;
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
@@ -174,11 +176,6 @@ function useProductCreateForm(
     weight: ""
   };
 
-  const initialProductType =
-    opts.productTypes?.find(
-      productType => initial?.productType?.id === productType.id
-    ) || null;
-
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -187,15 +184,12 @@ function useProductCreateForm(
     ...defaultInitialFormData
   });
   const attributes = useFormset<AttributeInputData>(
-    initial?.productType
-      ? getAttributeInputFromProductType(initialProductType)
+    opts.selectedProductType
+      ? getAttributeInputFromProductType(opts.selectedProductType)
       : []
   );
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData>([]);
-  const [productType, setProductType] = useStateFromProps<ProductType>(
-    initialProductType || null
-  );
   const [description, changeDescription] = useRichText({
     initial: null,
     triggerChange
@@ -258,9 +252,7 @@ function useProductCreateForm(
     triggerChange
   );
   const handleProductTypeSelect = createProductTypeSelectHandler(
-    attributes.set,
-    setProductType,
-    opts.productTypes,
+    opts.onSelectProductType,
     triggerChange
   );
   const handleStockChange: FormsetChange<string> = (id, value) => {
@@ -309,18 +301,14 @@ function useProductCreateForm(
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: description.current,
-    productType,
+    productType: opts.selectedProductType,
     stocks: stocks.data
   });
   const data = getData();
   const submit = () => onSubmit(data);
 
-  const productTypeChoice = opts.productTypeChoiceList?.find(
-    choice => choice.id === data.productType?.id
-  );
-
   const disabled =
-    !productTypeChoice?.hasVariants &&
+    !opts.selectedProductType?.hasVariants &&
     (!data.sku ||
       data.channelListings.some(
         channel =>
