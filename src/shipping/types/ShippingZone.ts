@@ -140,6 +140,13 @@ export interface ShippingZone_shippingZone_shippingMethods {
   excludedProducts: ShippingZone_shippingZone_shippingMethods_excludedProducts | null;
 }
 
+export interface ShippingZone_shippingZone_channels {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
 export interface ShippingZone_shippingZone_warehouses {
   __typename: "Warehouse";
   id: string;
@@ -156,7 +163,8 @@ export interface ShippingZone_shippingZone {
   description: string | null;
   default: boolean;
   shippingMethods: (ShippingZone_shippingZone_shippingMethods | null)[] | null;
-  warehouses: (ShippingZone_shippingZone_warehouses | null)[] | null;
+  channels: ShippingZone_shippingZone_channels[];
+  warehouses: ShippingZone_shippingZone_warehouses[];
 }
 
 export interface ShippingZone {

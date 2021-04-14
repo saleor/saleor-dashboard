@@ -93,7 +93,7 @@ describe("Products", () => {
     });
   });
 
-  it("should filter products out of stock", () => {
+  xit("should filter products out of stock", () => {
     const productOutOfStock = `${startsWith}${faker.random.number()}`;
     createProductInChannel({
       name: productOutOfStock,

@@ -121,6 +121,7 @@ export enum ChannelErrorCode {
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1092,7 +1093,6 @@ export interface AttributeFilterInput {
   filterableInStorefront?: boolean | null;
   filterableInDashboard?: boolean | null;
   availableInGrid?: boolean | null;
-  metadata?: (MetadataInput | null)[] | null;
   search?: string | null;
   ids?: (string | null)[] | null;
   type?: AttributeTypeEnum | null;
@@ -1159,7 +1159,6 @@ export interface CatalogueInput {
 
 export interface CategoryFilterInput {
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1183,6 +1182,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  addShippingZones?: string[] | null;
 }
 
 export interface ChannelDeleteInput {
@@ -1193,6 +1193,8 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  addShippingZones?: string[] | null;
+  removeShippingZones?: string[] | null;
 }
 
 export interface CollectionChannelListingUpdateInput {
@@ -1215,7 +1217,6 @@ export interface CollectionCreateInput {
 export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
   channel?: string | null;
 }
@@ -1257,7 +1258,6 @@ export interface CustomerInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
-  languageCode?: LanguageCodeEnum | null;
 }
 
 export interface DateRangeInput {
@@ -1384,7 +1384,6 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1394,7 +1393,6 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1588,10 +1586,12 @@ export interface ProductChannelListingAddInput {
   visibleInListings?: boolean | null;
   isAvailableForPurchase?: boolean | null;
   availableForPurchaseDate?: any | null;
+  addVariants?: string[] | null;
+  removeVariants?: string[] | null;
 }
 
 export interface ProductChannelListingUpdateInput {
-  addChannels?: ProductChannelListingAddInput[] | null;
+  updateChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
 }
 
@@ -1620,7 +1620,6 @@ export interface ProductFilterInput {
   productType?: string | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1658,7 +1657,6 @@ export interface ProductTypeFilterInput {
   search?: string | null;
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
-  metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1800,6 +1798,7 @@ export interface ShippingZoneCreateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
 }
 
 export interface ShippingZoneUpdateInput {
@@ -1808,7 +1807,9 @@ export interface ShippingZoneUpdateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
   removeWarehouses?: (string | null)[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ShopSettingsInput {
@@ -1877,7 +1878,6 @@ export interface UserCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
-  languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
 }
 

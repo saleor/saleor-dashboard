@@ -1,21 +1,24 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
+import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { ChannelDelete } from "@saleor/channels/types/ChannelDelete";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
+import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
+import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ChannelUpdateInput } from "../../../types/globalTypes";
 import {
   useChannelActivateMutation,
   useChannelDeactivateMutation,
@@ -54,14 +57,15 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
 
-  const onSubmit = (data: ChannelUpdate) => {
-    if (!data.channelUpdate.errors.length) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-    }
-  };
+  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdate) =>
+      notify(getDefaultNotifierSuccessErrorData(errors, intl))
+  });
+
+  const { data, loading } = useChannelDetails({
+    displayLoader: true,
+    variables: { id }
+  });
 
   const handleError = (error: ChannelErrorFragment) => {
     notify({
@@ -69,15 +73,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       text: getChannelsErrorMessage(error, intl)
     });
   };
-
-  const { data, loading } = useChannelDetails({
-    displayLoader: true,
-    variables: { id }
-  });
-
-  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: onSubmit
-  });
 
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
@@ -100,15 +95,25 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     }
   });
 
-  const handleSubmit = (data: ChannelUpdateInput) =>
+  const handleSubmit = ({
+    name,
+    slug,
+    shippingZonesIdsToRemove,
+    shippingZonesIdsToAdd
+  }: FormData) =>
     updateChannel({
       variables: {
-        id,
-        input: { name: data.name, slug: data.slug }
+        id: data?.channel.id,
+        input: {
+          name,
+          slug,
+          addShippingZones: shippingZonesIdsToAdd,
+          removeShippingZones: shippingZonesIdsToRemove
+        }
       }
     });
 
-  const onCompleted = (data: ChannelDelete) => {
+  const onDeleteCompleted = (data: ChannelDelete) => {
     const errors = data.channelDelete.errors;
     if (errors.length === 0) {
       notify({
@@ -130,7 +135,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
-    onCompleted
+    onCompleted: onDeleteCompleted
   });
 
   const channelsChoices = getChannelsCurrencyChoices(
@@ -146,6 +151,14 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     deleteChannel({ variables: data });
   };
 
+  const {
+    loadMore: fetchMoreShippingZones,
+    search: searchShippingZones,
+    result: searchShippingZonesResult
+  } = useShippingZonesSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+
   return (
     <>
       <WindowTitle
@@ -160,15 +173,21 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </AppHeader>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
+          searchShippingZones={searchShippingZones}
+          searchShippingZonesData={searchShippingZonesResult.data}
+          fetchMoreShippingZones={getSearchFetchMoreProps(
+            searchShippingZonesResult,
+            fetchMoreShippingZones
+          )}
           channel={data?.channel}
           disabled={updateChannelOpts.loading || loading}
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading
           }
           errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
-          onSubmit={handleSubmit}
           onBack={handleBack}
           onDelete={() => openModal("remove")}
+          onSubmit={handleSubmit}
           updateChannelStatus={() =>
             data?.channel?.isActive
               ? deactivateChannel({ variables: { id } })

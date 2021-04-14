@@ -2,7 +2,9 @@ import { LocaleContext } from "@saleor/components/Locale";
 import moment from "moment-timezone";
 import { useContext } from "react";
 
-function useDateLocalize(): (date: string, format?: string) => string {
+export type LocalizeDate = (date: string, format?: string) => string;
+
+function useDateLocalize(): LocalizeDate {
   const { locale } = useContext(LocaleContext);
 
   return (date: string, format?: string) =>

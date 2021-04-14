@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys */
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import {
   useOrderDiscountAddMutation,
@@ -15,7 +16,7 @@ import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
-import { getDiscountNotifierData, useDiscountDialog } from "./utils";
+import { useDiscountDialog } from "./utils";
 import { getManualOrderDiscount, getParsedDiscountData } from "./utils";
 
 export interface OrderDiscountContextConsumerProps
@@ -68,7 +69,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
 
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
-    notify(getDiscountNotifierData(errors, intl));
+    notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };
 
   const addOrderDiscount = (data: OrderDiscountCommonInput) =>

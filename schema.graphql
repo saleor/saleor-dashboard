@@ -86,7 +86,6 @@ input AccountInput {
   lastName: String
   defaultBillingAddress: AddressInput
   defaultShippingAddress: AddressInput
-  languageCode: LanguageCodeEnum
 }
 
 type AccountRegister {
@@ -103,7 +102,6 @@ input AccountRegisterInput {
   email: String!
   password: String!
   redirectUrl: String
-  languageCode: LanguageCodeEnum
 }
 
 type AccountRequestDeletion {
@@ -575,7 +573,6 @@ input AttributeFilterInput {
   filterableInStorefront: Boolean
   filterableInDashboard: Boolean
   availableInGrid: Boolean
-  metadata: [MetadataInput]
   search: String
   ids: [ID]
   type: AttributeTypeEnum
@@ -678,7 +675,6 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
-  value: String
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
   reference: ID
@@ -879,7 +875,6 @@ type CategoryDelete {
 
 input CategoryFilterInput {
   search: String
-  metadata: [MetadataInput]
   ids: [ID]
 }
 
@@ -956,6 +951,7 @@ type Channel implements Node {
   slug: String!
   currencyCode: String!
   hasOrders: Boolean!
+  shippingZones: [ShippingZone!]!
 }
 
 type ChannelActivate {
@@ -981,6 +977,7 @@ input ChannelCreateInput {
   name: String!
   slug: String!
   currencyCode: String!
+  addShippingZones: [ID!]
 }
 
 type ChannelDeactivate {
@@ -1009,6 +1006,7 @@ type ChannelError {
   field: String
   message: String
   code: ChannelErrorCode!
+  shippingZones: [ID!]
 }
 
 enum ChannelErrorCode {
@@ -1021,6 +1019,7 @@ enum ChannelErrorCode {
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT
   CHANNELS_CURRENCY_MUST_BE_THE_SAME
   CHANNEL_WITH_ORDERS
+  DUPLICATED_INPUT_ITEM
 }
 
 type ChannelUpdate {
@@ -1036,6 +1035,8 @@ input ChannelUpdateInput {
   isActive: Boolean
   name: String
   slug: String
+  addShippingZones: [ID!]
+  removeShippingZones: [ID!]
 }
 
 type Checkout implements Node & ObjectWithMetadata {
@@ -1065,7 +1066,6 @@ type Checkout implements Node & ObjectWithMetadata {
   subtotalPrice: TaxedMoney
   token: UUID!
   totalPrice: TaxedMoney
-  languageCode: LanguageCodeEnum!
 }
 
 type CheckoutAddPromoCode {
@@ -1124,7 +1124,6 @@ input CheckoutCreateInput {
   email: String
   shippingAddress: AddressInput
   billingAddress: AddressInput
-  languageCode: LanguageCodeEnum
 }
 
 type CheckoutCustomerAttach {
@@ -1184,6 +1183,7 @@ enum CheckoutErrorCode {
   ZERO_QUANTITY
   MISSING_CHANNEL_SLUG
   CHANNEL_INACTIVE
+  UNAVAILABLE_VARIANT_IN_CHANNEL
 }
 
 type CheckoutLanguageCodeUpdate {
@@ -1423,7 +1423,6 @@ enum CollectionErrorCode {
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
-  metadata: [MetadataInput]
   ids: [ID]
   channel: String
 }
@@ -1908,7 +1907,6 @@ input CustomerInput {
   email: String
   isActive: Boolean
   note: String
-  languageCode: LanguageCodeEnum
 }
 
 type CustomerUpdate {
@@ -2628,6 +2626,13 @@ type InvoiceRequestDelete {
   invoice: Invoice
 }
 
+type InvoiceSendEmail {
+  errors: [Error!]!
+    @deprecated(
+      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
+    )
+}
+
 type InvoiceSendNotification {
   errors: [Error!]!
     @deprecated(
@@ -2826,7 +2831,6 @@ enum MenuErrorCode {
 input MenuFilterInput {
   search: String
   slug: [String]
-  metadata: [MetadataInput]
 }
 
 input MenuInput {
@@ -2900,7 +2904,6 @@ type MenuItemDelete {
 
 input MenuItemFilterInput {
   search: String
-  metadata: [MetadataInput]
 }
 
 input MenuItemInput {
@@ -3341,7 +3344,7 @@ type Mutation {
   invoiceCreate(input: InvoiceCreateInput!, orderId: ID!): InvoiceCreate
   invoiceDelete(id: ID!): InvoiceDelete
   invoiceUpdate(id: ID!, input: UpdateInvoiceInput!): InvoiceUpdate
-  invoiceSendNotification(id: ID!): InvoiceSendNotification
+  invoiceSendEmail(id: ID!): InvoiceSendEmail
   giftCardActivate(id: ID!): GiftCardActivate
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
@@ -3366,6 +3369,7 @@ type Mutation {
   voucherDelete(id: ID!): VoucherDelete
   voucherBulkDelete(ids: [ID]!): VoucherBulkDelete
   voucherUpdate(id: ID!, input: VoucherInput!): VoucherUpdate
+  invoiceSendNotification(id: ID!): InvoiceSendNotification
   voucherCataloguesAdd(id: ID!, input: CatalogueInput!): VoucherAddCatalogues
   voucherCataloguesRemove(
     id: ID!
@@ -3763,7 +3767,6 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
   channels: [ID]
 }
 
@@ -3921,7 +3924,6 @@ input OrderFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
   channels: [ID]
 }
 
@@ -4303,7 +4305,6 @@ enum PageErrorCode {
 
 input PageFilterInput {
   search: String
-  metadata: [MetadataInput]
 }
 
 type PageInfo {
@@ -4579,10 +4580,6 @@ enum PaymentErrorCode {
   NOT_SUPPORTED_GATEWAY
 }
 
-input PaymentFilterInput {
-  checkouts: [ID]
-}
-
 type PaymentGateway {
   name: String!
   id: ID!
@@ -4853,6 +4850,10 @@ type Product implements Node & ObjectWithMetadata {
   isAvailableForPurchase: Boolean
 }
 
+input PaymentFilterInput {
+  checkouts: [ID]
+}
+
 type ProductAttributeAssign {
   errors: [Error!]!
     @deprecated(
@@ -4911,6 +4912,8 @@ input ProductChannelListingAddInput {
   visibleInListings: Boolean
   isAvailableForPurchase: Boolean
   availableForPurchaseDate: Date
+  addVariants: [ID!]
+  removeVariants: [ID!]
 }
 
 type ProductChannelListingError {
@@ -4920,6 +4923,7 @@ type ProductChannelListingError {
   attributes: [ID!]
   values: [ID!]
   channels: [ID!]
+  variants: [ID!]
 }
 
 type ProductChannelListingUpdate {
@@ -4932,7 +4936,7 @@ type ProductChannelListingUpdate {
 }
 
 input ProductChannelListingUpdateInput {
-  addChannels: [ProductChannelListingAddInput!]
+  updateChannels: [ProductChannelListingAddInput!]
   removeChannels: [ID!]
 }
 
@@ -5033,7 +5037,6 @@ input ProductFilterInput {
   productType: ID
   stocks: ProductStockFilterInput
   search: String
-  metadata: [MetadataInput]
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
@@ -5299,7 +5302,6 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
-  metadata: [MetadataInput]
   ids: [ID]
 }
 
@@ -5472,7 +5474,6 @@ type ProductVariantDelete {
 input ProductVariantFilterInput {
   search: String
   sku: [String]
-  metadata: [MetadataInput]
 }
 
 input ProductVariantInput {
@@ -5606,6 +5607,7 @@ type Query {
   orderSettings: OrderSettings
   shippingZone(id: ID!, channel: String): ShippingZone
   shippingZones(
+    filter: ShippingZoneFilterInput
     channel: String
     before: String
     after: String
@@ -6312,7 +6314,8 @@ type ShippingZone implements Node & ObjectWithMetadata {
   priceRange: MoneyRange
   countries: [CountryDisplay]
   shippingMethods: [ShippingMethod]
-  warehouses: [Warehouse]
+  warehouses: [Warehouse!]!
+  channels: [Channel!]!
   description: String
 }
 
@@ -6351,6 +6354,7 @@ input ShippingZoneCreateInput {
   countries: [String]
   default: Boolean
   addWarehouses: [ID]
+  addChannels: [ID!]
 }
 
 type ShippingZoneDelete {
@@ -6360,6 +6364,10 @@ type ShippingZoneDelete {
     )
   shippingErrors: [ShippingError!]!
   shippingZone: ShippingZone
+}
+
+input ShippingZoneFilterInput {
+  search: String
 }
 
 type ShippingZoneUpdate {
@@ -6377,7 +6385,9 @@ input ShippingZoneUpdateInput {
   countries: [String]
   default: Boolean
   addWarehouses: [ID]
+  addChannels: [ID!]
   removeWarehouses: [ID]
+  removeChannels: [ID!]
 }
 
 type Shop {
@@ -6728,9 +6738,21 @@ type Transaction implements Node {
   token: String!
   kind: TransactionKind!
   isSuccess: Boolean!
-  error: String
-  gatewayResponse: JSONString!
+  error: TransactionError
   amount: Money
+}
+
+enum TransactionError {
+  TRANSACTIONERROR_INCORRECT_NUMBER
+  TRANSACTIONERROR_INVALID_NUMBER
+  TRANSACTIONERROR_INCORRECT_CVV
+  TRANSACTIONERROR_INVALID_CVV
+  TRANSACTIONERROR_INCORRECT_ZIP
+  TRANSACTIONERROR_INCORRECT_ADDRESS
+  TRANSACTIONERROR_INVALID_EXPIRY_DATE
+  TRANSACTIONERROR_EXPIRED
+  TRANSACTIONERROR_PROCESSING_ERROR
+  TRANSACTIONERROR_DECLINED
 }
 
 enum TransactionKind {
@@ -6882,7 +6904,6 @@ type User implements Node & ObjectWithMetadata {
   avatar(size: Int): Image
   events: [CustomerEvent]
   storedPaymentSources: [PaymentSource]
-  languageCode: LanguageCodeEnum!
 }
 
 type UserAvatarDelete {
@@ -6931,7 +6952,6 @@ input UserCreateInput {
   email: String
   isActive: Boolean
   note: String
-  languageCode: LanguageCodeEnum
   redirectUrl: String
 }
 
@@ -7447,7 +7467,6 @@ enum WebhookSampleEventTypeEnum {
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
-  NOTIFY_USER
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED

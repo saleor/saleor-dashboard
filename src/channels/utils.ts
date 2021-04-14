@@ -3,9 +3,15 @@ import { CollectionDetails_collection } from "@saleor/collections/types/Collecti
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { RequireOnlyOne } from "@saleor/misc";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
+import {
+  ProductDetails_product,
+  ProductDetails_product_variants
+} from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
-import { ShippingZone_shippingZone_shippingMethods_channelListings } from "@saleor/shipping/types/ShippingZone";
+import {
+  ShippingZone_shippingZone_channels,
+  ShippingZone_shippingZone_shippingMethods_channelListings
+} from "@saleor/shipping/types/ShippingZone";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash-es/uniqBy";
 
@@ -16,15 +22,16 @@ export interface Channel {
 
 export interface ChannelData {
   id: string;
-  isPublished: boolean;
   name: string;
-  publicationDate: string | null;
-  currency: string;
-  price: string;
-  costPrice: string;
-  availableForPurchase: string;
-  isAvailableForPurchase: boolean;
-  visibleInListings: boolean;
+  isPublished?: boolean;
+  publicationDate?: string | null;
+  currency?: string;
+  variantsIds?: string[];
+  price?: string;
+  costPrice?: string;
+  availableForPurchase?: string;
+  isAvailableForPurchase?: boolean;
+  visibleInListings?: boolean;
 }
 
 export interface ChannelPriceData {
@@ -95,21 +102,13 @@ export const createVariantChannels = (
   data?: ProductVariantDetails_productVariant
 ): ChannelPriceData[] => {
   if (data) {
-    const productChannels = data?.product.channelListings.map(listing => ({
-      costPrice: "",
-      currency: listing.channel.currencyCode,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: ""
-    }));
-    const variantChannels = data?.channelListings.map(listing => ({
+    return data?.channelListings.map(listing => ({
       costPrice: listing.costPrice?.amount.toString() || "",
       currency: listing.channel.currencyCode,
       id: listing.channel.id,
       name: listing.channel.name,
-      price: listing.price.amount.toString()
+      price: listing.price?.amount?.toString()
     }));
-    return uniqBy([...variantChannels, ...productChannels], obj => obj.id);
   }
   return [];
 };
@@ -147,6 +146,7 @@ export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
     currency: channel.currencyCode,
     id: channel.id,
     isAvailableForPurchase: false,
+    variantsIds: [],
     isPublished: false,
     name: channel.name,
     price: "",
@@ -168,7 +168,7 @@ export const createChannelsDataWithPrice = (
 };
 
 export const createShippingChannels = (
-  data?: Channels_channels[]
+  data?: ShippingZone_shippingZone_channels[]
 ): ChannelShippingData[] =>
   data?.map(channel => ({
     currency: channel.currencyCode,
@@ -240,29 +240,54 @@ export const createChannelsDataFromSale = (saleData?: SaleDetails_sale) =>
 export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product
 ) =>
-  productData?.channelListings?.map(option => {
-    const variantChannel = productData.variants[0]?.channelListings.find(
-      listing => listing.channel.id === option.channel.id
-    );
-    const price = variantChannel?.price;
-    const costPrice = variantChannel?.costPrice;
-    return {
-      availableForPurchase: option?.availableForPurchase,
-      costPrice: costPrice ? costPrice.amount.toString() : "",
-      currency: price ? price.currency : "",
-      id: option.channel.id,
-      isAvailableForPurchase: !!option?.isAvailableForPurchase,
-      isPublished: option.isPublished,
-      name: option.channel.name,
-      price: price ? price.amount.toString() : "",
-      publicationDate: option.publicationDate,
-      visibleInListings: !!option.visibleInListings
-    };
-  }) || [];
+  productData?.channelListings?.map(
+    ({
+      channel,
+      availableForPurchase,
+      isAvailableForPurchase,
+      visibleInListings,
+      publicationDate,
+      isPublished
+    }) => {
+      const variantChannel = productData.variants[0]?.channelListings.find(
+        listing => listing.channel.id === channel.id
+      );
+      const price = variantChannel?.price;
+      const costPrice = variantChannel?.costPrice;
+      const variantsIds = extractVariantsIdsForChannel(
+        productData.variants,
+        channel.id
+      );
+
+      return {
+        availableForPurchase,
+        isPublished,
+        publicationDate,
+        variantsIds,
+        costPrice: costPrice?.amount.toString() ?? "",
+        currency: price ? price.currency : "",
+        id: channel.id,
+        isAvailableForPurchase: !!isAvailableForPurchase,
+        name: channel.name,
+        price: price ? price.amount.toString() : "",
+        visibleInListings: !!visibleInListings
+      };
+    }
+  ) || [];
+
+export const extractVariantsIdsForChannel = (
+  productVariants: ProductDetails_product_variants[],
+  channelId: string
+) =>
+  productVariants
+    ?.filter(({ channelListings }) =>
+      channelListings.some(({ channel }) => channel.id === channelId)
+    )
+    .map(({ id }) => id) || [];
 
 export const createSortedChannelsDataFromProduct = (
   productData?: ProductDetails_product
-) =>
+): ChannelData[] =>
   createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -272,7 +297,9 @@ export const createSortedChannelsData = (data?: Channels_channels[]) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedShippingChannels = (data?: Channels_channels[]) =>
+export const createSortedShippingChannels = (
+  data?: ShippingZone_shippingZone_channels[]
+) =>
   createShippingChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
