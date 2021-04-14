@@ -9,25 +9,35 @@ import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
 const useStyles = makeStyles(
   () => ({
     container: {
-      maxWidth: 300
+      maxWidth: 300,
+      zIndex: 1000
     }
   }),
-  { name: "index" }
+  { name: "PluginChannelsAvailabilityStatusPopup" }
 );
 
 interface PluginAvailabilityStatusPopupProps {
   plugin: Plugin_plugin;
+  isOpen: boolean;
+  anchor: React.RefObject<HTMLTableCellElement>;
 }
 
 const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
-  plugin
+  plugin,
+  isOpen,
+  anchor
 }) => {
   const classes = useStyles({});
 
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);
 
   return (
-    <Popper open={true} className={classes.container}>
+    <Popper
+      placement="left-end"
+      open={isOpen}
+      className={classes.container}
+      anchorEl={anchor.current}
+    >
       <Card>
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />
