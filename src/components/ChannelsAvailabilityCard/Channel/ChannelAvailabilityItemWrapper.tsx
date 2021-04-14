@@ -76,7 +76,10 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   const { name } = data;
 
   return (
-    <ExpansionPanel classes={expanderClasses}>
+    <ExpansionPanel
+      classes={expanderClasses}
+      data-test="channel-availability-item"
+    >
       <ExpansionPanelSummary
         expandIcon={<IconChevronDown />}
         classes={summaryClasses}
