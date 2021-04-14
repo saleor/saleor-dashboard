@@ -259,9 +259,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
-  const isSimpleProduct =
-    data?.product?.variants.length === 1 &&
-    !!data?.product.variants.find(getById(data?.product?.defaultVariant.id));
+  const isSimpleProduct = !data?.product?.productType?.hasVariants;
 
   const {
     channelsWithVariantsData,

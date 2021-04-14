@@ -8,7 +8,7 @@ export const PRODUCT_DETAILS = {
   firstCategoryItem: "#downshift-0-item-0",
   visibleRadioBtn: "[name='isPublished']",
   confirmationMsg: "[data-test='notification-success']",
-  channelAvailabilityItem: "[data-test='channel-availability-item']",
+  channelAvailabilityItem: "[class*='expandIcon']",
   addVariantsButton: "[data-test*='button-add-variant']",
   descriptionInput: "[data-test-id='description']",
   ratingInput: "[name='rating']",
