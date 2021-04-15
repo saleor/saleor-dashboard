@@ -28,6 +28,7 @@ describe("Homepage analytics", () => {
   let category;
   let warehouse;
   let shippingMethod;
+  let addresses;
 
   const productPrice = 22;
   const shippingPrice = 12;
@@ -39,7 +40,6 @@ describe("Homepage analytics", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteCustomersStartsWith(startsWith);
     shippingUtils.deleteShippingStartsWith(startsWith);
-    let addresses;
 
     getDefaultChannel()
       .then(channel => {
@@ -139,7 +139,8 @@ describe("Homepage analytics", () => {
       defaultChannel.slug,
       randomEmail,
       createdVariants,
-      shippingMethod.id
+      shippingMethod.id,
+      addresses.plAddress
     );
 
     cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
