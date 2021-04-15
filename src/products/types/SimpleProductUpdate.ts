@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductInput, ProductVariantInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { ProductInput, ProductVariantInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SimpleProductUpdate
@@ -40,6 +40,7 @@ export interface SimpleProductUpdate_productUpdate_product_attributes_attribute 
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
 }
 
@@ -330,6 +331,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_selecti
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -379,6 +381,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSele
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -617,6 +620,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -666,6 +670,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_n
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -903,6 +908,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -952,6 +958,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_n
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -1190,6 +1197,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -1239,6 +1247,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_n
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 

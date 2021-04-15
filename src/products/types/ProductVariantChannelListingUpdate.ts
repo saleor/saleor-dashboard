@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantChannelListingAddInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantChannelListingAddInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantChannelListingUpdate
@@ -45,6 +45,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -94,6 +95,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 

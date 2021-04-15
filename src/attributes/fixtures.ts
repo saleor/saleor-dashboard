@@ -28,6 +28,7 @@ export const attribute: AttributeDetailsFragment = {
   storefrontSearchPosition: 2,
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
+  unit: null,
   values: [
     {
       __typename: "AttributeValue" as "AttributeValue",

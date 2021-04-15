@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductVariantDetails
@@ -45,6 +45,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariantDetails_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -94,6 +95,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 

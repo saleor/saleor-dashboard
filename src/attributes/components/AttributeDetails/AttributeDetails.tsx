@@ -55,10 +55,19 @@ export interface AttributeDetailsProps {
   errors: AttributeErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
   set: (data: Partial<AttributePageFormData>) => void;
+  triggerChange: () => void;
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
-  const { canChangeType, data, disabled, errors, onChange, set } = props;
+  const {
+    canChangeType,
+    data,
+    disabled,
+    errors,
+    onChange,
+    set,
+    triggerChange
+  } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
@@ -99,7 +108,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   ];
 
   const formErrors = getFormErrors(
-    ["name", "slug", "inputType", "entityType"],
+    ["name", "slug", "inputType", "entityType", "unit"],
     errors
   );
 
@@ -173,6 +182,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
             disabled={disabled}
             onChange={onChange}
             set={set}
+            triggerChange={triggerChange}
+            error={getAttributeErrorMessage(formErrors.unit, intl)}
           />
         )}
       </CardContent>

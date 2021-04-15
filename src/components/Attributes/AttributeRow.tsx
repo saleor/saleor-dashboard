@@ -1,3 +1,4 @@
+import { TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
@@ -155,6 +156,22 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             helperText={getErrorMessage(error, intl)}
             onChange={data => onChange(attribute.id, JSON.stringify(data))}
             data={getRichTextData(attribute)}
+          />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.NUMERIC:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <TextField
+            fullWidth
+            disabled={disabled}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            label={intl.formatMessage(messages.valueLabel)}
+            name={`attribute:${attribute.label}`}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            type="numeric"
+            value={attribute.value[0]}
           />
         </BasicAttributeRow>
       );

@@ -60,7 +60,6 @@ export interface AttributePageFormData extends MetadataFormData {
   slug: string;
   storefrontSearchPosition: string;
   valueRequired: boolean;
-  hasNumericUnit?: boolean;
   unit: MeasurementUnitsEnum;
   visibleInStorefront: boolean;
 }
@@ -102,7 +101,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
           storefrontSearchPosition: "",
           type: AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: true,
-          hasNumericUnit: true,
           visibleInStorefront: true,
           unit: undefined
         }
@@ -123,11 +121,11 @@ const AttributePage: React.FC<AttributePageProps> = ({
           type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: attribute?.valueRequired ?? true,
           visibleInStorefront: attribute?.visibleInStorefront ?? true,
-          hasNumericUnit: !!attribute?.unit,
+
           unit: attribute?.unit
         };
 
-  const handleSubmit = ({ hasNumericUnit, ...data }: AttributePageFormData) => {
+  const handleSubmit = (data: AttributePageFormData) => {
     const metadata =
       !attribute || isMetadataModified ? data.metadata : undefined;
     const privateMetadata =
@@ -147,7 +145,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, set, data, hasChanged, submit }) => {
+      {({ change, set, data, hasChanged, submit, triggerChange }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -174,6 +172,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   errors={errors}
                   onChange={change}
                   set={set}
+                  triggerChange={triggerChange}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
                   data.inputType

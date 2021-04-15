@@ -29,6 +29,7 @@ export const product: (
         name: "Borders",
         slug: "Borders",
         valueRequired: false,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -72,6 +73,7 @@ export const product: (
         name: "Legacy",
         slug: "Legacy",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -289,6 +291,7 @@ export const product: (
         name: "Attachment",
         slug: "attachment",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -315,6 +318,7 @@ export const product: (
         name: "Color",
         slug: "color",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -2778,6 +2782,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         name: "Attachment",
         slug: "attachment",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -3042,6 +3047,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         name: "Borders",
         slug: "Borders",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",
@@ -3085,6 +3091,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         name: "Legacy",
         slug: "Legacy",
         valueRequired: true,
+        unit: null,
         values: [
           {
             __typename: "AttributeValue",

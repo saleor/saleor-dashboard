@@ -31,15 +31,19 @@ const useStyles = makeStyles(
 interface NumericUnitsProps {
   data: AttributePageFormData;
   disabled: boolean;
-  set: (data: Partial<AttributePageFormData>) => void;
+  error: string;
   onChange: (event: React.ChangeEvent<any>) => void;
+  set: (data: Partial<AttributePageFormData>) => void;
+  triggerChange: () => void;
 }
 
 export const NumericUnits: React.FC<NumericUnitsProps> = ({
-  onChange,
-  disabled,
   data,
-  set
+  disabled,
+  onChange,
+  set,
+  triggerChange,
+  error
 }) => {
   const classes = useStyles();
   const unitRef = useRef(data.unit);
@@ -68,12 +72,13 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
     <div>
       <div className={classes.hr} />
       <ControlledCheckbox
-        name={"selectUnit"}
+        name="selectUnit"
         label={M.selectUnit}
         checked={data.unit !== null}
-        onChange={({ target }) =>
-          set({ unit: target.value ? unitRef.current ?? undefined : null })
-        }
+        onChange={({ target }) => {
+          triggerChange();
+          set({ unit: target.value ? unitRef.current ?? undefined : null });
+        }}
         disabled={disabled}
       />
       {data.unit !== null && (
@@ -103,6 +108,8 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               }}
               disabled={!type || disabled}
               value={type ? data.unit : undefined}
+              hint={error}
+              error={!!error}
             />
           </div>
         </>
