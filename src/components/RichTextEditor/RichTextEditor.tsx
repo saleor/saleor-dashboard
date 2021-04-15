@@ -82,9 +82,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         }
         prevTogglePromise.current = editor.current.readOnly.toggle(disabled);
 
-        // Switching to readOnly with no data present causes the editor to freeze
+        // Switching to readOnly with empty blocks present causes the editor to freeze
         // Remove this logic when this is fixed in EditorJS
-        if (!disabled && !data) {
+        if (!disabled && !data?.blocks?.length) {
           await prevTogglePromise.current;
           editor.current.clear();
         }
