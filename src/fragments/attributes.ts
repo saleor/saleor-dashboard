@@ -39,6 +39,7 @@ export const attributeDetailsFragment = gql`
     availableInGrid
     inputType
     entityType
+    unit
     storefrontSearchPosition
     valueRequired
     values {

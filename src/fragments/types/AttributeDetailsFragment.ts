@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
+import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: AttributeDetailsFragment
@@ -51,6 +51,7 @@ export interface AttributeDetailsFragment {
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
   values: (AttributeDetailsFragment_values | null)[] | null;

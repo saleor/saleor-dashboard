@@ -541,6 +541,7 @@ export enum MeasurementUnitsEnum {
   CUBIC_METER = "CUBIC_METER",
   CUBIC_MILLIMETER = "CUBIC_MILLIMETER",
   CUBIC_YARD = "CUBIC_YARD",
+  FL_OZ = "FL_OZ",
   FT = "FT",
   G = "G",
   INCH = "INCH",
@@ -1150,6 +1151,7 @@ export interface AttributeSortingInput {
 export interface AttributeUpdateInput {
   name?: string | null;
   slug?: string | null;
+  unit?: MeasurementUnitsEnum | null;
   removeValues?: (string | null)[] | null;
   addValues?: (AttributeValueCreateInput | null)[] | null;
   valueRequired?: boolean | null;

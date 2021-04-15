@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueDelete
@@ -51,6 +51,7 @@ export interface AttributeValueDelete_attributeValueDelete_attribute {
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
   values: (AttributeValueDelete_attributeValueDelete_attribute_values | null)[] | null;

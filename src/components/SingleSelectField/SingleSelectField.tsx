@@ -28,8 +28,8 @@ const useStyles = makeStyles(
   { name: "SingleSelectField" }
 );
 
-export interface Choice {
-  value: string;
+export interface Choice<T = string> {
+  value: T;
   label: string | React.ReactNode;
 }
 
@@ -41,7 +41,7 @@ interface SingleSelectFieldProps {
   disabled?: boolean;
   error?: boolean;
   hint?: string;
-  label?: string;
+  label?: string | React.ReactNode;
   name?: string;
   selectProps?: SelectProps;
   placeholder?: string;

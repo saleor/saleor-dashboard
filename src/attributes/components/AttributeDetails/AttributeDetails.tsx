@@ -1,6 +1,7 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
+import { NumericUnits } from "@saleor/attributes/components/AttributeDetails/NumericUnits";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -20,56 +21,7 @@ import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { AttributePageFormData } from "../AttributePage";
-
-const messages = defineMessages({
-  attributeLabel: {
-    defaultMessage: "Default Label",
-    description: "attribute's label"
-  },
-  attributeSlug: {
-    defaultMessage: "Attribute Code",
-    description: "attribute's slug short code label"
-  },
-  attributeSlugHelperText: {
-    defaultMessage: "This is used internally. Make sure you don’t use spaces",
-    description: "attribute slug input field helper text"
-  },
-  entityType: {
-    defaultMessage: "Entity",
-    description: "attribute's editor component entity"
-  },
-  inputType: {
-    defaultMessage: "Catalog Input type for Store Owner",
-    description: "attribute's editor component"
-  },
-  valueRequired: {
-    defaultMessage: "Value Required",
-    description: "check to require attribute to have value"
-  }
-});
-
-const inputTypeMessages = defineMessages({
-  dropdown: {
-    defaultMessage: "Dropdown",
-    description: "product attribute type"
-  },
-  file: {
-    defaultMessage: "File",
-    description: "file attribute type"
-  },
-  multiselect: {
-    defaultMessage: "Multiple Select",
-    description: "product attribute type"
-  },
-  references: {
-    defaultMessage: "References",
-    description: "references attribute type"
-  },
-  text: {
-    defaultMessage: "Text",
-    description: "text attribute type"
-  }
-});
+import { inputTypeMessages, messages } from "./messages";
 
 const entityTypeMessages = defineMessages({
   page: {
@@ -102,10 +54,11 @@ export interface AttributeDetailsProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
+  set: (data: Partial<AttributePageFormData>) => void;
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
-  const { canChangeType, data, disabled, errors, onChange } = props;
+  const { canChangeType, data, disabled, errors, onChange, set } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
@@ -128,6 +81,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.text),
       value: AttributeInputTypeEnum.RICH_TEXT
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.numeric),
+      value: AttributeInputTypeEnum.NUMERIC
     }
   ];
   const entityTypeChoices = [
@@ -210,6 +167,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           onChange={onChange}
           disabled={disabled}
         />
+        {data.inputType === AttributeInputTypeEnum.NUMERIC && (
+          <NumericUnits
+            data={data}
+            disabled={disabled}
+            onChange={onChange}
+            set={set}
+          />
+        )}
       </CardContent>
     </Card>
   );
