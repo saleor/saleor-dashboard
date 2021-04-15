@@ -122,7 +122,6 @@ export const area = (
 /**
  * Units
  */
-
 export const cubicCentimeter = (
   <FormattedMessage
     defaultMessage="Cubic centimeter"
