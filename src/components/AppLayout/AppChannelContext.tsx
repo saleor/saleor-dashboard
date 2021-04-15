@@ -1,5 +1,6 @@
 import { useAuth } from "@saleor/auth/AuthProvider";
 import { useBaseChannelsList } from "@saleor/channels/queries";
+import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import React from "react";
@@ -24,6 +25,17 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
   setPickerActive: () => undefined
 });
 
+const isValidChannel = (
+  channelId: string,
+  channelList?: BaseChannels_channels[]
+) => {
+  if (!channelId) {
+    return false;
+  }
+
+  return channelList?.some(v => v.id === channelId);
+};
+
 export const AppChannelProvider: React.FC = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
@@ -33,7 +45,10 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
-    if (!selectedChannel && channelData?.channels?.length > 0) {
+    if (
+      !isValidChannel(selectedChannel, channelData?.channels) &&
+      channelData?.channels?.length > 0
+    ) {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData]);

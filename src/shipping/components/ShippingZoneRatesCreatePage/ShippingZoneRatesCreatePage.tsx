@@ -89,14 +89,14 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     minDays: "",
     minValue: "",
     name: "",
-    description: "",
+    description: null,
     noLimits: false,
     type: null
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,
           onChannelsChange,
@@ -105,6 +105,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel.price)
         );
+        const onDescriptionChange = (description: OutputData) => {
+          set({ description });
+          triggerChange();
+        };
 
         return (
           <Container>
@@ -131,6 +135,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  onDescriptionChange={onDescriptionChange}
                 />
                 <CardSpacer />
                 {isPriceVariant ? (

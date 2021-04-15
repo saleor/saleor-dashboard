@@ -1641,7 +1641,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DB Schenker",
-      description: "General shipping method",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "General shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1706,7 +1706,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "Registred priority",
-      description: "Priority shipping method",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Priority shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1771,7 +1771,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "UPS",
-      description: "Different shipping method",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1823,7 +1823,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DHL",
-      description: "Different shipping method",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",

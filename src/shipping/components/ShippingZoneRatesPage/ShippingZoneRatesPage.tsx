@@ -110,7 +110,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     minDays: rate?.minimumDeliveryDays?.toString() || "",
     minValue: rate?.minimumOrderWeight?.value.toString() || "",
     name: rate?.name || "",
-    description: rate?.description || "",
+    description: rate?.description && JSON.parse(rate.description),
     noLimits: false,
     privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
     type: rate?.type || null
@@ -122,7 +122,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, set, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,
           onChannelsChange,
@@ -131,6 +131,10 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel.price)
         );
+        const onDescriptionChange = (description: OutputData) => {
+          set({ description });
+          triggerChange();
+        };
 
         const changeMetadata = makeMetadataChangeHandler(change);
         const formIsUnchanged =
@@ -149,6 +153,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  onDescriptionChange={onDescriptionChange}
                 />
                 <CardSpacer />
                 {isPriceVariant ? (

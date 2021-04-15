@@ -76,7 +76,8 @@ export function getCreateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: JSON.stringify(data.description)
     }
   };
 }
@@ -103,7 +104,8 @@ export function getCreateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: JSON.stringify(data.description)
     }
   };
 }
@@ -130,7 +132,8 @@ export function getUpdateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: JSON.stringify(data.description)
     }
   };
 }
@@ -162,7 +165,8 @@ export function getUpdateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: JSON.stringify(data.description)
     }
   };
 }
