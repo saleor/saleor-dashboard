@@ -1,4 +1,5 @@
 import {
+  Divider,
   TableBody,
   TableCell,
   TableHead,
@@ -13,6 +14,7 @@ import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { renderCollection } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import {
@@ -64,6 +66,7 @@ const useStyles = makeStyles(
 interface ProductVariantPriceProps {
   ProductVariantChannelListings: ChannelData[];
   errors: ProductChannelListingErrorFragment[];
+  variant: ProductVariant;
   loading?: boolean;
   onChange: (id: string, data: ChannelPriceArgs) => void;
 }
@@ -72,6 +75,7 @@ const numberOfColumns = 2;
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const {
+    variant,
     errors = [],
     ProductVariantChannelListings,
     loading,
@@ -80,6 +84,27 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price", "costPrice"], errors);
+
+  if (!variant?.id || !ProductVariantChannelListings.length) {
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Pricing",
+            description: "product pricing, section header"
+          })}
+        />
+        <CardContent>
+          <Typography variant="caption">
+            {intl.formatMessage({
+              defaultMessage: "There is no channel to define prices for",
+              description: "variant pricing section subtitle"
+            })}
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>

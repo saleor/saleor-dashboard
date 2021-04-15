@@ -265,6 +265,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <ProductVariantPrice
+                    variant={variant}
                     ProductVariantChannelListings={data.channelListings.map(
                       channel => ({
                         ...channel.data,
