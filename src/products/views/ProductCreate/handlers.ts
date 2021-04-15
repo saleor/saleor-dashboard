@@ -44,7 +44,7 @@ const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
     id: productId,
     input: {
-      addChannels: getAvailabilityVariables(channels)
+      updateChannels: getAvailabilityVariables(channels)
     }
   }
 });

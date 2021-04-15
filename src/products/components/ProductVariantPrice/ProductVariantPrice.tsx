@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { ChannelPriceArgs, ChannelPriceData } from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -62,7 +62,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantPriceProps {
-  ProductVariantChannelListings: ChannelPriceData[];
+  ProductVariantChannelListings: ChannelData[];
   errors: ProductChannelListingErrorFragment[];
   loading?: boolean;
   onChange: (id: string, data: ChannelPriceArgs) => void;

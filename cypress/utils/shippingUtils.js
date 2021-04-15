@@ -6,7 +6,7 @@ export function createShipping({ channelId, name, address, price = 1 }) {
   let shippingZone;
   let warehouse;
 
-  return createShippingZone(name, address.country)
+  return createShippingZone(name, address.country, channelId)
     .then(shippingZoneResp => {
       shippingZone = shippingZoneResp;
       createWarehouse({ name, shippingZoneId: shippingZone.id, address });
@@ -26,9 +26,9 @@ export function createShipping({ channelId, name, address, price = 1 }) {
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
 }
 
-export function createShippingZone(name, country) {
+export function createShippingZone(name, country, channelId) {
   return shippingMethodRequest
-    .createShippingZone(name, country)
+    .createShippingZone(name, country, channelId)
     .its("body.data.shippingZoneCreate.shippingZone");
 }
 export function createWarehouse({ name, shippingZoneId, address }) {

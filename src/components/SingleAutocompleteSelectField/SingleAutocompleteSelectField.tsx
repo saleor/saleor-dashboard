@@ -1,4 +1,5 @@
 import { InputProps } from "@material-ui/core/Input";
+import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { makeStyles } from "@saleor/theme";
@@ -16,12 +17,15 @@ import SingleAutocompleteSelectFieldContent, {
 } from "./SingleAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     container: {
       flexGrow: 1,
       position: "relative"
+    },
+    nakedInput: {
+      padding: theme.spacing(2, 3)
     }
-  },
+  }),
   { name: "SingleAutocompleteSelectField" }
 );
 
@@ -44,6 +48,7 @@ export interface SingleAutocompleteSelectFieldProps
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   FormHelperTextProps?: ExtendedFormHelperTextProps;
+  nakedInput?: boolean;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -72,6 +77,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     onChange,
     onFetchMore,
     FormHelperTextProps,
+    nakedInput = false,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -157,27 +163,41 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               ensureProperValues();
             }
 
+            const TextFieldComponent = nakedInput ? InputBase : TextField;
+
+            const commonInputProps = {
+              ...InputProps,
+              ...getInputProps({
+                placeholder
+              }),
+              endAdornment: (
+                <div>
+                  <ArrowDropdownIcon />
+                </div>
+              ),
+              error,
+              id: undefined,
+              onBlur: handleBlur,
+              onClick: toggleMenu
+            };
+
+            const nakedInputProps = nakedInput
+              ? {
+                  "aria-label": "naked",
+                  ...commonInputProps,
+                  autoFocus: true,
+                  className: classes.nakedInput
+                }
+              : {};
+
             return (
               <div
                 className={classNames(classes.container, className)}
                 {...rest}
               >
-                <TextField
-                  InputProps={{
-                    ...InputProps,
-                    ...getInputProps({
-                      placeholder
-                    }),
-                    endAdornment: (
-                      <div>
-                        <ArrowDropdownIcon />
-                      </div>
-                    ),
-                    error,
-                    id: undefined,
-                    onBlur: handleBlur,
-                    onClick: toggleMenu
-                  }}
+                <TextFieldComponent
+                  {...nakedInputProps}
+                  InputProps={commonInputProps}
                   error={error}
                   disabled={disabled}
                   helperText={helperText}

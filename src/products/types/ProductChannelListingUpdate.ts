@@ -187,6 +187,11 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   oembedData: any;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -233,6 +238,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_media[] | null;
   stocks: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings[] | null;
