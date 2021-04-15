@@ -41,6 +41,7 @@ import ProductVariantUpdateForm, {
   ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData
 } from "./form";
+import VariantDetailsChannelsAvailabilityCard from "./VariantDetailsChannelsAvailabilityCard";
 
 const messages = defineMessages({
   nonSelectionAttributes: {
@@ -217,6 +218,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                 </div>
                 <div>
+                  <VariantDetailsChannelsAvailabilityCard variant={variant} />
                   <Attributes
                     title={intl.formatMessage(messages.nonSelectionAttributes)}
                     attributes={data.attributes.filter(

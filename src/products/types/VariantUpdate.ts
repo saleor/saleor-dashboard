@@ -196,6 +196,8 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_chann
 
 export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_channel;
   pricing: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing | null;
 }
@@ -483,6 +485,8 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_channel;
   pricing: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing | null;
 }
