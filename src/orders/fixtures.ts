@@ -814,6 +814,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   channel: {
     __typename: "Channel",
+    slug: "channel-default",
     currencyCode: "USD",
     id: "123454",
     isActive: true,
@@ -1371,6 +1372,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   channel: {
     __typename: "Channel",
+    slug: "channel-default",
     currencyCode: "USD",
     id: "123454",
     isActive: true,
