@@ -112,6 +112,7 @@ export function createVariant({
   warehouseId,
   quantity,
   channelId,
+  attributeId,
   price = 1,
   costPrice = 1
 }) {
@@ -134,7 +135,10 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
-      attributes: []
+      attributes: [{
+        id:"${attributeId}"
+        values: ["value"]
+      }]
       sku: "${sku}"
       ${channelListings}
       ${stocks}

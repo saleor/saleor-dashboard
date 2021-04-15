@@ -18,7 +18,7 @@ import * as shippingUtils from "../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyHomeAnalytics-";
 
   let customerId;
   let defaultChannel;

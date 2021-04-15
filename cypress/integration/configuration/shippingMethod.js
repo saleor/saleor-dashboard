@@ -21,7 +21,7 @@ import * as shippingUtils from "../../utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
 
 describe("Shipping methods", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyShippingMethods-";
   const name = `${startsWith}${faker.random.number()}`;
   const price = 8;
   let defaultChannel;

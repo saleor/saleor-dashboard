@@ -20,7 +20,7 @@ import {
 import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontProductUtils";
 
 describe("Collections", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyCollections-";
   const name = `${startsWith}${faker.random.number()}`;
 
   let attribute;

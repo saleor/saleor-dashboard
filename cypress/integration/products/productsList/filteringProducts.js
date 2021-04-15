@@ -6,6 +6,7 @@ import {
   selectFilterOption,
   selectProductsOutOfStock
 } from "../../../steps/catalog/products/productsListSteps";
+import { selectChannelInHeader } from "../../../steps/channelsSteps";
 import { urlList } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
@@ -20,7 +21,7 @@ import {
 } from "../../../utils/shippingUtils";
 
 describe("Products", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyFilterProducts-";
   const name = `${startsWith}${faker.random.number()}`;
   const stockQuantity = 747;
   const price = 342;
@@ -93,7 +94,7 @@ describe("Products", () => {
     });
   });
 
-  xit("should filter products out of stock", () => {
+  it("should filter products out of stock", () => {
     const productOutOfStock = `${startsWith}${faker.random.number()}`;
     createProductInChannel({
       name: productOutOfStock,
@@ -105,6 +106,7 @@ describe("Products", () => {
       categoryId: category.id,
       price
     });
+    selectChannelInHeader(channel.name);
     selectProductsOutOfStock();
     cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
       expect(product).to.includes(productOutOfStock);
