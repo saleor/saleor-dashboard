@@ -10,7 +10,7 @@ import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFr
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyAvailForPurchase-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
   let attribute;
