@@ -193,7 +193,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     !loading &&
     !state.postalCodeRules?.length &&
     !state.codesToDelete?.length &&
-    rate.postalCodeRules?.length;
+    rate?.postalCodeRules?.length;
 
   if (postalCodeRulesLoaded) {
     dispatch({ postalCodeRules: rate.postalCodeRules });

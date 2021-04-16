@@ -3,6 +3,7 @@ import { useBaseChannelsList } from "@saleor/channels/queries";
 import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React from "react";
 
 interface UseAppChannel {
@@ -33,7 +34,7 @@ const isValidChannel = (
     return false;
   }
 
-  return channelList?.some(v => v.id === channelId);
+  return channelList?.some(getById(channelId));
 };
 
 export const AppChannelProvider: React.FC = ({ children }) => {

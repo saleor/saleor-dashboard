@@ -110,7 +110,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     !loading &&
     !state.postalCodeRules?.length &&
     !state.codesToDelete?.length &&
-    rate.postalCodeRules?.length;
+    rate?.postalCodeRules?.length;
 
   if (postalCodeRulesLoaded) {
     dispatch({ postalCodeRules: rate.postalCodeRules });
