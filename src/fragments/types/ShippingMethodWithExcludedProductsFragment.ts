@@ -117,6 +117,7 @@ export interface ShippingMethodWithExcludedProductsFragment {
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodWithExcludedProductsFragment_channelListings[] | null;
   excludedProducts: ShippingMethodWithExcludedProductsFragment_excludedProducts | null;

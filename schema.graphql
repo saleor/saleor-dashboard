@@ -4,40 +4,28 @@ schema {
 }
 
 type AccountAddressCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
 }
 
 type AccountAddressDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
 }
 
 type AccountAddressUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
 }
 
 type AccountDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
 }
@@ -86,13 +74,11 @@ input AccountInput {
   lastName: String
   defaultBillingAddress: AddressInput
   defaultShippingAddress: AddressInput
+  languageCode: LanguageCodeEnum
 }
 
 type AccountRegister {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   requiresConfirmation: Boolean
   accountErrors: [AccountError!]!
   user: User
@@ -102,30 +88,22 @@ input AccountRegisterInput {
   email: String!
   password: String!
   redirectUrl: String
+  languageCode: LanguageCodeEnum
 }
 
 type AccountRequestDeletion {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
 }
 
 type AccountSetDefaultAddress {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
 
 type AccountUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
 }
@@ -148,20 +126,14 @@ type Address implements Node {
 }
 
 type AddressCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
 }
 
 type AddressDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
@@ -182,10 +154,7 @@ input AddressInput {
 }
 
 type AddressSetDefault {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
@@ -196,10 +165,7 @@ enum AddressTypeEnum {
 }
 
 type AddressUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
   address: Address
@@ -254,10 +220,7 @@ type App implements Node & ObjectWithMetadata {
 }
 
 type AppActivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   app: App
 }
@@ -274,38 +237,26 @@ type AppCountableEdge {
 }
 
 type AppCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   authToken: String
   appErrors: [AppError!]!
   app: App
 }
 
 type AppDeactivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   app: App
 }
 
 type AppDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   app: App
 }
 
 type AppDeleteFailedInstallation {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   appInstallation: AppInstallation
 }
@@ -334,10 +285,7 @@ enum AppErrorCode {
 }
 
 type AppFetchManifest {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   manifest: Manifest
   appErrors: [AppError!]!
 }
@@ -355,10 +303,7 @@ input AppInput {
 }
 
 type AppInstall {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   appInstallation: AppInstallation
 }
@@ -381,10 +326,7 @@ type AppInstallation implements Node & Job {
 }
 
 type AppRetryInstall {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   appInstallation: AppInstallation
 }
@@ -406,20 +348,14 @@ type AppToken implements Node {
 }
 
 type AppTokenCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   authToken: String
   appErrors: [AppError!]!
   appToken: AppToken
 }
 
 type AppTokenDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   appToken: AppToken
 }
@@ -430,10 +366,7 @@ input AppTokenInput {
 }
 
 type AppTokenVerify {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   valid: Boolean!
   appErrors: [AppError!]!
 }
@@ -444,37 +377,21 @@ enum AppTypeEnum {
 }
 
 type AppUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
   app: App
 }
 
 type AssignNavigation {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menu: Menu
   menuErrors: [MenuError!]!
 }
 
 type Attribute implements Node & ObjectWithMetadata {
   id: ID!
-  productTypes(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductTypeCountableConnection!
-  productVariantTypes(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductTypeCountableConnection!
+  productTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
+  productVariantTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   inputType: AttributeInputTypeEnum
@@ -493,10 +410,7 @@ type Attribute implements Node & ObjectWithMetadata {
 }
 
 type AttributeBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   attributeErrors: [AttributeError!]!
 }
@@ -513,10 +427,7 @@ type AttributeCountableEdge {
 }
 
 type AttributeCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
 }
@@ -538,10 +449,7 @@ input AttributeCreateInput {
 }
 
 type AttributeDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attributeErrors: [AttributeError!]!
   attribute: Attribute
 }
@@ -573,6 +481,7 @@ input AttributeFilterInput {
   filterableInStorefront: Boolean
   filterableInDashboard: Boolean
   availableInGrid: Boolean
+  metadata: [MetadataInput]
   search: String
   ids: [ID]
   type: AttributeTypeEnum
@@ -596,10 +505,7 @@ enum AttributeInputTypeEnum {
 }
 
 type AttributeReorderValues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
 }
@@ -629,10 +535,7 @@ type AttributeTranslatableContent implements Node {
 }
 
 type AttributeTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   attribute: Attribute
 }
@@ -649,10 +552,7 @@ enum AttributeTypeEnum {
 }
 
 type AttributeUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
 }
@@ -675,6 +575,7 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
+  value: String
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
   reference: ID
@@ -683,19 +584,13 @@ type AttributeValue implements Node {
 }
 
 type AttributeValueBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   attributeErrors: [AttributeError!]!
 }
 
 type AttributeValueCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
@@ -708,10 +603,7 @@ input AttributeValueCreateInput {
 }
 
 type AttributeValueDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
@@ -734,10 +626,7 @@ type AttributeValueTranslatableContent implements Node {
 }
 
 type AttributeValueTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   attributeValue: AttributeValue
 }
@@ -755,10 +644,7 @@ input AttributeValueTranslationInput {
 }
 
 type AttributeValueUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
   attributeErrors: [AttributeError!]!
   attributeValue: AttributeValue
@@ -806,40 +692,17 @@ type Category implements Node & ObjectWithMetadata {
   level: Int!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
-  ancestors(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CategoryCountableConnection
-  products(
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
-  url: String
-    @deprecated(reason: "This field will be removed after 2020-07-31.")
-  children(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CategoryCountableConnection
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  ancestors(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
+  products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection
+  url: String @deprecated(reason: "This field will be removed after 2020-07-31.")
+  children(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
 }
 
 type CategoryBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
 }
@@ -856,25 +719,20 @@ type CategoryCountableEdge {
 }
 
 type CategoryCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   category: Category
 }
 
 type CategoryDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   category: Category
 }
 
 input CategoryFilterInput {
   search: String
+  metadata: [MetadataInput]
   ids: [ID]
 }
 
@@ -905,19 +763,13 @@ type CategoryTranslatableContent implements Node {
   id: ID!
   name: String!
   description: JSONString
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
   category: Category
 }
 
 type CategoryTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   category: Category
 }
@@ -929,17 +781,11 @@ type CategoryTranslation implements Node {
   name: String!
   description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type CategoryUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   category: Category
 }
@@ -955,19 +801,13 @@ type Channel implements Node {
 }
 
 type ChannelActivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   channel: Channel
   channelErrors: [ChannelError!]!
 }
 
 type ChannelCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   channelErrors: [ChannelError!]!
   channel: Channel
 }
@@ -981,19 +821,13 @@ input ChannelCreateInput {
 }
 
 type ChannelDeactivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   channel: Channel
   channelErrors: [ChannelError!]!
 }
 
 type ChannelDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   channelErrors: [ChannelError!]!
   channel: Channel
 }
@@ -1023,10 +857,7 @@ enum ChannelErrorCode {
 }
 
 type ChannelUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   channelErrors: [ChannelError!]!
   channel: Channel
 }
@@ -1066,31 +897,23 @@ type Checkout implements Node & ObjectWithMetadata {
   subtotalPrice: TaxedMoney
   token: UUID!
   totalPrice: TaxedMoney
+  languageCode: LanguageCodeEnum!
 }
 
 type CheckoutAddPromoCode {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutBillingAddressUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutComplete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   confirmationNeeded: Boolean!
   confirmationData: JSONString
@@ -1109,10 +932,7 @@ type CheckoutCountableEdge {
 }
 
 type CheckoutCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   created: Boolean
   checkoutErrors: [CheckoutError!]!
   checkout: Checkout
@@ -1124,31 +944,23 @@ input CheckoutCreateInput {
   email: String
   shippingAddress: AddressInput
   billingAddress: AddressInput
+  languageCode: LanguageCodeEnum
 }
 
 type CheckoutCustomerAttach {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutCustomerDetach {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutEmailUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
@@ -1187,10 +999,7 @@ enum CheckoutErrorCode {
 }
 
 type CheckoutLanguageCodeUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
@@ -1215,10 +1024,7 @@ type CheckoutLineCountableEdge {
 }
 
 type CheckoutLineDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
@@ -1229,56 +1035,38 @@ input CheckoutLineInput {
 }
 
 type CheckoutLinesAdd {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutLinesUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutPaymentCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   payment: Payment
   paymentErrors: [PaymentError!]!
 }
 
 type CheckoutRemovePromoCode {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutShippingAddressUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
 
 type CheckoutShippingMethodUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   checkout: Checkout
   checkoutErrors: [CheckoutError!]!
 }
@@ -1297,37 +1085,21 @@ type Collection implements Node & ObjectWithMetadata {
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
-  products(
-    filter: ProductFilterInput
-    sortBy: ProductOrder
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   channelListings: [CollectionChannelListing!]
 }
 
 type CollectionAddProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collection: Collection
   collectionErrors: [CollectionError!]!
 }
 
 type CollectionBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   collectionErrors: [CollectionError!]!
 }
@@ -1349,10 +1121,7 @@ type CollectionChannelListingError {
 }
 
 type CollectionChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collection: Collection
   collectionChannelListingErrors: [CollectionChannelListingError!]!
 }
@@ -1374,10 +1143,7 @@ type CollectionCountableEdge {
 }
 
 type CollectionCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collectionErrors: [CollectionError!]!
   collection: Collection
 }
@@ -1395,10 +1161,7 @@ input CollectionCreateInput {
 }
 
 type CollectionDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collectionErrors: [CollectionError!]!
   collection: Collection
 }
@@ -1423,6 +1186,7 @@ enum CollectionErrorCode {
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
+  metadata: [MetadataInput]
   ids: [ID]
   channel: String
 }
@@ -1444,19 +1208,13 @@ enum CollectionPublished {
 }
 
 type CollectionRemoveProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collection: Collection
   collectionErrors: [CollectionError!]!
 }
 
 type CollectionReorderProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collection: Collection
   collectionErrors: [CollectionError!]!
 }
@@ -1480,19 +1238,13 @@ type CollectionTranslatableContent implements Node {
   id: ID!
   name: String!
   description: JSONString
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   collection: Collection
 }
 
 type CollectionTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   collection: Collection
 }
@@ -1504,17 +1256,11 @@ type CollectionTranslation implements Node {
   name: String!
   description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type CollectionUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   collectionErrors: [CollectionError!]!
   collection: Collection
 }
@@ -1542,19 +1288,13 @@ enum ConfigurationTypeFieldEnum {
 }
 
 type ConfirmAccount {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
 
 type ConfirmEmailChange {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
@@ -1819,10 +1559,7 @@ type CountryDisplay {
 }
 
 type CreateToken {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
   refreshToken: String
   csrfToken: String
@@ -1839,28 +1576,19 @@ type CreditCard {
 }
 
 type CustomerBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   accountErrors: [AccountError!]!
 }
 
 type CustomerCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
 }
 
 type CustomerDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
 }
@@ -1907,13 +1635,11 @@ input CustomerInput {
   email: String
   isActive: Boolean
   note: String
+  languageCode: LanguageCodeEnum
 }
 
 type CustomerUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
   user: User
 }
@@ -1933,27 +1659,18 @@ input DateTimeRangeInput {
 }
 
 type DeactivateAllUserTokens {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
 }
 
 type DeleteMetadata {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   metadataErrors: [MetadataError!]!
   item: ObjectWithMetadata
 }
 
 type DeletePrivateMetadata {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   metadataErrors: [MetadataError!]!
   item: ObjectWithMetadata
 }
@@ -1983,20 +1700,14 @@ type DigitalContentCountableEdge {
 }
 
 type DigitalContentCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   variant: ProductVariant
   content: DigitalContent
   productErrors: [ProductError!]!
 }
 
 type DigitalContentDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   variant: ProductVariant
   productErrors: [ProductError!]!
 }
@@ -2009,10 +1720,7 @@ input DigitalContentInput {
 }
 
 type DigitalContentUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   variant: ProductVariant
   content: DigitalContent
   productErrors: [ProductError!]!
@@ -2036,10 +1744,7 @@ type DigitalContentUrl implements Node {
 }
 
 type DigitalContentUrlCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   digitalContentUrl: DigitalContentUrl
 }
@@ -2085,28 +1790,19 @@ type Domain {
 }
 
 type DraftOrderBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   orderErrors: [OrderError!]!
 }
 
 type DraftOrderComplete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type DraftOrderCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderErrors: [OrderError!]!
   order: Order
 }
@@ -2126,10 +1822,7 @@ input DraftOrderCreateInput {
 }
 
 type DraftOrderDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderErrors: [OrderError!]!
   order: Order
 }
@@ -2148,19 +1841,13 @@ input DraftOrderInput {
 }
 
 type DraftOrderLinesBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   orderErrors: [OrderError!]!
 }
 
 type DraftOrderUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderErrors: [OrderError!]!
   order: Order
 }
@@ -2250,10 +1937,7 @@ input ExportInfoInput {
 }
 
 type ExportProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   exportFile: ExportFile
   exportErrors: [ExportError!]!
 }
@@ -2278,28 +1962,19 @@ type ExternalAuthentication {
 }
 
 type ExternalAuthenticationUrl {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   authenticationData: JSONString
   accountErrors: [AccountError!]!
 }
 
 type ExternalLogout {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   logoutData: JSONString
   accountErrors: [AccountError!]!
 }
 
 type ExternalObtainAccessTokens {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
   refreshToken: String
   csrfToken: String
@@ -2308,10 +1983,7 @@ type ExternalObtainAccessTokens {
 }
 
 type ExternalRefresh {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
   refreshToken: String
   csrfToken: String
@@ -2320,10 +1992,7 @@ type ExternalRefresh {
 }
 
 type ExternalVerify {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   isValid: Boolean!
   verifyData: JSONString
@@ -2341,10 +2010,7 @@ enum FileTypesEnum {
 }
 
 type FileUpload {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   uploadedFile: File
   uploadErrors: [UploadError!]!
 }
@@ -2363,10 +2029,7 @@ type Fulfillment implements Node & ObjectWithMetadata {
 }
 
 type FulfillmentCancel {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   fulfillment: Fulfillment
   order: Order
   orderErrors: [OrderError!]!
@@ -2383,20 +2046,14 @@ type FulfillmentLine implements Node {
 }
 
 type FulfillmentRefundProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   fulfillment: Fulfillment
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type FulfillmentReturnProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   returnFulfillment: Fulfillment
   replaceFulfillment: Fulfillment
   order: Order
@@ -2414,10 +2071,7 @@ enum FulfillmentStatus {
 }
 
 type FulfillmentUpdateTracking {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   fulfillment: Fulfillment
   order: Order
   orderErrors: [OrderError!]!
@@ -2450,10 +2104,7 @@ type GiftCard implements Node {
 }
 
 type GiftCardActivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   giftCard: GiftCard
   giftCardErrors: [GiftCardError!]!
 }
@@ -2470,10 +2121,7 @@ type GiftCardCountableEdge {
 }
 
 type GiftCardCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   giftCardErrors: [GiftCardError!]!
   giftCard: GiftCard
 }
@@ -2487,10 +2135,7 @@ input GiftCardCreateInput {
 }
 
 type GiftCardDeactivate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   giftCard: GiftCard
   giftCardErrors: [GiftCardError!]!
 }
@@ -2511,10 +2156,7 @@ enum GiftCardErrorCode {
 }
 
 type GiftCardUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   giftCardErrors: [GiftCardError!]!
   giftCard: GiftCard
 }
@@ -2569,10 +2211,7 @@ type Invoice implements ObjectWithMetadata & Job & Node {
 }
 
 type InvoiceCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
@@ -2583,10 +2222,7 @@ input InvoiceCreateInput {
 }
 
 type InvoiceDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
@@ -2608,45 +2244,26 @@ enum InvoiceErrorCode {
 }
 
 type InvoiceRequest {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
 
 type InvoiceRequestDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
 
-type InvoiceSendEmail {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
-}
-
 type InvoiceSendNotification {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
 
 type InvoiceUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   invoiceErrors: [InvoiceError!]!
   invoice: Invoice
 }
@@ -2767,10 +2384,7 @@ type Menu implements Node & ObjectWithMetadata {
 }
 
 type MenuBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   menuErrors: [MenuError!]!
 }
@@ -2787,10 +2401,7 @@ type MenuCountableEdge {
 }
 
 type MenuCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menu: Menu
 }
@@ -2802,10 +2413,7 @@ input MenuCreateInput {
 }
 
 type MenuDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menu: Menu
 }
@@ -2831,6 +2439,7 @@ enum MenuErrorCode {
 input MenuFilterInput {
   search: String
   slug: [String]
+  metadata: [MetadataInput]
 }
 
 input MenuInput {
@@ -2855,10 +2464,7 @@ type MenuItem implements Node & ObjectWithMetadata {
 }
 
 type MenuItemBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   menuErrors: [MenuError!]!
 }
@@ -2875,10 +2481,7 @@ type MenuItemCountableEdge {
 }
 
 type MenuItemCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menuItem: MenuItem
 }
@@ -2894,16 +2497,14 @@ input MenuItemCreateInput {
 }
 
 type MenuItemDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menuItem: MenuItem
 }
 
 input MenuItemFilterInput {
   search: String
+  metadata: [MetadataInput]
 }
 
 input MenuItemInput {
@@ -2915,10 +2516,7 @@ input MenuItemInput {
 }
 
 type MenuItemMove {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menu: Menu
   menuErrors: [MenuError!]!
 }
@@ -2942,10 +2540,7 @@ type MenuItemTranslatableContent implements Node {
 }
 
 type MenuItemTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   menuItem: MenuItem
 }
@@ -2957,10 +2552,7 @@ type MenuItemTranslation implements Node {
 }
 
 type MenuItemUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menuItem: MenuItem
 }
@@ -2980,10 +2572,7 @@ input MenuSortingInput {
 }
 
 type MenuUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   menuErrors: [MenuError!]!
   menu: Menu
 }
@@ -3014,10 +2603,7 @@ type MetadataItem {
 type Money {
   currency: String!
   amount: Float!
-  localized: String!
-    @deprecated(
-      reason: "Price formatting according to the current locale should be handled by the frontend client. This field will be removed after 2020-07-31."
-    )
+  localized: String! @deprecated(reason: "Price formatting according to the current locale should be handled by the frontend client. This field will be removed after 2020-07-31.")
 }
 
 type MoneyRange {
@@ -3037,233 +2623,99 @@ type Mutation {
   createWarehouse(input: WarehouseCreateInput!): WarehouseCreate
   updateWarehouse(id: ID!, input: WarehouseUpdateInput!): WarehouseUpdate
   deleteWarehouse(id: ID!): WarehouseDelete
-  assignWarehouseShippingZone(
-    id: ID!
-    shippingZoneIds: [ID!]!
-  ): WarehouseShippingZoneAssign
-  unassignWarehouseShippingZone(
-    id: ID!
-    shippingZoneIds: [ID!]!
-  ): WarehouseShippingZoneUnassign
-  staffNotificationRecipientCreate(
-    input: StaffNotificationRecipientInput!
-  ): StaffNotificationRecipientCreate
-  staffNotificationRecipientUpdate(
-    id: ID!
-    input: StaffNotificationRecipientInput!
-  ): StaffNotificationRecipientUpdate
+  assignWarehouseShippingZone(id: ID!, shippingZoneIds: [ID!]!): WarehouseShippingZoneAssign
+  unassignWarehouseShippingZone(id: ID!, shippingZoneIds: [ID!]!): WarehouseShippingZoneUnassign
+  staffNotificationRecipientCreate(input: StaffNotificationRecipientInput!): StaffNotificationRecipientCreate
+  staffNotificationRecipientUpdate(id: ID!, input: StaffNotificationRecipientInput!): StaffNotificationRecipientUpdate
   staffNotificationRecipientDelete(id: ID!): StaffNotificationRecipientDelete
   shopDomainUpdate(input: SiteDomainInput): ShopDomainUpdate
   shopSettingsUpdate(input: ShopSettingsInput!): ShopSettingsUpdate
   shopFetchTaxRates: ShopFetchTaxRates
-  shopSettingsTranslate(
-    input: ShopSettingsTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): ShopSettingsTranslate
+  shopSettingsTranslate(input: ShopSettingsTranslationInput!, languageCode: LanguageCodeEnum!): ShopSettingsTranslate
   shopAddressUpdate(input: AddressInput): ShopAddressUpdate
   orderSettingsUpdate(input: OrderSettingsUpdateInput!): OrderSettingsUpdate
-  shippingMethodChannelListingUpdate(
-    id: ID!
-    input: ShippingMethodChannelListingInput!
-  ): ShippingMethodChannelListingUpdate
+  shippingMethodChannelListingUpdate(id: ID!, input: ShippingMethodChannelListingInput!): ShippingMethodChannelListingUpdate
   shippingPriceCreate(input: ShippingPriceInput!): ShippingPriceCreate
   shippingPriceDelete(id: ID!): ShippingPriceDelete
   shippingPriceBulkDelete(ids: [ID]!): ShippingPriceBulkDelete
   shippingPriceUpdate(id: ID!, input: ShippingPriceInput!): ShippingPriceUpdate
-  shippingPriceTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): ShippingPriceTranslate
-  shippingPriceExcludeProducts(
-    id: ID!
-    input: ShippingPriceExcludeProductsInput!
-  ): ShippingPriceExcludeProducts
-  shippingPriceRemoveProductFromExclude(
-    id: ID!
-    products: [ID]!
-  ): ShippingPriceRemoveProductFromExclude
+  shippingPriceTranslate(id: ID!, input: ShippingPriceTranslationInput!, languageCode: LanguageCodeEnum!): ShippingPriceTranslate
+  shippingPriceExcludeProducts(id: ID!, input: ShippingPriceExcludeProductsInput!): ShippingPriceExcludeProducts
+  shippingPriceRemoveProductFromExclude(id: ID!, products: [ID]!): ShippingPriceRemoveProductFromExclude
   shippingZoneCreate(input: ShippingZoneCreateInput!): ShippingZoneCreate
   shippingZoneDelete(id: ID!): ShippingZoneDelete
   shippingZoneBulkDelete(ids: [ID]!): ShippingZoneBulkDelete
-  shippingZoneUpdate(
-    id: ID!
-    input: ShippingZoneUpdateInput!
-  ): ShippingZoneUpdate
-  productAttributeAssign(
-    operations: [ProductAttributeAssignInput]!
-    productTypeId: ID!
-  ): ProductAttributeAssign
-  productAttributeUnassign(
-    attributeIds: [ID]!
-    productTypeId: ID!
-  ): ProductAttributeUnassign
+  shippingZoneUpdate(id: ID!, input: ShippingZoneUpdateInput!): ShippingZoneUpdate
+  productAttributeAssign(operations: [ProductAttributeAssignInput]!, productTypeId: ID!): ProductAttributeAssign
+  productAttributeUnassign(attributeIds: [ID]!, productTypeId: ID!): ProductAttributeUnassign
   categoryCreate(input: CategoryInput!, parent: ID): CategoryCreate
   categoryDelete(id: ID!): CategoryDelete
   categoryBulkDelete(ids: [ID]!): CategoryBulkDelete
   categoryUpdate(id: ID!, input: CategoryInput!): CategoryUpdate
-  categoryTranslate(
-    id: ID!
-    input: TranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): CategoryTranslate
-  collectionAddProducts(
-    collectionId: ID!
-    products: [ID]!
-  ): CollectionAddProducts
+  categoryTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): CategoryTranslate
+  collectionAddProducts(collectionId: ID!, products: [ID]!): CollectionAddProducts
   collectionCreate(input: CollectionCreateInput!): CollectionCreate
   collectionDelete(id: ID!): CollectionDelete
-  collectionReorderProducts(
-    collectionId: ID!
-    moves: [MoveProductInput]!
-  ): CollectionReorderProducts
+  collectionReorderProducts(collectionId: ID!, moves: [MoveProductInput]!): CollectionReorderProducts
   collectionBulkDelete(ids: [ID]!): CollectionBulkDelete
-  collectionRemoveProducts(
-    collectionId: ID!
-    products: [ID]!
-  ): CollectionRemoveProducts
+  collectionRemoveProducts(collectionId: ID!, products: [ID]!): CollectionRemoveProducts
   collectionUpdate(id: ID!, input: CollectionInput!): CollectionUpdate
-  collectionTranslate(
-    id: ID!
-    input: TranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): CollectionTranslate
-  collectionChannelListingUpdate(
-    id: ID!
-    input: CollectionChannelListingUpdateInput!
-  ): CollectionChannelListingUpdate
+  collectionTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): CollectionTranslate
+  collectionChannelListingUpdate(id: ID!, input: CollectionChannelListingUpdateInput!): CollectionChannelListingUpdate
   productCreate(input: ProductCreateInput!): ProductCreate
   productDelete(id: ID!): ProductDelete
   productBulkDelete(ids: [ID]!): ProductBulkDelete
   productUpdate(id: ID!, input: ProductInput!): ProductUpdate
-  productTranslate(
-    id: ID!
-    input: TranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): ProductTranslate
-  productChannelListingUpdate(
-    id: ID!
-    input: ProductChannelListingUpdateInput!
-  ): ProductChannelListingUpdate
+  productTranslate(id: ID!, input: TranslationInput!, languageCode: LanguageCodeEnum!): ProductTranslate
+  productChannelListingUpdate(id: ID!, input: ProductChannelListingUpdateInput!): ProductChannelListingUpdate
   productMediaCreate(input: ProductMediaCreateInput!): ProductMediaCreate
-  productVariantReorder(
-    moves: [ReorderInput]!
-    productId: ID!
-  ): ProductVariantReorder
+  productVariantReorder(moves: [ReorderInput]!, productId: ID!): ProductVariantReorder
   productMediaDelete(id: ID!): ProductMediaDelete
   productMediaBulkDelete(ids: [ID]!): ProductMediaBulkDelete
   productMediaReorder(mediaIds: [ID]!, productId: ID!): ProductMediaReorder
-  productMediaUpdate(
-    id: ID!
-    input: ProductMediaUpdateInput!
-  ): ProductMediaUpdate
+  productMediaUpdate(id: ID!, input: ProductMediaUpdateInput!): ProductMediaUpdate
   productTypeCreate(input: ProductTypeInput!): ProductTypeCreate
   productTypeDelete(id: ID!): ProductTypeDelete
   productTypeBulkDelete(ids: [ID]!): ProductTypeBulkDelete
   productTypeUpdate(id: ID!, input: ProductTypeInput!): ProductTypeUpdate
-  productTypeReorderAttributes(
-    moves: [ReorderInput]!
-    productTypeId: ID!
-    type: ProductAttributeType!
-  ): ProductTypeReorderAttributes
-  productReorderAttributeValues(
-    attributeId: ID!
-    moves: [ReorderInput]!
-    productId: ID!
-  ): ProductReorderAttributeValues
-  digitalContentCreate(
-    input: DigitalContentUploadInput!
-    variantId: ID!
-  ): DigitalContentCreate
+  productTypeReorderAttributes(moves: [ReorderInput]!, productTypeId: ID!, type: ProductAttributeType!): ProductTypeReorderAttributes
+  productReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, productId: ID!): ProductReorderAttributeValues
+  digitalContentCreate(input: DigitalContentUploadInput!, variantId: ID!): DigitalContentCreate
   digitalContentDelete(variantId: ID!): DigitalContentDelete
-  digitalContentUpdate(
-    input: DigitalContentInput!
-    variantId: ID!
-  ): DigitalContentUpdate
-  digitalContentUrlCreate(
-    input: DigitalContentUrlCreateInput!
-  ): DigitalContentUrlCreate
+  digitalContentUpdate(input: DigitalContentInput!, variantId: ID!): DigitalContentUpdate
+  digitalContentUrlCreate(input: DigitalContentUrlCreateInput!): DigitalContentUrlCreate
   productVariantCreate(input: ProductVariantCreateInput!): ProductVariantCreate
   productVariantDelete(id: ID!): ProductVariantDelete
-  productVariantBulkCreate(
-    product: ID!
-    variants: [ProductVariantBulkCreateInput]!
-  ): ProductVariantBulkCreate
+  productVariantBulkCreate(product: ID!, variants: [ProductVariantBulkCreateInput]!): ProductVariantBulkCreate
   productVariantBulkDelete(ids: [ID]!): ProductVariantBulkDelete
-  productVariantStocksCreate(
-    stocks: [StockInput!]!
-    variantId: ID!
-  ): ProductVariantStocksCreate
-  productVariantStocksDelete(
-    variantId: ID!
-    warehouseIds: [ID!]
-  ): ProductVariantStocksDelete
-  productVariantStocksUpdate(
-    stocks: [StockInput!]!
-    variantId: ID!
-  ): ProductVariantStocksUpdate
-  productVariantUpdate(
-    id: ID!
-    input: ProductVariantInput!
-  ): ProductVariantUpdate
-  productVariantSetDefault(
-    productId: ID!
-    variantId: ID!
-  ): ProductVariantSetDefault
-  productVariantTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): ProductVariantTranslate
-  productVariantChannelListingUpdate(
-    id: ID!
-    input: [ProductVariantChannelListingAddInput!]!
-  ): ProductVariantChannelListingUpdate
-  productVariantReorderAttributeValues(
-    attributeId: ID!
-    moves: [ReorderInput]!
-    variantId: ID!
-  ): ProductVariantReorderAttributeValues
+  productVariantStocksCreate(stocks: [StockInput!]!, variantId: ID!): ProductVariantStocksCreate
+  productVariantStocksDelete(variantId: ID!, warehouseIds: [ID!]): ProductVariantStocksDelete
+  productVariantStocksUpdate(stocks: [StockInput!]!, variantId: ID!): ProductVariantStocksUpdate
+  productVariantUpdate(id: ID!, input: ProductVariantInput!): ProductVariantUpdate
+  productVariantSetDefault(productId: ID!, variantId: ID!): ProductVariantSetDefault
+  productVariantTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ProductVariantTranslate
+  productVariantChannelListingUpdate(id: ID!, input: [ProductVariantChannelListingAddInput!]!): ProductVariantChannelListingUpdate
+  productVariantReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, variantId: ID!): ProductVariantReorderAttributeValues
   variantMediaAssign(mediaId: ID!, variantId: ID!): VariantMediaAssign
   variantMediaUnassign(mediaId: ID!, variantId: ID!): VariantMediaUnassign
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
   paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
-  paymentInitialize(
-    gateway: String!
-    paymentData: JSONString
-  ): PaymentInitialize
+  paymentInitialize(gateway: String!, paymentData: JSONString): PaymentInitialize
   pageCreate(input: PageCreateInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
   pageBulkPublish(ids: [ID]!, isPublished: Boolean!): PageBulkPublish
   pageUpdate(id: ID!, input: PageInput!): PageUpdate
-  pageTranslate(
-    id: ID!
-    input: PageTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): PageTranslate
+  pageTranslate(id: ID!, input: PageTranslationInput!, languageCode: LanguageCodeEnum!): PageTranslate
   pageTypeCreate(input: PageTypeCreateInput!): PageTypeCreate
   pageTypeUpdate(id: ID, input: PageTypeUpdateInput!): PageTypeUpdate
   pageTypeDelete(id: ID!): PageTypeDelete
   pageTypeBulkDelete(ids: [ID!]!): PageTypeBulkDelete
-  pageAttributeAssign(
-    attributeIds: [ID!]!
-    pageTypeId: ID!
-  ): PageAttributeAssign
-  pageAttributeUnassign(
-    attributeIds: [ID!]!
-    pageTypeId: ID!
-  ): PageAttributeUnassign
-  pageTypeReorderAttributes(
-    moves: [ReorderInput!]!
-    pageTypeId: ID!
-  ): PageTypeReorderAttributes
-  pageReorderAttributeValues(
-    attributeId: ID!
-    moves: [ReorderInput]!
-    pageId: ID!
-  ): PageReorderAttributeValues
+  pageAttributeAssign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeAssign
+  pageAttributeUnassign(attributeIds: [ID!]!, pageTypeId: ID!): PageAttributeUnassign
+  pageTypeReorderAttributes(moves: [ReorderInput!]!, pageTypeId: ID!): PageTypeReorderAttributes
+  pageReorderAttributeValues(attributeId: ID!, moves: [ReorderInput]!, pageId: ID!): PageReorderAttributeValues
   draftOrderComplete(id: ID!): DraftOrderComplete
   draftOrderCreate(input: DraftOrderCreateInput!): DraftOrderCreate
   draftOrderDelete(id: ID!): DraftOrderDelete
@@ -3275,55 +2727,28 @@ type Mutation {
   orderCapture(amount: PositiveDecimal!, id: ID!): OrderCapture
   orderConfirm(id: ID!): OrderConfirm
   orderFulfill(input: OrderFulfillInput!, order: ID): OrderFulfill
-  orderFulfillmentCancel(
-    id: ID!
-    input: FulfillmentCancelInput!
-  ): FulfillmentCancel
-  orderFulfillmentUpdateTracking(
-    id: ID!
-    input: FulfillmentUpdateTrackingInput!
-  ): FulfillmentUpdateTracking
-  orderFulfillmentRefundProducts(
-    input: OrderRefundProductsInput!
-    order: ID!
-  ): FulfillmentRefundProducts
-  orderFulfillmentReturnProducts(
-    input: OrderReturnProductsInput!
-    order: ID!
-  ): FulfillmentReturnProducts
+  orderFulfillmentCancel(id: ID!, input: FulfillmentCancelInput!): FulfillmentCancel
+  orderFulfillmentUpdateTracking(id: ID!, input: FulfillmentUpdateTrackingInput!): FulfillmentUpdateTracking
+  orderFulfillmentRefundProducts(input: OrderRefundProductsInput!, order: ID!): FulfillmentRefundProducts
+  orderFulfillmentReturnProducts(input: OrderReturnProductsInput!, order: ID!): FulfillmentReturnProducts
   orderLinesCreate(id: ID!, input: [OrderLineCreateInput]!): OrderLinesCreate
   orderLineDelete(id: ID!): OrderLineDelete
   orderLineUpdate(id: ID!, input: OrderLineInput!): OrderLineUpdate
-  orderDiscountAdd(
-    input: OrderDiscountCommonInput!
-    orderId: ID!
-  ): OrderDiscountAdd
-  orderDiscountUpdate(
-    discountId: ID!
-    input: OrderDiscountCommonInput!
-  ): OrderDiscountUpdate
+  orderDiscountAdd(input: OrderDiscountCommonInput!, orderId: ID!): OrderDiscountAdd
+  orderDiscountUpdate(discountId: ID!, input: OrderDiscountCommonInput!): OrderDiscountUpdate
   orderDiscountDelete(discountId: ID!): OrderDiscountDelete
-  orderLineDiscountUpdate(
-    input: OrderDiscountCommonInput!
-    orderLineId: ID!
-  ): OrderLineDiscountUpdate
+  orderLineDiscountUpdate(input: OrderDiscountCommonInput!, orderLineId: ID!): OrderLineDiscountUpdate
   orderLineDiscountRemove(orderLineId: ID!): OrderLineDiscountRemove
   orderMarkAsPaid(id: ID!, transactionReference: String): OrderMarkAsPaid
   orderRefund(amount: PositiveDecimal!, id: ID!): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
-  orderUpdateShipping(
-    order: ID!
-    input: OrderUpdateShippingInput
-  ): OrderUpdateShipping
+  orderUpdateShipping(order: ID!, input: OrderUpdateShippingInput): OrderUpdateShipping
   orderVoid(id: ID!): OrderVoid
   orderBulkCancel(ids: [ID]!): OrderBulkCancel
   deleteMetadata(id: ID!, keys: [String!]!): DeleteMetadata
   deletePrivateMetadata(id: ID!, keys: [String!]!): DeletePrivateMetadata
   updateMetadata(id: ID!, input: [MetadataInput!]!): UpdateMetadata
-  updatePrivateMetadata(
-    id: ID!
-    input: [MetadataInput!]!
-  ): UpdatePrivateMetadata
+  updatePrivateMetadata(id: ID!, input: [MetadataInput!]!): UpdatePrivateMetadata
   assignNavigation(menu: ID, navigationType: NavigationType!): AssignNavigation
   menuCreate(input: MenuCreateInput!): MenuCreate
   menuDelete(id: ID!): MenuDelete
@@ -3333,18 +2758,14 @@ type Mutation {
   menuItemDelete(id: ID!): MenuItemDelete
   menuItemBulkDelete(ids: [ID]!): MenuItemBulkDelete
   menuItemUpdate(id: ID!, input: MenuItemInput!): MenuItemUpdate
-  menuItemTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): MenuItemTranslate
+  menuItemTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): MenuItemTranslate
   menuItemMove(menu: ID!, moves: [MenuItemMoveInput]!): MenuItemMove
   invoiceRequest(number: String, orderId: ID!): InvoiceRequest
   invoiceRequestDelete(id: ID!): InvoiceRequestDelete
   invoiceCreate(input: InvoiceCreateInput!, orderId: ID!): InvoiceCreate
   invoiceDelete(id: ID!): InvoiceDelete
   invoiceUpdate(id: ID!, input: UpdateInvoiceInput!): InvoiceUpdate
-  invoiceSendEmail(id: ID!): InvoiceSendEmail
+  invoiceSendNotification(id: ID!): InvoiceSendNotification
   giftCardActivate(id: ID!): GiftCardActivate
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
@@ -3356,86 +2777,33 @@ type Mutation {
   saleUpdate(id: ID!, input: SaleInput!): SaleUpdate
   saleCataloguesAdd(id: ID!, input: CatalogueInput!): SaleAddCatalogues
   saleCataloguesRemove(id: ID!, input: CatalogueInput!): SaleRemoveCatalogues
-  saleTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): SaleTranslate
-  saleChannelListingUpdate(
-    id: ID!
-    input: SaleChannelListingInput!
-  ): SaleChannelListingUpdate
+  saleTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): SaleTranslate
+  saleChannelListingUpdate(id: ID!, input: SaleChannelListingInput!): SaleChannelListingUpdate
   voucherCreate(input: VoucherInput!): VoucherCreate
   voucherDelete(id: ID!): VoucherDelete
   voucherBulkDelete(ids: [ID]!): VoucherBulkDelete
   voucherUpdate(id: ID!, input: VoucherInput!): VoucherUpdate
-  invoiceSendNotification(id: ID!): InvoiceSendNotification
   voucherCataloguesAdd(id: ID!, input: CatalogueInput!): VoucherAddCatalogues
-  voucherCataloguesRemove(
-    id: ID!
-    input: CatalogueInput!
-  ): VoucherRemoveCatalogues
-  voucherTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): VoucherTranslate
-  voucherChannelListingUpdate(
-    id: ID!
-    input: VoucherChannelListingInput!
-  ): VoucherChannelListingUpdate
+  voucherCataloguesRemove(id: ID!, input: CatalogueInput!): VoucherRemoveCatalogues
+  voucherTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): VoucherTranslate
+  voucherChannelListingUpdate(id: ID!, input: VoucherChannelListingInput!): VoucherChannelListingUpdate
   exportProducts(input: ExportProductsInput!): ExportProducts
   fileUpload(file: Upload!): FileUpload
-  checkoutAddPromoCode(
-    checkoutId: ID!
-    promoCode: String!
-  ): CheckoutAddPromoCode
-  checkoutBillingAddressUpdate(
-    billingAddress: AddressInput!
-    checkoutId: ID!
-  ): CheckoutBillingAddressUpdate
-  checkoutComplete(
-    checkoutId: ID!
-    paymentData: JSONString
-    redirectUrl: String
-    storeSource: Boolean = false
-  ): CheckoutComplete
+  checkoutAddPromoCode(checkoutId: ID!, promoCode: String!): CheckoutAddPromoCode
+  checkoutBillingAddressUpdate(billingAddress: AddressInput!, checkoutId: ID!): CheckoutBillingAddressUpdate
+  checkoutComplete(checkoutId: ID!, paymentData: JSONString, redirectUrl: String, storeSource: Boolean = false): CheckoutComplete
   checkoutCreate(input: CheckoutCreateInput!): CheckoutCreate
-  checkoutCustomerAttach(
-    checkoutId: ID!
-    customerId: ID
-  ): CheckoutCustomerAttach
+  checkoutCustomerAttach(checkoutId: ID!, customerId: ID): CheckoutCustomerAttach
   checkoutCustomerDetach(checkoutId: ID!): CheckoutCustomerDetach
   checkoutEmailUpdate(checkoutId: ID, email: String!): CheckoutEmailUpdate
   checkoutLineDelete(checkoutId: ID!, lineId: ID): CheckoutLineDelete
-  checkoutLinesAdd(
-    checkoutId: ID!
-    lines: [CheckoutLineInput]!
-  ): CheckoutLinesAdd
-  checkoutLinesUpdate(
-    checkoutId: ID!
-    lines: [CheckoutLineInput]!
-  ): CheckoutLinesUpdate
-  checkoutRemovePromoCode(
-    checkoutId: ID!
-    promoCode: String!
-  ): CheckoutRemovePromoCode
-  checkoutPaymentCreate(
-    checkoutId: ID!
-    input: PaymentInput!
-  ): CheckoutPaymentCreate
-  checkoutShippingAddressUpdate(
-    checkoutId: ID!
-    shippingAddress: AddressInput!
-  ): CheckoutShippingAddressUpdate
-  checkoutShippingMethodUpdate(
-    checkoutId: ID
-    shippingMethodId: ID!
-  ): CheckoutShippingMethodUpdate
-  checkoutLanguageCodeUpdate(
-    checkoutId: ID!
-    languageCode: LanguageCodeEnum!
-  ): CheckoutLanguageCodeUpdate
+  checkoutLinesAdd(checkoutId: ID!, lines: [CheckoutLineInput]!): CheckoutLinesAdd
+  checkoutLinesUpdate(checkoutId: ID!, lines: [CheckoutLineInput]!): CheckoutLinesUpdate
+  checkoutRemovePromoCode(checkoutId: ID!, promoCode: String!): CheckoutRemovePromoCode
+  checkoutPaymentCreate(checkoutId: ID!, input: PaymentInput!): CheckoutPaymentCreate
+  checkoutShippingAddressUpdate(checkoutId: ID!, shippingAddress: AddressInput!): CheckoutShippingAddressUpdate
+  checkoutShippingMethodUpdate(checkoutId: ID, shippingMethodId: ID!): CheckoutShippingMethodUpdate
+  checkoutLanguageCodeUpdate(checkoutId: ID!, languageCode: LanguageCodeEnum!): CheckoutLanguageCodeUpdate
   channelCreate(input: ChannelCreateInput!): ChannelCreate
   channelUpdate(id: ID!, input: ChannelUpdateInput!): ChannelUpdate
   channelDelete(id: ID!, input: ChannelDeleteInput): ChannelDelete
@@ -3444,31 +2812,14 @@ type Mutation {
   attributeCreate(input: AttributeCreateInput!): AttributeCreate
   attributeDelete(id: ID!): AttributeDelete
   attributeUpdate(id: ID!, input: AttributeUpdateInput!): AttributeUpdate
-  attributeTranslate(
-    id: ID!
-    input: NameTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): AttributeTranslate
+  attributeTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): AttributeTranslate
   attributeBulkDelete(ids: [ID]!): AttributeBulkDelete
   attributeValueBulkDelete(ids: [ID]!): AttributeValueBulkDelete
-  attributeValueCreate(
-    attribute: ID!
-    input: AttributeValueCreateInput!
-  ): AttributeValueCreate
+  attributeValueCreate(attribute: ID!, input: AttributeValueCreateInput!): AttributeValueCreate
   attributeValueDelete(id: ID!): AttributeValueDelete
-  attributeValueUpdate(
-    id: ID!
-    input: AttributeValueCreateInput!
-  ): AttributeValueUpdate
-  attributeValueTranslate(
-    id: ID!
-    input: AttributeValueTranslationInput!
-    languageCode: LanguageCodeEnum!
-  ): AttributeValueTranslate
-  attributeReorderValues(
-    attributeId: ID!
-    moves: [ReorderInput]!
-  ): AttributeReorderValues
+  attributeValueUpdate(id: ID!, input: AttributeValueCreateInput!): AttributeValueUpdate
+  attributeValueTranslate(id: ID!, input: AttributeValueTranslationInput!, languageCode: LanguageCodeEnum!): AttributeValueTranslate
+  attributeReorderValues(attributeId: ID!, moves: [ReorderInput]!): AttributeReorderValues
   appCreate(input: AppInput!): AppCreate
   appUpdate(id: ID!, input: AppInput!): AppUpdate
   appDelete(id: ID!): AppDelete
@@ -3476,10 +2827,7 @@ type Mutation {
   appTokenDelete(id: ID!): AppTokenDelete
   appTokenVerify(token: String!): AppTokenVerify
   appInstall(input: AppInstallInput!): AppInstall
-  appRetryInstall(
-    activateAfterInstallation: Boolean = true
-    id: ID!
-  ): AppRetryInstall
+  appRetryInstall(activateAfterInstallation: Boolean = true, id: ID!): AppRetryInstall
   appDeleteFailedInstallation(id: ID!): AppDeleteFailedInstallation
   appFetchManifest(manifestUrl: String!): AppFetchManifest
   appActivate(id: ID!): AppActivate
@@ -3488,40 +2836,21 @@ type Mutation {
   tokenRefresh(csrfToken: String, refreshToken: String): RefreshToken
   tokenVerify(token: String!): VerifyToken
   tokensDeactivateAll: DeactivateAllUserTokens
-  externalAuthenticationUrl(
-    input: JSONString!
-    pluginId: String!
-  ): ExternalAuthenticationUrl
-  externalObtainAccessTokens(
-    input: JSONString!
-    pluginId: String!
-  ): ExternalObtainAccessTokens
+  externalAuthenticationUrl(input: JSONString!, pluginId: String!): ExternalAuthenticationUrl
+  externalObtainAccessTokens(input: JSONString!, pluginId: String!): ExternalObtainAccessTokens
   externalRefresh(input: JSONString!, pluginId: String!): ExternalRefresh
   externalLogout(input: JSONString!, pluginId: String!): ExternalLogout
   externalVerify(input: JSONString!, pluginId: String!): ExternalVerify
-  requestPasswordReset(
-    email: String!
-    redirectUrl: String!
-  ): RequestPasswordReset
+  requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
   confirmAccount(email: String!, token: String!): ConfirmAccount
   setPassword(email: String!, password: String!, token: String!): SetPassword
   passwordChange(newPassword: String!, oldPassword: String!): PasswordChange
-  requestEmailChange(
-    newEmail: String!
-    password: String!
-    redirectUrl: String!
-  ): RequestEmailChange
+  requestEmailChange(newEmail: String!, password: String!, redirectUrl: String!): RequestEmailChange
   confirmEmailChange(token: String!): ConfirmEmailChange
-  accountAddressCreate(
-    input: AddressInput!
-    type: AddressTypeEnum
-  ): AccountAddressCreate
+  accountAddressCreate(input: AddressInput!, type: AddressTypeEnum): AccountAddressCreate
   accountAddressUpdate(id: ID!, input: AddressInput!): AccountAddressUpdate
   accountAddressDelete(id: ID!): AccountAddressDelete
-  accountSetDefaultAddress(
-    id: ID!
-    type: AddressTypeEnum!
-  ): AccountSetDefaultAddress
+  accountSetDefaultAddress(id: ID!, type: AddressTypeEnum!): AccountSetDefaultAddress
   accountRegister(input: AccountRegisterInput!): AccountRegister
   accountUpdate(input: AccountInput!): AccountUpdate
   accountRequestDeletion(redirectUrl: String!): AccountRequestDeletion
@@ -3529,11 +2858,7 @@ type Mutation {
   addressCreate(input: AddressInput!, userId: ID!): AddressCreate
   addressUpdate(id: ID!, input: AddressInput!): AddressUpdate
   addressDelete(id: ID!): AddressDelete
-  addressSetDefault(
-    addressId: ID!
-    type: AddressTypeEnum!
-    userId: ID!
-  ): AddressSetDefault
+  addressSetDefault(addressId: ID!, type: AddressTypeEnum!, userId: ID!): AddressSetDefault
   customerCreate(input: UserCreateInput!): CustomerCreate
   customerUpdate(id: ID!, input: CustomerInput!): CustomerUpdate
   customerDelete(id: ID!): CustomerDelete
@@ -3545,13 +2870,8 @@ type Mutation {
   userAvatarUpdate(image: Upload!): UserAvatarUpdate
   userAvatarDelete: UserAvatarDelete
   userBulkSetActive(ids: [ID]!, isActive: Boolean!): UserBulkSetActive
-  permissionGroupCreate(
-    input: PermissionGroupCreateInput!
-  ): PermissionGroupCreate
-  permissionGroupUpdate(
-    id: ID!
-    input: PermissionGroupUpdateInput!
-  ): PermissionGroupUpdate
+  permissionGroupCreate(input: PermissionGroupCreateInput!): PermissionGroupCreate
+  permissionGroupUpdate(id: ID!, input: PermissionGroupUpdateInput!): PermissionGroupUpdate
   permissionGroupDelete(id: ID!): PermissionGroupDelete
 }
 
@@ -3621,23 +2941,11 @@ type Order implements Node & ObjectWithMetadata {
   totalBalance: Money!
   userEmail: String
   isShippingRequired: Boolean!
-  languageCode: String!
-    @deprecated(
-      reason: "Use the `languageCodeEnum` field to fetch the language code. This field will be removed in Saleor 4.0."
-    )
+  languageCode: String! @deprecated(reason: "Use the `languageCodeEnum` field to fetch the language code. This field will be removed in Saleor 4.0.")
   languageCodeEnum: LanguageCodeEnum!
-  discount: Money
-    @deprecated(
-      reason: "Use discounts field. This field will be removed in Saleor 4.0."
-    )
-  discountName: String
-    @deprecated(
-      reason: "Use discounts field. This field will be removed in Saleor 4.0."
-    )
-  translatedDiscountName: String
-    @deprecated(
-      reason: "Use discounts field. This field will be removed in Saleor 4.0."
-    )
+  discount: Money @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
+  discountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
+  translatedDiscountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
   discounts: [OrderDiscount!]
 }
 
@@ -3649,10 +2957,7 @@ enum OrderAction {
 }
 
 type OrderAddNote {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   event: OrderEvent
   orderErrors: [OrderError!]!
@@ -3663,37 +2968,25 @@ input OrderAddNoteInput {
 }
 
 type OrderBulkCancel {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   orderErrors: [OrderError!]!
 }
 
 type OrderCancel {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type OrderCapture {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type OrderConfirm {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -3726,10 +3019,7 @@ type OrderDiscount implements Node {
 }
 
 type OrderDiscountAdd {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -3741,10 +3031,7 @@ input OrderDiscountCommonInput {
 }
 
 type OrderDiscountDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -3755,10 +3042,7 @@ enum OrderDiscountType {
 }
 
 type OrderDiscountUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -3767,6 +3051,7 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
+  metadata: [MetadataInput]
   channels: [ID]
 }
 
@@ -3924,14 +3209,12 @@ input OrderFilterInput {
   customer: String
   created: DateRangeInput
   search: String
+  metadata: [MetadataInput]
   channels: [ID]
 }
 
 type OrderFulfill {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   fulfillments: [Fulfillment]
   order: Order
   orderErrors: [OrderError!]!
@@ -3982,30 +3265,21 @@ input OrderLineCreateInput {
 }
 
 type OrderLineDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderLine: OrderLine
   orderErrors: [OrderError!]!
 }
 
 type OrderLineDiscountRemove {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderLine: OrderLine
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type OrderLineDiscountUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderLine: OrderLine
   order: Order
   orderErrors: [OrderError!]!
@@ -4016,39 +3290,27 @@ input OrderLineInput {
 }
 
 type OrderLineUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
   orderLine: OrderLine
 }
 
 type OrderLinesCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderLines: [OrderLine!]
   orderErrors: [OrderError!]!
 }
 
 type OrderMarkAsPaid {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
 
 type OrderRefund {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -4105,10 +3367,7 @@ enum OrderSettingsErrorCode {
 }
 
 type OrderSettingsUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderSettings: OrderSettings
   orderSettingsErrors: [OrderSettingsError!]!
 }
@@ -4152,10 +3411,7 @@ enum OrderStatusFilter {
 }
 
 type OrderUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   orderErrors: [OrderError!]!
   order: Order
 }
@@ -4167,10 +3423,7 @@ input OrderUpdateInput {
 }
 
 type OrderUpdateShipping {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -4180,10 +3433,7 @@ input OrderUpdateShippingInput {
 }
 
 type OrderVoid {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
 }
@@ -4201,46 +3451,31 @@ type Page implements Node & ObjectWithMetadata {
   created: DateTime!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  contentJson: JSONString!
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
-    )
+  contentJson: JSONString! @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   attributes: [SelectedAttribute!]!
 }
 
 type PageAttributeAssign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageType: PageType
   pageErrors: [PageError!]!
 }
 
 type PageAttributeUnassign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageType: PageType
   pageErrors: [PageError!]!
 }
 
 type PageBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   pageErrors: [PageError!]!
 }
 
 type PageBulkPublish {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   pageErrors: [PageError!]!
 }
@@ -4257,10 +3492,7 @@ type PageCountableEdge {
 }
 
 type PageCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   page: Page
 }
@@ -4277,10 +3509,7 @@ input PageCreateInput {
 }
 
 type PageDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   page: Page
 }
@@ -4305,6 +3534,7 @@ enum PageErrorCode {
 
 input PageFilterInput {
   search: String
+  metadata: [MetadataInput]
 }
 
 type PageInfo {
@@ -4325,10 +3555,7 @@ input PageInput {
 }
 
 type PageReorderAttributeValues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   page: Page
   pageErrors: [PageError!]!
 }
@@ -4352,19 +3579,13 @@ type PageTranslatableContent implements Node {
   id: ID!
   title: String!
   content: JSONString
-  contentJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
-    )
+  contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   page: Page
 }
 
 type PageTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   page: PageTranslatableContent
 }
@@ -4376,10 +3597,7 @@ type PageTranslation implements Node {
   title: String!
   content: JSONString
   language: LanguageDisplay!
-  contentJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `content` field instead."
-    )
+  contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
 }
 
 input PageTranslationInput {
@@ -4396,21 +3614,12 @@ type PageType implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   attributes: [Attribute]
-  availableAttributes(
-    filter: AttributeFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): AttributeCountableConnection
+  availableAttributes(filter: AttributeFilterInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   hasPages: Boolean
 }
 
 type PageTypeBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   pageErrors: [PageError!]!
 }
@@ -4427,10 +3636,7 @@ type PageTypeCountableEdge {
 }
 
 type PageTypeCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   pageType: PageType
 }
@@ -4442,10 +3648,7 @@ input PageTypeCreateInput {
 }
 
 type PageTypeDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   pageType: PageType
 }
@@ -4455,10 +3658,7 @@ input PageTypeFilterInput {
 }
 
 type PageTypeReorderAttributes {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageType: PageType
   pageErrors: [PageError!]!
 }
@@ -4474,10 +3674,7 @@ input PageTypeSortingInput {
 }
 
 type PageTypeUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   pageType: PageType
 }
@@ -4490,19 +3687,13 @@ input PageTypeUpdateInput {
 }
 
 type PageUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   pageErrors: [PageError!]!
   page: Page
 }
 
 type PasswordChange {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
@@ -4529,10 +3720,7 @@ type Payment implements Node {
 }
 
 type PaymentCapture {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   payment: Payment
   paymentErrors: [PaymentError!]!
 }
@@ -4580,6 +3768,10 @@ enum PaymentErrorCode {
   NOT_SUPPORTED_GATEWAY
 }
 
+input PaymentFilterInput {
+  checkouts: [ID]
+}
+
 type PaymentGateway {
   name: String!
   id: ID!
@@ -4588,10 +3780,7 @@ type PaymentGateway {
 }
 
 type PaymentInitialize {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   initializedPayment: PaymentInitialized
   paymentErrors: [PaymentError!]!
 }
@@ -4610,10 +3799,7 @@ input PaymentInput {
 }
 
 type PaymentRefund {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   payment: Payment
   paymentErrors: [PaymentError!]!
 }
@@ -4624,10 +3810,7 @@ type PaymentSource {
 }
 
 type PaymentVoid {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   payment: Payment
   paymentErrors: [PaymentError!]!
 }
@@ -4658,10 +3841,7 @@ enum PermissionEnum {
 }
 
 type PermissionGroupCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   permissionGroupErrors: [PermissionGroupError!]!
   group: Group
 }
@@ -4673,10 +3853,7 @@ input PermissionGroupCreateInput {
 }
 
 type PermissionGroupDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   permissionGroupErrors: [PermissionGroupError!]!
   group: Group
 }
@@ -4714,10 +3891,7 @@ input PermissionGroupSortingInput {
 }
 
 type PermissionGroupUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   permissionGroupErrors: [PermissionGroupError!]!
   group: Group
 }
@@ -4780,10 +3954,7 @@ input PluginSortingInput {
 }
 
 type PluginUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   plugin: Plugin
   pluginsErrors: [PluginError!]!
 }
@@ -4821,12 +3992,8 @@ type Product implements Node & ObjectWithMetadata {
   rating: Float
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
-  url: String!
-    @deprecated(reason: "This field will be removed after 2020-07-31.")
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
+  url: String! @deprecated(reason: "This field will be removed after 2020-07-31.")
   thumbnail(size: Int): Image
   pricing(address: AddressInput): ProductPricingInfo
   isAvailable(address: AddressInput): Boolean
@@ -4834,31 +4001,18 @@ type Product implements Node & ObjectWithMetadata {
   attributes: [SelectedAttribute!]!
   channelListings: [ProductChannelListing!]
   mediaById(id: ID): ProductMedia!
-  imageById(id: ID): ProductImage
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead."
-    )
+  imageById(id: ID): ProductImage @deprecated(reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead.")
   variants: [ProductVariant]
   media: [ProductMedia!]
-  images: [ProductImage]
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `media` field instead."
-    )
+  images: [ProductImage] @deprecated(reason: "Will be removed in Saleor 4.0. Use the `media` field instead.")
   collections: [Collection]
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   availableForPurchase: Date
   isAvailableForPurchase: Boolean
 }
 
-input PaymentFilterInput {
-  checkouts: [ID]
-}
-
 type ProductAttributeAssign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productType: ProductType
   productErrors: [ProductError!]!
 }
@@ -4874,19 +4028,13 @@ enum ProductAttributeType {
 }
 
 type ProductAttributeUnassign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productType: ProductType
   productErrors: [ProductError!]!
 }
 
 type ProductBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
 }
@@ -4927,10 +4075,7 @@ type ProductChannelListingError {
 }
 
 type ProductChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productChannelListingErrors: [ProductChannelListingError!]!
 }
@@ -4952,10 +4097,7 @@ type ProductCountableEdge {
 }
 
 type ProductCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   product: Product
 }
@@ -4976,10 +4118,7 @@ input ProductCreateInput {
 }
 
 type ProductDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   product: Product
 }
@@ -5037,6 +4176,7 @@ input ProductFilterInput {
   productType: ID
   stocks: ProductStockFilterInput
   search: String
+  metadata: [MetadataInput]
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
@@ -5075,19 +4215,13 @@ type ProductMedia implements Node {
 }
 
 type ProductMediaBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
 }
 
 type ProductMediaCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   media: ProductMedia
   productErrors: [ProductError!]!
@@ -5101,20 +4235,14 @@ input ProductMediaCreateInput {
 }
 
 type ProductMediaDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   media: ProductMedia
   productErrors: [ProductError!]!
 }
 
 type ProductMediaReorder {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   media: [ProductMedia!]
   productErrors: [ProductError!]!
@@ -5126,10 +4254,7 @@ enum ProductMediaType {
 }
 
 type ProductMediaUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   media: ProductMedia
   productErrors: [ProductError!]!
@@ -5169,10 +4294,7 @@ type ProductPricingInfo {
 }
 
 type ProductReorderAttributeValues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productErrors: [ProductError!]!
 }
@@ -5188,19 +4310,13 @@ type ProductTranslatableContent implements Node {
   seoDescription: String
   name: String!
   description: JSONString
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   product: Product
 }
 
 type ProductTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   product: Product
 }
@@ -5212,10 +4328,7 @@ type ProductTranslation implements Node {
   name: String!
   description: JSONString
   language: LanguageDisplay!
-  descriptionJson: JSONString
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `description` field instead."
-    )
+  descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
 }
 
 type ProductType implements Node & ObjectWithMetadata {
@@ -5228,33 +4341,15 @@ type ProductType implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
-  products(
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
-    @deprecated(
-      reason: "Use the top-level `products` query with the `productTypes` filter."
-    )
+  products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection @deprecated(reason: "Use the top-level `products` query with the `productTypes` filter.")
   taxType: TaxType
   variantAttributes(variantSelection: VariantAttributeScope): [Attribute]
   productAttributes: [Attribute]
-  availableAttributes(
-    filter: AttributeFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): AttributeCountableConnection
+  availableAttributes(filter: AttributeFilterInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
 }
 
 type ProductTypeBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
 }
@@ -5276,19 +4371,13 @@ type ProductTypeCountableEdge {
 }
 
 type ProductTypeCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productType: ProductType
 }
 
 type ProductTypeDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productType: ProductType
 }
@@ -5302,6 +4391,7 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
+  metadata: [MetadataInput]
   ids: [ID]
 }
 
@@ -5318,10 +4408,7 @@ input ProductTypeInput {
 }
 
 type ProductTypeReorderAttributes {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productType: ProductType
   productErrors: [ProductError!]!
 }
@@ -5338,19 +4425,13 @@ input ProductTypeSortingInput {
 }
 
 type ProductTypeUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productType: ProductType
 }
 
 type ProductUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   product: Product
 }
@@ -5371,10 +4452,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   margin: Int
   quantityOrdered: Int
   revenue(period: ReportingPeriod): TaxedMoney
-  images: [ProductImage]
-    @deprecated(
-      reason: "Will be removed in Saleor 4.0. Use the `media` instead."
-    )
+  images: [ProductImage] @deprecated(reason: "Will be removed in Saleor 4.0. Use the `media` instead.")
   media: [ProductMedia!]
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   digitalContent: DigitalContent
@@ -5383,10 +4461,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
 }
 
 type ProductVariantBulkCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productVariants: [ProductVariant!]!
   bulkProductErrors: [BulkProductError!]!
@@ -5402,10 +4477,7 @@ input ProductVariantBulkCreateInput {
 }
 
 type ProductVariantBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
 }
@@ -5425,10 +4497,7 @@ input ProductVariantChannelListingAddInput {
 }
 
 type ProductVariantChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   variant: ProductVariant
   productChannelListingErrors: [ProductChannelListingError!]!
 }
@@ -5445,10 +4514,7 @@ type ProductVariantCountableEdge {
 }
 
 type ProductVariantCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productVariant: ProductVariant
 }
@@ -5463,10 +4529,7 @@ input ProductVariantCreateInput {
 }
 
 type ProductVariantDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productVariant: ProductVariant
 }
@@ -5474,6 +4537,7 @@ type ProductVariantDelete {
 input ProductVariantFilterInput {
   search: String
   sku: [String]
+  metadata: [MetadataInput]
 }
 
 input ProductVariantInput {
@@ -5484,55 +4548,37 @@ input ProductVariantInput {
 }
 
 type ProductVariantReorder {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productErrors: [ProductError!]!
 }
 
 type ProductVariantReorderAttributeValues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   productErrors: [ProductError!]!
 }
 
 type ProductVariantSetDefault {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   product: Product
   productErrors: [ProductError!]!
 }
 
 type ProductVariantStocksCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   bulkStockErrors: [BulkStockError!]!
 }
 
 type ProductVariantStocksDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   stockErrors: [StockError!]!
 }
 
 type ProductVariantStocksUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   bulkStockErrors: [BulkStockError!]!
 }
@@ -5545,10 +4591,7 @@ type ProductVariantTranslatableContent implements Node {
 }
 
 type ProductVariantTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   productVariant: ProductVariant
 }
@@ -5560,10 +4603,7 @@ type ProductVariantTranslation implements Node {
 }
 
 type ProductVariantUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productErrors: [ProductError!]!
   productVariant: ProductVariant
 }
@@ -5579,298 +4619,73 @@ type Query {
   webhookEvents: [WebhookEvent]
   webhookSamplePayload(eventType: WebhookSampleEventTypeEnum!): JSONString
   warehouse(id: ID!): Warehouse
-  warehouses(
-    filter: WarehouseFilterInput
-    sortBy: WarehouseSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): WarehouseCountableConnection
-  translations(
-    kind: TranslatableKinds!
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): TranslatableItemConnection
+  warehouses(filter: WarehouseFilterInput, sortBy: WarehouseSortingInput, before: String, after: String, first: Int, last: Int): WarehouseCountableConnection
+  translations(kind: TranslatableKinds!, before: String, after: String, first: Int, last: Int): TranslatableItemConnection
   translation(id: ID!, kind: TranslatableKinds!): TranslatableItem
   stock(id: ID!): Stock
-  stocks(
-    filter: StockFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): StockCountableConnection
+  stocks(filter: StockFilterInput, before: String, after: String, first: Int, last: Int): StockCountableConnection
   shop: Shop!
   orderSettings: OrderSettings
   shippingZone(id: ID!, channel: String): ShippingZone
-  shippingZones(
-    filter: ShippingZoneFilterInput
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ShippingZoneCountableConnection
+  shippingZones(filter: ShippingZoneFilterInput, channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
   digitalContent(id: ID!): DigitalContent
-  digitalContents(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): DigitalContentCountableConnection
-  categories(
-    filter: CategoryFilterInput
-    sortBy: CategorySortingInput
-    level: Int
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CategoryCountableConnection
+  digitalContents(before: String, after: String, first: Int, last: Int): DigitalContentCountableConnection
+  categories(filter: CategoryFilterInput, sortBy: CategorySortingInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   category(id: ID, slug: String): Category
   collection(id: ID, slug: String, channel: String): Collection
-  collections(
-    filter: CollectionFilterInput
-    sortBy: CollectionSortingInput
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CollectionCountableConnection
+  collections(filter: CollectionFilterInput, sortBy: CollectionSortingInput, channel: String, before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   product(id: ID, slug: String, channel: String): Product
-  products(
-    filter: ProductFilterInput
-    sortBy: ProductOrder
-    stockAvailability: StockAvailability
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
+  products(filter: ProductFilterInput, sortBy: ProductOrder, stockAvailability: StockAvailability, channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   productType(id: ID!): ProductType
-  productTypes(
-    filter: ProductTypeFilterInput
-    sortBy: ProductTypeSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductTypeCountableConnection
+  productTypes(filter: ProductTypeFilterInput, sortBy: ProductTypeSortingInput, before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection
   productVariant(id: ID, sku: String, channel: String): ProductVariant
-  productVariants(
-    ids: [ID]
-    channel: String
-    filter: ProductVariantFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductVariantCountableConnection
-  reportProductSales(
-    period: ReportingPeriod!
-    channel: String!
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductVariantCountableConnection
+  productVariants(ids: [ID], channel: String, filter: ProductVariantFilterInput, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
+  reportProductSales(period: ReportingPeriod!, channel: String!, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   payment(id: ID!): Payment
-  payments(
-    filter: PaymentFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): PaymentCountableConnection
+  payments(filter: PaymentFilterInput, before: String, after: String, first: Int, last: Int): PaymentCountableConnection
   page(id: ID, slug: String): Page
-  pages(
-    sortBy: PageSortingInput
-    filter: PageFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): PageCountableConnection
+  pages(sortBy: PageSortingInput, filter: PageFilterInput, before: String, after: String, first: Int, last: Int): PageCountableConnection
   pageType(id: ID!): PageType
-  pageTypes(
-    sortBy: PageTypeSortingInput
-    filter: PageTypeFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): PageTypeCountableConnection
-  homepageEvents(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): OrderEventCountableConnection
+  pageTypes(sortBy: PageTypeSortingInput, filter: PageTypeFilterInput, before: String, after: String, first: Int, last: Int): PageTypeCountableConnection
+  homepageEvents(before: String, after: String, first: Int, last: Int): OrderEventCountableConnection
   order(id: ID!): Order
-  orders(
-    sortBy: OrderSortingInput
-    filter: OrderFilterInput
-    created: ReportingPeriod
-    status: OrderStatusFilter
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): OrderCountableConnection
-  draftOrders(
-    sortBy: OrderSortingInput
-    filter: OrderDraftFilterInput
-    created: ReportingPeriod
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): OrderCountableConnection
+  orders(sortBy: OrderSortingInput, filter: OrderFilterInput, created: ReportingPeriod, status: OrderStatusFilter, channel: String, before: String, after: String, first: Int, last: Int): OrderCountableConnection
+  draftOrders(sortBy: OrderSortingInput, filter: OrderDraftFilterInput, created: ReportingPeriod, before: String, after: String, first: Int, last: Int): OrderCountableConnection
   ordersTotal(period: ReportingPeriod, channel: String): TaxedMoney
   orderByToken(token: UUID!): Order
   menu(channel: String, id: ID, name: String, slug: String): Menu
-  menus(
-    channel: String
-    sortBy: MenuSortingInput
-    filter: MenuFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): MenuCountableConnection
+  menus(channel: String, sortBy: MenuSortingInput, filter: MenuFilterInput, before: String, after: String, first: Int, last: Int): MenuCountableConnection
   menuItem(id: ID!, channel: String): MenuItem
-  menuItems(
-    channel: String
-    sortBy: MenuItemSortingInput
-    filter: MenuItemFilterInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): MenuItemCountableConnection
+  menuItems(channel: String, sortBy: MenuItemSortingInput, filter: MenuItemFilterInput, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
   giftCard(id: ID!): GiftCard
-  giftCards(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): GiftCardCountableConnection
+  giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   plugin(id: ID!): Plugin
-  plugins(
-    filter: PluginFilterInput
-    sortBy: PluginSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): PluginCountableConnection
+  plugins(filter: PluginFilterInput, sortBy: PluginSortingInput, before: String, after: String, first: Int, last: Int): PluginCountableConnection
   sale(id: ID!, channel: String): Sale
-  sales(
-    filter: SaleFilterInput
-    sortBy: SaleSortingInput
-    query: String
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): SaleCountableConnection
+  sales(filter: SaleFilterInput, sortBy: SaleSortingInput, query: String, channel: String, before: String, after: String, first: Int, last: Int): SaleCountableConnection
   voucher(id: ID!, channel: String): Voucher
-  vouchers(
-    filter: VoucherFilterInput
-    sortBy: VoucherSortingInput
-    query: String
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): VoucherCountableConnection
+  vouchers(filter: VoucherFilterInput, sortBy: VoucherSortingInput, query: String, channel: String, before: String, after: String, first: Int, last: Int): VoucherCountableConnection
   exportFile(id: ID!): ExportFile
-  exportFiles(
-    filter: ExportFileFilterInput
-    sortBy: ExportFileSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ExportFileCountableConnection
+  exportFiles(filter: ExportFileFilterInput, sortBy: ExportFileSortingInput, before: String, after: String, first: Int, last: Int): ExportFileCountableConnection
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
-  checkouts(
-    channel: String
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CheckoutCountableConnection
+  checkouts(channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
   checkoutLine(id: ID): CheckoutLine
-  checkoutLines(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CheckoutLineCountableConnection
+  checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
-  attributes(
-    filter: AttributeFilterInput
-    sortBy: AttributeSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): AttributeCountableConnection
+  attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID, slug: String): Attribute
   appsInstallations: [AppInstallation!]!
-  apps(
-    filter: AppFilterInput
-    sortBy: AppSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): AppCountableConnection
+  apps(filter: AppFilterInput, sortBy: AppSortingInput, before: String, after: String, first: Int, last: Int): AppCountableConnection
   app(id: ID): App
-  addressValidationRules(
-    countryCode: CountryCode!
-    countryArea: String
-    city: String
-    cityArea: String
-  ): AddressValidationData
+  addressValidationRules(countryCode: CountryCode!, countryArea: String, city: String, cityArea: String): AddressValidationData
   address(id: ID!): Address
-  customers(
-    filter: CustomerFilterInput
-    sortBy: UserSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): UserCountableConnection
-  permissionGroups(
-    filter: PermissionGroupFilterInput
-    sortBy: PermissionGroupSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): GroupCountableConnection
+  customers(filter: CustomerFilterInput, sortBy: UserSortingInput, before: String, after: String, first: Int, last: Int): UserCountableConnection
+  permissionGroups(filter: PermissionGroupFilterInput, sortBy: PermissionGroupSortingInput, before: String, after: String, first: Int, last: Int): GroupCountableConnection
   permissionGroup(id: ID!): Group
   me: User
-  staffUsers(
-    filter: StaffUserInput
-    sortBy: UserSortingInput
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): UserCountableConnection
+  staffUsers(filter: StaffUserInput, sortBy: UserSortingInput, before: String, after: String, first: Int, last: Int): UserCountableConnection
   user(id: ID, email: String): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
@@ -5882,10 +4697,7 @@ type ReducedRate {
 }
 
 type RefreshToken {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
   user: User
   accountErrors: [AccountError!]!
@@ -5902,19 +4714,13 @@ enum ReportingPeriod {
 }
 
 type RequestEmailChange {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
 
 type RequestPasswordReset {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   accountErrors: [AccountError!]!
 }
 
@@ -5924,24 +4730,9 @@ type Sale implements Node {
   type: SaleType!
   startDate: DateTime!
   endDate: DateTime
-  categories(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CategoryCountableConnection
-  collections(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CollectionCountableConnection
-  products(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
+  categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
+  collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
+  products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
   translation(languageCode: LanguageCodeEnum!): SaleTranslation
   channelListings: [SaleChannelListing!]
   discountValue: Float
@@ -5949,19 +4740,13 @@ type Sale implements Node {
 }
 
 type SaleAddCatalogues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   sale: Sale
   discountErrors: [DiscountError!]!
 }
 
 type SaleBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   discountErrors: [DiscountError!]!
 }
@@ -5984,10 +4769,7 @@ input SaleChannelListingInput {
 }
 
 type SaleChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   sale: Sale
   discountErrors: [DiscountError!]!
 }
@@ -6004,19 +4786,13 @@ type SaleCountableEdge {
 }
 
 type SaleCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   sale: Sale
 }
 
 type SaleDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   sale: Sale
 }
@@ -6040,10 +4816,7 @@ input SaleInput {
 }
 
 type SaleRemoveCatalogues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   sale: Sale
   discountErrors: [DiscountError!]!
 }
@@ -6070,10 +4843,7 @@ type SaleTranslatableContent implements Node {
 }
 
 type SaleTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   sale: Sale
 }
@@ -6090,10 +4860,7 @@ enum SaleType {
 }
 
 type SaleUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   sale: Sale
 }
@@ -6109,10 +4876,7 @@ input SeoInput {
 }
 
 type SetPassword {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   token: String
   refreshToken: String
   csrfToken: String
@@ -6142,6 +4906,7 @@ enum ShippingErrorCode {
 type ShippingMethod implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
+  description: JSONString
   minimumOrderWeight: Weight
   maximumOrderWeight: Weight
   maximumDeliveryDays: Int
@@ -6155,12 +4920,7 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   maximumOrderPrice: Money
   minimumOrderPrice: Money
   postalCodeRules: [ShippingMethodPostalCodeRule]
-  excludedProducts(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
+  excludedProducts(before: String, after: String, first: Int, last: Int): ProductCountableConnection
 }
 
 type ShippingMethodChannelListing implements Node {
@@ -6184,10 +4944,7 @@ input ShippingMethodChannelListingInput {
 }
 
 type ShippingMethodChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
 }
@@ -6202,6 +4959,7 @@ type ShippingMethodPostalCodeRule implements Node {
 type ShippingMethodTranslatableContent implements Node {
   id: ID!
   name: String!
+  description: JSONString
   translation(languageCode: LanguageCodeEnum!): ShippingMethodTranslation
   shippingMethod: ShippingMethod
 }
@@ -6209,6 +4967,7 @@ type ShippingMethodTranslatableContent implements Node {
 type ShippingMethodTranslation implements Node {
   id: ID!
   name: String
+  description: JSONString
   language: LanguageDisplay!
 }
 
@@ -6223,39 +4982,27 @@ input ShippingPostalCodeRulesCreateInputRange {
 }
 
 type ShippingPriceBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   shippingErrors: [ShippingError!]!
 }
 
 type ShippingPriceCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingZone: ShippingZone
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
 }
 
 type ShippingPriceDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingMethod: ShippingMethod
   shippingZone: ShippingZone
   shippingErrors: [ShippingError!]!
 }
 
 type ShippingPriceExcludeProducts {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
 }
@@ -6266,6 +5013,7 @@ input ShippingPriceExcludeProductsInput {
 
 input ShippingPriceInput {
   name: String
+  description: JSONString
   minimumOrderWeight: WeightScalar
   maximumOrderWeight: WeightScalar
   maximumDeliveryDays: Int
@@ -6278,28 +5026,24 @@ input ShippingPriceInput {
 }
 
 type ShippingPriceRemoveProductFromExclude {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
 }
 
 type ShippingPriceTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   shippingMethod: ShippingMethod
 }
 
+input ShippingPriceTranslationInput {
+  name: String
+  description: JSONString
+}
+
 type ShippingPriceUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingZone: ShippingZone
   shippingMethod: ShippingMethod
   shippingErrors: [ShippingError!]!
@@ -6320,10 +5064,7 @@ type ShippingZone implements Node & ObjectWithMetadata {
 }
 
 type ShippingZoneBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   shippingErrors: [ShippingError!]!
 }
@@ -6340,10 +5081,7 @@ type ShippingZoneCountableEdge {
 }
 
 type ShippingZoneCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingErrors: [ShippingError!]!
   shippingZone: ShippingZone
 }
@@ -6358,10 +5096,7 @@ input ShippingZoneCreateInput {
 }
 
 type ShippingZoneDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingErrors: [ShippingError!]!
   shippingZone: ShippingZone
 }
@@ -6371,10 +5106,7 @@ input ShippingZoneFilterInput {
 }
 
 type ShippingZoneUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shippingErrors: [ShippingError!]!
   shippingZone: ShippingZone
 }
@@ -6393,10 +5125,7 @@ input ShippingZoneUpdateInput {
 type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
-  availableShippingMethods(
-    channel: String!
-    address: AddressInput
-  ): [ShippingMethod]
+  availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
@@ -6405,10 +5134,7 @@ type Shop {
   domain: Domain!
   languages: [LanguageDisplay]!
   name: String!
-  navigation: Navigation
-    @deprecated(
-      reason: "Fetch menus using the `menu` query with `slug` parameter."
-    )
+  navigation: Navigation @deprecated(reason: "Fetch menus using the `menu` query with `slug` parameter.")
   permissions: [Permission]!
   phonePrefixes: [String]!
   headerText: String
@@ -6429,19 +5155,13 @@ type Shop {
 }
 
 type ShopAddressUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shop: Shop
   shopErrors: [ShopError!]!
 }
 
 type ShopDomainUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shop: Shop
   shopErrors: [ShopError!]!
 }
@@ -6463,10 +5183,7 @@ enum ShopErrorCode {
 }
 
 type ShopFetchTaxRates {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shop: Shop
   shopErrors: [ShopError!]!
 }
@@ -6488,10 +5205,7 @@ input ShopSettingsInput {
 }
 
 type ShopSettingsTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shop: Shop
   translationErrors: [TranslationError!]!
 }
@@ -6502,10 +5216,7 @@ input ShopSettingsTranslationInput {
 }
 
 type ShopSettingsUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shop: Shop
   shopErrors: [ShopError!]!
 }
@@ -6523,19 +5234,13 @@ input SiteDomainInput {
 }
 
 type StaffBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   staffErrors: [StaffError!]!
 }
 
 type StaffCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   staffErrors: [StaffError!]!
   user: User
 }
@@ -6551,10 +5256,7 @@ input StaffCreateInput {
 }
 
 type StaffDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   staffErrors: [StaffError!]!
   user: User
 }
@@ -6581,19 +5283,13 @@ type StaffNotificationRecipient implements Node {
 }
 
 type StaffNotificationRecipientCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shopErrors: [ShopError!]!
   staffNotificationRecipient: StaffNotificationRecipient
 }
 
 type StaffNotificationRecipientDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shopErrors: [ShopError!]!
   staffNotificationRecipient: StaffNotificationRecipient
 }
@@ -6605,19 +5301,13 @@ input StaffNotificationRecipientInput {
 }
 
 type StaffNotificationRecipientUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   shopErrors: [ShopError!]!
   staffNotificationRecipient: StaffNotificationRecipient
 }
 
 type StaffUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   staffErrors: [StaffError!]!
   user: User
 }
@@ -6738,21 +5428,9 @@ type Transaction implements Node {
   token: String!
   kind: TransactionKind!
   isSuccess: Boolean!
-  error: TransactionError
+  error: String
+  gatewayResponse: JSONString!
   amount: Money
-}
-
-enum TransactionError {
-  TRANSACTIONERROR_INCORRECT_NUMBER
-  TRANSACTIONERROR_INVALID_NUMBER
-  TRANSACTIONERROR_INCORRECT_CVV
-  TRANSACTIONERROR_INVALID_CVV
-  TRANSACTIONERROR_INCORRECT_ZIP
-  TRANSACTIONERROR_INCORRECT_ADDRESS
-  TRANSACTIONERROR_INVALID_EXPIRY_DATE
-  TRANSACTIONERROR_EXPIRED
-  TRANSACTIONERROR_PROCESSING_ERROR
-  TRANSACTIONERROR_DECLINED
 }
 
 enum TransactionKind {
@@ -6768,18 +5446,7 @@ enum TransactionKind {
   CANCEL
 }
 
-union TranslatableItem =
-    ProductTranslatableContent
-  | CollectionTranslatableContent
-  | CategoryTranslatableContent
-  | AttributeTranslatableContent
-  | AttributeValueTranslatableContent
-  | ProductVariantTranslatableContent
-  | PageTranslatableContent
-  | ShippingMethodTranslatableContent
-  | SaleTranslatableContent
-  | VoucherTranslatableContent
-  | MenuItemTranslatableContent
+union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
 
 type TranslatableItemConnection {
   pageInfo: PageInfo!
@@ -6833,19 +5500,13 @@ input UpdateInvoiceInput {
 }
 
 type UpdateMetadata {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   metadataErrors: [MetadataError!]!
   item: ObjectWithMetadata
 }
 
 type UpdatePrivateMetadata {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   metadataErrors: [MetadataError!]!
   item: ObjectWithMetadata
 }
@@ -6877,58 +5538,34 @@ type User implements Node & ObjectWithMetadata {
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   addresses: [Address]
-  checkout: Checkout
-    @deprecated(
-      reason: "Use the `checkout_tokens` field to fetch the user checkouts."
-    )
+  checkout: Checkout @deprecated(reason: "Use the `checkout_tokens` field to fetch the user checkouts.")
   checkoutTokens(channel: String): [UUID!]
-  giftCards(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): GiftCardCountableConnection
-  orders(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): OrderCountableConnection
-  permissions: [Permission]
-    @deprecated(
-      reason: "Will be removed in Saleor 2.11.Use the `userPermissions` instead."
-    )
+  giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
+  orders(before: String, after: String, first: Int, last: Int): OrderCountableConnection
+  permissions: [Permission] @deprecated(reason: "Will be removed in Saleor 2.11.Use the `userPermissions` instead.")
   userPermissions: [UserPermission]
   permissionGroups: [Group]
   editableGroups: [Group]
   avatar(size: Int): Image
   events: [CustomerEvent]
   storedPaymentSources: [PaymentSource]
+  languageCode: LanguageCodeEnum!
 }
 
 type UserAvatarDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
 
 type UserAvatarUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
 }
 
 type UserBulkSetActive {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   accountErrors: [AccountError!]!
 }
@@ -6952,6 +5589,7 @@ input UserCreateInput {
   email: String
   isActive: Boolean
   note: String
+  languageCode: LanguageCodeEnum
   redirectUrl: String
 }
 
@@ -6986,20 +5624,14 @@ enum VariantAttributeScope {
 }
 
 type VariantMediaAssign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   media: ProductMedia
   productErrors: [ProductError!]!
 }
 
 type VariantMediaUnassign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   productVariant: ProductVariant
   media: ProductMedia
   productErrors: [ProductError!]!
@@ -7015,10 +5647,7 @@ type VariantPricingInfo {
 }
 
 type VerifyToken {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   isValid: Boolean!
   payload: GenericScalar
@@ -7038,24 +5667,9 @@ type Voucher implements Node {
   applyOncePerCustomer: Boolean!
   discountValueType: DiscountValueTypeEnum!
   minCheckoutItemsQuantity: Int
-  categories(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CategoryCountableConnection
-  collections(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): CollectionCountableConnection
-  products(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ProductCountableConnection
+  categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
+  collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
+  products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
   countries: [CountryDisplay]
   translation(languageCode: LanguageCodeEnum!): VoucherTranslation
   discountValue: Float
@@ -7065,19 +5679,13 @@ type Voucher implements Node {
 }
 
 type VoucherAddCatalogues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   voucher: Voucher
   discountErrors: [DiscountError!]!
 }
 
 type VoucherBulkDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   discountErrors: [DiscountError!]!
 }
@@ -7102,10 +5710,7 @@ input VoucherChannelListingInput {
 }
 
 type VoucherChannelListingUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   voucher: Voucher
   discountErrors: [DiscountError!]!
 }
@@ -7122,19 +5727,13 @@ type VoucherCountableEdge {
 }
 
 type VoucherCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   voucher: Voucher
 }
 
 type VoucherDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   voucher: Voucher
 }
@@ -7171,10 +5770,7 @@ input VoucherInput {
 }
 
 type VoucherRemoveCatalogues {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   voucher: Voucher
   discountErrors: [DiscountError!]!
 }
@@ -7203,10 +5799,7 @@ type VoucherTranslatableContent implements Node {
 }
 
 type VoucherTranslate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   translationErrors: [TranslationError!]!
   voucher: Voucher
 }
@@ -7224,10 +5817,7 @@ enum VoucherTypeEnum {
 }
 
 type VoucherUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   discountErrors: [DiscountError!]!
   voucher: Voucher
 }
@@ -7237,12 +5827,7 @@ type Warehouse implements Node & ObjectWithMetadata {
   name: String!
   slug: String!
   companyName: String!
-  shippingZones(
-    before: String
-    after: String
-    first: Int
-    last: Int
-  ): ShippingZoneCountableConnection!
+  shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection!
   address: Address!
   email: String!
   privateMetadata: [MetadataItem]!
@@ -7272,10 +5857,7 @@ type WarehouseCountableEdge {
 }
 
 type WarehouseCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   warehouseErrors: [WarehouseError!]!
   warehouse: Warehouse
 }
@@ -7290,10 +5872,7 @@ input WarehouseCreateInput {
 }
 
 type WarehouseDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   warehouseErrors: [WarehouseError!]!
   warehouse: Warehouse
 }
@@ -7319,19 +5898,13 @@ input WarehouseFilterInput {
 }
 
 type WarehouseShippingZoneAssign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   warehouseErrors: [WarehouseError!]!
   warehouse: Warehouse
 }
 
 type WarehouseShippingZoneUnassign {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   warehouseErrors: [WarehouseError!]!
   warehouse: Warehouse
 }
@@ -7346,10 +5919,7 @@ input WarehouseSortingInput {
 }
 
 type WarehouseUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   warehouseErrors: [WarehouseError!]!
   warehouse: Warehouse
 }
@@ -7373,10 +5943,7 @@ type Webhook implements Node {
 }
 
 type WebhookCreate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   webhookErrors: [WebhookError!]!
   webhook: Webhook
 }
@@ -7391,10 +5958,7 @@ input WebhookCreateInput {
 }
 
 type WebhookDelete {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   webhookErrors: [WebhookError!]!
   webhook: Webhook
 }
@@ -7467,16 +6031,14 @@ enum WebhookSampleEventTypeEnum {
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
+  NOTIFY_USER
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED
 }
 
 type WebhookUpdate {
-  errors: [Error!]!
-    @deprecated(
-      reason: "Use typed errors with error codes. This field will be removed after 2020-07-31."
-    )
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   webhookErrors: [WebhookError!]!
   webhook: Webhook
 }
@@ -7506,19 +6068,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity =
-    Address
-  | User
-  | Group
-  | App
-  | ProductVariant
-  | Product
-  | ProductType
-  | Collection
-  | Category
-  | ProductMedia
-  | ProductImage
-  | PageType
+union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
 
 type _Service {
   sdl: String

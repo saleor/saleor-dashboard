@@ -293,7 +293,7 @@ export const TypedUpdateAttributeValueTranslations = TypedMutation<
 const updateShippingMethodTranslations = gql`
   mutation UpdateShippingMethodTranslations(
     $id: ID!
-    $input: NameTranslationInput!
+    $input: ShippingPriceTranslationInput!
     $language: LanguageCodeEnum!
   ) {
     shippingPriceTranslate(id: $id, input: $input, languageCode: $language) {
@@ -304,12 +304,14 @@ const updateShippingMethodTranslations = gql`
       shippingMethod {
         id
         name
+        description
         translation(languageCode: $language) {
           id
           language {
             language
           }
           name
+          description
         }
       }
     }
